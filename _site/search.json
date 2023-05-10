@@ -1,0 +1,268 @@
+[
+  {
+    "objectID": "webexercises.html",
+    "href": "webexercises.html",
+    "title": "Webexercises",
+    "section": "",
+    "text": "This is a Web Exercise template created by the psychology teaching team at the University of Glasgow, based on ideas from Software Carpentry. This template shows how instructors can easily create interactive web documents that students can use in self-guided learning.\nThe {webexercises} package provides a number of functions that you use in inline R code or through code chunk options to create HTML widgets (text boxes, pull down menus, buttons that reveal hidden content). Examples are given below. Render this file to HTML to see how it works.\nNOTE: To use the widgets in the compiled HTML file, you need to have a JavaScript-enabled browser."
+  },
+  {
+    "objectID": "webexercises.html#example-questions",
+    "href": "webexercises.html#example-questions",
+    "title": "Webexercises",
+    "section": "Example Questions",
+    "text": "Example Questions\n\nFill-In-The-Blanks (fitb())\nCreate fill-in-the-blank questions using fitb(), providing the answer as the first argument.\n\n2 + 2 is \n\nYou can also create these questions dynamically, using variables from your R session.\n\n\n\n\nThe square root of 25 is: \n\nThe blanks are case-sensitive; if you don’t care about case, use the argument ignore_case = TRUE.\n\nWhat is the letter after D? \n\nIf you want to ignore differences in whitespace use, use the argument ignore_ws = TRUE (which is the default) and include spaces in your answer anywhere they could be acceptable.\n\nHow do you load the tidyverse package? \n\nYou can set more than one possible correct answer by setting the answers as a vector.\n\nType a vowel: \n\nYou can use regular expressions to test answers against more complex rules.\n\nType any 3 letters: \n\n\n\nMultiple Choice (mcq())\n\n“Never gonna give you up, never gonna: let you goturn you downrun awaylet you down”\n“I bless the rainsguess it rainssense the rain down in Africa” -Toto\n\n\n\nTrue or False (torf())\n\nTrue or False? You can permute values in a vector using sample(). TRUEFALSE\n\n\n\nLonger MCQs (longmcq())\nWhen your answers are very long, sometimes a drop-down select box gets formatted oddly. You can use longmcq() to deal with this. Since the answers are long, It’s probably best to set up the options inside an R chunk with echo=FALSE.\nWhat is a p-value?\n\n\n\n\n the probability that the null hypothesis is true the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true the probability of making an error in your conclusion\n\nWhat is true about a 95% confidence interval of the mean?\n\n\n\n\n if you repeated the process many times, 95% of intervals calculated in this way contain the true mean 95% of the data fall within this range there is a 95% probability that the true mean lies within this range"
+  },
+  {
+    "objectID": "webexercises.html#checked-sections",
+    "href": "webexercises.html#checked-sections",
+    "title": "Webexercises",
+    "section": "Checked sections",
+    "text": "Checked sections\nCreate sections with the class webex-check to add a button that hides feedback until it is pressed. Add the class webex-box to draw a box around the section (or use your own styles).\n\nI am going to learn a lot: TRUEFALSE\nWhat is a p-value?\n\n the probability that the null hypothesis is true the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true the probability of making an error in your conclusion"
+  },
+  {
+    "objectID": "webexercises.html#hidden-solutions-and-hints",
+    "href": "webexercises.html#hidden-solutions-and-hints",
+    "title": "Webexercises",
+    "section": "Hidden solutions and hints",
+    "text": "Hidden solutions and hints\nYou can fence off a solution area that will be hidden behind a button using hide() before the solution and unhide() after, each as inline R code. Pass the text you want to appear on the button to the hide() function.\nIf the solution is a code chunk, instead of using hide() and unhide(), simply set the webex.hide chunk option to TRUE, or set it to the string you wish to display on the button.\nRecreate the scatterplot below, using the built-in cars dataset.\n\n\n\n\n\n\n\nI need a hint\n\nSee the documentation for plot() (?plot)\n\n\n\n\n\nClick here to see the solution\n\n\nCode\nplot(cars$speed, cars$dist)"
+  },
+  {
+    "objectID": "sigmanotation.html",
+    "href": "sigmanotation.html",
+    "title": "Sigma notation",
+    "section": "",
+    "text": "Before reading this guide, it is recommended that you read GUIDE and GUIDE"
+  },
+  {
+    "objectID": "sigmanotation.html#what-is-sigma-notation",
+    "href": "sigmanotation.html#what-is-sigma-notation",
+    "title": "Sigma notation",
+    "section": "What is sigma notation?",
+    "text": "What is sigma notation?\nIf you want to add infinitely many things together, then it would be nice to have a quick way of writing this down! This is where sigma notation comes in.\n\n\n\n\n\n\nDefinition of sum and sigma notation\n\n\n\nA sum is any addition of two or more real numbers. If \\(a_k,a_{k+1}, \\ldots, a_n\\) are real numbers (where \\(k\\) and \\(n\\) are some natural numbers with \\(k\\leq N\\)), then you can use sigma notation to write their sum as \\[a_k + a_{k+1} + \\ldots + a_N = \\sum_{i = k}^N a_i\\] where the right hand side reads ‘the sum from \\(i = k\\) to \\(i = n\\) of the elements \\(a_i\\)’. The symbol \\(i\\) is known as the index of the sum; the index of a sum can notionally be any letter.\n\n\n\nExamples\nHere’s some examples of sigma notation.\n\nWhat is the value of \\(\\displaystyle\\sum_{n=2}^5 n^2\\)?\nBefore tackling a problem using sigma notation, it can be best to read it out loud. Here, \\[\\sum_{n=2}^5 n^2\\textsf{ is 'the sum from $n = 2$ to $n = 5$ of $n^2$'.}\\] This translates to \\[\\sum_{n=2}^5 n^2 = 2^2 + 3^2 + 4^2 + 5^2\\] and \\(2^2 + 3^2 + 4^2 + 5^2 = 4 + 9 + 16 + 25 = 54\\).\nWhat is the value of \\(\\displaystyle\\sum_{n=1}^N n = S\\)?\n\nIn this case, you’re being asked to find \\(S = 1 + 2 + 3 + \\ldots + N\\). The following method is due to Gauss, who came up with this answer during a maths lesson at school when he was seven (hinting at the genius to follow).\nFirst of all, you can reorder \\(S\\) to write that \\(S = N + (N-1) + \\ldots + 2 + 1\\). Adding two lots of \\(S\\) together gives the following:\n\\[\n\\begin{array}{cccccccccccc}\n& S & = & 1 & + & 2 & + & 3 & + & \\ldots & + & N \\\\\n+ & S & = & N & + & (N-1) & + & (N-2) & + & \\ldots & + & 1\\\\\\hline\n& 2S & = & (N+1) & + & (N+1) & + & (N+1) & + & \\ldots & + & (N+1)\n\\end{array}\n\\]\nTherefore, \\(2S\\) is \\(N\\) lots of \\((N+1)\\); you can write this as \\(2S = N(N+1)\\). Dividing both sides by \\(2\\) gives \\(S = N(N+1)/2\\)."
+  },
+  {
+    "objectID": "sigmanotation.html#writing-sums-using-sigma-notation",
+    "href": "sigmanotation.html#writing-sums-using-sigma-notation",
+    "title": "Sigma notation",
+    "section": "Writing sums using sigma notation",
+    "text": "Writing sums using sigma notation\n\nWrite \\(2 + 4 + 6 + 8 + 10 + 12\\) using sigma notation.\nYou can tell that these are the first six multiples of \\(2\\); so you can list these elements as \\(2n\\) for \\(n = 1\\) up to \\(n = 6\\). Therefore, you can write that \\[2 + 4 + 6 + 8 + 10 + 12 = \\sum_{n=1}^6 2n.\\]"
+  },
+  {
+    "objectID": "sigmanotation.html#properties",
+    "href": "sigmanotation.html#properties",
+    "title": "Sigma notation",
+    "section": "Properties",
+    "text": "Properties"
+  },
+  {
+    "objectID": "sigmanotation.html#double-sums",
+    "href": "sigmanotation.html#double-sums",
+    "title": "Sigma notation",
+    "section": "Double sums",
+    "text": "Double sums\n\n\n\n\n\n\nAdditional sums\n\n\n\nA sum is any addition of two or more real numbers. If \\(a_k,a_{k+1}, \\ldots, a_n\\) are real numbers (where \\(k\\) and \\(n\\) are some natural numbers with \\(k\\leq N\\)), then you can use sigma notation to write their sum as \\[a_k + a_{k+1} + \\ldots + a_N = \\sum_{i = k}^N a_i\\] where the right hand side reads ‘the sum from \\(i = k\\) to \\(i = n\\) of the elements \\(a_i\\)’. The symbol \\(i\\) is known as the index of the sum; the index of a sum can notionally be any letter."
+  },
+  {
+    "objectID": "sigmanotation.html#problems",
+    "href": "sigmanotation.html#problems",
+    "title": "Sigma notation",
+    "section": "Problems",
+    "text": "Problems"
+  },
+  {
+    "objectID": "sigmanotation.html#further-reading",
+    "href": "sigmanotation.html#further-reading",
+    "title": "Sigma notation",
+    "section": "Further reading",
+    "text": "Further reading"
+  },
+  {
+    "objectID": "quadraticformula.html",
+    "href": "quadraticformula.html",
+    "title": "Using the quadratic formula",
+    "section": "",
+    "text": "Before reading this guide, it is recommended that you read (Guide: Introduction to quadratic equations) In addition, the proof of the quadratic formula relies on the technique of ‘completing the square’; see (Guide: Completing the square) for more."
+  },
+  {
+    "objectID": "quadraticformula.html#what-is-the-quadratic-formula",
+    "href": "quadraticformula.html#what-is-the-quadratic-formula",
+    "title": "Using the quadratic formula",
+    "section": "What is the quadratic formula?",
+    "text": "What is the quadratic formula?\n(BLURB)\n\n\n\n\n\n\nThe quadratic formula\n\n\n\nLet \\(ax^2 + bx + c = 0\\) be a quadratic equation (where \\(a\\neq 0\\)). Then the roots to this quadratic equation are given by \\[x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\\] where one of the roots is given by the positive term \\((-b+\\sqrt{b^2 - 4ac})/2a\\) and the other given by the negative term \\((-b-\\sqrt{b^2 - 4ac})/2a\\).\n\n\n\nWhy use the quadratic formula?\n(BLURB)"
+  },
+  {
+    "objectID": "quadraticformula.html#using-the-quadratic-formula",
+    "href": "quadraticformula.html#using-the-quadratic-formula",
+    "title": "Using the quadratic formula",
+    "section": "Using the quadratic formula",
+    "text": "Using the quadratic formula\nHere are some examples of quadratic equations which are solved using the quadratic formula. To do this, you need to be able to identify the variable and the coefficients \\(a,b,c\\).\nThe first of these examples illustrates the importance of making sure the correct signs are inputted into the quadratic formula.\n\n\n\n\n\n\nExample 1\n\n\n\nWhat are the roots of the quadratic equation \\(x^2 - 5x + 6 = 0\\)?\nHere, you could factorise the quadratic equation \\(x^2 - 5x + 6 = 0\\) to get \\((x-2)(x-3) = 0\\). This is zero precisely when \\(x - 2 = 0\\) or \\(x - 3 = 0\\); so the roots are \\(x = 2\\) and \\(x = 3\\).\nYou can also work this out using the quadratic formula. In this case, you’ll need to identify the values of \\(a,b,c\\) in the equation \\(x^2 - 5x + 6 = 0\\); here, \\(a = 1\\), \\(b = -5\\) and \\(c = 6\\). Taking care of the signs, you can put these into the quadratic formula and simplify to get \\[ x = \\frac{-(-5) \\pm \\sqrt{(-5)^2 - 4(1)(6)}}{2(1)} = \\frac{5 \\pm \\sqrt{25 - 24}}{2} = \\frac{5 \\pm \\sqrt{1}}{2} = \\frac{5\\pm 1}{2}\\] Therefore, the roots are \\(x = 4/2 = 2\\) and \\(x = 6/2 = 3\\), as was found above.\n\n\nThis next example illustrates the importance of the quadratic equation having \\(0\\) on one side in order to find the roots.\n\n\n\n\n\n\nExample 2\n\n\n\nWhat are the roots of the quadratic equation \\(-8x - 8 = x^2 + 8\\)?\nIn order to use the quadratic formula, you need to first put the equation into the form \\(ax^2 + bx + c = 0\\). So rearranging \\(-8x - 8 = x^2 + 8\\) to get zero on the left hand side gives \\[0 = x^2 + 8x + 16\\] So in this case, you can take \\(a = 1\\), \\(b = 8\\) and \\(c = 16\\) and put these in the quadratic formula to get \\[ x = \\frac{-(8) \\pm \\sqrt{(8)^2 - 4(1)(16)}}{2(1)} = \\frac{-8 \\pm \\sqrt{64 - 64}}{2} = \\frac{-8 \\pm \\sqrt{0}}{2} = \\frac{-8}{2}\\] In this case, the discriminant \\(D = 0\\) and so there is one distinct root that must be counted twice. Therefore, the roots are \\(x = -8/2 = -4\\) twice.\n\n\nThis next example is the first where \\(a \\neq 1\\); you should be prepared to solve any quadratic equation in the form \\(ax^2 + bx + c = 0\\).\n\n\n\n\n\n\nExample 3\n\n\n\nWhat are the roots of the quadratic equation \\(4x^2 + 4x + 5 = 0\\)?\nThis equation is already in the form \\(ax^2 + bx + c = 0\\), with \\(a = 4\\), \\(b = 4\\) and \\(c = 5\\). Putting these into the quadratic formula gives \\[ x = \\frac{-(4) \\pm \\sqrt{(4)^2 - 4(4)(5)}}{2(4)} = \\frac{-4 \\pm \\sqrt{16 - 80}}{8} = \\frac{-4 \\pm \\sqrt{-64}}{8}\\] In this case, the discriminant \\(D < 0\\). You can say that \\(\\sqrt{-64} = 8i\\), as \\(8\\) is the square root of \\(64\\) and \\(i\\) is the square root of \\(-1\\). This means that \\[x = \\frac{-4 \\pm \\sqrt{-64}}{8} = \\frac{-4 \\pm 8i}{8} = \\frac{1}{2}\\pm i\\] and these are the two roots of this quadratic equation.\n\n\nThe next example changes the name of the variable used. You should be able to recognise a quadratic equation in the wild, regardless of what symbol is used as the variable.\n\n\n\n\n\n\nExample 4\n\n\n\nWhat are the roots of the quadratic equation \\(m^2 - m - 1 = 0\\)?\nHere, the quadratic equation is of the required form \\(am^2 + bm + c = 0\\) with \\(a = 1, b = -1\\) and \\(c = -1\\). Putting these into the quadratic formula gives: \\[ m = \\frac{-(-1) \\pm \\sqrt{(-1)^2 - 4(1)(-1)}}{2(1)} = \\frac{1 \\pm \\sqrt{1 - (-4)}}{2} = \\frac{1 \\pm \\sqrt{5}}{2}\\] Therefore, the two roots of the quadratic equation are \\(m = (1 -\\sqrt{5})/2\\) and \\(m = (1 + \\sqrt{5})/2\\). (The second of these is a well-known mathematical constant known as the golden ratio)\n\n\nThe final two examples deal with changes of variable and also a change in the typical structure of a quadratic equation.\n\n\n\n\n\n\nExample 5\n\n\n\nWhat are the roots of the equation \\(y^4 - 3y^2 + 2 =0\\)?\nYou can notice here that the equation given is not strictly a quadratic equation, as it is not of the form given in the definition above. However, by taking \\(y^2\\) as the variable instead of \\(y\\), you can rewrite this equation as \\[y^4 - 3y^2 + 2 = (y^2)^2 - 3y^2 + 2 = 0\\] and so this is a quadratic equation, with \\(y^2\\) as the variable. You can then use the quadratic formula with \\(y^2\\) as the variable, \\(a = 1\\), \\(b = -3\\) and \\(c = 2\\) to get \\[ y^2 = \\frac{-(-3) \\pm \\sqrt{(-3)^2 - 4(1)(2)}}{2(1)} = \\frac{3 \\pm \\sqrt{9 - 8}}{2} = \\frac{3 \\pm 1}{2}\\] Therefore, the two solutions for \\(y^2\\) are \\(y^2 = 2/2 = 1\\) and \\(y^2 = 4/2 = 2\\). This gives four solutions for \\(y\\), which are \\(y = 1, -1, \\sqrt{2}, -\\sqrt{2}\\).\n\n\n\n\n\n\n\n\nExample 6\n\n\n\nWhat are the solutions to the equation \\(4q - 13 = -3/q\\)?\nYou can notice here that this equation does not look like a quadratic equation at all; so some rearranging needs to be done. First of all, you can multiply both sides by \\(q\\) to get \\[4q^2 - 13q = -3\\] and so \\[4q^2 - 13q + 3 = 0\\] So this really was a quadratic equation, with \\(a = 4\\), \\(b = -13\\) and \\(c = 3\\). Putting this into the quadratic formula gives \\[\\begin{align*}\nq &= \\frac{-(-13) \\pm \\sqrt{(-13)^2 - 4(4)(3)}}{2(4)} = \\frac{13 \\pm \\sqrt{169 - 48}}{8}\\\\[1em]\n&= \\frac{13 \\pm \\sqrt{121}}{8} = \\frac{13 \\pm 11}{8}\n\\end{align*}\\] Therefore, the two solutions to the equation are \\(q = 2/8 = 1/4\\) and \\(q = 24/8 = 3\\)."
+  },
+  {
+    "objectID": "quadraticformula.html#why-does-the-quadratic-formula-work",
+    "href": "quadraticformula.html#why-does-the-quadratic-formula-work",
+    "title": "Using the quadratic formula",
+    "section": "Why does the quadratic formula work?",
+    "text": "Why does the quadratic formula work?\nIt’s important to note that the quadratic formula does not come out of thin air. In order to be able to use a result like this, you will have to prove that the formula gives the roots for the quadratic equation \\(ax^2 + bx + c\\).\nTo do this; you can complete the square on \\(ax^2 + bx + c\\) using the fact that \\(a\\neq 0\\). See (Guide: Completing the square) for why this works.\n\n\n\n\n\n\nProof of the quadratic formula\n\n\n\nThe proof of this relies on completing the square. First of all, as \\(a\\neq 0\\) you can divide \\(ax^2 + bx + c = 0\\) through by \\(a\\) to get \\[x^2 + \\frac{b}{a} x + \\frac{c}{a} = 0\\] Taking the \\(c/a\\) term over to the other side gives \\[x^2 + \\frac{b}{a} x = -\\frac{c}{a}\\] Completing the square gives \\[\\left(x + \\frac{b}{2a}\\right)^2 - \\frac{b^2}{4a^2} = -\\frac{c}{a}\\] You can rearrange to get \\[\\left(x + \\frac{b}{2a}\\right)^2 = \\frac{b^2}{4a^2} - \\frac{c}{a} = \\frac{b^2 - 4ac}{4a^2}\\] Now the result is starting to come together. Taking square roots of both sides (not forgetting that it could be positive or negative) gives \\[x + \\frac{b}{2a} = \\pm\\frac{\\sqrt{b^2 - 4ac}}{2a}\\] and rearranging gives \\[x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\\] as required."
+  },
+  {
+    "objectID": "quadraticformula.html#quick-check-problems",
+    "href": "quadraticformula.html#quick-check-problems",
+    "title": "Using the quadratic formula",
+    "section": "Quick check problems",
+    "text": "Quick check problems"
+  },
+  {
+    "objectID": "quadraticformula.html#further-reading",
+    "href": "quadraticformula.html#further-reading",
+    "title": "Using the quadratic formula",
+    "section": "Further reading",
+    "text": "Further reading\n(Guide: Polynomial long division)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "STARMAST",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\nSigma notation\nQuadratic formula – questions\nIntro to quadratic equations –"
+  },
+  {
+    "objectID": "index.html#vectors",
+    "href": "index.html#vectors",
+    "title": "STARMAST",
+    "section": "Vectors",
+    "text": "Vectors\n\nInitial\n\nWhat is a vector? (vector notation, positive, negative, zero, addition, scalar multiplication)\nGeometric properties of vectors (relation to 3D geometry, ijk/column vector notation, length, unit vectors)\n\n\n\nOperations\n\nThe scalar product\nThe vector product\nTriple products\n\n\n\nGeometry\n\nVector equations of lines\nVector equations of planes\nSolving geometric problems with vectors"
+  },
+  {
+    "objectID": "index.html#algebra",
+    "href": "index.html#algebra",
+    "title": "STARMAST",
+    "section": "Algebra",
+    "text": "Algebra\n\nArithmetic\n\nSigma notation\nPi notation"
+  },
+  {
+    "objectID": "index.html#easy-enough-to-learn-but-still-useful",
+    "href": "index.html#easy-enough-to-learn-but-still-useful",
+    "title": "STARMAST",
+    "section": "easy enough to learn but still useful",
+    "text": "easy enough to learn but still useful\n\nSets\nProofs\nDifferentiation and derivatives\nLogs and exponentials"
+  },
+  {
+    "objectID": "index.html#others",
+    "href": "index.html#others",
+    "title": "STARMAST",
+    "section": "Others",
+    "text": "Others\n\nIntegrals\nVectors\nMatrices\nLinear Algebra"
+  },
+  {
+    "objectID": "index.html#general-mathematical-notation-such-as",
+    "href": "index.html#general-mathematical-notation-such-as",
+    "title": "STARMAST",
+    "section": "General mathematical notation such as",
+    "text": "General mathematical notation such as\n\nGreek symbols and their names\nSigma notation\nThe lines and hats over letters (sorry don’t know the word)\nIndexing in equations"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n\nCode\n1 + 1\n\n\n[1] 2"
+  },
+  {
+    "objectID": "qs-quadraticformula.html",
+    "href": "qs-quadraticformula.html",
+    "title": "Using the quadratic formula: questions",
+    "section": "",
+    "text": "Before attempting these questions, it is recommended that you read (Guide: Using the quadratic formula)."
+  },
+  {
+    "objectID": "qs-quadraticformula.html#questions",
+    "href": "qs-quadraticformula.html#questions",
+    "title": "Using the quadratic formula: questions",
+    "section": "Questions",
+    "text": "Questions\n\n1\nUsing the quadratic formula or otherwise, solve the following quadratic equations.\n1.1 \\(x^2 - 7x + 6 = 0\\).\n1.2. \\(x^2 + 14x + 45 = 0\\).\n1.3. \\(x^2 - x - 56 = 0\\).\n1.4. \\(s^2 + 4s + 4 = 0\\).\n1.5. \\(t^2 + 4t - 4 = 0\\).\n1.6. \\(m^2 - 144 = 0\\).\n1.7. \\(5c^2 - 25 + 30 = 0\\).\n1.8. \\(2n^2 + n + 1 = 0\\).\n1.9. \\(-3c^2 + 9c - 1 = 0\\).\n1.10. \\(\\frac{x^2}{2} - \\frac{7x}{2} + 3 = 0\\).\n\n\n2\nAlthough it may not look like it, the following equations are quadratics. Solve these for the variable indicated.\n2.1 \\(x^2 - 7x + 6 = 0\\).\n2.2. \\(x^2 + 14x + 45 = 0\\).\n2.3. \\(x^2 - x - 56 = 0\\).\n2.4. \\(s^2 + 4s + 4 = 0\\).\n2.5. \\(t^2 + 4t - 4 = 0\\).\n2.6. \\(m^2 - 144 = 0\\).\n2.7. \\(5c^2 - 25 + 30 = 0\\).\n2.8. \\(2n^2 + n + 1 = 0\\).\n2.9. \\(-3c^2 + 9c - 1 = 0\\).\n2.10. \\(\\frac{x^2}{2} - \\frac{7x}{2} + 3 = 0\\).\n\n\n3"
+  },
+  {
+    "objectID": "styleguide.html",
+    "href": "styleguide.html",
+    "title": "STARMAST style guide",
+    "section": "",
+    "text": "The aim of this project is to produce accessible online resources for incoming students to the School of Mathematics and Statistics. There are two ways that accessibility can be defined in this context:\n\ntechnical accessibility: ensuring that the way that material is presented is accessible to any user. These include things like ability to screen-read, ability to zoom, correct colour contrasts, etc.\naccessibility of language: ensuring that the material itself is understandable by all who read it. This could include users with specific learning difficulties (such as dyslexia or attention deficit disorder) or low literacy skills, international readers where English is not their first language, or even younger people looking for more mathematical support.\n\nOf these, the fact that you are writing in a language that can output to both HTML and Word documents satisfy the somewhat more stringent technical accessibility requirements (such as screen reading, ability to zoom). In addition, the setup for this project (html settings, a LaTeX document class, docx setup) takes care of some other aesthetic changes such as margins, headings, and line-spacing.\nThe other requirements are up to the writer – you!\nBelow are some guidelines (read: laws) to follow when writing for STARMAST."
+  },
+  {
+    "objectID": "styleguide.html#five-main-principles",
+    "href": "styleguide.html#five-main-principles",
+    "title": "STARMAST style guide",
+    "section": "Five main principles",
+    "text": "Five main principles\nWhen writing for students using these materials, it’s important to know that these students could be coming from any level of mathematical knowledge or any level of literal knowledge. In particular, your reader can have any level of confidence in their ability to do mathematics or statistics.\nThe way that you write can directly affect this confidence. Below are five main principles of writing materials for this project.\n\nIt’s you, not we.\nTraditionally, mathematical writing has used the first-person plural ‘we’, intending to lead the reader on a journey through the material. This is all well and good if you assume that the reader is confident with the work; but what if they are not confident in their ability?\nIf introductory material is written in an exclusive manner, then a student with absolutely no confidence will struggle. Every student needs to feel included and inspired when reading about mathematics or statistics; so write inclusively and in the active voice.\nThe problem is that ‘we’ could be inclusive (including the reader) or exclusive (not including the reader). If this is married to concepts which are quite difficult, it can be quick to feel excluded; not part of the journey. In addition, using ‘we’ can be passive; if you want your reader to do mathematics, saying ‘we see this’ and ‘we deduce that’ may create a false sense of security.\nTherefore, the writing for this project will use the second-person singular ‘you’, with an emphasis on the active voice. Saying ‘you can do this’ rather than ‘we can see that’ helps to instill confidence in the reader, and actually shifts the focus to the reader doing mathematics.\n\n\n\n\n\n\n\nNothing is easy.\nYour experiences with mathematics are unique, and will not be generally applicable to all students reading your work. If you think that something is ‘easy’ or ‘obvious’, then good for you; but even mentioning this in your writing will crush the confidence of any student reading your work.\nSo nothing is easy. Not even things you learned in high school. Everyone has to start somewhere, and that somewhere might be here. A consequence of this is that nothing should be hard either; present your material objectively.\nBelow is a table of banned adjectives, which does not claim to be complete. You can change most of these into adverbs by adding ‘ly’ to the end; these adverbs are banned too.\n\nA list of banned words.\n\n\n\n\n\n\n\n\nDon’t use these. Ever.\n\n\n\n\n\n\n\nEasy\nObvious\nTrivial\nStraightforward\n\n\nSimple\nEffortless\nPainless\nNot hard\n\n\nFoolproof\nElementary\nBasic\nA doddle\n\n\nRun-of-the-mill\nUnchallenging\nNo trouble\nJust\n\n\n\nPlease feel free to let tdhc know if you want to make any addition to the list.\n\n\nMinimise jargon.\nIf a difficult concept is explained behind jargon or symbols that the student has to look up while trying to understand, then that concept becomes far harder to master. Learning mathematics is hard enough without students trying to translate what is going on.\nHowever, at some point, students will need to be introduced to mathematical terminology. It is a language after all. It is too much to expect to eliminate mathematical or statistical terms entirely, so minimise jargon where you can, and provide references to terms if needed. This includes symbols including the therefore symbol, quantifier symbols, the implied sign, etc.\nOne of the main aims of this project is going to be a glossary of mathematical terms, so a link to this could be included in every study guide.\n\n\nKeep it simple.\nWhich is easier to read or understand: ‘so’, or ‘whenceforth’? How about: ‘deduction’ or ‘working’?\nAgain, there may be significant barriers to understanding; barriers which should not be in place when trying to learn mathematics. Therefore, keep your writing as simple as possible.\nExceptions of course should be made for mathematical terms, which should be clearly defined.\n\n\nAvoid context.\nWhile it may be tempting to relate everything you write to your education (‘saw this in A-level/Higher’, ‘this was in MT2XXX’, ‘this is used in physics’), please avoid this in your general mathematical writing. So avoid context where possible.\nThere are some exceptions; when motivating the subject at hand, you may want to say ‘this is used in X and Y and Z’; this is absolutely fine."
+  },
+  {
+    "objectID": "styleguide.html#guide-to-structure",
+    "href": "styleguide.html#guide-to-structure",
+    "title": "STARMAST style guide",
+    "section": "Guide to structure",
+    "text": "Guide to structure\nEach study guide should have:\n\na summary: two to three lines about the material in the study guide.\n(optional) a paragraph of presumed knowledge: relating any presumed knowledge to the contents of the guide.\na paragraph-long introduction to the topic: this could include motivation, historical background, and other topics.\nthe guide itself: definitions, examples, results, followed by any justification for the results.\na quick check: two or three introductory questions to reinforce knowledge.\n(optional) a list of guides for further reading.\n\nOf these, focus on number 4 first. The summary, presumed knowledge, and introduction should be written at the very end."
+  },
+  {
+    "objectID": "styleguide.html#guide-to-formatting",
+    "href": "styleguide.html#guide-to-formatting",
+    "title": "STARMAST style guide",
+    "section": "Guide to formatting",
+    "text": "Guide to formatting\n\nWriting\n\nAvoid italics and underlining; emphasise using bold text only.\n\n\n\nContent\n\nDefinitions and results need not be numbered; there should only be two or three of these in the study guide.\nExamples should be numbered, since there are more of these than definitions and results.\nThere are five environments (called callout blocks) to use; one for definitions and results, one for examples and proofs, one for warnings, one for important things, and one for a tip.\n\n\n::: {.callout-note}\n\n## Definition of property x\n<!-- Always include a title using the above ## syntax. -->\n\nDefinition content, where **property x** is bolded.\n\n:::\n\n\n\n\n\n\nDefinition of property x\n\n\n\n\nDefinition content, where property x is bolded.\n\n\n\n::: {.callout-note appearance=\"simple\"}\n\n## Example 1\n<!-- Don't forget to enumerate the example. -->\n<!-- You will have to do this manually. -->\n\nExample content here, with maths $e^{i\\theta}$ and \n\n$$e^{i\\theta} = \\cos(\\theta)+i\\sin(\\theta).$$\n\n:::\n\n\n\n\n\n\nExample 1\n\n\n\n\nExample content here, with maths \\(e^{i\\theta}\\) and\n\\[e^{i\\theta} = \\cos(\\theta)+i\\sin(\\theta).\\]\n\n\n\n::: {.callout-warning}\n\nBe careful with your writing.\n\n:::\n\n\n\n\n\n\nWarning\n\n\n\nBe careful with your writing.\n\n\n\n::: {.callout-important}\n\nBe really careful with your writing! Oh, and don't divide by $0$.\n\n:::\n\n\n\n\n\n\nImportant\n\n\n\nBe really careful with your writing! Oh, and don’t divide by \\(0\\).\n\n\n\n::: {.callout-tip}\n\nHere's what you can do to help your writing. \n\n:::\n\n\n\n\n\n\nTip\n\n\n\nHere’s what you can do to help your writing."
+  },
+  {
+    "objectID": "styleguide.html#guide-to-maths",
+    "href": "styleguide.html#guide-to-maths",
+    "title": "STARMAST style guide",
+    "section": "Guide to maths",
+    "text": "Guide to maths"
+  },
+  {
+    "objectID": "styleguide.html#resources",
+    "href": "styleguide.html#resources",
+    "title": "STARMAST style guide",
+    "section": "Resources",
+    "text": "Resources\n\nUK Government guidance on producing accessible documents\nBritish Dyslexic Association style guide\nLondon Mathematical Society: Mathematics and Accessibility"
+  },
+  {
+    "objectID": "introtoquadratics.html",
+    "href": "introtoquadratics.html",
+    "title": "Introduction to quadratic equations",
+    "section": "",
+    "text": "Before reading this guide, it is recommended that you read (Guide: Introduction to complex numbers)."
+  },
+  {
+    "objectID": "introtoquadratics.html#what-is-a-quadratic-equation",
+    "href": "introtoquadratics.html#what-is-a-quadratic-equation",
+    "title": "Introduction to quadratic equations",
+    "section": "What is a quadratic equation?",
+    "text": "What is a quadratic equation?\nEquations in one variable come in all shapes and sizes.\nOne of the most important types of an equation is known as a quadratic equation. These appear almost everywhere in mathematics, from modelling projectile motion in mechanics to describing circles, ellipses, parabolas and hyperbolas in 2D space.\n\n\n\n\n\n\nDefinition of quadratic equation, root\n\n\n\nA quadratic equation is an equation that can be rearranged into the form \\[ax^2 + bx + c = 0\\] where \\(x\\) is a variable and \\(a,b,c\\) are real numbers with \\(a \\neq 0\\).\nValues of \\(x\\) that satisfy the equation \\(ax^2 + bx + c = 0\\) are known as roots of the equation.\n\n\nHere, \\(a\\neq 0\\) as if it was, then the equation would no longer be a quadratic equation!\nThe general shape of a quadratic equation is known as a parabola. A figure of two parabolas is given in Figure 1; the left hand graph is if \\(a > 0\\), whereas the right hand graph is when \\(a < 0\\).\n\n\n\nFigure 1: A pair of parabolas. (left) A graph of a quadratic \\(ax^2 + bx + c\\) where \\(a > 0\\). (right) A graph of a quadratic \\(ax^2 + bx + c\\) where \\(a < 0\\).\n\n\nIt is very important to be able to identify the variable in a quadratic equation, as well as the coefficients \\(a,b,c\\). In the course of your mathematical study, it may be that the variable of a quadratic equation is not only letters like \\(x,y,z\\), but squares or cubes like \\(x^2\\) and \\(y^3\\), or even functions like \\(e^x\\), \\(\\cos(x)\\), and \\(\\sin(y)\\).\n\n\n\n\n\n\nExample 1\n\n\n\nYou are given the quadratic equation \\(2x^2 + 4x - 8 = 0\\). The variable of the quadratic equation is \\(x\\), and the coefficients are \\(a = 2, b = 4, c = -8\\).\n\n\n\n\n\n\n\n\nExample 2\n\n\n\nHere, the equation \\(y^4 - 10y^2 + 25 = 0\\) may look like a quartic equation, but it is actually a quadratic equation. Using the laws of indices, you can rewrite the equation as \\((y^2)^2 - 10y^2 + 25 = 0\\). Therefore, the variable of the quadratic equation is \\(y^2\\), and the coefficients are \\(a = 1\\), \\(b = -10\\), \\(c = 25\\).\n\n\n\n\n\n\n\n\nExample 3\n\n\n\nYou are given the equation \\(-e^{2x} + 4e^{x} - 5 = 0\\). Using the laws of indices, you can rewrite the equation as \\(-(e^{x})^2 + 4e^x - 5 = 0\\). The variable of the quadratic equation is \\(e^x\\), and the coefficients are \\(a = -1\\), \\(b = 4\\), \\(c = -5\\). This is not the only solution to the coefficients; you can multiply the equation through by \\(-1\\) to get \\((e^{x})^2 - 4e^x + 5 = 0\\), which gives \\(a = 1\\), \\(b = -4\\) and \\(c = 5\\). Both solutions are equally valid.\n\n\n\n\n\n\n\n\nExample 4\n\n\n\nYou are given the equation \\(t+1 = \\frac{4}{t-3}\\). This really is a quadratic equation! You can multiply both sides by \\(x - 3\\) to get \\[(t+1)(t+3) = 4\\] You can then expand the brackets to get \\[t^2 + t + 3t + 3 = 4\\] and so \\(t^2 + 4t + 3 = 4\\). Finally, you are able to subtract \\(4\\) from both sides to get \\(t^2 + 4t - 1 = 0\\). It follows that the variable of the quadratic equation is \\(t\\), and the coefficients are \\(a = 1\\), \\(b = 4\\), \\(c = -1\\)."
+  },
+  {
+    "objectID": "introtoquadratics.html#solving-a-quadratic-equation",
+    "href": "introtoquadratics.html#solving-a-quadratic-equation",
+    "title": "Introduction to quadratic equations",
+    "section": "Solving a quadratic equation",
+    "text": "Solving a quadratic equation\nTo solve the quadratic equation, you could use one of three methods:\n\nYou could factorise the quadratic equation \\(ax^2 + bx + c = 0\\) into linear equations \\((mx + n)(px + q)\\), then work out the roots when each of these linear equations is zero. See (Guide: Factorisation) for more.\nYou could complete the square in order to reduce the quadratic equation \\(ax^2 + bx + c = 0\\) into the form \\((x + b/2a)^2 = d\\), and then solve from there (not forgetting the negative root). See (Guide: Completing the square) for more.\nYou could use the quadratic formula; for a quadratic equation \\(ax^2 + bx + c = 0\\), the two roots to the quadratic equation are given by \\[x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}\\].\n\nEach method is equally valid, but some may involve more work than others. It is up to you to decide which method is best for each quadratic you encounter; but it is thoroughly recommended that if you are not sure which method is best, then the quadratic formula is the one to choose."
+  },
+  {
+    "objectID": "introtoquadratics.html#the-discriminant",
+    "href": "introtoquadratics.html#the-discriminant",
+    "title": "Introduction to quadratic equations",
+    "section": "The discriminant",
+    "text": "The discriminant\nWhat the roots of the quadratic formula look like are determined by the term \\(b^2 - 4ac\\); this term has a special name.\n\n\n\n\n\n\nThe discriminant\n\n\n\nThe term \\(D = b^2 - 4ac\\) is known as the discriminant of the quadratic equation \\(ax^2 + bx + c = 0\\).\n\n\nThere are then three separate cases for solutions to quadratic equations.\n\nIf \\(D = b^2 - 4ac\\) is positive, then \\(\\sqrt{D}\\) is a real number and the two roots of the quadratic equation \\(ax^2 + bx + c = 0\\) are \\[x = \\frac{-b + \\sqrt{D}}{2a}\\qquad\\textsf{ and }\\qquad x = \\frac{-b - \\sqrt{D}}{2a}\\] These two roots are both real numbers and distinct from each other. You can observe this behaviour on a graph in Figure 2; the parabola crosses the \\(x\\)-axis in two places.\n\n\n\n\nFigure 2: A pair of parabolas. (left) A graph of a quadratic \\(ax^2 + bx + c\\) where \\(a > 0\\) and \\(D > 0\\). (right) A graph of a quadratic \\(ax^2 + bx + c\\) where \\(a < 0\\) and \\(D > 0\\).\n\n\n\nIf \\(D = b^2 - 4ac = 0\\) is zero, then \\(\\sqrt{D} = 0\\). In this case, the two roots of the quadratic equation \\(ax^2 + bx + c = 0\\) are \\[x = \\frac{-b}{2a} \\qquad\\textsf{ and }\\qquad x = \\frac{-b}{2a}\\] These two roots are given by the same real number. To be sure that you express both roots, you can write ‘\\(x = -b/2a\\) twice’. You can observe this behaviour on a graph in Figure 3; the parabola touches the \\(x\\)-axis in exactly one place.\n\n\n\n\nFigure 3: A pair of parabolas. (left) A graph of a quadratic \\(ax^2 + bx + c\\) where \\(a > 0\\) and \\(D = 0\\). (right) A graph of a quadratic \\(ax^2 + bx + c\\) where \\(a < 0\\) and \\(D = 0\\).\n\n\n\nIf \\(D = b^2 - 4ac\\) is negative, then \\(\\sqrt{D}\\) is not a real number. In this case, the two roots of the quadratic equation are complex numbers. You can express the two roots of the quadratic equation by \\[x = \\frac{-b + i\\sqrt{-D}}{2a}\\qquad\\textsf{ and }\\qquad x = \\frac{-b - i\\sqrt{-D}}{2a}\\] where \\(i\\) is the imaginary unit (so \\(i^2 = -1\\); see (Guide: Introduction to complex numbers)). In a graph, the parabola does not cross the \\(x\\)-axis at all; this indicates that there are no real solutions to this quadratic equation. See Figure 4 for a picture.\n\n\n\n\nFigure 4: A pair of parabolas. (left) A graph of a quadratic \\(ax^2 + bx + c\\) where \\(a > 0\\) and \\(D > 0\\). (right) A graph of a quadratic \\(ax^2 + bx + c\\) where \\(a < 0\\) and \\(D < 0\\).\n\n\nYou can use the discriminant to check how many roots a quadratic equation has in the variable given to you. However, this is at most a maximum number of solutions. Conditions on that variable may also reduce the number of valid solutions, particular if you have real valued functions. Here’s some examples of using the discriminant and known properties of functions to rule out solutions.\n\n\n\n\n\n\nExample 5\n\n\n\nIn Example 1, you identified the coefficients of \\(2x^2 + 4x - 8 = 0\\) as \\(a = 2, b = 4, c = -8\\). Using these, you can work out the value of the discriminant \\(D = b^2 - 4ac\\) as \\[D = (4)^2 - 4(2)(-8) = 16 + 64 = 80.\\] Since \\(D = 80\\), you can say that this quadratic equation has two distinct real roots in \\(x = r_1\\) and \\(x = r_2\\).\n\n\n\n\n\n\n\n\nExample 6\n\n\n\nIn Example 2, you identified the coefficients of \\(y^4 - 10y^2 + 25 = 0\\) as \\(a = 1, b = -10, c = 25\\), and the variable as \\(y^2\\). Using these, you can work out the value of the discriminant \\(D = b^2 - 4ac\\) as \\[D = (-10)^2 - 4(1)(25) = 100 - 100 = 0.\\] Since \\(D = 0\\), you can say that this quadratic equation has at most one real root \\(y^2 = r\\).\nWhether or not the equation itself has real solutions in \\(y\\) depends on whether \\(r\\) is positive or negative!\n\n\n\n\n\n\n\n\nExample 7\n\n\n\nIn Example 3, you identified the coefficients of \\(-e^{2x} + 4e^{x} - 5 = 0\\) as \\(a = -1, b = 4, c = -5\\), and the variable as \\(e^{x}\\). Using these, you can work out the value of the discriminant \\(D = b^2 - 4ac\\) as \\[D = (4)^2 - 4(-1)(-5) = 16 - 20 = -4.\\] Since \\(D = -4\\), you can say that this quadratic equation has complex roots.\nThis equation therefore has no real solutions in \\(x\\). This is because \\(e^x\\) is real for any real \\(x\\); if \\(e^x\\) is complex, it follows that \\(x\\) cannot be real.\n\n\n\n\n\n\n\n\nExample 8\n\n\n\nIn Example 4, you rearranged the equation \\(t+1 = \\frac{4}{t-3}\\) to \\(t^2 + 4t - 1 = 0\\), and therefore identifed the coefficients as \\(a = 1, b = 4, c = -1\\), and the variable as \\(t\\). Using these, you can work out the value of the discriminant \\(D = b^2 - 4ac\\) as \\[D = (4)^2 - 4(1)(-1) = 16 + 4 = 20.\\] Since \\(D = 20\\), you can say that this quadratic equation has two distinct real roots in \\(t\\)."
+  },
+  {
+    "objectID": "introtoquadratics.html#quick-check-problems",
+    "href": "introtoquadratics.html#quick-check-problems",
+    "title": "Introduction to quadratic equations",
+    "section": "Quick check problems",
+    "text": "Quick check problems\n\n\n\nWhat is the discriminant of the quadratic equation \\(x^2 - x - 1 = 0\\)?\n\n\n -1 1 5 -5"
+  },
+  {
+    "objectID": "introtoquadratics.html#further-reading",
+    "href": "introtoquadratics.html#further-reading",
+    "title": "Introduction to quadratic equations",
+    "section": "Further reading",
+    "text": "Further reading\n(Guide: Polynomial long division)"
+  }
+]

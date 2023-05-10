@@ -1,0 +1,64 @@
+project:
+  type: website
+
+website:
+  title: STARMS
+  navbar:
+    left:
+    - href: index.qmd
+      text: Home
+    - about.qmd
+  reader-mode: true
+  
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    toc: true
+    code-fold: true
+    html-math-method: mathjax
+    fontsize: 1.1em
+    linestretch: 1.5
+    css: webexfiles/webex.css
+    include-after-body: webexfiles/webex.js
+    
+  pdf:
+    engine: xelatex
+    encoding: utf-8
+    documentclass: starmastarticle
+    classoption: a4paper, oneside
+    fontsize: 12pt
+    geometry:
+    - top=25mm
+    - left=25mm
+    - right=25mm
+    - bottom=25mm
+    header-includes:
+    - \usepackage{setspace}
+    - \renewcommand{\familydefault}{cmss}
+    - \renewcommand{\familydefault}{\sfdefault}
+    - \usepackage{multirow}
+    - \usepackage{colortbl}
+    - \usepackage{fancyhdr}
+    - \onehalfspacing
+    - \renewcommand{\arraystretch}{1.2}
+    - \setlength{\parskip}{0.5em}
+    - \setlength{\parindent}{0em}
+    - \renewcommand{\familydefault}{cmss}
+    - \newcommand{\mb}[1]{\mathbb{#1}} % blackboard bold
+    - \newcommand{\mc}[1]{\mathcal{#1}} % calligraphic
+    - \newcommand{\mf}[1]{\mathfrak{#1}} % fraktur
+    - \newcommand{\ms}[1]{\mathscr{#1}} % script
+    - \newcommand{\vb}[1]{\mathbf{#1}} % vector bold
+    - \newcommand{\from}{\leftarrow}
+    - \newcommand{\dne}{\hfill \qed \vspace{0.3cm}} % end of proof symbol
+    - \newcommand{\abs}[1]{\left|#1\right|} % modulus signs
+    - \newcommand{\norm}[1]{\left|\left|#1\right|\right|} % norm signs
+    - \renewcommand{\Re}{\mathrm{Re}}
+    - \renewcommand{\Im}{\mathrm{Im}}
+    - \newcommand{\im}{\mathrm{im}}
+    - \newcommand{\ds}{\displaystyle}
+    
+  docx:
+    reference-doc: starmast-doc-formatting.docx

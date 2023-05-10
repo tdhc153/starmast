@@ -1,0 +1,415 @@
+\ProvidesPackage{teaching}
+
+%%%%%%%%%%%%%%%
+
+\usepackage[utf8]{inputenc}
+\renewcommand{\familydefault}{cmss}
+%\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{setspace}
+\onehalfspacing
+\renewcommand{\arraystretch}{1.2}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0em}
+
+\usepackage{xcolor}
+\definecolor{deepred}{HTML}{800008}
+\definecolor{deepblue}{HTML}{020085}
+\definecolor{deeppurple}{HTML}{69006b}
+\usepackage{hyperref}
+
+\usepackage{marginnote}
+\usepackage[top=25mm, bottom=25mm, outer=40mm, inner=20mm, heightrounded, marginparwidth=27mm, marginparsep=12mm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{hhline}
+\usepackage{color}
+\usepackage{xparse}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{twoopt}
+
+
+
+\usepackage{textcomp}
+
+\usepackage{lmodern}
+\usepackage{wasysym}
+\newcommand{\command}{}
+\newcommand{\danger}{\tikz[baseline=-.75ex,scale=0.7]\node[shape=regular polygon, regular polygon sides=3, inner sep=0pt, draw, thin] {\scriptsize{!}};}
+
+%%%%%%%%%%%%%%
+
+% \usepackage{fancyhdr}
+% \fancypagestyle{firststyle}
+% {
+% \renewcommand{\headrulewidth}{0pt}
+%    \fancyhf{}
+%    \fancyfoot[R]{\normalsize \textbf{[Please turn over]}}
+% }
+
+%%%%%%%%%%%%%%
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.16}
+\usetikzlibrary{calc,decorations.pathreplacing,shapes,matrix,arrows,decorations.markings,intersections}
+\tikzset{draw half paths/.style 2 args={%
+  decoration={show path construction,
+    lineto code={
+      \draw [#1] (\tikzinputsegmentfirst) -- 
+         ($(\tikzinputsegmentfirst)!0.5!(\tikzinputsegmentlast)$);
+      \draw [#2] ($(\tikzinputsegmentfirst)!0.5!(\tikzinputsegmentlast)$)
+        -- (\tikzinputsegmentlast);
+    }
+  }, decorate
+}}
+\tikzset{draw third paths/.style 2 args={%
+  decoration={show path construction,
+    lineto code={
+      \draw [#1] (\tikzinputsegmentfirst) -- 
+         ($(\tikzinputsegmentfirst)!0.33!(\tikzinputsegmentlast)$);
+      \draw [#2] ($(\tikzinputsegmentfirst)!0.67!(\tikzinputsegmentlast)$)
+        -- (\tikzinputsegmentlast);
+    }
+  }, decorate
+}}
+\tikzset{draw 2third paths/.style 2 args={%
+  decoration={show path construction,
+    lineto code={
+      \draw [#1] (\tikzinputsegmentfirst) -- 
+         ($(\tikzinputsegmentfirst)!0.67!(\tikzinputsegmentlast)$);
+      \draw [#2] ($(\tikzinputsegmentfirst)!0.33!(\tikzinputsegmentlast)$)
+        -- (\tikzinputsegmentlast);
+    }
+  }, decorate
+}}
+
+
+\tikzset{middlearrow/.style={
+        decoration={markings,
+            mark= at position 0.5 with {\arrow{#1}} ,
+        },
+        postaction={decorate}
+    }
+}
+
+\tikzset{->-/.style={decoration={
+  markings,
+  mark=at position #1 with {\arrow{>}}},postaction={decorate}}}
+  
+  \tikzset{>=latex}
+\tikzset{every loop/.style={}}
+
+%%%%%%%%%%%%
+
+\usepackage{aliascnt}
+
+\providecommand\phantomsection{}
+
+\newtheorem{theorem}{Theorem}[section]
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma} 
+\aliascntresetthe{lemma}
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}   
+\aliascntresetthe{proposition}
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+\newaliascnt{question}{theorem}
+\newtheorem{question}[question]{Question}
+\aliascntresetthe{question}
+\newaliascnt{method}{theorem}
+\newtheorem{method}[method]{Method}
+\aliascntresetthe{method}
+\newaliascnt{conjecture}{theorem}
+\newtheorem{conjecture}[conjecture]{Conjecture}
+\aliascntresetthe{conjecture}   
+\newaliascnt{basicfact}{theorem}
+\newtheorem{basicfact}[basicfact]{Basic Fact}
+\aliascntresetthe{basicfact}
+\newaliascnt{fact}{theorem}
+\newtheorem{fact}[fact]{Fact}
+\aliascntresetthe{fact}
+\def\basicfactautorefname{Basic Fact}
+\def\factautorefname{Fact}
+\def\sectionautorefname{Section}
+\def\subsectionautorefname{Subsection}
+\def\lemmaautorefname{Lemma}
+\def\propositionautorefname{Proposition}
+\def\theoremautorefname{Theorem}
+\def\corollaryautorefname{Corollary}
+\def\questionautorefname{Question}
+\def\conjectureautorefname{Conjecture}
+\def\chapterautorefname{Chapter}
+\def\methodautorefname{Method}
+\newtheorem*{theorem*}{Theorem}
+
+%%%%%%%%%%%%
+
+\theoremstyle{definition}
+\newtheorem*{answer}{Answer}
+\newtheorem*{notation}{Notation}
+\newtheorem*{terminology}{Terminology}
+\newtheorem*{warning}{Warning}
+\newtheorem*{exercise}{Exercise}
+\newtheorem*{convention}{Convention}
+%\newtheorem*{fact}{Fact}
+\newtheorem*{strategy}{Strategy}
+\newtheorem*{claim}{Claim}
+\newtheorem*{claim1}{Claim 1}
+\newtheorem*{claim2}{Claim 2}
+\newtheorem*{claim3}{Claim 3}
+\newtheorem*{case1}{Case 1}
+\newtheorem*{case2}{Case 2}
+\newtheorem*{case3}{Case 3}
+\newaliascnt{example}{theorem}
+\newtheorem{example}[example]{Example}
+\aliascntresetthe{example}
+\def\exampleautorefname{Example}
+\newaliascnt{examples}{theorem}
+\newtheorem{examples}[examples]{Examples}
+\aliascntresetthe{examples}
+\def\examplesautorefname{Examples}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+\def\definitionautorefname{Definition}
+\newaliascnt{algorithm}{theorem}
+\newtheorem{algorithm}[algorithm]{Algorithm}
+\aliascntresetthe{algorithm}
+\def\algorithmautorefname{Algorithm}
+
+
+%%%%%%%%%%%%
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{remarks}{Remarks}
+
+\newtheoremstyle{dotless}{}{}{}{}{\bfseries}{}{ }{}
+\theoremstyle{dotless}
+\newtheorem*{dangersign}{$\danger\;$}
+
+%%%%%%%%%%%%
+
+\newcommand{\mb}[1]{\mathbb{#1}} % blackboard bold
+\newcommand{\mc}[1]{\mathcal{#1}} % calligraphic font
+\newcommand{\mf}[1]{\mathfrak{#1}} % mathfrak font
+\newcommand{\ms}[1]{\mathscr{#1}} % script font
+
+\newcommand{\larr}[1][]{\xleftarrow{#1}} % labelled left arrow
+\newcommand{\rarr}[1][]{\xrightarrow{#1}} % labelled right arrow
+\newcommand{\Rarr}[1][]{\xRightarrow{#1}} % labelled implication arrow
+\newcommand{\from}{\leftarrow} % unlabelled left arrow
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\Sym}{Sym}
+
+\newcommand{\stl}{\;\left|\right.\;} % such that line, set builder notation
+\newcommand{\st}{\; : \;} % such that colon, set builder notation
+\newcommand{\dne}{\hfill \qed \vspace{0.3cm}} % end of proof symbol
+\newcommand{\abs}[1]{\left|#1\right|} % modulus signs
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|} % norm signs
+
+\definecolor{fgreen}{HTML}{026025}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing 
+
+\let\oldRe\Re
+\renewcommand{\Re}{\mathrm{Re}} 
+
+\let\oldIm\Im
+\renewcommand{\Im}{\mathrm{Im}}
+
+\newcommand{\qmarks}[1]{\hfill{\bf [#1 marks]}}
+
+\newcommand{\PD}[3][]{\frac{\partial^{#1}{#2}}{\partial {#3}^{#1}}} % partial derivatives for one variable
+\newcommand{\D}[3][]{\frac{\mathrm{d}^{#1}{#2}}{\mathrm{d}{#3}^{#1}}}  % ordinary derivatives
+\newcommand{\PDxy}[3]{\frac{\partial^2 #1}{\partial #2 \partial #3}} % partial derivatives for multiple variables
+\newcommand{\intinf}[2]{\int^\infty_{-\infty} #1\, \mathrm{d}#2} % integral between -infty and infty
+\newcommandtwoopt{\intbc}[4][][]{\int_{#1}^{#2} #3\, \mathrm{d} #4} %integrate #3 between #1 and #2, w.r.t. #4
+\newcommand{\dint}[8][\!\!]{\int_{#2}^{#3}\!\! #1 \int_{#4}^{#5} #6\, \mathrm{d} #7\, \mathrm{d} #8}
+\newcommand{\tintd}[4]{#1\, \mathrm{d} #2\, \mathrm{d} #3\, \mathrm{d} #4}
+\newcommandtwoopt{\tintl}[8][\!\!][\!\!]{\int_{#3}^{#4}\!\! #1 \int_{#5}^{#6}\!\! #2 \int_{#7}^{#8}} %integrate #3 between #1 and #2, w.r.t. #4
+\newcommand{\sumtxt}[2]{\sum\limits_{#1}^{#2}}  %summation between limits #1 and #2 for use in text mode
+\newcommand{\prodtxt}[2]{\prod\limits_{#1}^{#2}} %product between limits #1 and #2 for use in text mode
+\renewcommand{\mod}[1]{\text{ }(\textrm{mod }#1)}
+
+\newcommand{\col}[3]{\left( \begin{array}{c}
+#1\\#2\\#3 \\ \end{array} \right)} 
+\newcommand{\colfour}[4]{\left( \begin{array}{c}
+#1\\#2\\#3\\#4 \\ \end{array} \right)} 
+\newcommand{\coltwo}[2]{\left( \begin{array}{c}
+#1\\#2 \\ \end{array} \right)} 
+
+\newcommand{\lcoltwo}[2]{\left(\begin{smallmatrix} #1 \\ 
+#2 \\ \end{smallmatrix}\right)}
+\newcommand{\lcol}[3]{\left(\begin{smallmatrix} #1 \\ 
+#2 \\ #3 \end{smallmatrix}\right)}
+\newcommand{\lcolfour}[4]{\left(\begin{smallmatrix} #1 \\
+#2 \\ #3 \\ #4 \end{smallmatrix}\right)}
+\newcommand{\lthreetwo}[6]{\left(\begin{smallmatrix}
+    #1 & #2 & #3 \\ #4 & #5 & #6
+  \end{smallmatrix}\right)}
+\newcommand{\lMtwo}[4]{\left(\begin{smallmatrix}
+    #1 & #2 \\
+    #3 & #4 
+  \end{smallmatrix}\right)}
+\newcommand{\lMthree}[9]{\left(\begin{smallmatrix}
+    #1 & #2 & #3 \\
+    #4 & #5 & #6 \\
+    #7 & #8 & #9 
+\end{smallmatrix}\right)}
+
+\newcommand{\G}{\Gamma}
+\newcommand{\n}{\{1,2,\ldots,n\}}
+\newcommand{\s}{\star}
+\newcommand{\dom}{\mathrm{dom}}
+\newcommand{\im}{\mathrm{im}}
+
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{caption}
+\hypersetup{pdfauthor={Tom Coleman},
+            pdftitle={MT1001 Lecture Notes},
+            pdfsubject={full lecture notes for MT1001},
+            pdfkeywords={MT1001, material, lecture notes},
+            pdfproducer={Latex with hyperref, or other system},
+            pdfcreator={pdflatex, or other tool},
+            pdflang={en-GB},
+            colorlinks=true,
+            linkcolor=deepred,      
+            urlcolor=deepblue,
+            linkbordercolor = {white}}
+\usepackage{ulem}
+
+
+\renewcommand{\mod}[3]{#1 \equiv #2\; (\mathrm{mod}\; #3)}
+\newcommand{\md}[2]{#1\; (\mathrm{mod}\; #2)}
+\newcommand{\todo}[1]{\fbox{{\color{red}#1}}}
+\newcommand{\dangerbox}[1]{\vspace{1em} \fbox{\parbox{\textwidth} {$\danger$ #1}}\vspace{1em}}
+\newcommand{\normalbox}[1]{\vspace{1em} \fbox{\parbox{\textwidth} {#1}}\vspace{1em}}
+\newcommand{\emphbox}[1]{\vspace{1em} \fbox{\parbox{\textwidth} {#1}}\vspace{1em}}
+\newcommand{\nexbox}[1]{\begin{tabular}{|p{\textwidth}}#1\end{tabular}}
+\newcommand{\defnote}[1]{\index{#1}\marginnote{\textit{#1}}}
+\newcommand{\nexnote}{\marginnote{\color{blue} Non-examinable.}}
+\renewcommand{\tfrac}[2]{{#1}/{#2}}
+\newcommand{\ds}{\displaystyle}
+\newcommand{\leg}[2]{\displaystyle{\left(\frac{#1}{#2}\right)}}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\xoutr}[1]{{\color{red}\xout{#1}}}
+\usepackage[xcolor,leftbars]{changebar}
+\cbcolor{deepblue}
+\usepackage{lipsum}
+
+\newcommand{\ddx}[1]{\frac{\mathrm{d}}{\mathrm{d}{#1}}}
+\newcommand{\dydx}[2]{\frac{\mathrm{d}{#1}}{\mathrm{d}{#2}}} 
+\newcommand{\diff}[3]{\frac{\mathrm{d}^{#1}{#2}}{\mathrm{d}{#3}^{#1}}}
+
+\newenvironment{nex}{\vspace{1em}\cbstart\vspace{-1em}}{\cbend}
+\setcounter{tocdepth}{1}
+
+\newcommand\bonusspiral{} % just for safety
+\def\bonusspiral[#1](#2)(#3:#4)(#5:#6)[#7]{% \bonusspiral[draw options](placement)(start angle:end angle)(start radius:final radius)[revolutions]
+\pgfmathsetmacro{\domain}{#4+#7*360}
+\pgfmathsetmacro{\growth}{180*(#6-#5)/(pi*(\domain-#3))}
+\draw [#1,
+       shift={(#2)},
+       domain=#3*pi/180:\domain*pi/180,
+       variable=\t,
+       smooth,
+       samples=int(\domain/5)] plot ({\t r}: {#5+\growth*\t-\growth*#3*pi/180})
+}
+
+\newcommand{\appx}{\part*}
+\providecommand{\appxautorefname}{Appendix}
+
+%%%%%%%%%%%%%%%%%%% Continued fraction machinery
+
+
+\ExplSyntaxOn
+\NewDocumentCommand{\cfracdots}{ }
+  {
+   \rule{0pt}{1.5\baselineskip}
+   \raisebox{.5\baselineskip}{\enspace$\ddots$\enspace}
+  }
+\NewDocumentCommand{\cfraccdots}{}{\cdots}
+\NewDocumentCommand{\cfracddots}{}{\ddots}
+\NewDocumentCommand{\cfracldots}{}{\ldots}
+
+\NewDocumentCommand{\xcontfrac}{ s O{c} >{\SplitArgument{1}{;}}m }
+  { 
+   \IfBooleanTF{#1}
+     { \cfrac_inline:nn #3 }
+     { \cfrac_map:nnn { #2 } #3 }
+  }
+
+\cs_new:Npn \cfrac_inline:nn #1 #2
+  {
+   \IfNoValueTF { #2 }
+     {
+      \tl_use:N \c_cfrac_message_tl
+      \xcontfrac*{;#1}
+     }
+     {
+      \group_begin:
+      \cs_set_eq:NN \cfracdots \dots
+      [\, \tl_if_empty:nTF { #1 } { 0 } { #1 } ; #2 \,]
+      \group_end:
+     }
+  }
+
+\tl_const:Nn \c_cfrac_lbrace_tl { \if_true:  { \else: } \fi: }
+\tl_const:Nn \c_cfrac_rbrace_tl { \if_false: { \else: } \fi: }
+\tl_const:Nn \c_cfrac_strut_tl { \vrule width 0pt depth .3\baselineskip }
+\tl_new:N \l_cfrac_left_tl
+\tl_new:N \l_cfrac_right_tl
+\msg_new:nnn { cfrac } { wrong-syntax }
+  {
+   Wrong~syntax~for~\token_to_str:N \xcontfrac,~
+   assuming~0~in~the~integer~part,~on~line~\msg_line_number:.
+  }
+
+\cs_new:Npn \cfrac_map:nnn #1 #2 #3
+  {
+   \tl_clear:N \l_cfrac_left_tl \tl_clear:N \l_cfrac_right_tl
+   \IfNoValueTF { #3 }
+     { 
+      \msg_warning:nn { cfrac } { wrong-syntax }
+      \xcontfrac[#1]{;#2}
+     }
+     {
+      \tl_if_empty:nTF { #2 }
+        { \cfrac_map_aux:nn { #1 } { \exp_not:N \use_none:n , #3 } }
+        { \cfrac_map_aux:nn { #1 } { #2 , #3 } }
+     }
+  }
+\cs_new:Npn \cfrac_map_aux:nn #1 #2
+  {
+   \clist_map_inline:nn { #2 }
+     {
+      \tl_put_right:Nn \l_cfrac_left_tl { \cfrac_begin:nn { #1 } { ##1 } }
+      \tl_put_right:Nn \l_cfrac_right_tl { \exp_not:N \c_cfrac_rbrace_tl }
+     }
+   \tl_set:Nx \l_cfrac_left_tl
+     { \l_cfrac_left_tl \c_cfrac_strut_tl \l_cfrac_right_tl }
+   \tl_set:Nx \l_cfrac_left_tl { \l_cfrac_left_tl }
+   \exp_after:wN \use_none:nnnnnn \l_cfrac_left_tl
+  }
+\cs_new:Npn \cfrac_begin:nn #1 #2
+  {
+   \exp_not:n
+     { + \exp_not:N \cfrac[#1] { 1 } \c_cfrac_lbrace_tl \exp_not:N \mathstrut #2 }
+  }
+\ExplSyntaxOff
