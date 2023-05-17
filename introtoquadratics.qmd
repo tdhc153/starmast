@@ -74,9 +74,9 @@ To solve the quadratic equation, you could use one of three methods:
 
 - You could **complete the square** in order to reduce the quadratic equation $ax^2 + bx + c = 0$ into the form $(x + b/2a)^2 = d$, and then solve from there (not forgetting the negative root). See (Guide: Completing the square) for more.
 
-- You could **use the quadratic formula**; for a quadratic equation $ax^2 + bx + c = 0$, the two roots to the quadratic equation are given by $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$.
+- You could **use the quadratic formula**; for a quadratic equation $ax^2 + bx + c = 0$, the two roots to the quadratic equation are given by $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.$$
 
-Each method is equally valid, but some may involve more work than others. It is up to you to decide which method is best for each quadratic you encounter; but it is thoroughly recommended that if you are not sure which method is best, then the quadratic formula is the one to choose. 
+Each method is equally valid, but some may involve more work than others. It is up to you to decide which method is best for each quadratic you encounter; but it is thoroughly recommended that if you are not sure which method is best, then the quadratic formula is the one to choose. See [Guide: Using the quadratic formula](quadraticformula.qmd) for more.
 
 ## The discriminant
 
@@ -94,7 +94,7 @@ There are then three separate cases for solutions to quadratic equations.
 
 - If $D = b^2 - 4ac$ is positive, then $\sqrt{D}$ is a real number and the two roots of the quadratic equation $ax^2 + bx + c = 0$ are $$x = \frac{-b + \sqrt{D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - \sqrt{D}}{2a}$$ These two roots are both real numbers and distinct from each other. You can observe this behaviour on a graph in @fig-2; the parabola crosses the $x$-axis in two places.
 
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D > 0$.](./FiguresPNG/introtoquadratics-fig2-2.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like an n, and touches the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-2}
+![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D > 0$.](./FiguresPNG/introtoquadratics-fig2-2.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-2}
     
 - If $D = b^2 - 4ac = 0$ is zero, then $\sqrt{D} = 0$. In this case, the two roots of the quadratic equation $ax^2 + bx + c = 0$ are $$x = \frac{-b}{2a} \qquad\textsf{ and }\qquad x = \frac{-b}{2a}$$ These two roots are given by the same real number. To be sure that you express both roots, you can write '$x = -b/2a$ twice'. You can observe this behaviour on a graph in @fig-3; the parabola touches the $x$-axis in exactly one place.
 
@@ -104,7 +104,14 @@ There are then three separate cases for solutions to quadratic equations.
 
 ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D < 0$.](./FiguresPNG/introtoquadratics-fig4-4.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and ;ies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-4}
 
-You can use the discriminant to check how many roots a quadratic equation has in the variable given to you. However, this is at most a maximum number of solutions. Conditions on that variable may also reduce the number of valid solutions, particular if you have real valued functions. Here's some examples of using the discriminant and known properties of functions to rule out solutions.
+
+::: {.callout-warning}
+
+You can use the discriminant to check how many roots a quadratic equation has in the variable given to you. However, this is at most a maximum number of solutions. Conditions on that variable may also reduce the number of valid solutions, particularly if you have real valued functions. For instance, since $e^x > 0$ for all real number $x$, there are no solutions in $x$ if you find $e^x = -1$. 
+
+:::
+
+Here's some examples of using the discriminant and known properties of functions to rule out solutions.
 
 ::: {.callout-note appearance="simple"}
 
@@ -148,13 +155,29 @@ In Example 4, you rearranged the equation $t+1 = \frac{4}{t-3}$ to $t^2 + 4t - 1
 library("webexercises")
 ```
 
+<!-- add facility for webexercises to work on html -->
+
 ::: {.content-visible when-format="html"}
+
+<!-- add facility to check answers at end rather than one at a time -->
 
 ::: {.webex-check .webex-box}
 
 1. What is the discriminant of the quadratic equation $x^2 - x - 1 = 0$?
 
-`r mcq(c(-1, 1, answer = 5, -5))`
+Answer: The discriminant $D$ is equal to `r fitb(5)`.
+
+2. You are given the quadratic equation $4h^2 - h + 101 = 0$. Identify the variable, and the coefficients $a,b,c$. 
+
+Answer: The variable is `r fitb("h")`, and the coefficients are $a=$ `r fitb(4)`, $b=$ `r fitb(-1)`, and $c=$ `r fitb(101)`.
+
+3. You are given three statements below. Decide whether they are true or false.
+
+(a) The quadratic equation $m^2 + 4m + 4 = 0$ has two distinct real roots. Answer: `r torf(FALSE)`.
+
+(b) The quadratic equation $m^2 - 4m - 4 = 0$ has exactly one real root. Answer: `r torf(FALSE)`.
+
+(c) The quadratic eqution $4m^2 + 4m + 4 = 0$ has no real roots. Answer: `r torf(TRUE)`.
 
 :::
 
@@ -164,7 +187,15 @@ library("webexercises")
 
 1. What is the discriminant of the quadratic equation $x^2 - x - 1 = 0$?
 
-(a) $-1\qquad$ (b) $1\qquad$ (c) $5\qquad$ (d) $-5$.
+2. You are given the quadratic equation $4h^2 - h + 101 = 0$. Identify the variable, and the coefficients $a,b,c$. 
+
+3. You are given three statements below. Decide whether they are true or false.
+
+(a) The quadratic equation $m^2 + 4m + 4 = 0$ has two distinct real roots.
+
+(b) The quadratic equation $m^2 - 4m - 4 = 0$ has exactly one real root.
+
+(c) The quadratic eqution $4m^2 + 4m + 4 = 0$ has no real roots.
 
 :::
 
@@ -172,15 +203,20 @@ library("webexercises")
 
 ::: {.content-visible when-format="docx"}
 
-1. What is the discriminant of the quadratic equation $x^2 - x - 1 = 0$?
+3. You are given three statements below. Decide whether they are true or false.
 
-(a) $-1\qquad$ (b) $1\qquad$ (c) $5\qquad$ (d) $-5$.
+(a) The quadratic equation $m^2 + 4m + 4 = 0$ has two distinct real roots.
+
+(b) The quadratic equation $m^2 - 4m - 4 = 0$ has exactly one real root.
+
+(c) The quadratic eqution $4m^2 + 4m + 4 = 0$ has no real roots.
 
 :::
 
+[For more questions on the subject, please click on this sentence.](qs-introtoquadratics.qmd)
 
 ## Further reading {-}
 
-(Guide: Polynomial long division)
+(Guide: Using the quadratic formula)
 
 
