@@ -34,7 +34,11 @@ To build the `.pdf` and `.docx` versions of your work, you will need to first **
 
 ## What packages do you need to install?
 
-Running `quarto::quarto_render()` for the first time should prompt installation for the packages that are required to build the files.
+You should be using Quarto 1.3 (the latest stable version); you can download this at the following link.
+
+[Quarto 1.3 download](https://quarto.org/docs/get-started/)
+
+Other than this, running `quarto::quarto_render()` for the first time should prompt installation for the packages that are required to build the files.
 
 The only exception to this is `webexercises`; Quarto support has not yet reached the version of this package on CRAN. Instead, you will need to run the following command in the console:
 
