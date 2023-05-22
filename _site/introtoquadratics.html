@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,7 +18,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -62,6 +62,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="webexfiles/webex.css">
@@ -78,29 +79,29 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">STARMAST</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
+    <a class="nav-link" href="./about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
 </a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -120,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="introtoquadratics.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="introtoquadratics.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -148,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
 <div>
   <div class="abstract">
     <div class="abstract-title">Summary</div>
-    Solving quadratic equations of the form <span class="math inline">\(ax^2 + bx + c\)</span> is a core skill in mathematics. A guaranteed method to solve these is use of the quadratic formula. This guide explains the terminology and usage of the quadratic formula, as well as an explanation of why the quadratic formula works.
+    Solving quadratic equations of the form <span class="math inline">\(ax^2 + bx + c\)</span> is a core skill in mathematics. Identifying variables and coefficients of quadratic equations, as well as finding the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span>, are essential steps in solving quadratic equations.
   </div>
 </div>
 
@@ -157,37 +158,37 @@ ul.task-list li input[type="checkbox"] {
 <p><em>Before reading this guide, it is recommended that you read (Guide: Introduction to complex numbers).</em></p>
 <section id="what-is-a-quadratic-equation" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="what-is-a-quadratic-equation">What is a quadratic equation?</h2>
-<p>Equations in one variable come in all shapes and sizes.</p>
-<p>One of the most important types of an equation is known as a <strong>quadratic equation</strong>. These appear almost everywhere in mathematics, from modelling projectile motion in mechanics to describing circles, ellipses, parabolas and hyperbolas in 2D space.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<p>One of the most important types of an equation are <strong>quadratic equations</strong>; very generally speaking, these are equations that contain a squared term. These appear almost everywhere in mathematics, from modelling projectile motion in mechanics to describing circles, ellipses, parabolas and hyperbolas in 2D space. It is therefore crucial to be able to identify and solve quadratic equations.</p>
+<p>This guide will focus quadratic equations in one variable, explain the shape of their graphs, and explains how to identify the variable and the coefficients of the equation. Then, the discriminant is defined, and the role of the discriminant in determining solutions to the quadratic equation is explained.</p>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Definition of quadratic equation, root
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>A <strong>quadratic equation</strong> is an equation that can be rearranged into the form <span class="math display">\[ax^2 + bx + c = 0\]</span> where <span class="math inline">\(x\)</span> is a variable and <span class="math inline">\(a,b,c\)</span> are real numbers with <span class="math inline">\(a \neq 0\)</span>.</p>
-<p>Values of <span class="math inline">\(x\)</span> that satisfy the equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> are known as <strong>roots</strong> of the equation.</p>
+<p>Values of <span class="math inline">\(x\)</span> that satisfy the equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> are known as <strong>roots</strong> of the equation. Typically, roots of a quadratic are expressed in the form of the variable. So here, the roots of <span class="math inline">\(ax^2 + bx + c = 0\)</span> are ‘roots in <span class="math inline">\(x\)</span>’.</p>
 </div>
 </div>
 <p>Here, <span class="math inline">\(a\neq 0\)</span> as if it was, then the equation would no longer be a quadratic equation!</p>
 <p>The general shape of a quadratic equation is known as a <strong>parabola</strong>. A figure of two parabolas is given in <a href="#fig-1">Figure&nbsp;1</a>; the left hand graph is if <span class="math inline">\(a &gt; 0\)</span>, whereas the right hand graph is when <span class="math inline">\(a &lt; 0\)</span>.</p>
 <div id="fig-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="./FiguresPNG/introtoquadratics-fig1-1.png" class="img-fluid figure-img" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively."></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span>.</figcaption><p></p>
+<p><img src="./Figures/introtoquadratics-fig1.svg" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively."></p>
+<figcaption class="figure-caption">Figure&nbsp;1: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span>.</figcaption>
 </figure>
 </div>
 <p>It is very important to be able to identify the variable in a quadratic equation, as well as the coefficients <span class="math inline">\(a,b,c\)</span>. In the course of your mathematical study, it may be that the variable of a quadratic equation is not only letters like <span class="math inline">\(x,y,z\)</span>, but squares or cubes like <span class="math inline">\(x^2\)</span> and <span class="math inline">\(y^3\)</span>, or even functions like <span class="math inline">\(e^x\)</span>, <span class="math inline">\(\cos(x)\)</span>, and <span class="math inline">\(\sin(y)\)</span>.</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 1
 </div>
 </div>
@@ -195,12 +196,12 @@ Example 1
 <p>You are given the quadratic equation <span class="math inline">\(2x^2 + 4x - 8 = 0\)</span>. The variable of the quadratic equation is <span class="math inline">\(x\)</span>, and the coefficients are <span class="math inline">\(a = 2, b = 4, c = -8\)</span>.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 2
 </div>
 </div>
@@ -208,12 +209,12 @@ Example 2
 <p>Here, the equation <span class="math inline">\(y^4 - 10y^2 + 25 = 0\)</span> may look like a quartic equation, but it is actually a quadratic equation. Using the laws of indices, you can rewrite the equation as <span class="math inline">\((y^2)^2 - 10y^2 + 25 = 0\)</span>. Therefore, the variable of the quadratic equation is <span class="math inline">\(y^2\)</span>, and the coefficients are <span class="math inline">\(a = 1\)</span>, <span class="math inline">\(b = -10\)</span>, <span class="math inline">\(c = 25\)</span>.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 3
 </div>
 </div>
@@ -221,12 +222,12 @@ Example 3
 <p>You are given the equation <span class="math inline">\(-e^{2x} + 4e^{x} - 5 = 0\)</span>. Using the laws of indices, you can rewrite the equation as <span class="math inline">\(-(e^{x})^2 + 4e^x - 5 = 0\)</span>. The variable of the quadratic equation is <span class="math inline">\(e^x\)</span>, and the coefficients are <span class="math inline">\(a = -1\)</span>, <span class="math inline">\(b = 4\)</span>, <span class="math inline">\(c = -5\)</span>. This is not the only solution to the coefficients; you can multiply the equation through by <span class="math inline">\(-1\)</span> to get <span class="math inline">\((e^{x})^2 - 4e^x + 5 = 0\)</span>, which gives <span class="math inline">\(a = 1\)</span>, <span class="math inline">\(b = -4\)</span> and <span class="math inline">\(c = 5\)</span>. Both solutions are equally valid.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 4
 </div>
 </div>
@@ -248,12 +249,12 @@ Example 4
 <section id="the-discriminant" class="level2">
 <h2 class="anchored" data-anchor-id="the-discriminant">The discriminant</h2>
 <p>What the roots of the quadratic formula look like are determined by the term <span class="math inline">\(b^2 - 4ac\)</span>; this term has a special name.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 The discriminant
 </div>
 </div>
@@ -267,8 +268,8 @@ The discriminant
 </ul>
 <div id="fig-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="./FiguresPNG/introtoquadratics-fig2-2.png" class="img-fluid figure-img" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image."></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>.</figcaption><p></p>
+<p><img src="./Figures/introtoquadratics-fig2.svg" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image."></p>
+<figcaption class="figure-caption">Figure&nbsp;2: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>.</figcaption>
 </figure>
 </div>
 <ul>
@@ -276,8 +277,8 @@ The discriminant
 </ul>
 <div id="fig-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="./FiguresPNG/introtoquadratics-fig3-3.png" class="img-fluid figure-img" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and touches the $x$-axis in precisely one place. The parabola on the right looks like an n, and touches the $x$-axis in precisely one place. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D=0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image."></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D = 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D = 0\)</span>.</figcaption><p></p>
+<p><img src="./Figures/introtoquadratics-fig3.svg" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and touches the $x$-axis in precisely one place. The parabola on the right looks like an n, and touches the $x$-axis in precisely one place. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D=0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image."></p>
+<figcaption class="figure-caption">Figure&nbsp;3: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D = 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D = 0\)</span>.</figcaption>
 </figure>
 </div>
 <ul>
@@ -285,16 +286,16 @@ The discriminant
 </ul>
 <div id="fig-4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="./FiguresPNG/introtoquadratics-fig4-4.png" class="img-fluid figure-img" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and ;ies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image."></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;4: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D &lt; 0\)</span>.</figcaption><p></p>
+<p><img src="./Figures/introtoquadratics-fig4.svg" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and lies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image."></p>
+<figcaption class="figure-caption">Figure&nbsp;4: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D &lt; 0\)</span>.</figcaption>
 </figure>
 </div>
-<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Warning
 </div>
 </div>
@@ -303,12 +304,12 @@ Warning
 </div>
 </div>
 <p>Here’s some examples of using the discriminant and known properties of functions to rule out solutions.</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 5
 </div>
 </div>
@@ -316,26 +317,26 @@ Example 5
 <p>In Example 1, you identified the coefficients of <span class="math inline">\(2x^2 + 4x - 8 = 0\)</span> as <span class="math inline">\(a = 2, b = 4, c = -8\)</span>. Using these, you can work out the value of the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span> as <span class="math display">\[D = (4)^2 - 4(2)(-8) = 16 + 64 = 80.\]</span> Since <span class="math inline">\(D = 80\)</span>, you can say that this quadratic equation has two distinct real roots in <span class="math inline">\(x = r_1\)</span> and <span class="math inline">\(x = r_2\)</span>.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In Example 2, you identified the coefficients of <span class="math inline">\(y^4 - 10y^2 + 25 = 0\)</span> as <span class="math inline">\(a = 1, b = -10, c = 25\)</span>, and the variable as <span class="math inline">\(y^2\)</span>. Using these, you can work out the value of the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span> as <span class="math display">\[D = (-10)^2 - 4(1)(25) = 100 - 100 = 0.\]</span> Since <span class="math inline">\(D = 0\)</span>, you can say that this quadratic equation has at most one real root <span class="math inline">\(y^2 = r\)</span>.</p>
-<p>Whether or not the equation itself has real solutions in <span class="math inline">\(y\)</span> depends on whether <span class="math inline">\(r\)</span> is positive or negative!</p>
+<p>In Example 2, you identified the coefficients of <span class="math inline">\(y^4 - 10y^2 + 25 = 0\)</span> as <span class="math inline">\(a = 1, b = -10, c = 25\)</span>, and the variable as <span class="math inline">\(y^2\)</span>. Using these, you can work out the value of the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span> as <span class="math display">\[D = (-10)^2 - 4(1)(25) = 100 - 100 = 0.\]</span> Since <span class="math inline">\(D = 0\)</span>, you can say that this quadratic equation has at most one real root <span class="math inline">\(r\)</span> in terms of <span class="math inline">\(y^2\)</span>.</p>
+<p>Whether or not the equation itself has real solutions in <span class="math inline">\(y\)</span> depends on whether <span class="math inline">\(r\)</span> is positive or negative! You cannot take the square root of a negative number, so if <span class="math inline">\(r\)</span> is negative the equation has no real solutions. If <span class="math inline">\(r\)</span> is positive, then the equation has two real roots in <span class="math inline">\(y\)</span>; that is, <span class="math inline">\(y = \pm\sqrt{r}\)</span>.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 7
 </div>
 </div>
@@ -344,12 +345,12 @@ Example 7
 <p>This equation therefore has no real solutions in <span class="math inline">\(x\)</span>. This is because <span class="math inline">\(e^x\)</span> is real for any real <span class="math inline">\(x\)</span>; if <span class="math inline">\(e^x\)</span> is complex, it follows that <span class="math inline">\(x\)</span> cannot be real.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 8
 </div>
 </div>
@@ -361,7 +362,6 @@ Example 8
 <section id="quick-check-problems" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="quick-check-problems">Quick check problems</h2>
 <!-- add facility for webexercises to work on html -->
-<div>
 <!-- add facility to check answers at end rather than one at a time -->
 <div class="webex-check webex-box">
 <ol type="1">
@@ -381,13 +381,11 @@ Example 8
 <li><p>The quadratic eqution <span class="math inline">\(4m^2 + 4m + 4 = 0\)</span> has no real roots. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
 </ol>
 </div>
-</div>
-<!-- docx block should be same as pdf block -->
-<p><a href="./qs-introtoquadratics.html">For more questions on the subject, please click on this sentence.</a></p>
+<p><a href="./qs-introtoquadratics.html">For more questions on the subject, please go to Questions: Introduction to quadratic equations.</a></p>
 </section>
 <section id="further-reading" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="further-reading">Further reading</h2>
-<p>(Guide: Using the quadratic formula)</p>
+<p><a href="quadraticformula.html">Guide: Using the quadratic formula</a></p>
 
 
 </section>
@@ -741,9 +739,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -808,6 +820,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {

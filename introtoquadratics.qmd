@@ -2,17 +2,22 @@
 title: "Introduction to quadratic equations"
 author: "Tom Coleman"
 abstract-title: Summary
-abstract: Solving quadratic equations of the form $ax^2 + bx + c$ is a core skill in mathematics. A guaranteed method to solve these is use of the quadratic formula. This guide explains the terminology and usage of the quadratic formula, as well as an explanation of why the quadratic formula works. 
+abstract: Solving quadratic equations of the form $ax^2 + bx + c$ is a core skill in mathematics. Identifying variables and coefficients of quadratic equations, as well as finding the discriminant $D = b^2 - 4ac$, are essential steps in solving quadratic equations.
 
 ---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
 
 *Before reading this guide, it is recommended that you read (Guide: Introduction to complex numbers).*
 
 ## What is a quadratic equation? {-}
 
-Equations in one variable come in all shapes and sizes. 
+One of the most important types of an equation are **quadratic equations**; very generally speaking, these are equations that contain a squared term. These appear almost everywhere in mathematics, from modelling projectile motion in mechanics to describing circles, ellipses, parabolas and hyperbolas in 2D space. It is therefore crucial to be able to identify and solve quadratic equations.
 
-One of the most important types of an equation is known as a **quadratic equation**. These appear almost everywhere in mathematics, from modelling projectile motion in mechanics to describing circles, ellipses, parabolas and hyperbolas in 2D space.
+This guide will focus quadratic equations in one variable, explain the shape of their graphs, and explains how to identify the variable and the coefficients of the equation. Then, the discriminant is defined, and the role of the discriminant in determining solutions to the quadratic equation is explained. 
 
 ::: {.callout-note}
 
@@ -20,7 +25,7 @@ One of the most important types of an equation is known as a **quadratic equatio
 
 A **quadratic equation** is an equation that can be rearranged into the form $$ax^2 + bx + c = 0$$ where $x$ is a variable and $a,b,c$ are real numbers with $a \neq 0$.
 
-Values of $x$ that satisfy the equation $ax^2 + bx + c = 0$ are known as **roots** of the equation.
+Values of $x$ that satisfy the equation $ax^2 + bx + c = 0$ are known as **roots** of the equation. Typically, roots of a quadratic are expressed in the form of the variable. So here, the roots of $ax^2 + bx + c = 0$ are 'roots in $x$'.
 
 :::
 
@@ -28,7 +33,17 @@ Here, $a\neq 0$ as if it was, then the equation would no longer be a quadratic e
 
 The general shape of a quadratic equation is known as a **parabola**. A figure of two parabolas is given in @fig-1; the left hand graph is if $a > 0$, whereas the right hand graph is when $a < 0$.
 
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1}
+::: {.content-visible when-format="html"}
+
+![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./Figures/introtoquadratics-fig1){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1}
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./Figures/introtoquadratics-fig1){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1}
+
+:::
 
 It is very important to be able to identify the variable in a quadratic equation, as well as the coefficients $a,b,c$. In the course of your mathematical study, it may be that the variable of a quadratic equation is not only letters like $x,y,z$, but squares or cubes like $x^2$ and $y^3$, or even functions like $e^x$, $\cos(x)$, and $\sin(y)$.
 
@@ -94,15 +109,45 @@ There are then three separate cases for solutions to quadratic equations.
 
 - If $D = b^2 - 4ac$ is positive, then $\sqrt{D}$ is a real number and the two roots of the quadratic equation $ax^2 + bx + c = 0$ are $$x = \frac{-b + \sqrt{D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - \sqrt{D}}{2a}$$ These two roots are both real numbers and distinct from each other. You can observe this behaviour on a graph in @fig-2; the parabola crosses the $x$-axis in two places.
 
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D > 0$.](./FiguresPNG/introtoquadratics-fig2-2.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-2}
-    
+::: {.content-visible when-format="html"}
+
+![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D > 0$.](./Figures/introtoquadratics-fig2){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-2}
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D > 0$.](./Figures/introtoquadratics-fig2){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-2}
+
+:::
+
 - If $D = b^2 - 4ac = 0$ is zero, then $\sqrt{D} = 0$. In this case, the two roots of the quadratic equation $ax^2 + bx + c = 0$ are $$x = \frac{-b}{2a} \qquad\textsf{ and }\qquad x = \frac{-b}{2a}$$ These two roots are given by the same real number. To be sure that you express both roots, you can write '$x = -b/2a$ twice'. You can observe this behaviour on a graph in @fig-3; the parabola touches the $x$-axis in exactly one place.
 
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D = 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D = 0$.](./FiguresPNG/introtoquadratics-fig3-3.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and touches the $x$-axis in precisely one place. The parabola on the right looks like an n, and touches the $x$-axis in precisely one place. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D=0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-3}
+::: {.content-visible when-format="html"}
+
+![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D = 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D = 0$.](./Figures/introtoquadratics-fig3){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and touches the $x$-axis in precisely one place. The parabola on the right looks like an n, and touches the $x$-axis in precisely one place. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D=0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-3}
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D = 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D = 0$.](./Figures/introtoquadratics-fig3){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and touches the $x$-axis in precisely one place. The parabola on the right looks like an n, and touches the $x$-axis in precisely one place. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D=0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-3}
+
+:::
 
 - If $D = b^2 - 4ac$ is negative, then $\sqrt{D}$ is not a real number. In this case, the two roots of the quadratic equation are **complex numbers**. You can express the two roots of the quadratic equation by $$x = \frac{-b + i\sqrt{-D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - i\sqrt{-D}}{2a}$$ where $i$ is the imaginary unit (so $i^2 = -1$; see (Guide: Introduction to complex numbers)). In a graph, the parabola does not cross the $x$-axis at all; this indicates that there are no real solutions to this quadratic equation. See @fig-4 for a picture.
 
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D < 0$.](./FiguresPNG/introtoquadratics-fig4-4.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and ;ies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-4}
+::: {.content-visible when-format="html"}
+
+![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D < 0$.](./Figures/introtoquadratics-fig4){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and lies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-4}
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D < 0$.](./Figures/introtoquadratics-fig4){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and lies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-4}
+
+:::
 
 
 ::: {.callout-warning}
@@ -125,9 +170,9 @@ In Example 1, you identified the coefficients of $2x^2 + 4x - 8 = 0$ as $a = 2, 
 
 ## Example 6
 
-In Example 2, you identified the coefficients of $y^4 - 10y^2 + 25 = 0$ as $a = 1, b = -10, c = 25$, and the variable as $y^2$. Using these, you can work out the value of the discriminant $D = b^2 - 4ac$ as $$D = (-10)^2 - 4(1)(25) = 100 - 100 = 0.$$ Since $D = 0$, you can say that this quadratic equation has at most one real root $y^2 = r$. 
+In Example 2, you identified the coefficients of $y^4 - 10y^2 + 25 = 0$ as $a = 1, b = -10, c = 25$, and the variable as $y^2$. Using these, you can work out the value of the discriminant $D = b^2 - 4ac$ as $$D = (-10)^2 - 4(1)(25) = 100 - 100 = 0.$$ Since $D = 0$, you can say that this quadratic equation has at most one real root $r$ in terms of $y^2$. 
 
-Whether or not the equation itself has real solutions in $y$ depends on whether $r$ is positive or negative!
+Whether or not the equation itself has real solutions in $y$ depends on whether $r$ is positive or negative! You cannot take the square root of a negative number, so if $r$ is negative the equation has no real solutions. If $r$ is positive, then the equation has two real roots in $y$; that is, $y = \pm\sqrt{r}$.
 
 :::
 
@@ -150,10 +195,6 @@ In Example 4, you rearranged the equation $t+1 = \frac{4}{t-3}$ to $t^2 + 4t - 1
 :::
 
 ## Quick check problems {-}
-
-```{r, setup, include = FALSE}
-library("webexercises")
-```
 
 <!-- add facility for webexercises to work on html -->
 
@@ -183,7 +224,7 @@ Answer: The variable is `r fitb("h")`, and the coefficients are $a=$ `r fitb(4)`
 
 :::
 
-::: {.content-visible when-format="pdf"}
+::: {.content-hidden when-format="html"}
 
 1. What is the discriminant of the quadratic equation $x^2 - x - 1 = 0$?
 
@@ -195,28 +236,14 @@ Answer: The variable is `r fitb("h")`, and the coefficients are $a=$ `r fitb(4)`
 
 (b) The quadratic equation $m^2 - 4m - 4 = 0$ has exactly one real root.
 
-(c) The quadratic eqution $4m^2 + 4m + 4 = 0$ has no real roots.
+(c) The quadratic equation $4m^2 + 4m + 4 = 0$ has no real roots.
 
 :::
 
-<!-- docx block should be same as pdf block -->
-
-::: {.content-visible when-format="docx"}
-
-3. You are given three statements below. Decide whether they are true or false.
-
-(a) The quadratic equation $m^2 + 4m + 4 = 0$ has two distinct real roots.
-
-(b) The quadratic equation $m^2 - 4m - 4 = 0$ has exactly one real root.
-
-(c) The quadratic eqution $4m^2 + 4m + 4 = 0$ has no real roots.
-
-:::
-
-[For more questions on the subject, please click on this sentence.](qs-introtoquadratics.qmd)
+[For more questions on the subject, please go to Questions: Introduction to quadratic equations.](qs-introtoquadratics.qmd)
 
 ## Further reading {-}
 
-(Guide: Using the quadratic formula)
+[Guide: Using the quadratic formula](quadraticformula.html)
 
 

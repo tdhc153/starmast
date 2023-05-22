@@ -30,7 +30,7 @@ The best way to learn is to get stuck in! Save new copies of the example guide/q
 
 There are (initially) two ways to view your changes. The first is to 'render website'; this will build all `.qmd` files into a `.html` that you can view, and outputs the index page. The other files will be in the `_site` folder; you can open the `.html` files in your browser.
 
-To build the `.pdf` and `.docx` versions of your work, you will need to first **save your work**, then go to the Console (bottom of default RStudio layout and type in `quarto::quarto_render()`. This will build **every** file in the directory and takes a while (about one minute for the initial commit!). All outputs are stored in the `_site` folder, which you can then view.
+To build the `.pdf` and `.docx` versions of your work, you will need to first **save your work**, then go to the Console (bottom of default RStudio layout) and type in `quarto::quarto_render()`. This will build **every** file in the directory and takes a while (about one minute for the initial commit!). All outputs are stored in the `_site` folder, which you can then view.
 
 ## What packages do you need to install?
 
@@ -55,3 +55,11 @@ There are a few files which will be heavily scrutinised upon any commit. These a
 -   `styles.css` is a file that contains styles for the website. This is empty, and should be edited with admin permission only.
 
 -   Any files in the `webexfiles` directory should be left well alone.
+
+## Any questions?
+
+Raise as an Issue or post in Discussions. :)
+
+## Version control
+
+- v1.0 (initial readme commit, 18/05)
