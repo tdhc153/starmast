@@ -60,6 +60,10 @@ There are a few files which will be heavily scrutinised upon any commit. These a
 
 -   Any files in the `webexfiles` directory should be left well alone.
 
+## Templates?
+
+Feel free to create a copy of `introtoquadratics.qmd` to use as a template for your study guides; similarly, use `qs-` and `as-` for questions and answers. I am going to be quite strict with style, so I would thoroughly recommend you use these as templates.
+
 ## Any questions?
 
 Raise as an Issue or post in Discussions. :)
