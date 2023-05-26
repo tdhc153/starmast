@@ -1,6 +1,6 @@
 # starmast
 
-St Andrews resources in mathematics and statistics
+St Andrews resources in mathematics and statistics. Please read this and `styleguide.pdf` before starting a guide.
 
 ## What do you need to download to run the code?
 
