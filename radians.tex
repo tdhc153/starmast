@@ -1,0 +1,310 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  12pt,
+  a4paper, oneside]{starmastarticle}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[top=25mm,left=25mm,right=25mm,bottom=25mm]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{setspace}
+\renewcommand{\familydefault}{cmss}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{fancyhdr}
+\onehalfspacing
+\renewcommand{\arraystretch}{1.2}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0em}
+\newcommand{\mb}[1]{\mathbb{#1}} % blackboard bold
+\newcommand{\mc}[1]{\mathcal{#1}} % calligraphic
+\newcommand{\mf}[1]{\mathfrak{#1}} % fraktur
+\newcommand{\ms}[1]{\mathscr{#1}} % script
+\newcommand{\vb}[1]{\mathbf{#1}} % vector bold
+\newcommand{\from}{\leftarrow}
+\newcommand{\dne}{\hfill \qed \vspace{0.3cm}} % end of proof symbol
+\newcommand{\abs}[1]{\left|#1\right|} % modulus signs
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|} % norm signs
+\renewcommand{\Re}{\mathrm{Re}}
+\renewcommand{\Im}{\mathrm{Im}}
+\newcommand{\im}{\mathrm{im}}
+\newcommand{\ds}{\displaystyle}
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Summarizing Output for Reproducible Documents},
+  pdfauthor={Ifan Howells Baines, Mark Toner},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Summarizing Output for Reproducible Documents}
+\author{Ifan Howells Baines, Mark Toner}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+tbc
+\end{abstract}
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, borderline west={3pt}{0pt}{shadecolor}, sharp corners, frame hidden, boxrule=0pt, breakable, enhanced]}{\end{tcolorbox}}\fi
+
+\hypertarget{what-are-radians}{%
+\subsection*{What are Radians?}\label{what-are-radians}}
+\addcontentsline{toc}{subsection}{What are Radians?}
+
+\textbf{Radians}, like Degrees are a way of measuring angles. Radians
+can usually be identified by the prescence of \textbf{\(\pi\).}
+
+Radians are derived from the \textbf{radius of a circle} which makes
+them especially useful when working with circles. You will see this
+relationship more in the following section.
+
+Radians are denoted by the symbol rad.
+
+This guide will firstly describe the relationship between Radians and
+Circles. Then describe the relationship between Radians and Degrees
+showing how to convert between them.Lastly, it will provide a table of
+some useful Degree to Radian conversions for common angle sizes.
+
+::: \{.callout-note\}
+
+\hypertarget{radians-and-circles}{%
+\subsection{Radians and circles}\label{radians-and-circles}}
+
+\hypertarget{converting-between-radians-and-degrees}{%
+\subsection{Converting between Radians and
+Degrees}\label{converting-between-radians-and-degrees}}
+
+The process for converting from Radians to Degrees and from Degrees to
+Radians are direct opposites.
+
+\hypertarget{converting-from-degrees-to-radians}{%
+\subsubsection{Converting from Degrees to
+Radians}\label{converting-from-degrees-to-radians}}
+
+Starting from an angle in degrees.
+
+\begin{itemize}
+\tightlist
+\item
+  Multiply the angle in degrees by \(\pi\)
+\item
+  Divide the result by 180
+\end{itemize}
+
+Your angle is now in Radians. It is important to remember to simplify
+fractions.
+
+\hypertarget{example-1}{%
+\paragraph{Example 1}\label{example-1}}
+
+You are given the angle \(180\textdegree\).
+
+\begin{itemize}
+\tightlist
+\item
+  Multipying by \(\pi\) gives \(180\pi\)
+\item
+  Dividing by 180 gives \(\pi\)
+\end{itemize}
+
+This means that \(180\textdegree\) is equal to \(\pi\) rad.
+
+\hypertarget{example-2}{%
+\paragraph{Example 2}\label{example-2}}
+
+You are given the angle \(45\textdegree\).
+
+\begin{itemize}
+\tightlist
+\item
+  Multipying by \(\pi\) gives \(45\pi\)
+\item
+  Dividing by 180 gives \(\frac{\pi}{4}\)
+\end{itemize}
+
+This means that \(45\textdegree\) is equal to \(\frac{\pi}{4}\) rad.
+
+\hypertarget{converting-from-radians-to-degrees}{%
+\subsubsection{Converting from Radians to
+Degrees}\label{converting-from-radians-to-degrees}}
+
+Starting from an angle in Radians.
+
+\begin{itemize}
+\tightlist
+\item
+  Multiply the angle in Radians by 180
+\item
+  Divide the result by \(\pi\)
+\end{itemize}
+
+Your angle is now in degrees
+
+\hypertarget{example-3}{%
+\paragraph{Example 3}\label{example-3}}
+
+You are given the angle \(\pi\)rad.
+
+\begin{itemize}
+\tightlist
+\item
+  Multipying by 180 gives \(180\pi\)
+\item
+  Dividing by \(\pi\) gives 180
+\end{itemize}
+
+This means that \(\pi\)rad is equal to \(180\textdegree\).
+
+\hypertarget{example-4}{%
+\paragraph{Example 4}\label{example-4}}
+
+You are given the angle \(\frac{\pi}{4}\)rad
+
+\begin{itemize}
+\tightlist
+\item
+  Multipying by 180 gives \(45\pi\)
+\item
+  Dividing by \(\pi\) gives 45
+\end{itemize}
+
+This means that \(\frac{\pi}{4}\)rads is equal to \(45\textdegree\).
+
+::: \{.callout-note\}
+
+\hypertarget{useful-conversions-to-know}{%
+\subsection{Useful conversions to
+know}\label{useful-conversions-to-know}}
+
+
+
+\end{document}
