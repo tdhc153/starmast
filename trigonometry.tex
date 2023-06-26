@@ -1,0 +1,376 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  12pt,
+  a4paper, oneside]{starmastarticle}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[top=25mm,left=25mm,right=25mm,bottom=25mm]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{setspace}
+\renewcommand{\familydefault}{cmss}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{fancyhdr}
+\onehalfspacing
+\renewcommand{\arraystretch}{1.2}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0em}
+\newcommand{\mb}[1]{\mathbb{#1}} % blackboard bold
+\newcommand{\mc}[1]{\mathcal{#1}} % calligraphic
+\newcommand{\mf}[1]{\mathfrak{#1}} % fraktur
+\newcommand{\ms}[1]{\mathscr{#1}} % script
+\newcommand{\vb}[1]{\mathbf{#1}} % vector bold
+\newcommand{\from}{\leftarrow}
+\newcommand{\dne}{\hfill \qed \vspace{0.3cm}} % end of proof symbol
+\newcommand{\abs}[1]{\left|#1\right|} % modulus signs
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|} % norm signs
+\renewcommand{\Re}{\mathrm{Re}}
+\renewcommand{\Im}{\mathrm{Im}}
+\newcommand{\im}{\mathrm{im}}
+\newcommand{\ds}{\displaystyle}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Trigonometry},
+  pdfauthor={cc357, emg9, dtr2},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Trigonometry}
+\author{cc357, emg9, dtr2}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Trigonometric functions are a part of maths which will appear frequently
+throughout your university career. They have uses in geometry, physics,
+and much much more. This guide will look at defining the functions, how
+to find the values of these functions from a given angle, some values to
+remember, and some properties of the functions themselves.
+\end{abstract}
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, breakable, borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt, enhanced, sharp corners, interior hidden]}{\end{tcolorbox}}\fi
+
+\emph{Before reading this guide, you may want to review (Guide:
+Radians). Additionally, after this guide you may have further questions
+which can be answered by (Guide: Trigonometric Identities) or (Guide:
+Solving Equations using Trigonometry and Logarithms).}
+
+\hypertarget{what-is-trigonometry}{%
+\subsection{What is trigonometry?}\label{what-is-trigonometry}}
+
+Trigonometry deals with the relationship between the angles and the
+sides of a triangle. It can be used to calculate the heights of
+buildings,construct planes and even in the motion of heroes in video
+games. It is mainly focused on the functions sine(sin), cosine(cos),
+tangent(tan), and cotangent(cot).The first introduction you may have had
+to the trigonometric functions is in the context of right angled
+triangles. If you pick an angle you want to focus on, you can then label
+the side opposite it with `o', the side which has no contact with the
+right angle `h' (for hypotenuse), and the final side as `a' (as it is
+adjacent to the angle). If you have some information about either two
+sides or a side and an angle, you can use the trigonometric functions to
+figure out the size of the angle or the other side. The abbrieviation
+`SOH, CAH, TOA' is often used to describe this process. The first letter
+in each word represents the function, the second the numerator and the
+third the denominator. For example, SOH says that ``you can find
+\textbf{sin} by dividing the \textbf{opposite} by the
+\textbf{hypotenuse}.''
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Trigonometric functions}, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, left=2mm, rightrule=.15mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, toprule=.15mm, titlerule=0mm, arc=.35mm, coltitle=black, leftrule=.75mm]
+\[\sin(\theta) = \frac{opposite\ side}{hypotenuse} \qquad\qquad \cos(\theta) = \frac{adjacent\ side}{hypotenuse}\]
+
+\[\tan(\theta) = \frac{opposite\ side}{adjacent\ side} \qquad\qquad \cot(\theta) = \frac{adjacent\ side}{opposite\ side} \]
+\end{tcolorbox}
+
+\hypertarget{the-unit-circle}{%
+\subsection*{The unit circle}\label{the-unit-circle}}
+\addcontentsline{toc}{subsection}{The unit circle}
+
+The \textbf{unit circle} uses this relationship to represent the values
+of the trigonometric functions. The unit circle is a circle of radius
+one which is centered on the origin of a coordinate system. Because of
+this, the radius represents the hypotenuse of our right angled triangle.
+As the radius/hypotenuse is one, you can use the definitions above to
+see that the opposite and adjacent sides represent the absolute values
+of \(sin(\theta)\) and \(cos(\theta)\) respectively. In this case,
+\(\theta\) is the angle as measured anticlockwise from the positive x
+axis. As such, \(\theta=0\) along the positive x axis, \(\theta=90\)
+along the positive y axis, \(\theta=180\) along the negative x axis, and
+\(\theta=270\) along the negative y axis. This is done in degrees,
+although it may be appropriate to operate in radians, wherein it would
+be 0, \(\frac{\pi}{2}\), \(/pi\), and \(\frac{3\pi}{4}\) respectively.
+Whilst these angles extend beyond 180 degrees or \(\pi\) radians, which
+would be an issue for triangles, you will be measuring an acute angle
+that forms a triangle with one `edge' of the quadrant. This may be a
+little confusing to begin with, so there will be diagrams attached to
+explain. If you have any issues with these conversions, feel free to
+consult the radians worksheet. You can also find \(tan(\theta)\) by
+using that \(tan(\theta)=\frac{sin(\theta)}{cos(\theta)}\).
+
+It's important to note that these are the absolute values which you get
+from reading off of this system, as they are lengths. You can figure out
+the sign of your functions by considering what quadrant you are looking
+in; this depends on your angle, and drawing out the unit circle can
+often help when starting out. Whilst I have spoken in terms of opposite
+and adjacent sides of a triangle, when using the unit circle it turns
+out that the magnitude of \(cos(\theta)\) will always be the x
+coordinate and the magnitude of \(sin(\theta)\) always the y coordinate.
+This means that \(tan(\theta)= \frac{y}{x}\) As such, you can see that
+an angle over 90 degrees but less than 180 degrees will be in a quadrant
+where y is positive and x is negative. This means that your value for
+\(sin(\theta)\) is positive and \(cos(\theta)\) is negative. Because
+they are not the same sign, \(tan(\theta)\) will also be negative.
+
+Now the issue comes from what to do with angles greater than 360 degrees
+or \(2 \pi\) radians? This can be solved by using the fact that all
+trigonometric functions are periodic with a period of 360 degrees or
+\(2\pi\) radians. They repeat the same pattern, and so a value of
+\(sin(\theta)\) would be equal to a value of \(sin(\theta+2\pi)\) or
+\(sin(\theta-6\pi)\). Keep in mind, the last one works as \(6\pi\) is an
+integer multiple of \(2\pi\). It wouldn't work for \(sin(theta-3\pi)\)
+for this reason.
+
+\hypertarget{table-of-common-angles}{%
+\subsection{Table of common angles}\label{table-of-common-angles}}
+
+When you solve problems you may need different values of these
+functions. To ease you mathematicians have created tables with most
+frequently used values.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1300}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1300}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1300}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1300}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1300}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1300}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1300}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 14\tabcolsep) * \real{0.1300}}@{}}
+\caption{Trgionometric values.}\tabularnewline
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Angles(\(^\circ\))
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(0^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(30^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(45^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(60^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(90^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(180^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(270^\circ\)
+\end{minipage} \\
+\midrule()
+\endfirsthead
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+Angles(\(^\circ\))
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(0^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(30^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(45^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(60^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(90^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(180^\circ\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(270^\circ\)
+\end{minipage} \\
+\midrule()
+\endhead
+\(\sin(\theta)\) & \(0\) & \(\frac{1}{2}\) & \(\frac{1}{\sqrt{2}}\) &
+\(\frac{\sqrt{3}}{2}\) & \(1\) & \(0\) & \(-1\) \\
+\(\cos(\theta)\) & \(1\) & \(\frac{\sqrt{3}}{2}\) &
+\(\frac{1}{\sqrt{2}}\) & \(\frac{1}{2}\) & \(0\) & \(-1\) & \(0\) \\
+\(\tan(\theta)\) & \(0\) & \(\frac{1}{\sqrt{3}}\) & \(1\) & \(\sqrt{3}\)
+& \(-\) & \(0\) & \(-\) \\
+\(\cot(\theta)\) & \(-\) & \(\sqrt{3}\) & \(1\) & \(\frac{1}{\sqrt{3}}\)
+& \(1\) & \(-\) & \(-1\) \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{properties-of-trigonometric-functions}{%
+\subsection{Properties of trigonometric
+functions}\label{properties-of-trigonometric-functions}}
+
+Using the unit circle you can add an angle to your \(\theta\) and find
+yourself on another point of the unit circle. You already saw that when
+you move \(360^\circ\), you get to the same place. When you move
+\(180^\circ\) you get to the opposite side of the unit circle. This
+would lead to a change of sign as you go on the same distance, on the
+other side of the axis. A more interesting transition is observed when
+you shift the angle with \(90^\circ\). Then the distance that was
+projected on the x-axis is now projected on the y-axis and vice versa.
+This would lead to change between \(\sin\theta\) and \(\cos\theta\).
+Additionally, if you look at the triangle example, you can see that the
+cosine of the one not right angle is the same as the sine of the other
+one. These leads to the following properties.
+
+\begin{tcolorbox}[enhanced jigsaw, colback=white, opacityback=0, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Phase shift with \(90^\circ\)}, toptitle=1mm, colbacktitle=quarto-callout-note-color!10!white, bottomrule=.15mm, left=2mm, rightrule=.15mm, breakable, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, opacitybacktitle=0.6, toprule=.15mm, titlerule=0mm, arc=.35mm, coltitle=black, leftrule=.75mm]
+\[\sin(\theta+90) = \cos(\theta) \qquad \cos(\theta+90) = -\sin(\theta) \qquad \tan(\theta+90) = -\cot(\theta) \qquad \cot(\theta+90) = -\tan(\theta) \]
+
+\[\sin(90-\theta) = \cos(\theta) \qquad \cos(90-\theta) = \sin(\theta) \qquad \tan(90-\theta) = \cot(\theta) \qquad \cot(90-\theta) = \tan(\theta) \]
+\end{tcolorbox}
+
+\hypertarget{further-reading}{%
+\subsection*{Further reading}\label{further-reading}}
+\addcontentsline{toc}{subsection}{Further reading}
+
+
+
+\end{document}

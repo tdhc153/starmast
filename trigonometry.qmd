@@ -3,8 +3,11 @@ title: "Trigonometry"
 author: "cc357, emg9, dtr2"
 abstract-title: Summary
 abstract: Trigonometric functions are a part of maths which will appear frequently throughout your university career. They have uses in geometry, physics, and much much more. This guide will look at defining the functions, how to find the values of these functions from a given angle, some values to remember, and some properties of the functions themselves.
+<!-- Appearing: Error in yaml::yaml.load(..., eval.expr = TRUE) : Scanner error: while scanning a simple key at line 4, column 1 could not find expected ':' at line 5, column 1-->
+
 
 ---
+
 
 ```{r, setup, include = FALSE}
 library("webexercises")
@@ -12,15 +15,22 @@ library("webexercises")
 
 *Before reading this guide, you may want to review (Guide: Radians). Additionally, after this guide you may have further questions which can be answered by (Guide: Trigonometric Identities) or (Guide: Solving Equations using Trigonometry and Logarithms).*
 
-## Definitions
+## What is trigonometry?
+Trigonometry deals with the relationship between the angles and the sides of a triangle. It can be used to calculate the heights of buildings,construct planes and even in the motion of heroes in video games. It is mainly focused on the functions sine(sin), cosine(cos), tangent(tan), and cotangent(cot).The first introduction you may have had to the trigonometric functions is in the context of right angled triangles. If you pick an angle you want to focus on, you can then label the side opposite it with 'o', the side which has no contact with the right angle 'h' (for hypotenuse), and the final side as 'a' (as it is adjacent to the angle). If you have some information about either two sides or a side and an angle, you can use the trigonometric functions to figure out the size of the angle or the other side. The abbreviation 'SOH, CAH, TOA' is often used to describe this process. The first letter in each word represents the function, the second the numerator and the third the denominator. For example, SOH says that "you can find **sin** by dividing the **opposite** by the **hypotenuse**." 
+
+<!-- May change the SOH, CAH, TOA-->
+
+::: {.callout-note}
+
+## Trigonometric functions
+$$\sin(\theta) = \frac{opposite\ side}{hypotenuse} \qquad\qquad \cos(\theta) = \frac{adjacent\ side}{hypotenuse}$$
+$$\tan(\theta) = \frac{opposite\ side}{adjacent\ side} \qquad\qquad \cot(\theta) = \frac{adjacent\ side}{opposite\ side} $$
+:::
+
+
 
 ## The unit circle {-}
 
-The first introduction you may have had to the trigonometric functions is in the context of right angled triangles. If you pick an angle you want to focus on, you can then label the side opposite it with 'o', the side which has no contact with the right angle 'h' (for hypotenuse), and the final side as 'a' (as it is adjacent to the angle). If you have some information about either two sides or a side and an angle, you can use the trigonometric functions to figure out the size of the angle or the other side. The abbrieviation 'SOH, CAH, TOA' is often used to describe this process. The first letter in each word represents the function, the second the numerator and the third the denominator. For example, SOH says that "you can find **sin** by dividing the **opposite** by the **hypotenuse**." 
-
-$$sin(\theta)= \frac{opposite}{hypotenuse}$$
-$$cos(\theta)= \frac{adjacent}{hypotenuse}$$
-$$tan(\theta)= \frac{opposite}{adjacent}$$
  
 The **unit circle** uses this relationship to represent the values of the trigonometric functions. The unit circle is a circle of radius one which is centered on the origin of a coordinate system. Because of this, the radius represents the hypotenuse of our right angled triangle. As the radius/hypotenuse is one, you can use the definitions above to see that the opposite and adjacent sides represent the absolute values of $sin(\theta)$ and $cos(\theta)$ respectively. In this case, $\theta$ is the angle as measured anticlockwise from the positive x axis. As such, $\theta=0$ along the positive x axis, $\theta=90$ along the positive y axis, $\theta=180$ along the negative x axis, and $\theta=270$ along the negative y axis. This is done in degrees, although it may be appropriate to operate in radians, wherein it would be 0, $\frac{\pi}{2}$, $/pi$, and $\frac{3\pi}{4}$ respectively. Whilst these angles extend beyond 180 degrees or $\pi$ radians, which would be an issue for triangles, you will be measuring an acute angle that forms a triangle with one 'edge' of the quadrant. This may be a little confusing to begin with, so there will be diagrams attached to explain. If you have any issues with these conversions, feel free to consult the radians worksheet. You can also find $tan(\theta)$ by using that $tan(\theta)=\frac{sin(\theta)}{cos(\theta)}$. 
 
@@ -28,6 +38,32 @@ It's important to note that these are the absolute values which you get from rea
 
 Now the issue comes from what to do with angles greater than 360 degrees or $2 \pi$ radians? This can be solved by using the fact that all trigonometric functions are periodic with a period of 360 degrees or $2\pi$ radians. They repeat the same pattern, and so a value of $sin(\theta)$ would be equal to a value of $sin(\theta+2\pi)$ or $sin(\theta-6\pi)$. Keep in mind, the last one works as $6\pi$ is an integer multiple of $2\pi$. It wouldn't work for $sin(theta-3\pi)$ for this reason. 
 
+## Table of common angles
+
+When you solve problems you may need different values of these functions. To ease you mathematicians have created tables with most frequently used values.
+
+<!--|Angles($rad$)   | $0$     | $\frac{\pi}{6}$      | $\frac{\pi}{4}$      | $\frac{\pi}{3}$      | $\frac{\pi}{2}$ | $\pi$       | $\frac{3\pi}{2}$| -->
+
+
+|Angles($^\circ$)|$0^\circ$|$30^\circ$            | $45^\circ$           | $60^\circ$           | $90^\circ$      | $180^\circ$ | $270^\circ$     |
+|:---------------|:--------|:---------------------|:---------------------|:---------------------|:----------------|:------------|:----------------|
+|$\sin(\theta)$  | $0$     | $\frac{1}{2}$        | $\frac{1}{\sqrt{2}}$ | $\frac{\sqrt{3}}{2}$ | $1$             | $0$         | $-1$            | 
+|$\cos(\theta)$  | $1$     | $\frac{\sqrt{3}}{2}$ | $\frac{1}{\sqrt{2}}$ | $\frac{1}{2}$        | $0$             | $-1$        | $0$             | 
+|$\tan(\theta)$  | $0$     | $\frac{1}{\sqrt{3}}$ | $1$                  | $\sqrt{3}$           | $-$             | $0$         | $-$             | 
+|$\cot(\theta)$  | $-$     | $\sqrt{3}$           | $1$                  | $\frac{1}{\sqrt{3}}$ | $1$             | $-$         | $-1$            |
+
+: Trgionometric values. {tbl-colwidths="[15,15,15,15,15,15,15,15]"}
+
+## Properties of trigonometric functions
+Using the unit circle you can add an angle to your $\theta$ and find yourself on another point of the unit circle. You already saw that when you move $360^\circ$, you get to the same place. When you move $180^\circ$ you get to the opposite side of the unit circle. This would lead to a change of sign as you go on the same distance, on the other side of the axis. A more interesting transition is observed when you shift the angle with $90^\circ$. Then the distance that was projected on the x-axis is now projected on the y-axis and vice versa. This would lead to change between $\sin\theta$ and $\cos\theta$. Additionally, if you look at the triangle example, you can see that the cosine of the one not right angle is the same as the sine of the other one. These leads to the following properties.
+
+
+::: {.callout-note}
+# Phase shift with $90^\circ$
+<!--need corrections-->
+$$\sin(\theta+90) = \cos(\theta) \qquad \cos(\theta+90) = -\sin(\theta) \qquad \tan(\theta+90) = -\cot(\theta) \qquad \cot(\theta+90) = -\tan(\theta) $$
+$$\sin(90-\theta) = \cos(\theta) \qquad \cos(90-\theta) = \sin(\theta) \qquad \tan(90-\theta) = \cot(\theta) \qquad \cot(90-\theta) = \tan(\theta) $$
+:::
 
 
 

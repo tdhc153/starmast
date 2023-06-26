@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>STARMAST – trigonometry</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">STARMAST</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">About</a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-trigonometry" id="toc-what-is-trigonometry" class="nav-link active" data-scroll-target="#what-is-trigonometry">What is trigonometry?</a></li>
+  <li><a href="#the-unit-circle" id="toc-the-unit-circle" class="nav-link" data-scroll-target="#the-unit-circle">The unit circle</a></li>
+  <li><a href="#table-of-common-angles" id="toc-table-of-common-angles" class="nav-link" data-scroll-target="#table-of-common-angles">Table of common angles</a></li>
+  <li><a href="#properties-of-trigonometric-functions" id="toc-properties-of-trigonometric-functions" class="nav-link" data-scroll-target="#properties-of-trigonometric-functions">Properties of trigonometric functions</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<p><em>Before reading this guide, you may want to review (Guide: Radians). Additionally, after this guide you may have further questions which can be answered by (Guide: Trigonometric Identities) or (Guide: Solving Equations using Trigonometry and Logarithms).</em></p>
+<section id="what-is-trigonometry" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-trigonometry">What is trigonometry?</h2>
+<p>Trigonometry deals with the relationship between the angles and the sides of a triangle. It can be used to calculate the heights of buildings,construct planes and even in the motion of heroes in video games. It is mainly focused on the functions sine(sin), cosine(cos), tangent(tan), and cotangent(cot).The first introduction you may have had to the trigonometric functions is in the context of right angled triangles. If you pick an angle you want to focus on, you can then label the side opposite it with ‘o’, the side which has no contact with the right angle ‘h’ (for hypotenuse), and the final side as ‘a’ (as it is adjacent to the angle). If you have some information about either two sides or a side and an angle, you can use the trigonometric functions to figure out the size of the angle or the other side. The abbreviation ‘SOH, CAH, TOA’ is often used to describe this process. The first letter in each word represents the function, the second the numerator and the third the denominator. For example, SOH says that “you can find <strong>sin</strong> by dividing the <strong>opposite</strong> by the <strong>hypotenuse</strong>.”</p>
+<!-- May change the SOH, CAH, TOA-->
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Trigonometric functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\sin(\theta) = \frac{opposite\ side}{hypotenuse} \qquad\qquad \cos(\theta) = \frac{adjacent\ side}{hypotenuse}\]</span></p>
+<p><span class="math display">\[\tan(\theta) = \frac{opposite\ side}{adjacent\ side} \qquad\qquad \cot(\theta) = \frac{adjacent\ side}{opposite\ side} \]</span></p>
+</div>
+</div>
+</section>
+<section id="the-unit-circle" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="the-unit-circle">The unit circle</h2>
+<p>The <strong>unit circle</strong> uses this relationship to represent the values of the trigonometric functions. The unit circle is a circle of radius one which is centered on the origin of a coordinate system. Because of this, the radius represents the hypotenuse of our right angled triangle. As the radius/hypotenuse is one, you can use the definitions above to see that the opposite and adjacent sides represent the absolute values of <span class="math inline">\(sin(\theta)\)</span> and <span class="math inline">\(cos(\theta)\)</span> respectively. In this case, <span class="math inline">\(\theta\)</span> is the angle as measured anticlockwise from the positive x axis. As such, <span class="math inline">\(\theta=0\)</span> along the positive x axis, <span class="math inline">\(\theta=90\)</span> along the positive y axis, <span class="math inline">\(\theta=180\)</span> along the negative x axis, and <span class="math inline">\(\theta=270\)</span> along the negative y axis. This is done in degrees, although it may be appropriate to operate in radians, wherein it would be 0, <span class="math inline">\(\frac{\pi}{2}\)</span>, <span class="math inline">\(/pi\)</span>, and <span class="math inline">\(\frac{3\pi}{4}\)</span> respectively. Whilst these angles extend beyond 180 degrees or <span class="math inline">\(\pi\)</span> radians, which would be an issue for triangles, you will be measuring an acute angle that forms a triangle with one ‘edge’ of the quadrant. This may be a little confusing to begin with, so there will be diagrams attached to explain. If you have any issues with these conversions, feel free to consult the radians worksheet. You can also find <span class="math inline">\(tan(\theta)\)</span> by using that <span class="math inline">\(tan(\theta)=\frac{sin(\theta)}{cos(\theta)}\)</span>.</p>
+<p>It’s important to note that these are the absolute values which you get from reading off of this system, as they are lengths. You can figure out the sign of your functions by considering what quadrant you are looking in; this depends on your angle, and drawing out the unit circle can often help when starting out. Whilst I have spoken in terms of opposite and adjacent sides of a triangle, when using the unit circle it turns out that the magnitude of <span class="math inline">\(cos(\theta)\)</span> will always be the x coordinate and the magnitude of <span class="math inline">\(sin(\theta)\)</span> always the y coordinate. This means that <span class="math inline">\(tan(\theta)= \frac{y}{x}\)</span> As such, you can see that an angle over 90 degrees but less than 180 degrees will be in a quadrant where y is positive and x is negative. This means that your value for <span class="math inline">\(sin(\theta)\)</span> is positive and <span class="math inline">\(cos(\theta)\)</span> is negative. Because they are not the same sign, <span class="math inline">\(tan(\theta)\)</span> will also be negative.</p>
+<p>Now the issue comes from what to do with angles greater than 360 degrees or <span class="math inline">\(2 \pi\)</span> radians? This can be solved by using the fact that all trigonometric functions are periodic with a period of 360 degrees or <span class="math inline">\(2\pi\)</span> radians. They repeat the same pattern, and so a value of <span class="math inline">\(sin(\theta)\)</span> would be equal to a value of <span class="math inline">\(sin(\theta+2\pi)\)</span> or <span class="math inline">\(sin(\theta-6\pi)\)</span>. Keep in mind, the last one works as <span class="math inline">\(6\pi\)</span> is an integer multiple of <span class="math inline">\(2\pi\)</span>. It wouldn’t work for <span class="math inline">\(sin(theta-3\pi)\)</span> for this reason.</p>
+</section>
+<section id="table-of-common-angles" class="level2">
+<h2 class="anchored" data-anchor-id="table-of-common-angles">Table of common angles</h2>
+<p>When you solve problems you may need different values of these functions. To ease you mathematicians have created tables with most frequently used values.</p>
+<!--|Angles($rad$)   | $0$     | $\frac{\pi}{6}$      | $\frac{\pi}{4}$      | $\frac{\pi}{3}$      | $\frac{\pi}{2}$ | $\pi$       | $\frac{3\pi}{2}$| -->
+<table class="table">
+<caption>Trgionometric values.</caption>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Angles(<span class="math inline">\(^\circ\)</span>)</th>
+<th style="text-align: left;"><span class="math inline">\(0^\circ\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(30^\circ\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(45^\circ\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(60^\circ\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(90^\circ\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(180^\circ\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(270^\circ\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\sin(\theta)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\frac{1}{\sqrt{2}}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\frac{\sqrt{3}}{2}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(-1\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\cos(\theta)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\frac{\sqrt{3}}{2}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\frac{1}{\sqrt{2}}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\frac{1}{2}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(-1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\tan(\theta)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\frac{1}{\sqrt{3}}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sqrt{3}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(-\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(-\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\cot(\theta)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(-\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sqrt{3}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\frac{1}{\sqrt{3}}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(-\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(-1\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="properties-of-trigonometric-functions" class="level2">
+<h2 class="anchored" data-anchor-id="properties-of-trigonometric-functions">Properties of trigonometric functions</h2>
+<p>Using the unit circle you can add an angle to your <span class="math inline">\(\theta\)</span> and find yourself on another point of the unit circle. You already saw that when you move <span class="math inline">\(360^\circ\)</span>, you get to the same place. When you move <span class="math inline">\(180^\circ\)</span> you get to the opposite side of the unit circle. This would lead to a change of sign as you go on the same distance, on the other side of the axis. A more interesting transition is observed when you shift the angle with <span class="math inline">\(90^\circ\)</span>. Then the distance that was projected on the x-axis is now projected on the y-axis and vice versa. This would lead to change between <span class="math inline">\(\sin\theta\)</span> and <span class="math inline">\(\cos\theta\)</span>. Additionally, if you look at the triangle example, you can see that the cosine of the one not right angle is the same as the sine of the other one. These leads to the following properties.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Phase shift with <span class="math inline">\(90^\circ\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\sin(\theta+90) = \cos(\theta) \qquad \cos(\theta+90) = -\sin(\theta) \qquad \tan(\theta+90) = -\cot(\theta) \qquad \cot(\theta+90) = -\tan(\theta) \]</span></p>
+<p><span class="math display">\[\sin(90-\theta) = \cos(\theta) \qquad \cos(90-\theta) = \sin(\theta) \qquad \tan(90-\theta) = \cot(\theta) \qquad \cot(90-\theta) = \tan(\theta) \]</span></p>
+</div>
+</div>
+</section>
+<section id="further-reading" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="further-reading">Further reading</h2>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } 
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
