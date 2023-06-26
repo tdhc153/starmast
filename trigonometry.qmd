@@ -2,7 +2,7 @@
 title: "Trigonometry"
 author: "cc357, emg9, dtr2"
 abstract-title: Summary
-abstract: Definition of cos, sin, tan in terms of the circle, common angles and values of cos, sin, tan at these angles, properties of sin, cos, tan
+abstract: Trigonometric functions are a part of maths which will appear frequently throughout your university career. They have uses in geometry, physics, and much much more. This guide will look at defining the functions, how to find the values of these functions from a given angle, some values to remember, and some properties of the functions themselves.
 
 ---
 
@@ -10,8 +10,24 @@ abstract: Definition of cos, sin, tan in terms of the circle, common angles and 
 library("webexercises")
 ```
 
+*Before reading this guide, you may want to review (Guide: Radians). Additionally, after this guide you may have further questions which can be answered by (Guide: Trigonometric Identities) or (Guide: Solving Equations using Trigonometry and Logarithms).*
 
 ## Definitions
+
+## The unit circle {-}
+
+The first introduction you may have had to the trigonometric functions is in the context of right angled triangles. If you pick an angle you want to focus on, you can then label the side opposite it with 'o', the side which has no contact with the right angle 'h' (for hypotenuse), and the final side as 'a' (as it is adjacent to the angle). If you have some information about either two sides or a side and an angle, you can use the trigonometric functions to figure out the size of the angle or the other side. The abbrieviation 'SOH, CAH, TOA' is often used to describe this process. The first letter in each word represents the function, the second the numerator and the third the denominator. For example, SOH says that "you can find **sin** by dividing the **opposite** by the **hypotenuse**." 
+
+$$sin(\theta)= \frac{opposite}{hypotenuse}$$
+$$cos(\theta)= \frac{adjacent}{hypotenuse}$$
+$$tan(\theta)= \frac{opposite}{adjacent}$$
+ 
+The **unit circle** uses this relationship to represent the values of the trigonometric functions. The unit circle is a circle of radius one which is centered on the origin of a coordinate system. Because of this, the radius represents the hypotenuse of our right angled triangle. As the radius/hypotenuse is one, you can use the definitions above to see that the opposite and adjacent sides represent the absolute values of $sin(\theta)$ and $cos(\theta)$ respectively. In this case, $\theta$ is the angle as measured anticlockwise from the positive x axis. As such, $\theta=0$ along the positive x axis, $\theta=90$ along the positive y axis, $\theta=180$ along the negative x axis, and $\theta=270$ along the negative y axis. This is done in degrees, although it may be appropriate to operate in radians, wherein it would be 0, $\frac{\pi}{2}$, $/pi$, and $\frac{3\pi}{4}$ respectively. Whilst these angles extend beyond 180 degrees or $\pi$ radians, which would be an issue for triangles, you will be measuring an acute angle that forms a triangle with one 'edge' of the quadrant. This may be a little confusing to begin with, so there will be diagrams attached to explain. If you have any issues with these conversions, feel free to consult the radians worksheet. You can also find $tan(\theta)$ by using that $tan(\theta)=\frac{sin(\theta)}{cos(\theta)}$. 
+
+It's important to note that these are the absolute values which you get from reading off of this system, as they are lengths. You can figure out the sign of your functions by considering what quadrant you are looking in; this depends on your angle, and drawing out the unit circle can often help when starting out. Whilst I have spoken in terms of opposite and adjacent sides of a triangle, when using the unit circle it turns out that the magnitude of $cos(\theta)$ will always be the x coordinate and the magnitude of $sin(\theta)$ always the y coordinate. This means that $tan(\theta)= \frac{y}{x}$ As such, you can see that an angle over 90 degrees but less than 180 degrees will be in a quadrant where y is positive and x is negative. This means that your value for $sin(\theta)$ is positive and $cos(\theta)$ is negative. Because they are not the same sign, $tan(\theta)$ will also be negative.
+
+Now the issue comes from what to do with angles greater than 360 degrees or $2 \pi$ radians? This can be solved by using the fact that all trigonometric functions are periodic with a period of 360 degrees or $2\pi$ radians. They repeat the same pattern, and so a value of $sin(\theta)$ would be equal to a value of $sin(\theta+2\pi)$ or $sin(\theta-6\pi)$. Keep in mind, the last one works as $6\pi$ is an integer multiple of $2\pi$. It wouldn't work for $sin(theta-3\pi)$ for this reason. 
+
 
 
 
