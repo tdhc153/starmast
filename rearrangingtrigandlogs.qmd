@@ -12,7 +12,7 @@ library("webexercises")
 
 *Before reading this, you may want to read the guides on logarithms, trigonometry, radians and trigonometric identities.* 
 
-Introduction here!
+This guide should help to get a grasp of rearranging trigonometric and logarithmic equations. This can be a very useful skill, especially when considering modelling things. For example, trigonometric equations are often used to describe signal waves and motion, whereas logarithms (or exponentials) tend to be used when describing growth and decay.
 
 ## Trigonometric equations {-}
 
@@ -24,7 +24,7 @@ These are one step problems, and you will normally have a calculator to solve th
 
 If not, it's likely the angle has a commonly known value, for example $\cos(\frac{\pi}{2})=0$. A table of these known values is given in the guide on Trigonometry. 
 
-An important factor to note is that throughout this guide, you will be finding a correct answer, not the correct answer. Due to the periodic nature of trigonometric functions (thinking of the graph can help visualise this- if you draw a horizontal line across the graph, it will cross more than once!), 
+An important factor to note is that throughout this guide, you will be finding a correct answer, not the correct answer. This is due to the periodic nature of trigonometric functions (thinking of the graph can help visualise this- if you draw a horizontal line across the graph, it will cross more than once!), 
 
 There are infinite answers to trigonometric equations. The way you can find the other answers is by adding or subtracting $2\pi$ radians or 360 degrees (or an integer multiple of) from your answer.
 
@@ -38,7 +38,7 @@ Lets say you want to solve $$\cos(3x+15)=0.5$$
 
 A good first step is to rename $3x+15$ to $y$. Then, you have a familiar equation $\cos(y)=0.5$. You can rearrange this to $\cos^{-1}(0.5)=y$, which gives $y=\frac{\pi}{3}$
 
-From there, you can see that $\frac{\pi}{3}=3x+15$ from our definition of $y$. Please note, I've added in the step of naming y as I find it easier to comprehend, but if you want to use $3x+15$ the whole time, that is also a valid method. 
+From there, you can see that $\frac{\pi}{3}=3x+15$ from the definition of $y$. Please note, I've added in the step of naming y as I find it easier to comprehend, but if you want to use $3x+15$ the whole time, that is also a valid method. 
 
 You can factorise the left hand side to get $\frac{\pi}{3}= 3(x+5)$. Then you can divide both sides of the equation by 3, so that you now have x with no prefix, giving $\frac{\pi}{9}= x+5$. 
 
@@ -50,7 +50,7 @@ This example has a linear equation inside the trigonometric function, but you wo
 
 ## Quadratic trigonometric equations {-}
 
-Another type of equation will be a quadratic equation cleverly disguised as a trigonometric equation. This is almost the opposite method from the one just above it. 
+Another type of equation will be a quadratic equation cleverly disguised as a trigonometric one. This is almost the opposite method from the one just above it. 
 
 For this, you will want to treat the trigonometric function as the variable and solve the quadratic normally, before using the method above to find the final answer. 
 
@@ -113,7 +113,7 @@ Remember that $\log_{a}{b}=c$ and $a^c=b$ are interchangeable.
 
 :::
 
-So one type of equation will likely be similar to this: $5^x=25$. If you use the format above, you can label a=5, b=25, and c=x. Then, you would rewrite in the form $\log_a{b}=\log_5{25}=x$, giving $x=2$. 
+So one type of equation will likely be similar to $5^x=25$. If you use the format above, you can label a=5, b=25, and c=x. Then, you would rewrite in the form $\log_a{b}=\log_5{25}=x$, giving $x=2$. This is commonly phrased as asking a question about modelling some form of exponential growth. 
 
 Another type may be to have an equation inside the logarithm. Lets take a look at an example to explain this one.
 
@@ -142,6 +142,56 @@ You start by rewriting the left hand side of the equation into one logarithm. Th
 Now, you should rewrite this as an exponential to get $10^2= \frac{4x}{3}$. To finish solving, you will divide both sides by $\frac{4}{3}$. This gives that $x=75$.
 
 :::
+
+::: {.callout-note appearance="simple"}
+
+## Example 7
+
+Here's a little example/proof which should help to understand the next example more completely. 
+
+Lets have a look at an equation where a number is raised to the power of a logarithm in its own base. 
+
+$$e^{\log_e(x)}=y$$ Find y in terms of x.
+
+Firstly, label up the equation according to the note at the start of this. This gives a=e, b=y, c=$\log_e(x)$. From there, rewrite the equation as a logarithm, $\log_e(y)=\log_e(x)$. This means that $y=x$. We can say this for a log function but not for, lets say, a trigonometric function, as log functions don't have repeating values. 
+
+On a wider scale, this proves that $$a^{\log_a(b)}=b$$. Whilst e was the base used in this example, it doesn't affect the outcome. You can repeat this exercise with a base of 2 if you would like to confirm. 
+
+:::
+
+
+Another use of logarithms is in solving simultaneous equations. This takes advantage of the relationship between logarithms and exponentials.
+
+::: {.callout-note appearance="simple"}
+
+## Example 8
+
+Solve this set of simultaneous equations
+$$e^y=2x+1$$
+$$\ln(3x)=y$$
+The first step for this problem would to be to substitute $y=\ln(3x)$ into the first equation. This gives $e^{\ln(3x)}=2x+1$. Now, lets label: a=e, b=2x+1 and c=$\ln(3x)$. 
+
+Thus, refer to our example 7 to see that $3x=2x+1$. Subtracting 2x from either side gives that $x=1$. Substituting this back into our equation gives that $y=\ln(3)$ or approximately 1.099.
+
+:::
+
+Another example of the relationship between logarithms and exponentials.
+
+::: {.callout-note appearance="simple"}
+
+## Example 9
+
+Solve $$5e^{-x}+3e^x=9$$
+
+To start with this problem, you should multiply everything by $e^x$, giving $5+3e^{2x}=9e^x$. 
+
+Lets rename $e^x=y$, which should hopefully give a more familiar equation: $5+3y^2=9y$. You can rearrange and solve this quadratic using the quadratic equation. This gives y=$\frac{9+\sqrt{21}}{16}$ or $\frac{9-\sqrt{21}}{16}$. 
+
+$e^x=y$ implies that $\ln(y)=x$, so you substitute y into this equation to give your final answer. This leaves you with x=$\ln{(\frac{9+\sqrt{21}}{16})}$ or $\ln{(\frac{9-\sqrt{21}}{16})}$, which are (to 3sf) -0.164 and -1.29 respectively. 
+
+:::
+
+
 
 ## Quick check problems {-}
 
