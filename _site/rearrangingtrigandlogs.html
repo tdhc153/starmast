@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
 </style>
 
 
@@ -57,6 +62,7 @@ ul.task-list{list-style: none;}
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="webexfiles/webex.css">
@@ -68,30 +74,34 @@ ul.task-list{list-style: none;}
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="./index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">STARMAST</span>
-  </a>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">Home</a>
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
+    <a class="nav-link" href="./about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
 </a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -101,7 +111,7 @@ ul.task-list{list-style: none;}
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -111,7 +121,7 @@ ul.task-list{list-style: none;}
   <li><a href="#logarithmic-equations" id="toc-logarithmic-equations" class="nav-link" data-scroll-target="#logarithmic-equations">Logarithmic equations</a></li>
   <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="rearrangingtrigandlogs.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="rearrangingtrigandlogs.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -132,6 +142,7 @@ ul.task-list{list-style: none;}
           </div>
   </div>
     
+  
     
   </div>
   
@@ -144,23 +155,23 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<p><em>Before reading this, you may want to read the guides on logarithms, trigonometry, radians and trigonometric identities.</em></p>
+<p><em>Before reading this, you may want to read the guides on logarithms, trigonometry, radians, and trigonometric identities.</em></p>
 <p>This guide should help to get a grasp of rearranging trigonometric and logarithmic equations. This can be a very useful skill, especially when considering modelling things. For example, trigonometric equations are often used to describe signal waves and motion, whereas logarithms (or exponentials) tend to be used when describing growth and decay.</p>
 <section id="trigonometric-equations" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="trigonometric-equations">Trigonometric equations</h2>
 <p>The first instance of trigonometric equations you will probably come across will be in the form <span class="math inline">\(\cos(x)=\)</span> a constant and you want to find the angle x.</p>
 <p>Let’s take <span class="math inline">\(\cos(x)=0.15\)</span> for an example. This can be done by using your calculator to find <span class="math inline">\(\cos^{-1}(0.15)\)</span>.</p>
 <p>These are one step problems, and you will normally have a calculator to solve them.</p>
-<p>If not, it’s likely the angle has a commonly known value, for example <span class="math inline">\(\cos(\frac{\pi}{2})=0\)</span>. A table of these known values is given in the guide on Trigonometry.</p>
+<p>If not, it’s likely the angle has a commonly known value, for example <span class="math inline">\(\cos(\frac{\pi}{2})=0\)</span>. A table of these known values is given in the guide on Trigonometry. It may also be the case that you can use a double angle formula to find it using known values.</p>
 <p>An important factor to note is that throughout this guide, you will be finding a correct answer, not the correct answer. This is due to the periodic nature of trigonometric functions (thinking of the graph can help visualise this- if you draw a horizontal line across the graph, it will cross more than once!),</p>
 <p>There are infinite answers to trigonometric equations. The way you can find the other answers is by adding or subtracting <span class="math inline">\(2\pi\)</span> radians or 360 degrees (or an integer multiple of) from your answer.</p>
 <p>The next set of trigonometric equations you are likely to find are in a similar format. This time, however, instead of just x there would be an equation involving x. To solve this, you would solve as the first method, then set that equal to your equation.</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 1
 </div>
 </div>
@@ -183,31 +194,29 @@ Example 1
 <section id="trigonometric-equations-which-use-identities" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="trigonometric-equations-which-use-identities">Trigonometric equations which use identities</h2>
 <p>The majority of trigonometric equations will make use of trigonometric identities (See the guide for a list of those). For example, if you see an equation you want to solve which includes a mixture of sin, cos, tan etc, identities should be the first place you look in order to solve it.</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 2
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let’s start with the equation</p>
-<p><span class="math display">\[4\cos^{2}(x)+6\sin^{2}(x)-6=0\]</span></p>
-<p>Initially, you can’t solve this equation using the methods described above. This is where trigonometric identities play an important role. This equation can be solved using the fact that <span class="math inline">\(\cos^{2}(x)+\sin^2(x)=1\)</span>. The way that you know to use this identity is that the equation involves <span class="math inline">\(\cos^2(x)\)</span> and <span class="math inline">\(\sin^2(x)\)</span>.</p>
+<p>Let’s start with the equation <span class="math display">\[4\cos^{2}(x)+6\sin^{2}(x)-6=0\]</span> Initially, you can’t solve this equation using the methods described above. This is where trigonometric identities play an important role. This equation can be solved using the fact that <span class="math inline">\(\cos^{2}(x)+\sin^2(x)=1\)</span>. The way that you know to use this identity is that the equation involves <span class="math inline">\(\cos^2(x)\)</span> and <span class="math inline">\(\sin^2(x)\)</span>.</p>
 <p>Firstly, lets rewrite as <span class="math inline">\(4\cos^2(x)+4\sin^2(x)+2\sin^2(x)-6=0\)</span> and from there, <span class="math inline">\(4(\cos^2(x)+\sin^2(x))+2\sin^2(x)-6=0\)</span>. Then, use the identity to say that <span class="math inline">\(4(1)+2\sin^2(x)-6=0\)</span>.</p>
 <p>You can then move the constants to the left hand side and say that <span class="math inline">\(2\sin^2(x)= 2\)</span>, or <span class="math inline">\(\sin^2(x)=1\)</span>. Remember that <span class="math inline">\(\sin^2(x)= {\sin(x)}^2\)</span></p>
 <p>Note that this is NOT the case for <span class="math inline">\(\sin^{-1}(x)\)</span>, as that is describing the inverse of a function, not raising to the power of -1.</p>
 <p>Using that, you can rewrite this as <span class="math inline">\(\sin(x)=\sqrt{1}=1\)</span>. Then, find the inverse sin <span class="math inline">\(\sin^{-1}(1)=\frac{\pi}{2}\)</span>.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 3
 </div>
 </div>
@@ -216,12 +225,12 @@ Example 3
 <p>To prove this you use the identity <span class="math inline">\(\sec^2(x)=\tan^2(x)+1\)</span>. You can work from either side, but I find it easier to replace <span class="math inline">\(\sec^2(x)\)</span>, giving the equation <span class="math inline">\(4(\tan^2(x)+1)+3\)</span> on the left hand side. Now, expanding the brackets should give your final answer.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Example 4
 </div>
 </div>
@@ -232,16 +241,49 @@ Example 4
 <p>Finally, multiplying both sides by <span class="math inline">\(\cos^2(x)\)</span> will leave your identity: <span class="math inline">\(1= \cos^2(x)+\sin^2(x)\)</span></p>
 </div>
 </div>
-</section>
-<section id="logarithmic-equations" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="logarithmic-equations">Logarithmic equations</h2>
-<p>Here’s a quick reminder that you may want to reread the guide on logarithms before starting this section.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<p>Another type of trigonometric trick you are likely to come across are known as R equations. These allow you a way to rewrite equations in terms of sin and cos in to an equation in either sin or cos. They make use of the addition formula.</p>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>##Addition formula</p>
+<p><span class="math display">\[\sin(x\pm\theta)=\sin(x)\cos(\theta)\pm\cos(x)\sin(\theta)\]</span> <span class="math display">\[\cos(x\pm\theta)=\cos(x)cos(\theta)\mp\sin(x)\sin(\theta)\]</span></p>
+</div>
+</div>
+<p>R equations will have you rewrite an equation in the form <span class="math inline">\(A\cos(x)\pmB\sin(x)\)</span> as <span class="math inline">\(R\cos(x\pm\theta)\)</span> or <span class="math inline">\(R\sin(x\pm\theta)\)</span>. Let’s try an example!</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[2\sin(x)+6\cos(x)= R\cos(x+\theta)\]</span> Determine R and <span class="math inline">\(\theta\)</span>.</p>
+<p>You will start by rewriting the right hand side of the equation using the appropriate addition formulae. This gives <span class="math inline">\(2\sin(x)+6\cos(x)=R\cos(\theta)\cos(x)-R\sin(\theta)\sin(x)\)</span>. Now, we can compare coefficients on either side of the equation. For this to be true for all values of x, the coefficients before sin and cos must match on each side. This means that <span class="math inline">\(2=R\cos(\theta)\)</span> and <span class="math inline">\(6=R\sin(\theta)\)</span>.</p>
+<p>Now, it’s time to find <span class="math inline">\(\theta\)</span>. By using that <span class="math inline">\(\tan(\theta)=\frac{\sin(\theta)}{\cos(\theta)}\)</span>, you can see that you want to divide the equation in terms of sin by the one in terms of cos. This leaves you with <span class="math inline">\(\tan(\theta)=3\)</span>, or <span class="math inline">\(\theta=1.25\)</span> to 3sf.</p>
+<p>To find R, you need to use <span class="math inline">\(\cos^2(\theta)+\sin^2(\theta)=1\)</span>. To do this, square both equations and add them, giving <span class="math inline">\(R^2(\cos^2(\theta)+\sin^2(\theta))=2^2+6^2\)</span> and realise that you can simplify this to <span class="math inline">\(R^2= 40\)</span>, or <span class="math inline">\(R=2\sqrt{10}\)</span>, which is approximately 6.32.</p>
+<p>Therefore, you can say <span class="math inline">\(2\sin(x)+6\cos(x)= 2\sqrt{10}\cos(x+1.25)\)</span>. This method can be helpful if given an equation such as <span class="math inline">\(2\sin(x)+6\cos(x)= 5\)</span>, where you would need to rewrite it as <span class="math inline">\(2\sqrt{10}\cos(x+1.25)=5\)</span> to solve.</p>
+</div>
+</div>
+</section>
+<section id="logarithmic-equations" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="logarithmic-equations">Logarithmic equations</h2>
+<p>Here’s a quick reminder that you may want to reread the guide on logarithms before starting this section.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
 Tip
 </div>
 </div>
@@ -251,28 +293,27 @@ Tip
 </div>
 <p>So one type of equation will likely be similar to <span class="math inline">\(5^x=25\)</span>. If you use the format above, you can label a=5, b=25, and c=x. Then, you would rewrite in the form <span class="math inline">\(\log_a{b}=\log_5{25}=x\)</span>, giving <span class="math inline">\(x=2\)</span>. This is commonly phrased as asking a question about modelling some form of exponential growth.</p>
 <p>Another type may be to have an equation inside the logarithm. Lets take a look at an example to explain this one.</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Example 5
+<div class="callout-title-container flex-fill">
+Example 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[\log_{10}(5x+7)=1\]</span></p>
-<p>You want to find x. Using the tip from above, you can rewrite this as: <span class="math inline">\(10^1=5x+7\)</span>. From there, you can subtract 7 from both sides, giving <span class="math inline">\(3=5x\)</span> and then divide both sides by 5, giving <span class="math inline">\(x=\frac{3}{5}\)</span>.</p>
+<p><span class="math display">\[\log_{10}(5x+7)=1\]</span> You want to find x. Using the tip from above, you can rewrite this as: <span class="math inline">\(10^1=5x+7\)</span>. From there, you can subtract 7 from both sides, giving <span class="math inline">\(3=5x\)</span> and then divide both sides by 5, giving <span class="math inline">\(x=\frac{3}{5}\)</span>.</p>
 </div>
 </div>
 <p>You may also come across equations which are similar to the one above, but cleverly hidden through logarithm rules. Lets go through one of those.</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Example 6
+<div class="callout-title-container flex-fill">
+Example 7
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -282,13 +323,13 @@ Example 6
 <p>Now, you should rewrite this as an exponential to get <span class="math inline">\(10^2= \frac{4x}{3}\)</span>. To finish solving, you will divide both sides by <span class="math inline">\(\frac{4}{3}\)</span>. This gives that <span class="math inline">\(x=75\)</span>.</p>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Example 7
+<div class="callout-title-container flex-fill">
+Example 8
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -300,31 +341,28 @@ Example 7
 </div>
 </div>
 <p>Another use of logarithms is in solving simultaneous equations. This takes advantage of the relationship between logarithms and exponentials.</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Example 8
+<div class="callout-title-container flex-fill">
+Example 9
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Solve this set of simultaneous equations</p>
-<p><span class="math display">\[e^y=2x+1\]</span></p>
-<p><span class="math display">\[\ln(3x)=y\]</span></p>
-<p>The first step for this problem would to be to substitute <span class="math inline">\(y=\ln(3x)\)</span> into the first equation. This gives <span class="math inline">\(e^{\ln(3x)}=2x+1\)</span>. Now, lets label: a=e, b=2x+1 and c=<span class="math inline">\(\ln(3x)\)</span>.</p>
-<p>Thus, refer to our example 7 to see that <span class="math inline">\(3x=2x+1\)</span>. Subtracting 2x from either side gives that <span class="math inline">\(x=1\)</span>. Substituting this back into our equation gives that <span class="math inline">\(y=\ln(3)\)</span> or approximately 1.099.</p>
+<p>Solve this set of simultaneous equations <span class="math display">\[e^y=2x+1\]</span> <span class="math display">\[\ln(3x)=y\]</span> The first step for this problem would to be to substitute <span class="math inline">\(y=\ln(3x)\)</span> into the first equation. This gives <span class="math inline">\(e^{\ln(3x)}=2x+1\)</span>. Now, lets label: a=e, b=2x+1 and c=<span class="math inline">\(\ln(3x)\)</span>.</p>
+<p>Thus, refer to our example 8 to see that <span class="math inline">\(3x=2x+1\)</span>. Subtracting 2x from either side gives that <span class="math inline">\(x=1\)</span>. Substituting this back into our equation gives that <span class="math inline">\(y=\ln(3)\)</span> or approximately 1.099.</p>
 </div>
 </div>
 <p>Another example of the relationship between logarithms and exponentials.</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Example 9
+<div class="callout-title-container flex-fill">
+Example 10
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -332,6 +370,36 @@ Example 9
 <p>To start with this problem, you should multiply everything by <span class="math inline">\(e^x\)</span>, giving <span class="math inline">\(5+3e^{2x}=9e^x\)</span>.</p>
 <p>Lets rename <span class="math inline">\(e^x=y\)</span>, which should hopefully give a more familiar equation: <span class="math inline">\(5+3y^2=9y\)</span>. You can rearrange and solve this quadratic using the quadratic equation. This gives y=<span class="math inline">\(\frac{9+\sqrt{21}}{16}\)</span> or <span class="math inline">\(\frac{9-\sqrt{21}}{16}\)</span>.</p>
 <p><span class="math inline">\(e^x=y\)</span> implies that <span class="math inline">\(\ln(y)=x\)</span>, so you substitute y into this equation to give your final answer. This leaves you with x=<span class="math inline">\(\ln{(\frac{9+\sqrt{21}}{16})}\)</span> or <span class="math inline">\(\ln{(\frac{9-\sqrt{21}}{16})}\)</span>, which are (to 3sf) -0.164 and -1.29 respectively.</p>
+</div>
+</div>
+<p>A final thing you may want to consider is how to solve an equationn if you have logarithms in different bases. This will make use of the change of base formula.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Change of base formula
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\log_a(b)=\frac{\log_c(b)}{\log_c(a)}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\log_{8}(x)+\log_2(y)=\log_2(4y+1)\]</span> Represent y in terms of x.</p>
+<p>Begin by rewriting <span class="math inline">\(\log_{8}(x)\)</span> in base 2, using the formula. This gives <span class="math inline">\(\log_8(x)=\frac{\log_2(x)}{\log_2(8)}\)</span>. Now, you can see that <span class="math inline">\(\log_2(8)=3\)</span>, as <span class="math inline">\(2^3=8\)</span> (you can use the method in Example 6 to check this). This means that <span class="math inline">\(\log_8(x)=\frac{1}{3}\log_2(x)\)</span>.</p>
+<p>Applying how powers work with logarithms, and inserting back into the equation you want to solve gives <span class="math inline">\(\log_2(x^{\frac{1}{3}})+\log_2(y)=\log_2(4y+1)\)</span>. To get the right hand side into one log, you can say that <span class="math inline">\(\log_2(x^{\frac{1}{3}}y)\)</span> due to the rules for adding logs.</p>
+<p>As the left and right hand side are in the same base, you can then say that <span class="math inline">\(x^{\frac{1}{3}}y=4y+1\)</span>. Rearranging this gives <span class="math inline">\(y= \frac{-1}{4-x^{\frac{1}{3}}}\)</span>.</p>
 </div>
 </div>
 </section>
@@ -374,7 +442,7 @@ Example 9
 </ol>
 <p>Answer: <span class="math inline">\(x =\)</span> <input class="webex-solveme nospaces" size="4" data-answer="[&quot;1800&quot;]"></p>
 </div>
-<p><a href="./qs-rearrangingwithtrigandlogs.html">For more questions on this topic, please got o Questions: Rearranging Equations using Trigonometry and Logarithms.</a></p>
+<p><a href="./qs-rearrangingwithtrigandlogs.html">For more questions on this topic, please go to Questions: Rearranging Equations using Trigonometry and Logarithms.</a></p>
 
 
 </section>
@@ -657,6 +725,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         }
       }
     }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
   }
   const isFileUrl = () => { 
     return window.location.protocol === 'file:';
@@ -708,7 +786,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   // Switch to dark mode if need be
   if (hasAlternateSentinel()) {
     toggleColorMode(true);
-  } 
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -716,9 +796,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -730,7 +824,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -758,31 +869,136 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
