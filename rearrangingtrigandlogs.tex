@@ -1,0 +1,626 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  12pt,
+  a4paper, oneside]{starmastarticle}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[top=25mm,left=25mm,right=25mm,bottom=25mm]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{setspace}
+\renewcommand{\familydefault}{cmss}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{fancyhdr}
+\onehalfspacing
+\renewcommand{\arraystretch}{1.2}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0em}
+\newcommand{\mb}[1]{\mathbb{#1}} % blackboard bold
+\newcommand{\mc}[1]{\mathcal{#1}} % calligraphic
+\newcommand{\mf}[1]{\mathfrak{#1}} % fraktur
+\newcommand{\ms}[1]{\mathscr{#1}} % script
+\newcommand{\vb}[1]{\mathbf{#1}} % vector bold
+\newcommand{\from}{\leftarrow}
+\newcommand{\dne}{\hfill \qed \vspace{0.3cm}} % end of proof symbol
+\newcommand{\abs}[1]{\left|#1\right|} % modulus signs
+\newcommand{\norm}[1]{\left|\left|#1\right|\right|} % norm signs
+\renewcommand{\Re}{\mathrm{Re}}
+\renewcommand{\Im}{\mathrm{Im}}
+\newcommand{\im}{\mathrm{im}}
+\newcommand{\ds}{\displaystyle}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Introduction to rearranging equations involving trigonometry and logarithms},
+  pdfauthor={Ellie Gurini, Krish Chaudhary, Mark Toner},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Introduction to rearranging equations involving trigonometry and
+logarithms}
+\author{Ellie Gurini, Krish Chaudhary, Mark Toner}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+This guide serves to introduce rearranging equations involving
+trigonometry and logarithms. This can be a useful skill, especially when
+considering the uses trigonometry has in describing motion.
+\end{abstract}
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, interior hidden, enhanced, sharp corners, breakable, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}]}{\end{tcolorbox}}\fi
+
+\emph{Before reading this, you may want to read the guides on
+logarithms, trigonometry, radians and trigonometric identities.}
+
+This guide should help to get a grasp of rearranging trigonometric and
+logarithmic equations. This can be a very useful skill, especially when
+considering modelling things. For example, trigonometric equations are
+often used to describe signal waves and motion, whereas logarithms (or
+exponentials) tend to be used when describing growth and decay.
+
+\hypertarget{trigonometric-equations}{%
+\subsection*{Trigonometric equations}\label{trigonometric-equations}}
+\addcontentsline{toc}{subsection}{Trigonometric equations}
+
+The first instance of trigonometric equations you will probably come
+across will be in the form \(\cos(x)=\) a constant and you want to find
+the angle x.
+
+Let's take \(\cos(x)=0.15\) for an example. This can be done by using
+your calculator to find \(\cos^{-1}(0.15)\).
+
+These are one step problems, and you will normally have a calculator to
+solve them.
+
+If not, it's likely the angle has a commonly known value, for example
+\(\cos(\frac{\pi}{2})=0\). A table of these known values is given in the
+guide on Trigonometry.
+
+An important factor to note is that throughout this guide, you will be
+finding a correct answer, not the correct answer. This is due to the
+periodic nature of trigonometric functions (thinking of the graph can
+help visualise this- if you draw a horizontal line across the graph, it
+will cross more than once!),
+
+There are infinite answers to trigonometric equations. The way you can
+find the other answers is by adding or subtracting \(2\pi\) radians or
+360 degrees (or an integer multiple of) from your answer.
+
+The next set of trigonometric equations you are likely to find are in a
+similar format. This time, however, instead of just x there would be an
+equation involving x. To solve this, you would solve as the first
+method, then set that equal to your equation.
+
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, rightrule=.15mm, breakable, left=2mm, colback=white, bottomrule=.15mm, arc=.35mm, toprule=.15mm, opacityback=0, colframe=quarto-callout-note-color-frame]
+\begin{minipage}[t]{5.5mm}
+\textcolor{quarto-callout-note-color}{\faInfo}
+\end{minipage}%
+\begin{minipage}[t]{\textwidth - 5.5mm}
+
+\textbf{Example 1}\vspace{2mm}
+
+Lets say you want to solve \[\cos(3x+15)=0.5\]
+
+A good first step is to rename \(3x+15\) to \(y\). Then, you have a
+familiar equation \(\cos(y)=0.5\). You can rearrange this to
+\(\cos^{-1}(0.5)=y\), which gives \(y=\frac{\pi}{3}\)
+
+From there, you can see that \(\frac{\pi}{3}=3x+15\) from the definition
+of \(y\). Please note, I've added in the step of naming y as I find it
+easier to comprehend, but if you want to use \(3x+15\) the whole time,
+that is also a valid method.
+
+You can factorise the left hand side to get \(\frac{\pi}{3}= 3(x+5)\).
+Then you can divide both sides of the equation by 3, so that you now
+have x with no prefix, giving \(\frac{\pi}{9}= x+5\).
+
+After this, subtract 5 from both sides to isolate x:
+\(\frac{\pi}{9}-5 =x\). In some cases that will be an appropriate answer
+(for example in maths or this exercise), other times you may want to
+give a number (like if you are solving a physics problem). In this case
+\(x= -4.65\) to 3 significant figures.
+
+This example has a linear equation inside the trigonometric function,
+but you would follow the same steps for a quadratic equation in the
+function. In that case, you would just be solving where your value for
+\(y\) is equal to a quadratic equation, using the methods enclosed in
+the guide on Quadratic equations.
+
+\end{minipage}%
+\end{tcolorbox}
+
+\hypertarget{quadratic-trigonometric-equations}{%
+\subsection*{Quadratic trigonometric
+equations}\label{quadratic-trigonometric-equations}}
+\addcontentsline{toc}{subsection}{Quadratic trigonometric equations}
+
+Another type of equation will be a quadratic equation cleverly disguised
+as a trigonometric one. This is almost the opposite method from the one
+just above it.
+
+For this, you will want to treat the trigonometric function as the
+variable and solve the quadratic normally, before using the method above
+to find the final answer.
+
+For example, for \(4\sin^{2}(x)+6\sin(x)+7=0\), you would solve the
+equation \(4y^2+6y+7=0\) and then set \(y=\sin(x)\) and solve; by this
+point, y will be a constant. For more information on solving quadratic
+equations see the Quadratic Equations guide.
+
+\hypertarget{trigonometric-equations-which-use-identities}{%
+\subsection*{Trigonometric equations which use
+identities}\label{trigonometric-equations-which-use-identities}}
+\addcontentsline{toc}{subsection}{Trigonometric equations which use
+identities}
+
+The majority of trigonometric equations will make use of trigonometric
+identities (See the guide for a list of those). For example, if you see
+an equation you want to solve which includes a mixture of sin, cos, tan
+etc, identities should be the first place you look in order to solve it.
+
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, rightrule=.15mm, breakable, left=2mm, colback=white, bottomrule=.15mm, arc=.35mm, toprule=.15mm, opacityback=0, colframe=quarto-callout-note-color-frame]
+\begin{minipage}[t]{5.5mm}
+\textcolor{quarto-callout-note-color}{\faInfo}
+\end{minipage}%
+\begin{minipage}[t]{\textwidth - 5.5mm}
+
+\textbf{Example 2}\vspace{2mm}
+
+Let's start with the equation \[4\cos^{2}(x)+6\sin^{2}(x)-6=0\]
+Initially, you can't solve this equation using the methods described
+above. This is where trigonometric identities play an important role.
+This equation can be solved using the fact that
+\(\cos^{2}(x)+\sin^2(x)=1\). The way that you know to use this identity
+is that the equation involves \(\cos^2(x)\) and \(\sin^2(x)\).
+
+Firstly, lets rewrite as \(4\cos^2(x)+4\sin^2(x)+2\sin^2(x)-6=0\) and
+from there, \(4(\cos^2(x)+\sin^2(x))+2\sin^2(x)-6=0\). Then, use the
+identity to say that \(4(1)+2\sin^2(x)-6=0\).
+
+You can then move the constants to the left hand side and say that
+\(2\sin^2(x)= 2\), or \(\sin^2(x)=1\). Remember that
+\(\sin^2(x)= {\sin(x)}^2\)
+
+Note that this is NOT the case for \(\sin^{-1}(x)\), as that is
+describing the inverse of a function, not raising to the power of -1.
+
+Using that, you can rewrite this as \(\sin(x)=\sqrt{1}=1\). Then, find
+the inverse sin \(\sin^{-1}(1)=\frac{\pi}{2}\).
+
+\end{minipage}%
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, rightrule=.15mm, breakable, left=2mm, colback=white, bottomrule=.15mm, arc=.35mm, toprule=.15mm, opacityback=0, colframe=quarto-callout-note-color-frame]
+\begin{minipage}[t]{5.5mm}
+\textcolor{quarto-callout-note-color}{\faInfo}
+\end{minipage}%
+\begin{minipage}[t]{\textwidth - 5.5mm}
+
+\textbf{Example 3}\vspace{2mm}
+
+Prove that \(4\sec^2(x)+3= 4\tan^2(x)+7\).
+
+To prove this you use the identity \(\sec^2(x)=\tan^2(x)+1\). You can
+work from either side, but I find it easier to replace \(\sec^2(x)\),
+giving the equation \(4(\tan^2(x)+1)+3\) on the left hand side. Now,
+expanding the brackets should give your final answer.
+
+\end{minipage}%
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, rightrule=.15mm, breakable, left=2mm, colback=white, bottomrule=.15mm, arc=.35mm, toprule=.15mm, opacityback=0, colframe=quarto-callout-note-color-frame]
+\begin{minipage}[t]{5.5mm}
+\textcolor{quarto-callout-note-color}{\faInfo}
+\end{minipage}%
+\begin{minipage}[t]{\textwidth - 5.5mm}
+
+\textbf{Example 4}\vspace{2mm}
+
+Trigonometric identities aren't mutually exclusive. For example, you can
+use that \(\sec^2(x)=1+\tan^2(x)\) to prove that
+\(\cos^2(x)+\sin^2(x)=1\).
+
+Firstly, rewrite \(\sec^2(x)\) and \(\tan^2(x)\) in terms of \(\cos(x)\)
+and \(\sin(x)\). This gives the equation
+\(\frac{1}{\cos^2(x)}= 1 + \frac{\sin^2(x)}{\cos^2(x)}\).
+
+Now, you can rewrite 1 as \(\frac{\cos^2(x)}{\cos^2(x)}\), and get that
+\(\frac{1}{\cos^2(x)}=\frac{\cos^2(x)+\sin^2(x)}{\cos^2(x)}\).
+
+Finally, multiplying both sides by \(\cos^2(x)\) will leave your
+identity: \(1= \cos^2(x)+\sin^2(x)\)
+
+\end{minipage}%
+\end{tcolorbox}
+
+\hypertarget{logarithmic-equations}{%
+\subsection*{Logarithmic equations}\label{logarithmic-equations}}
+\addcontentsline{toc}{subsection}{Logarithmic equations}
+
+Here's a quick reminder that you may want to reread the guide on
+logarithms before starting this section.
+
+\begin{tcolorbox}[enhanced jigsaw, bottomtitle=1mm, colbacktitle=quarto-callout-tip-color!10!white, toprule=.15mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, colback=white, opacitybacktitle=0.6, arc=.35mm, titlerule=0mm, leftrule=.75mm, rightrule=.15mm, breakable, left=2mm, bottomrule=.15mm, toptitle=1mm, opacityback=0, coltitle=black, colframe=quarto-callout-tip-color-frame]
+
+Remember that \(\log_{a}{b}=c\) and \(a^c=b\) are interchangeable.
+
+\end{tcolorbox}
+
+So one type of equation will likely be similar to \(5^x=25\). If you use
+the format above, you can label a=5, b=25, and c=x. Then, you would
+rewrite in the form \(\log_a{b}=\log_5{25}=x\), giving \(x=2\). This is
+commonly phrased as asking a question about modelling some form of
+exponential growth.
+
+Another type may be to have an equation inside the logarithm. Lets take
+a look at an example to explain this one.
+
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, rightrule=.15mm, breakable, left=2mm, colback=white, bottomrule=.15mm, arc=.35mm, toprule=.15mm, opacityback=0, colframe=quarto-callout-note-color-frame]
+\begin{minipage}[t]{5.5mm}
+\textcolor{quarto-callout-note-color}{\faInfo}
+\end{minipage}%
+\begin{minipage}[t]{\textwidth - 5.5mm}
+
+\textbf{Example 5}\vspace{2mm}
+
+\[\log_{10}(5x+7)=1\] You want to find x. Using the tip from above, you
+can rewrite this as: \(10^1=5x+7\). From there, you can subtract 7 from
+both sides, giving \(3=5x\) and then divide both sides by 5, giving
+\(x=\frac{3}{5}\).
+
+\end{minipage}%
+\end{tcolorbox}
+
+You may also come across equations which are similar to the one above,
+but cleverly hidden through logarithm rules. Lets go through one of
+those.
+
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, rightrule=.15mm, breakable, left=2mm, colback=white, bottomrule=.15mm, arc=.35mm, toprule=.15mm, opacityback=0, colframe=quarto-callout-note-color-frame]
+\begin{minipage}[t]{5.5mm}
+\textcolor{quarto-callout-note-color}{\faInfo}
+\end{minipage}%
+\begin{minipage}[t]{\textwidth - 5.5mm}
+
+\textbf{Example 6}\vspace{2mm}
+
+\[\log_{10}(4x)-\log_{10}(3)=2\]
+
+Find x.
+
+You start by rewriting the left hand side of the equation into one
+logarithm. The guide on logarithms should have a section on this. This
+will give you \(\log_{10}(\frac{4x}{3})=2\).
+
+Now, you should rewrite this as an exponential to get
+\(10^2= \frac{4x}{3}\). To finish solving, you will divide both sides by
+\(\frac{4}{3}\). This gives that \(x=75\).
+
+\end{minipage}%
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, rightrule=.15mm, breakable, left=2mm, colback=white, bottomrule=.15mm, arc=.35mm, toprule=.15mm, opacityback=0, colframe=quarto-callout-note-color-frame]
+\begin{minipage}[t]{5.5mm}
+\textcolor{quarto-callout-note-color}{\faInfo}
+\end{minipage}%
+\begin{minipage}[t]{\textwidth - 5.5mm}
+
+\textbf{Example 7}\vspace{2mm}
+
+Here's a little example/proof which should help to understand the next
+example more completely.
+
+Lets have a look at an equation where a number is raised to the power of
+a logarithm in its own base.
+
+\[e^{\log_e(x)}=y\] Find y in terms of x.
+
+Firstly, label up the equation according to the note at the start of
+this. This gives a=e, b=y, c=\(\log_e(x)\). From there, rewrite the
+equation as a logarithm, \(\log_e(y)=\log_e(x)\). This means that
+\(y=x\). We can say this for a log function but not for, lets say, a
+trigonometric function, as log functions don't have repeating values.
+
+On a wider scale, this proves that \[a^{\log_a(b)}=b\]. Whilst e was the
+base used in this example, it doesn't affect the outcome. You can repeat
+this exercise with a base of 2 if you would like to confirm.
+
+\end{minipage}%
+\end{tcolorbox}
+
+Another use of logarithms is in solving simultaneous equations. This
+takes advantage of the relationship between logarithms and exponentials.
+
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, rightrule=.15mm, breakable, left=2mm, colback=white, bottomrule=.15mm, arc=.35mm, toprule=.15mm, opacityback=0, colframe=quarto-callout-note-color-frame]
+\begin{minipage}[t]{5.5mm}
+\textcolor{quarto-callout-note-color}{\faInfo}
+\end{minipage}%
+\begin{minipage}[t]{\textwidth - 5.5mm}
+
+\textbf{Example 8}\vspace{2mm}
+
+Solve this set of simultaneous equations \[e^y=2x+1\] \[\ln(3x)=y\] The
+first step for this problem would to be to substitute \(y=\ln(3x)\) into
+the first equation. This gives \(e^{\ln(3x)}=2x+1\). Now, lets label:
+a=e, b=2x+1 and c=\(\ln(3x)\).
+
+Thus, refer to our example 7 to see that \(3x=2x+1\). Subtracting 2x
+from either side gives that \(x=1\). Substituting this back into our
+equation gives that \(y=\ln(3)\) or approximately 1.099.
+
+\end{minipage}%
+\end{tcolorbox}
+
+Another example of the relationship between logarithms and exponentials.
+
+\begin{tcolorbox}[enhanced jigsaw, leftrule=.75mm, rightrule=.15mm, breakable, left=2mm, colback=white, bottomrule=.15mm, arc=.35mm, toprule=.15mm, opacityback=0, colframe=quarto-callout-note-color-frame]
+\begin{minipage}[t]{5.5mm}
+\textcolor{quarto-callout-note-color}{\faInfo}
+\end{minipage}%
+\begin{minipage}[t]{\textwidth - 5.5mm}
+
+\textbf{Example 9}\vspace{2mm}
+
+Solve \[5e^{-x}+3e^x=9\]
+
+To start with this problem, you should multiply everything by \(e^x\),
+giving \(5+3e^{2x}=9e^x\).
+
+Lets rename \(e^x=y\), which should hopefully give a more familiar
+equation: \(5+3y^2=9y\). You can rearrange and solve this quadratic
+using the quadratic equation. This gives y=\(\frac{9+\sqrt{21}}{16}\) or
+\(\frac{9-\sqrt{21}}{16}\).
+
+\(e^x=y\) implies that \(\ln(y)=x\), so you substitute y into this
+equation to give your final answer. This leaves you with
+x=\(\ln{(\frac{9+\sqrt{21}}{16})}\) or
+\(\ln{(\frac{9-\sqrt{21}}{16})}\), which are (to 3sf) -0.164 and -1.29
+respectively.
+
+\end{minipage}%
+\end{tcolorbox}
+
+\hypertarget{quick-check-problems}{%
+\subsection*{Quick check problems}\label{quick-check-problems}}
+\addcontentsline{toc}{subsection}{Quick check problems}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  You are given 3 questions and there supposed solutions. Determine if
+  the solutions are True or False:
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  For \(sin(4x)= 1\) a solution is \(x =\frac{\pi}{8}\) \_\_\_\_
+\item
+  For \[tan(x+15)=\sqrt{3}\]
+\end{enumerate}
+
+a solution is \(x=\frac{\pi-15}{4}\) TRUE / FALSE.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  For \[cos(2x+25)= 0\]
+\end{enumerate}
+
+a solution is \(x=\frac{\pi+25}{4}\) TRUE / FALSE.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Using trigonometric identities solve the following. (The expected
+  identities are given in Guide: Trigonometric Identities). Please give
+  angles in degrees.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  \[x = 2sin^2(\theta) + 2cos^2(\theta)\]
+\end{enumerate}
+
+Answer: \(x =\) \_
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\item
+  \[4sin^2(\theta) + 6cos^2(\theta) - 4 =0\] Answer: \(\theta =\) \_\_
+\item
+  \(2cot^2(\theta) = csc^2(\theta)\) Answer: \(\theta =\) \_\_
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Solve the following equations for x.
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  \(\log_{3}{5x+4}=2\)
+\end{enumerate}
+
+Answer: \(x =\) \_.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \(\log_{10}{5x} - \log_{10}{9} =3\)
+\end{enumerate}
+
+Answer: \(x =\) \_\_\_\_
+
+\href{qs-rearrangingwithtrigandlogs.qmd}{For more questions on this
+topic, please got o Questions: Rearranging Equations using Trigonometry
+and Logarithms.}
+
+
+
+\end{document}
