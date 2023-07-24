@@ -375,7 +375,11 @@ Example 9
 </div>
 </div>
 <div class="callout-body-container callout-body">
-
+<p>Write <span class="math inline">\(\sum_{i=10}^{100}i\)</span> as the product of three sums</p>
+<p>There are a large number of ways to do this an example of which is:</p>
+<p><span class="math display">\[\sum_{i=10}^{11} i + \sum_{i=12}^{98} i + \sum_{i=99}^{100} i.\]</span></p>
+<p>Note that this example has not been particularly useful but is to illustrate the property in action.</p>
+<p>This property is used more when working with infinite summations.</p>
 </div>
 </div>
 </section>
@@ -422,14 +426,24 @@ Double sums and products of two sums
 <p>Let <span class="math inline">\(a_{k},a_{k+1},\ldots,a_n\)</span> and <span class="math inline">\(b_t,b_{t+1},\ldots,b_m\)</span> be two sequences of numbers (where <span class="math inline">\(k,n,t\)</span>, and <span class="math inline">\(m\)</span> are integers with <span class="math inline">\(k \leq n\)</span> and <span class="math inline">\(t \leq m\)</span>). Then <span class="math display">\[\sum_{i=k}^n\sum_{j=t}^m a_i b_j = (\sum_{i=k}^na_i)(\sum_{j=t}^mb_j).\]</span></p>
 </div>
 </div>
-<div class="callout-note callout callout-style-simple">
-<div class="callout-body d-flex">
+<div class="callout-note callout callout-style-simple callout-captioned">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
-
+<div class="callout-caption-container flex-fill">
+Example 10
 </div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Write <span class="math inline">\((1+2+3+4+5+6)(2+4+6+8+10+12)\)</span> as a double sum and as a product of two sums</p>
+<p>First, notice you can write out the above expression in the form <span class="math inline">\((1)(2) + (1)(4) + ... (1)(12) + (2)(2) + (2)(4) ... (3)(2) + ...(6)(12)\)</span></p>
+<p>From the definition above you may now rewrite the expression to the double sum</p>
+<p><span class="math display">\[\sum_{i=1}^6\sum_{j=1}^6 i*2j\]</span></p>
+<p>using the distrubitivity property this can be written as <span class="math display">\[2\sum_{i=1}^6\sum_{j=1}^6 ij\]</span></p>
+<p>This can then be written using the product of two sums rule above to <span class="math display">\[2\sum_{i=1}^6i\sum_{j=1}^6j\]</span></p>
+<p>It is evident that the two sums are the same with different index variables this means that they can be combined to form <span class="math display">\[2\sum_{k=1}^6k^2\]</span></p>
+<p><span class="math inline">\(k\)</span> has been used to differentiate the new sum from the ones involving i and j before but as always the choice of index variable is relatively unimportant</p>
 </div>
 </div>
 <div class="callout-note callout callout-style-simple callout-captioned">
@@ -448,8 +462,6 @@ Additional sums
 </section>
 <section id="quick-check-problems" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="quick-check-problems">Quick check problems</h2>
-<!-- add facility for webexercises to work on html -->
-<p>::: {.content-visible when-format=“html”}</p>
 <!-- add facility to check answers at end rather than one at a time -->
 <div class="webex-check webex-box">
 <ol type="1">
@@ -461,7 +473,7 @@ Additional sums
 </ol>
 <p>Answer: The index is <input class="webex-solveme nospaces" size="1" data-answer="[&quot;i&quot;]"></p>
 <ol start="3" type="1">
-<li>You are given three statements below. Decide whether they are true or false.</li>
+<li>You are given several statements below based on the properties of sums. Identify whether they are true or false.</li>
 </ol>
 <ol type="a">
 <li><p>The sum <span class="math inline">\(3 + 6 + 9 + 12\)</span> can be expressed as <span class="math display">\[\sum_{i = 0}^{4} 3i\]</span> Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
@@ -471,8 +483,16 @@ Additional sums
 <li><p><span class="math display">\[\sum_{i = 1}^{100} 9i + \sum_{i = 1}^{100} 3i = \sum_{i = 1}^{100} 27i^2\]</span> Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
 <li><p><span class="math display">\[\sum_{i = 1}^{100} 12i - \sum_{i = 1}^{100} 4i = 8 \sum_{i = 1}^{100} i\]</span> Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
 </ol>
+<ol start="4" type="1">
+<li>You are given several statements below based on the properties of sums. Identify whether they are true or false.</li>
+</ol>
+<ol type="a">
+<li><p><span class="math inline">\(\sum_{i=1}^{10}\sum_{j=2}^6 ij\)</span> can be expressed as <span class="math inline">\((\sum_{i=2}^6i)(\sum_{j=1}^{10} j)\)</span> Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p><span class="math inline">\((\sum_{i=1}^52i)(\sum_{j=5}^{10} 3j)\)</span> can be expressed as <span class="math inline">\(6(\sum_{i=1}^5\sum_{j=5}^{10} ij)\)</span> Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+<li><p>The sum <span class="math inline">\((1+2+3+4+5+6)(-1-2)(3+6+9)\)</span> can be expressed as <span class="math display">\[\sum_{i=1}^6\sum_{j=1}^2\sum_{k=1}^3 -3ijk\]</span> Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+</ol>
 </div>
-<p><a href="./qs-introtoquadratics.html">For more questions on the subject, please go to Questions: Introduction to quadratic equations.</a></p>
+<p><a href="./qs-sigma-notation.html">For more questions on the subject, please go to Questions: Sigma Notation.</a></p>
 </section>
 <section id="further-reading" class="level2">
 <h2 class="anchored" data-anchor-id="further-reading">Further reading</h2>
