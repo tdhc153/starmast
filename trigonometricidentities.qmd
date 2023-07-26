@@ -1,0 +1,263 @@
+---
+title: "Trigonometric Identities"
+author: "Krish Chaudhary, Shanelle Advani, Dzhemma Ruseva"
+abstract-title: Summary
+abstract: Trigonometric identities are equations expressed in terms of trigonometric functions that hold true for all values of the variable defined. It is important to familiarize yourself with the standard trigonometric identities as they come in handy later whether that be for deriving further trigonometric identities or solving integrals involving trigonometric functions. 
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+library("ggplot2")
+library(knitr)
+```
+
+*Before reading this guide, it is recommended that you read (Guide: Trigonometry) first.*
+
+## What is a trigonometric identity? {.unnumbered}
+
+Think of **trigonometric identities** as rules or shortcuts that help us solve certain types of problems involving triangles, angles, and cycles more easily.
+
+For example, if you're trying to find out information about a right triangle -- maybe you know the length of one side and the size of one angle, and you want to find out the length of another side -- trigonometric identities can help you do that.
+
+You've probably heard of the sine ($\sin$), cosine ($\cos$), and tangent ($\tan$) functions. These functions are a way of relating the angles and sides of a triangle.
+
+Trigonometric Identities are used in numerous fields of study, such as physics, engineering, astronomy, architecture, and even geography, so the knowledge you gather here could potentially be used in further studies.
+
+::: callout-note
+## Definition of Trigonometric Identity
+
+A **trigonometric identity** is a mathematical equation that is always true for any values of the variables where both sides of the equation are defined, and that involves the trigonometric functions: sine, cosine, tangent, cotangent, secant, and cosecant.
+
+These identities can be derived from the definitions of these trigonometric functions and the Pythagorean theorem, and they hold for all real numbers (and complex numbers, if you choose to expand your understanding to include complex analysis).
+
+In more technical terms, these identities are equalities that involve trigonometric functions and are true for every single value of the occurring variables. It's important to understand that trigonometric identities are not equations to solve for variables, but rather, they are tools to simplify trigonometric expressions or to solve other trigonometric equations.
+:::
+
+## Fundamental Trigonometric Identities
+
+There are several fundamental types of trigonometric identities. Each type provides a different way of relating the various trigonometric functions to one another. Here are the basic categories:
+
+1.  **Pythagorean identities**: These are derived from the Pythagorean theorem. The basic one is
+
+    -   $\sin^2(\theta) + \cos^2(\theta) = 1$.
+
+    If you divide the entire equation by $\sin^2(\theta)$ or $\cos^2(\theta)$, you get the other two identities.
+
+    -   $1 + \cot^2(\theta) = \csc^2(\theta)$
+    -   $\tan^2(\theta) + 1 = \sec^2(\theta)$
+
+::: callout-note
+## **Proof**
+
+You know $\sin(\theta)$ = $\frac{Opposite}{Hypotenuse}$ and $\cos(\theta)$ = $\frac{Adjacent}{Hypotenuse}$ (Hence referred to as O, H and A).
+
+$O = (H)(\sin(\theta))$ and $A = (H)(\cos(\theta))$
+
+From Pythagoras' Theorem, you also know:
+
+$(O)^2 + (A)^2 = (H)^2$
+
+Replacing O and A, you get
+
+${(H)(\sin(\theta))}^2 + {(H)(\cos(\theta))}^2 = (H)^2$
+
+Divide everything by $H^2$
+
+$\frac{(H)(\sin(\theta))^2}{(H)^2}$ + $\frac{{(H)(\cos(\theta))}^2}{(H)^2}$ = $\frac{(H)^2}{(H)^2}$
+
+Therefore $\sin^2(\theta) + \cos^2(\theta) = 1$
+
+You can substitute $\tan(\theta)$, $\cot(\theta)$, $\sec(\theta)$ and $\csc(\theta)$ in a similar manner to arrive to a similar conclusion for the remaining identities.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 1.1
+
+$6 + 12sin^2(\theta) + 12cos^2(\theta)$
+
+**Solution**:
+
+$= 6 + 12(\sin^2(\theta) + \cos^2(\theta))$
+
+$= 6 + 12(1)$
+
+$= 18$
+:::
+
+2.  **Reciprocal identities**: These express $\csc$, $\sec$, and $\cot$ in terms of $\sin$, $\cos$, and $\tan$.
+
+    -   $\csc(\theta) = \frac{1}{\sin(\theta)}$
+    -   $\sec(\theta) = \frac{1}{\cos(\theta)}$
+    -   $\cot(\theta) = \frac{1}{\tan(\theta)}$
+
+::: {.callout-note appearance="simple"}
+## Example 2.1
+
+Simplify $\sin(\theta)(\csc(\theta) - \sin(\theta))$ to the maximum possible extent.
+
+**Solution**:
+
+$\sin(\theta)(\csc(\theta) - \sin(\theta))$
+
+$=\sin(\theta)(\frac{1}{\sin(\theta)} - \sin(\theta))$
+
+$=(1 - \sin^2(\theta))$
+
+$= \cos^2(\theta)$
+:::
+
+3.  **Quotient identities**: These express $\tan$ and $\cot$ in terms of $\sin$ and $\cos$.
+
+    -   $\tan(\theta) = \frac{\sin(\theta)}{\cos(\theta)}$
+    -   $\cot(\theta) = \frac{\cos(\theta)}{\sin(\theta)}$
+
+::: {.callout-note appearance="simple"}
+## Example 3.1
+
+Prove $\frac{\sin(\theta)\cot(\theta)+\cos(\theta)}{2cot(\theta)} = \sin(\theta)$
+
+**Solution**:
+
+$\frac{\sin(\theta)\cot(\theta)+\cos(\theta)}{2cot(\theta)}$
+
+$= \frac{\sin(\theta)\frac{\cos(\theta)}{\sin(\theta)}+\cos(\theta)}{2cot(\theta)}$
+
+$= \frac{\cos(\theta)+\cos(\theta)}{2cot(\theta)}$
+
+$= \frac{2cos(\theta)}{2\frac{\cos(\theta)}{\sin(\theta)}}$
+
+$= \sin(\theta)$
+:::
+
+4.  **Co-Function identities**: These express $\sin$, $\cos$, and $\tan$ in terms of each other.
+
+    -   $\sin(\frac{\pi}{2}-\theta)$ = $\cos(\theta)$
+    -   $\cos(\frac{\pi}{2}-\theta)$ = $\sin(\theta)$
+    -   $\tan(\frac{\pi}{2}-\theta)$ = $\cot(\theta)$
+
+::: {.callout-note appearance="simple"}
+## Example 4.1
+
+Find $\cos(\theta)$, given $\sin(55°)$
+
+**Solution**:
+
+$\cos(\theta)$ = $\sin(90°-\theta)$
+
+$\sin(55°)$ = $\sin(90°-\theta)$
+
+$90°-\theta$ = $55°$
+
+$\theta$ = $35°$
+
+$\cos(\theta)$ = $\cos(35°)$
+:::
+
+5.  **Sum and difference identities**: These express the $sine$, $cosine$, or $tangent$ of the sum or difference of two angles in terms of sines and cosines of the angles.
+
+    -   $\sin(\alpha \pm \beta)$ = $\sin(\alpha)\cos(\beta) \pm \cos(\alpha)\sin(\beta)$
+    -   $\cos(\alpha \pm \beta)$ = $\cos(\alpha)\cos(\beta) \mp \sin(\alpha)\sin(\beta)$
+    -   $\tan(\alpha \pm \beta)$ = $\frac{\tan(\alpha) \pm \tan(\beta)}{(1 \mp \tan(\alpha)\tan(\beta))}$
+
+## Example 5.1
+
+Find the value of $\tan(15°)$
+
+**Solution**:
+
+$\tan(15°)$ = $\tan(45°- 30°)$
+
+$\tan(45°- 30°)$ = $\frac{\tan(45°) - \tan(30°)}{(1 + \tan(45°)\tan(30°))}$ 
+
+$\frac{1 - \frac{1}{\sqrt 3}}{(1 + (1)(\frac{1}{\sqrt 3})}$  = $\frac{\sqrt 3 - 1}{\sqrt 3 + 1}$
+
+$\frac{(\sqrt 3 - 1)^2}{(\sqrt 3 + 1)(\sqrt 3 - 1)}$ = $\frac{(4 - 2\sqrt3)}{2}$
+
+$(2 - \sqrt3)$
+:::
+
+6.  **Double angle identities**: These express the $sine$, $cosine$, or $tangent$ of twice an angle in terms of $sine$, $cosine$, or $tangent$ of the angle.
+
+    -   $\sin(2\theta)$ = $2sin(\theta)\cos(\theta)$
+
+        ::: callout-note
+        ## Proof
+
+        If you let $\alpha = \beta$ in the identity $\sin(\alpha + \beta)$ = $\sin(\alpha)\cos(\beta) + \cos(\alpha)\sin(\beta)$
+
+        You get $\sin(2\alpha)$ = $\sin(\alpha)\cos(\alpha) + \cos(\alpha)\sin(\alpha)$
+
+        Which is the same as $\sin(2\alpha) = 2sin(\alpha)\cos(\alpha)$
+        :::
+
+    -   $\cos(2\theta)$ = $\cos^2(\theta) - \sin^2(\theta)$
+
+        ::: callout-note
+        ## Proof
+
+        Similarly, if you let $\alpha = \beta$ in the identity $\cos(\alpha + \beta)$ = $\cos(\alpha)\cos(\beta) - \sin(\alpha)\sin(\beta)$
+
+        You get $\cos(2\alpha)$ = $\cos(\alpha)\cos(\alpha) - \sin(\alpha)\sin(\alpha)$
+
+        Which is the same as $\cos(2\alpha)$ = $\cos^2(\alpha) - \sin^2(\alpha)$
+        :::
+
+    -   $\tan(2\theta)$ = $\frac{2tan(\theta)}{(1 - \tan^2(\theta))}$
+
+        ::: callout-note
+        ## Proof
+
+        In a similar vein, if you let $\alpha = \beta$ in the identity $\tan(\alpha + \beta)$ = $\frac{\tan(\alpha) + \tan(\beta)}{(1 - \tan(\alpha)\tan(\beta))}$
+
+        You get $\tan(2\alpha)$ = $\frac{\tan(\alpha) + \tan(\alpha)}{(1 - \tan(\alpha)\tan(\alpha))}$
+
+        Which is the same as $\tan(2\alpha)$ = $\frac{2tan(\alpha)}{(1 - \tan^2(\alpha))}$
+        :::
+
+7.  **Even-Odd Identities**: These identities express the properties of even or odd functions in trigonometry.
+
+    -   $\sin(-\theta)$ = $-\sin(\theta)$
+    -   $\cos(-\theta)$ = $\cos(\theta)$
+    -   $\tan(-\theta)$ = $-\tan(\theta)$
+
+8.  **Half Angle Identities**: These identities provide expressions for the sine, cosine, or tangent of half an angle in terms of the square roots of expressions involving the sine, cosine, or tangent of the angle.
+
+    -   $\sin(\frac{\theta}{2})$ = $±\sqrt{\frac{(1 - \cos(\theta))}{2}}$
+
+        ::: callout-note
+        ## Proof
+
+        If you rearrange the double angle identity $\cos(2\theta)$ = $1 - 2sin^2(\theta)$ to make $\sin(\theta)$ the subject of the formula, it results in $\sin(\theta)$ = $±\sqrt{\frac{(1 - \cos(2\theta))}{2}}$
+
+        You can now replace $\theta$ with the variable $\frac{\theta}{2}$ to get the half angle identity.
+
+        You can use the remaining double angle identities to derive similar proofs for the other two half angle identities.
+        :::
+
+    -   $\cos(\frac{\theta}{2})$ = $±\sqrt{\frac{(1 + \cos(\theta))}{2}}$
+
+    -   $\tan(\frac{\theta}{2})$ = $±\sqrt{\frac{(1 - \cos(\theta))}{(1 + \cos(\theta))}}$ or $\frac{\sin(\theta)}{(1 + \cos(\theta))}$ or $\frac{(1-\cos(\theta))}{\sin(\theta)}$
+
+9.  **Product-to-Sum and Sum-to-Product Identities**: These let us express products of sine and cosine or sums/differences of sine and cosine as each other. They are incredibly useful in integrating products of sine and cosine and in simplifying trigonometric expressions.
+
+-   *Product-to-Sum identities are as follows*
+    -   $\sin(\alpha) \cos(\beta) = \frac{1}{2}[\sin(\alpha+\beta) + \sin(\alpha-\beta)]$
+    -   $\cos(\alpha) \cos(\beta) = \frac{1}{2}[\cos(\alpha+\beta) + \cos(\alpha-\beta)]$
+    -   $\sin(\alpha) \sin(\beta) = \frac{1}{2}[\cos(\alpha-\beta) - \cos(\alpha+\beta)]$
+-   *Sum-to-Product identities are as follows*
+    -   $\sin(\alpha) + \sin(\beta) = 2 sin(\frac{\alpha+\beta}{2}) cos(\frac{\alpha-\beta}{2})$
+    -   $\sin(\alpha) - \sin(\beta) = 2 cos(\frac{\alpha+\beta}{2}) sin(\frac{\alpha-\beta}{2})$
+    -   $\cos(\alpha) + \cos(\beta) = 2 cos(\frac{\alpha+\beta}{2}) cos(\frac{\alpha-\beta}{2})$
+    -   $\cos(\alpha) - \cos(\beta) = -2 sin(\frac{\alpha+\beta}{2}) sin(\frac{\alpha-\beta}{2})$
+
+10. **Periodicity Identities**: Also known as the circular identities, they come from the cyclic nature of the trigonometric functions which repeat their values in a specific pattern. These have to be subdivided as their nature varies based on sine, cosecant and tangent.
+
+-   ***Sine and Cosine*** are periodic functions with a period of $2\pi$. This is due to their relationship with the unit circle which has a circumference of $2\pi$. So, for any angle $\theta$,
+    -   $\sin(\theta + 2\pi) = \sin(\theta)$
+    -   $\cos(\theta + 2\pi) = \cos(\theta)$
+-   ***Tangent and Cotangent*** have a period of $π$, as they repeat their values every half rotation on the unit circle. Thus, for any angle $\theta$,
+    -   $\tan(\theta + \pi) = \tan(\theta)$
+    -   $\cot(\theta + \pi) = \cot(\theta)$
+-   ***Secant and Cosecant*** are periodic functions with a period of $2\pi$, like sine and cosine. For any angle $\theta$,
+    -   $\sec(\theta + 2\pi) = \sec(\theta)$
+    -   $\csc(\theta + 2\pi) = \csc(\theta)$
