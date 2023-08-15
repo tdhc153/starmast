@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Zheng Chen">
+
+<title>STARMAST - Introduction to the Laws of indices</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About STARMAST</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-are-indices" id="toc-what-are-indices" class="nav-link active" data-scroll-target="#what-are-indices">What are indices?</a></li>
+  <li><a href="#laws-of-indices" id="toc-laws-of-indices" class="nav-link" data-scroll-target="#laws-of-indices">Laws of indices</a></li>
+  <li><a href="#solving-equations-using-indices" id="toc-solving-equations-using-indices" class="nav-link" data-scroll-target="#solving-equations-using-indices">Solving equations using indices</a>
+  <ul class="collapse">
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="lawsofindices.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="lawsofindices.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to the Laws of indices</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zheng Chen </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Summary</div>
+    Indices are used in many aspects of modern technology. Economics, Biology, Demographics and many more fields rely on exponential growth. Chemicals, radioactive waste, sound are all examples of exponential decay. In mathematics, a knowledge of indices is important for an understanding of algebraic processes. The laws of indices enable expressions involving powers to be manipulated more efficiently than writing them out in full.
+  </div>
+</div>
+
+</header>
+
+<p><em>Before reading this guide, it is recommended that you read (Guide: Introduction to Logarithms) and (Guide: Dealing with powers and nth roots).</em></p>
+<section id="what-are-indices" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="what-are-indices">What are indices?</h2>
+<p>Indices are used to display how many times a number has been multiplied by itself. They can also be used to represent roots and fractions, such as the square root. The laws of indices make it possible to alter expressions involving powers more quickly than if they were written out whole.</p>
+<p>This guide will introduce six properties of indices: multiplication, division, brackets, powers of zero, negative indices and fractional indices.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of an index
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A number or a variable may have an <strong>index</strong>. The <strong>index</strong> of a variable (or a constant) is a value that is raised to the power of the variable. Indices are also known as powers or exponents. It shows the number of times a given number has to be multiplied. It is represented in the form</p>
+<p><span class="math display">\[ a^m =\underbrace{a\cdot a \cdot a \cdot \ldots \cdot a}_{m\textsf{ times}}\]</span></p>
+<p>Here, <span class="math inline">\(a\)</span> is the base and <span class="math inline">\(m\)</span> is the index.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Indices are basically a shorthand way of writing multiplications of the same number. Suppose you have <span class="math display">\[2·2·2·2·2\]</span> you can write this as ’<span class="math inline">\(2\)</span> to the power of <span class="math inline">\(5\)</span> <span class="math display">\[2^5\]</span> So <span class="math display">\[2^5 = 2·2·2·2·2 = 32\]</span></p>
+<p>In this example, <span class="math inline">\(2\)</span> is the base and <span class="math inline">\(5\)</span> is the index.</p>
+</div>
+</div>
+</section>
+<section id="laws-of-indices" class="level2">
+<h2 class="anchored" data-anchor-id="laws-of-indices">Laws of indices</h2>
+<p>Using indices is a way of writing something down. In mathematics you may want to use indices in other ways. For example, what do these expressions mean: <span class="math inline">\(a^{-1}\)</span> or <span class="math inline">\(a^0\)</span> or <span class="math inline">\(a^{\LARGE\frac{1}{2}}\)</span> ?</p>
+<p>To proceed further, you need to learn rules to operate with so you can find out what these notations mean.</p>
+<div id="law-1-link" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Law 1: Multiplication
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the two terms have the same base (in this case <span class="math inline">\(a\)</span>) and are multiplied together, then their indices are <strong>added</strong> (in this case <span class="math inline">\(m+n\)</span>)</p>
+<p><span class="math display">\[a^m·a^n = a^{m+n}\]</span></p>
+<p>For example:</p>
+<p>Suppose you have <span class="math inline">\(3^2\)</span> and you want to multiply it by <span class="math inline">\(3^3\)</span>. That is <span class="math display">\[3^2·3^3 = 3·3 \ \ ·\ \ 3·3·3 \]</span> which is equal to <span class="math inline">\(3^5\)</span>.</p>
+<p>Therefore, using Law 1 you can get <span class="math display">\[3^2·3^3 = 9·27 = 243 = 3^5 = 3^{2+3}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simplify the following expression: <span class="math inline">\(x^2y^3· x^3y^{-1}\)</span></p>
+<p>You can treat <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> as two separate terms and you are now simplifying <span class="math inline">\(x^2·x^3\)</span> and <span class="math inline">\(y^3·y^{-1}\)</span>. Using Law 1, you can add the indices to get: <span class="math inline">\(x^{2+3}\)</span> and <span class="math inline">\(y^{3+(-1)}\)</span>. Remembering to multiply the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> terms, you then get <span class="math display">\[x^2y^3· x^3y^{-1} = x^{2+3}y^{3-1} = x^5y^2\]</span></p>
+</div>
+</div>
+<div id="law-2-link" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Law 2: Division
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the two terms have the same base (in this case <span class="math inline">\(a\)</span>) and are to be divided, then their indices are <strong>subtracted</strong> (in this case <span class="math inline">\(m-n\)</span>)</p>
+<p><span class="math display">\[\dfrac{a^m}{a^n} = a^{m-n}\]</span> For example:</p>
+<p>Suppose you want to divide <span class="math inline">\(2^5\)</span> by <span class="math inline">\(2^3\)</span>. <span class="math display">\[\dfrac{2^5}{2^3} = \dfrac{2·2·2·2·2}{2·2·2}\]</span> You can now cancel the common factors of <span class="math inline">\(2\)</span>. Three of the <span class="math inline">\(2\)</span>’s at the bottom can be cancelled out, so you are left with <span class="math display">\[\dfrac{2·2}{1} = 2^2 = 4\]</span> Therefore, you can get <span class="math display">\[\dfrac{2^5}{2^3} = 4 = 2^2 = 2^{5-3}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simplify the following expression: <span class="math inline">\(\dfrac{x^2y^3}{x^5y}\)</span></p>
+<p>You can treat <span class="math inline">\(\dfrac{x^2y^3}{x^5y}\)</span> as the product of two fractions: <span class="math inline">\(\dfrac{x^2}{x^5}\)</span> and <span class="math inline">\(\dfrac{y^3}{y}\)</span>.<br>
+Using Law 2, you can simplify the fractions to get:&nbsp;<span class="math inline">\(\dfrac{x^2}{x^5} = x^{2-5} = x^{-3}\)</span> and <span class="math inline">\(\dfrac{y^3}{y} = y^{3-1} = y^2\)</span>, remembering to multiply the fractions, you get <span class="math display">\[\dfrac{x^2y^3}{x^5y} = x^{2-5}y^{3-1} = x^{-3}y^2\]</span></p>
+</div>
+</div>
+<div id="law-3-link" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Law 3: Brackets
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To raise a value or variable (in this case <span class="math inline">\(a\)</span>) presented in index form to another index, <strong>multiply</strong> the indices together (<span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span>) <span class="math display">\[(a^m)^n = a^{m·n}\]</span> For example:</p>
+<p>Suppose you had <span class="math inline">\(3^2\)</span> and you want to raise it all to the power of <span class="math inline">\(3\)</span>. That is <span class="math display">\[(3^2)^3\]</span> this means <span class="math display">\[3^2·3^2·3^2\]</span> <a href="#law-1-link">Law 1</a> tells you to add the indices together. So you can get <span class="math display">\[3^6\]</span> But note that <span class="math inline">\(6\)</span> is <span class="math inline">\(2·3\)</span>. This suggests that Law 3 also works. Therefore, using Law 3 you can get <span class="math display">\[(3^2)^3 = 729 = 3^6 = 3^{2·3}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simplify the following expression: <span class="math inline">\((x^2y^3)^4\)</span></p>
+<p>Using Law 3, you get <span class="math display">\[(x^2y^3)^4 = (x^2)^4·(y^3)^4 = x^{2·4}y^{3·4} = x^8y^{12}\]</span></p>
+</div>
+</div>
+<div id="law-4-link" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Law 4: Power of <span class="math inline">\(0\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Anything to the power of zero is equal to one: <span class="math display">\[a^0 = 1\]</span></p>
+<p>Note:</p>
+<p>Anything to the power of one is equal to itself <span class="math display">\[a^1 = a\]</span> and</p>
+<p><span class="math inline">\(1\)</span> to the power of anything is <span class="math inline">\(1\)</span> <span class="math display">\[1^a=1\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(0^0\)</span> is indeterminate, anything to the power of <span class="math inline">\(0\)</span> is <span class="math inline">\(1\)</span>, but <span class="math inline">\(0\)</span> to the power of anything is <span class="math inline">\(0\)</span>, so it is not defined.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simplify the following expression: <span class="math inline">\((x^2 + y^5)^0\)</span></p>
+<p>Using Law 4, you can get <span class="math display">\[(x^2 + y^5)^0 = 1\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof of Law 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#law-2-link">Law 2</a> helps to explain Law 4:</p>
+<p>Since anything divided by itself is equal to one, so <span class="math display">\[\dfrac{a^m}{a^m} = 1\]</span></p>
+<p>Also <span class="math display">\[\dfrac{a^m}{a^m} = a^{m-m} = a^0 = 1\]</span> Therefore, <span class="math display">\[a^0 = 1\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Law 5: Negative indices
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the index is a negative value, then it can be shown as the reciprocal of the positive index raised to the same variable <span class="math display">\[a^{-m} = \dfrac{1}{a^m}\]</span></p>
+<p>For example:</p>
+<p>Suppose you want to divide <span class="math inline">\(2^3\)</span> by <span class="math inline">\(2^7\)</span> <span class="math display">\[\dfrac{2^3}{2^7}=\dfrac{2·2·2}{2·2·2·2·2·2·2}\]</span> Again, you can find the common factors of <span class="math inline">\(2\)</span>. The three <span class="math inline">\(2\)</span>’s at the top can be cancelled out, so you are left with <span class="math display">\[\dfrac{2^3}{2^7}=\dfrac{1}{2·2·2·2}=\dfrac{1}{2^4}\]</span></p>
+<p>Now consider <a href="#law-2-link">Law 2</a>, you can do the similar calculation by subtracting the indices <span class="math display">\[\dfrac{2^3}{2^7}=2^{3-7}=2^{-4}\]</span> You have done the calculation in two different ways. So you get <span class="math display">\[\dfrac{2^3}{2^7}=2^{3-4}=2^{-4}=\dfrac{1}{2^4}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simplify the following expression: <span class="math inline">\((3x+4y)^{-1}\)</span></p>
+<p>Using Law 5, you can get <span class="math display">\[(3x+4y)^{-1} = \dfrac{1}{3x+4y}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Law 6: Fractional indices
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An index in the form of a fraction can be represented as the radical form:</p>
+<p><span class="math display">\[a^{\LARGE(\frac{m}{n})}= (\sqrt[n]{a})^m\]</span> For example:</p>
+<p>Suppose you found that <span class="math display">\[2^r·2^r=2\]</span> This means that multiplying <span class="math inline">\(2^r\)</span> by <span class="math inline">\(2^r\)</span> gives the result <span class="math inline">\(2\)</span>. So <span class="math inline">\(2^r\)</span> is a square root of <span class="math inline">\(2\)</span>.</p>
+<p>Note that <span class="math inline">\(2=2^1\)</span> and consider <a href="#law-1-link">Law 1</a>, <span class="math inline">\(2^r·2^r=2^{2r}\)</span>. If <span class="math inline">\(2^r·2^r=2\)</span> then you can get <span class="math display">\[2^{2r}=2^1\]</span> from which <span class="math display">\[2r=1\]</span> so <span class="math display">\[r=\dfrac{1}{2}\]</span> This shows that <span class="math display">\[2^{\LARGE\frac{1}{2}}=\sqrt[1]{2}=\sqrt{2}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simplify <span class="math inline">\(10000^{\LARGE(\frac{3}{4})}\)</span></p>
+<p>Using Law 7, you can re-express <span class="math inline">\(10000^{\LARGE(\frac{3}{4})}\)</span> as <span class="math inline">\((\sqrt[4]{10000})^3\)</span>, because <span class="math inline">\(10^4=10000\)</span>, <span class="math inline">\(\sqrt[4]{10000} = 10\)</span>. So <span class="math inline">\((\sqrt[4]{10000})^3 = 10^3 = 1000\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simplify <span class="math inline">\(27^{\LARGE(\frac{-2}{3})}\)</span></p>
+<p>Using Law 7, you can get <span class="math inline">\(27^{\LARGE(\frac{-2}{3})} = (\sqrt[3]{27})^{-2} = 3^{-2} = \dfrac{1}{3^2} = \dfrac{1}{9}\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="solving-equations-using-indices" class="level1">
+<h1>Solving equations using indices</h1>
+<p>You can use laws of indices to solve equations, here are some examples:</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Solve <span class="math inline">\(x^{\LARGE\frac{1}{2}}=8\)</span></p>
+<p>Start by squaring both sides of the equation to get <span class="math inline">\((x^{\LARGE\frac{1}{2}})^2 = 8^2\)</span>, then you get the answer <span class="math inline">\(x = 64\)</span>. To check if the answer is correct, you can substitute <span class="math inline">\(64\)</span> back into the equation: <span class="math inline">\(64^{\LARGE\frac{1}{2}} = \sqrt[2]{64}=8\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Solve <span class="math inline">\(x^{-2}=9\)</span></p>
+<p><span class="math inline">\(x^{-2} = 9\)</span> can be re-expressed as <span class="math inline">\(\dfrac{1}{x^2} = 9\)</span>. Multiplying both sides by <span class="math inline">\(x^2\)</span> gives you <span class="math inline">\(1=9x^2\)</span>. Then dividing both sides by <span class="math inline">\(9\)</span> gives you <span class="math inline">\(\dfrac{1}{9}=x^2\)</span>. Now you can square root both sides to obtain: <span class="math inline">\(\sqrt[2]{\dfrac{1}{9}}=x\)</span>. Remember you can have positive and negative roots. Therefore, you get <span class="math inline">\(x= \dfrac{1}{3}\)</span> or <span class="math inline">\(x= -\dfrac{1}{3}\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Solve <span class="math inline">\(3^{4x}=27^{5-x}\)</span></p>
+<p>As <span class="math inline">\(27=3^3\)</span>, the equation can be rewritten as: <span class="math inline">\(3^{4x}=(3^3)^{5-x}\)</span>. Then using the laws of indices, <span class="math inline">\(3^{4x}=3^{15-3x}\)</span>. Since both sides are equal, <span class="math inline">\(4x=15-3x\)</span>. Then <span class="math inline">\(x=\dfrac{15}{7}\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 12
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Solve <span class="math inline">\(x^{\LARGE\frac{5}{3}} + 3x^{\LARGE\frac{2}{3}} = 10x^{-\LARGE\frac{1}{3}}\)</span></p>
+<p>If you look at all of the indices in the question, the denominator is three and that is a hint of what you need to multiply by. Multiply <span class="math inline">\(x^{\LARGE\frac{1}{3}}\)</span> on both sides of the equation, you can get <span class="math inline">\(x^{\LARGE\frac{6}{3}} + 3x^{\LARGE\frac{3}{3}} = 10x^0\)</span>, you can further simplify it to get <span class="math inline">\(x^2 +3x = 10\)</span>. And now have a quadratic equation, subtract <span class="math inline">\(10\)</span> from both sides gives you <span class="math inline">\(x^2+3x-10=0\)</span>, factorising this equation gives you <span class="math inline">\((x+5)(x-2)=0\)</span>, then you can get <span class="math inline">\(x=-5\)</span> and <span class="math inline">\(x=2\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 13
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Solve <span class="math inline">\(e^{3x}=12\)</span></p>
+<p>Taking the logarithm of both sides gives you <span class="math inline">\(\log_e(e^{3x})=\log_e(12)\)</span>.<br>
+<span class="math inline">\(\log_e(x)\)</span> is the natural logarithm often denoted <span class="math inline">\(\ln(x)\)</span>, so you can write the equation as <span class="math inline">\(\ln(e^{3x})=\ln(12)\)</span>.<br>
+Using the power rule of logarithms, you can express the equation as <span class="math inline">\(3x \cdot \ln(e) = \ln(12)\)</span>, then by the identity rule, you can get <span class="math inline">\(3x \cdot (1)=\ln(12)\)</span>. Rearranging the equation gives you <span class="math inline">\(x=\dfrac{\ln(12)}{3}\)</span>.</p>
+<p><a href="Logarithms_Study_Guide.qmd">To see more about Euler’s number <span class="math inline">\(e\)</span>, please go the Guide: Introduction to Logarithms</a></p>
+</div>
+</div>
+<section id="quick-check-problems" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="quick-check-problems">Quick check problems</h2>
+<!-- add facility for webexercises to work on html -->
+<!-- add facility to check answers at end rather than one at a time -->
+<div class="webex-check webex-box">
+<ol type="1">
+<li>Solve <span class="math inline">\(\sqrt[3]{9x-1}=4\)</span></li>
+</ol>
+<p>Answer: It is <input class="webex-solveme nospaces" size="13" data-answer="[&quot;$\frac{65}{9}$&quot;]"></p>
+<ol start="2" type="1">
+<li>Solve <span class="math inline">\(x^{\dfrac{2}{3}}=4\dfrac{17}{27}\)</span></li>
+</ol>
+<p>Answer: It is <input class="webex-solveme nospaces" size="13" data-answer="[&quot;$\frac{25}{9}$&quot;]"></p>
+<ol start="3" type="1">
+<li>Determine whether the following calculations are correct:</li>
+</ol>
+<ol type="a">
+<li><p><span class="math inline">\(\dfrac{17x^{17}y^{14}}{15x^{18}y^{18}} = \dfrac{17}{15xy}\)</span> <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select></p></li>
+<li><p><span class="math inline">\((5x^2·2x^5·3x^4)^2 = 900x^{22}\)</span> <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select></p></li>
+<li><p><span class="math inline">\(\dfrac{12x^{14}y^{-4}}{12x^7y^{11}} = \dfrac{x^6}{y^7}\)</span> <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select></p></li>
+</ol>
+</div>
+<p><a href="qs-lawsofindices.qmd">For more questions on the subject, please go to Questions: Laws of indices</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

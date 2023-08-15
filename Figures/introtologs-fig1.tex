@@ -1,0 +1,37 @@
+\documentclass[preview,border=5pt]{standalone}
+\usepackage{teaching}
+\begin{document}
+
+\centering
+\pgfplotsset{compat=newest,width=0.85\textwidth}
+\begin{tikzpicture}[scale=1]
+\begin{axis}[
+axis x line=center,
+axis y line=center,
+axis line style={black!20!white},
+xlabel={$x$},
+ylabel={$y$},
+xlabel style={right,black!20!white},
+ylabel style={above,black!20!white},
+domain=(-1.25):(3),
+samples=128,
+ticks=none,
+no marks,
+xmin=(-2.25), xmax=(9),
+ymin=(-2.25), ymax=(9)
+]
+%\addplot [blue] {2^\x} node[above] {$2^x$}; 
+\addplot [domain=-2.25:ln(8),black] {exp(\x)} node[above] {$e^x$}; 
+%\addplot [domain=-1.25:1.5,red] {4^\x} node[above] {$4^x$};
+%\addplot [domain=0.1:3.5,blue] {ln(\x)/0.69314718056} node[above right] {$\log_2(x)$}; 
+\addplot [domain=0.05:8,black] {ln(\x)} node[right] {$\ln(x)$}; 
+%\addplot [domain=0.1:3.5,red] {ln(\x)/1.38629436112} node[below right] {$\log_4(x)$};
+\addplot [domain=-1.25:7.75,dotted] {\x} node[above] {$y = x$};
+\end{axis} 
+
+\node(a) at (3.5,1.7) {$1$};
+\node(b) at (2.1,3.1) {$1$};
+
+\end{tikzpicture}
+
+\end{document}
