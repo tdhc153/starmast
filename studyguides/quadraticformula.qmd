@@ -3,12 +3,20 @@ title: "Using the quadratic formula"
 author: "Tom Coleman"
 abstract-title: Summary
 abstract: Solving quadratic equations of the form $ax^2 + bx + c$ is a core skill in mathematics. A guaranteed method to solve these is use of the quadratic formula. This guide explains the terminology and usage of the quadratic formula, as well as an explanation of why the quadratic formula works. 
-
+categories:
+  - Solving equations
+  - Algebra
+image: FiguresPNG/quadraticformula-image.png
 ---
 
-*Before reading this guide, it is highly recommended that you read [Guide: Introduction to quadratic equations](introtoquadratics.qmd). In addition, the proof of the quadratic formula relies on the technique of 'completing the square'; see (Guide: Completing the square) for more.*
+```{r, setup, include = FALSE}
+library("webexercises")
+```
 
-## What is the quadratic formula? {-}
+
+*Before reading this guide, it is highly recommended that you read [Guide: Introduction to quadratic equations](introtoquadratics.qmd).*
+
+# What is the quadratic formula? {-}
 
 One of the most important types of an equation are **quadratic equations**; very generally speaking, these are equations that contain a squared term. These appear almost everywhere in mathematics, from modelling projectile motion in mechanics to describing circles, ellipses, parabolas and hyperbolas in 2D space. It is therefore crucial to be able to identify and solve quadratic equations.
 
@@ -25,11 +33,13 @@ where one of the roots is given by the term $(-b+\sqrt{b^2 - 4ac})/2a$ and the o
 
 If you have read [Guide: Introduction to quadratic equations](introtoquadratics.qmd), you can recognize the discriminant $D = b^2 - 4ac$ in the square root. As you know from there, the discriminant tells you how many potential real solutions the quadratic has; the reason for this is the square root in the quadratic formula. 
 
-### Why use the quadratic formula? {-}
+The proof of the quadratic formula is given in [Proof: The quadratic formula](../proofsheets/ps-quadraticformula).
+
+## Why use the quadratic formula? {-}
 
 (BLURB)
 
-## Using the quadratic formula {-}
+# Using the quadratic formula {-}
 
 Here are some examples of quadratic equations which are solved using the quadratic formula. To do this, you need to be able to identify the variable and the coefficients $a,b,c$; something that was covered in [Guide: Introduction to quadratic equations](introtoquadratics.qmd).
 
@@ -149,31 +159,13 @@ In Example 6 of [Guide: Introduction to quadratic equations](introtoquadratics.q
 
 :::
 
-## Why does the quadratic formula work? {-}
+# Why does the quadratic formula work? {-}
 
-It's important to note that the quadratic formula does not come out of thin air. In order to be able to use a result like this, you will have to **prove** that the formula gives the roots for the quadratic equation $ax^2 + bx + c$. 
+It's important to note that the quadratic formula does not come out of thin air. In order to be able to use a result like this, you will have to **prove** that the formula gives the roots for the quadratic equation $ax^2 + bx + c$. To see how this is done, go to [Proof: The quadratic formula](../proofsheets/ps-quadraticformula) for more.
 
-To do this; you can **complete the square** on $ax^2 + bx + c$ using the fact that $a\neq 0$. See (Guide: Completing the square) for why this works. 
+# Quick check problems {-}
 
-::: {.callout-note appearance="simple"}
-
-## Proof of the quadratic formula
-
-The proof of this relies on completing the square. First of all, as $a\neq 0$ you can divide $ax^2 + bx + c = 0$ through by $a$ to get 
-$$x^2 + \frac{b}{a} x + \frac{c}{a} = 0$$
-Taking the $c/a$ term over to the other side gives
-$$x^2 + \frac{b}{a} x = -\frac{c}{a}$$
-Completing the square gives
-$$\left(x + \frac{b}{2a}\right)^2 - \frac{b^2}{4a^2} = -\frac{c}{a}$$
-You can rearrange to get $$\left(x + \frac{b}{2a}\right)^2 = \frac{b^2}{4a^2} - \frac{c}{a} = \frac{b^2 - 4ac}{4a^2}$$ Now the result is starting to come together. Taking square roots of both sides (not forgetting that it could be positive or negative) gives
-$$x + \frac{b}{2a} = \pm\frac{\sqrt{b^2 - 4ac}}{2a}$$
-and rearranging gives
-$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
-as required.
-
-:::
-
-## Quick check problems {-}
+<!-- add facility for webexercises to work on html -->
 
 <!-- add facility for webexercises to work on html -->
 
@@ -183,15 +175,15 @@ as required.
 
 ::: {.webex-check .webex-box}
 
-Find the roots of each of the quadratic equations below. If a root is repeated, write it twice. Complex numbers should be written as $a+bi$ without spaces, and where $a$, $b$ are real numbers. If the roots are real, write them in ascending order; if the roots are complex, write the negative $i$ term first. 
+Find the roots of each of the quadratic equations below. If a root is repeated, write it twice. Complex numbers should be written as $a+bi$ without spaces, and where $a$, $b$ are real numbers. Rational numbers should be written as fractions in their simplest forms. If the roots are real, write them in ascending order; if the roots are complex, write the negative $i$ term first. 
 
 (a) The roots of $x^2 + 2x - 48 = 0$ are $x=$ `r fitb(-8)` and $x=$ `r fitb(6)`.
 
-(b) The roots of $x^2 - 2x + 5 = 0$ are $x=$ `r fitb(1-2i)` and $x=$ `r fitb(1+2i)`.
+(b) The roots of $x^2 - 2x + 5 = 0$ are $x=$ `r fitb("1-2i")` and $x=$ `r fitb("1+2i")`.
 
-(c) The roots of $6x^2 + 5x - 6 = 0$ are $x=$ `r fitb(-3/2)` and $x=$ `r fitb(2/3)`.
+(c) The roots of $6x^2 + 5x - 6 = 0$ are $x=$ `r fitb("-3/2")` and $x=$ `r fitb("2/3")`.
 
-(d) The roots of $16x^2 + 24x + 9 = 0$ are $x=$ `r fitb(-3/4)` and $x=$ `r fitb(-3/4)`.
+(d) The roots of $16x^2 + 24x + 9 = 0$ are $x=$ `r fitb("-3/4")` and $x=$ `r fitb("-3/4")`.
 
 :::
 
@@ -211,11 +203,15 @@ Find the roots of each of the quadratic equations below.
 
 :::
 
-[For more questions on the subject, please go to Questions: Using the quadratic formula.](qs-quadraticformula.qmd)
+# Further reading {-}
 
-## Further reading {-}
+[For more questions on the subject, please go to Questions: Using the quadratic formula.](../questions/qs-quadraticformula.qmd)
 
+## Version history {-}
 
+v1.0: initial version created 06/23 by TC.
+
+  - v1.1: edited 04/24 by TC. 
 
 
 

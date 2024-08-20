@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Shanelle Advani, Ciara Cormican">
+
+<title>STARMAST - Introduction to rearranging equations</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html" rel="" target="">
+ <span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../studyguidelist.html" rel="" target="">
+ <span class="menu-text">Study guides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../qalist.html" rel="" target="">
+ <span class="menu-text">Questions and answers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fslist.html" rel="" target="">
+ <span class="menu-text">Fact sheets</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pslist.html" rel="" target="">
+ <span class="menu-text">Proof sheets</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#the-golden-rule-of-rearranging-equations" id="toc-the-golden-rule-of-rearranging-equations" class="nav-link" data-scroll-target="#the-golden-rule-of-rearranging-equations">The golden rule of rearranging equations</a></li>
+  <li><a href="#undoing-operations" id="toc-undoing-operations" class="nav-link" data-scroll-target="#undoing-operations">Undoing operations</a>
+  <ul class="collapse">
+  <li><a href="#addition-and-subtraction" id="toc-addition-and-subtraction" class="nav-link" data-scroll-target="#addition-and-subtraction">Addition and subtraction</a></li>
+  <li><a href="#multiplication-and-division" id="toc-multiplication-and-division" class="nav-link" data-scroll-target="#multiplication-and-division">Multiplication and division</a></li>
+  <li><a href="#powers-and-roots" id="toc-powers-and-roots" class="nav-link" data-scroll-target="#powers-and-roots">Powers and roots</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  </ul></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="introtorearrange.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="introtorearrange.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to rearranging equations</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Key skills</div>
+    <div class="quarto-category">Algebra</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Shanelle Advani, Ciara Cormican </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Summary</div>
+    Being able to rearrange equations is a crucial skill in mathematics as it can help us to simplify problems and better understand the relationships between variables. This will guide introduce the concept and take you through how to undo common operations like addition, multiplication, and powers.
+  </div>
+</div>
+
+</header>
+
+<!-- *Before reading this guide, it is recommended that you read [Guide: Introduction to quadratic equations](introtoquadratics.qmd)* -->
+<section id="introduction" class="level1 unnumbered">
+<h1 class="unnumbered">Introduction</h1>
+<p>Mathematical formulas are used in all walks of life. From converting between temperature scales, to working out volumes of spheres, these are important mathematical expressions often linking two or more variables. Being able to manipulate these mathematical expressions could allow you to extract information and solve for specific variables. This concept of <strong>rearranging an equation</strong> is vital in handling mathematical formulas, solving all sorts of equations (linear, quadratic, simultaneous, vector), and much much more. It is a crucial tool in almost any academic subject that handles numbers or data.</p>
+<p>This guide will introduce you to rearranging equations by stipulating the golden rule of rearranging equations, demonstrate how certain pairs of mathematical operations ‘undo’ each other, and explain strategies and techniques for rearranging even the most complicated looking formulas.</p>
+<!-- It is useful to be able to rearrange an equation to focus on a specific variable. For this guide we will refer to the specific variable as the 'subject' of the equation. -->
+<!-- To rearrange an equation to make a variable the subject of the equation you may need to 'undo' certain operations which are applied to the equation. -->
+<!-- Additionally, when rearranging equations, commutative, associative and distributive laws are important.  -->
+</section>
+<section id="the-golden-rule-of-rearranging-equations" class="level1 unnumbered">
+<h1 class="unnumbered">The golden rule of rearranging equations</h1>
+<p>The <strong>golden rule of rearranging equations</strong> is the following.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>You must treat both sides of an equation exactly the same.</strong></p>
+</div>
+</div>
+<p>This means if you add <span class="math inline">\(5xy\)</span> to one side an equation, you must add <span class="math inline">\(5xy\)</span> to the other side of the equation. If you multiply one side of an equation by <span class="math inline">\(189273\)</span>, you must multiply the other side of the equation by <span class="math inline">\(189273\)</span>. If you divide both sides of an equation by <span class="math inline">\(2lp\)</span>, then… well, you get the picture.</p>
+<p>The reason for this is balance. Suppose that <span class="math inline">\(x = 2\)</span>. If you wanted to multiply the left hand side by <span class="math inline">\(2\)</span> but not the right hand side, you would end up with <span class="math inline">\(2x = 2\)</span>. But as you can see here, this has changed the assumption that <span class="math inline">\(x = 2\)</span>, as in this case <span class="math inline">\(x\)</span> is now equal to <span class="math inline">\(1\)</span>! So to preserve equality in the expression, you must follow the golden rule of rearranging equations.</p>
+<!-- ### Why it is useful to be able to rearrange equations -->
+<!-- Rearranging equations can be useful. You may want to rearrange an equation to get an expression for a specific value which can be then solved by substitution. -->
+<!--  e.g $x = \sqrt{45y}$ -->
+<!-- You may also have multiple equations where rearranging an equation allows for a substitution. -->
+<!-- For example -->
+<!-- ::: {.callout-note} -->
+<!-- ## Example 1 -->
+<!-- Consider the following simultaneous equations -->
+<!-- $$1)\quad x + y = 4z$$ -->
+<!-- $$2)\quad \frac{5z}{x} + \frac{1}{x} = 5 + 5\frac{y}{x}$$ -->
+<!-- the second equation can be simplified by a number of steps  -->
+<!-- $$ \frac{1}{x}(5z + 1) = 5 + 5\frac{y}{x} $$ -->
+<!-- $$ \frac{1}{x}(5z + 1) = 5(1 + \frac{y}{x}) $$ -->
+<!-- $$ \frac{1}{5}(5z + 1) = x(1 + \frac{y}{x}) $$ -->
+<!-- $$ \frac{1}{5}(5z + 1) = x + y $$ -->
+<!-- As we have another expression for $x+y$ above $x+y=4z$ we can substitute $4z$ into the simplified expression above to get -->
+<!-- $$ \frac{1}{5} (5z + 1) = 4z$$ -->
+<!-- which further simplifies to -->
+<!-- $$ z + \frac{1}{5} = 4z$$ -->
+<!-- $$ 3z = \frac{1}{5}$$ -->
+<!-- $$ z = \frac{1}{15}$$ -->
+<!-- ::: -->
+</section>
+<section id="undoing-operations" class="level1 unnumbered">
+<h1 class="unnumbered">Undoing operations</h1>
+<p>Suppose you are given an expression like <span class="math display">\[5x^3y^3 + \frac{6z}{w^4} = 4abc^2\]</span> How would you go about rearranging this equation to something of the form <span class="math inline">\(x = \ldots\)</span>? This process is known as <strong>rearranging for <span class="math inline">\(x\)</span></strong> or <strong>making <span class="math inline">\(x\)</span> the subject of the equation</strong>. You can notice that in the above equation, <span class="math inline">\(x\)</span> has been raised to the power of <span class="math inline">\(3\)</span>, it has been multiplied by both <span class="math inline">\(5\)</span> and <span class="math inline">\(y^3\)</span>, and it has been added to <span class="math inline">\(6z/w^4\)</span>. To make <span class="math inline">\(x\)</span> the subject of the equation, you will need to ‘undo’ the operations on <span class="math inline">\(x\)</span> until only a single instance of <span class="math inline">\(x\)</span> remains.</p>
+<p>The premise of rearranging equations is to ‘undo’ what operations have been applied to a particular variable to express that variable on its own. This guide will focus on the following three pairs of operations:</p>
+<ul>
+<li>addition and subtraction</li>
+<li>multiplication and division</li>
+<li>powers of <span class="math inline">\(n\)</span> and <span class="math inline">\(n\)</span>th roots, where <span class="math inline">\(n\)</span> is some number not equal to <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>.</li>
+</ul>
+<p>Of these</p>
+<ul>
+<li>subtraction ‘undoes’ addition and addition ‘undoes’ subtraction</li>
+<li>division ‘undoes’ multiplication and multiplication ‘undoes’ division</li>
+<li>taking the <span class="math inline">\(n\)</span>th root ‘undoes’ raising to the power of <span class="math inline">\(n\)</span>, and raising to the power of <span class="math inline">\(n\)</span> ‘undoes’ taking the <span class="math inline">\(n\)</span>th root.</li>
+</ul>
+<p>The <em>order</em> of undoing these operations is often critical. Addition, subtraction, multiplication and division involve <strong>two numbers</strong>, but raising to the power of <span class="math inline">\(n\)</span> and taking <span class="math inline">\(n\)</span>th roots involves <strong>one number</strong>. These properties influence the order in which you should undo operations and therefore rearrange the equation. You should keep these properties in mind as you study the content in the guide.</p>
+<section id="addition-and-subtraction" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="addition-and-subtraction">Addition and subtraction</h2>
+<p>The reason why you can undo addition by subtraction (and subtraction by addition) is because anything added to <span class="math inline">\(0\)</span> is itself. It is best to see this behaviour in an example: Example 1 uses subtraction to rearrange an equation in <span class="math inline">\(x\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Given the equation <span class="math inline">\(x + a = b\)</span> you can make <span class="math inline">\(x\)</span> the subject of the equation by subtracting the variable <span class="math inline">\(a\)</span> from both sides of the equation (remembering the golden rule!)</p>
+<p>This will give you</p>
+<p><span class="math display">\[x + a − a = b − a\]</span></p>
+<p>Since <span class="math inline">\(a-a = 0\)</span>, the equation becomes <span class="math display">\[x + 0 = b - a\]</span> Since <span class="math inline">\(x + 0 = x\)</span> for any number <span class="math inline">\(x\)</span>, you can write that</p>
+<p><span class="math display">\[x = b − a\]</span> and since <span class="math inline">\(x\)</span> is isolated on the left hand side, you have finished.</p>
+</div>
+</div>
+<p>Example 1 is written in lots of detail to explain what is going on. In practice, you will not need to be this thorough in your working.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you want to make <span class="math inline">\(x\)</span> the subject of the equation <span class="math inline">\(x − 8 = ab\)</span> you can add <span class="math inline">\(8\)</span> to both sides.</p>
+<p>Doing this gives you</p>
+<p><span class="math display">\[x − 8 + 8 = ab + 8\]</span></p>
+<p>which simplifies to</p>
+<p><span class="math display">\[x = ab + 8\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Going forward, you may not even have to write the middle step of Example 2; you can start with <span class="math inline">\(x - 8 = ab\)</span> and go straight to <span class="math inline">\(x = ab + 8\)</span>. This is an example of natural progression in mathematics; once a concept has been mastered, then you can use it without specifying details in future.</p>
+</div>
+</div>
+</section>
+<section id="multiplication-and-division" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="multiplication-and-division">Multiplication and division</h2>
+<p>The reason why you can undo multiplication with division (and division with multiplication) is that any number multiplied by <span class="math inline">\(1\)</span> is itself. However, the following health warning applies:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>Most of the time</em>, you can undo multiplication in an equation by division. The only time you are not able to do this is if you divide by <span class="math inline">\(0\)</span>; which is strictly forbidden in mathematics and carries a heavy punishment. The expression <span class="math inline">\(0/0\)</span> is <strong>undefined and should not be written</strong>.</p>
+</div>
+</div>
+<p>The example below uses division to ‘undo’ the multiplication in the equation in <span class="math inline">\(x\)</span>. As with Example 1, this example uses more detail than is necessary to illustrate the concepts involved.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Given the equation <span class="math inline">\(8x = 9\)</span>, you can make <span class="math inline">\(x\)</span> the subject by dividing both sides by <span class="math inline">\(8\)</span> (which is not equal to <span class="math inline">\(0\)</span>). Doing this gives</p>
+<p><span class="math display">\[\frac{8x}{8} = \frac{9}{8}\]</span></p>
+<p>This can then be simplified. As <span class="math inline">\(\dfrac{8}{8}\)</span> is equal to 1, the expression simplifies to <span class="math display">\[1\cdot x = \frac{8}{9}\]</span></p>
+<p>which, as <span class="math inline">\(1\cdot x = 1\)</span> for all numbers <span class="math inline">\(x\)</span>, can be simplified to</p>
+<p><span class="math display">\[x = \frac{8}{9}\]</span> and since <span class="math inline">\(x\)</span> is on its own on the left-hand side, you are finished.</p>
+</div>
+</div>
+<p>Similarly, you can undo division in an equation by using multiplication. Since no equation will ever be divided by <span class="math inline">\(0\)</span> to begin with, you can always undo division.</p>
+<p>This next example combines what you have learned so far.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How do you make <span class="math inline">\(x\)</span> the subject of the equation <span class="math inline">\(\dfrac{3}{4}x + a = 6\)</span>?</p>
+<p>In fact, you have a little bit of flexibility in this question. One way you can do it is isolate a multiple of <span class="math inline">\(x\)</span> on one side by subtracting by <span class="math inline">\(a\)</span> first. Doing this gives <span class="math display">\[\frac{3}{4}x = 6 - a\]</span> You know that you can undo the division of <span class="math inline">\(x\)</span> by <span class="math inline">\(4\)</span> by multiplying both sides of the equation by <span class="math inline">\(4\)</span>. Here, that you have to multiply <strong>all</strong> of the right hand side by <span class="math inline">\(4\)</span>; this includes both terms <span class="math inline">\(6\)</span> and <span class="math inline">\(-a\)</span>. This is an important step; as if you don’t do this, you are violating the golden rule in not treating both sides of the equation exactly the same! To make sure you do not fall into this trap, it can be useful to use brackets to ensure everything on the right-hand side is multiplied by <span class="math inline">\(4\)</span>. Anyway, the next step in the rearranging is <span class="math display">\[3x = 4(6-a)\]</span> Now, dividing both sides by <span class="math inline">\(3\)</span> (making sure to divide <em>everything</em> on the right-hand side by <span class="math inline">\(3\)</span>) gives <span class="math display">\[x = \frac{4(6-a)}{3}\]</span> and you are done.</p>
+</div>
+</div>
+<p>There are many ways to do this question. You could do the division by <span class="math inline">\(3\)</span> first, then the subtraction by <span class="math inline">\(a/3\)</span>, then the multiplication by <span class="math inline">\(4\)</span>. Here, the order of operations doesn’t matter so much, but isolating a multiple of the chosen variable on one side is often the best way to go about rearranging equations.</p>
+<p>This forms the basis of the general strategy for rearranging any equation:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When rearranging an equation for a variable, try to get exactly one term involving that variable on one side of the equation; then do what you need to do to isolate that variable.</p>
+</div>
+</div>
+<p>It is also worth restating:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When multiplying/dividing one side of an equation by a number <span class="math inline">\(a\)</span>, make sure to multiply/divide <strong>everything</strong> on that side of an equation by <span class="math inline">\(a\)</span>.</p>
+</div>
+</div>
+<p>This is a common health warning in rearranging equations, as you will see throughout the rest of the guide.</p>
+<!-- In this case it is the addition of the variable $a$.  -->
+<!-- You can remove it from the right hand side of the equation by subtracting it from both sides.  -->
+<!-- This gives us  -->
+<!-- $$\frac{3}{4}x + a - a = 6 - a$$ -->
+<!-- which simplifies to -->
+<!-- $$\frac{3}{4}x = 6 - a$$ -->
+<!-- Now in order to get rid of the fraction on the right hand side you first multiply -->
+<!-- the whole equation by the denominator 4, giving you -->
+<!-- $$3x = (6 − a)*4$$ -->
+<!-- $$3x = 24 − 4a$$ -->
+<!-- Then finally you divide both sides of the equation by 3 to get -->
+<!-- $$x = 8 − \frac{4}{3}a$$ -->
+<!-- Tip: Make sure that whatever action you do to one side of the equation you -->
+<!-- do to the other. For example, if you multiply one side of the equation by -->
+<!-- 3, you have to multiply the other side by 3 as well. -->
+</section>
+<section id="powers-and-roots" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="powers-and-roots">Powers and roots</h2>
+<section id="undoing-powers-of-n-using-nth-roots" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="undoing-powers-of-n-using-nth-roots">Undoing powers of <span class="math inline">\(n\)</span> using <span class="math inline">\(n\)</span>th roots</h4>
+<p>How would you undo a power such as <span class="math inline">\(x^2 = 9\)</span>, <span class="math inline">\(y^3 = 64\)</span> or even <span class="math inline">\(x^n = a\)</span> (where <span class="math inline">\(n\geq 2\)</span> is a whole number)?</p>
+<p>The idea is to use roots. However, there are some considerations to be made when taking the <span class="math inline">\(n\)</span>th root of an equation.</p>
+<p>Take the first of these examples, which is <span class="math inline">\(x^2 = 9\)</span>. Here, you are trying to rearrange for <span class="math inline">\(x\)</span>, where <span class="math inline">\(x\)</span> is some number than when squared gives <span class="math inline">\(9\)</span>. You would immediately think that <span class="math inline">\(x = 3\)</span>, and you’d be right; but <span class="math inline">\(x\)</span> could <em>also</em> be <span class="math inline">\(-3\)</span>. How do you account for this? The idea is to use the square root symbol <span class="math inline">\(\sqrt{\;}\)</span>, but <span class="math inline">\(x = \sqrt{9}\)</span> can’t be two solutions at once. To get around this, you could define the square root symbol to <strong>always</strong> mean the <em>positive</em> square root of a number, and write <span class="math inline">\(\pm\)</span> to mean ‘plus or minus’. Therefore, if <span class="math inline">\(x^2=9\)</span>, then you can write <span class="math inline">\(x = \pm \sqrt{9} = \pm 3\)</span> to rearrange for <span class="math inline">\(x\)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You cannot take the square root of a negative number.</p>
+</div>
+</div>
+<p>So, what about <span class="math inline">\(y^3 = 64\)</span>. Here there is only one number that when cubed is equal to <span class="math inline">\(64\)</span>; this number is <span class="math inline">\(4\)</span>. This is because <span class="math inline">\((-4)^3 = -64\)</span>. So in fact, you are able to take the <em>cube root</em> <span class="math inline">\(\sqrt[3]{\;}\)</span> of any number and not have to worry about signs; if <span class="math inline">\(y^3 = 64\)</span> then <span class="math inline">\(y = \sqrt[3]{64} = 4\)</span>. You can contrast this to the case of the square roots!</p>
+<p>Now, what about <span class="math inline">\(x^n = a\)</span>? If <span class="math inline">\(n\)</span> is even, then <span class="math inline">\(x^n\)</span> must be a square number, and so must be positive. In addition, if <span class="math inline">\(n\)</span> is even then <span class="math inline">\((-x)^n = x^n\)</span>, and so you must also take positive and negative roots.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Undoing powers using <span class="math inline">\(n\)</span>th roots
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(x^n = a\)</span>.</p>
+<ul>
+<li><p>If <span class="math inline">\(n\)</span> is even and <span class="math inline">\(a \geq 0\)</span>, then <span class="math display">\[x = \pm\sqrt[n]{a}\]</span> where <span class="math inline">\(\sqrt[n]{a}\)</span> is the positive <span class="math inline">\(n\)</span>th root of <span class="math inline">\(a\)</span>.</p></li>
+<li><p>If <span class="math inline">\(n\)</span> is odd, then <span class="math display">\[x = \sqrt[n]{a}\]</span> where <span class="math inline">\(\sqrt[n]{a}\)</span> is the <span class="math inline">\(n\)</span>th root of <span class="math inline">\(a\)</span>.</p></li>
+</ul>
+</div>
+</div>
+<p>Thankfully, the situation of undoing <span class="math inline">\(n\)</span>th roots using powers of <span class="math inline">\(n\)</span> is not as complex. Since there is no ambiguity about the sign of an <span class="math inline">\(n\)</span>th root, you can raise to the power of <span class="math inline">\(n\)</span> to undo the root in any case:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Undoing <span class="math inline">\(n\)</span>th roots using powers of <span class="math inline">\(n\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(\sqrt[n]{x} = a\)</span>. Then <span class="math inline">\(x = a^n\)</span>.</p>
+</div>
+</div>
+<p>When rearranging equations involving powers of <span class="math inline">\(n\)</span> and <span class="math inline">\(n\)</span>th roots, you should <em>always</em> aim to isolate your variable on one side before undoing the power of <span class="math inline">\(n\)</span> or the <span class="math inline">\(n\)</span>th root. This is because:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In general, <span class="math display">\[a^n + b^n \neq (a+b)^n \quad\textsf{ and }\sqrt[n]{a} + \sqrt[n]{b} \neq \sqrt[n]{a+b}\]</span></p>
+</div>
+</div>
+<!-- ::: {.callout-note} -->
+<!-- ## Example 6 -->
+<!-- Suppose you want to make $x$ the subject of the equation $x^a = b$, you take the $a^{th}$ root of both sides.  -->
+<!-- This gives you -->
+<!-- $$x = ± \sqrt[a]{b}$$ -->
+<!-- • Tip:  Make sure when you take the root of a power, you are aware of what sign the value is. For a square root, the value could have a positive or negative sign. -->
+<!-- ::: -->
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given the equation <span class="math inline">\(2z = 4x^2 + 5y\)</span>. To make <span class="math inline">\(x\)</span> the subject of this equation, you should isolate <span class="math inline">\(4x^2\)</span> on one side of the equation like so:</p>
+<p><span class="math display">\[4x^2 = 5y − 2z\]</span> Now, to apply the square root, you need to have <span class="math inline">\(x^2\)</span> on its own. So divide by <span class="math inline">\(4\)</span> to get</p>
+<p><span class="math display">\[x^2 = \frac{5y-2z}{4}\]</span> Now you can then take the square root of both sides to get</p>
+<p><span class="math display">\[x = \pm\sqrt{\frac{5y − 2z}{4}}\]</span> and this is your answer.</p>
+</div>
+</div>
+<p>For roots in equations, you can use inverse operation of taking the equation to a power.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you want to make <span class="math inline">\(x\)</span> the subject of the equation <span class="math inline">\(\displaystyle \sqrt[5]{\frac{x^3}{2}} = b-1\)</span>, you need to undo the fifth root around <span class="math inline">\(x^3/2\)</span>. This can be done by raising both sides to the power of <span class="math inline">\(5\)</span>. Following the health warning above, you must remember to raise <strong>everything</strong> on the right hand side to the power of <span class="math inline">\(5\)</span>. Doing this gives <span class="math display">\[\frac{x^3}{2} = (b-1)^5\]</span> You cannot take cube roots yet however, because of that <span class="math inline">\(2\)</span>. Multiplying <span class="math inline">\(2\)</span> from both sides gives <span class="math display">\[x^3 = 2(b-1)^5.\]</span> <em>Now</em> you can cube root to get <span class="math display">\[x = \sqrt[3]{2(b-1)^5}\]</span> and you are done.</p>
+</div>
+</div>
+<p>Finally, let’s return to the initial example at the start of the guide.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s take <span class="math display">\[5x^3y^3 + \frac{6z}{w^4} = 4abc^2\]</span> How do you rearrange for <span class="math inline">\(x\)</span>?</p>
+<p>First of all, you need to isolate the term involving <span class="math inline">\(x\)</span> on one side of the equation. You can subtract <span class="math inline">\(6z/w^4\)</span> from both sides of the equation to get <span class="math display">\[5x^3y^3 = 4abc^2 - \frac{6z}{w^4}\]</span> You now need to get a power of <span class="math inline">\(x\)</span> on its own by dividing through by <span class="math inline">\(5\)</span> and <span class="math inline">\(y^3\)</span>. You can either do these separately or together. So dividing both sides of the equation by <span class="math inline">\(5y^3\)</span> gives <span class="math display">\[x^3 = \frac{4abc^2}{5y^3} - \frac{6z}{5w^4y^3}\]</span> Now, taking the cube root of both sides gives <span class="math display">\[x = \sqrt[3]{\frac{4abc^2}{5y^3} - \frac{6z}{5w^4y^3}}\]</span> and this is your answer.</p>
+</div>
+</div>
+<!-- ## Using Factorisation -->
+<!-- What if the variable you want to subject is linked to more than one term? -->
+<!-- In this instance, we can use factorisation to help us rearrange the equation.  -->
+<!-- Let’s have a look at some examples. -->
+<!-- ::: {.callout-note} -->
+<!-- ## Example 9 -->
+<!-- In the equation $xy + 2x = 3y$ you can see that $x$ appears twice in the first two -->
+<!-- terms.  -->
+<!-- To rewrite the equation in terms of x you can factorise the right-hand side, this gives you -->
+<!-- $$x(y + 2) = 3y$$ -->
+<!-- Next, divide both side of the equation to get the final form: -->
+<!-- $$x = \frac{3y}{y+2}$$ -->
+<!-- ::: -->
+<!-- ::: {.callout-note} -->
+<!-- ## Example 10 -->
+<!-- Here, the equation $xyz − 2z = 4y + x$ contains the variable $x$ on both sides.  -->
+<!-- You can start by bringing all the terms with $x$ to one side and moving the others so your equation look like this: -->
+<!-- $$xyz − x = 4y + 2z$$ -->
+<!-- Now you can factorise $x$ out the right-hand side, giving you -->
+<!-- $$x(yz − 1) = 4y + 2z$$ -->
+<!-- Finally, divide both side by $(yx − 1)$ to get -->
+<!-- $$x = 4y + 2z yz − 1$$ -->
+<!-- - Tip: If the variable you wish to subject appears more than once in an -->
+<!-- equation, it is generally a good idea to start by bringing all the terms that -->
+<!-- include the variable to one side of the equation so you can factorise it out. -->
+<!-- ::: -->
+<!-- ## Putting it all together -->
+<!-- Often expressions will include multiple operations which you will have to undo part by part to rearrange an equation.  -->
+<!-- The example below includes an expression which requires multiple steps in order to make $x$ the subject of the equation.  -->
+<!-- ::: {.callout-note} -->
+<!-- ## Example 11 -->
+<!-- Consider the following equation $3(x^2 + a) = \frac{x^3}{xb} - a$ -->
+<!-- When rearranging this equation, the order of operations is important to keep in mind.  -->
+<!-- To rearrange the equation to make $x$ the focus, the first operation which you need to 'undo' is the bracket. -->
+<!--  $\frac{3(x^2 + a)}{3} = \frac{\frac{x^3}{xb} - a}{3}$ -->
+<!--  $x^2 + a = \frac{1}{3}(\frac{x^3}{xb} - a)$ -->
+<!-- This can be simplified to  -->
+<!--  $x^2 + a = \frac{1}{3}(\frac{x^2}{b} - a)$ -->
+<!-- Now the $x$ on the right hand side needs to be moved to the left. This can be done by subtracting the expression in x from both sides.  -->
+<!-- This can be done as soon as any brackets have been multiplied out. -->
+<!--  $$x^2 + a = \frac{x^2}{3b} - \frac{a}{3}$$ -->
+<!--  $$x^2 + a -\frac{x^2}{3b} = \frac{x^2}{3b} - \frac{a}{3} - \frac{x^2}{3b}$$ -->
+<!--  $$x^2 + a -\frac{x^2}{3b} = - \frac{a}{3}$$ -->
+<!-- The $a$ term on the left hand side can be moved to the right hand side using subtraction again. -->
+<!--  $$x^2 + a -\frac{x^2}{3b} - a = - \frac{a}{3} - a$$ -->
+<!--  $$x^2 -\frac{x^2}{3b}= - \frac{a}{3} - a$$ -->
+<!--  $$x^2 (1 - \frac{1}{3b}) = -a(1 + \frac{1}{3})$$ -->
+<!--  $$x^2 (1 - \frac{1}{3b}) = -a(1 + \frac{1}{3})$$ -->
+<!--  $$x^2 = \frac{-a(1 + \frac{1}{3})}{1 - \frac{1}{3b}}$$ -->
+<!--  $$x = ±\sqrt{\frac{-a(1 + \frac{1}{3})}{1 - \frac{1}{3b}}}$$ -->
+<!-- ::: -->
+</section>
+</section>
+<section id="quick-check-problems" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="quick-check-problems">Quick check problems</h2>
+<div class="webex-check webex-box">
+<ol type="1">
+<li>What is the subject of the following equation <span class="math inline">\(x^3 - \frac{x}{7} - 16 = y\)</span>?</li>
+</ol>
+<p>Answer: The subject of the equation is <input class="webex-solveme nospaces" size="1" data-answer="[&quot;y&quot;]">.</p>
+<!-- 2. You are given the quadratic equation $4l^2 - m = n^2 + 8$. How many operations need to be undone to get $l$ as the subject of the equation.  -->
+<!-- Answer: The number of operations is <input class='webex-solveme nospaces' size='1' data-answer='["3"]'/>. -->
+<ol start="2" type="1">
+<li>You are given five statements below. Decide whether they are true or false.</li>
+</ol>
+<ol type="a">
+<li><p>Rearranging <span class="math inline">\(x^2 - 4 = 16\)</span> gives <span class="math inline">\(x = \pm 2\)</span>. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p>Division undoes multiplication by any number. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p>The equation <span class="math inline">\(m^2 + 4m = 7l + m\)</span> is equivalent to <span class="math inline">\(m + 7l = m^2 + 4m\)</span>. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+<li><p>The equation <span class="math inline">\(p = \sqrt{q + 4r^2}\)</span> has <span class="math inline">\(q\)</span> as the subject of the equation. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p>The equation <span class="math inline">\(\sqrt{a^2 + 4b + 2c} = c^2\)</span> is equivalent to <span class="math inline">\(c^4 - 2c = a^2 + 4b\)</span>. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+</ol>
+</div>
+</section>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<!-- [For more information on quadratic equations, see Guide: Using the quadratic formula](quadraticformula.qmd) -->
+<p><a href="../studyguides/lawsofindices.html">For more about why powers of <span class="math inline">\(n\)</span> and <span class="math inline">\(n\)</span>th roots undo each other, see Guide: Laws of indices.</a>.</p>
+<p><a href="../questions/qs-introtorearrange.html">For more questions on this topic, please go to Questions: Introduction to rearranging equations.</a></p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 08/23 by Shanelle Advani and Ciara Cormican as part of a University of St Andrews STEP project.</p>
+<ul>
+<li>v1.1: edited 06/24 by tdhc.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="tdhc153/starmast" data-repo-id="R_kgDOJhaqiA" data-category="General" data-category-id="DIC_kwDOJhaqiM4CWZev" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

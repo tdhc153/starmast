@@ -8,7 +8,7 @@
 
 <meta name="author" content="Isabella Lewis">
 
-<title>STARMAST - The Scalar Product</title>
+<title>STARMAST - The scalar product</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -91,7 +91,27 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../about.html" rel="" target="">
- <span class="menu-text">About STARMAST</span></a>
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html" rel="" target="">
+ <span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../studyguidelist.html" rel="" target="">
+ <span class="menu-text">Study guides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../qalist.html" rel="" target="">
+ <span class="menu-text">Questions and answers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fslist.html" rel="" target="">
+ <span class="menu-text">Fact sheets</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pslist.html" rel="" target="">
+ <span class="menu-text">Proof sheets</span></a>
   </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
@@ -116,12 +136,16 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#what-is-the-scalar-product" id="toc-what-is-the-scalar-product" class="nav-link active" data-scroll-target="#what-is-the-scalar-product">What is the scalar product?</a></li>
-  <li><a href="#properties-of-the-scalar-product" id="toc-properties-of-the-scalar-product" class="nav-link" data-scroll-target="#properties-of-the-scalar-product">Properties of the scalar product</a></li>
-  <li><a href="#proof-of-commutativity" id="toc-proof-of-commutativity" class="nav-link" data-scroll-target="#proof-of-commutativity">Proof of commutativity</a></li>
-  <li><a href="#the-geometric-interpretation" id="toc-the-geometric-interpretation" class="nav-link" data-scroll-target="#the-geometric-interpretation">The Geometric Interpretation</a></li>
-  <li><a href="#special-cases" id="toc-special-cases" class="nav-link" data-scroll-target="#special-cases">Special Cases…</a></li>
-  <li><a href="#the-scalar-product-of-perpendicular-vectors" id="toc-the-scalar-product-of-perpendicular-vectors" class="nav-link" data-scroll-target="#the-scalar-product-of-perpendicular-vectors">The scalar product of perpendicular vectors</a></li>
+  <li><a href="#algebraic-definition" id="toc-algebraic-definition" class="nav-link" data-scroll-target="#algebraic-definition">Algebraic definition</a></li>
+  <li><a href="#geometric-definition" id="toc-geometric-definition" class="nav-link" data-scroll-target="#geometric-definition">Geometric definition</a></li>
+  <li><a href="#properties-of-the-scalar-product" id="toc-properties-of-the-scalar-product" class="nav-link" data-scroll-target="#properties-of-the-scalar-product">Properties of the scalar product</a>
+  <ul class="collapse">
   <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  </ul></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="scalarproduct.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="scalarproduct.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
     </div>
@@ -130,8 +154,13 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">The Scalar Product</h1>
-</div>
+<h1 class="title">The scalar product</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Geometry</div>
+    <div class="quarto-category">Vectors</div>
+    <div class="quarto-category">Linear mathematics</div>
+  </div>
+  </div>
 
 
 
@@ -151,18 +180,24 @@ ul.task-list li input[type="checkbox"] {
 <div>
   <div class="abstract">
     <div class="abstract-title">Summary</div>
-    Calulcating the scalar product, interpreting it geometrically and being careful of certain special cases are all important steps in working with vectors.
+    The scalar product is an important concept in the theory of vectors, with many geometric and algebraic applications.
   </div>
 </div>
 
 </header>
 
-<p><em>Before reading this guide, it is recommended that you read (Guide: Introduction to Vectors, Guide: Vector Addition and Scalar Multiplication and Guide: Sigma Notation).</em></p>
+<p><em>Before reading this guide, you must have a good initial knowledge of vectors. Therefore, it is highly recommended that you read <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a>. You should be able to understand the components of a vector and be able to work out the magnitude of a vector before continuing.</em></p>
 <section id="what-is-the-scalar-product" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="what-is-the-scalar-product">What is the scalar product?</h2>
-<p>When working with vectors, you want to be able to combine them in order to solve vector-related problems. The <strong>scalar product</strong> (named as such since the result is a scalar), also known as the <strong>dot product</strong> (due to the symbol for the operation), gives you one way of doing this. The scalar product can tell you how much two vectors are aligned and can be used to find the angle between them.<br>
-It also has applications in applied mathematics and physics.</p>
-<p>This guide will give both the algebraic and geometric definition of the scalar product, display certain properties of the operation and bring awareness to special cases that arise.</p>
+<p>When working with vectors, you want to be able to combine them in order to solve problems involving vectors in three dimensional space. This may extend to finding the angle between two vectors or testing to see if two vectors are perpendicular or not. The tool you need for these endeavours is the <strong>scalar product</strong>.</p>
+<p>The <strong>scalar product</strong> also known as the <strong>dot product</strong> (due to the symbol for the operation) or <strong>inner product</strong> (as one of the many inner products that exist in linear mathematics), essentially measures how much two vectors are pointing in the same direction. This measure can then be used to find the angle between two vectors.</p>
+<p>As you might imagine, this is an important tool if you are working with vectors in three dimensional space. The scalar product has many applications in geometry, multivariable calculus, physics, and chemistry.</p>
+<p>This guide will give both the algebraic and geometric definition of the scalar product, explain certain properties of the operation, show you how to find the angle between two vectors using the scalar product, and bring awareness to special cases that arise, such as being able to determine whether or not two vectors are perpendicular.</p>
+<p>As with all other introductory guides to vectors (including <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a> and <a href="../studyguides/addandsm.html">Guide: Vector addition and scalar multiplication</a>), the vectors in this guide are exclusively <strong>three dimensional</strong>.</p>
+</section>
+<section id="algebraic-definition" class="level1 unnumbered">
+<h1 class="unnumbered">Algebraic definition</h1>
+<p>Working out the scalar product of two vectors algebraically is based on their components.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -173,23 +208,25 @@ Algebraic definition of the scalar product
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Let <span class="math inline">\(\mathbf{u}= \begin{pmatrix}u_1\\ \vdots \\u_n\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v} =\begin{pmatrix}v_1\\ \vdots \\v_n\end{pmatrix}\)</span>, then the <strong>scalar product</strong>, denoted <span class="math inline">\(\mathbf{u} \cdot \mathbf{v}\)</span>, is defined as follows:</p>
-<p><span class="math display">\[\mathbf{u} \cdot \mathbf{v} = \begin{pmatrix}u_1\\ \vdots \\u_n\end{pmatrix}\cdot\begin{pmatrix}v_1\\ \vdots \\v_n\end{pmatrix} = u_1v_1 + u_2v_2 + ... + u_nv_n \]</span></p>
-<p>This may also be written, using sigma notation, as <span class="math display">\[\mathbf{u} \cdot \mathbf{v} = \sum^n_{i=1}\,u_i v_i\]</span></p>
+<p>Let <span class="math inline">\(\mathbf{a} = a_1 \mathbf{i} + a_2 \mathbf{j} + a_3 \mathbf{k}\)</span> and <span class="math inline">\(\mathbf{b} = b_1 \mathbf{i} + b_2 \mathbf{j} + b_3 \mathbf{k}\)</span> be two vectors. The <strong>scalar product</strong> of <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>, written as <span class="math inline">\(\mathbf{a}\cdot\mathbf{b}\)</span>, is given by <span class="math display">\[\mathbf{a}\cdot\mathbf{b} = a_1b_1 + a_2b_2 + a_3b_3.\]</span></p>
+<p>Similarly, in column notation <span class="math inline">\(\mathbf{a}= \begin{pmatrix}a_1\\ a_2 \\a_3\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} =\begin{pmatrix}b_1\\ b_2 \\b_3\end{pmatrix}\)</span>, then:</p>
+<p><span class="math display">\[\mathbf{a} \cdot \mathbf{b} = \begin{pmatrix}a_1\\ a_2 \\a_3\end{pmatrix}\cdot\begin{pmatrix}b_1\\ b_2 \\b_3\end{pmatrix} = a_1b_1 + a_2b_2 + a_3b_3\]</span></p>
+<!-- This may also be written, using sigma notation, as $$\mathbf{u} \cdot \mathbf{v} = \sum^n_{i=1}\,u_i v_i$$ -->
 </div>
 </div>
-<p>As the name suggests, the scalar product of two vectors is a scalar. It is important to be able to calculate the scalar product of vectors of all dimensions.</p>
+<!-- As the name suggests, the scalar product of two vectors is a scalar. It is important to be able to calculate the scalar product of vectors of all dimensions. -->
+<p>The most important thing to take away from this definition is the following:</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-WARNING
+Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Vectors must have the same dimension to have a scalar product.</p>
+<p>The output of the scalar product of two vectors is a <strong>scalar</strong>. So if you are working out the scalar product of two vectors and your answer is either a column vector or contains <span class="math inline">\(\mathbf{i},\mathbf{j},\mathbf{k}\)</span>, then your answer is <strong>incorrect</strong> and should be recalculated.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled">
@@ -202,9 +239,13 @@ Example 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Take <span class="math inline">\(\mathbf{u}=\begin{pmatrix}3\\5\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v} =\begin{pmatrix}2\\7\\2\end{pmatrix}\)</span>, then the scalar product is <span class="math display">\[\begin{pmatrix}3\\ 5 \\1\end{pmatrix}\cdot\begin{pmatrix}2\\ 7 \\2\end{pmatrix} = (3)(2) + (5)(7) + (1)(2) = 6+35+2 = 43\]</span></p>
+<p>Take <span class="math inline">\(\mathbf{a}=\begin{pmatrix}3\\5\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} =\begin{pmatrix}2\\7\\2\end{pmatrix}\)</span>, then the scalar product is <span class="math display">\[\begin{pmatrix}3\\ 5 \\1\end{pmatrix}\cdot\begin{pmatrix}2\\ 7 \\2\end{pmatrix} = (3)(2) + (5)(7) + (1)(2) = 6+35+2 = 43\]</span></p>
 </div>
 </div>
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Example 2 -->
+<!-- Take $\mathbf{u}=\begin{pmatrix}10\\13\\3\\2\end{pmatrix}$ and $\mathbf{v} =\begin{pmatrix}5\\1\\20\\1\end{pmatrix}$, then the scalar product is $$\begin{pmatrix}10\\ 13 \\3\\2\end{pmatrix}\cdot\begin{pmatrix}5\\ 1 \\20\\1\end{pmatrix} = (10)(5)+(13)(1)+(3)(20)+(2)(1)=50+13+60+2 = 125 $$ -->
+<!-- ::: -->
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -215,7 +256,20 @@ Example 2
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Take <span class="math inline">\(\mathbf{u}=\begin{pmatrix}10\\13\\3\\2\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v} =\begin{pmatrix}5\\1\\20\\1\end{pmatrix}\)</span>, then the scalar product is <span class="math display">\[\begin{pmatrix}10\\ 13 \\3\\2\end{pmatrix}\cdot\begin{pmatrix}5\\ 1 \\20\\1\end{pmatrix} = (10)(5)+(13)(1)+(3)(20)+(2)(1)=50+13+60+2 = 125 \]</span></p>
+<p>Take <span class="math inline">\(\mathbf{a}=\begin{pmatrix}-1\\7\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} =\begin{pmatrix}-1\\-1\\2\end{pmatrix}\)</span>, then the scalar product is <span class="math display">\[\begin{pmatrix}-1\\ 7 \\1\end{pmatrix}\cdot\begin{pmatrix}-1\\ -1 \\2\end{pmatrix} = (-1)(-1) + (7)(-1) + (1)(2) = 1-7+2 = -4\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice from Example 2 that the scalar product of two vectors can be a <strong>negative number</strong>.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled">
@@ -228,10 +282,33 @@ Example 3
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Take <span class="math inline">\(\mathbf{u}=\begin{pmatrix}-1\\7\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v} =\begin{pmatrix}-1\\-1\\2\end{pmatrix}\)</span>, then the scalar product is <span class="math display">\[\begin{pmatrix}-1\\ 7 \\1\end{pmatrix}\cdot\begin{pmatrix}-1\\ -1 \\2\end{pmatrix} = (-1)(-1) + (7)(-1) + (1)(2) = 1-7+2 = -4\]</span></p>
+<p>Take <span class="math inline">\(\mathbf{u}=4\mathbf{i}+2\mathbf{j}+\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{v}=\mathbf{i}-\mathbf{j}+3\mathbf{k}\)</span>, then <span class="math display">\[\mathbf{u}\cdot\mathbf{v}=(4\mathbf{i}+2\mathbf{j}+\mathbf{k})\cdot(\mathbf{i}-\mathbf{j}+3\mathbf{k})=(4)(1)+(2)(-1)+(1)(3)=5\]</span></p>
 </div>
 </div>
-<p>You can also take the scalar product of vectors in cartesian form.</p>
+</section>
+<section id="geometric-definition" class="level1 unnumbered">
+<h1 class="unnumbered">Geometric definition</h1>
+<p>It was mentioned in the introduction that the scalar product can be used to measure how much of a vector points in the direction of another. However, there is nothing in the algebraic definition to suggest <em>why</em> this is the case. The second definition of the scalar product relies on the magnitude of the two vectors and the smallest angle between them.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Geometric defintion of the scalar product
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For two vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>, their scalar product <span class="math inline">\(\mathbf{a}\cdot\mathbf{b}\)</span> can also be defined as follows: <span class="math display">\[\mathbf{a}\cdot\mathbf{b}=|\mathbf{a}||\mathbf{b}|\cos(\theta)\]</span> where <span class="math inline">\(|\mathbf{a}|,|\mathbf{b}|\)</span> are the magnitudes of <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> respectively and <span class="math inline">\(\theta\)</span> (pronounced ‘theta’) is the <strong>smallest</strong> angle between <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>.</p>
+</div>
+</div>
+<p>You can use this definition to find the angle between two (non-zero) vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>. Since these vectors are non-zero, both <span class="math inline">\(|\mathbf{a}|\)</span> and <span class="math inline">\(|\mathbf{b}|\)</span> are non-zero. You can then divide both sides of the geometric definition of the scalar product to get <span class="math display">\[\cos(\theta) = \frac{\mathbf{a}\cdot\mathbf{b}}{|\mathbf{a}||\mathbf{b}|}.\]</span></p>
+<p>Since <span class="math inline">\(\theta\)</span> is the smallest angle between <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> by definition, it follows that <span class="math inline">\(0^\circ\leq \theta \leq 180^\circ\)</span> in degrees, or <span class="math inline">\(0\leq \theta \leq \pi\)</span> in radians. This means that you can safely use the inverse trigonometric function <span class="math inline">\(\cos^{-1}\)</span> in this case. (See [Guide: Inverse trigonometric functions] for more.)</p>
+<p>Let’s now put this definition to use!</p>
+<!-- ::: {.callout-warning}  -->
+<!-- ## WARNING -->
+<!-- In the above, the vectors cannot be **anti-parallel** or **parallel** and must be of non-zero length. The special cases in which they do not follow these conditions are dealt with below. -->
+<!-- :::  -->
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -242,42 +319,12 @@ Example 4
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Take <span class="math inline">\(\mathbf{u}=4\mathbf{i}+2\mathbf{j}+\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{v}=\mathbf{i}-\mathbf{j}+3\mathbf{k}\)</span>, then <span class="math display">\[\mathbf{u}\cdot\mathbf{v}=(4\mathbf{i}+2\mathbf{j}+\mathbf{k})\cdot(\mathbf{i}-\mathbf{j}+3\mathbf{k})=(4)(1)+(2)(-1)+(1)(3)=5\]</span></p>
+<p>Take <span class="math inline">\(\mathbf{a}=\begin{pmatrix}3\\5\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} =\begin{pmatrix}2\\7\\2\end{pmatrix}\)</span>, as in Example 1. In that example, it was calculated that <span class="math inline">\(\mathbf{a}\cdot\mathbf{b} = 43\)</span>. So you can use the above definition to calculate the smallest angle <span class="math inline">\(\theta\)</span> between the two vectors.</p>
+<p><span class="math display">\[\cos(\theta)=\frac{\mathbf{a}\cdot\mathbf{b}}{|\mathbf{a}||\mathbf{b}|}=\frac{43}{\left(\sqrt{3^2+5^2+1^2}\right)\left(\sqrt{2^2+7^2+2^2}\right)}=\frac{43}{\sqrt{35}\sqrt{57}}\]</span> You will need a calculator or computer to work out the value of <span class="math inline">\(\theta\)</span> via <span class="math inline">\(\cos^{-1}\)</span>. To avoid rounding errors, you should find the inverse cosine of this exact value in your calculator or computer. Doing this gives <span class="math display">\[\begin{align*}
+\theta=\cos^{-1}\left(\frac{43}{\sqrt{35}\sqrt{57}}\right) = {15.695^\circ} = 0.274\textsf{ rad}\tag{\textsf{to 3dp}}
+\end{align*}\]</span></p>
 </div>
 </div>
-</section>
-<section id="properties-of-the-scalar-product" class="level2">
-<h2 class="anchored" data-anchor-id="properties-of-the-scalar-product">Properties of the scalar product</h2>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definition of Commutative, Distributive
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>An operation is <strong>commutative</strong> if it gives the same result whatever order the values are in. For example, <span class="math inline">\(ab = ba\)</span>, so multiplication is commutative.</p>
-<p>An operation is <strong>distributive</strong> (under addition) if <span class="math inline">\(a (b+c)=(ab)+(ac)\)</span>.</p>
-</div>
-</div>
-<p>The scalar product has some nice properties:<br>
-</p>
-<ol type="a">
-<li>The scalar product of a vector with itself is the square of its magnitude:</li>
-</ol>
-<p><span class="math display">\[\mathbf{u}\cdot\mathbf{u}=|\mathbf{u}|^2\]</span><br>
-</p>
-<ol start="2" type="a">
-<li>Multiplying a vector, <span class="math inline">\(\mathbf{u}\)</span> by a scalar, c, multiplies its scalar product with another vector, <span class="math inline">\(\mathbf{v}\)</span> by the same scalar, c:</li>
-</ol>
-<p><span class="math display">\[(c\mathbf{u})\cdot\mathbf{v}=c(\mathbf{u}\cdot\mathbf{v})\]</span></p>
-<ol start="3" type="a">
-<li><p>The scalar product of a vector, <span class="math inline">\(\mathbf{u}\)</span> with the zero vector, <span class="math inline">\(\mathbf{0}\)</span> is 0: <span class="math display">\[\mathbf{u}\cdot\mathbf{0}=0\]</span></p></li>
-<li><p>The scalar product is <strong>commutative</strong>: <span class="math display">\[\mathbf{u}\cdot\mathbf{v}=\mathbf{v}\cdot\mathbf{u}\]</span></p></li>
-<li><p>The scalar product is <strong>distributive</strong>: <span class="math display">\[\mathbf{u}\cdot (\mathbf{v}+\mathbf{w}) = \mathbf{u}\cdot\mathbf{v}+\mathbf{u}\cdot\mathbf{w}\]</span></p></li>
-</ol>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -288,9 +335,54 @@ Example 5
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Take <span class="math inline">\(\mathbf{u}=\begin{pmatrix}3\\5\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v} =\begin{pmatrix}2\\7\\2\end{pmatrix}\)</span>, as in example 1. Then you know <span class="math display">\[\mathbf{u}\cdot\mathbf{v}= 43 \]</span>. Also, <span class="math display">\[\mathbf{v}\cdot\mathbf{u}=\begin{pmatrix}2\\7\\2\end{pmatrix}\cdot\begin{pmatrix}3\\5\\1\end{pmatrix}=(2)(3)+(7)(5)+(2)(1)=6+35+2=43\]</span> So, <span class="math inline">\(\mathbf{u}\cdot\mathbf{v}=\mathbf{v}\cdot\mathbf{u}\)</span>, that is, commutative.</p>
+<p>Take <span class="math inline">\(\mathbf{a}=\begin{pmatrix}-1\\7\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} =\begin{pmatrix}-1\\-1\\2\end{pmatrix}\)</span>, then the scalar product is <span class="math display">\[\begin{pmatrix}-1\\ 7 \\1\end{pmatrix}\cdot\begin{pmatrix}-1\\ -1 \\2\end{pmatrix} = (-1)(-1) + (7)(-1) + (1)(2) = 1-7+2 = -4\]</span></p>
+<p>Take <span class="math inline">\(\mathbf{a}=\begin{pmatrix}-1\\7\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} =\begin{pmatrix}-1\\-1\\2\end{pmatrix}\)</span>, as in Example 2. It was calculated then that the scalar product between them is <span class="math inline">\(-4\)</span>. So, the angle between them can be calculated as follows: <span class="math display">\[\cos(\theta)=\frac{\mathbf{a}\cdot\mathbf{b}}{|\mathbf{a}||\mathbf{b}|}=\frac{-4}{\left(\sqrt{(-1)^2+7^2+1^2}\right)\left(\sqrt{(-1)^2+(-1)^2+2^2}\right)}=\frac{-4}{\sqrt{51}\sqrt{6}}\]</span> and so, following the advice from Example 4 above, you can work out the angle to be <span class="math display">\[\begin{align*}
+\theta=\cos^{-1}\left(\frac{-4}{\sqrt{51}\sqrt{6}}\right) = {103.218^\circ} = 1.802\textsf{ rad}\tag{\textsf{to 3dp}}
+\end{align*}\]</span></p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the scalar product of two vectors is positive, then the smallest angle <span class="math inline">\(\theta\)</span> between the two vectors is acute (that is, <span class="math inline">\(0^\circ\leq\theta &lt; 90^\circ\)</span> or <span class="math inline">\(0 \leq \theta &lt; \pi/2\)</span>). If the scalar product of two vectors is negative, then the smallest angle <span class="math inline">\(\theta\)</span> between the two vectors is obtuse (that is, <span class="math inline">\(90^\circ &lt; \theta \leq 180^\circ\)</span> or <span class="math inline">\(\pi/2 &lt; \theta \leq \pi\)</span>).</p>
+<p>If the scalar product of two vectors is <span class="math inline">\(0\)</span>, then the two vectors are perpendicular; see below for more on this.</p>
+</div>
+</div>
+</section>
+<section id="properties-of-the-scalar-product" class="level1">
+<h1>Properties of the scalar product</h1>
+<p>Much like in <a href="../studyguides/addandsm.html">Guide: Vector addition and scalar multiplication</a>, the scalar product has many useful properties, both from its algebraic and its geometric definitions.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For more information as to <strong>why</strong> the following properties are true, please see <a href="../proofsheets/ps-scalarproduct.html">Proof sheet: The scalar product</a> for more details.</p>
+</div>
+</div>
+<!-- ::: {.callout-note} -->
+<!-- ## Definition of Commutative, Distributive -->
+<!-- An operation is **commutative** if it gives the same result whatever order the values are in. For example, $ab = ba$, so multiplication is commutative. -->
+<!-- An operation is **distributive** (under addition) if $a (b+c)=(ab)+(ac)$.  -->
+<!-- ::: -->
+<ol type="1">
+<li><p>The scalar product is <strong>commutative</strong>, so for all vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>: <span class="math display">\[\mathbf{a}\cdot\mathbf{b}=\mathbf{b}\cdot\mathbf{a}.\]</span></p></li>
+<li><p>The scalar product of any vector <span class="math inline">\(\mathbf{a}\)</span> with the zero vector <span class="math inline">\(\mathbf{0}\)</span> is 0, so: <span class="math display">\[\mathbf{a}\cdot\mathbf{0}=0\]</span></p></li>
+<li><p>The scalar product is <strong>distributive</strong>, so for all vectors <span class="math inline">\(\mathbf{a},\mathbf{b},\mathbf{c}\)</span>, it follows that: <span class="math display">\[\mathbf{a}\cdot (\mathbf{b}+\mathbf{c}) = \mathbf{a}\cdot\mathbf{b}+\mathbf{a}\cdot\mathbf{c}\]</span></p></li>
+<li><p>Scalar multiplication is preserved in the scalar product. So if <span class="math inline">\(\mathbf{a},\mathbf{b}\)</span> are vectors and <span class="math inline">\(\lambda\)</span> (pronounced ‘lambda’) is a scalar, then <span class="math display">\[(\lambda\mathbf{a})\cdot\mathbf{b}=\lambda(\mathbf{a}\cdot\mathbf{b})\]</span></p></li>
+</ol>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -301,50 +393,18 @@ Example 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Take <span class="math inline">\(\mathbf{u}=\begin{pmatrix}14\\2\\100\end{pmatrix}\)</span>, then <span class="math display">\[\mathbf{u}\cdot\mathbf{u}=14^2+2^2+100^2=10200\]</span> and, the magnitude is <span class="math display">\[|\mathbf{u}|=\sqrt{14^2+2^2+100^2}=\sqrt{10200}\]</span> and so, <span class="math display">\[|\mathbf{u}|^2=\mathbf{u}\cdot\mathbf{u}\]</span></p>
+<p>Take <span class="math inline">\(\mathbf{a}=\begin{pmatrix}3\\5\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} =\begin{pmatrix}2\\7\\2\end{pmatrix}\)</span>, as in Example 1. Then you know <span class="math inline">\(\mathbf{a}\cdot\mathbf{b}= 43\)</span>. You can check <span class="math inline">\(\mathbf{b}\cdot\mathbf{a}\)</span> to verify the commutative property (1) of the scalar product: <span class="math display">\[\mathbf{b}\cdot\mathbf{a}=\begin{pmatrix}2\\7\\2\end{pmatrix}\cdot\begin{pmatrix}3\\5\\1\end{pmatrix}=(2)(3)+(7)(5)+(2)(1)=6+35+2=43\]</span> So <span class="math inline">\(\mathbf{a}\cdot\mathbf{b}=\mathbf{b}\cdot\mathbf{a}\)</span> as expected.</p>
+<p>In addition, you can work out <span class="math inline">\((3\mathbf{a})\cdot\mathbf{b}\)</span> by using property (4) without much further calculation. Using the property and the fact that <span class="math inline">\(\mathbf{a}\cdot\mathbf{b}= 43\)</span> gives: <span class="math display">\[(3\mathbf{a})\cdot\mathbf{b} = 3(\mathbf{a}\cdot\mathbf{b}) = 3(43) = 129.\]</span></p>
 </div>
 </div>
-</section>
-<section id="proof-of-commutativity" class="level2">
-<h2 class="anchored" data-anchor-id="proof-of-commutativity">Proof of commutativity</h2>
-<p>You’ve just seen one example showing that the scalar product is commutative. How about for all vectors? Let <span class="math inline">\(\mathbf{u} = \begin{pmatrix}u_1\\ \vdots \\u_n\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v} =\begin{pmatrix}v_1\\ \vdots \\v_n\end{pmatrix}\)</span>, then <span class="math display">\[\mathbf{u} \cdot \mathbf{v} = \begin{pmatrix}u_1\\ \vdots \\u_n\end{pmatrix}\cdot\begin{pmatrix}v_1\\ \vdots \\v_n\end{pmatrix} = u_1v_1 + u_2v_2 + ... + u_nv_n = v_1u_1 + v_2u_2+...+v_nu_n\]</span>&nbsp;since multiplication is commutative (that is <span class="math inline">\(u_1v_1=v_1u_1\)</span>). And, <span class="math display">\[\mathbf{v} \cdot \mathbf{u}=\begin{pmatrix}v_1\\ \vdots \\v_n\end{pmatrix}\cdot\begin{pmatrix}u_1\\ \vdots \\u_n\end{pmatrix}=v_1u_1 + v_2u_2+...+v_nu_n=\mathbf{u}\cdot\mathbf{v}\]</span> Hence, the scalar product is commutative.</p>
-</section>
-<section id="the-geometric-interpretation" class="level2">
-<h2 class="anchored" data-anchor-id="the-geometric-interpretation">The Geometric Interpretation</h2>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Geometric defintion of the Scalar Product
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The scalar product can also be defined as follows: <span class="math display">\[\mathbf{u}\cdot\mathbf{v}=|\mathbf{u}||\mathbf{v}|\cos(\psi)\]</span></p>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-WARNING
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In the above, the vectors cannot be <strong>anti-parallel</strong> or <strong>parallel</strong> and must be of non-zero length. The special cases in which they do not follow these conditions are dealt with below.</p>
-</div>
-</div>
-<p>Having seen the geometric definition of the scalar product, you may now be wondering about where it comes from and its interpretation. You have the definitions, but how do these relate to the vectors you’re taking the scalar product of? Take two arbitrary vectors <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span>. Place their base at the same point. Call this base point A. Consider the plane formed by the tip of <span class="math inline">\(\mathbf{u}\)</span> (at point B) and formed at the tip of <span class="math inline">\(\mathbf{v}\)</span> (at point C). The points A,B,C form a plane. Now, let a be the length of <span class="math inline">\(\mathbf{u}\)</span>, b be the length of <span class="math inline">\(\mathbf{v}\)</span> and c be the length of <span class="math inline">\(\mathbf{v-u}\)</span>, like in the diagram below.</p>
-<div id="fig-4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><embed src="./FiguresPNG/Figure 1.pdf" class="img-fluid" style="width:150.0%" alt="Two triangles side by side on separate diagrams. The first shows the vectors u and v. u is horizontal and v start from the same place as u and is above. v-u is labelled and is the line joining the 2 vectors lines, making it a triangles. The second shows the same traingle, but instead labels the sides as the corresponding lengths, a,b,c and also labels h,$\psi$ and x."></p>
-<figcaption class="figure-caption">Figure&nbsp;1: Geometric interpretation of the Scalar Product, showing the vectors v and u and their difference and a triangle with the corresponding lengths.</figcaption>
-</figure>
-</div>
-<p>Using trigonometry, the height of the triangle in figure 1 is <span class="math inline">\(h=b\sin(\psi)\)</span>. Looking at the diagram again, <span class="math inline">\(l=b\cos(\psi)\)</span> and <span class="math display">\[x=a-l=a-b\cos(\psi)\]</span> Using Pythagoras’s theorem, <span class="math display">\[h^2+x^2=c^2\]</span> <span class="math display">\[b^2\sin^2(\psi)+(a-b\cos(\psi))^2=c^2=|\mathbf{v}-\mathbf{u}|^2\]</span> (the length of <span class="math inline">\(\mathbf{v}-\mathbf{u})\)</span>. Expanding out the brackets on the left hand side obtains <span class="math display">\[b^2-2ab\cos(\psi)+a^2=|\mathbf{v}-\mathbf{u}|^2\]</span> Using property (a) from above: <span class="math display">\[|\mathbf{v}-\mathbf{u}|^2=(\mathbf{v}-\mathbf{u})\cdot(\mathbf{v}-\mathbf{u})\]</span> Also, by distributivity and property (a), <span class="math display">\[(\mathbf{v}-\mathbf{u})\cdot(\mathbf{v}-\mathbf{u})=\mathbf{v}\cdot\mathbf{v}-2\mathbf{u}\cdot\mathbf{v}+\mathbf{u}\cdot\mathbf{u} = |\mathbf{v}|^2-2\mathbf{u}\cdot\mathbf{v}+|\mathbf{u}|^2\]</span> Recall from above that <span class="math inline">\(|\mathbf{u}|^2=a\)</span> and <span class="math inline">\(|\mathbf{v}|^2=b\)</span>, then <span class="math display">\[b^2-2ab\cos(\psi)+a^2=b^2-2\mathbf{u}\cdot\mathbf{v}+a^2\]</span> Cancelling the terms <span class="math inline">\(a^2\)</span> and <span class="math inline">\(b^2\)</span>, <span class="math display">\[ab\cos(\psi)=\mathbf{u}\cdot\mathbf{v}\]</span> So, <span class="math display">\[\cos(\psi)={\frac{(\mathbf{u}\cdot\mathbf{v})}{(ab)}}={\frac{(\mathbf{u}\cdot\mathbf{v})}{(|\mathbf{u}||\mathbf{v}|)}}\]</span> So, in geometric terms, the above derivation tells you that the scalar product between two vectors is the product of their magnitudes multiplied by the angle between them.</p>
+<p>The following further properties are consequences of the geometric definition of the scalar product.</p>
+<ol start="5" type="1">
+<li><p>The scalar product of a vector <span class="math inline">\(\mathbf{a}\)</span> with itself is the square of its magnitude: <span class="math display">\[\mathbf{a}\cdot\mathbf{a}=|\mathbf{a}|^2\]</span></p></li>
+<li><p>If two vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> are <strong>parallel</strong> (so <span class="math inline">\(\mathbf{a}\)</span> is a scalar multiple of <span class="math inline">\(\mathbf{b}\)</span> by a positive scalar; see <a href="../studyguides/addandsm.html">Guide: Vector addition and scalar multiplication</a>), then <span class="math display">\[\mathbf{a}\cdot\mathbf{b}=|\mathbf{a}||\mathbf{b}|.\]</span> Similarly, if <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> are <strong>anti-parallel</strong> (so <span class="math inline">\(\mathbf{a}\)</span> is a scalar multiple of <span class="math inline">\(\mathbf{b}\)</span> by a negative scalar; see <a href="../studyguides/addandsm.html">Guide: Vector addition and scalar multiplication</a>), then <span class="math display">\[\mathbf{a}\cdot\mathbf{b}=-|\mathbf{a}||\mathbf{b}|.\]</span></p></li>
+<li><p>If two non-zero vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> are perpendicular, then their scalar product <span class="math inline">\(\mathbf{a}\cdot\mathbf{b}\)</span> is equal to <span class="math inline">\(0\)</span>. On the other hand, if the scalar product of two non-zero vectors <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> is equal to <span class="math inline">\(0\)</span>, then <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> are perpendicular.</p></li>
+</ol>
+<p>Of these, property (7) is incredibly interesting. You can even use this property to solve some vector equations involving the scalar product.</p>
+<!-- This is because the angle between the two vectors is $90^\circ$ and as $\cos(90)=0$, $$\mathbf{u}\cdot\mathbf{v}=|\mathbf{u}||\mathbf{v}|\cos(90)=0$$. -->
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -355,10 +415,24 @@ Example 7
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Take <span class="math inline">\(\mathbf{u}=\begin{pmatrix}3\\5\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v} =\begin{pmatrix}2\\7\\2\end{pmatrix}\)</span>, as in Example 1. It was calculated then that the scalar product is 43. So, you can use the above definition to calculate the angle, <span class="math inline">\(\psi\)</span> between the two vectors.</p>
-<p><span class="math display">\[\cos(\psi)=\frac{\mathbf{u}\cdot\mathbf{v}}{|\mathbf{u}||\mathbf{v}|}=\frac{43}{(\sqrt{3^2+5^2+1^2})(\sqrt{2^2+7^2+2^2})}=\frac{43}{(\sqrt{35})(\sqrt57)}\approx{0.96}\]</span> So, <span class="math inline">\(cos(\psi)\approx{0.96}\)</span> and hence, <span class="math inline">\(\psi=\cos^{-1}(0.96)\approx{15.7^\circ}\)</span></p>
+<p>Take <span class="math inline">\(\mathbf{a}=\begin{pmatrix}14\\2\\100\end{pmatrix}\)</span>, then <span class="math display">\[\mathbf{a}\cdot\mathbf{a}=14^2+2^2+100^2=10200.\]</span> The magnitude of <span class="math inline">\(\mathbf{a}\)</span> is <span class="math display">\[|\mathbf{a}|=\sqrt{14^2+2^2+100^2}=\sqrt{10200}\]</span> and so, <span class="math display">\[|\mathbf{a}|^2=\mathbf{a}\cdot\mathbf{a}\]</span> as you would expect!</p>
 </div>
 </div>
+<!-- ## Proof of commutativity -->
+<!-- You've just seen one example showing that the scalar product is commutative. How about for all vectors? Let $\mathbf{u} = \begin{pmatrix}u_1\\ \vdots \\u_n\end{pmatrix}$ and $\mathbf{v} =\begin{pmatrix}v_1\\ \vdots \\v_n\end{pmatrix}$, then $$\mathbf{u} \cdot \mathbf{v} = \begin{pmatrix}u_1\\ \vdots \\u_n\end{pmatrix}\cdot\begin{pmatrix}v_1\\ \vdots \\v_n\end{pmatrix} = u_1v_1 + u_2v_2 + ... + u_nv_n = v_1u_1 + v_2u_2+...+v_nu_n$$\ since multiplication is commutative (that is $u_1v_1=v_1u_1$). And, $$\mathbf{v} \cdot \mathbf{u}=\begin{pmatrix}v_1\\ \vdots \\v_n\end{pmatrix}\cdot\begin{pmatrix}u_1\\ \vdots \\u_n\end{pmatrix}=v_1u_1 + v_2u_2+...+v_nu_n=\mathbf{u}\cdot\mathbf{v}$$ Hence, the scalar product is commutative. -->
+<!-- ## Special Cases... -->
+<!-- There are a few specific cases that you need to be careful with when dealing with the scalar product. These are:\ -->
+<!-- (a) When $\mathbf{u}$ and $\mathbf{v}$ are parallel. In this case, the angle between the vectors is 0. So, the dot product is the magnitudes multiplied, that is -->
+<!-- $$\mathbf{u}\cdot\mathbf{v}=|\mathbf{u}||\mathbf{v}|$$ -->
+<!-- (b) When $\mathbf{u}$ and $\mathbf{v}$ are anti-parallel, then the dot product is negative the magnitudes multiplied, that is -->
+<!-- $$\mathbf{u}\cdot\mathbf{v}=-|\mathbf{u}||\mathbf{v}|$$ -->
+<!-- (c) When either $\mathbf{u}$ or $\mathbf{v}$ is equal to $0$ (or both are), the dot product is equal to $0$, that is -->
+<!-- $$\mathbf{u}\cdot\mathbf{0}=\mathbf{0}\cdot\mathbf{v}=0$$ -->
+<!-- (d) Two vectors $\mathbf{u}$ and $\mathbf{v}$ are perpendicular  if and only if their scalar product is equal to $0$. This is because the angle between the two vectors is $90^\circ$ and as $\cos(90)=0$, -->
+<!-- $$\mathbf{u}\cdot\mathbf{v}=|\mathbf{u}||\mathbf{v}|\cos(90)=0$$. -->
+<!-- ## The scalar product of perpendicular vectors -->
+<!-- As mentioned in the above result, the scalar product of two perpendicular vectors is $0$.  -->
+<!-- Given two vectors, you can use this fact to test whether they are perpendicular or not.  -->
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -369,31 +443,9 @@ Example 8
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Take <span class="math inline">\(\mathbf{u}=4\mathbf{i}+2\mathbf{j}+\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{v}=\mathbf{i}-\mathbf{j}+3\mathbf{k}\)</span>, as in Example 4. It was calculated then that the scalar product between them is 5. So, the angle between them can be calculated as follows: <span class="math display">\[\cos(\psi)=\frac{\mathbf{u}\cdot\mathbf{v}}{|\mathbf{u}||\mathbf{v}|}=\frac{5}{(\sqrt{4^2+2^2+1^2})(\sqrt{1^2+(-1)^2+3^2})}=\frac{5}{(\sqrt{21})(\sqrt{11})}\approx{0.33}\]</span> <span class="math display">\[\psi\approx{\cos^{-1}(0.33)}\approx{71^\circ}\]</span></p>
+<p>Take <span class="math inline">\(\mathbf{a}=3\mathbf{i} + 3\mathbf{j} + 4\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{b}=\mathbf{i} + 3\mathbf{j} -3\mathbf{k}\)</span>. Then, <span class="math display">\[\mathbf{a}\cdot\mathbf{b}=(3)(1)+(3)(3)-(4)(3)=0\]</span> So <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> are indeed perpendicular.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-IMPORTANT
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The scalar product can be a negative number! All this means is that the angle is between <span class="math inline">\(90^\circ\)</span> or <span class="math inline">\(270^\circ\)</span> exclusively, or one vector is in the opposite direction to the other.</p>
-</div>
-</div>
-</section>
-<section id="special-cases" class="level2">
-<h2 class="anchored" data-anchor-id="special-cases">Special Cases…</h2>
-<p>There are a few specific cases that you need to be careful with when dealing with the scalar product. These are:<br>
-(a) When <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are parallel. In this case, the angle between the vectors is 0. So, the dot product is the magnitudes multiplied, that is <span class="math display">\[\mathbf{u}\cdot\mathbf{v}=|\mathbf{u}||\mathbf{v}|\]</span> (b) When <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are anti-parallel, then the dot product is negative the magnitudes multiplied, that is <span class="math display">\[\mathbf{u}\cdot\mathbf{v}=-|\mathbf{u}||\mathbf{v}|\]</span> (c) When either <span class="math inline">\(\mathbf{u}\)</span> or <span class="math inline">\(\mathbf{v}\)</span> is equal to <span class="math inline">\(0\)</span> (or both are), the dot product is equal to <span class="math inline">\(0\)</span>, that is <span class="math display">\[\mathbf{u}\cdot\mathbf{0}=\mathbf{0}\cdot\mathbf{v}=0\]</span> (d) Two vectors <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are perpendicular if and only if their scalar product is equal to <span class="math inline">\(0\)</span>. This is because the angle between the two vectors is <span class="math inline">\(90^\circ\)</span> and as <span class="math inline">\(\cos(90)=0\)</span>, <span class="math display">\[\mathbf{u}\cdot\mathbf{v}=|\mathbf{u}||\mathbf{v}|\cos(90)=0\]</span>.</p>
-</section>
-<section id="the-scalar-product-of-perpendicular-vectors" class="level2">
-<h2 class="anchored" data-anchor-id="the-scalar-product-of-perpendicular-vectors">The scalar product of perpendicular vectors</h2>
-<p>As mentioned in the above result, the scalar product of two perpendicular vectors is <span class="math inline">\(0\)</span>. Given two vectors, you can use this fact to test whether they are perpendicular or not.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -404,48 +456,45 @@ Example 9
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Take <span class="math inline">\(\mathbf{u}=\begin{pmatrix}3\\3\\4\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v}=\begin{pmatrix}1\\3\\-3\end{pmatrix}\)</span>. Then, <span class="math display">\[\mathbf{u}\cdot\mathbf{v}=\begin{pmatrix}3\\3\\4\end{pmatrix}\cdot\begin{pmatrix}1\\3\\-3\end{pmatrix}=(3)(1)+(3)(3)-(4)(3)=0\]</span> So, <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are indeed perpendicular.</p>
+<p>Let <span class="math inline">\(\mathbf{a}=\begin{pmatrix}2\\1\\z\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b}=\begin{pmatrix}5\\6\\1\end{pmatrix}\)</span>. By working out the scalar product of <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> and setting <span class="math inline">\(\mathbf{a}\cdot\mathbf{b} = 0\)</span>, you can find the value of <span class="math inline">\(z\)</span> for which <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> are perpendicular. Doing this gives <span class="math display">\[\mathbf{a}\cdot\mathbf{b}=\begin{pmatrix}2\\1\\z\end{pmatrix}\cdot\begin{pmatrix}5\\6\\1\end{pmatrix}=(2)(5)+(1)(6)+(z)(1)=10+6+z=16+z\]</span> Setting this scalar product to be zero allows you to find the value of <span class="math inline">\(z\)</span> such that <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> are perpendicular. So setting <span class="math inline">\(16 + z = 0\)</span> gives <span class="math inline">\(z=-16\)</span>.</p>
 </div>
 </div>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Example 10
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Let <span class="math inline">\(\mathbf{u}=\begin{pmatrix}2\\1\\\lambda\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v}=\begin{pmatrix}5\\6\\1\end{pmatrix}\)</span>. You can find the value of <span class="math inline">\(\lambda\)</span> for which <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are perpendicular as follows: <span class="math display">\[\mathbf{u}\cdot\mathbf{v}=\begin{pmatrix}2\\1\\\lambda\end{pmatrix}\cdot\begin{pmatrix}5\\6\\1\end{pmatrix}=(2)(5)+(1)(6)+(\lambda)(1)=10+6+\lambda=16+\lambda\]</span> As <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are perpendicular, the scalar product is <span class="math inline">\(0\)</span>. So, <span class="math display">\[16+\lambda=0\]</span> Hence, <span class="math inline">\(\lambda=-16\)</span></p>
-</div>
-</div>
-</section>
 <section id="quick-check-problems" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="quick-check-problems">Quick check problems</h2>
 <!-- add facility for webexercises to work on html -->
 <!-- add facility to check answers at end rather than one at a time -->
 <div class="webex-check webex-box">
 <ol type="1">
-<li>Using the algebraic definition, what is the scalar product of the vectors <span class="math inline">\(\mathbf{u}=\begin{pmatrix}1\\2\\-1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v}=\begin{pmatrix}2\\10\\15\end{pmatrix}\)</span>?</li>
+<li>Using the algebraic definition, what is the scalar product of the vectors <span class="math inline">\(\mathbf{a}=\begin{pmatrix}1\\2\\-1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b}=\begin{pmatrix}2\\10\\15\end{pmatrix}\)</span>?</li>
 </ol>
-<p>Answer: The scalar product is equal to <input class="webex-solveme nospaces" size="1" data-answer="[&quot;7&quot;]">.</p>
+<p>Answer: The scalar product <span class="math inline">\(\mathbf{a}\cdot\mathbf{b}\)</span> is equal to <input class="webex-solveme nospaces" size="1" data-answer="[&quot;7&quot;]">.</p>
+<!-- 2. What is the scalar product of $\mathbf{u}\begin{pmatrix}5\\7\\-13\end{pmatrix}$ with itself?  -->
+<!-- Answer: The scalar product is equal to the square of the magnitude of the vector. So, the scalar product is equal to <input class='webex-solveme nospaces' size='3' data-answer='["243"]'/>. -->
 <ol start="2" type="1">
-<li>What is the scalar product of <span class="math inline">\(\mathbf{u}\begin{pmatrix}5\\7\\-13\end{pmatrix}\)</span> with itself?</li>
-</ol>
-<p>Answer: The scalar product is equal to the square of the magnitude of the vector. So, the scalar product is equal to <input class="webex-solveme nospaces" size="3" data-answer="[&quot;243&quot;]">.</p>
-<ol start="3" type="1">
-<li>What is the scalar product of <span class="math inline">\(\mathbf{v}=3\mathbf{i}+\mathbf{j}-\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{u}=4\mathbf{i}+5\mathbf{j}+\mathbf{k}\)</span>?</li>
+<li>What is the scalar product of <span class="math inline">\(\mathbf{a}=3\mathbf{i}+\mathbf{j}-\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{b}=4\mathbf{i}+5\mathbf{j}+\mathbf{k}\)</span>?</li>
 </ol>
 <p>Answer: The scalar product is equal to <input class="webex-solveme nospaces" size="2" data-answer="[&quot;16&quot;]">.</p>
-<ol start="4" type="1">
-<li>Find the angle between the vectors <span class="math inline">\(\mathbf{u}=\begin{pmatrix}7\\-4\\11\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{v} =\begin{pmatrix}5\\2\\2\end{pmatrix}\)</span> to 2 significant figures.</li>
+<ol start="3" type="1">
+<li>Working in degrees, find the angle between the vectors <span class="math inline">\(\mathbf{a}=\begin{pmatrix}7\\-4\\11\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} =\begin{pmatrix}5\\2\\2\end{pmatrix}\)</span>.</li>
 </ol>
-<p>Answer: The angle is equal to <input class="webex-solveme nospaces" size="2" data-answer="[&quot;51&quot;]">.</p>
+<p>Answer: The angle is <input class="webex-solveme nospaces" size="2" data-answer="[&quot;51&quot;]"> degrees accurate to the nearest whole number.</p>
 </div>
-<p>[For more questions on the subject, please go to Questions: Scalar Product.]</p>
+</section>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../questions/qs-scalarproduct.html">For more questions on this topic, please go to Questions: The scalar product.</a></p>
+<p>If you are unsure about any of the concepts involving vectors in this guide, please see <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a> or <a href="../studyguides/addandsm.html">Guide: Vector addition and scalar multiplication</a>.</p>
+<p>If you would like to know more about why the two definitions of the scalar product are equal, or why the seven numbered properties of the scalar product are true, please see <a href="../proofsheets/ps-scalarproduct.html">Proof sheet: The scalar product</a>.</p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 08/23 by Isabella Lewis as part of a University of St Andrews STEP project.</p>
+<ul>
+<li>v1.1: edited 05/24 by tdhc.</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1002,6 +1051,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://giscus.app/client.js" data-repo="tdhc153/starmast" data-repo-id="R_kgDOJhaqiA" data-category="General" data-category-id="DIC_kwDOJhaqiM4CWZev" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 

@@ -1,0 +1,375 @@
+---
+title: "Trigonometric identities (degrees)"
+author: "Shanelle Advani, Krish Chaudhary, Dzhemma Ruseva"
+abstract-title: Summary
+abstract: Trigonometric identities are equations expressed in terms of trigonometric functions that hold true for all values of the variable defined. It is important to familiarize yourself with the standard trigonometric identities as they come in handy later whether that be for deriving further trigonometric identities or solving integrals involving trigonometric functions. 
+categories:
+  - Geometry
+  - Trigonometry
+image: FiguresPNG/trigidentities-image.png
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, it is recommended that you read [Guide: Trigonometry (degrees)](trigonometry-degrees.qmd) (or [Guide: Trigonometry (radians)](trigonometry-radians.qmd) first.*
+
+**Degrees are used throughout this guide. If you would like to see this guide using radians, please see [Guide: Trigonometric identities (radians)](trigonometricidentities-radians.qmd).**
+
+# What is a trigonometric identity? {-}
+
+**Trigonometric identities** are rules that can help you solve certain types of problems involving triangles, angles, and cycles more easily.
+
+For example, if you are trying to find out information about a right triangle -- maybe you know the length of one side and the size of one angle, and you want to find out the length of another side -- trigonometric identities can help you do that.
+
+In [Guide: Trigonometry (degrees)](trigonometry-degrees.qmd) (or [Guide: Trigonometry (radians)](trigonometry-radians.qmd)) you have seen the sine ($\sin$), cosine ($\cos$), and tangent ($\tan$) functions, as well as secant ($\sec$), cosecant ($\csc$), and cotangent ($\cot$). These functions are a way of relating the angles and sides of a triangle.
+
+Trigonometric identities are used in numerous fields of study, such as physics, engineering, astronomy, architecture, and even geography, so the knowledge you gather here could potentially be used in further studies. In particular, trigonometric identities are a key component in calculus.
+
+::: callout-note
+
+## Definition of trigonometric identity
+
+A **trigonometric identity** is a mathematical equation that is **always** true for any values of the variables where both sides of the equation are defined, and that involves trigonometric functions.
+
+These identities can be derived from the definitions of these trigonometric functions and the Pythagorean theorem, and they hold for all real numbers.
+
+In more technical terms, these identities are equalities that involve trigonometric functions and are true for every single value of the occurring variables. It's important to understand that trigonometric identities are not equations to solve for variables, but rather, they are tools to simplify trigonometric expressions or to solve other trigonometric equations.
+
+:::
+
+There are several fundamental types of trigonometric identities. Each type provides a different way of relating the various trigonometric functions to one another.
+
+# Pythagorean identities {-}
+
+One of the most celebrated theorems in mathematics is the Pythagorean theorem, which relates the two shorter sides of a right-angled triangle to its longer side (the hypotenuse). Since trigonometric functions are closely related to right-angled triangles, you can rephrase Pythagoras' theorem in terms of trigonometric functions.
+
+::: {.callout-note}
+
+## Pythagorean identities
+
+The key Pythagorean identity is $$\cos^2(\theta) + \sin^2(\theta)  = 1.$$ {#eq-cossin} Dividing @eq-cossin by $\cos^2(\theta)$ gives $$1 + \tan^2(\theta) = \sec^2(\theta)$$ {#eq-tansec} and dividing @eq-cossin by $\sin^2(\theta)$ gives $$\cot^2(\theta) + 1 = \csc^2(\theta)$$ {#eq-cotcsc}
+
+:::
+
+<!-- $$ \qquad\qquad \cot(\theta) = \frac{adjacent\ side}{opposite\ side} $$ -->
+
+<!-- ::: -->
+
+<!-- 1.  **Pythagorean identities**: These are derived from the Pythagorean theorem. The basic one is -->
+
+<!--     -   $\sin^2(\theta) + \cos^2(\theta) = 1$. -->
+
+<!--     If you divide the entire equation by $\sin^2(\theta)$ or $\cos^2(\theta)$, you get the other two identities. -->
+
+<!--     -   $1 + \cot^2(\theta) = \csc^2(\theta)$ -->
+<!--     -   $\tan^2(\theta) + 1 = \sec^2(\theta)$ -->
+
+::: {.callout-note appearance="simple"}
+
+## Example 1
+
+Simplify $6 + 12\sin^2(\theta) + 15\cos^2(\theta)$ as much as possible.
+
+**Solution**: Here, you are looking for any instances of $\cos^2(\theta) + \sin^2(\theta)$. You can see that $15 = 12 + 3$ and so $15\cos^2(\theta) = 12\cos^2(\theta) + 3\cos^2(\theta)$.  So you can then factorise and write $$6 + 12\sin^2(\theta) + 15\cos^2(\theta) = 6 + 12(\sin^2(\theta) + \cos^2(\theta)) + 3\cos^2(\theta)$$ Since $\sin^2(\theta) + \cos^2(\theta) = 1$, you can then write
+$$6 + 12(\sin^2(\theta) + \cos^2(\theta)) + 3\cos^2(\theta) = 6 + 12(1) + 3\cos^2(\theta)$$ and so 
+$$6 + 12\sin^2(\theta) + 15\cos^2(\theta) = 18 + 3\cos^2(\theta)$$ and this is as far as you can go.
+
+:::
+
+<!-- 2.  **Reciprocal identities**: These express $\csc$, $\sec$, and $\cot$ in terms of $\sin$, $\cos$, and $\tan$. -->
+
+<!--     -   $\csc(\theta) = \frac{1}{\sin(\theta)}$ -->
+<!--     -   $\sec(\theta) = \frac{1}{\cos(\theta)}$ -->
+<!--     -   $\cot(\theta) = \frac{1}{\tan(\theta)}$ -->
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+Simplify $\sin(\theta)(\csc(\theta) - \sin(\theta))$ to an expression involving $\cos(\theta)$.
+
+**Solution**:
+
+Here, you will need to use the definition of $\csc(\theta)$, which is $1/\sin(\theta)$. Writing this in gives $$\sin(\theta)\left(\csc(\theta) - \sin(\theta)\right) = \sin(\theta)\left(\frac{1}{\sin(\theta)} - \sin(\theta)\right)$$ Expanding the brackets gives
+$$\sin(\theta)\left(\frac{1}{\sin(\theta)} - \sin(\theta)\right) = \frac{\sin(\theta)}{\sin(\theta)} - \sin^2(\theta) = 1 -\sin^2(\theta)$$ Now, you can rearrange $\cos^2(\theta) + \sin^2(\theta) = 1$ to $\cos^2(\theta) = 1 - \sin^2(\theta)$, and so 
+$$\sin(\theta)(\csc(\theta) - \sin(\theta)) = 1 - \sin^2(\theta) = \cos^2(\theta)$$ and you are done!
+
+:::
+
+<!-- 3.  **Quotient identities**: These express $\tan$ and $\cot$ in terms of $\sin$ and $\cos$. -->
+
+<!--     -   $\tan(\theta) = \frac{\sin(\theta)}{\cos(\theta)}$ -->
+<!--     -   $\cot(\theta) = \frac{\cos(\theta)}{\sin(\theta)}$ -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Example 3.1 -->
+
+
+<!-- ## Shift identities  -->
+
+<!-- Sometimes, you may have to write an equivalence between a particular value of sin  These express $\sin$, $\cos$, and $\tan$ in terms of each other. These identities are known as  -->
+
+<!--     -   $\sin(\frac{\pi}{2}-\theta)$ = $\cos(\theta)$ -->
+<!--     -   $\cos(\frac{\pi}{2}-\theta)$ = $\sin(\theta)$ -->
+<!--     -   $\tan(\frac{\pi}{2}-\theta)$ = $\cot(\theta)$ -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Example 5 -->
+
+<!-- Find $\cos(\theta)$, given $\sin(55)$ -->
+
+<!-- **Solution**: -->
+
+<!-- $\cos(\theta)$ = $\sin(90-\theta)$ -->
+
+<!-- $\sin(55)$ = $\sin(90-\theta)$ -->
+
+<!-- $90-\theta$ = $55$ -->
+
+<!-- $\theta$ = $35$ -->
+
+<!-- $\cos(\theta)$ = $\cos(35)$ -->
+<!-- ::: -->
+
+# Sum and difference identities
+
+Sometimes, you will have to find exact values of trigonometric functions for certain angles, or to split an expression like $\cos(x+h)$ to be simplified further. To do this, you can use **sum and difference identities**. These express the sine, cosine, or tangent of the sum or difference of two angles in terms of sines, cosines and tangents of the angles.
+
+For sine: $$\sin(\alpha \pm \beta) = \sin(\alpha)\cos(\beta) \pm \cos(\alpha)\sin(\beta)$$ {#eq-sinsum}
+
+For cosine, take care with the $\mp$ sign in the middle of the right hand side: $$\cos(\alpha \pm \beta) = \cos(\alpha)\cos(\beta) \mp \sin(\alpha)\sin(\beta)$$ {#eq-cossum}
+
+And for tangent, note the $\pm$ sign in the numerator and the $\mp$ sign in the denominator.
+$$\tan(\alpha \pm \beta) = \frac{\tan(\alpha) \pm \tan(\beta)}{(1 \mp \tan(\alpha)\tan(\beta))}$$ {#eq-tansum}
+
+::: {.callout-note appearance="simple"}
+
+## Example 3
+
+Find the value of $\tan(15)$.
+
+**Solution**: To solve this problem, you will need a good knowledge of the tangent function applied to common angles; see the table of common angles found in [Guide: Trigonometry (degrees)](trigonometry-degrees.qmd). First of all, you can see that
+
+$$\tan(15) = \tan(45- 30)$$
+Next, using @eq-tansum you can write that
+$$\tan(45- 30) = \frac{\tan(45) - \tan(30)}{1 + \tan(45)\tan(30)}$$
+Using the fact that $\tan(45) = 1$ and $\tan(30) = 1/\sqrt{3}$, you can write that 
+$$\frac{\tan(45) - \tan(30)}{1 + \tan(45)\tan(30)} = \frac{1 - \frac{1}{\sqrt{3}}}{1 + (1)\left(\frac{1}{\sqrt{3}}\right)}$$
+
+Simplifying the numerator and denominator by cross multiplication gives: $$\frac{1 - \frac{1}{\sqrt{3}}}{1 + (1)\left(\frac{1}{\sqrt{3}}\right)} = \frac{\frac{\sqrt{3} - 1}{\sqrt{3}}}{
+\frac{\sqrt{3} + 1}{\sqrt{3}}} = \frac{\sqrt{3} - 1}{\sqrt{3} + 1}$$ So $\tan(15) = \frac{\sqrt{3} - 1}{\sqrt{3} + 1}$. You can leave your answer like this if you wish; but if you prefer to rationalize your denominator (see Guide: Rationalizing the denominator for more) then you can say that $\tan(15) = 2 - \sqrt{3}$.
+
+:::
+
+# Double angle identities
+
+Important consequences of the sum identities follow when you let $\alpha = \beta$. These are the well known **double-angle identities**, and are extremely useful in areas of calculus. These express the sine, cosine, or tangent of twice an angle $\theta$ in terms of $\sin(\theta)$, $\cos(\theta)$ and $\tan(\theta)$. The formulas are
+
+$$\sin(2\theta) = 2\sin(\theta)\cos(\theta)$$ {#eq-twosin}
+
+$$\cos(2\theta) = \cos^2(\theta) - \sin^2(\theta)$$ {#eq-twocos}
+
+$$\tan(2\theta) = \frac{2\tan(\theta)}{1 - \tan^2(\theta)}$$ {#eq-twotan}
+
+These identities are particularly useful for doing calculus; as you will see in [Guide: Trigonometry and integration], $\cos(2x)$ is far easier to integrate than $\cos^2(x)$!
+
+::: {.callout-note appearance="simple"}
+
+## Example 4
+
+Write $\cos^2(x)$ in terms of $\cos(2x)$.
+
+**Solution**: Start with the identity $$\cos(2x) = \cos^2(x) - \sin^2(x)$$ Next, you know from @eq-cossin that $\cos^2(x) + \sin^2(x) = 1$. The question wants you to write $\cos^2(x)$ in terms of $\cos(2x)$, so the $\sin^2(x)$ term needs to be eliminated. Using @eq-cossin, you can write that $\sin^2(x) = 1 - \cos^2(x)$. Taking care of the signs, you can substitute this into the expression for $\cos(2x)$ to get:
+\begin{align*}
+\cos(2x) &= \cos^2(x) - (1-\cos^2(x))\\[1em]
+&= 2\cos^2(x) - 1
+\end{align*}
+You can now rearrange this to make $\cos^2(x)$ the subject. Adding $1$ to both sides and then dividing by $2$ gives $$\frac{1}{2}\left(\cos(2x) + 1\right) = \cos^2(x)$$ and this is your final answer.
+
+:::
+
+Using a similar method, you can also show that $\sin^2(x) = \frac{1}{2}\left(1 - \cos(2x)\right)$.
+
+# Other trigonometric identities
+
+There are many other kinds of identities relating trigonometric functions. Four more types of trigonometric identity are given below: **phase shift identities**, **parity identities**, **half-angle identities**, and **sum-to-product identities**. Both phase shift and parity identities will allow you to work out angles involving multiple revolutions or even negative angles. Half-angle and sum-to-product/product-to-sum identities are especially useful in calculus.
+
+## Phase shift identities
+
+As seen in [Guide: Trigonometry (degrees)](trigonometry-degrees.qmd), you can use the unit circle to add or subtract an angle to your $\theta$ and find yourself on another point of the unit circle.
+
+For example, suppose that you were to shift the angle by $90^\circ$. Then the distance that was projected on the $x$-axis is now projected on the $y$-axis and vice versa. This would lead to a change between $\sin(\theta)$ and $\cos(\theta)$. These lead to the following properties.
+
+
+::: {.callout-note}
+
+## Phase shift with $90^\circ$
+<!--need corrections-->
+$$\sin(\theta\pm 90) = \pm\cos(\theta) \qquad  \cos(\theta\pm90) = \mp\sin(\theta)$$
+$$\sin(90-\theta) = \cos(\theta) \qquad \cos(90-\theta) = \sin(\theta) $$
+:::
+
+When you move $180^\circ$ you get to the opposite side of the unit circle. This would lead to a change of sign as you go on the same distance, on the other side of the axis. 
+
+::: {.callout-note}
+
+## Phase shift with $180^\circ$
+<!--need corrections-->
+
+$$\sin(\theta+180) = \sin(\theta-180) = -\sin(\theta) \qquad \cos(\theta+180) = \cos(\theta-180) = -\cos(\theta)$$
+
+and so $$\tan(\theta+180) = \tan(\theta-180) = \tan(\theta)$$
+
+:::
+
+When you move $360^\circ$ you get back to where you started. Therefore:
+
+::: {.callout-note}
+
+## Phase shift with $360^\circ$
+<!--need corrections-->
+
+$$\sin(\theta+360) = \sin(\theta) \qquad \cos(\theta+360) = \cos(\theta)$$
+:::
+
+Following these two results, you can say that $\sin$ and $\cos$ are **periodic** with period $360^\circ$. In fact, for any whole number $k$ (both positive and negative), you can say that 
+$$\sin(\theta+k\cdot360^\circ) = \sin(\theta) \qquad \cos(\theta + k\cdot360^\circ) = \cos(\theta)$$
+
+For more on this, see guide on [Guide: Multiple revolutions and negative angles](). You can use these equations to work out more trigonometric values:
+
+::: {.callout-note appearance="simple"}
+
+## Example 5
+
+Using the fact that $\cos(60) = 1/2$ and $\sin(60) = sqrt{3}/2$, you can work out the values of $\cos(1500)$ and $\sin(-2820)$. Here, you can write $$1500 = 1440 + 60 = 4\cdot 360 + 60$$ and so $$\cos\left(1500\right) = \cos\left(4\cdot 360 + 60\right) = \cos\left(60\right) = \frac{1}{2}.$$ Similarly $$-2820 = -2880 + 60 = -8\cdot 360 + 60$$ and so $$\sin\left(-2820\right) = \sin\left(-8\cdot 360 + 60\right) = \sin\left(60\right) = \frac{\sqrt{3}}{2}.$$
+
+:::
+
+## Parity identities {-}
+
+Taking the lead from the theory of even and odd functions (see [Guide: Even and odd functions]), the 
+**parity identities** demonstrate that $\cos$ is an even function and that $\sin$ and $\tan$ are both odd functions:
+
+\begin{align*}
+\cos(-\theta) &= \cos(\theta)\\[1em]
+\sin(-\theta) &= -\sin(\theta)\\[1em]
+\tan(-\theta) &= -\tan(\theta)
+\end{align*}
+
+Together with the table for common angles as seen in [Guide: Trigonometry (degrees)](trigonometry-degrees.qmd), you can use the parity identities to find values of trigonometric functions for common negative angles (see [Guide: Multiple revolutions and negative values]() for more):
+
+|Angles ($^\circ$)|$0^\circ$|$-30^\circ$            | $-45^\circ$           | $-60^\circ$           | $-90^\circ$      | $-180^\circ$ | $-270^\circ$     |
+|:---------------|:--------|:---------------------|:---------------------|:---------------------|:----------------|:------------|:----------------|
+|$\sin(\theta)$  | $0$     | $-\frac{1}{2}$        | $-\frac{1}{\sqrt{2}}$ | $-\frac{\sqrt{3}}{2}$ | $-1$             | $0$         | $1$            | 
+|$\cos(\theta)$  | $1$     | $\frac{\sqrt{3}}{2}$ | $\frac{1}{\sqrt{2}}$ | $\frac{1}{2}$        | $0$             | $-1$        | $0$             | 
+|$\tan(\theta)$  | $0$     | $-\frac{1}{\sqrt{3}}$ | $-1$                  | $-\sqrt{3}$           | undef.             | $0$         | undef.            | 
+
+: Trigonometric values for negative angles. {tbl-colwidths="[15,15,15,15,15,15,15,15]"}
+
+## Half-angle identities {-}
+
+By rearranging the double angle identities and writing an angle $\theta$ as $2\cdot\frac{\theta}{2}$, you can obtain expressions for the sine, cosine, or tangent of half an angle in terms of the square roots of expressions involving the sine, cosine, or tangent of the angle:
+
+\begin{align*}
+\sin\left(\frac{\theta}{2}\right) &= \pm\sqrt{\frac{(1 - \cos(\theta))}{2}}\\[1em]
+\cos\left(\frac{\theta}{2}\right) &= \pm\sqrt{\frac{(1 + \cos(\theta))}{2}}\\[1em]
+\tan\left(\frac{\theta}{2}\right) &= \pm\sqrt{\frac{(1 - \cos(\theta))}{(1 + \cos(\theta))}}= \frac{\sin(\theta)}{(1 + \cos(\theta))} = \frac{(1-\cos(\theta))}{\sin(\theta)}
+\end{align*}
+
+## Product-to-sum and sum-to-product identities: 
+
+These allow you to express products of sine and cosine as sums/differences of sine and cosine, and also the other way around:
+
+### Product-to-sum identities {-}
+
+\begin{align*}
+\sin(\alpha) \cos(\beta) &= \frac{1}{2}\left(\sin(\alpha+\beta) + \sin(\alpha-\beta)\right)\\[1em]
+\cos(\alpha) \cos(\beta) &= \frac{1}{2}\left(\cos(\alpha+\beta) + \cos(\alpha-\beta)\right)\\[1em]
+\sin(\alpha) \sin(\beta) &= \frac{1}{2}\left(\cos(\alpha-\beta) - \cos(\alpha+\beta)\right)
+\end{align*}
+
+### Sum-to-product identities {-}
+
+\begin{align*}
+\sin(\alpha) + \sin(\beta) &= 2 \sin\left(\frac{\alpha+\beta}{2}\right) \cos\left(\frac{\alpha-\beta}{2}\right)\\[1em]
+\sin(\alpha) - \sin(\beta) &= 2 \cos\left(\frac{\alpha+\beta}{2}\right) \sin\left(\frac{\alpha-\beta}{2}\right)\\[1em]
+\cos(\alpha) + \cos(\beta) &= 2 \cos\left(\frac{\alpha+\beta}{2}\right) \cos\left(\frac{\alpha-\beta}{2}\right)\\[1em]
+\cos(\alpha) - \cos(\beta) &= -2 \sin\left(\frac{\alpha+\beta}{2}\right) \sin\left(\frac{\alpha-\beta}{2}\right)
+\end{align*}
+
+Together with the half-angle identities, the sum-to-product and the product-to-sum identities can be incredibly useful in integrating trigonometric functions and in simplifying more complicated trigonometric expressions.
+
+
+<!-- 10. **Periodicity Identities**: Also known as the circular identities, they come from the cyclic nature of the trigonometric functions which repeat their values in a specific pattern. These have to be subdivided as their nature varies based on sine, cosecant and tangent. -->
+
+<!-- -   ***Sine and Cosine*** are periodic functions with a period of $2\pi$. This is due to their relationship with the unit circle which has a circumference of $2\pi$. So, for any angle $\theta$, -->
+<!--     -   $\sin(\theta + 2\pi) = \sin(\theta)$ -->
+<!--     -   $\cos(\theta + 2\pi) = \cos(\theta)$ -->
+<!-- -   ***Tangent and Cotangent*** have a period of $\pi$, as they repeat their values every half rotation on the unit circle. Thus, for any angle $\theta$, -->
+<!--     -   $\tan(\theta + \pi) = \tan(\theta)$ -->
+<!--     -   $\cot(\theta + \pi) = \cot(\theta)$ -->
+<!-- -   ***Secant and Cosecant*** are periodic functions with a period of $2\pi$, like sine and cosine. For any angle $\theta$, -->
+<!--     -   $\sec(\theta + 2\pi) = \sec(\theta)$ -->
+<!--     -   $\csc(\theta + 2\pi) = \csc(\theta)$ -->
+    
+
+## Quick check problems {-}
+
+::: {.content-visible when-format="html"}
+
+::: {.webex-check .webex-box}
+
+You are given ten trigonometric expressions below. Match the correct number to the correct letter to form a valid trigonometric identity.
+
+(1) $\sec^2(\theta) - \tan^2(\theta)$
+(2) $\cos^2(\theta) - \sin^2(\theta)$
+(3) $2\sin(\theta)\cos(\theta)$
+(4) $\cos(-\theta)(1-\sin^2(\theta))$
+(5) $\cos^2(\theta) + \sin^2(\theta) + \cot^2(\theta)$
+
+(a) $\csc^2(\theta) =$ `r mcq(c("(1)", "(2)", "(3)", "(4)", answer = "(5)"))`
+(b) $1 =$ `r mcq(c(answer = "(1)", "(2)", "(3)", "(4)", "(5)"))`
+(c) $\cos^3(\theta) =$ `r mcq(c("(1)", "(2)", "(3)", answer = "(4)", "(5)"))`
+(d) $\sin(2\theta) =$ `r mcq(c("(1)", "(2)", answer = "(3)", "(4)", "(5)"))`
+(e) $\cos(2\theta) =$ `r mcq(c("(1)", answer = "(2)", "(3)", "(4)", "(5)"))`
+
+:::
+
+:::
+
+
+::: {.content-hidden when-format="html"}
+
+You are given ten trigonometric expressions below. Match the correct number to the correct letter to form a valid trigonometric identity.
+
+(1) $\sec^2(\theta) - \tan^2(\theta)$
+(2) $\cos^2(\theta) - \sin^2(\theta)$
+(3) $2\sin(\theta)\cos(\theta)$
+(4) $\cos(-\theta)(1-\sin^2(\theta))$
+(5) $\cos^2(\theta) + \sin^2(\theta) + \cot^2(\theta)$
+
+(a) $\csc^2(\theta)$
+(b) $1$
+(c) $\cos^3(\theta)$ 
+(d) $\sin(2\theta)$
+(e) $\cos(2\theta)$
+
+:::
+
+# Further reading {-}
+
+[For more questions on the subject, please go to Questions: Trigonometric identities (degrees).](../questions/qs-trigonometricidentities-degrees.qmd)
+
+[To see this guide using radians as a measure of angle, please go to Guide: Trigonometric identities (radians).](trigonometricidentities-radians.qmd)
+
+[To understand where these identities came from, please go to Proof: Trigonometric identities.](../proofsheets/ps-trigonometricidentities.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 08/23 by Krish Chaudhary, Shanelle Advani, Dzhemma Ruseva as part of a University of St Andrews STEP project.
+
+  - v1.1: edited 04/24 by tdhc, and split into a degrees and radians version. 

@@ -3,12 +3,29 @@ project:
 
 website:
   title: STARMAST
+  search:
+    location: navbar
+    type: overlay
   navbar:
     left:
     - href: index.qmd
       text: Home
-    - about.qmd
+    - href: about.qmd
+      text: About
+    - href: fullindex.qmd
+      text: Index
+    - href: studyguidelist.qmd
+      text: Study guides
+    - href: qalist.qmd
+      text: Questions and answers
+    - href: fslist.qmd
+      text: Fact sheets
+    - href: pslist.qmd
+      text: Proof sheets
   reader-mode: true
+  comments:
+    giscus:
+      repo: tdhc153/starmast
   
 format:
   html:
@@ -21,9 +38,12 @@ format:
     fontsize: 1.1em
     linestretch: 1.5
     css: webexfiles/webex.css
-    include-after-body: webexfiles/webex.js
+    include-after-body: 
+    - webexfiles/webex.js
     default-image-extension: svg
     fig-width: 15
+          
+        
     
   pdf:
     engine: xelatex

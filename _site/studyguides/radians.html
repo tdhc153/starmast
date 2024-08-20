@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ifan Howells-Baines, Mark Toner">
+
+<title>STARMAST - Introduction to radians</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html" rel="" target="">
+ <span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../studyguidelist.html" rel="" target="">
+ <span class="menu-text">Study guides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../qalist.html" rel="" target="">
+ <span class="menu-text">Questions and answers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fslist.html" rel="" target="">
+ <span class="menu-text">Fact sheets</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pslist.html" rel="" target="">
+ <span class="menu-text">Proof sheets</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-are-radians" id="toc-what-are-radians" class="nav-link active" data-scroll-target="#what-are-radians">What are radians?</a></li>
+  <li><a href="#radians-and-circles" id="toc-radians-and-circles" class="nav-link" data-scroll-target="#radians-and-circles">Radians and circles</a></li>
+  <li><a href="#converting-between-radians-and-degrees" id="toc-converting-between-radians-and-degrees" class="nav-link" data-scroll-target="#converting-between-radians-and-degrees">Converting between radians and degrees</a>
+  <ul class="collapse">
+  <li><a href="#converting-from-degrees-to-radians" id="toc-converting-from-degrees-to-radians" class="nav-link" data-scroll-target="#converting-from-degrees-to-radians">Converting from degrees to radians</a></li>
+  <li><a href="#converting-from-radians-to-degrees" id="toc-converting-from-radians-to-degrees" class="nav-link" data-scroll-target="#converting-from-radians-to-degrees">Converting from radians to degrees</a></li>
+  <li><a href="#useful-conversions-to-know" id="toc-useful-conversions-to-know" class="nav-link" data-scroll-target="#useful-conversions-to-know">Useful conversions to know</a></li>
+  </ul></li>
+  <li><a href="#arc-length-and-sector-area" id="toc-arc-length-and-sector-area" class="nav-link" data-scroll-target="#arc-length-and-sector-area">Arc length and sector area</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="radians.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="radians.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to radians</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Geometry</div>
+    <div class="quarto-category">Trigonometry</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ifan Howells-Baines, Mark Toner </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Summary</div>
+    Radians are an important concept to understand in mathematics. They are used instead of degrees in areas like calculus and trigonometry, and so becoming comfortable converting between radians and degrees is an important skill. This guide also explains how to find lengths of circular arcs and areas of circular sectors.
+  </div>
+</div>
+
+</header>
+
+<section id="what-are-radians" class="level1 unnumbered">
+<h1 class="unnumbered">What are radians?</h1>
+<p><strong>Radians</strong>, like degrees are a way of measuring the size of angles and can often be identified by the presence of <strong><span class="math inline">\(\pi\)</span>.</strong></p>
+<p>Radians are the SI unit for angles derived from the <strong>radius of a circle</strong>, which makes them especially useful when working with circles. You will see this relationship more in the following section on arc length and sector area. Radians are denoted by the symbol <strong>rad</strong>, or sometimes by <span class="math inline">\(^c\)</span> (although this is slightly older).</p>
+<p>Radians are exclusively used to describe angles in calculus; therefore if you want to study calculus in the future it is <em>extremely</em> important to understand how to convert between degrees and radians, and be comfortable using radians more generally.</p>
+<p>This guide will firstly describe the relationship between radians and circles. Then it will describe the relationship between radians and degrees showing how to convert between them. Lastly, it will provide a table of some useful degree to radians conversions for common angle sizes.</p>
+</section>
+<section id="radians-and-circles" class="level1">
+<h1>Radians and circles</h1>
+<p>Before you see the close relationship between radians and circles, it s important to understand what <strong>arcs</strong> and <strong>sectors</strong> are.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of a circular arc
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pick any two different points on a circle and draw a curve between them, following the circle. This curve is known as a <strong>circular arc</strong>, but this is usually shortened to <strong>arc</strong>.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>circle</strong> does not include the interior of the circle. A circle together with its interior is called a <strong>disk</strong>.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#fig-circulararc">Figure&nbsp;1</a> shows an example of an arc.</p>
+</div>
+</div>
+<div id="fig-circulararc" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/radians-fig2-2.png" class="img-fluid figure-img" style="width:100.0%" alt="A circular arc"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: A circular arc.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of a circular sector
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pick two different points on a circle and draw two radiuses between them and the centre. The area enclosed by these two radiuses of the circle and the arc between the points is called a <strong>circular sector</strong>, but this is usually shortened to <strong>sector</strong>.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-default callout-note callout-titled" data-appreance="simple">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#fig-circularsector">Figure&nbsp;2</a> is an example of a sector.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div id="fig-circularsector" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/radians-fig3-3.png" class="img-fluid figure-img" style="width:100.0%" alt="A circular sector."></p>
+<figcaption class="figure-caption">Figure&nbsp;2: A circular sector.</figcaption>
+</figure>
+</div>
+<p>These two concepts form the foundations to to precisely explain the definition of a radian.</p>
+<p>Pick any two points on a circle such that the length of the arc between them is <strong>equal to the radius of the circle</strong> and draw radiuses from these points to the centre. The angle between these two lines at the centre is defined to be <span class="math inline">\(1\)</span> radian. A precise way to say this is:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of a radian
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>One <strong>radian</strong> is the angle formed by the section of circle where the length of the arc <span class="math inline">\(a\)</span> is the radius <span class="math inline">\(r\)</span>. See <a href="#fig-radian">Figure&nbsp;3</a> for a picture of this.</p>
+<p>More generally, the angle <span class="math inline">\(\theta\)</span> in radians is defined by <span class="math inline">\(a/r\)</span>, where <span class="math inline">\(a\)</span> is the length of the arc and <span class="math inline">\(r\)</span> is the radius of the circle.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can notice that the size of the circle does not change the value of <span class="math inline">\(1\)</span> rad - it is the same in any circle.</p>
+</div>
+</div>
+<div id="fig-radian" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/radians-fig1-1.png" class="img-fluid figure-img" style="width:100.0%" alt="A radian drawn on a circle."></p>
+<figcaption class="figure-caption">Figure&nbsp;3: A visual representation of a radian.</figcaption>
+</figure>
+</div>
+<p>Using this definition, you can find the number of radians in a full circle. The well-known equation <span class="math inline">\(c = 2 \pi r\)</span>, where <span class="math inline">\(c\)</span> is the circumference of a circle and <span class="math inline">\(r\)</span> the radius, tells you that you can fit sectors with arc length <span class="math inline">\(r\)</span> side by side into the circle <span class="math inline">\(2\pi\)</span> times. Since each of these sectors has an angle of <span class="math inline">\(1\)</span> radians at the centre, it follows that there are <span class="math inline">\(2\pi\)</span> radians in the whole circle.</p>
+<div id="fig-twopi" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/radians-fig4-4.png" class="img-fluid figure-img" style="width:100.0%" alt="A circle divided by sectors with arc length equal to the radius."></p>
+<figcaption class="figure-caption">Figure&nbsp;4: A circle divided by sectors with arc length equal to the radius.</figcaption>
+</figure>
+</div>
+</section>
+<section id="converting-between-radians-and-degrees" class="level1 unnumbered">
+<h1 class="unnumbered">Converting between radians and degrees</h1>
+<p>The process for converting from radians to degrees and from degrees to radians are direct opposites to each other.</p>
+<section id="converting-from-degrees-to-radians" class="level2">
+<h2 class="anchored" data-anchor-id="converting-from-degrees-to-radians">Converting from degrees to radians</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Converting angles from degrees to radians
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Starting from an angle in degrees:</p>
+<ol type="1">
+<li>Multiply the angle in degrees by <span class="math inline">\(\pi\)</span></li>
+<li>Divide the result by <span class="math inline">\(180\)</span></li>
+</ol>
+<p>Your angle is now in radians.</p>
+<p>More precisely, suppose you have an angle of <span class="math inline">\(x\)</span> degrees. Then your angle in radians is equal to <span class="math inline">\(x\pi/180\)</span>. In particular, one degree is equal to <span class="math inline">\(\pi/180\)</span> radians.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Where possible, remember to simplify fractions at the very end of your working.</strong></p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given the angle <span class="math inline">\(180^\circ\)</span> to convert to radians.</p>
+<ul>
+<li>Multiplying by <span class="math inline">\(\pi\)</span> gives <span class="math inline">\(180\pi\)</span></li>
+<li>Dividing by 180 gives <span class="math inline">\(\pi\)</span></li>
+</ul>
+<p>This means that <span class="math inline">\(180^\circ\)</span> is equal to <span class="math inline">\(\pi\)</span> rad.</p>
+<p>Alternatively, you could put <span class="math inline">\(x = 180\)</span> into the formula <span class="math inline">\(x\pi/180\)</span> to obtain <span class="math inline">\(180\pi/180 = \pi\)</span> as the angle in radians.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given the angle <span class="math inline">\(45^\circ\)</span> to convert to radians.</p>
+<ul>
+<li>Multiplying by <span class="math inline">\(\pi\)</span> gives <span class="math inline">\(45\pi\)</span></li>
+<li>Dividing by 180 gives <span class="math inline">\(\frac{\pi}{4}\)</span></li>
+</ul>
+<p>This means that <span class="math inline">\(45^\circ\)</span> is equal to <span class="math inline">\(\frac{\pi}{4}\)</span> rad.</p>
+<p>Alternatively, you could put <span class="math inline">\(x = 45\)</span> into the formula <span class="math inline">\(x\pi/180\)</span> to obtain <span class="math inline">\(45\pi/180 = \pi/4\)</span> as the angle in radians.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can notice that angles in radians are typically given as fractions of <span class="math inline">\(\pi\)</span>, rather than decimal numbers. In mathematics, it is usually better to express your answer <strong>exactly</strong> rather than as a decimal approximation.</p>
+</div>
+</div>
+</section>
+<section id="converting-from-radians-to-degrees" class="level2">
+<h2 class="anchored" data-anchor-id="converting-from-radians-to-degrees">Converting from radians to degrees</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Converting angles from radians to degrees
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Starting from an angle in radians:</p>
+<ul>
+<li>Multiply the angle in radians by <span class="math inline">\(180\)</span></li>
+<li>Divide the result by <span class="math inline">\(\pi\)</span></li>
+</ul>
+<p>Your angle is now in degrees.</p>
+<p>More precisely, suppose you have an angle of <span class="math inline">\(y\)</span> radians. Then your angle in degrees is equal to <span class="math inline">\(180y/\pi\)</span>. In particular, one radian is equal to <span class="math inline">\(180/\pi = 57.295\)</span> degrees (to three decimal places).</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given the angle <span class="math inline">\(5\pi/4\)</span> rad to convert to degrees.</p>
+<ul>
+<li>Multiplying by <span class="math inline">\(180\)</span> gives <span class="math inline">\(900\pi/4 = 225\pi\)</span></li>
+<li>Dividing the result by <span class="math inline">\(\pi\)</span> gives <span class="math inline">\(225\)</span>.</li>
+</ul>
+<p>This means that <span class="math inline">\(5\pi/4\)</span> rad is equal to <span class="math inline">\(225^\circ\)</span>.</p>
+<p>Alternatively, you could put <span class="math inline">\(y = 5\pi/4\)</span> into the formula <span class="math inline">\(180y/\pi\)</span> to obtain <span class="math inline">\(900\pi/4\pi = 225\)</span> as the angle in degrees.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given the angle <span class="math inline">\(\frac{\pi}{6}\)</span> rad to convert to degrees</p>
+<ul>
+<li>Multiplying by <span class="math inline">\(180\)</span> gives <span class="math inline">\(180\pi/6 = 30\pi\)</span></li>
+<li>Dividing the result by <span class="math inline">\(\pi\)</span> gives <span class="math inline">\(30\)</span>.</li>
+</ul>
+<p>This means that <span class="math inline">\(\frac{\pi}{6}\)</span> rad is equal to <span class="math inline">\(30^\circ\)</span>.</p>
+<p>Alternatively, you could put <span class="math inline">\(y = \pi/6\)</span> into the formula <span class="math inline">\(180y/\pi\)</span> to obtain <span class="math inline">\(180\pi/6\pi = 30\)</span> as the angle in degrees.</p>
+</div>
+</div>
+</section>
+<section id="useful-conversions-to-know" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="useful-conversions-to-know">Useful conversions to know</h2>
+<p>Here is a table of useful conversions of degrees to radians that come up often:</p>
+<table class="table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Angle in degrees</th>
+<th style="text-align: center;"><span class="math inline">\(0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(30\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(45\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(60\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(90\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(120\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(135\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(150\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(180\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(270\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(360\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Angle in radians</td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\pi}{6}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\pi}{4}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\pi}{3}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{\pi}{2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{2\pi}{3}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{3\pi}{4}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{5\pi}{6}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\pi\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{3\pi}{2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\pi\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="arc-length-and-sector-area" class="level1 unnumbered">
+<h1 class="unnumbered">Arc length and sector area</h1>
+<p>If you have two radiuses of the circle and know the angle, in radians, between these radiuses, then you can calculate the length of the arc between these lines.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Equation for arc length
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The length <span class="math inline">\(s\)</span> of an arc between two points is given by <span class="math inline">\(s = r \theta\)</span>, where <span class="math inline">\(r\)</span> is the radius of the circle and <span class="math inline">\(\theta\)</span> is the angle, in radians, between the radiuses of the two given points.</p>
+</div>
+</div>
+<p>To see why this equation holds, convince yourself that this equality is true (<span class="math inline">\(c\)</span> is the circumference of the circle): <span class="math display">\[\frac{s}{c} = \frac{\theta}{2\pi}.\]</span> If you substitute <span class="math inline">\(c = 2\pi r\)</span> into this equality, you get <span class="math display">\[\frac{s}{2\pi r} = \frac{\theta}{2\pi}.\]</span> Finally, rearranging gives you the equation <span class="math display">\[s = r \theta.\]</span></p>
+<p>Similar to arc length, you can get an equation in terms of radians to calculate the area of a sector.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Equation for sector area
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The area <span class="math inline">\(A\)</span> of a sector of a circle with radius <span class="math inline">\(r\)</span> and angle <span class="math inline">\(\theta\)</span> at the centre (in radians) is given by <span class="math inline">\(A = \frac{1}{2}r^2\theta\)</span>.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given a circle with radius <span class="math inline">\(4\)</span>. Find the length of arc and the area of the sector covering an angle of <span class="math inline">\(2\pi/3\)</span> radians.</p>
+<p>Using the formula for length of arc with <span class="math inline">\(r = 4\)</span> and <span class="math inline">\(\theta = 2\pi/3\)</span> gives <span class="math display">\[s = 4\cdot \frac{2\pi}{3} = \frac{8\pi}{3}.\]</span> Similarly, using the formula for area of the sector with <span class="math inline">\(r=4\)</span> and <span class="math inline">\(\theta = 2\pi/3\)</span> gives <span class="math display">\[A = \frac{1}{2}\cdot\frac{4^2\cdot 2\pi}{3} = \frac{32\pi}{6} = \frac{16\pi}{3}.\]</span></p>
+</div>
+</div>
+</section>
+<section id="quick-check-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Quick check problems</h1>
+<!-- add facility to check answers at end rather than one at a time -->
+<div class="webex-check webex-box">
+<ol type="1">
+<li>You are given three degree to radians conversions. Determine whether they are true or false.</li>
+</ol>
+<ol type="a">
+<li><p><span class="math inline">\(15^\circ = \dfrac{\pi}{12}\textsf{ rad}\)</span> Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+<li><p><span class="math inline">\(450^\circ = \dfrac{5\pi}{2}\textsf{ rad}\)</span> Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+<li><p><span class="math inline">\(720^\circ = 2\pi\textsf{ rad}\)</span> Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+</ol>
+<ol start="2" type="1">
+<li>You are given three radians to degrees conversions. Determine whether they are true or false.</li>
+</ol>
+<ol type="a">
+<li><p><span class="math inline">\(\dfrac{\pi}{24} \textsf{ rad} = 10\)</span> Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p><span class="math inline">\(3\pi \textsf{ rad} = 540\)</span> Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+<li><p><span class="math inline">\(\dfrac{3\pi}{4} \textsf{ rad} = 140\)</span> Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+</ol>
+<ol start="3" type="1">
+<li>By entering your answer as a rational number <span class="math inline">\(a/b\)</span> in its simplest terms, what fraction of <span class="math inline">\(\pi\)</span> describes the following:</li>
+</ol>
+<ol type="a">
+<li><p>length of arc of circle with radius <span class="math inline">\(3\)</span> over an angle of <span class="math inline">\(5\pi/6\)</span> radians. Answer: <input class="webex-solveme nospaces" size="3" data-answer="[&quot;2.5&quot;]">.</p></li>
+<li><p>area of sector of circle with radius <span class="math inline">\(2\)</span> over an angle of <span class="math inline">\(\pi/4\)</span> radians. Answer: <input class="webex-solveme nospaces" size="3" data-answer="[&quot;0.5&quot;,&quot;.5&quot;]">.</p></li>
+</ol>
+</div>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../questions/qs-radians.html">For more questions on the subject, please go to Questions: Radians.</a></p>
+<p>To see how trigonometry interacts with radians as a measure of an angle, see <a href="../studyguides/trigonometry-radians.html">Guide: Introduction to trigonometry (radians)</a> and <a href="../studyguides/trigonometricidentities-radians.html">Guide: Trigonometric identities (radians)</a>.</p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 08/23 by Ifan Howells-Baines and Mark Toner as part of a University of St Andrews STEP project.</p>
+<ul>
+<li>v1.1: edited 04/24 by TC.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="tdhc153/starmast" data-repo-id="R_kgDOJhaqiA" data-category="General" data-category-id="DIC_kwDOJhaqiM4CWZev" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

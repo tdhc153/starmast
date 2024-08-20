@@ -1,0 +1,292 @@
+---
+title: "Rearranging equations involving trigonometry and logarithms"
+author: "Ellie Gurini, Krish Chaudhary, Mark Toner"
+abstract-title: Summary
+abstract: This guide serves to introduce rearranging equations involving trigonometry and logarithms. This can be a useful skill, especially when considering the uses trigonometry has in describing motion.
+draft: true
+
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+**THIS MATERIAL IS PLANNED TO BE SPLIT INTO TWO GUIDES. (1) SOLVING TRIGONOMETRIC EQUATIONS (2) SOLVING LOGARITHMIC EQUATIONS.**
+
+*Before reading this, you may want to read the guides on logarithms, trigonometry, radians, and trigonometric identities.* 
+
+This guide should help to get a grasp of rearranging trigonometric and logarithmic equations. This can be a very useful skill, especially when considering modelling things. For example, trigonometric equations are often used to describe signal waves and motion, whereas logarithms (or exponentials) tend to be used when describing growth and decay.
+
+## Trigonometric equations {-}
+
+The first instance of trigonometric equations you will probably come across will be in the form $\cos(x)=$ a constant and you want to find the angle x.
+
+Let's take $\cos(x)=0.15$ for an example. This can be done by using your calculator to find $\cos^{-1}(0.15)$. 
+
+These are one step problems, and you will normally have a calculator to solve them. 
+
+If not, it's likely the angle has a commonly known value, for example $\cos(\frac{\pi}{2})=0$. A table of these known values is given in the guide on Trigonometry. It may also be the case that you can use a double angle formula to find it using known values.
+
+An important factor to note is that throughout this guide, you will be finding a correct answer, not the correct answer. This is due to the periodic nature of trigonometric functions (thinking of the graph can help visualise this- if you draw a horizontal line across the graph, it will cross more than once!), 
+
+There are infinite answers to trigonometric equations. The way you can find the other answers is by adding or subtracting $2\pi$ radians or 360 degrees (or an integer multiple of) from your answer.
+
+The next set of trigonometric equations you are likely to find are in a similar format. This time, however, instead of just x there would be an equation involving x. To solve this, you would solve as the first method, then set that equal to your equation.
+
+::: {.callout-note appearance="simple"}
+
+## Example 1
+
+Lets say you want to solve $$\cos(3x+15)=0.5$$
+
+A good first step is to rename $3x+15$ to $y$. Then, you have a familiar equation $\cos(y)=0.5$. You can rearrange this to $\cos^{-1}(0.5)=y$, which gives $y=\frac{\pi}{3}$
+
+From there, you can see that $\frac{\pi}{3}=3x+15$ from the definition of $y$. Please note, I've added in the step of naming y as I find it easier to comprehend, but if you want to use $3x+15$ the whole time, that is also a valid method. 
+
+You can factorise the left hand side to get $\frac{\pi}{3}= 3(x+5)$. Then you can divide both sides of the equation by 3, so that you now have x with no prefix, giving $\frac{\pi}{9}= x+5$. 
+
+After this, subtract 5 from both sides to isolate x: $\frac{\pi}{9}-5 =x$. In some cases that will be an appropriate answer (for example in maths or this exercise), other times you may want to give a number (like if you are solving a physics problem). In this case $x= -4.65$ to 3 significant figures.
+
+This example has a linear equation inside the trigonometric function, but you would follow the same steps for a quadratic equation in the function. In that case, you would just be solving where your value for $y$ is equal to a quadratic equation, using the methods enclosed in the guide on Quadratic equations.
+
+:::
+
+## Quadratic trigonometric equations {-}
+
+Another type of equation will be a quadratic equation cleverly disguised as a trigonometric one. This is almost the opposite method from the one just above it. 
+
+For this, you will want to treat the trigonometric function as the variable and solve the quadratic normally, before using the method above to find the final answer. 
+
+For example, for $4\sin^{2}(x)+6\sin(x)+7=0$, you would solve the equation $4y^2+6y+7=0$ and then set $y=\sin(x)$ and solve; by this point, y will be a constant. For more information on solving quadratic equations see the Quadratic Equations guide.
+
+## Trigonometric equations which use identities {-}
+
+The majority of trigonometric equations will make use of trigonometric identities (See the guide for a list of those). For example, if you see an equation you want to solve which includes a mixture of sin, cos, tan etc, identities should be the first place you look in order to solve it.
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+Let's start with the equation
+$$4\cos^{2}(x)+6\sin^{2}(x)-6=0$$
+Initially, you can't solve this equation using the methods described above. This is where trigonometric identities play an important role. This equation can be solved using the fact that $\cos^{2}(x)+\sin^2(x)=1$. The way that you know to use this identity is that the equation involves $\cos^2(x)$ and $\sin^2(x)$.
+
+Firstly, lets rewrite as $4\cos^2(x)+4\sin^2(x)+2\sin^2(x)-6=0$ and from there, $4(\cos^2(x)+\sin^2(x))+2\sin^2(x)-6=0$. Then, use the identity to say that $4(1)+2\sin^2(x)-6=0$. 
+
+You can then move the constants to the left hand side and say that $2\sin^2(x)= 2$, or $\sin^2(x)=1$. Remember that $\sin^2(x)= {\sin(x)}^2$ 
+
+Note that this is NOT the case for $\sin^{-1}(x)$, as that is describing the inverse of a function, not raising to the power of -1. 
+
+Using that, you can rewrite this as $\sin(x)=\sqrt{1}=1$. Then, find the inverse sin $\sin^{-1}(1)=\frac{\pi}{2}$. 
+
+:::
+
+
+::: {.callout-note appearance="simple"}
+
+## Example 3
+
+Prove that $4\sec^2(x)+3= 4\tan^2(x)+7$.
+
+To prove this you use the identity $\sec^2(x)=\tan^2(x)+1$. You can work from either side, but I find it easier to replace $\sec^2(x)$, giving the equation $4(\tan^2(x)+1)+3$ on the left hand side. Now, expanding the brackets should give your final answer.
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 4
+
+Trigonometric identities aren't mutually exclusive. For example, you can use that $\sec^2(x)=1+\tan^2(x)$ to prove that $\cos^2(x)+\sin^2(x)=1$.
+
+Firstly, rewrite $\sec^2(x)$ and $\tan^2(x)$ in terms of $\cos(x)$ and $\sin(x)$. This gives the equation $\frac{1}{\cos^2(x)}= 1 + \frac{\sin^2(x)}{\cos^2(x)}$.
+
+Now, you can rewrite 1 as $\frac{\cos^2(x)}{\cos^2(x)}$, and get that $\frac{1}{\cos^2(x)}=\frac{\cos^2(x)+\sin^2(x)}{\cos^2(x)}$. 
+
+Finally, multiplying both sides by $\cos^2(x)$ will leave your identity: $1= \cos^2(x)+\sin^2(x)$
+
+:::
+
+Another type of trigonometric trick you are likely to come across are known as R equations. These allow you a way to rewrite equations in terms of sin and cos in to an equation in either sin or cos. They make use of the addition formulae.
+
+::: {.callout-note appearance="simple"}
+##Addition formulae
+
+$$\sin(x\pm\theta)=\sin(x)\cos(\theta)\pm\cos(x)\sin(\theta)$$
+$$\cos(x\pm\theta)=\cos(x)cos(\theta)\mp\sin(x)\sin(\theta)$$
+:::
+
+R equations will have you rewrite an equation in the form $A\cos(x)\pm B\sin(x)$ as $R\cos(x\pm\theta)$ or $R\sin(x\pm\theta)$. Let's try an example!
+
+::: {.callout-note appearance="simple"}
+## Example 5
+
+$$6\sin(x)+2\cos(x)= R\cos(x+\theta)$$
+Determine R and $\theta$.
+
+You will start by rewriting the right hand side of the equation using the appropriate addition formula. This gives $6\sin(x)+2\cos(x)=R\cos(\theta)\cos(x)-R\sin(\theta)\sin(x)$. Now, we can compare coefficients on either side of the equation. For this to be true for all values of x, the coefficients before sin and cos must match on each side. This means that $2=R\cos(\theta)$ and $6=R\sin(\theta)$. 
+
+Now, it's time to find $\theta$. By using that $\tan(\theta)=\frac{\sin(\theta)}{\cos(\theta)}$, you can see that you want to divide the equation in terms of sin by the one in terms of cos. This leaves you with $\tan(\theta)=3$, or $\theta=1.25$ to 3sf. 
+
+To find R, you need to use $\cos^2(\theta)+\sin^2(\theta)=1$. To do this, square both equations and add them, giving $R^2(\cos^2(\theta)+\sin^2(\theta))=2^2+6^2$ and realise that you can simplify this to $R^2= 40$, or $R=2\sqrt{10}$, which is approximately 6.32.
+
+Therefore, you can say $6\sin(x)+2\cos(x)= 2\sqrt{10}\cos(x+1.25)$. This method can be helpful if given an equation such as $6\sin(x)+2\cos(x)= 5$, where you would need to rewrite it as $2\sqrt{10}\cos(x+1.25)=5$ to solve. 
+
+:::
+
+## Logarithmic equations {-}
+
+Here's a quick reminder that you may want to reread the guide on logarithms before starting this section. 
+
+::: {.callout-tip}
+
+Remember that $\log_{a}{b}=c$ and $a^c=b$ are interchangeable.
+
+:::
+
+So one type of equation will likely be similar to $5^x=25$. If you use the format above, you can label a=5, b=25, and c=x. Then, you would rewrite in the form $\log_a{b}=\log_5{25}=x$, giving $x=2$. This is commonly phrased as asking a question about modelling some form of exponential growth. 
+
+Another type may be to have an equation inside the logarithm. Lets take a look at an example to explain this one.
+
+::: {.callout-note appearance="simple"}
+
+## Example 6
+
+$$\log_{10}(5x+7)=1$$
+You want to find x. Using the tip from above, you can rewrite this as:
+$10^1=5x+7$. From there, you can subtract 7 from both sides, giving $3=5x$ and then divide both sides by 5, giving $x=\frac{3}{5}$.
+
+:::
+
+You may also come across equations which are similar to the one above, but cleverly hidden through logarithm rules. Lets go through one of those.
+
+::: {.callout-note appearance="simple"}
+
+## Example 7
+
+$$\log_{10}(4x)-\log_{10}(3)=2$$
+
+Find x. 
+
+You start by rewriting the left hand side of the equation into one logarithm. The guide on logarithms should have a section on this. This will give you $\log_{10}(\frac{4x}{3})=2$. 
+
+Now, you should rewrite this as an exponential to get $10^2= \frac{4x}{3}$. To finish solving, you will divide both sides by $\frac{4}{3}$. This gives that $x=75$.
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 8
+
+Here's a little example/proof which should help to understand the next example more completely. 
+
+Lets have a look at an equation where a number is raised to the power of a logarithm in its own base. 
+
+$$e^{\log_e(x)}=y$$ Find y in terms of x.
+
+Firstly, label up the equation according to the note at the start of this. This gives a=e, b=y, c=$\log_e(x)$. From there, rewrite the equation as a logarithm, $\log_e(y)=\log_e(x)$. This means that $y=x$. We can say this for a log function but not for, lets say, a trigonometric function, as log functions don't have repeating values. 
+
+On a wider scale, this proves that $$a^{\log_a(b)}=b$$. Whilst e was the base used in this example, it doesn't affect the outcome. You can repeat this exercise with a base of 2 if you would like to confirm. 
+
+:::
+
+
+Another use of logarithms is in solving simultaneous equations. This takes advantage of the relationship between logarithms and exponentials.
+
+::: {.callout-note appearance="simple"}
+
+## Example 9
+
+Solve this set of simultaneous equations
+$$e^y=2x+1$$
+$$\ln(3x)=y$$
+The first step for this problem would to be to substitute $y=\ln(3x)$ into the first equation. This gives $e^{\ln(3x)}=2x+1$. Now, lets label: a=e, b=2x+1 and c=$\ln(3x)$. 
+
+Thus, refer to our example 8 to see that $ e^{ln(3x)}=3x$, and so $3x=2x+1$. Subtracting 2x from either side gives that $x=1$. Substituting this back into our equation gives that $y=\ln(3)$ or approximately 1.099.
+
+:::
+
+Here's another example of the relationship between logarithms and exponentials.
+
+::: {.callout-note appearance="simple"}
+
+## Example 10
+
+Solve $$5e^{-x}+3e^x=9$$
+
+To start with this problem, you should multiply everything by $e^x$, giving $5+3e^{2x}=9e^x$. 
+
+Lets rename $e^x=y$, which should hopefully give a more familiar equation: $5+3y^2=9y$. You can rearrange and solve this quadratic using the quadratic equation. This gives y=$\frac{9+\sqrt{21}}{16}$ or $\frac{9-\sqrt{21}}{16}$. 
+
+$e^x=y$ implies that $\ln(y)=x$, so you substitute y into this equation to give your final answer. This leaves you with x=$\ln{(\frac{9+\sqrt{21}}{16})}$ or $\ln{(\frac{9-\sqrt{21}}{16})}$, which are (to 3sf) -0.164 and -1.29 respectively. 
+
+:::
+
+A final thing you may want to consider is how to solve an equationn if you have logarithms in different bases. This will make use of the change of base formula.
+
+::: {.callout-note}
+## Change of base formula
+
+$$\log_a(b)=\frac{\log_c(b)}{\log_c(a)}$$
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 11
+
+$$\log_{8}(x)+\log_2(y)=\log_2(4y+1)$$
+Represent y in terms of x.
+
+Begin by rewriting $\log_{8}(x)$ in base 2, using the formula. This gives $\log_8(x)=\frac{\log_2(x)}{\log_2(8)}$. Now, you can see that $\log_2(8)=3$, as $2^3=8$ (you can use the method in Example 6 to check this). This means that $\log_8(x)=\frac{1}{3}\log_2(x)$. 
+
+Applying how powers work with logarithms, and inserting back into the equation you want to solve gives $\log_2(x^{\frac{1}{3}})+\log_2(y)=\log_2(4y+1)$. To get the right hand side into one log, you can say that $\log_2(x^{\frac{1}{3}}y)$ due to the rules for adding logs. 
+
+As the left and right hand side are in the same base, you can then say that $x^{\frac{1}{3}}y=4y+1$. Rearranging this gives $y= \frac{-1}{4-x^{\frac{1}{3}}}$.
+
+:::
+
+
+## Quick check problems {-}
+
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box}
+
+1. You are given 3 questions and there supposed solutions. Determine if the solutions are True or False:
+
+a) For $sin(4x)= 1$ a solution is $x =\frac{\pi}{8}$ `r torf("TRUE")`
+
+b) For $$tan(x+15)=\sqrt{3}$$ 
+
+a solution is $x=\frac{\pi-15}{4}$ `r torf(FALSE)`.
+
+c) For $$cos(2x+25)= 0$$ 
+
+a solution is $x=\frac{\pi+25}{4}$ `r torf(FALSE)`.
+
+
+
+2. Using trigonometric identities solve the following. (The expected identities are given in Guide: Trigonometric Identities). Please give angles in degrees.
+
+a) $$x = 2sin^2(\theta) + 2cos^2(\theta)$$  
+
+Answer: $x =$ `r fitb(2)`
+
+b) $$4sin^2(\theta) + 6cos^2(\theta) - 4 =0$$  Answer: $\theta =$ `r fitb(90)`
+
+c)  $2cot^2(\theta) = csc^2(\theta)$  Answer: $\theta =$ `r fitb(45)`
+
+
+3. Solve the following equations for x.
+
+a) $\log_{3}{5x+4}=2$
+
+Answer: $x =$ `r fitb(1)`.
+
+b) $\log_{10}{5x} - \log_{10}{9} =3$  
+
+Answer: $x =$ `r fitb(1800)`
+
+
+:::
+
+[For more questions on this topic, please go to Questions: Rearranging Equations using Trigonometry and Logarithms.](../questions/qs-rearrangingtrigandlogs.qmd)

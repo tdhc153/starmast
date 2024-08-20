@@ -8,7 +8,7 @@
 
 <meta name="author" content="Akshat Srivastava">
 
-<title>STARMAST - Introduction To Vectors</title>
+<title>STARMAST - Introduction to vectors</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -91,7 +91,27 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../about.html" rel="" target="">
- <span class="menu-text">About STARMAST</span></a>
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html" rel="" target="">
+ <span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../studyguidelist.html" rel="" target="">
+ <span class="menu-text">Study guides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../qalist.html" rel="" target="">
+ <span class="menu-text">Questions and answers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fslist.html" rel="" target="">
+ <span class="menu-text">Fact sheets</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pslist.html" rel="" target="">
+ <span class="menu-text">Proof sheets</span></a>
   </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
@@ -116,10 +136,24 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#drawing-vectors" id="toc-drawing-vectors" class="nav-link" data-scroll-target="#drawing-vectors">Drawing Vectors</a></li>
-  <li><a href="#free-and-localized-vectors" id="toc-free-and-localized-vectors" class="nav-link" data-scroll-target="#free-and-localized-vectors">Free and Localized Vectors</a></li>
-  <li><a href="#vectors-in-three-dimensional-space" id="toc-vectors-in-three-dimensional-space" class="nav-link" data-scroll-target="#vectors-in-three-dimensional-space">Vectors In Three-Dimensional Space</a></li>
-  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick Check Problems</a></li>
+  <li><a href="#initial-properties-of-vectors" id="toc-initial-properties-of-vectors" class="nav-link" data-scroll-target="#initial-properties-of-vectors">Initial properties of vectors</a>
+  <ul class="collapse">
+  <li><a href="#free-vectors" id="toc-free-vectors" class="nav-link" data-scroll-target="#free-vectors">Free vectors</a></li>
+  <li><a href="#localized-vectors" id="toc-localized-vectors" class="nav-link" data-scroll-target="#localized-vectors">Localized vectors</a></li>
+  <li><a href="#negative-vectors" id="toc-negative-vectors" class="nav-link" data-scroll-target="#negative-vectors">Negative vectors</a></li>
+  <li><a href="#scaling-vectors" id="toc-scaling-vectors" class="nav-link" data-scroll-target="#scaling-vectors">Scaling vectors</a></li>
+  </ul></li>
+  <li><a href="#vectors-in-three-dimensional-space" id="toc-vectors-in-three-dimensional-space" class="nav-link" data-scroll-target="#vectors-in-three-dimensional-space">Vectors in three-dimensional space</a>
+  <ul class="collapse">
+  <li><a href="#ijk-notation" id="toc-ijk-notation" class="nav-link" data-scroll-target="#ijk-notation"><strong>i,j,k</strong> notation</a></li>
+  <li><a href="#column-vector-notation" id="toc-column-vector-notation" class="nav-link" data-scroll-target="#column-vector-notation">Column vector notation</a></li>
+  </ul></li>
+  <li><a href="#magnitudes-and-unit-vectors" id="toc-magnitudes-and-unit-vectors" class="nav-link" data-scroll-target="#magnitudes-and-unit-vectors">Magnitudes and unit vectors</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="introductiontovectors.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="introductiontovectors.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
     </div>
@@ -128,8 +162,13 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introduction To Vectors</h1>
-</div>
+<h1 class="title">Introduction to vectors</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Geometry</div>
+    <div class="quarto-category">Vectors</div>
+    <div class="quarto-category">Linear mathematics</div>
+  </div>
+  </div>
 
 
 
@@ -149,77 +188,55 @@ ul.task-list li input[type="checkbox"] {
 <div>
   <div class="abstract">
     <div class="abstract-title">Summary</div>
-    Vectors are used in various disciplines and have a wide range of real-life application. This guide serves as a valuable resource for developing a solid foundation in vector understanding. It explores essential concepts such as vector representation, both geometrically and algebraically, using both column notation and component form among other things.
+    Quantities expressing both a magnitude and a direction are called vectors. Vectors are used in various disciplines and have a wide range of real-life applications.
   </div>
 </div>
 
 </header>
 
-<section id="introduction" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In mathematics, physics and engineering, you will come across two types of quantities, scalar quantities such as length, mass, time, distance, density, area, volume, temperature, work, etc. and vector quantities like position, displacement, velocity, acceleration, force, momentum, etc.</p>
-<p>Vectors has various real-life applications across different fields, such as Engineering, Navigation and GPS, Computer Graphics and Gaming, Data Analysis and Machine learning, Cryptography and much more. In this guide, you will study some of the fundamental concepts about vectors, various operations on vectors, and their algebraic and geometric properties.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Magnitude
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Size or extent of a physical quantity. <strong>Magnitude</strong> and length can be used inter-changeably when discussing vectors.</p>
-</div>
-</div>
+<section id="introduction" class="level1 unnumbered">
+<h1 class="unnumbered">Introduction</h1>
+<p>Up until now, the quantities that you have studied in mathematics express ‘how much’ of something exists. For instance, you could have four apples, or be 178cm tall, or have £55 in your bank account. Even negative numbers can be used to represent ‘how much’; if you have -£55 in your bank account, you need to pay in £55 to get to zero again.</p>
+<p>However, sometimes you need to use something different to express some physical quantities. For instance, suppose you were travelling somewhere to see a friend. It’s not enough to say you are travelling at 30mph — how do you know where you’ll meet? Similarly, saying that you’re going north-west isn’t useful; when will you meet your friend? Sometimes, you need quantities that possess <strong>both</strong> a magnitude (30mph) and a direction (north-west):</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Definition of Scalars
+Definition of a vector
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Any physical quantity that has magnitude only and no direction are called <strong>scalar quantities</strong>. <strong>Scalars</strong> are represented by a single real number along with appropriate units of measurement. They can be positive, negative or zero.</p>
+<p>Any physical quantity that has both <em>magnitude</em> (size, or length) and <em>direction</em> is called a <strong>vector quantity</strong>.</p>
 </div>
 </div>
+<!-- A **vector** is a quantity that possesses both *magnitude* (size, or length) and *direction*, and so these can be used to model the travel to your friendly gathering above. Quantities that represent magnitude only are called **scalars** -->
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Definition of Vectors
+Definition of a scalar
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Any physical quantity that has both magnitude and direction is called a <strong>vector quantity</strong>.</p>
+<p>Any physical quantity that has magnitude only and no direction are called <strong>scalar quantities</strong>. <strong>Scalars</strong> are represented by a single number. They can be positive, negative or zero.</p>
 </div>
 </div>
-<p>Besides this, a physical quantity, which is a vector, should also follow laws of vector addition. For example, electric current has both magnitude and direction, but it doesn’t follow laws of vector addition (you will see this in the next guide) and hence is not a vector.</p>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Example 1
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In classifying <span class="math inline">\(15\textsf{kg}\)</span>, <span class="math inline">\(45\textsf{m}/\textsf{s}^2\)</span> and <span class="math inline">\(70\textsf{W}\)</span> as either a scalar or vector quantity, <span class="math inline">\(15\textsf{kg}\)</span> and <span class="math inline">\(70\textsf{W}\)</span> are scalar quantities because mass and power don’t have direction, whereas, <span class="math inline">\(45\textsf{m}/\textsf{s}^2\)</span> is a vector quantity because accelaration needs direction.</p>
-</div>
-</div>
-<ul>
-<li><p><strong>Zero Vector</strong>:A vector is said to be a <strong>zero or a null vector</strong> if its magnitude is zero. For example, a stationary body has the velocity vector of zero.</p></li>
-<li><p><strong>Equal Vectors</strong>:Vectors are said to be equal if they have the same magnitude as well as the direction.</p></li>
-</ul>
-</section>
-<section id="drawing-vectors" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="drawing-vectors">Drawing Vectors</h2>
-<p>Consider a line segment <span class="math inline">\(AB\)</span> in space and let a direction be assigned to it. The arrow marked on the line denotes the direction of the vector. Vectors are written with a little arrow over its head, for example, <span class="math inline">\(\overrightarrow{AB}\)</span>.</p>
+<!-- Examples of scalar quantities in physics include mass, time, distance, volume, temperature, and so on; examples of vector quantities in physics are displacement, velocity, momentum, among others. -->
+<!-- ::: callout-tip -->
+<!-- ## Magnitude -->
+<!-- Size or extent of a physical quantity. **Magnitude** and length can be used inter-changeably when discussing vectors. -->
+<!-- ::: -->
+<p>As the initial point of study in <strong>linear mathematics</strong>, vectors have various real-life applications across different fields, such as physics and engineering, navigation and GPS, computer graphics and gaming, data analysis and machine learning, cryptography, statistics and much more. In this guide, you will study some of the fundamental concepts about vectors, their algebraic and geometric properties, and an introduction to dealing with magnitude and unit vectors.</p>
+<!-- This guide introduces the concept of a vector including what they are in both geometry and algebra and the different ways in which you can write them such as column notation and component. This guide also introduces the magnitude (length) of a vector and the idea of a unit vector." -->
+<!-- Besides this, a physical quantity, which is a vector, should also follow laws of vector addition. For example, electric current has both magnitude and direction, but it doesn’t follow laws of vector addition (you will see this in the next guide) and hence is not a vector. -->
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Example 1 -->
+<!-- In classifying $15\textsf{kg}$, $45\textsf{m}/\textsf{s}^2$ and $70\textsf{W}$ as either a scalar or vector quantity, $15\textsf{kg}$ and $70\textsf{W}$ are scalar quantities because mass and power don't have direction, whereas, $45\textsf{m}/\textsf{s}^2$ is a vector quantity because accelaration needs direction. -->
+<!-- ::: -->
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -230,35 +247,186 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This study guide will use the bold notation (<span class="math inline">\(\mathbf{a}\)</span>). However, vectors can also be represented by using the arrow notation (<span class="math inline">\(\vec{a}\)</span>) or underlining them (<span class="math inline">\(\underline{a}\)</span>).</p>
+<p>Two vectors are said to be <strong>equal</strong> if they have the same magnitude and the same direction.</p>
 </div>
 </div>
-<p>The direction in which the arrow points towards is called the head of a vector, which makes the other end, the tail of the vector. The length of the line indicates the magnitude of the vector and is denoted by <span class="math inline">\(|\overrightarrow{AB}|\)</span>.</p>
+</section>
+<section id="initial-properties-of-vectors" class="level1 unnumbered">
+<h1 class="unnumbered">Initial properties of vectors</h1>
+<section id="free-vectors" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="free-vectors">Free vectors</h2>
+<p>A vector can be any directed line in space. Here is a vector <span class="math inline">\(\mathbf{v}\)</span>.</p>
 <div id="fig-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="./FiguresPNG/introtovectors-fig1-1.png" class="img-fluid figure-img" alt="Vector $\overrightarrow{AB}$, with arbitrary length, looks like an arrow pointing from $A$ to $B$, where, $A$ is the tail and $B$ is the head."></p>
-<figcaption class="figure-caption">Figure&nbsp;1: Graphical representation of Vector <span class="math inline">\(\overrightarrow{AB}\)</span></figcaption>
+<p><img src="./FiguresPNG/introtovectors-fig0.png" class="img-fluid figure-img" alt="A picture of an arrow, with label v in bold."></p>
+<figcaption class="figure-caption">Figure&nbsp;1: A vector <span class="math inline">\(\mathbf{v}\)</span></figcaption>
 </figure>
 </div>
+<p>Any vector defined in this way can be denoted by a bold letter <span class="math inline">\(\mathbf{v}\)</span>; or, if you are hand-writing, <span class="math inline">\(\underline{v}\)</span>. These are known as <strong>free vectors</strong>. A free vector <span class="math inline">\(\mathbf{v}\)</span> can be ‘moved’ to have any start point in space, as long as the magnitude and the direction are preserved.</p>
 <div id="fig-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="./FiguresPNG/introtovectors-fig2-2.png" class="img-fluid figure-img" alt="Vector $\overrightarrow{BA}$, with arbitrary length, looks like an arrow pointing from $B$ to $A$, where, $B$ is the tail and $A$ is the head."></p>
-<figcaption class="figure-caption">Figure&nbsp;2: Graphical representation of Vector <span class="math inline">\(\overrightarrow{BA}\)</span></figcaption>
+<p><img src="./FiguresPNG/introtovectors-fig01.png" class="img-fluid figure-img" alt="Five copies of the vector $\mathbf{v}$, each with a label of a bold v."></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Many copies of the vector <span class="math inline">\(\mathbf{v}\)</span></figcaption>
 </figure>
 </div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The reason that vectors are written in this way is to distinguish them from scalar quantities. You should always remember to <strong>underline</strong> vectors when doing your written work.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This study guide will use the bold notation (<span class="math inline">\(\mathbf{a}\)</span>). However, vectors can also be represented by using the arrow notation <span class="math inline">\(\vec{a}\)</span> or (as previously mentioned) underlining them <span class="math inline">\(\underline{a}\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="localized-vectors" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="localized-vectors">Localized vectors</h2>
+<p>Another way to write a vector is to start and finish at two specified points in space. So consider a line segment <span class="math inline">\(AB\)</span> in space and let a direction be assigned to it. The arrow marked on the line denotes the direction of the vector. The vector from <span class="math inline">\(A\)</span> to <span class="math inline">\(B\)</span> is written as <span class="math inline">\(\overrightarrow{AB}\)</span>. Any vector defined in this way is known as a <strong>localized vector</strong>, as the start point of the vector is a fixed point.</p>
+<p>The direction in which the arrow points towards is called the head of a vector, which makes the other end the tail of the vector. The length of the line indicates the magnitude of the vector and is denoted by <span class="math inline">\(|\overrightarrow{AB}|\)</span>.</p>
+<div id="fig-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtovectors-fig1-1.png" class="img-fluid figure-img" alt="Vector $\overrightarrow{AB}$, with arbitrary length, looks like an arrow pointing from $A$ to $B$, where, $A$ is the tail and $B$ is the head."></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Graphical representation of the vector <span class="math inline">\(\overrightarrow{AB}\)</span></figcaption>
+</figure>
+</div>
+<p>However, you could also consider the vector from <span class="math inline">\(B\)</span> to <span class="math inline">\(A\)</span>, which is written as <span class="math inline">\(\overrightarrow{BA}\)</span>.</p>
+<div id="fig-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtovectors-fig2-2.png" class="img-fluid figure-img" alt="Vector $\overrightarrow{BA}$, with arbitrary length, looks like an arrow pointing from $B$ to $A$, where, $B$ is the tail and $A$ is the head."></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Graphical representation of the vector <span class="math inline">\(\overrightarrow{BA}\)</span></figcaption>
+</figure>
+</div>
+<p>Any free vector can be turned into a localized vector by specifying a start point. Any localized vector can be turned into a free vector by ‘forgetting’ the start point. See below for some examples.</p>
+<p>Any localized vector that starts at the origin <span class="math inline">\(O = (0,0,0)\)</span> of three dimensional space is known as a <strong>position vector</strong>; as this vector specifies a point in space. Every free vector can be viewed as a position vector.</p>
+<div id="fig-5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtovectors-fig4-4.png" class="img-fluid figure-img" alt="Position Vector $\overrightarrow{OP}$ with its tail at the origin and head at an arbitrary point $P$."></p>
+<figcaption class="figure-caption">Figure&nbsp;5: The position vector for the point <span class="math inline">\(P\)</span> with respect to the origin</figcaption>
+</figure>
+</div>
+</section>
+<section id="negative-vectors" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="negative-vectors">Negative vectors</h2>
+<p>Here, you can notice that the direction of <span class="math inline">\(\overrightarrow{BA}\)</span> is exactly opposite to the direction of <span class="math inline">\(\overrightarrow{BA}\)</span>, but with the same magnitude. Therefore, you could write <span class="math inline">\(\overrightarrow{BA} = -\overrightarrow{AB}\)</span>; in fact, this is the exact definition of the negative of a vector.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Negative Of A Vector:
+Negative of a vector
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A vector whose magnitude is the same as that of the given vector <span class="math inline">\(\mathbf{a}\)</span> but is in the opposite direction is called the <strong>negative of a vector</strong> and is denoted by -<span class="math inline">\(\mathbf{a}\)</span>.</p>
+<p>Let <span class="math inline">\(\mathbf{a}\)</span> be a vector. The vector whose magnitude is the same as that of <span class="math inline">\(\mathbf{a}\)</span> but is in exactly the opposite direction is called the <strong>negative</strong> of <span class="math inline">\(\mathbf{a}\)</span> and is written <span class="math inline">\(-\mathbf{a}\)</span>.</p>
 </div>
 </div>
+</section>
+<section id="scaling-vectors" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="scaling-vectors">Scaling vectors</h2>
+<p>You can notice that the negative of a vector <span class="math inline">\(\mathbf{a}\)</span> is written as <span class="math inline">\(-\mathbf{a}\)</span>, which is the same as <span class="math inline">\((-1)\mathbf{a}\)</span>. This is a special example of more general behaviour, known as <strong>scalar multiplication of vectors</strong>.</p>
+<p>Scalar multiplying a vector by a positive scalar changes the magnitude of the vector and preserves the direction, and multiplying a vector by a negative scalar changes the magnitude of the vector and <em>reverses</em> the direction.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(\overrightarrow{AB}\)</span> be a vector. Then <span class="math inline">\(2\overrightarrow{AB}\)</span> is a vector in the same direction as <span class="math inline">\(\overrightarrow{AB}\)</span> but twice as long, and <span class="math inline">\(-3\overrightarrow{AB}\)</span> is a vector in the opposite direction as <span class="math inline">\(\overrightarrow{AB}\)</span> (so the same direction as <span class="math inline">\(\overrightarrow{BA}\)</span>) and three times as long.</p>
+<p>Similarly, <span class="math inline">\(\frac{1}{2}\overrightarrow{BA}\)</span> is a vector in the same direction as <span class="math inline">\(\overrightarrow{BA}\)</span>, but half as long. Since the magnitudes of <span class="math inline">\(\overrightarrow{AB}\)</span> and <span class="math inline">\(\overrightarrow{BA}\)</span> are the same, it follows that this vector is also half the length of <span class="math inline">\(\overrightarrow{AB}\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You cannot multiply together two vectors, only a vector and a scalar.</p>
+</div>
+</div>
+<p>For more on scalar multiplication on vectors, please see <a href="../studyguides/addandsm.html">Guide: Vector addition and scalar multiplication</a>.</p>
+<p>Finally, there is one special vector that possesses a zero magnitude.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of the zero vector
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A vector is said to be the <strong>zero vector</strong> or <strong>null vector</strong> if its magnitude is zero. The zero vector is usually written as <span class="math inline">\(\mathbf{0}\)</span> (or, if you are handwriting, <span class="math inline">\(\underline{0}\)</span>).</p>
+<p>For any vector <span class="math inline">\(\mathbf{v}\)</span>, it can be shown that <span class="math inline">\(0\mathbf{v} = \mathbf{0}\)</span>.</p>
+</div>
+</div>
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Example 2 -->
+<!-- When a ball is dropped from a height, gravity acts in the same direction as the motion of the ball, hence, the gravitational force $\mathbf{a}=10\textsf{m}/\textsf{s}^2$. A negative gravitational force would mean that gravity is working in the opposite direction of the motion, which is the case of a vertically projected body, here, $-\mathbf{a}$ is applied. -->
+<!-- ::: -->
+<!-- ::: {#example-3-link .callout-note appearance="simple"} -->
+<!-- ## Example 3 -->
+<!-- A car A travels from point $P$ to point $Q$ with a velocity of $80 km/hr$. Simultaneously, a car B starts travelling from point $Q$ to point $P$ with the same velocity.  -->
+<!-- In this case, as the velocity vectors are in the opposite direction for the two cars. $\overrightarrow{PQ}=80\textsf{km}/\textsf{hr}$ for car A while $\overrightarrow{QP}=80\textsf{km}/\textsf{hr}$ for car B. -->
+<!-- ::: -->
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Example 4 -->
+<!-- Continuing the [Example 3](#example-3-link), consider the car B to be travelling in the same direction as car A but with double the velocity. Visually, the velocity vector would also become double for the second car (As shown in @fig-3) -->
+<!-- ::: {.content-visible when-format="html"} -->
+<!-- ![Visual representation of the two vectors, $\mathbf{a}$ and $\mathbf{b}$, for car A and car B.](./FiguresPNG/introtovectors-fig3-3.png){fig-alt="Vectors $\mathbf{a}$ and $\mathbf{b}$ shown with $\mathbf{b}$ being twice $\mathbf{a}$ in the same direction." #fig-3} -->
+<!-- ::: -->
+<!-- ::: {.content-hidden when-format="html"} -->
+<!-- ![Visual representation of the two vectors, $\mathbf{a}$ and $\mathbf{b}$, for car A and car B.](./FiguresPNG/introtovectors-fig3-3.png){fig-alt="Vectors $\mathbf{a}$ and $\mathbf{b}$ shown with $\mathbf{b}$ being twice $\mathbf{a}$ in the same direction." #fig-3} -->
+<!-- ::: -->
+<!-- ::: -->
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Example 5 -->
+<!-- Force, momentum, impulse are some examples of free vectors because they remain unchanged when translated to a different location in space, whereas, displacement and velocity vectors are localized vectors because they change when translated to a different location in space. -->
+<!-- ::: -->
+</section>
+</section>
+<section id="vectors-in-three-dimensional-space" class="level1 unnumbered">
+<h1 class="unnumbered">Vectors in three-dimensional space</h1>
+<p>A vector <span class="math inline">\(\mathbf{a}\)</span> can be expressed in both two-dimensional and three-dimensional space through various coordinate systems. You will see the standard Cartesian coordinate system in this guide.</p>
+<section id="ijk-notation" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="ijk-notation"><strong>i,j,k</strong> notation</h2>
+<p>In three-dimensional space, <span class="math inline">\(\mathbf{i}\)</span>, <span class="math inline">\(\mathbf{j}\)</span>, <span class="math inline">\(\mathbf{k}\)</span> are the vectors with magnitude <span class="math inline">\(1\)</span> pointing in the positive direction along the <span class="math inline">\(x\)</span>-axis, <span class="math inline">\(y\)</span>-axis and <span class="math inline">\(z\)</span>-axis respectively. Any vector in the three-dimensional Cartesian coordinate system can be generally represented as a sum of scalar multiples of these three vectors <span class="math inline">\(\mathbf{i}\)</span>, <span class="math inline">\(\mathbf{j}\)</span>, <span class="math inline">\(\mathbf{k}\)</span>. Any such combination of vectors is known as a <strong>linear combination</strong>.</p>
+<div id="fig-6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtovectors-fig5-5.png" class="img-fluid figure-img" alt="$\mathbf{i},\mathbf{j},\mathbf{k}$ unit vectors along $x,y,z$ axis."></p>
+<figcaption class="figure-caption">Figure&nbsp;6: <span class="math inline">\(\mathbf{i},\mathbf{j},\mathbf{k}\)</span> unit vectors along their respective axis.</figcaption>
+</figure>
+</div>
+<p>Following this, any vector <span class="math inline">\(\mathbf{a}\)</span> can be expressed in the format</p>
+<p><span class="math display">\[\mathbf{a}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}\]</span></p>
+<p>where <span class="math inline">\(x\)</span> is the coefficient of the vector along the <span class="math inline">\(\mathbf{i}\)</span>-direction, <span class="math inline">\(y\)</span> is the coefficient along the <span class="math inline">\(\mathbf{j}\)</span>-direction, and <span class="math inline">\(z\)</span> is the coefficient along the <span class="math inline">\(\mathbf{k}\)</span>-direction. These coefficients are known as <strong>components</strong> of the vector: for example, <span class="math inline">\(x\)</span> is the <span class="math inline">\(\mathbf{i}\)</span>-component of the vector <span class="math inline">\(\mathbf{a}\)</span>.</p>
+<p>Here, a positive <span class="math inline">\(x\)</span> is along the positive <span class="math inline">\(x\)</span>-axis, whereas the vectors towards the negative <span class="math inline">\(x\)</span>-axis would have a negative <span class="math inline">\(x\)</span> value. The same is true for the other two axes as well.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -269,10 +437,11 @@ Example 2
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>When a ball is dropped from a height, gravity acts in the same direction as the motion of the ball, hence, the gravitational force <span class="math inline">\(\mathbf{a}=10\textsf{m}/\textsf{s}^2\)</span>. A negative gravitational force would mean that gravity is working in the opposite direction of the motion, which is the case of a vertically projected body, here, <span class="math inline">\(-\mathbf{a}\)</span> is applied.</p>
+<p>You are given a vector <span class="math inline">\(\mathbf{a}=2\mathbf{i}+5\mathbf{j}+4\mathbf{k}\)</span>. This means that the vector <span class="math inline">\(\mathbf{a}\)</span> is a free vector moving <span class="math inline">\(2\)</span> units along the positive <span class="math inline">\(x\)</span>-axis, <span class="math inline">\(5\)</span> units along the positive <span class="math inline">\(y\)</span>-axis and <span class="math inline">\(4\)</span> units along the positive <span class="math inline">\(z\)</span>-axis.</p>
+<p>As <span class="math inline">\(\mathbf{a}\)</span> is a free vector, you can start <span class="math inline">\(\mathbf{a}\)</span> at any point. Starting the vector <span class="math inline">\(\mathbf{a}\)</span> at the origin defines the line segment from <span class="math inline">\((0,0,0)\)</span> to <span class="math inline">\((2,5,4)\)</span> in three dimensional space; therefore, <span class="math inline">\(\mathbf{a}\)</span> is the position vector of the point <span class="math inline">\((2,5,4)\)</span>.</p>
 </div>
 </div>
-<div id="example-3-link" class="callout callout-style-simple callout-note callout-titled">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -282,8 +451,7 @@ Example 3
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A car A travels from point <span class="math inline">\(P\)</span> to point <span class="math inline">\(Q\)</span> with a velocity of <span class="math inline">\(80 km/hr\)</span>. Simultaneously, a car B starts travelling from point <span class="math inline">\(Q\)</span> to point <span class="math inline">\(P\)</span> with the same velocity.</p>
-<p>In this case, as the velocity vectors are in the opposite direction for the two cars. <span class="math inline">\(\overrightarrow{PQ}=80\textsf{km}/\textsf{hr}\)</span> for car A while <span class="math inline">\(\overrightarrow{QP}=80\textsf{km}/\textsf{hr}\)</span> for car B.</p>
+<p>You are given a vector <span class="math inline">\(\mathbf{b}=-7\mathbf{k}+3\mathbf{i}\)</span>. This means that the vector <span class="math inline">\(\mathbf{b}\)</span> is a free vector with <span class="math inline">\(\mathbf{i}\)</span> component <span class="math inline">\(3\)</span>, <span class="math inline">\(\mathbf{j}\)</span> component <span class="math inline">\(0\)</span> and <span class="math inline">\(\mathbf{k}\)</span> component <span class="math inline">\(-7\)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled">
@@ -296,21 +464,22 @@ Example 4
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Continuing the <a href="#example-3-link">Example 3</a>, consider the car B to be travelling in the same direction as car A but with double the velocity. Visually, the velocity vector would also become double for the second car (As shown in <a href="#fig-3">Figure&nbsp;3</a>)</p>
-<div id="fig-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="./FiguresPNG/introtovectors-fig3-3.png" class="img-fluid figure-img" alt="Vectors $\mathbf{a}$ and $\mathbf{b}$ shown with $\mathbf{b}$ being twice $\mathbf{a}$ in the same direction."></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Visual representation of the two vectors, <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>, for car A and car B.</figcaption>
-</figure>
-</div>
+<p>You are given the vector <span class="math inline">\(\overrightarrow{AB}\)</span> where <span class="math inline">\(A = (3,4,5)\)</span> and <span class="math inline">\(B = (4,-3,5)\)</span> are two points in three dimensional space. You can write <span class="math inline">\(\overrightarrow{AB}\)</span> in <span class="math inline">\(\mathbf{i}\)</span>, <span class="math inline">\(\mathbf{j}\)</span>, <span class="math inline">\(\mathbf{k}\)</span> notation by considering the distances moved between each of the co-ordinates.</p>
+<ul>
+<li>The <span class="math inline">\(x\)</span>-coordinate of <span class="math inline">\(A\)</span> is <span class="math inline">\(3\)</span> and the <span class="math inline">\(x\)</span>-coordinate of <span class="math inline">\(B\)</span> is <span class="math inline">\(4\)</span>. The difference from <span class="math inline">\(B\)</span> to <span class="math inline">\(A\)</span> is <span class="math inline">\(4-3 = 1\)</span>, and so the vector has <span class="math inline">\(\mathbf{i}\)</span> component <span class="math inline">\(1\)</span>.</li>
+<li>The <span class="math inline">\(y\)</span>-coordinate of <span class="math inline">\(A\)</span> is <span class="math inline">\(4\)</span> and the <span class="math inline">\(y\)</span>-coordinate of <span class="math inline">\(B\)</span> is <span class="math inline">\(-3\)</span>. The difference from <span class="math inline">\(B\)</span> to <span class="math inline">\(A\)</span> is <span class="math inline">\(-3-4 = -7\)</span>, and so the vector has <span class="math inline">\(\mathbf{j}\)</span> component <span class="math inline">\(-7\)</span>.</li>
+<li>The <span class="math inline">\(z\)</span>-coordinate of <span class="math inline">\(A\)</span> is <span class="math inline">\(5\)</span> and the <span class="math inline">\(z\)</span>-coordinate of <span class="math inline">\(B\)</span> is <span class="math inline">\(5\)</span>. The difference from <span class="math inline">\(B\)</span> to <span class="math inline">\(A\)</span> is <span class="math inline">\(5-5 = 0\)</span>, and so the vector has <span class="math inline">\(\mathbf{k}\)</span> component <span class="math inline">\(0\)</span>.</li>
+</ul>
+<p>Therefore, <span class="math inline">\(\overrightarrow{AB} = 1\mathbf{i} + (-7)\mathbf{j} + (0)\mathbf{k} = \mathbf{i} - 7\mathbf{j}\)</span>.</p>
 </div>
 </div>
 </section>
-<section id="free-and-localized-vectors" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="free-and-localized-vectors">Free and Localized Vectors</h2>
-<p>If the initial point of a vector can be chosen then the vector is said to be a <strong>free vector</strong>. A free vector can be displaced parallel to itself as long as the magnitude and the direction stay the same.</p>
-<p>If the initial point is restricted to a specific point then that vector is called a <strong>localized vector</strong>.</p>
-<div class="callout callout-style-simple callout-note callout-titled">
+<section id="column-vector-notation" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="column-vector-notation">Column vector notation</h2>
+<p>This is another way of representing vectors. A <strong>column vector</strong> is a vector whose components are listed vertically in a single column, with the <span class="math inline">\(\mathbf{i}\)</span> component at the top, the <span class="math inline">\(\mathbf{j}\)</span> component in the middle and the <span class="math inline">\(\mathbf{k}\)</span> component at the bottom.</p>
+<p>So, a vector <span class="math inline">\(\mathbf{a}\)</span> can be written as:</p>
+<p><span class="math display">\[\mathbf{a}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}=\begin{pmatrix}x\\y\\z\end{pmatrix}\]</span></p>
+<div id="example-9-link" class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -320,44 +489,14 @@ Example 5
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Force, momentum, impulse are some examples of free vectors because they remain unchanged when translated to a different location in space, whereas, displacement and velocity vectors are localized vectors because they change when translated to a different location in space.</p>
+<p>You are given the vector <span class="math inline">\(\mathbf{c}=3\mathbf{i}-4\mathbf{j}+5\mathbf{k}\)</span>. To represent this vector in column notation you can write the components of the vector as specified above. So, <span class="math display">\[\mathbf{c}=3\mathbf{i}-4\mathbf{j}+5\mathbf{k}=\begin{pmatrix}3\\-4\\5\end{pmatrix}.\]</span></p>
 </div>
 </div>
-</section>
-<section id="vectors-in-three-dimensional-space" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="vectors-in-three-dimensional-space">Vectors In Three-Dimensional Space</h2>
-<p>A vector <span class="math inline">\(\mathbf{a}\)</span> can be expressed in two-dimensional and three-dimensional space through various coordinate systems. You will see the standard cartesian coordinate system in this guide.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definition Of Unit Vectors:
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Unit vectors</strong> are vectors whose magnitude is exactly <span class="math inline">\(1\)</span>. They are represented as <span class="math inline">\(\hat{a}\)</span>, with a cap or a hat over its head. Consider the vector <span class="math inline">\(\mathbf{a}\)</span>, then the unit vector of <span class="math inline">\(\mathbf{a}\)</span> is defined as:</p>
-<p><span class="math inline">\(\hat{a}=\frac{\mathbf{a}}{|\mathbf{a}|}\)</span><br>
-</p>
-<p>Where the vector <span class="math inline">\(\mathbf{a}\)</span> is divided by its magnitude.</p>
-</div>
-</div>
-<ul>
-<li><strong>Parallel Vectors</strong>: Vectors having the same unit vector are known as <strong>parallel vectors</strong>. They can be expressed as scalar multiples of one another.</li>
-</ul>
-<p>In a three-dimensional space, <span class="math inline">\(\hat{i}\)</span>, <span class="math inline">\(\hat{j}\)</span>, <span class="math inline">\(\hat{k}\)</span> are the unit vectors along the <span class="math inline">\(x\)</span>-axis, <span class="math inline">\(y\)</span>-axis and <span class="math inline">\(z\)</span>-axis respectively. These are also written like <span class="math inline">\(\mathbf{i},\mathbf{j},\mathbf{k}\)</span> and any vector in the cartesian coordinate system can be generally represented in terms of this.</p>
-<div id="fig-5" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="./FiguresPNG/introtovectors-fig5-5.png" class="img-fluid figure-img" alt="$\mathbf{i},\mathbf{j},\mathbf{k}$ unit vectors along $x,y,z$ axis. "></p>
-<figcaption class="figure-caption">Figure&nbsp;4: <span class="math inline">\(\mathbf{i},\mathbf{j},\mathbf{k}\)</span> unit vectors along their respective axis.</figcaption>
-</figure>
-</div>
-<p>Any vector <span class="math inline">\(\vec{a}\)</span> can be expressed in the format</p>
-<p><span class="math inline">\(\mathbf{a}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}\)</span><br>
-</p>
-<p>where <span class="math inline">\(x\)</span> is the coefficient of the vector along the <span class="math inline">\(\mathbf{i}\)</span>-direction, <span class="math inline">\(y\)</span> is the coefficient along the <span class="math inline">\(\mathbf{j}\)</span>-direction, and <span class="math inline">\(z\)</span> is the coefficient along the <span class="math inline">\(\mathbf{k}\)</span>-direction.</p>
-<p>Here, a positive <span class="math inline">\(x\)</span> is along the positive <span class="math inline">\(x\)</span>-axis, whereas the vectors towards the negative <span class="math inline">\(x\)</span>-axis would have a negative <span class="math inline">\(x\)</span> value. The same is true for the other two axis as well.</p>
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Example 10 -->
+<!-- To find if the vector in [Example 9](#example-9-link) and $\mathbf{d}=\begin{pmatrix}6\\-8\\10\end{pmatrix}$\ are parallel or not, you check if the corresponding coefficients have the same ratio.  -->
+<!-- Since $\frac{3}{6}=\frac{-4}{-8}=\frac{5}{10}=\frac{1}{2}$\, these two vectors have the same ratio of $1:2$, hence, $\mathbf{l}$ and $\mathbf{d}$ are parallel to each other. -->
+<!-- ::: -->
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -368,7 +507,57 @@ Example 6
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You are given a vector <span class="math inline">\(\mathbf{a}=2\mathbf{i}+5\mathbf{j}+4\mathbf{k}\)</span>&nbsp;, this means that the vector <span class="math inline">\(\vec{a}\)</span> is a free vector with <span class="math inline">\(2\)</span> units along the positive <span class="math inline">\(x\)</span>-axis, <span class="math inline">\(5\)</span> units along the positive <span class="math inline">\(y\)</span>-axis and <span class="math inline">\(4\)</span> units along the positive <span class="math inline">\(z\)</span>-axis.</p>
+<p>To express the vector <span class="math inline">\(\displaystyle \mathbf{d}=\begin{pmatrix}-7\\0\\4\end{pmatrix}\)</span>&nbsp;in terms of <span class="math inline">\(\mathbf{i},\mathbf{j},\mathbf{k}\)</span>, you can reverse the process given above to write <span class="math display">\[\mathbf{d}=\begin{pmatrix}-7\\0\\4\end{pmatrix}=(-7)\mathbf{i}+0\mathbf{j}+4\mathbf{k} = -7\mathbf{i} + 4\mathbf{k}.\]</span></p>
+</div>
+</div>
+<!-- **Position Vectors**, denoted $\mathbf{r}$, are vectors that indicate the position of a body.  -->
+<!-- Consider a point $P$ in space, having coordinates $(x,y,z)$ with respect  to the origin $O(0,0,0)$, the vector $\overrightarrow{OP}$ is the position vector for the point $P$. So,  -->
+<!-- $\mathbf{r}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}$\, for the point P.  -->
+<!-- Then the magnitude of the position vector $\mathbf{r}$ is given by $|\mathbf{r}|=\sqrt{x^2+y^2+z^2}$\. -->
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How do you express the zero vector <span class="math inline">\(\mathbf{0}\)</span> in both of these vector notations? Here, the values of each of the components of the zero vector are <span class="math inline">\(0\)</span>, so <span class="math display">\[\mathbf{0} = 0\mathbf{i} + 0\mathbf{j} + 0\mathbf{k} = \begin{pmatrix}0\\0\\0\end{pmatrix}.\]</span></p>
+<p>How do you express the negative of a vector <span class="math inline">\(\mathbf{a} = x\mathbf{i} + y\mathbf{j} + z\mathbf{k} = \begin{pmatrix}x\\y\\z\end{pmatrix}\)</span>? The negative of a vector is its reverse; so all of the components are multiplied by <span class="math inline">\(-1\)</span>. Therefore <span class="math display">\[-\mathbf{a} = (-x)\mathbf{i} + (-y)\mathbf{j} + (-z)\mathbf{k} = \begin{pmatrix}-x\\-y\\-z\end{pmatrix}.\]</span></p>
+<p>Finally, when are two vectors in our notation equal? Let <span class="math inline">\(\mathbf{a} = a_1 \mathbf{i} + a_2 \mathbf{j} + a_3 \mathbf{k}\)</span> and <span class="math inline">\(\mathbf{b} = b_1 \mathbf{i} + b_2 \mathbf{j} + b_3 \mathbf{k}\)</span>. These two vectors are equal if and only if they have the same direction and the same magnitude; so all the components must match. That is, <span class="math display">\[\mathbf{a} = \mathbf{b}\quad\textsf{ if and only if }\quad a_1 = b_1,\, a_2 = b_2,\, a_3 = b_3.\]</span></p>
+</div>
+</div>
+</section>
+</section>
+<section id="magnitudes-and-unit-vectors" class="level1 unnumbered">
+<h1 class="unnumbered">Magnitudes and unit vectors</h1>
+<p>Since any free vector <span class="math inline">\(\mathbf{a}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}\)</span> can be viewed as a position vector for the point <span class="math inline">\((x,y,z)\)</span>, the magnitude of the vector <span class="math inline">\(\mathbf{a}\)</span> is the same as the distance from the origin <span class="math inline">\((0,0,0)\)</span> to the point <span class="math inline">\((x,y,z)\)</span>. This gives:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Magnitude of a vector
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(\displaystyle\mathbf{a} = x\mathbf{i}+y\mathbf{j}+z\mathbf{k} = \begin{pmatrix}x\\y\\z\end{pmatrix}\)</span> be a vector. The <strong>magnitude</strong> of <span class="math inline">\(\mathbf{a}\)</span> is given by <span class="math display">\[|\mathbf{a}| = \sqrt{x^2 + y^2 + z^2}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The magnitude of a vector is always non-negative.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled">
@@ -381,9 +570,31 @@ Example 7
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You are given a vector <span class="math inline">\(\mathbf{b}=-7\mathbf{k}+3\mathbf{i}\)</span>, this means that the vector <span class="math inline">\(\vec{b}\)</span> is a free vector with <span class="math inline">\(3\)</span> units along the positive <span class="math inline">\(x\)</span>-axis, <span class="math inline">\(0\)</span> units along the <span class="math inline">\(y\)</span>-axis and <span class="math inline">\(7\)</span> units along the negative <span class="math inline">\(z\)</span>-axis. This means that the vector lies in the <span class="math inline">\(x-z\)</span> plane, making it a two-dimensional vector.</p>
+<p>You are given the two vectors <span class="math inline">\(\mathbf{p}=\mathbf{i}+4\mathbf{j}-8\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{q} = -4\mathbf{i}+2\mathbf{j}+11\mathbf{k}\)</span>. What are their magnitudes?</p>
+<p>You can use the formula for the magnitude of a vector as given above. For the vector <span class="math inline">\(\mathbf{p}\)</span>, this is where the <span class="math inline">\(\mathbf{i}\)</span> component is <span class="math inline">\(1\)</span>, the <span class="math inline">\(\mathbf{j}\)</span> component is <span class="math inline">\(4\)</span>, and the <span class="math inline">\(\mathbf{k}\)</span> component is <span class="math inline">\(-8\)</span>. So <span class="math display">\[|\mathbf{p}|= \sqrt{(1)^2 + (4)^2 + (-8)^2} = \sqrt{1+16+64} = \sqrt{81} = 9\]</span></p>
+<p>Similarly, the magnitude for <span class="math inline">\(\mathbf{q} = =-4\mathbf{i}+2\mathbf{j}+11\mathbf{k}\)</span> is <span class="math display">\[|\mathbf{q}| = \sqrt{(-4)^2 + (2)^2 + (11)^2} = \sqrt{16 + 4 + 121} = \sqrt{141}\]</span></p>
 </div>
 </div>
+<p>Since the magnitude of a vector <span class="math inline">\(\mathbf{a}\)</span> is a scalar, you can scalar multiply by <span class="math inline">\(1/|\mathbf{a}|\)</span>, which is the same as dividing the vector <span class="math inline">\(\mathbf{a}\)</span> by <span class="math inline">\(|\mathbf{a}|\)</span>. As scalar multiplication does not change the direction of a vector, the vector <span class="math inline">\(\mathbf{a}/|\mathbf{a}|\)</span> has the same direction as <span class="math inline">\(\mathbf{a}\)</span> and magnitude <span class="math inline">\(|\mathbf{a}|/|\mathbf{a}| = 1\)</span>. This has a special name:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Unit vector
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Any vector with a magnitude equal to <span class="math inline">\(1\)</span> is called a <strong>unit vector</strong>.</p>
+<p>Unit vectors can be constructed in any direction. Let <span class="math inline">\(\displaystyle\mathbf{a} = x\mathbf{i}+y\mathbf{j}+z\mathbf{k} = \begin{pmatrix}x\\y\\z\end{pmatrix}\)</span> be a vector. The <strong>unit vector</strong> <span class="math inline">\(\hat{\mathbf{a}}\)</span> in the direction of <span class="math inline">\(\mathbf{a}\)</span> is given by <span class="math display">\[\hat{\mathbf{a}}=\frac{\mathbf{a}}{|\mathbf{a}|}=\frac{x\mathbf{i}+y\mathbf{j}+z\mathbf{k}}{\sqrt{x^2+y^2+z^2}}\]</span></p>
+</div>
+</div>
+<p>For example, the co-ordinate vectors <span class="math inline">\(\mathbf{i},\mathbf{j},\mathbf{k}\)</span> are all unit vectors, since they are defined to have magnitude <span class="math inline">\(1\)</span>.</p>
+<!-- dividing You can use the magnitude of your vector $\mathbf{a}$ to scale the vector. By dividing by the magnitude ( -->
+<!-- Any vector $\mathbf{a}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}$\ can have its unit vector expressed as  -->
+<!-- $\hat{\mathbf{a}}=\frac{\mathbf{a}}{|\mathbf{a}|}=\frac{x\mathbf{i}+y\mathbf{j}+z\mathbf{k}}{|\mathbf{a}|}=\frac{x\mathbf{i}+y\mathbf{j}+z\mathbf{k}}{\sqrt{x^2+y^2+z^2}}$\ -->
+<!-- So, $\hat{\mathbf{a}}=\frac{x\mathbf{i}+y\mathbf{j}+z\mathbf{k}}{\sqrt{x^2+y^2+z^2}}$\ -->
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -394,128 +605,44 @@ Example 8
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You are given a vector <span class="math inline">\(\mathbf{c}=25\mathbf{i}\)</span>, this means that the vector <span class="math inline">\(\vec{c}\)</span> has direction only along the positive <span class="math inline">\(x\)</span>-axis with a magnitude of <span class="math inline">\(25\)</span>. This a one-dimensional vector.</p>
-</div>
-</div>
-<section id="column-vectors" class="level5">
-<h5 class="anchored" data-anchor-id="column-vectors"><strong>Column Vectors</strong></h5>
-<p>This is another way of representing vectors. A <strong>column vector</strong> is a vector whose components are listed vertically in a single column. So, a vector <span class="math inline">\(\vec{a}\)</span> can be written as:</p>
-<p><span class="math inline">\(\mathbf{a}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}=\begin{pmatrix}x\\y\\z\end{pmatrix}\)</span><br>
-</p>
-<div id="example-9-link" class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Example 9
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You are given the vector <span class="math inline">\(\mathbf{l}=3\mathbf{i}-4\mathbf{j}+5\mathbf{k}\)</span>, to represent this vector in column notation you make a <span class="math inline">\(3 \times 1\)</span> matrix with entries <span class="math inline">\(3,-4\)</span> and <span class="math inline">\(5\)</span> respectively. So, <span class="math inline">\(\mathbf{l}=3\mathbf{i}-4\mathbf{j}+5\mathbf{k}=\begin{pmatrix}3\\-4\\5\end{pmatrix}\)</span><br>
-</p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Example 10
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>To find if the vector in <a href="#example-9-link">Example 9</a> and <span class="math inline">\(\mathbf{d}=\begin{pmatrix}6\\-8\\10\end{pmatrix}\)</span>&nbsp;are parallel or not, you check if the corresponding coefficients have the same ratio.</p>
-<p>Since <span class="math inline">\(\frac{3}{6}=\frac{-4}{-8}=\frac{5}{10}=\frac{1}{2}\)</span>, these two vectors have the same ratio of <span class="math inline">\(1:2\)</span>, hence, <span class="math inline">\(\mathbf{l}\)</span> and <span class="math inline">\(\mathbf{d}\)</span> are parallel to each other.</p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Example 11
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>To express the vector <span class="math inline">\(\mathbf{B}=\begin{pmatrix}7\\1\\4\end{pmatrix}\)</span>&nbsp;in terms of <span class="math inline">\(\mathbf{i},\mathbf{j},\mathbf{k}\)</span>, you can write <span class="math inline">\(\mathbf{B}=\begin{pmatrix}7\\1\\4\end{pmatrix}=7\mathbf{i}+\mathbf{j}+4\mathbf{k}\)</span><br>
-</p>
-</div>
-</div>
-<p><strong>Position Vectors</strong>, denoted <span class="math inline">\(\mathbf{r}\)</span>, are vectors that indicate the position of a body.</p>
-<p>Consider a point <span class="math inline">\(P\)</span> in space, having coordinates <span class="math inline">\((x,y,z)\)</span> with respect to the origin <span class="math inline">\(O(0,0,0)\)</span>, the vector <span class="math inline">\(\overrightarrow{OP}\)</span> is the position vector for the point <span class="math inline">\(P\)</span>. So,</p>
-<p><span class="math inline">\(\mathbf{r}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}\)</span>, for the point P.</p>
-<p>Then the magnitude of the position vector <span class="math inline">\(\mathbf{r}\)</span> is given by <span class="math inline">\(|\mathbf{r}|=\sqrt{x^2+y^2+z^2}\)</span>.</p>
-<div id="fig-4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="./FiguresPNG/introtovectors-fig4-4.png" class="img-fluid figure-img" alt="Position Vector $\overrightarrow{OP}$ with its tail at the origin and head at an arbitrary point $P$."></p>
-<figcaption class="figure-caption">Figure&nbsp;5: The position vector for the point <span class="math inline">\(P\)</span> with respect to the origin</figcaption>
-</figure>
-</div>
-<p>Any vector <span class="math inline">\(\mathbf{a}=x\mathbf{i}+y\mathbf{j}+z\mathbf{k}\)</span>&nbsp;can have its unit vector expressed as</p>
-<p><span class="math inline">\(\hat{a}=\frac{\mathbf{a}}{|\mathbf{a}|}=\frac{x\mathbf{i}+y\mathbf{j}+z\mathbf{k}}{|\mathbf{a}|}=\frac{x\mathbf{i}+y\mathbf{j}+z\mathbf{k}}{\sqrt{x^2+y^2+z^2}}\)</span><br>
-</p>
-<p>So, <span class="math inline">\(\hat{a}=\frac{x\mathbf{i}+y\mathbf{j}+z\mathbf{k}}{\sqrt{x^2+y^2+z^2}}\)</span><br>
-</p>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Example 12
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Given <span class="math inline">\(\mathbf{p}=\mathbf{i}+4\mathbf{j}-9\mathbf{k}\)</span>, to find the unit vector <span class="math inline">\(\hat{p}\)</span>, you find the magnitude of <span class="math inline">\(\mathbf{p}\)</span>:</p>
-<p><span class="math inline">\(|\mathbf{p}|=\sqrt{1^2+4^2+(-9)^2}\)</span>.</p>
-<p>Then, using the tip from above, the unit vector is</p>
-<p><span class="math inline">\(\hat{p}=\frac{\mathbf{i}+4\mathbf{j}-9\mathbf{k}}{\sqrt{1^2+4^2+(-9)^2}}=\frac{\mathbf{i}+4\mathbf{j}-9\mathbf{k}}{\sqrt{98}}\)</span><br>
-</p>
-<p>Which can be simplified to: <span class="math inline">\(\hat{p}=\frac{1}{7\sqrt{2}}\mathbf{i}+\frac{4}{7\sqrt{2}}\mathbf{j}-\frac{9}{7\sqrt{2}}\mathbf{k}\)</span><br>
-</p>
-</div>
-</div>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Example 13
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Given <span class="math inline">\(\mathbf{q}=-4\mathbf{i}+2\mathbf{j}+11\mathbf{k}\)</span>, to find the unit vector <span class="math inline">\(\hat{q}\)</span>, you find the magnitude of <span class="math inline">\(\mathbf{q}\)</span>,</p>
-<p><span class="math inline">\(|\mathbf{q}|=\sqrt{(-4)^2+2^2+11^2}=\sqrt{141}\)</span>.</p>
-<p>Then the <span class="math inline">\(\hat{q}=\frac{-4\mathbf{i}+2\mathbf{j}+11\mathbf{k}}{\sqrt{141}}=-\frac{4}{\sqrt{141}}\mathbf{i}+\frac{2}{\sqrt{141}}\mathbf{j}+\frac{11}{\sqrt{141}}\mathbf{k}\)</span><br>
-</p>
+<p>Remember the two vectors <span class="math inline">\(\mathbf{p}=\mathbf{i}+4\mathbf{j}-8\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{q} = -4\mathbf{i}+2\mathbf{j}+11\mathbf{k}\)</span> from Example 7. What are the unit vectors in the directions of <span class="math inline">\(\mathbf{p}\)</span> and <span class="math inline">\(\mathbf{q}\)</span>?</p>
+<p>You worked out in Example 7 that the magnitude of <span class="math inline">\(\mathbf{p}\)</span> is <span class="math inline">\(|\mathbf{p}| = 9\)</span>. Therefore, the unit vector in the direction of <span class="math inline">\(\mathbf{p}\)</span> is <span class="math display">\[\hat{\mathbf{p}} = \frac{\mathbf{p}}{|\mathbf{p}|} = \frac{\mathbf{i}+4\mathbf{j}-8\mathbf{k}}{9} = \frac{1}{9}\left(\mathbf{i}+4\mathbf{j}-8\mathbf{k}\right)\]</span></p>
+<p>Similarly, you worked out in Example 7 that the magnitude of <span class="math inline">\(\mathbf{q}\)</span> is <span class="math inline">\(|\mathbf{q}| = \sqrt{141}\)</span>. Therefore, the unit vector in the direction of <span class="math inline">\(\mathbf{q}\)</span> is <span class="math display">\[\hat{\mathbf{q}} = \frac{\mathbf{q}}{|\mathbf{q}|} = \frac{1}{\sqrt{141}}\left(-4\mathbf{i}+2\mathbf{j}+11\mathbf{k}\right)\]</span></p>
 </div>
 </div>
 </section>
-</section>
-<section id="quick-check-problems" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="quick-check-problems">Quick Check Problems</h2>
+<section id="quick-check-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Quick check problems</h1>
 <div class="webex-check webex-box">
 <ol type="1">
-<li><p>State whether these statements are TRUE or FALSE.</p>
+<li><p>State whether these statements are true or false.</p>
 <ol type="a">
-<li><p>The magnitude of a vector is always a positive value. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+<li><p>The magnitude of a vector is always a non-negative value. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
 <li><p>The zero vector has a magnitude of one. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p>If <span class="math inline">\(\mathbf{v}\)</span> is a non-zero vector, then there exists a unit vector in the direction of <span class="math inline">\(\mathbf{v}\)</span>. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
 </ol></li>
-<li><p>If <span class="math inline">\(\mathbf{a}=\begin{pmatrix}2\\-5\\-3\end{pmatrix}\)</span>, then what is <span class="math inline">\(|\mathbf{a}|\)</span>?</p>
-<p>Answer: <span class="math inline">\(|\mathbf{a}|\)</span> is equal to <input class="webex-solveme nospaces" size="2" data-answer="[&quot;38&quot;]">.</p></li>
-<li><p>Find the unit vector in the direction <span class="math inline">\(\mathbf{a}=-3\mathbf{i}+4\mathbf{k}\)</span>.(Answer in decimals)</p>
-<p>Answer: <span class="math inline">\(\hat{a}\)</span> is equal to <input class="webex-solveme nospaces" size="4" data-answer="[&quot;-0.6&quot;,&quot;-.6&quot;]"><span class="math inline">\(\mathbf{i}+\)</span><input class="webex-solveme nospaces" size="3" data-answer="[&quot;0.8&quot;,&quot;.8&quot;]"><span class="math inline">\(\mathbf{k}\)</span>.</p></li>
-<li><p>The position vector of P is <span class="math inline">\(a\mathbf{i}+2\mathbf{j}-11\mathbf{k}\)</span>&nbsp;(where <span class="math inline">\(a\)</span> is a positive integer) and the distance from the origin is 15, then what is the value of <span class="math inline">\(a\)</span>?</p>
-<p>Answer:<input class="webex-solveme nospaces" size="2" data-answer="[&quot;10&quot;]">.</p></li>
+<li><p>If <span class="math inline">\(\mathbf{a}=\begin{pmatrix}2\\-2\\-1\end{pmatrix}\)</span>, then what is <span class="math inline">\(|\mathbf{a}|\)</span>?</p>
+<p>Answer: <span class="math inline">\(|\mathbf{a}|\)</span> is equal to <input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]">.</p></li>
+<li><p>Find the unit vector in the direction of <span class="math inline">\(\mathbf{b}=-3\mathbf{i}+4\mathbf{k}\)</span>. (Give your answers using decimals.)</p>
+<p>Answer: <span class="math inline">\(\hat{\mathbf{b}}\)</span> is equal to <input class="webex-solveme nospaces" size="4" data-answer="[&quot;-0.6&quot;,&quot;-.6&quot;]"><span class="math inline">\(\mathbf{i}+\)</span><input class="webex-solveme nospaces" size="3" data-answer="[&quot;0.8&quot;,&quot;.8&quot;]"><span class="math inline">\(\mathbf{k}\)</span>.</p></li>
 </ol>
+<!-- 4. The position vector of P is $a\mathbf{i}+2\mathbf{j}-11\mathbf{k}$\ (where $a$ is a positive integer) and the distance from the origin is 15, then what is the value of $a$? -->
+<!--     Answer:<input class='webex-solveme nospaces' size='2' data-answer='["10"]'/>. -->
 </div>
-<p>For more questions on this topic, please go to <a href="qs-introductiontovectors.qmd">Questions: Introduction To Vectors.</a></p>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../questions/qs-introductiontovectors.html">For more questions on this topic, please go to Questions: Introduction to vectors.</a></p>
+<p>To explore more about vectors, included how they are added and scalar multiplied, please see either <a href="../studyguides/addandsm.html">Guide: Vector addition and scalar multiplication</a>.</p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 08/23 by Akshat Srivastava as part of a University of St Andrews STEP project.</p>
+<ul>
+<li>v1.1: edited 05/24 by tdhc.</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1072,6 +1199,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://giscus.app/client.js" data-repo="tdhc153/starmast" data-repo-id="R_kgDOJhaqiA" data-category="General" data-category-id="DIC_kwDOJhaqiM4CWZev" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 

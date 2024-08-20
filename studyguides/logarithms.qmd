@@ -1,36 +1,39 @@
 ---
-title: "Introduction to Logarithms"
+title: "Introduction to logarithms"
 author: "Ritwik Anand"
 abstract-title: Summary
-abstract: Using logarithms to condense large numbers is a fundamental skill when working in Mathematics. Understanding the laws of logarithms, working with the natural logarithm and learning how to change the base of a logarithm are key in mastering their functionality.
+abstract: Using logarithms to help understand large numbers is a fundamental skill when working in mathematics. Understanding the laws of logarithms, working with the natural logarithm and learning how to change the base of a logarithm are key in mastering their functionality.
+categories:
+  - Key skills
+  - Algebra
+image: FiguresPNG/logarithms-image.png
 ---
 
 ```{r, setup, include = FALSE}
 library("webexercises")
 ```
 
-*Before reading this guide, it is recommended that you read the guides on 'Laws of indices', as well as 'Dealing with powers and nth roots'.*
+*Before reading this guide, it is recommended that you read [Guide: Laws of indices](lawsofindices.qmd).*
 
-## What are Logarithms?
+# What are logarithms? {-}
 
-In the same way that subtraction 'undoes' addition, and division 'undoes' multiplication, you can think of the logarithm as the function that 'undoes' exponentiation. Logarithms are useful because they essentially let you work backwards through a calculation by undoing exponential effects. Furthermore, logarithms allow us to express large numbers in a convenient way, as well as model various phenomena as they occur in a logarithmic fashion. An example would be a hot object cooling down; this decays logarithmically.
+In the same way that subtraction 'undoes' addition, and division 'undoes' multiplication, you can think of the logarithm as the function that 'undoes' exponentiation. Logarithms are useful because they essentially let you work backwards through a calculation by undoing exponential effects. Furthermore, logarithms allow you to express large numbers in a convenient way, as well as model various phenomena as they occur in a logarithmic fashion. An example would be a hot object cooling down; this cools down logarithmically.
 
 In this guide, you will learn the definition of a logarithm, the laws concerning logarithms, what the natural logarithm is and finally, how to change the base of a logarithm.
 
 ::: {#definition-1-link .callout-note}
+
 ## Definition of a logarithm
 
-In its simplest form, a logarithm answers "How many of one number multiply together to make another number." This is what motivates the following definition:
+In its simplest form, a logarithm answers 'How many of one number multiply together to make another number?'. This is what motivates the following definition:
 
-$$ a^x = b$$ or
+If $$ a^x = b$$ then
 
-$$\log_a(b) = x $$ where $a > 1$, and $b > 0$. 
-
-$x$ is known as the *exponent*, $a$ is the *base* and $b$ is the *argument*. You would read the equation above as "logarithm of $b$ to the base $a$ is equal to $x$."
+$$\log_a(b) = x $$ where $a,b > 0$ and $a\neq 1$. Here, $x$ is known as the *exponent*, $a$ is the *base* and $b$ is the *argument*. You would read the equation above as "logarithm of $b$ to the base $a$ is equal to $x$".
 :::
 
 ::: callout-important
-Note that the logarithm function can only evaluate **real, positive numbers**. Therefore, you can't compute the logarithm of any number that is lesser than or equal to $0$.
+Note that the logarithm function can only evaluate **real, positive numbers**. Therefore, **you cannot compute the logarithm of a number that is less than or equal to $0$**.
 :::
 
 ::: {#example-1-link .callout-note appearance="simple"}
@@ -50,12 +53,12 @@ Generally, if the base is not specified, it is assumed that the base is 10. For 
 ::: {.callout-note appearance="simple"}
 ## Example 3
 
-Consider the equation from [Example 1](#example-1-link). This can be rewritten as $\log(1000) = x$, and the solution for $x$ is once again $x = 3$
+Consider the equation from [Example 1](#example-1-link). This can be rewritten as $\log(1000) = x$, and the solution for $x$ is once again $x = 3$.
 :::
 
-That being said, it is good practice to always specify the base of the logarithm you're using.
+That being said, it is good practice to always specify the base of the logarithm that you are using.
 
-Following from the [definition](#definition-1-link), you can make two key observations.
+Following from the [definition](#definition-1-link) of a logarithm, you can make two key observations.
 
 ::: {#law-6-link .callout-note}
 ## Inverse of a logarithm
@@ -66,17 +69,17 @@ $$\log_b(b^k) = k$$ The logarithm of an exponential where the base is equal to t
 ::: callout-note
 ## Inverse of an exponent
 
-$$b^{log_b(k)} = k$$ Raising a logarithm of a number to its own base is equal to the number itself.
+$$b^{\log_b(k)} = k$$ Raising a logarithm of a number to its own base is equal to the number itself.
 :::
 
-The results above can be proved using the definition of the logarithm.
+The results above are equivalent to the definition of the logarithm, and are often used. You should remember these results!
 
-## Laws of Logarithms
+# Laws of logarithms {-}
 
-There are several rules of logarithms that allows us to expand, condense and solve logarithmic equations. For this section, assume that $a > 1$.
+Following on from the laws of indices, there are several rules of logarithms that allows you to expand, condense and solve logarithmic equations. For this section, assume that $a$ is a positive real number with $a \neq 1$.
 
 ::: {#product-rule-link .callout-note}
-## Law 1: Product Rule
+## Law 1: product rule
 
 $$\log_a(M \cdot N) = \log_a(M) + \log_a(N)$$ The logarithm of a product is the sum of the logarithms of the factors.
 
@@ -88,14 +91,16 @@ $$\log_a(M \cdot N) = \log_a(M) + \log_a(N)$$ The logarithm of a product is the 
 
 1. $\log_a(100) = \log_a(10 \cdot 10) = \log_a(10) + \log_a(10)$
 
-2. $\log_a(27) = \log_a(3 \cdot 9) = \log_a(3) + \log_a(9)$
+2. $\log_a(27) = \log_a(3 \cdot 9) = \log_a(3) + \log_a(9) = \log_a(3) + \log_a(3) + \log_a(3)$
+
+3. $\log_2(x^4y^4) = \log_2(x^4) + \log_2(y^4)$.
 
 :::
 
 ::: callout-note
-## Law 2: Quotient Rule
+## Law 2: quotient rule
 
-$$\log_a\left(\frac{M}{N}\right) = \log_a(M) - \log_a(N) $$ The logarithm of a ratio of two numbers is equal to the logarithm of the **numerator** minus the logarithm of the **denominator**
+$$\log_a\left(\frac{M}{N}\right) = \log_a(M) - \log_a(N) $$ The logarithm of a ratio of two numbers is equal to the logarithm of the **numerator** minus the logarithm of the **denominator**.
 
 :::
 
@@ -107,11 +112,12 @@ $$\log_a\left(\frac{M}{N}\right) = \log_a(M) - \log_a(N) $$ The logarithm of a r
 
 2. $\log_a(27) = \log_a\left(\frac{54}{2}\right) = \log_a(54) - \log_a(2)$
 
+3. $\log_2(x^4y^{-4}) = \log_2\left(\dfrac{x^4}{y^{4}}\right) = \log_2(x^4) - \log_2(y^4)$.
 
 :::
 
 ::: {#law-3-link .callout-note}
-## Law 3: Power Rule
+## Law 3: power rule
 
 $$\log_a(M^k) = k \cdot \log_a(M)$$ The logarithm of an exponential number is the exponent multiplied with the logarithm of the base.
 
@@ -125,10 +131,14 @@ $$\log_a(M^k) = k \cdot \log_a(M)$$ The logarithm of an exponential number is th
 
 2. $\log_a(27) = \log_a(3^3) = 3 \cdot \log_a(3)$
 
+3. Using the laws of indices, $\log_2(x^4y^4) = \log_2\left((xy)^4\right) = 4\log_2(xy)$.
+
+(You can compare 2. to Example 4 (2) above!)
+
 :::
 
 ::: callout-note
-## Law 4: Zero Rule
+## Law 4: zero rule
 
 $$\log_a(1) = 0$$ The logarithm of 1 to any base is **always** equal to 0.
 
@@ -146,86 +156,84 @@ This is true as $$a^0 = 1$$ using the [definition](#definition-1-link) of the lo
 :::
 
 ::: callout-note
-## Law 5: Identity Rule
+## Law 5: identity rule
 
 $$\log_a(a) = 1$$
 
 The logarithm of the argument, where the argument is equal to the base of the logarithm, is **always** equal to 1.
 
-This is true as $$a^1 = a$$ using the [definition](#definition-1-link) of the logarithm.
+This is true as $$a^1 = a$$ for all positive real numbers $a$ and by also using the [definition](#definition-1-link) of the logarithm.
 :::
 
 ::: {.callout-note appearance="simple"}
 
 ## Example 8
 
-1. $\log_4(4) = 1$
-
-2. $\log_{10}(10) = 1$
+For instance, $\log_4(4) = 1$ and $\log_{10}(10) = 1$.
 
 :::
 
-# The Natural Logarithm
+# The natural logarithm
 
 To learn about the natural logarithm, you first need to know of **Euler's number**.
 
 ::: callout-note
 
-## Euler's Number
+## Euler's number
 
-**Euler's number**, denoted *e*, is an irrational mathematical constant that is approximately equal to 2.71828. 
+**Euler's number**, denoted *e*, is an irrational mathematical constant that is approximately equal to 2.718281828...
 
 :::
 
-Euler's number appears naturally in various phenomena involving exponential growth and decay.
+Much like $\pi$, the decimal representation of $e$ never repeats itself; it is an **irrational number**. Euler's number $e$ appears naturally in various phenomena involving exponential growth and decay; as well as in important mathematical settings such as calculus and dealing with complex numbers. It is one of the most important mathematical constants yet discovered.
 
-Now, the natural logarithm is a mathematical function used to study problems specifically involving exponential growth and decay. Unlike the logarithms we encountered above, this logarithm always has *e* as its base.
+Now, the natural logarithm is a mathematical function used to study problems specifically involving exponential growth and decay. Unlike the logarithms you encountered above, this logarithm always has $e$ as its base.
 
 ::: {#definition-2-link .callout-note}
-## The Natural Logarithm
+## The natural logarithm
 
 The **natural logarithm**, often denoted $\ln(x)$, is $\log_e(x)$.
 :::
 
-The Natural Logarithm shares the same domain as the logarithms above, namely that it only evaluates **positive, real** numbers. All of the laws from above apply as well.
+The natural logarithm shares the same domain as the logarithms above, namely that it only evaluates **positive, real** numbers. All of the laws from above apply to the natural logarithm as well.
 
 ::: {.callout-note appearance="simple"}
 
 ## Example 9
 
-Suppose you're given the equation $\ln(x) = 4$, and you've been asked to find $x$.
+Suppose you are given the equation $\ln(x) = 4$ and asked to find $x$.
 
-Using the definiton of a [natural logarithm](#definition-2-link), you can show that $\log_e(x) = 4$. Then, using the definition of a [logarithm](#definition-1-link), you can conclude that $x = e^4$. 
+Using the definition of a [natural logarithm](#definition-2-link), you can show that $\log_e(x) = 4$. Then, using the definition of a [logarithm](#definition-1-link), you can conclude that $x = e^4$. 
 
 :::
 
-The Natural Logarithm is quite useful as it's the **inverse** of the exponential function with base *e*. A graph of the natural logarithm, as well as its corresponding exponential curve is shown in Figure 1.
+The natural logarithm is useful as it is the **inverse** of the exponential function $e^x$. A graph of the natural logarithm, as well as its corresponding exponential curve, is shown in Figure 1.
 
-![Figure 1: A graph that shows the natural logarithm $\ln(x)$, along with the $e^x$ curve. Each curve is a reflection of the other in the line $y = x$, making them inverses of each other. Note that $\ln(x)$ only takes positive $x$ values, and is undefined for $x = 0$.](./FiguresPNG/log_curve.png){fig-alt="A graph of the natural logarithm and it's inverse, the exponential function with Euler's number as the base."}
+![Figure 1: A graph that shows the natural logarithm $\ln(x)$, along with the $e^x$ curve. Each curve is a reflection of the other in the line $y = x$, making them inverses of each other. Note that $\ln(x)$ only takes positive $x$ values, and is undefined for $x = 0$.](./FiguresPNG/log_curve.png){fig-alt="A graph of the natural logarithm and its inverse, the exponential function with Euler's number as the base."}
 
 ::: {#example-5-link .callout-note appearance="simple"}
 
 ## Example 10
 
-Let's say that you've been given the equation $e^x = 5$, and you need to solve for $x$. Taking the natural log on both sides of the equation gives us
+Say that you've been given the equation $e^x = 5$, and you need to solve for $x$. Taking the natural logarithm on both sides of the equation gives you
 $$\ln(e^x) = \ln(5)$$ Now, using [Law 3](#law-3-link), you can write the equation as  $$x\ln(e) = \ln(5)$$
 From here, dividing both sides by $\ln(e)$ results in $$x = \frac{\ln(5)}{\ln(e)}$$
 
-However, you know from the [definition](#definition-1-link) of the logarithm that $\ln(e) = \log_e(e)$. Finally, $\log_e(e) = 1$ by the [Inverse of a Logarithm](#law-6-link) rule.
+However, you know from the [definition](#definition-1-link) of the logarithm that $\ln(e) = \log_e(e)$. Finally, $\log_e(e) = 1$ by the [inverse of a logarithm](#law-6-link) rule.
 
 Therefore, $x = \ln(5)$.
 
 :::
 
-# Changing Bases of Logarithms
+# Changing bases of logarithms {-}
 
-Changing the base of a logarithm can be done for a variety of reasons. A few common reasons might be because;
+Changing the base of a logarithm can be done for a variety of reasons. A few common reasons might be:
 
-- **Familiarity**: Sometimes, changing the base of a logarithm can make calculations more familiar. For example, working with base 10 logarithms is common in many areas of engineering, physics and chemistry, as they allow for simpler calculations by working with powers of 10.
+- **Familiarity**: Sometimes, changing the base of a logarithm can make calculations more familiar. For example, working with base $10$ logarithms is common in many areas of engineering, physics and chemistry, as they allow for simpler calculations by working with powers of $10$.
 
 - **Solving equations**: Changing the base of a logarithm can sometimes help make a calculation simpler. You could change the base in order to work in a base that suits the problem at hand better. An example would be wanting to work with the [natural logarithm](#definition-2-link) when working on problems involving [Euler's number](#euler-number).
 
-- **Using Calculators**: Some calculators may only allow logarithms of base 10 or the natural logarithm to be computed. For this reason, it's important to know how to write out logarithms of any base into one that's required for use.
+- **Using calculators**: Some calculators may only allow logarithms of base $10$ or the natural logarithm to be computed. For this reason, it is important to know how to write out logarithms of any base into one that is required for use.
 
 ::: {#change-base-rule .callout-note}
 
@@ -236,9 +244,9 @@ Changing the base of any logarithm can be done by using the following formula
 $$\log_b(a) = \frac{\log_x(a)}{\log_x(b)}$$
 where 
 
-- $a$ is the argument.
-- $b$ is the original base, and $b > 0$..
-- $x$ is the new base, and $x > 1$.
+- $a$ is the argument (which cannot be negative)
+- $b$ is the original base, where $b > 0$.
+- $x$ is the new base, where $x > 0$ and $x\neq 1$.
 
 :::
 
@@ -251,46 +259,12 @@ You are given $\log_2(e^5)$ and asked to change the base to $e$.
 Using the [change of base rule](#change-base-rule), 
 
 $$\log_2(e^5) = \frac{\ln(e^5)}{\ln(2)}$$
-Using the [Inverse of a Logarithm](#law-6-link) rule, you can work out that $\ln(e^5) = 5$. Therefore, the equation above simplifies to $$\log_2(e^5) = \frac{5}{\ln(2)}$$
+Using the [inverse of a logarithm](#law-6-link) rule, you can work out that $\ln(e^5) = 5$. Therefore, the equation above simplifies to $$\log_2(e^5) = \frac{5}{\ln(2)}$$
 
 :::
 
-::: {.callout-note appearance="simple"}
 
-## Example 12
-
-Given the equation $3^x = 7^{x + 1}$, to solve for $x$;
-
-First, you can take the logarithm of both sides of the equation with base $a > 1$, $$\log_a(3^x) = \log_a(7^{x+1})$$
-
-Next, using Law 3, you can bring the powers of the arguments outside of the logarithm as follows, $$x\log_a(3) = (x+1)\log_a(7)$$
-
-After that, expand the right side of the equation to obtain $$x\log_a(3) = x\log_a(7) + \log_a(7)$$
-
-Subtracting $x\log_a(7)$ from both sides of the equation gives you $$x\log_a(3) - x\log_a(7) = \log_a(7)$$ From which you can pull a factor of $x$ out on the left, giving you $$x \cdot (\log_a(3) - \log_a(7)) = \log_a(7)$$
-
-Finally, dividing both sides by $(\log_a(3) - \log_a(7))$, you conclude that $$x = \frac{\log_a(7)}{\log_a(3) - \log_a(7)}$$
-
-:::
-
-::: {.callout-note appearance="simple"}
-
-## Example 13
-
-Given the equation $5^{2x} + 7(5^x) - 30 = 0$, you are asked to solve for $x$.
-
-Start by letting $y = 5^x$. Then, you can rewrite the equation given as $(5^x)^2 + 7(5^x) - 30 = 0$ using [laws of indices](introtolawsofindices.qmd), which is the same as writing $$y^2 +7y - 30 = 0$$
-
-Recognizing that this is a [quadratic equation](introtoquadratics.qmd), you can use the quadratic formula, or otherwise, to show that $$y = -10 \quad \text{or} \quad y = 3$$
-
-As $y = 5^x$, this means that $5^x = -10$ or $5^x = 3$. By taking the logarithm of both sides, you can show that $$x\log_a(5) = \log_a(-10) \quad \text{or} \quad x\log_a(5) = 3$$ 
-
-Recall that the logarithm of a negative number is not defined, so $x\log_a(5) = 3$ is the only viable solution. 
-Therefore, you can conclude that $$x = \frac{3}{\log_a(5)}$$
-
-:::
-
-## Quick check problems {-}
+# Quick check problems {-}
 
 <!-- add facility for webexercises to work on html -->
 
@@ -317,7 +291,7 @@ Answer: `r mcq(c(4, answer = 3, 2, 1))`
 
 (c) $\log_{1234}(12.34)$? `r torf(TRUE)`
 
-4. Let $a > 1$. Which of the following is true for all positive numbers of $x$ and $y$?
+4. Let $a > 0$ with $a\neq 1$. Which of the following is true for all positive numbers $x$ and $y$?
 
 (a) $\log_a\left(\frac{2x}{3y^2}\right) = \log_a(2x) \cdot \log_a(3y^2)$ `r torf(FALSE)` 
 
@@ -345,8 +319,17 @@ Answer: `r mcq(c(4, answer = 3, 2, 1))`
 (b) $\log_3(-9)$? 
 (c) $\log_{1234}(12.34)$? 
 
-4. Let $a > 1$. Rewrite $\log_a\left(\frac{2x}{3y^2}\right)$ as $m\log_a(2x) + n\log_a(3y^2)$ where $m$ and $n$ are constants. What are the values of $m$ and $n$?
+4. Let $a > 0$ with $a\neq 1$. Rewrite $\log_a\left(\frac{2x}{3y^2}\right)$ as $m\log_a(2x) + n\log_a(3y^2)$ where $m$ and $n$ are constants. What are the values of $m$ and $n$?
 
 :::
 
+# Further reading {-}
+
+[For more questions on the subject, please go to Questions: Logarithms.](../questions/qs-logarithms.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 08/23 by Ritwik Anand as part of a University of St Andrews STEP project.
+
+  - v1.1: edited 04/24 by TC. 
 
