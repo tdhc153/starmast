@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Renee Knapp, Kin Wang Pang">
+
+<title>STARMAST - Vector addition and scalar multiplication</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html" rel="" target="">
+ <span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../studyguidelist.html" rel="" target="">
+ <span class="menu-text">Study guides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../qalist.html" rel="" target="">
+ <span class="menu-text">Questions and answers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fslist.html" rel="" target="">
+ <span class="menu-text">Fact sheets</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pslist.html" rel="" target="">
+ <span class="menu-text">Proof sheets</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-vector-addition-and-scalar-multiplication" id="toc-what-is-vector-addition-and-scalar-multiplication" class="nav-link active" data-scroll-target="#what-is-vector-addition-and-scalar-multiplication">What is vector addition and scalar multiplication?</a></li>
+  <li><a href="#vector-addition-and-subtraction" id="toc-vector-addition-and-subtraction" class="nav-link" data-scroll-target="#vector-addition-and-subtraction">Vector addition and subtraction</a>
+  <ul class="collapse">
+  <li><a href="#definition-and-initial-examples" id="toc-definition-and-initial-examples" class="nav-link" data-scroll-target="#definition-and-initial-examples">Definition and initial examples</a></li>
+  <li><a href="#properties-of-vector-addition" id="toc-properties-of-vector-addition" class="nav-link" data-scroll-target="#properties-of-vector-addition">Properties of vector addition</a></li>
+  </ul></li>
+  <li><a href="#scalar-multiplication" id="toc-scalar-multiplication" class="nav-link" data-scroll-target="#scalar-multiplication">Scalar multiplication</a>
+  <ul class="collapse">
+  <li><a href="#definition-and-initial-examples-1" id="toc-definition-and-initial-examples-1" class="nav-link" data-scroll-target="#definition-and-initial-examples-1">Definition and initial examples</a></li>
+  <li><a href="#properties-of-scalar-multiplication" id="toc-properties-of-scalar-multiplication" class="nav-link" data-scroll-target="#properties-of-scalar-multiplication">Properties of scalar multiplication</a></li>
+  <li><a href="#solving-vector-equations" id="toc-solving-vector-equations" class="nav-link" data-scroll-target="#solving-vector-equations">Solving vector equations</a></li>
+  </ul></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="addandsm.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="addandsm.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Vector addition and scalar multiplication</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Geometry</div>
+    <div class="quarto-category">Vectors</div>
+    <div class="quarto-category">Linear mathematics</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Renee Knapp, Kin Wang Pang </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Summary</div>
+    Understanding and utilising vector addition and scalar multiplication are essential when studying vectors, particularly when it comes to solving equations involving vectors.
+  </div>
+</div>
+
+</header>
+
+<p><em>Before reading this guide, it is recommended that you read <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a>.</em></p>
+<!--Besides the 3 Figures (6 links to total), there are 3 hyperlinks to other .qmd files: line 93,343,347-->
+<section id="what-is-vector-addition-and-scalar-multiplication" class="level1 unnumbered">
+<h1 class="unnumbered">What is vector addition and scalar multiplication?</h1>
+<p>As you have seen in <a href="../studyguides/introductiontovectors.html">Guide: Introdution to vectors</a>, vectors have a magnitude and a direction and are represented in coordinate spaces by components, either in <span class="math inline">\(\mathbf{i},\mathbf{j},\mathbf{k}\)</span> notation or as a column vector. These components can be considered independent to each other.</p>
+<p>You are able to add two vectors together, or multiply a vector by a scalar. To do this, you have to consider each component of the vector individually. These ideas of vector addition and scalar multiplication are key concepts in <strong>linear mathematics</strong>, which underpins many important concepts in applied mathematics, physics, chemistry, statistics, economics, and computer science – linear mathematics is even used in generative AI and machine learning!</p>
+<p>This guide introduces vector addition and scalar multiplication, for vectors in both <span class="math inline">\(\mathbf{i}\)</span>,<span class="math inline">\(\mathbf{j}\)</span>,<span class="math inline">\(\mathbf{k}\)</span> and column notation, and explains the role of vector addition and scalar multiplication in solving equations using vectors.</p>
+<p>Following the lead of <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a> this guide solely works on vectors in <strong>three dimensions</strong>.</p>
+</section>
+<section id="vector-addition-and-subtraction" class="level1 unnumbered">
+<h1 class="unnumbered">Vector addition and subtraction</h1>
+<section id="definition-and-initial-examples" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="definition-and-initial-examples">Definition and initial examples</h2>
+<p>The addition of vectors <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> is defined by following <span class="math inline">\(\mathbf{u}\)</span> and then <span class="math inline">\(\mathbf{v}\)</span>. More specifically, you can join the start of a vector <span class="math inline">\(\mathbf{v}\)</span> to the end of another vector <span class="math inline">\(\mathbf{u}\)</span>, and then draw a vector <span class="math inline">\(\mathbf{u}+\mathbf{v}\)</span> from the start of <span class="math inline">\(\mathbf{u}\)</span> to the end of <span class="math inline">\(\mathbf{v}\)</span>. See Figure <a href="#fig-1">Figure&nbsp;1</a> for a picture of this process.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/17-1.png" class="img-fluid figure-img" style="width:100.0%" alt="(1) There are two vectors u and v. (2) The head of vector u is joined to the tail of vector v. (3) This forms a triangle and the new vector u + v is created by completing the triangle. This vector points from the tail of u to the head of v."></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Graphical representation of vector addition. The three steps of the process are labelled.</figcaption>
+</figure>
+</div>
+<p>What does this mean for a vector written in <span class="math inline">\(\mathbf{i},\mathbf{j},\mathbf{k}\)</span> notation? Examining the <span class="math inline">\(\mathbf{i}\)</span> component of the vector <span class="math inline">\(\mathbf{u}+\mathbf{v}\)</span>, you can notice that you first move using <span class="math inline">\(\mathbf{i}\)</span> component of <span class="math inline">\(\mathbf{u}\)</span> and then move by the <span class="math inline">\(\mathbf{i}\)</span> component of <span class="math inline">\(\mathbf{v}\)</span>. It follows that the <span class="math inline">\(\mathbf{i}\)</span> component of the vector <span class="math inline">\(\mathbf{u}+\mathbf{v}\)</span> is the sum of the <span class="math inline">\(\mathbf{i}\)</span> component of <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{i}\)</span> component of <span class="math inline">\(\mathbf{v}\)</span>. You can expand this to both the <span class="math inline">\(\mathbf{j}\)</span> and <span class="math inline">\(\mathbf{k}\)</span> components of <span class="math inline">\(\mathbf{u}+\mathbf{v}\)</span> to get the following definition.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of vector addition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(\mathbf{a} = a_1 \mathbf{i} + a_2 \mathbf{j} + a_3 \mathbf{k}\)</span> and <span class="math inline">\(\mathbf{b} = b_1 \mathbf{i} + b_2 \mathbf{j} + b_3 \mathbf{k}\)</span> be two vectors. Then the <strong>addition of the two vectors</strong>, written as <span class="math inline">\(\mathbf{a} + \mathbf{b}\)</span>, is defined as follows: <span class="math display">\[\mathbf{a} + \mathbf{b} = (a_1+b_1) \mathbf{i} + (a_2 + b_2) \mathbf{j} + (a_3 + b_3)\mathbf{k}.\]</span> In column vector notation, the addition of <span class="math inline">\(\mathbf{a} = \begin{pmatrix}a_1\\a_2\\a_3\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} = \begin{pmatrix}b_1\\b_2\\b_3\end{pmatrix}\)</span> is: <span class="math display">\[\mathbf{a} + \mathbf{b} = \begin{pmatrix}a_1 + b_1\\a_2 + b_2\\a_3 + b_3\end{pmatrix}.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given <span class="math inline">\(\mathbf{a} = 3\mathbf{i} + 4\mathbf{j} - 8\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{b} = 2\mathbf{i} +8\mathbf{j} + 12\mathbf{k}\)</span>. Then <span class="math display">\[\begin{align*}
+\mathbf{a} + \mathbf{b} &amp;= (3\mathbf{i} + 4\mathbf{j} - 8\mathbf{k}) + (2\mathbf{i} +8\mathbf{j} + 12\mathbf{k})\\
+&amp;=(3+2)\mathbf{i} + (4+8)\mathbf{j} + (-8 + 12)\mathbf{k}\\
+&amp;=5\mathbf{i} + 12\mathbf{j} + 4\mathbf{k}
+\end{align*}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given <span class="math inline">\(\mathbf{a} = \begin{pmatrix}3\\4\\-2\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} = \begin{pmatrix}5\\6\\14\end{pmatrix}\)</span>. Then <span class="math display">\[\mathbf{a} + \mathbf{b} = \begin{pmatrix}3\\4\\-2\end{pmatrix} + \begin{pmatrix}5\\6\\14\end{pmatrix} = \begin{pmatrix}3+5\\4+6\\-2 + 14\end{pmatrix} = \begin{pmatrix}8\\10\\12\end{pmatrix}.\]</span></p>
+</div>
+</div>
+<!-- In the above diagram, the two vectors $\mathbf{u}$ and $\mathbf{v}$ are shown. The addition of the two vectors is the process of joining the head of one of the vectors to the tail of another. Then completing the triangle to form the new vector. -->
+<p>To <em>subtract</em> one vector from another, you can use the definition of a negative vector from <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a>. Much like for numbers, you can write that <span class="math display">\[\mathbf{u} - \mathbf{v} = \mathbf{u} + (-\mathbf{v}).\]</span> So to subtract to vectors, you need to add <span class="math inline">\(-\mathbf{v}\)</span> to <span class="math inline">\(\mathbf{u}\)</span> using vector addition.</p>
+<p>Geometrically, you need tp reverse the direction of the vector <span class="math inline">\(\mathbf{v}\)</span> first before finding <span class="math inline">\(\mathbf{u} + (-\mathbf{v})\)</span> in the usual fashion. <a href="#fig-2">Figure&nbsp;2</a> explains this process.</p>
+<div id="fig-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/18-2.png" class="img-fluid figure-img" style="width:100.0%" alt="(1) There are two vectors u and v. (2) The direction of vector v is reversed in direction to form the negative v vector. (3) Then the head of vector u joins the tail of vector -v. (4) Completing the triangle gives the vector u - v. This vector points from the tail of u to the head of -v."></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Graphical representation of vector subtraction. The four steps are labelled.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given <span class="math inline">\(\mathbf{a} = 3\mathbf{i} + 4\mathbf{j} + 3\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{b} = 5\mathbf{i} - 6\mathbf{j}\)</span>. Then <span class="math display">\[\begin{align*}
+\mathbf{a} - \mathbf{b} &amp;= \mathbf{a} + (-\mathbf{b})\\
+&amp;= (3\mathbf{i} + 4\mathbf{j} + 3\mathbf{k}) + (-5\mathbf{i} + 6\mathbf{j})\\
+&amp;= (3-5)\mathbf{i} + (4+6)\mathbf{j} + (3 + 0)\mathbf{k}\\
+&amp;= -2\mathbf{i} + 10\mathbf{j} + 3\mathbf{k}
+\end{align*}\]</span></p>
+</div>
+</div>
+<p>You can notice that you don’t need to work out <span class="math inline">\(-\mathbf{b}\)</span> or similar; notice that if <span class="math inline">\(\mathbf{a} = a_1 \mathbf{i} + a_2 \mathbf{j} + a_3 \mathbf{k}\)</span> and <span class="math inline">\(\mathbf{b} = b_1 \mathbf{i} + b_2 \mathbf{j} + b_3 \mathbf{k}\)</span>, then <span class="math display">\[\mathbf{a} - \mathbf{b} = (a_1-b_1) \mathbf{i} + (a_2 - b_2) \mathbf{j} + (a_3 - b_3)\mathbf{k}\]</span> or, in column notation, <span class="math display">\[\mathbf{a} - \mathbf{b} = \begin{pmatrix}a_1 - b_1\\a_2 - b_2\\a_3 - b_3\end{pmatrix}.\]</span></p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Be careful with your signs when subtracting vectors in this way!</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given <span class="math inline">\(\mathbf{a} = \begin{pmatrix}3\\0\\-2\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{b} = \begin{pmatrix}5\\6\\-14\end{pmatrix}\)</span>. Then <span class="math display">\[\mathbf{a} - \mathbf{b} = \begin{pmatrix}3\\0\\-2\end{pmatrix} - \begin{pmatrix}5\\6\\-14\end{pmatrix} = \begin{pmatrix}3-5\\0-6\\-2 - (-14)\end{pmatrix} = \begin{pmatrix}-2\\-6\\12\end{pmatrix}.\]</span></p>
+</div>
+</div>
+<!-- You may realize that vector addition is scalar addition done in a component manner, that is you sum of the magnitude of the $\textbf{i}$th component, the $\textbf{j}$th component and the $\textbf{k}$th component independently. -->
+<!-- Thus vector addition inherits properties from scalar addition as well. -->
+</section>
+<section id="properties-of-vector-addition" class="level2">
+<h2 class="anchored" data-anchor-id="properties-of-vector-addition">Properties of vector addition</h2>
+<p>The process of adding vectors via their components is called <strong>componentwise addition</strong>. The addition of the components is the same as adding numbers, so you may expect properties of adding numbers to be reflected in vector addition. In fact, the following properties are true for <strong>all</strong> vectors <span class="math inline">\(\mathbf{u},\mathbf{v},\mathbf{w}\)</span>.</p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}\)</span> (called <strong>commutativity</strong>)</p></li>
+<li><p><span class="math inline">\((\mathbf{u} + \mathbf{v}) + \mathbf{w} = \mathbf{u} + (\mathbf{v} + \mathbf{w})\)</span> (called <strong>associativity</strong>).</p></li>
+</ul>
+<p>The <strong>zero vector</strong> (see <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a>) plays an important role in properties of vector addition. In fact, there are two more properties relating entirely to the zero vector, which are true for all vectors <span class="math inline">\(\mathbf{u}\)</span>:</p>
+<ul>
+<li><p><span class="math inline">\(\mathbf{0} + \mathbf{u} = \mathbf{u}\)</span></p></li>
+<li><p><span class="math inline">\(\mathbf{u} + (-\mathbf{u}) = \mathbf{0}\)</span></p></li>
+</ul>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given <span class="math inline">\(\mathbf{a}= 2\mathbf{i}+ y\mathbf{j}-3\mathbf{k}\)</span>. Then <span class="math display">\[\mathbf{a} + \mathbf{0} = (2+0)\mathbf{i}+ (y+0)\mathbf{j}+(-3+0)\mathbf{k} = 2\mathbf{i}+ y\mathbf{j}-3\mathbf{k} = \mathbf{a}\]</span> (as you would expect!)</p>
+</div>
+</div>
+<!-- ::: {.callout-warning} -->
+<!-- As vector addition is similar to scalar addition, then the rules for -->
+<!-- expanding brackets follow. -->
+<!-- $\mathbf{u} - \mathbf{v} + \mathbf{w} \neq\mathbf{u} - (\mathbf{v} + \mathbf{w})$ -->
+<!-- ::: -->
+<!-- ## The Zero vector -->
+<!-- The zero vector $\mathbf{0}$ is defined as a vector with zero length. This -->
+<!-- is different from the 0 scalar. You can learn more about the zero vector in [Guide: Introduction to Vectors](introductiontovectors.qmd) -->
+<!-- The zero vector has the following properties: -->
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given <span class="math inline">\(\mathbf{a} = \begin{pmatrix}2\\1\\0\end{pmatrix}\)</span>, <span class="math inline">\(\mathbf{b} = \begin{pmatrix}7\\2\\1\end{pmatrix}\)</span> and <span class="math inline">\(\mathbf{c} = \begin{pmatrix}-3\\-2\\5\end{pmatrix}.\)</span></p>
+<p>Then <span class="math inline">\(\mathbf{a} + \mathbf{b} - \mathbf{c} = \begin{pmatrix}2+7 - (-3)\\1+2-(-2)\\0 + 1 - 5\end{pmatrix} = \begin{pmatrix}12\\5\\-4\end{pmatrix}\)</span></p>
+</div>
+</div>
+</section>
+</section>
+<section id="scalar-multiplication" class="level1 unnumbered">
+<h1 class="unnumbered">Scalar multiplication</h1>
+<section id="definition-and-initial-examples-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="definition-and-initial-examples-1">Definition and initial examples</h2>
+<p>As was mentioned in <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a>, another thing that you can do with vectors is to multiply it with a <strong>scalar</strong>, which is usually a real number. <strong>Scalar multiplying</strong> a vector by a positive scalar typically changes the magnitude of the vector and preserves the direction, and multiplying a vector by a negative scalar typically changes the magnitude of the vector and <em>reverses</em> the direction. <a href="#fig-3">Figure&nbsp;3</a> shows a picture of these scenarios.</p>
+<div id="fig-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/vectoradditionandscalarmultiplication-fig3.png" class="img-fluid figure-img" style="width:100.0%" alt="There are five vectors side by side. Going from left to right, the first shows the general vector u. The second shows the vector lambda u, where lambda is larger than one. The vector is lambda times longer than the vector u, pointing in the same direction. The third vector shows the vector lambda u, where lambda is between one and zero. The magnitude of the vector is shorter than the original vector u by a factor of 1/lambda. The fourth vector shows lambda u, where lambda is between negative one and zero. The magnitude of the vector is shorter than the original vector u by a factor of 1/lambda, and the direction of the vector is reversed. The fifth vector shows the vector lambda u, where lambda is smaller than negative one. The magnitude of the vector is longer than the original vector u by a factor of lambda, and direction of the vector is inverted."></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Graphical representation of scalar multiplication.</figcaption>
+</figure>
+</div>
+<p>What does scalar multiplication do to the components of a vector? Suppose that you are scalar multiplying the vector <span class="math inline">\(\mathbf{i}\)</span>. This is a unit vector, so has magnitude <span class="math inline">\(1\)</span>. Since scalar multiplication by a scalar <span class="math inline">\(\lambda\)</span> (pronounced ‘lambda’) changes the length of a vector, it follows that the vector <span class="math inline">\(\lambda\mathbf{i}\)</span> has magnitude <span class="math inline">\(|\lambda|\)</span>, the absolute value of <span class="math inline">\(\lambda\)</span>.</p>
+<p>Since every vector <span class="math inline">\(\mathbf{u}\)</span> is the sum of scalar multiples of <span class="math inline">\(\mathbf{i},\mathbf{j},\mathbf{k}\)</span>, it follows that <span class="math inline">\(\lambda\mathbf{u}\)</span> is the sum of scalar multiples of <span class="math inline">\(\lambda\mathbf{i},\lambda\mathbf{j},\lambda\mathbf{k}\)</span>. This forms the basis of the definition:</p>
+<!-- You can represent scalar multiplication graphically. For different real scalars, the magnitude is multiplied by that amount. Note that if the scalar is negative, the direction of the vector is reversed. -->
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of scalar multiplication
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(\mathbf{a} = a_1\mathbf{i} + a_2\mathbf{j} + a_3\mathbf{k}\)</span> be a vector and let <span class="math inline">\(\lambda\)</span> be a real number. Then the <strong>scalar multiple of <span class="math inline">\(\mathbf{a}\)</span> by <span class="math inline">\(\lambda\)</span></strong> is given by <span class="math display">\[\lambda \mathbf{a} = \lambda a_1\mathbf{i} + \lambda a_2\mathbf{j} + \lambda a_3\mathbf{k}.\]</span></p>
+<p>In column notation, if <span class="math inline">\(\mathbf{a} = \begin{pmatrix}a_1\\a_2\\a_3\end{pmatrix}\)</span>, then <span class="math inline">\(\lambda \mathbf{a} = \begin{pmatrix}\lambda a_1\\ \lambda a_2\\ \lambda a_3 \end{pmatrix}.\)</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given <span class="math inline">\(\mathbf{a} = \begin{pmatrix}3\\5\\6\end{pmatrix}\)</span>. Then <span class="math inline">\(5\mathbf{a} = \begin{pmatrix}5(3)\\5(5)\\5(6)\end{pmatrix} = \begin{pmatrix}15\\25\\30\end{pmatrix}.\)</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given <span class="math inline">\(\mathbf{b} = -2\mathbf{i} + 6\mathbf{j} - 7\mathbf{k}\)</span>. Then <span class="math display">\[-3\mathbf{b} = (-3)(-2)\mathbf{i} + (-3)6\mathbf{j} - (-3)7\mathbf{k} = 6\mathbf{i} -18\mathbf{j} + 21\mathbf{k}.\]</span></p>
+</div>
+</div>
+</section>
+<section id="properties-of-scalar-multiplication" class="level2">
+<h2 class="anchored" data-anchor-id="properties-of-scalar-multiplication">Properties of scalar multiplication</h2>
+<p>Since scalar multiplication is similar to component-wise multiplication, then it has the following properties for all vectors <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> and scalars <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\mu\)</span>:</p>
+<ul>
+<li><p><span class="math inline">\((\lambda \mu) \mathbf{u} = \lambda (\mu \mathbf{u})\)</span> (called <strong>associativity of scalar multiplication</strong>)</p></li>
+<li><p><span class="math inline">\(( \lambda + \mu ) \mathbf{u} = \lambda \mathbf{u} + \mu \mathbf{u}\)</span> (called <strong>distributivity of scalar multiplication</strong>)</p></li>
+<li><p><span class="math inline">\(\lambda (\mathbf{u} + \mathbf{v}) = \lambda\mathbf{u} + \lambda\mathbf{v}\)</span> (called <strong>distributivity of vector addition</strong>)</p></li>
+<li><p><span class="math inline">\(1\mathbf{u} = \mathbf{u}\)</span> (so <span class="math inline">\(1\)</span> is the <strong>scalar multiplicative identity</strong>)</p></li>
+</ul>
+<p>In addition, the following are also true:</p>
+<ul>
+<li><p><span class="math inline">\(0\mathbf{u} = \mathbf{0}\)</span>, so any vector scalar multiplied by <span class="math inline">\(0\)</span> gives the zero vector <span class="math inline">\(\mathbf{0}\)</span>.</p></li>
+<li><p><span class="math inline">\((-1)\mathbf{u} = -\mathbf{u}\)</span></p></li>
+</ul>
+<p>Finally, if two vectors are scalar multiples of each other, then they must have either the same direction or exactly opposite directions.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are general vectors such that <span class="math inline">\(\mathbf{u} = \lambda \mathbf{v}\)</span> for some <em>positive</em> scalar <span class="math inline">\(\lambda\)</span>, then <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are <strong>parallel</strong> to each other. If <span class="math inline">\(\mathbf{u} = \lambda \mathbf{v}\)</span> for some <em>negative</em> scalar <span class="math inline">\(\lambda\)</span>, then <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are <strong>antiparallel</strong> to each other.</p>
+<p>Equivalently, two vectors <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are parallel if their correpsonding unit vectors are equal; so when <span class="math inline">\(\hat{\mathbf{u}} = \hat{\mathbf{v}}\)</span>. You can say that <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> are antiparallel if <span class="math inline">\(\hat{\mathbf{u}} = -\hat{\mathbf{v}}\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="solving-vector-equations" class="level2">
+<h2 class="anchored" data-anchor-id="solving-vector-equations">Solving vector equations</h2>
+<p>By combining addition and scalar multiplication, you can form vector equations. It is extremely important to be able to solve vector equations. They have many applications in varied field such as geometry, mechanics, multivariable calculus and more. In addition, solving vector equations is one of the key studies of linear mathematics.</p>
+<p>One thing to remember from <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a> is that vectors are only equal if and only if their components are individually equal. That is, if <span class="math inline">\(\mathbf{a} = a_1 \mathbf{i} + a_2 \mathbf{j} + a_3 \mathbf{k}\)</span> and <span class="math inline">\(\mathbf{b} = b_1 \mathbf{i} + b_2 \mathbf{j} + b_3 \mathbf{k}\)</span> are two vectors, then <span class="math display">\[\mathbf{a} = \mathbf{b}\quad\textsf{ if and only if }\quad a_1 = b_1,\, a_2 = b_2,\, a_3 = b_3.\]</span></p>
+<p>This means that to solve vector equations, you may have to solve three equations simultaneously! This requires an excellent knowledge of solving simultaneous equations; see [Guide: Solving simultaneous equations] for more.</p>
+<p>Solving vector equations is best done when following the lead of examples; here are two. The first of these involves <strong>position vectors</strong>: see <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a> for more.</p>
+<!-- ::: callout-note -->
+<!-- ## Solving vector equations -->
+<!-- If $\lambda \mathbf{a} + \mu \mathbf{b} = \mathbf{c}$ -->
+<!-- Then in $\textbf{i}$,$\textbf{j}$,$\textbf{k}$ notation, -->
+<!-- let $\mathbf{a} = a_1\mathbf{i} + a_2\mathbf{j}$,$\mathbf{b} = b_1\mathbf{i} + b_2\mathbf{j}$ -->
+<!-- and $\mathbf{c} = c_1\mathbf{i} + c_2\mathbf{j}$. -->
+<!-- The equation gives -->
+<!-- $\lambda(a_1\mathbf{i} + a_2\mathbf{j} )+ \mu(b_1\mathbf{i} + b_2\mathbf{j}) = c_1\mathbf{i} + c_2\mathbf{j}$ -->
+<!-- In column notation, -->
+<!-- $\mathbf{a} = \begin{pmatrix}a_1\\a_2\end{pmatrix}$, $\mathbf{b} = \begin{pmatrix}b_1\\b_2\end{pmatrix}$ and -->
+<!-- $\mathbf{c} = \begin{pmatrix}c_1\\c_2\end{pmatrix}$. -->
+<!-- The equation gives -->
+<!-- $\begin{pmatrix}\lambda a_1 + \mu b_1\\ \lambda a_2 + \mu b_2\end{pmatrix} = \begin{pmatrix}c_1\\c_2\end{pmatrix}$ -->
+<!-- Both notations give the same simultaneous equations: -->
+<!-- $\begin{cases}\lambda a_1 + \mu b_1 = c_1\\\lambda a_2 + \mu b_2 = c_2\end{cases}$ -->
+<!-- ::: -->
+<!-- This part is the quick examples for simultaneous equations -->
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the co-ordinates of the point <span class="math inline">\(B\)</span> are <span class="math inline">\((-5,-2,-4)\)</span> and <span class="math inline">\(\overrightarrow{AB} = \begin{pmatrix}1\\1\\-6\end{pmatrix}\)</span>, what are the co-ordinates of <span class="math inline">\(A\)</span>?</p>
+<p>Using knowledge from <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a>, you can say that the position vector of the point <span class="math inline">\(B\)</span> is <span class="math display">\[\overrightarrow{OB} = \begin{pmatrix}-5\\-2\\-4\end{pmatrix}\]</span></p>
+<p>If you can find the value of the position vector <span class="math inline">\(\overrightarrow{OA}\)</span>, then you can read off the co-ordinates of the point <span class="math inline">\(A\)</span>. Using the definition of vector addition, you can write that <span class="math display">\[\overrightarrow{OB} = \overrightarrow{OA} + \overrightarrow{AB}\]</span> and so <span class="math inline">\(\overrightarrow{OA} = \overrightarrow{OB} - \overrightarrow{AB}\)</span>. Therefore <span class="math display">\[\overrightarrow{OA} = \overrightarrow{OB} - \overrightarrow{AB}= \begin{pmatrix}-5\\-2\\-4\end{pmatrix} - \begin{pmatrix}1\\1\\-6\end{pmatrix} = \begin{pmatrix}-6\\-3\\2\end{pmatrix}\]</span> and so the co-ordinates of <span class="math inline">\(A\)</span> are <span class="math inline">\((-6,-3,2)\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If <span class="math inline">\(\mathbf{u} = 4\mathbf{i} + 3\mathbf{j}\)</span> and <span class="math inline">\(\mathbf{v} = -\mathbf{i} + 2\mathbf{j}\)</span>, how can you express <span class="math inline">\(7\mathbf{i} + 19\mathbf{j}\)</span> in terms of <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span>?</p>
+<p>What you can do here is take the sum of scalar multiples of <span class="math inline">\(\mathbf{u}\)</span> and <span class="math inline">\(\mathbf{v}\)</span> (known as a <strong>linear combination</strong>) and set this vector equal to <span class="math inline">\(7\mathbf{i} + 19 \mathbf{j}\)</span>. It is important that you take these two scalars to be potentially different, so give them different names like <span class="math inline">\(\lambda\)</span> (‘lambda’) and <span class="math inline">\(\mu\)</span> (‘mu’). So <span class="math display">\[7\mathbf{i} + 19 \mathbf{j} = \lambda \mathbf{u} + \mu \mathbf{v}\]</span> Since <span class="math inline">\(\mathbf{u} = 4\mathbf{i} + 3\mathbf{j}\)</span> and <span class="math inline">\(\mathbf{v} = -\mathbf{i} + 2\mathbf{j}\)</span>, this becomes <span class="math display">\[7\mathbf{i} + 19 \mathbf{j} = (4\lambda \mathbf{i} + 3\lambda\mathbf{j}) + (-\mu\mathbf{i} + 2\mu\mathbf{j})\]</span> These two vectors are equal if and only if their components are equal. Therefore, this gives two simultaneous equations <span class="math display">\[\begin{align*}
+7 &amp;= 4\lambda - \mu \tag{\textsf{$\mathbf{i}$ component}}\\
+19 &amp;= 3\lambda + 2\mu \tag{\textsf{$\mathbf{j}$ component}}
+\end{align*}\]</span> Solving these equations (see [Guide: Solving simultaneous equations] for more) gives <span class="math inline">\(\lambda = 3\)</span> and <span class="math inline">\(\mu = 5\)</span>, and so <span class="math display">\[7\mathbf{i} + 19\mathbf{j} = 3\mathbf{u} + 5\mathbf{v}.\]</span></p>
+</div>
+</div>
+<!-- The third of these involves defining straight lines using vectors: see [Guide: Vector equation of a line] for more. -->
+</section>
+</section>
+<section id="quick-check-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Quick check problems</h1>
+<!-- add facility for webexercises to work on html -->
+<!-- add facility to check answers at end rather than one at a time -->
+<div class="webex-check webex-box">
+<ol type="1">
+<li>If <span class="math inline">\(\mathbf{a} = \begin{pmatrix}0\\-6\\2\end{pmatrix}\)</span>, then what is <span class="math inline">\(7\mathbf{a}\)</span>?</li>
+</ol>
+<p>Answer: <span class="math inline">\(7\mathbf{a}\)</span> is equal to <input class="webex-solveme nospaces" size="1" data-answer="[&quot;0&quot;]"><span class="math inline">\(\mathbf{i}\)</span> + <input class="webex-solveme nospaces" size="3" data-answer="[&quot;-42&quot;]"><span class="math inline">\(\mathbf{j}\)</span> + <input class="webex-solveme nospaces" size="2" data-answer="[&quot;14&quot;]"><span class="math inline">\(\mathbf{k}\)</span>.</p>
+<ol start="2" type="1">
+<li>If <span class="math inline">\(\mathbf{b} = 2\mathbf{i} + 6\mathbf{k}\)</span> and <span class="math inline">\(\mathbf{c} = -5\mathbf{i} + 3\mathbf{j} + 2\mathbf{k}\)</span>, then what is <span class="math inline">\(\mathbf{c} + 2\mathbf{b}\)</span>?</li>
+</ol>
+<p>Answer: <span class="math inline">\(\mathbf{c} + 2\mathbf{b}\)</span> = <input class="webex-solveme nospaces" size="2" data-answer="[&quot;-1&quot;]"><span class="math inline">\(\mathbf{i}\)</span> + <input class="webex-solveme nospaces" size="2" data-answer="[&quot;-3&quot;]"><span class="math inline">\(\mathbf{j}\)</span> + <input class="webex-solveme nospaces" size="2" data-answer="[&quot;14&quot;]"><span class="math inline">\(\mathbf{k}\)</span>.</p>
+<ol start="3" type="1">
+<li>Given that the coordinates <span class="math inline">\(A = \begin{pmatrix}2\\-1\\4\end{pmatrix}\)</span> and <span class="math inline">\(B = \begin{pmatrix}3\\-3\\-6\end{pmatrix}\)</span>, what is the vector <span class="math inline">\(\overrightarrow{AB}\)</span>?</li>
+</ol>
+<p>Answer: <input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"><span class="math inline">\(\mathbf{i}\)</span> + <input class="webex-solveme nospaces" size="2" data-answer="[&quot;-2&quot;]"><span class="math inline">\(\mathbf{j}\)</span> + <input class="webex-solveme nospaces" size="2" data-answer="[&quot;-2&quot;]"><span class="math inline">\(\mathbf{k}\)</span>.</p>
+<ol start="4" type="1">
+<li>You are given three statements below. Decide whether they are true or false.</li>
+</ol>
+<ol type="a">
+<li><p>If <span class="math inline">\(\overrightarrow{AB} = 2\mathbf{BC}\)</span>, the two vectors are perpendicular. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p>If <span class="math inline">\(12\mathbf{a} - 4\mathbf{b} = 8\mathbf{c}\)</span>, then <span class="math inline">\(2\mathbf{c} + \mathbf{b} = 3\mathbf{a}\)</span>. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+<li><p>If <span class="math inline">\(\lambda \mathbf{a} + \mu \mathbf{b} = \mathbf{0}\)</span> and <span class="math inline">\(\mathbf{a}\)</span> and <span class="math inline">\(\mathbf{b}\)</span> are parallel non-zero vectors, then <span class="math inline">\(\lambda = \mu = 0\)</span> is the only solution to this vector equation. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+</ol>
+</div>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../questions/qs-addandsm.html">For more questions on the subject, please go to Questions: Vector addition and scalar multiplication.</a></p>
+<p>To explore more about vectors, including when two vectors are perpendicular, please see <a href="../studyguides/scalarproduct.html">Guide: The scalar product</a>.</p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 08/23 by Renee Knapp and Kin Wang Pang as part of a University of St Andrews STEP project.</p>
+<ul>
+<li>v1.1: edited 05/24 by tdhc.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="tdhc153/starmast" data-repo-id="R_kgDOJhaqiA" data-category="General" data-category-id="DIC_kwDOJhaqiM4CWZev" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

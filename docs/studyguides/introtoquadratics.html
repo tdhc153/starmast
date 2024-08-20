@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tom Coleman">
+
+<title>STARMAST - Introduction to quadratic equations</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html" rel="" target="">
+ <span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../studyguidelist.html" rel="" target="">
+ <span class="menu-text">Study guides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../qalist.html" rel="" target="">
+ <span class="menu-text">Questions and answers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fslist.html" rel="" target="">
+ <span class="menu-text">Fact sheets</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pslist.html" rel="" target="">
+ <span class="menu-text">Proof sheets</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-a-quadratic-equation" id="toc-what-is-a-quadratic-equation" class="nav-link active" data-scroll-target="#what-is-a-quadratic-equation">What is a quadratic equation?</a></li>
+  <li><a href="#solving-a-quadratic-equation" id="toc-solving-a-quadratic-equation" class="nav-link" data-scroll-target="#solving-a-quadratic-equation">Solving a quadratic equation</a></li>
+  <li><a href="#the-discriminant" id="toc-the-discriminant" class="nav-link" data-scroll-target="#the-discriminant">The discriminant</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="introtoquadratics.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="introtoquadratics.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to quadratic equations</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Algebra</div>
+    <div class="quarto-category">Solving equations</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tom Coleman </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Summary</div>
+    Solving quadratic equations of the form <span class="math inline">\(ax^2 + bx + c\)</span> is a core skill in mathematics. Identifying variables and coefficients of quadratic equations, as well as finding the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span>, are essential steps in solving quadratic equations.
+  </div>
+</div>
+
+</header>
+
+<p><em>Before reading this guide, it is recommended that you read (Guide: Introduction to complex numbers).</em></p>
+<section id="what-is-a-quadratic-equation" class="level1 unnumbered">
+<h1 class="unnumbered">What is a quadratic equation?</h1>
+<p>One of the most important types of an equation are <strong>quadratic equations</strong>; very generally speaking, these are equations that contain a squared term. These appear almost everywhere in mathematics, from modelling projectile motion in mechanics to describing circles, ellipses, parabolas and hyperbolas in 2D space. It is therefore crucial to be able to identify and solve quadratic equations.</p>
+<p>This guide will focus on quadratic equations in one variable, explain the shape of their graphs, and shows how to identify the variable and the coefficients of the equation. Then, the discriminant is defined, and the role of the discriminant in determining solutions to the quadratic equation is explained.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of quadratic equation, root
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>quadratic equation</strong> is an equation that can be rearranged into the form <span class="math display">\[ax^2 + bx + c = 0\]</span> where <span class="math inline">\(x\)</span> is a variable and <span class="math inline">\(a,b,c\)</span> are real numbers with <span class="math inline">\(a \neq 0\)</span>.</p>
+<p>Values of <span class="math inline">\(x\)</span> that satisfy the equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> are known as <strong>roots</strong> of the equation. Typically, roots of a quadratic are expressed in the form of the variable. So here, the roots of <span class="math inline">\(ax^2 + bx + c = 0\)</span> are ‘roots in <span class="math inline">\(x\)</span>’.</p>
+</div>
+</div>
+<p>Here, <span class="math inline">\(a\neq 0\)</span> as if it was, then the equation would no longer be a quadratic equation!</p>
+<p>The general shape of a quadratic equation is known as a <strong>parabola</strong>. A figure of two parabolas is given in <a href="#fig-1">Figure&nbsp;1</a>; the left hand graph is if <span class="math inline">\(a &gt; 0\)</span>, whereas the right hand graph is when <span class="math inline">\(a &lt; 0\)</span>.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoquadratics-fig1-1.png" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively."></p>
+<figcaption class="figure-caption">Figure&nbsp;1: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span>.</figcaption>
+</figure>
+</div>
+<p>It is very important to be able to identify the variable in a quadratic equation, as well as the coefficients <span class="math inline">\(a,b,c\)</span>. In the course of your mathematical study, it may be that the variable of a quadratic equation is not only letters like <span class="math inline">\(x,y,z\)</span>, but squares or cubes like <span class="math inline">\(x^2\)</span> and <span class="math inline">\(y^3\)</span>, or even functions like <span class="math inline">\(e^x\)</span>, <span class="math inline">\(\cos(x)\)</span>, and <span class="math inline">\(\sin(y)\)</span>.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given the quadratic equation <span class="math inline">\(2x^2 + 4x - 8 = 0\)</span>. The variable of the quadratic equation is <span class="math inline">\(x\)</span>, and the coefficients are <span class="math inline">\(a = 2, b = 4, c = -8\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here, the equation <span class="math inline">\(y^4 - 10y^2 + 25 = 0\)</span> may look like a quartic equation, but it is actually a quadratic equation. Using the laws of indices, you can rewrite the equation as <span class="math inline">\((y^2)^2 - 10y^2 + 25 = 0\)</span>. Therefore, the variable of the quadratic equation is <span class="math inline">\(y^2\)</span>, and the coefficients are <span class="math inline">\(a = 1\)</span>, <span class="math inline">\(b = -10\)</span>, <span class="math inline">\(c = 25\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given the equation <span class="math inline">\(-e^{2x} + 4e^{x} - 5 = 0\)</span>. Using the laws of indices, you can rewrite the equation as <span class="math inline">\(-(e^{x})^2 + 4e^x - 5 = 0\)</span>. The variable of the quadratic equation is <span class="math inline">\(e^x\)</span>, and the coefficients are <span class="math inline">\(a = -1\)</span>, <span class="math inline">\(b = 4\)</span>, <span class="math inline">\(c = -5\)</span>. This is not the only solution to the coefficients; since the right-hand side is equal to <span class="math inline">\(0\)</span>, you can multiply the equation through by <span class="math inline">\(-1\)</span> to get <span class="math inline">\((e^{x})^2 - 4e^x + 5 = 0\)</span>, which gives <span class="math inline">\(a = 1\)</span>, <span class="math inline">\(b = -4\)</span> and <span class="math inline">\(c = 5\)</span>. Both solutions are equally valid.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given the equation <span class="math inline">\(t+1 = \frac{4}{t-3}\)</span>. This really is a quadratic equation! You can multiply both sides by <span class="math inline">\(x - 3\)</span> to get <span class="math display">\[(t+1)(t+3) = 4\]</span> You can then expand the brackets to get <span class="math display">\[t^2 + t + 3t + 3 = 4\]</span> and so <span class="math inline">\(t^2 + 4t + 3 = 4\)</span>. Finally, you are able to subtract <span class="math inline">\(4\)</span> from both sides to get <span class="math inline">\(t^2 + 4t - 1 = 0\)</span>. It follows that the variable of the quadratic equation is <span class="math inline">\(t\)</span>, and the coefficients are <span class="math inline">\(a = 1\)</span>, <span class="math inline">\(b = 4\)</span>, <span class="math inline">\(c = -1\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="solving-a-quadratic-equation" class="level1">
+<h1>Solving a quadratic equation</h1>
+<p>To solve the quadratic equation, you could use one of three methods:</p>
+<ul>
+<li><p>You could <strong>factorise</strong> the quadratic equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> into linear equations <span class="math inline">\((mx + n)(px + q)\)</span>, then work out the roots when each of these linear equations is zero. See (Guide: Factorisation) for more.</p></li>
+<li><p>You could <strong>complete the square</strong> in order to reduce the quadratic equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> into the form <span class="math inline">\((x + b/2a)^2 = d\)</span>, and then solve from there (not forgetting the negative root). See (Guide: Completing the square) for more.</p></li>
+<li><p>You could <strong>use the quadratic formula</strong>; for a quadratic equation <span class="math inline">\(ax^2 + bx + c = 0\)</span>, the two roots to the quadratic equation are given by <span class="math display">\[x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.\]</span></p></li>
+</ul>
+<p>Each method is equally valid, but some may involve more work than others. It is up to you to decide which method is best for each quadratic you encounter; but it is thoroughly recommended that if you are not sure which method is best, then the quadratic formula is the one to choose. See <a href="../studyguides/quadraticformula.html">Guide: Using the quadratic formula</a> for more.</p>
+</section>
+<section id="the-discriminant" class="level1">
+<h1>The discriminant</h1>
+<p>What the roots of the quadratic formula look like are determined by the term <span class="math inline">\(b^2 - 4ac\)</span>; this term has a special name.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The discriminant
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The term <span class="math inline">\(D = b^2 - 4ac\)</span> is known as the <strong>discriminant</strong> of the quadratic equation <span class="math inline">\(ax^2 + bx + c = 0\)</span>.</p>
+</div>
+</div>
+<p>There are then three separate cases for solutions to quadratic equations.</p>
+<ul>
+<li>If <span class="math inline">\(D = b^2 - 4ac\)</span> is positive, then <span class="math inline">\(\sqrt{D}\)</span> is a real number and the two roots of the quadratic equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> are <span class="math display">\[x = \frac{-b + \sqrt{D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - \sqrt{D}}{2a}\]</span> These two roots are both real numbers and distinct from each other. You can observe this behaviour on a graph in <a href="#fig-2">Figure&nbsp;2</a>; the parabola crosses the <span class="math inline">\(x\)</span>-axis in two places.</li>
+</ul>
+<div id="fig-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoquadratics-fig2-2.png" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image."></p>
+<figcaption class="figure-caption">Figure&nbsp;2: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>.</figcaption>
+</figure>
+</div>
+<ul>
+<li>If <span class="math inline">\(D = b^2 - 4ac = 0\)</span> is zero, then <span class="math inline">\(\sqrt{D} = 0\)</span>. In this case, the two roots of the quadratic equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> are <span class="math display">\[x = \frac{-b}{2a} \qquad\textsf{ and }\qquad x = \frac{-b}{2a}\]</span> These two roots are given by the same real number. To be sure that you express both roots, you can write ‘<span class="math inline">\(x = -b/2a\)</span> twice’. You can observe this behaviour on a graph in <a href="#fig-3">Figure&nbsp;3</a>; the parabola touches the <span class="math inline">\(x\)</span>-axis in exactly one place.</li>
+</ul>
+<div id="fig-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoquadratics-fig3-3.png" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and touches the $x$-axis in precisely one place. The parabola on the right looks like an n, and touches the $x$-axis in precisely one place. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D=0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image."></p>
+<figcaption class="figure-caption">Figure&nbsp;3: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D = 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D = 0\)</span>.</figcaption>
+</figure>
+</div>
+<ul>
+<li>If <span class="math inline">\(D = b^2 - 4ac\)</span> is negative, then <span class="math inline">\(\sqrt{D}\)</span> is not a real number. In this case, the two roots of the quadratic equation are <strong>complex numbers</strong>. You can express the two roots of the quadratic equation by <span class="math display">\[x = \frac{-b + i\sqrt{-D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - i\sqrt{-D}}{2a}\]</span> where <span class="math inline">\(i\)</span> is the imaginary unit (so <span class="math inline">\(i^2 = -1\)</span>; see (Guide: Introduction to complex numbers)). In a graph, the parabola does not cross the <span class="math inline">\(x\)</span>-axis at all; this indicates that there are no real solutions to this quadratic equation. See <a href="#fig-4">Figure&nbsp;4</a> for a picture.</li>
+</ul>
+<div id="fig-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoquadratics-fig4-4.png" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and lies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image."></p>
+<figcaption class="figure-caption">Figure&nbsp;4: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D &lt; 0\)</span>.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can use the discriminant to check how many roots a quadratic equation has in the variable given to you. However, this is at most a maximum number of solutions. Conditions on that variable may also reduce the number of valid solutions, particularly if you have real valued functions. For instance, since <span class="math inline">\(e^x &gt; 0\)</span> for all real number <span class="math inline">\(x\)</span>, there are no solutions in <span class="math inline">\(x\)</span> if you find <span class="math inline">\(e^x = -1\)</span>.</p>
+</div>
+</div>
+<p>Here’s some examples of using the discriminant and known properties of functions to rule out solutions.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In Example 1, you identified the coefficients of <span class="math inline">\(2x^2 + 4x - 8 = 0\)</span> as <span class="math inline">\(a = 2, b = 4, c = -8\)</span>. Using these, you can work out the value of the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span> as <span class="math display">\[D = (4)^2 - 4(2)(-8) = 16 + 64 = 80.\]</span> Since <span class="math inline">\(D = 80\)</span>, you can say that this quadratic equation has two distinct real roots in <span class="math inline">\(x = r_1\)</span> and <span class="math inline">\(x = r_2\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In Example 2, you identified the coefficients of <span class="math inline">\(y^4 - 10y^2 + 25 = 0\)</span> as <span class="math inline">\(a = 1, b = -10, c = 25\)</span>, and the variable as <span class="math inline">\(y^2\)</span>. Using these, you can work out the value of the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span> as <span class="math display">\[D = (-10)^2 - 4(1)(25) = 100 - 100 = 0.\]</span> Since <span class="math inline">\(D = 0\)</span>, you can say that this quadratic equation has at most one real root <span class="math inline">\(r\)</span> in terms of <span class="math inline">\(y^2\)</span>.</p>
+<p>Whether or not the equation itself has real solutions in <span class="math inline">\(y\)</span> depends on whether <span class="math inline">\(r\)</span> is positive or negative! You cannot take the square root of a negative number, so if <span class="math inline">\(r\)</span> is negative the equation has no real solutions. If <span class="math inline">\(r\)</span> is positive, then the equation has two real roots in <span class="math inline">\(y\)</span>; that is, <span class="math inline">\(y = \pm\sqrt{r}\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In Example 3, you identified the coefficients of <span class="math inline">\(-e^{2x} + 4e^{x} - 5 = 0\)</span> as <span class="math inline">\(a = -1, b = 4, c = -5\)</span>, and the variable as <span class="math inline">\(e^{x}\)</span>. Using these, you can work out the value of the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span> as <span class="math display">\[D = (4)^2 - 4(-1)(-5) = 16 - 20 = -4.\]</span> Since <span class="math inline">\(D = -4\)</span>, you can say that this quadratic equation has complex roots.</p>
+<p>This equation therefore has no real solutions in <span class="math inline">\(x\)</span>. This is because <span class="math inline">\(e^x\)</span> is real for any real <span class="math inline">\(x\)</span>; if <span class="math inline">\(e^x\)</span> is complex, it follows that <span class="math inline">\(x\)</span> cannot be real.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In Example 4, you rearranged the equation <span class="math inline">\(t+1 = \frac{4}{t-3}\)</span> to <span class="math inline">\(t^2 + 4t - 1 = 0\)</span>, and therefore identified the coefficients as <span class="math inline">\(a = 1, b = 4, c = -1\)</span>, and the variable as <span class="math inline">\(t\)</span>. Using these, you can work out the value of the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span> as <span class="math display">\[D = (4)^2 - 4(1)(-1) = 16 + 4 = 20.\]</span> Since <span class="math inline">\(D = 20\)</span>, you can say that this quadratic equation has two distinct real roots in <span class="math inline">\(t\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="quick-check-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Quick check problems</h1>
+<!-- add facility for webexercises to work on html -->
+<!-- add facility to check answers at end rather than one at a time -->
+<div class="webex-check webex-box">
+<ol type="1">
+<li>What is the discriminant of the quadratic equation <span class="math inline">\(x^2 - x - 1 = 0\)</span>?</li>
+</ol>
+<p>Answer: The discriminant <span class="math inline">\(D\)</span> is equal to <input class="webex-solveme nospaces" size="1" data-answer="[&quot;5&quot;]">.</p>
+<ol start="2" type="1">
+<li>You are given the quadratic equation <span class="math inline">\(4h^2 - h + 101 = 0\)</span>. Identify the variable, and the coefficients <span class="math inline">\(a,b,c\)</span>.</li>
+</ol>
+<p>Answer: The variable is <input class="webex-solveme nospaces" size="1" data-answer="[&quot;h&quot;]">, and the coefficients are <span class="math inline">\(a=\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]">, <span class="math inline">\(b=\)</span> <input class="webex-solveme nospaces" size="2" data-answer="[&quot;-1&quot;]">, and <span class="math inline">\(c=\)</span> <input class="webex-solveme nospaces" size="3" data-answer="[&quot;101&quot;]">.</p>
+<ol start="3" type="1">
+<li>You are given three statements below. Decide whether they are true or false.</li>
+</ol>
+<ol type="a">
+<li><p>The quadratic equation <span class="math inline">\(m^2 + 4m + 4 = 0\)</span> has two distinct real roots. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p>The quadratic equation <span class="math inline">\(m^2 - 4m - 4 = 0\)</span> has exactly one real root. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p>The quadratic equation <span class="math inline">\(4m^2 + 4m + 4 = 0\)</span> has no real roots. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+</ol>
+</div>
+<p><a href="../questions/qs-introtoquadratics.html">For more questions on the subject, please go to Questions: Introduction to quadratic equations.</a></p>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../studyguides/quadraticformula.html">For a way to solve quadratic equations, please see Guide: Using the quadratic formula.</a></p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 06/23 by tdhc.</p>
+<ul>
+<li>v1.1: edited 04/24 by tdhc.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="tdhc153/starmast" data-repo-id="R_kgDOJhaqiA" data-category="General" data-category-id="DIC_kwDOJhaqiM4CWZev" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
