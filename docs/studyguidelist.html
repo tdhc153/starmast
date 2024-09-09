@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>STARMAST - List of study guides</title>
+<title>List of study guides – STARMAST</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -51,7 +51,12 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -60,8 +65,10 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -115,6 +122,8 @@ cookieconsent.run({
   "preferences_center_close_button_hide":false,
   "website_name":"",
 "website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
   });
 });
 </script> 
@@ -126,8 +135,35 @@ cookieconsent.run({
   });
 </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="webexfiles/webex.css">
 </head>
@@ -136,49 +172,50 @@ cookieconsent.run({
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">STARMAST</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./fullindex.html" rel="" target="">
- <span class="menu-text">Index</span></a>
+    <a class="nav-link" href="./fullindex.html"> 
+<span class="menu-text">Index</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./studyguidelist.html" rel="" target="" aria-current="page">
- <span class="menu-text">Study guides</span></a>
+    <a class="nav-link active" href="./studyguidelist.html" aria-current="page"> 
+<span class="menu-text">Study guides</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./qalist.html" rel="" target="">
- <span class="menu-text">Questions and answers</span></a>
+    <a class="nav-link" href="./qalist.html"> 
+<span class="menu-text">Questions and answers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./fslist.html" rel="" target="">
- <span class="menu-text">Fact sheets</span></a>
+    <a class="nav-link" href="./fslist.html"> 
+<span class="menu-text">Fact sheets</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./pslist.html" rel="" target="">
- <span class="menu-text">Proof sheets</span></a>
+    <a class="nav-link" href="./pslist.html"> 
+<span class="menu-text">Proof sheets</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
@@ -186,9 +223,11 @@ cookieconsent.run({
   </div>
 </a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
+  <div id="quarto-announcement" data-announcement-id="848e20a5e8c14ee65f7e727fa16c5b81" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> <a href="../studyguides/completingthesquare.qmd">Guide: Completing the square</a> is now available! (09/09/24)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
@@ -196,7 +235,7 @@ cookieconsent.run({
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(15)</span></div><div class="category" data-category="Algebra">Algebra <span class="quarto-category-count">(7)</span></div><div class="category" data-category="Arithmetic">Arithmetic <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Geometry">Geometry <span class="quarto-category-count">(8)</span></div><div class="category" data-category="Key skills">Key skills <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Linear mathematics">Linear mathematics <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Solving equations">Solving equations <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Trigonometry">Trigonometry <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Vectors">Vectors <span class="quarto-category-count">(3)</span></div></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="studyguidelist.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="studyguidelist.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(16)</span></div><div class="category" data-category="Algebra">Algebra <span class="quarto-category-count">(8)</span></div><div class="category" data-category="Arithmetic">Arithmetic <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Geometry">Geometry <span class="quarto-category-count">(8)</span></div><div class="category" data-category="Key skills">Key skills <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Linear mathematics">Linear mathematics <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Solving equations">Solving equations <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Trigonometry">Trigonometry <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Vectors">Vectors <span class="quarto-category-count">(3)</span></div></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="studyguidelist.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="studyguidelist.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -215,7 +254,9 @@ cookieconsent.run({
   </div>
   
 
+
 </header>
+
 
 
 
@@ -223,19 +264,55 @@ cookieconsent.run({
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1724235720433" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="0" data-categories="Algebra,Solving equations,Key skills" data-listing-file-modified-sort="1725882645292" data-listing-reading-time-sort="17" data-listing-word-count-sort="3291">
 <div class="thumbnail">
-<p><a href="./studyguides/logarithms.html"> <img src="./studyguides/FiguresPNG/logarithms-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/completingthesquare.html" class="no-external"></a></p><a href="./studyguides/completingthesquare.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/completingthesquare-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/completingthesquare.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/logarithms.html">
 <h3 class="no-anchor listing-title">
-Introduction to logarithms
+<a href="./studyguides/completingthesquare.html" class="no-external">Completing the square</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/completingthesquare.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Algebra'); return false;">
+Algebra
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Solving equations'); return false;">
+Solving equations
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Key skills'); return false;">
+Key skills
+</div>
+</div>
+<div class="listing-description">
+<a href="./studyguides/completingthesquare.html" class="no-external">Completing the square is an important technique to learn for dealing with quadratic expressions in a variety of places. It can help you solve quadratic equations, accurately sketch graphs of conic sections, and is widely used in integral calculus.</a>
+</div>
+</div>
+<div class="metadata">
+<p><a href="./studyguides/completingthesquare.html" class="no-external"></a></p><a href="./studyguides/completingthesquare.html" class="no-external">
+<div class="listing-author">
+Tom Coleman
 </div>
 </a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1724235720433" data-listing-reading-time-sort="9" data-listing-word-count-sort="1654">
+<div class="thumbnail">
+<p><a href="./studyguides/logarithms.html" class="no-external"></a></p><a href="./studyguides/logarithms.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/logarithms-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/logarithms.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./studyguides/logarithms.html" class="no-external">Introduction to logarithms</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./studyguides/logarithms.html" class="no-external"></a>
+</div>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Key skills'); return false;">
 Key skills
@@ -244,33 +321,31 @@ Key skills
 Algebra
 </div>
 </div>
-<a href="./studyguides/logarithms.html">
 <div class="listing-description">
-<p>Using logarithms to help understand large numbers is a fundamental skill when working in mathematics. Understanding the laws of logarithms, working with the natural logarithm and learning how to change the base of a logarithm are key in mastering their functionality.</p>
+<a href="./studyguides/logarithms.html" class="no-external">Using logarithms to help understand large numbers is a fundamental skill when working in mathematics. Understanding the laws of logarithms, working with the natural logarithm and learning how to change the base of a logarithm are key in mastering their functionality.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/logarithms.html">
+<p><a href="./studyguides/logarithms.html" class="no-external"></a></p><a href="./studyguides/logarithms.html" class="no-external">
 <div class="listing-author">
 Ritwik Anand
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Algebra,Solving equations" data-listing-file-modified-sort="1724235577239" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="2" data-categories="Algebra,Solving equations" data-listing-file-modified-sort="1725546275098" data-listing-reading-time-sort="15" data-listing-word-count-sort="2815">
 <div class="thumbnail">
-<p><a href="./studyguides/introtoquadratics.html"> <img src="./studyguides/FiguresPNG/introtoquadratics-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/introtoquadratics.html" class="no-external"></a></p><a href="./studyguides/introtoquadratics.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/introtoquadratics-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/introtoquadratics.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/introtoquadratics.html">
 <h3 class="no-anchor listing-title">
-Introduction to quadratic equations
+<a href="./studyguides/introtoquadratics.html" class="no-external">Introduction to quadratic equations</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/introtoquadratics.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Algebra'); return false;">
 Algebra
@@ -279,33 +354,31 @@ Algebra
 Solving equations
 </div>
 </div>
-<a href="./studyguides/introtoquadratics.html">
 <div class="listing-description">
-<p>Solving quadratic equations of the form <span class="math inline">\(ax^2 + bx + c\)</span> is a core skill in mathematics. Identifying variables and coefficients of quadratic equations, as well as finding the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span>, are essential steps in solving quadratic equations.</p>
+<a href="./studyguides/introtoquadratics.html" class="no-external">Solving quadratic equations of the form <span class="math inline">\(ax^2 + bx + c\)</span> is a core skill in mathematics. Identifying variables and coefficients of quadratic equations, as well as finding the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span>, are essential steps in solving quadratic equations.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/introtoquadratics.html">
+<p><a href="./studyguides/introtoquadratics.html" class="no-external"></a></p><a href="./studyguides/introtoquadratics.html" class="no-external">
 <div class="listing-author">
 Tom Coleman
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724235824031" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="3" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724235824031" data-listing-reading-time-sort="9" data-listing-word-count-sort="1655">
 <div class="thumbnail">
-<p><a href="./studyguides/radians.html"> <img src="./studyguides/FiguresPNG/radians-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/radians.html" class="no-external"></a></p><a href="./studyguides/radians.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/radians-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/radians.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/radians.html">
 <h3 class="no-anchor listing-title">
-Introduction to radians
+<a href="./studyguides/radians.html" class="no-external">Introduction to radians</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/radians.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;">
 Geometry
@@ -314,33 +387,31 @@ Geometry
 Trigonometry
 </div>
 </div>
-<a href="./studyguides/radians.html">
 <div class="listing-description">
-<p>Radians are an important concept to understand in mathematics. They are used instead of degrees in areas like calculus and trigonometry, and so becoming comfortable converting between radians and degrees is an important skill. This guide also explains how to find lengths of circular arcs and areas of circular sectors.</p>
+<a href="./studyguides/radians.html" class="no-external">Radians are an important concept to understand in mathematics. They are used instead of degrees in areas like calculus and trigonometry, and so becoming comfortable converting between radians and degrees is an important skill. This guide also explains how to find lengths of circular arcs and areas of circular sectors.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/radians.html">
+<p><a href="./studyguides/radians.html" class="no-external"></a></p><a href="./studyguides/radians.html" class="no-external">
 <div class="listing-author">
 Ifan Howells-Baines, Mark Toner
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1724235609772" data-listing-reading-time-sort="18">
+<div class="quarto-post image-right" data-index="4" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1725438322664" data-listing-reading-time-sort="19" data-listing-word-count-sort="3631">
 <div class="thumbnail">
-<p><a href="./studyguides/introtorearrange.html"> <img src="./studyguides/FiguresPNG/introtorearrange-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/introtorearrange.html" class="no-external"></a></p><a href="./studyguides/introtorearrange.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/introtorearrange-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/introtorearrange.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/introtorearrange.html">
 <h3 class="no-anchor listing-title">
-Introduction to rearranging equations
+<a href="./studyguides/introtorearrange.html" class="no-external">Introduction to rearranging equations</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/introtorearrange.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Key skills'); return false;">
 Key skills
@@ -349,33 +420,31 @@ Key skills
 Algebra
 </div>
 </div>
-<a href="./studyguides/introtorearrange.html">
 <div class="listing-description">
-<p>Being able to rearrange equations is a crucial skill in mathematics as it can help us to simplify problems and better understand the relationships between variables. This will guide introduce the concept and take you through how to undo common operations like addition, multiplication, and powers.</p>
+<a href="./studyguides/introtorearrange.html" class="no-external">Being able to rearrange equations is a crucial skill in mathematics as it can help us to simplify problems and better understand the relationships between variables. This will guide introduce the concept and take you through how to undo common operations like addition, multiplication, and powers.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/introtorearrange.html">
+<p><a href="./studyguides/introtorearrange.html" class="no-external"></a></p><a href="./studyguides/introtorearrange.html" class="no-external">
 <div class="listing-author">
 Shanelle Advani, Ciara Cormican
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="Arithmetic,Algebra,Key skills" data-listing-file-modified-sort="1724236327943" data-listing-reading-time-sort="10">
+<div class="quarto-post image-right" data-index="5" data-categories="Arithmetic,Algebra,Key skills" data-listing-file-modified-sort="1724236327943" data-listing-reading-time-sort="10" data-listing-word-count-sort="1984">
 <div class="thumbnail">
-<p><a href="./studyguides/sigmanotation.html"> <img src="./studyguides/FiguresPNG/sigmanotation-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/sigmanotation.html" class="no-external"></a></p><a href="./studyguides/sigmanotation.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/sigmanotation-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/sigmanotation.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/sigmanotation.html">
 <h3 class="no-anchor listing-title">
-Introduction to sigma notation
+<a href="./studyguides/sigmanotation.html" class="no-external">Introduction to sigma notation</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/sigmanotation.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Arithmetic'); return false;">
 Arithmetic
@@ -387,33 +456,31 @@ Algebra
 Key skills
 </div>
 </div>
-<a href="./studyguides/sigmanotation.html">
 <div class="listing-description">
-<p>Sigma notation is used to express many additions at once. Understanding what this notation is, how it works, and how to manipulate them is a valuable skill to learn for use in almost any area of mathematics.</p>
+<a href="./studyguides/sigmanotation.html" class="no-external">Sigma notation is used to express many additions at once. Understanding what this notation is, how it works, and how to manipulate them is a valuable skill to learn for use in almost any area of mathematics.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/sigmanotation.html">
+<p><a href="./studyguides/sigmanotation.html" class="no-external"></a></p><a href="./studyguides/sigmanotation.html" class="no-external">
 <div class="listing-author">
 Tom Coleman, Ifan Howells-Baines, Mark Toner
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="Geometry,Vectors,Linear mathematics" data-listing-file-modified-sort="1724235541218" data-listing-reading-time-sort="17">
+<div class="quarto-post image-right" data-index="6" data-categories="Geometry,Vectors,Linear mathematics" data-listing-file-modified-sort="1724235541218" data-listing-reading-time-sort="17" data-listing-word-count-sort="3359">
 <div class="thumbnail">
-<p><a href="./studyguides/introductiontovectors.html"> <img src="./studyguides/FiguresPNG/introductiontovectors-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/introductiontovectors.html" class="no-external"></a></p><a href="./studyguides/introductiontovectors.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/introductiontovectors-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/introductiontovectors.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/introductiontovectors.html">
 <h3 class="no-anchor listing-title">
-Introduction to vectors
+<a href="./studyguides/introductiontovectors.html" class="no-external">Introduction to vectors</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/introductiontovectors.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;">
 Geometry
@@ -425,33 +492,31 @@ Vectors
 Linear mathematics
 </div>
 </div>
-<a href="./studyguides/introductiontovectors.html">
 <div class="listing-description">
-<p>Quantities expressing both a magnitude and a direction are called vectors. Vectors are used in various disciplines and have a wide range of real-life applications.</p>
+<a href="./studyguides/introductiontovectors.html" class="no-external">Quantities expressing both a magnitude and a direction are called vectors. Vectors are used in various disciplines and have a wide range of real-life applications.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/introductiontovectors.html">
+<p><a href="./studyguides/introductiontovectors.html" class="no-external"></a></p><a href="./studyguides/introductiontovectors.html" class="no-external">
 <div class="listing-author">
 Akshat Srivastava
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1724235696097" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="7" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1724235696097" data-listing-reading-time-sort="9" data-listing-word-count-sort="1793">
 <div class="thumbnail">
-<p><a href="./studyguides/lawsofindices.html"> <img src="./studyguides/FiguresPNG/lawsofindices-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/lawsofindices.html" class="no-external"></a></p><a href="./studyguides/lawsofindices.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/lawsofindices-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/lawsofindices.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/lawsofindices.html">
 <h3 class="no-anchor listing-title">
-Laws of indices
+<a href="./studyguides/lawsofindices.html" class="no-external">Laws of indices</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/lawsofindices.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Key skills'); return false;">
 Key skills
@@ -460,33 +525,31 @@ Key skills
 Algebra
 </div>
 </div>
-<a href="./studyguides/lawsofindices.html">
 <div class="listing-description">
-<p>In mathematics, a knowledge of indices is important for an understanding of algebraic processes. The laws of indices enable expressions involving powers to be manipulated more efficiently than writing them out in full.</p>
+<a href="./studyguides/lawsofindices.html" class="no-external">In mathematics, a knowledge of indices is important for an understanding of algebraic processes. The laws of indices enable expressions involving powers to be manipulated more efficiently than writing them out in full.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/lawsofindices.html">
+<p><a href="./studyguides/lawsofindices.html" class="no-external"></a></p><a href="./studyguides/lawsofindices.html" class="no-external">
 <div class="listing-author">
 Zheng Chen, Zoe Gemmell
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="Solving equations,Algebra" data-listing-file-modified-sort="1724236387530" data-listing-reading-time-sort="10">
+<div class="quarto-post image-right" data-index="8" data-categories="Solving equations,Algebra" data-listing-file-modified-sort="1724236387530" data-listing-reading-time-sort="10" data-listing-word-count-sort="1925">
 <div class="thumbnail">
-<p><a href="./studyguides/solvingeqsindices.html"> <img src="./studyguides/FiguresPNG/solvingeqsindices-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/solvingeqsindices.html" class="no-external"></a></p><a href="./studyguides/solvingeqsindices.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/solvingeqsindices-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/solvingeqsindices.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/solvingeqsindices.html">
 <h3 class="no-anchor listing-title">
-Solving exponential equations
+<a href="./studyguides/solvingeqsindices.html" class="no-external">Solving exponential equations</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/solvingeqsindices.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Solving equations'); return false;">
 Solving equations
@@ -495,33 +558,31 @@ Solving equations
 Algebra
 </div>
 </div>
-<a href="./studyguides/solvingeqsindices.html">
 <div class="listing-description">
-<p>This guide applies the laws of indices to solve equations involving powers; a key skill in mathematics and many areas of science.</p>
+<a href="./studyguides/solvingeqsindices.html" class="no-external">This guide applies the laws of indices to solve equations involving powers; a key skill in mathematics and many areas of science.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/solvingeqsindices.html">
+<p><a href="./studyguides/solvingeqsindices.html" class="no-external"></a></p><a href="./studyguides/solvingeqsindices.html" class="no-external">
 <div class="listing-author">
 Ritwik Anand, Zheng Chen, Zoe Gemmell
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="Geometry,Vectors,Linear mathematics" data-listing-file-modified-sort="1724236180826" data-listing-reading-time-sort="11">
+<div class="quarto-post image-right" data-index="9" data-categories="Geometry,Vectors,Linear mathematics" data-listing-file-modified-sort="1724236180826" data-listing-reading-time-sort="11" data-listing-word-count-sort="2193">
 <div class="thumbnail">
-<p><a href="./studyguides/scalarproduct.html"> <img src="./studyguides/FiguresPNG/scalarproduct-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/scalarproduct.html" class="no-external"></a></p><a href="./studyguides/scalarproduct.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/scalarproduct-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/scalarproduct.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/scalarproduct.html">
 <h3 class="no-anchor listing-title">
-The scalar product
+<a href="./studyguides/scalarproduct.html" class="no-external">The scalar product</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/scalarproduct.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;">
 Geometry
@@ -533,33 +594,31 @@ Vectors
 Linear mathematics
 </div>
 </div>
-<a href="./studyguides/scalarproduct.html">
 <div class="listing-description">
-<p>The scalar product is an important concept in the theory of vectors, with many geometric and algebraic applications.</p>
+<a href="./studyguides/scalarproduct.html" class="no-external">The scalar product is an important concept in the theory of vectors, with many geometric and algebraic applications.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/scalarproduct.html">
+<p><a href="./studyguides/scalarproduct.html" class="no-external"></a></p><a href="./studyguides/scalarproduct.html" class="no-external">
 <div class="listing-author">
 Isabella Lewis
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724237892475" data-listing-reading-time-sort="14">
+<div class="quarto-post image-right" data-index="10" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724237892475" data-listing-reading-time-sort="14" data-listing-word-count-sort="2680">
 <div class="thumbnail">
-<p><a href="./studyguides/trigonometricidentities-degrees.html"> <img src="./studyguides/FiguresPNG/trigidentities-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/trigonometricidentities-degrees.html" class="no-external"></a></p><a href="./studyguides/trigonometricidentities-degrees.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/trigidentities-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/trigonometricidentities-degrees.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/trigonometricidentities-degrees.html">
 <h3 class="no-anchor listing-title">
-Trigonometric identities (degrees)
+<a href="./studyguides/trigonometricidentities-degrees.html" class="no-external">Trigonometric identities (degrees)</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/trigonometricidentities-degrees.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;">
 Geometry
@@ -568,33 +627,31 @@ Geometry
 Trigonometry
 </div>
 </div>
-<a href="./studyguides/trigonometricidentities-degrees.html">
 <div class="listing-description">
-<p>Trigonometric identities are equations expressed in terms of trigonometric functions that hold true for all values of the variable defined. It is important to familiarize yourself with the standard trigonometric identities as they come in handy later whether that be for deriving further trigonometric identities or solving integrals involving trigonometric functions.</p>
+<a href="./studyguides/trigonometricidentities-degrees.html" class="no-external">Trigonometric identities are equations expressed in terms of trigonometric functions that hold true for all values of the variable defined. It is important to familiarize yourself with the standard trigonometric identities as they come in handy later whether that be for deriving further trigonometric identities or solving integrals involving trigonometric functions.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/trigonometricidentities-degrees.html">
+<p><a href="./studyguides/trigonometricidentities-degrees.html" class="no-external"></a></p><a href="./studyguides/trigonometricidentities-degrees.html" class="no-external">
 <div class="listing-author">
 Shanelle Advani, Krish Chaudhary, Dzhemma Ruseva
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724237938872" data-listing-reading-time-sort="14">
+<div class="quarto-post image-right" data-index="11" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724237938872" data-listing-reading-time-sort="14" data-listing-word-count-sort="2696">
 <div class="thumbnail">
-<p><a href="./studyguides/trigonometricidentities-radians.html"> <img src="./studyguides/FiguresPNG/trigidentities-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/trigonometricidentities-radians.html" class="no-external"></a></p><a href="./studyguides/trigonometricidentities-radians.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/trigidentities-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/trigonometricidentities-radians.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/trigonometricidentities-radians.html">
 <h3 class="no-anchor listing-title">
-Trigonometric identities (radians)
+<a href="./studyguides/trigonometricidentities-radians.html" class="no-external">Trigonometric identities (radians)</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/trigonometricidentities-radians.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;">
 Geometry
@@ -603,33 +660,31 @@ Geometry
 Trigonometry
 </div>
 </div>
-<a href="./studyguides/trigonometricidentities-radians.html">
 <div class="listing-description">
-<p>Trigonometric identities are equations expressed in terms of trigonometric functions that hold true for all values of the variable defined. It is important to familiarize yourself with the standard trigonometric identities as they come in handy later whether that be for deriving further trigonometric identities or solving integrals involving trigonometric functions.</p>
+<a href="./studyguides/trigonometricidentities-radians.html" class="no-external">Trigonometric identities are equations expressed in terms of trigonometric functions that hold true for all values of the variable defined. It is important to familiarize yourself with the standard trigonometric identities as they come in handy later whether that be for deriving further trigonometric identities or solving integrals involving trigonometric functions.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/trigonometricidentities-radians.html">
+<p><a href="./studyguides/trigonometricidentities-radians.html" class="no-external"></a></p><a href="./studyguides/trigonometricidentities-radians.html" class="no-external">
 <div class="listing-author">
 Shanelle Advani, Krish Chaudhary, Dzhemma Ruseva
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724238069225" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="12" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724238069225" data-listing-reading-time-sort="15" data-listing-word-count-sort="2919">
 <div class="thumbnail">
-<p><a href="./studyguides/trigonometry-degrees.html"> <img src="./studyguides/FiguresPNG/intrototrig-fig1-1.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/trigonometry-degrees.html" class="no-external"></a></p><a href="./studyguides/trigonometry-degrees.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/intrototrig-fig1-1.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/trigonometry-degrees.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/trigonometry-degrees.html">
 <h3 class="no-anchor listing-title">
-Trigonometry (degrees)
+<a href="./studyguides/trigonometry-degrees.html" class="no-external">Trigonometry (degrees)</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/trigonometry-degrees.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;">
 Geometry
@@ -638,33 +693,31 @@ Geometry
 Trigonometry
 </div>
 </div>
-<a href="./studyguides/trigonometry-degrees.html">
 <div class="listing-description">
-<p>Trigonometric functions are key concepts which will appear frequently throughout your mathematical studies. They have uses in geometry, calculus, mechanics, and much more. This guide uses degrees to measure angles.</p>
+<a href="./studyguides/trigonometry-degrees.html" class="no-external">Trigonometric functions are key concepts which will appear frequently throughout your mathematical studies. They have uses in geometry, calculus, mechanics, and much more. This guide uses degrees to measure angles.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/trigonometry-degrees.html">
+<p><a href="./studyguides/trigonometry-degrees.html" class="no-external"></a></p><a href="./studyguides/trigonometry-degrees.html" class="no-external">
 <div class="listing-author">
 Ciara Cormican, Ellie Gurini, Dzhemma Ruseva
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724238080718" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="13" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724238080718" data-listing-reading-time-sort="15" data-listing-word-count-sort="2921">
 <div class="thumbnail">
-<p><a href="./studyguides/trigonometry-radians.html"> <img src="./studyguides/FiguresPNG/intrototrig-fig1-1.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/trigonometry-radians.html" class="no-external"></a></p><a href="./studyguides/trigonometry-radians.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/intrototrig-fig1-1.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/trigonometry-radians.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/trigonometry-radians.html">
 <h3 class="no-anchor listing-title">
-Trigonometry (radians)
+<a href="./studyguides/trigonometry-radians.html" class="no-external">Trigonometry (radians)</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/trigonometry-radians.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;">
 Geometry
@@ -673,33 +726,31 @@ Geometry
 Trigonometry
 </div>
 </div>
-<a href="./studyguides/trigonometry-radians.html">
 <div class="listing-description">
-<p>Trigonometric functions are key concepts which will appear frequently throughout your mathematical studies. They have uses in geometry, calculus, mechanics, and much more. This guide uses radians to measure angles.</p>
+<a href="./studyguides/trigonometry-radians.html" class="no-external">Trigonometric functions are key concepts which will appear frequently throughout your mathematical studies. They have uses in geometry, calculus, mechanics, and much more. This guide uses radians to measure angles.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/trigonometry-radians.html">
+<p><a href="./studyguides/trigonometry-radians.html" class="no-external"></a></p><a href="./studyguides/trigonometry-radians.html" class="no-external">
 <div class="listing-author">
 Ciara Cormican, Ellie Gurini, Dzhemma Ruseva
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="Solving equations,Algebra" data-listing-file-modified-sort="1724235795908" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="14" data-categories="Solving equations,Algebra" data-listing-file-modified-sort="1725442484391" data-listing-reading-time-sort="10" data-listing-word-count-sort="1966">
 <div class="thumbnail">
-<p><a href="./studyguides/quadraticformula.html"> <img src="./studyguides/FiguresPNG/quadraticformula-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/quadraticformula.html" class="no-external"></a></p><a href="./studyguides/quadraticformula.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/quadraticformula-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/quadraticformula.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/quadraticformula.html">
 <h3 class="no-anchor listing-title">
-Using the quadratic formula
+<a href="./studyguides/quadraticformula.html" class="no-external">Using the quadratic formula</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/quadraticformula.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Solving equations'); return false;">
 Solving equations
@@ -708,33 +759,31 @@ Solving equations
 Algebra
 </div>
 </div>
-<a href="./studyguides/quadraticformula.html">
 <div class="listing-description">
-<p>Solving quadratic equations of the form <span class="math inline">\(ax^2 + bx + c\)</span> is a core skill in mathematics. A guaranteed method to solve these is use of the quadratic formula. This guide explains the terminology and usage of the quadratic formula, as well as an explanation of why the quadratic formula works.</p>
+<a href="./studyguides/quadraticformula.html" class="no-external">Solving quadratic equations of the form <span class="math inline">\(ax^2 + bx + c\)</span> is a core skill in mathematics. A guaranteed method to solve these is use of the quadratic formula. This guide explains the terminology and usage of the quadratic formula, as well as an explanation of why the quadratic formula works.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/quadraticformula.html">
+<p><a href="./studyguides/quadraticformula.html" class="no-external"></a></p><a href="./studyguides/quadraticformula.html" class="no-external">
 <div class="listing-author">
 Tom Coleman
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="Geometry,Vectors,Linear mathematics" data-listing-file-modified-sort="1724235495792" data-listing-reading-time-sort="16">
+<div class="quarto-post image-right" data-index="15" data-categories="Geometry,Vectors,Linear mathematics" data-listing-file-modified-sort="1724235495792" data-listing-reading-time-sort="16" data-listing-word-count-sort="3189">
 <div class="thumbnail">
-<p><a href="./studyguides/addandsm.html"> <img src="./studyguides/FiguresPNG/addandsm-image.png" class="thumbnail-image"> </a></p>
+<p><a href="./studyguides/addandsm.html" class="no-external"></a></p><a href="./studyguides/addandsm.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/addandsm-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/addandsm.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./studyguides/addandsm.html">
 <h3 class="no-anchor listing-title">
-Vector addition and scalar multiplication
+<a href="./studyguides/addandsm.html" class="no-external">Vector addition and scalar multiplication</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./studyguides/addandsm.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;">
 Geometry
@@ -746,14 +795,12 @@ Vectors
 Linear mathematics
 </div>
 </div>
-<a href="./studyguides/addandsm.html">
 <div class="listing-description">
-<p>Understanding and utilising vector addition and scalar multiplication are essential when studying vectors, particularly when it comes to solving equations involving vectors.</p>
+<a href="./studyguides/addandsm.html" class="no-external">Understanding and utilising vector addition and scalar multiplication are essential when studying vectors, particularly when it comes to solving equations involving vectors.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./studyguides/addandsm.html">
+<p><a href="./studyguides/addandsm.html" class="no-external"></a></p><a href="./studyguides/addandsm.html" class="no-external">
 <div class="listing-author">
 Renee Knapp, Kin Wang Pang
 </div>
@@ -1014,6 +1061,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
   }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
   const toggleColorMode = (alternate) => {
     // Switch the stylesheets
     const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
@@ -1080,13 +1154,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'default';
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1121,18 +1197,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1164,11 +1229,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1178,8 +1282,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1191,7 +1304,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1235,6 +1471,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1260,6 +1497,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1321,6 +1584,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <script src="https://giscus.app/client.js" data-repo="tdhc153/starmast" data-repo-id="R_kgDOJhaqiA" data-category="General" data-category-id="DIC_kwDOJhaqiM4CWZev" data-mapping="title" data-reactions-enabled="0" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
 </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="light">
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1330,25 +1595,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
+    <a class="nav-link" href="./about.html">
+<p>About</p>
+</a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="./fullindex.html">Index</a>
+    <a class="nav-link" href="./fullindex.html">
+<p>Index</p>
+</a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="./cookies.html">Cookie policy</a>
+    <a class="nav-link" href="./cookies.html">
+<p>Cookie policy</p>
+</a>
   </li>  
 </ul>
     <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="./license.html">STARMAST © 2024 is licensed under CC BY-NC-SA 4.0.</a>
+    <a class="nav-link" href="./license.html">
+<p>STARMAST © 2024 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
   </li>  
 </ul>
     </div>
   </div>
 </footer>
+
 
 
 
