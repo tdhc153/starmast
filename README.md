@@ -34,9 +34,9 @@ To build the `.pdf` and `.docx` versions of your work, you will need to first **
 
 ## What packages do you need to install?
 
-You should be using Quarto 1.3 (the latest stable version); you can download this at the following link.
+You should be using Quarto 1.5 (the latest stable version); you can download this at the following link.
 
-[Quarto 1.3 download](https://quarto.org/docs/get-started/)
+[Quarto 1.5 download](https://quarto.org/docs/get-started/)
 
 Other than this, running `quarto::quarto_render()` for the first time should prompt installation for the packages that are required to build the files.
 
@@ -70,4 +70,6 @@ Raise as an Issue or post in Discussions. :)
 
 ## Version control
 
-- v1.0 (initial readme commit, 18/05)
+- v1.1 (quarto version change, 12/09/24)
+- v1.0 (initial readme commit, 18/05/23)
+
