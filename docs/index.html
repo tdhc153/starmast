@@ -30,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/cookie-consent/cookie-consent.js"></script>
 <link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -69,6 +71,63 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-contents .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-contents'] = new List('listing-contents', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-gotm .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-gotm'] = new List('listing-gotm', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
 
 <script type="text/plain" cookie-consent="tracking">
@@ -104,6 +163,35 @@ cookieconsent.run({
   });
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="webexfiles/webex.css">
 </head>
@@ -179,9 +267,9 @@ cookieconsent.run({
    
   <ul>
   <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome!</a></li>
+  <li><a href="#guide-of-the-month" id="toc-guide-of-the-month" class="nav-link" data-scroll-target="#guide-of-the-month">Guide of the month</a></li>
   <li><a href="#materials" id="toc-materials" class="nav-link" data-scroll-target="#materials">Materials</a>
   <ul class="collapse">
-  <li><a href="#materials-by-type" id="toc-materials-by-type" class="nav-link" data-scroll-target="#materials-by-type">Materials by type</a></li>
   <li><a href="#other" id="toc-other" class="nav-link" data-scroll-target="#other">Other</a></li>
   </ul></li>
   </ul>
@@ -215,23 +303,259 @@ cookieconsent.run({
 <p>Welcome to STARMAST, an accessible online bank of resources in mathematics (and statistics, eventually) made by University of St Andrews staff and students for any student of mathematics or statistics. Please see our <a href="./about.html">about</a> page if you would like to learn more about the project, or <a href="./contribs.html">our page for contributors</a> if you would like to get involved!</p>
 <p>So far, we have <strong>16</strong> study guides on <strong>14</strong> topics, with <strong>16</strong> question sheets, <strong>16</strong> answer sheets, <strong>2</strong> fact sheets and <strong>2</strong> proof sheets.</p>
 </section>
+<section id="guide-of-the-month" class="level1 unnumbered">
+<h1 class="unnumbered">Guide of the month</h1>
+<div id="listing-gotm" class="quarto-listing quarto-listing-container-default">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="Algebra,Solving equations,Key skills" data-listing-file-modified-sort="1725882645292" data-listing-reading-time-sort="17" data-listing-word-count-sort="3291">
+<div class="thumbnail">
+<p><a href="./studyguides/completingthesquare.html" class="no-external"></a></p><a href="./studyguides/completingthesquare.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/completingthesquare-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/completingthesquare.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title" data-anchor-id="guide-of-the-month">
+<a href="./studyguides/completingthesquare.html" class="no-external">Completing the square</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./studyguides/completingthesquare.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./studyguides/completingthesquare.html" class="no-external">Completing the square is an important technique to learn for dealing with quadratic expressions in a variety of places. It can help you solve quadratic equations, accurately sketch graphs of conic sections, and is widely used in integral calculus.</a>
+</div>
+</div>
+<div class="metadata">
+<p><a href="./studyguides/completingthesquare.html" class="no-external"></a></p><a href="./studyguides/completingthesquare.html" class="no-external">
+<div class="listing-author">
+Tom Coleman
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+</section>
 <section id="materials" class="level1 unnumbered">
 <h1 class="unnumbered">Materials</h1>
+<div id="listing-contents" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1718287922038" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<a href="./fslist.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+List of fact sheets
+</h5>
+<div class="card-text listing-description">
+
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title-sort" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+<th>
+Title
+</th>
+<th>
+Author
+</th>
+</tr>
+</thead>…<tbody class="list"><tr data-index="0" data-listing-file-modified-sort="1724247418533" data-listing-reading-time-sort="2" data-listing-word-count-sort="248" data-listing-title-sort="Factsheet: Greek letters" data-listing-filename-sort="f-greekletters.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="1" data-listing-file-modified-sort="1724247436383" data-listing-reading-time-sort="1" data-listing-word-count-sort="138" data-listing-title-sort="Factsheet: Laws of indices" data-listing-filename-sort="f-lawsofindices.qmd"><td></td><td><span class="listing-author"></span></td></tr></tbody></table><div class="listing-no-matching d-none"></div>
+</div>
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
+
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1718287897543" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<a href="./pslist.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+List of fact sheets
+</h5>
+<div class="card-text listing-description">
+
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title-sort" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+<th>
+Title
+</th>
+<th>
+Author
+</th>
+</tr>
+</thead>…<tbody class="list"><tr data-index="0" data-listing-file-modified-sort="1724663648395" data-listing-reading-time-sort="8" data-listing-word-count-sort="1577" data-listing-title-sort="Proof: Scalar product" data-listing-filename-sort="ps-scalarproduct.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="1" data-listing-file-modified-sort="1725439987727" data-listing-reading-time-sort="2" data-listing-word-count-sort="272" data-listing-title-sort="Proof: the quadratic formula" data-listing-filename-sort="ps-quadraticformula.qmd"><td></td><td><span class="listing-author"></span></td></tr></tbody></table><div class="listing-no-matching d-none"></div>
+</div>
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
+
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-listing-file-modified-sort="1718357014887" data-listing-reading-time-sort="1" data-listing-word-count-sort="3">
+<a href="./qalist.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+List of questions and answers
+</h5>
+<div class="card-text listing-description">
+
+
+<div id="listing-questions" class="quarto-listing quarto-listing-container-table">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-questions-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-questions'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title-sort" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+<th>
+Title
+</th>
+<th>
+Author
+</th>…</tr></thead><tbody class="list"><tr data-index="0" data-listing-file-modified-sort="1725876246008" data-listing-reading-time-sort="2" data-listing-word-count-sort="267" data-listing-title-sort="Questions: Completing the square" data-listing-filename-sort="qs-completingthesquare.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="1" data-listing-file-modified-sort="1724237061179" data-listing-reading-time-sort="2" data-listing-word-count-sort="324" data-listing-title-sort="Questions: Introduction to quadratic equations" data-listing-filename-sort="qs-introtoquadratics.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="2" data-listing-file-modified-sort="1724237558484" data-listing-reading-time-sort="2" data-listing-word-count-sort="214" data-listing-title-sort="Questions: Introduction to radians" data-listing-filename-sort="qs-radians.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="3" data-listing-file-modified-sort="1724237255580" data-listing-reading-time-sort="2" data-listing-word-count-sort="265" data-listing-title-sort="Questions: Introduction to rearranging equations" data-listing-filename-sort="qs-introtorearrange.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="4" data-categories="Arithmetic,A-level,Advanced Higher" data-listing-file-modified-sort="1724237657851" data-listing-reading-time-sort="2" data-listing-word-count-sort="285" data-listing-title-sort="Questions: Introduction to sigma notation" data-listing-filename-sort="qs-sigmanotation.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="5" data-listing-file-modified-sort="1724236958022" data-listing-reading-time-sort="2" data-listing-word-count-sort="230" data-listing-title-sort="Questions: Introduction to vectors" data-listing-filename-sort="qs-introductiontovectors.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="6" data-listing-file-modified-sort="1724237286900" data-listing-reading-time-sort="2" data-listing-word-count-sort="207" data-listing-title-sort="Questions: Laws of indices" data-listing-filename-sort="qs-lawsofindices.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="7" data-listing-file-modified-sort="1724237425358" data-listing-reading-time-sort="2" data-listing-word-count-sort="279" data-listing-title-sort="Questions: Logarithms" data-listing-filename-sort="qs-logarithms.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="8" data-listing-file-modified-sort="1724237714002" data-listing-reading-time-sort="2" data-listing-word-count-sort="233" data-listing-title-sort="Questions: Solving exponential equations" data-listing-filename-sort="qs-solvingeqsindices.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="9" data-listing-file-modified-sort="1724237638465" data-listing-reading-time-sort="2" data-listing-word-count-sort="303" data-listing-title-sort="Questions: The scalar product" data-listing-filename-sort="qs-scalarproduct.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="10" data-listing-file-modified-sort="1724237912559" data-listing-reading-time-sort="1" data-listing-word-count-sort="179" data-listing-title-sort="Questions: Trigonometric identities (degrees)" data-listing-filename-sort="qs-trigonometricidentities-degrees.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="11" data-listing-file-modified-sort="1724237979037" data-listing-reading-time-sort="1" data-listing-word-count-sort="178" data-listing-title-sort="Questions: Trigonometric identities (radians)" data-listing-filename-sort="qs-trigonometricidentities-radians.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="12" data-listing-file-modified-sort="1724238023077" data-listing-reading-time-sort="2" data-listing-word-count-sort="295" data-listing-title-sort="Questions: Trigonometry (degrees)" data-listing-filename-sort="qs-trigonometry-degrees.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="13" data-listing-file-modified-sort="1724238050435" data-listing-reading-time-sort="2" data-listing-word-count-sort="292" data-listing-title-sort="Questions: Trigonometry (radians)" data-listing-filename-sort="qs-trigonometry-radians.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="14" data-listing-file-modified-sort="1724237518485" data-listing-reading-time-sort="2" data-listing-word-count-sort="280" data-listing-title-sort="Questions: Using the quadratic formula" data-listing-filename-sort="qs-quadraticformula.qmd"><td></td><td><span class="listing-author"></span></td></tr><tr data-index="15" data-listing-file-modified-sort="1724244791598" data-listing-reading-time-sort="3" data-listing-word-count-sort="406" data-listing-title-sort="Questions: Vector addition and scalar multiplication" data-listing-filename-sort="qs-addandsm.qmd"><td></td><td><span class="listing-author"></span></td></tr></tbody></table><div class="listing-no-matching d-none"></div></div>
+</div>
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
+
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="3" data-listing-file-modified-sort="1716297239858" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
+<a href="./studyguidelist.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top"><img src="studyguides/FiguresPNG/completingthesquare-image.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+List of study guides
+</h5>
+<div class="card-text listing-description">
+
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="Algebra,Solving equations,Key skills" data-listing-file-modified-sort="1725882645292" data-listing-reading-time-sort="17" data-listing-word-count-sort="3291">
+<div class="thumbnail">
+<p></p>
+<p></p>
+<p></p>
+</div>
+<div class="body">
+
+<div class="listing-subtitle">
+
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Algebra'); return false;">
+Algebra
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Solving equations'); return false;">
+Solving equations
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Key skills'); return false;">
+Key skills
+</div>
+</div>
+<div class="listing-description">
+Completing the square is an important technique to learn for dealing with quadratic expressions in a variety of…</div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="1" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1724235720433" data-listing-reading-time-sort="9" data-listing-word-count-sort="1654"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Key skills'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Algebra'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="2" data-categories="Algebra,Solving equations" data-listing-file-modified-sort="1728479340906" data-listing-reading-time-sort="15" data-listing-word-count-sort="2815"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Algebra'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Solving equations'); return false;"></div></div><div class="listing-description"><span class="math inline"></span><span class="math inline"></span></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="3" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724235824031" data-listing-reading-time-sort="9" data-listing-word-count-sort="1655"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Trigonometry'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="4" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1725438322664" data-listing-reading-time-sort="19" data-listing-word-count-sort="3631"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Key skills'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Algebra'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="5" data-categories="Arithmetic,Algebra,Key skills" data-listing-file-modified-sort="1724236327943" data-listing-reading-time-sort="10" data-listing-word-count-sort="1984"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Arithmetic'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Algebra'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Key skills'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="6" data-categories="Geometry,Vectors,Linear mathematics" data-listing-file-modified-sort="1724235541218" data-listing-reading-time-sort="17" data-listing-word-count-sort="3359"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Vectors'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Linear mathematics'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="7" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1724235696097" data-listing-reading-time-sort="9" data-listing-word-count-sort="1793"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Key skills'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Algebra'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="8" data-categories="Solving equations,Algebra" data-listing-file-modified-sort="1724236387530" data-listing-reading-time-sort="10" data-listing-word-count-sort="1925"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Solving equations'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Algebra'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="9" data-categories="Geometry,Vectors,Linear mathematics" data-listing-file-modified-sort="1724236180826" data-listing-reading-time-sort="11" data-listing-word-count-sort="2193"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Vectors'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Linear mathematics'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="10" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724237892475" data-listing-reading-time-sort="14" data-listing-word-count-sort="2680"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Trigonometry'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="11" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724237938872" data-listing-reading-time-sort="14" data-listing-word-count-sort="2696"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Trigonometry'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="12" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724238069225" data-listing-reading-time-sort="15" data-listing-word-count-sort="2919"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Trigonometry'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="13" data-categories="Geometry,Trigonometry" data-listing-file-modified-sort="1724238080718" data-listing-reading-time-sort="15" data-listing-word-count-sort="2921"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Trigonometry'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="14" data-categories="Solving equations,Algebra" data-listing-file-modified-sort="1725442484391" data-listing-reading-time-sort="10" data-listing-word-count-sort="1966"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Solving equations'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Algebra'); return false;"></div></div><div class="listing-description"><span class="math inline"></span></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div><div class="quarto-post image-right" data-index="15" data-categories="Geometry,Vectors,Linear mathematics" data-listing-file-modified-sort="1724235495792" data-listing-reading-time-sort="16" data-listing-word-count-sort="3189"><div class="thumbnail"><p></p><p></p><p></p></div><div class="body"><div class="listing-subtitle"></div><div class="listing-categories"><div class="listing-category" onclick="window.quartoListingCategory('Geometry'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Vectors'); return false;"></div><div class="listing-category" onclick="window.quartoListingCategory('Linear mathematics'); return false;"></div></div><div class="listing-description"></div></div><div class="metadata"><p></p><div class="listing-author"></div></div></div></div><div class="listing-no-matching d-none"></div>
+</div>
+<div class="card-attribution card-text-small start">
+<div class="listing-author">
+
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
 <p><a href="./fullindex.html">To see a full index of our materials, please click on this sentence.</a></p>
-<section id="materials-by-type" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="materials-by-type">Materials by type</h2>
-<p><a href="./studyguidelist.html">To see only study guides, please click on this sentence.</a></p>
-<p><a href="./qalist.html">To see only question and answer sheets, please click on this sentence.</a></p>
-<p><a href="./fslist.html">To see only fact sheets, please click on this sentence.</a></p>
-<p><a href="./pslist.html">To see only proof sheets, please click on this sentence.</a></p>
+<!-- ## Materials by type {-} -->
+<!-- [To see only study guides, please click on this sentence.](studyguidelist.qmd) -->
+<!-- [To see only question and answer sheets, please click on this sentence.](qalist.qmd) -->
+<!-- [To see only fact sheets, please click on this sentence.](fslist.qmd) -->
+<!-- [To see only proof sheets, please click on this sentence.](pslist.qmd) -->
 <p>For all materials by type, you can use the categories on the right hand side of the list to narrow your search.</p>
-</section>
 <section id="other" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="other">Other</h2>
 <p><a href="./about.html">To see our about page, please click here.</a></p>
 <p><a href="./VIP.html">If you are on a VIP, then please click here to see the VIP materials.</a></p>
 <p><a href="./license.html">To see our licensing information, please click here.</a></p>
 <p><a href="./cookies.html">To see our cookie policy, please click here.</a></p>
+
 
 
 </section>
