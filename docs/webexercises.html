@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./favicon.png" rel="icon" type="image/png">
 <script src="site_libs/cookie-consent/cookie-consent.js"></script>
 <link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -258,14 +259,8 @@ cookieconsent.run({
 <li>2 + 2 is <input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></li>
 </ul>
 <p>You can also create these questions dynamically, using variables from your R session.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
 <ul>
-<li>The square root of 9 is: <input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]"></li>
+<li>The square root of 25 is: <input class="webex-solveme nospaces" size="1" data-answer="[&quot;5&quot;]"></li>
 </ul>
 <p>The blanks are case-sensitive; if you don’t care about case, use the argument <code>ignore_case = TRUE</code>.</p>
 <ul>
@@ -301,33 +296,12 @@ cookieconsent.run({
 <h3 class="anchored" data-anchor-id="longer-mcqs-longmcq">Longer MCQs (<code>longmcq()</code>)</h3>
 <p>When your answers are very long, sometimes a drop-down select box gets formatted oddly. You can use <code>longmcq()</code> to deal with this. Since the answers are long, It’s probably best to set up the options inside an R chunk with <code>echo=FALSE</code>.</p>
 <p><strong>What is a p-value?</strong></p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>opts_p <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"the probability that the null hypothesis is true"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">answer =</span> <span class="st">"the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true"</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">"the probability of making an error in your conclusion"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div id="radio_SGQDGMBFKK" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_SGQDGMBFKK" value=""> <span>the probability that the null hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_SGQDGMBFKK" value="answer"> <span>the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_SGQDGMBFKK" value=""> <span>the probability of making an error in your conclusion</span></label>
+<div id="radio_DKOZHUDKJQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_DKOZHUDKJQ" value=""> <span>the probability that the null hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_DKOZHUDKJQ" value="answer"> <span>the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_DKOZHUDKJQ" value=""> <span>the probability of making an error in your conclusion</span></label>
 </div>
 <p><strong>What is true about a 95% confidence interval of the mean?</strong></p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use sample() to randomise the order</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>opts_ci <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">answer =</span> <span class="st">"if you repeated the process many times, 95% of intervals calculated in this way contain the true mean"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"there is a 95% probability that the true mean lies within this range"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"95% of the data fall within this range"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div id="radio_LJSNMVGRQM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_LJSNMVGRQM" value=""> <span>95% of the data fall within this range</span></label><label><input type="radio" autocomplete="off" name="radio_LJSNMVGRQM" value=""> <span>there is a 95% probability that the true mean lies within this range</span></label><label><input type="radio" autocomplete="off" name="radio_LJSNMVGRQM" value="answer"> <span>if you repeated the process many times, 95% of intervals calculated in this way contain the true mean</span></label>
+<div id="radio_ROJMAKFJPK" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ROJMAKFJPK" value=""> <span>there is a 95% probability that the true mean lies within this range</span></label><label><input type="radio" autocomplete="off" name="radio_ROJMAKFJPK" value=""> <span>95% of the data fall within this range</span></label><label><input type="radio" autocomplete="off" name="radio_ROJMAKFJPK" value="answer"> <span>if you repeated the process many times, 95% of intervals calculated in this way contain the true mean</span></label>
 </div>
 </section>
 </section>
@@ -336,19 +310,9 @@ cookieconsent.run({
 <p>Create sections with the class <code>webex-check</code> to add a button that hides feedback until it is pressed. Add the class <code>webex-box</code> to draw a box around the section (or use your own styles).</p>
 <div class="webex-check webex-box">
 <p>I am going to learn a lot: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select></p>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>opts <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"the probability that the null hypothesis is true"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">answer =</span> <span class="st">"the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">"the probability of making an error in your conclusion"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"What is a p-value?"</span>, <span class="fu">longmcq</span>(opts))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 What is a p-value?
-<div id="radio_GKUKPRCGJP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_GKUKPRCGJP" value=""> <span>the probability that the null hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_GKUKPRCGJP" value="answer"> <span>the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_GKUKPRCGJP" value=""> <span>the probability of making an error in your conclusion</span></label>
+<div id="radio_EGQAJDUVTS" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_EGQAJDUVTS" value=""> <span>the probability that the null hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_EGQAJDUVTS" value="answer"> <span>the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_EGQAJDUVTS" value=""> <span>the probability of making an error in your conclusion</span></label>
 </div>
 </div>
 </section>
@@ -358,10 +322,6 @@ What is a p-value?
 <p>If the solution is a code chunk, instead of using <code>hide()</code> and <code>unhide()</code>, simply set the <code>webex.hide</code> chunk option to TRUE, or set it to the string you wish to display on the button.</p>
 <p><strong>Recreate the scatterplot below, using the built-in <code>cars</code> dataset.</strong></p>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(cars, <span class="fu">plot</span>(speed, dist))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -384,7 +344,7 @@ Click here to see the solution
 </button>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars<span class="sc">$</span>speed, cars<span class="sc">$</span>dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars<span class="sc">$</span>speed, cars<span class="sc">$</span>dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </div>
