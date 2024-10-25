@@ -31,6 +31,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/cookie-consent/cookie-consent.js"></script>
 <link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -70,6 +72,63 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-contents .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-contents'] = new List('listing-contents', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-gotm .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-gotm'] = new List('listing-gotm', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
 
 <script type="text/plain" cookie-consent="tracking">
@@ -105,6 +164,35 @@ cookieconsent.run({
   });
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="webexfiles/webex.css">
 </head>
@@ -166,8 +254,8 @@ cookieconsent.run({
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <div id="quarto-announcement" data-announcement-id="b660e0474478f178d43941659e47be96" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
-<p><strong>Latest content:</strong> Guide: Completing the square is now available! (09/09/24)</p>
+  <div id="quarto-announcement" data-announcement-id="58bd5d2782db7566a4a0c39298a8f11b" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> Guide: Introduction to complex numbers is now available! (25/10/24)</p>
 </div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 </header>
 <!-- content -->
@@ -180,9 +268,9 @@ cookieconsent.run({
    
   <ul>
   <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome!</a></li>
+  <li><a href="#guide-of-the-month" id="toc-guide-of-the-month" class="nav-link" data-scroll-target="#guide-of-the-month">Guide of the month</a></li>
   <li><a href="#materials" id="toc-materials" class="nav-link" data-scroll-target="#materials">Materials</a>
   <ul class="collapse">
-  <li><a href="#materials-by-type" id="toc-materials-by-type" class="nav-link" data-scroll-target="#materials-by-type">Materials by type</a></li>
   <li><a href="#other" id="toc-other" class="nav-link" data-scroll-target="#other">Other</a></li>
   </ul></li>
   </ul>
@@ -214,42 +302,132 @@ cookieconsent.run({
 <section id="welcome" class="level1">
 <h1>Welcome!</h1>
 <p>Welcome to STARMAST, an accessible online bank of resources in mathematics (and statistics, eventually) made by University of St Andrews staff and students for any student of mathematics or statistics. Please see our <a href="./about.html">about</a> page if you would like to learn more about the project, or <a href="./contribs.html">our page for contributors</a> if you would like to get involved!</p>
-<p>So far, we have <strong>16</strong> study guides on <strong>14</strong> topics, with <strong>16</strong> question sheets, <strong>16</strong> answer sheets, <strong>2</strong> fact sheets and <strong>2</strong> proof sheets.</p>
-<!-- # Guide of the month {-} -->
-<!-- :::{#gotm} -->
-<!-- ::: -->
+<p>So far, we have <strong>17</strong> study guides on <strong>15</strong> topics, with <strong>17</strong> question sheets, <strong>17</strong> answer sheets, <strong>2</strong> fact sheets and <strong>2</strong> proof sheets.</p>
+</section>
+<section id="guide-of-the-month" class="level1 unnumbered">
+<h1 class="unnumbered">Guide of the month</h1>
+<div id="listing-gotm" class="quarto-listing quarto-listing-container-default">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1729779651359" data-listing-reading-time-sort="12" data-listing-word-count-sort="2321">
+<div class="thumbnail">
+<p><a href="./studyguides/introtocomplexnumbers.html" class="no-external"></a></p><a href="./studyguides/introtocomplexnumbers.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/introtocomplex-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/introtocomplexnumbers.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title" data-anchor-id="guide-of-the-month">
+<a href="./studyguides/introtocomplexnumbers.html" class="no-external">Introduction to complex numbers</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./studyguides/introtocomplexnumbers.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./studyguides/introtocomplexnumbers.html" class="no-external">Complex numbers are an extremely important concept in mathematics, as you can express a solution to any algebraic equation using complex numbers. This guide introduces the idea of a complex number in the form <span class="math inline">\(z = a + bi\)</span>, as well as the concepts of real and imaginary parts, complex conjugates, and Argand diagrams.</a>
+</div>
+</div>
+<div class="metadata">
+<p><a href="./studyguides/introtocomplexnumbers.html" class="no-external"></a></p><a href="./studyguides/introtocomplexnumbers.html" class="no-external">
+<div class="listing-author">
+Tom Coleman
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
 </section>
 <section id="materials" class="level1 unnumbered">
 <h1 class="unnumbered">Materials</h1>
-<!-- :::{#contents} -->
-<!-- ::: -->
-<p><a href="./fullindex.html">To see a full index of our materials, please click on this sentence.</a></p>
-<section id="materials-by-type" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="materials-by-type">Materials by type</h2>
-<p><a href="./studyguidelist.html">To see only study guides, please click on this sentence.</a></p>
-<p><a href="./qalist.html">To see only question and answer sheets, please click on this sentence.</a></p>
-<p><a href="./fslist.html">To see only fact sheets, please click on this sentence.</a></p>
-<p><a href="./pslist.html">To see only proof sheets, please click on this sentence.</a></p>
-<p>For all materials by type, you can use the categories on the right hand side of the list to narrow your search.</p>
-</section>
+<div id="listing-contents" class="quarto-listing quarto-listing-container-default">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1729259272317" data-listing-reading-time-sort="1" data-listing-word-count-sort="20">
+<div class="thumbnail">
+<p><a href="./studyguidelist.html" class="no-external"></a></p><a href="./studyguidelist.html" class="no-external">
+<p class="card-img-top"><img src="studyguides/FiguresPNG/completingthesquare-image.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./studyguidelist.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./studyguidelist.html" class="no-external">List of study guides</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./studyguidelist.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./studyguidelist.html" class="no-external">Our study guides, written for students by students on a specific area of mathematics or statistics, can be found here.</a>
+</div>
+</div>
+<div class="metadata">
+<p><a href="./studyguidelist.html" class="no-external"></a></p><a href="./studyguidelist.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1729259468382" data-listing-reading-time-sort="1" data-listing-word-count-sort="26">
+<div class="thumbnail">
+<p><a href="./qalist.html" class="no-external"></a></p><a href="./qalist.html" class="no-external">
+<p class="card-img-top"><img src="logo50mm.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./qalist.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./qalist.html" class="no-external">List of questions and answers</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./qalist.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./qalist.html" class="no-external">If you would like practice questions and solutions to any of our topics, you can find them in our list of questions and answers.</a>
+</div>
+</div>
+<div class="metadata">
+<p><a href="./qalist.html" class="no-external"></a></p><a href="./qalist.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1729779850411" data-listing-reading-time-sort="5" data-listing-word-count-sort="827">
+<div class="thumbnail">
+<p><a href="./fullindex.html" class="no-external"></a></p><a href="./fullindex.html" class="no-external">
+<p class="card-img-top"><img src="logo50mm.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./fullindex.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./fullindex.html" class="no-external">STARMAST full index</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./fullindex.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./fullindex.html" class="no-external">This is a complete index of links to all available materials on the STARMAST site.</a>
+</div>
+</div>
+<div class="metadata">
+<p><a href="./fullindex.html" class="no-external"></a></p><a href="./fullindex.html" class="no-external">
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+<!-- [To see a full index of our materials, please click on this sentence.](fullindex.qmd) -->
+<!-- ## Materials by type {-} -->
+<!-- [To see only study guides, please click on this sentence.](studyguidelist.qmd) -->
+<!-- [To see only question and answer sheets, please click on this sentence.](qalist.qmd) -->
+<!-- [To see only fact sheets, please click on this sentence.](fslist.qmd) -->
+<!-- [To see only proof sheets, please click on this sentence.](pslist.qmd) -->
+<!-- For all materials by type, you can use the categories on the right hand side of the list to narrow your search. -->
 <section id="other" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="other">Other</h2>
 <p><a href="./about.html">To see our about page, please click here.</a></p>
 <p><a href="./VIP.html">If you are on a VIP, then please click here to see the VIP materials.</a></p>
 <p><a href="./license.html">To see our licensing information, please click here.</a></p>
 <p><a href="./cookies.html">To see our cookie policy, please click here.</a></p>
-<!-- listing: -->
-<!--   - id: contents -->
-<!--     contents: -->
-<!--       - "studyguidelist.qmd" -->
-<!--       - "qalist.qmd" -->
-<!--       - "fslist.qmd" -->
-<!--       - "pslist.qmd" -->
-<!--     type: grid -->
-<!--   - id: gotm -->
-<!--     type: default -->
-<!--     contents: "studyguides/completingthesquare.qmd" -->
-<!--     max-items: 1 -->
+
 
 
 </section>

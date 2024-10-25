@@ -5,9 +5,8 @@ abstract-title: Summary
 abstract: Complex numbers are an extremely important concept in mathematics, as you can express a solution to any algebraic equation using complex numbers. This guide introduces the idea of a complex number in the form $z = a + bi$, as well as the concepts of real and imaginary parts, complex conjugates, and Argand diagrams. 
 categories:
   - Key skills
-image: FiguresPNG/introtoquadratics-image.png
-draft: true
-
+  - Algebra
+image: FiguresPNG/introtocomplex-image.png
 ---
 
 ```{r, setup, include = FALSE}
@@ -22,7 +21,7 @@ But real numbers cannot do everything. Consider the equation $$x^2 = -1.$$ Since
 
 It turns out that introducing this imaginary unit $i$ is enough to express solutions to **all** equations involving an $x^2$ term, known as **quadratic equations**; for more on these, see [Guide: Introduction to quadratic equations](introtoquadratics.qmd). By using this imaginary unit as the basis for a new number system containing the real numbers, you can solve all possible quadratic equations. This number system is known as the **complex numbers**.
 
-Complex numbers appear almost everywhere in mathematics. Aside from being used to solve any quadratics, they have important applications in the theory of numbers more generally, in higher forms of algebra, the study of functions, the theory of electromagnetism, solving differential equations, and even measuring the motion of tornadoes!
+Complex numbers appear almost everywhere in mathematics. Aside from being used to solve any quadratic equation, they have important applications in the theory of numbers more generally, in higher forms of algebra, the study of functions, the theory of electromagnetism, solving differential equations, and even measuring the motion of tornadoes!
 
 This guide will focus on introducing the concept of a complex number, with the exact definition of complex numbers together with some initial examples of complex numbers. Then, the concepts of real and imaginary parts of complex numbers are explored, the complex conjugate is defined, and the pictorial representation of a complex number via Argand diagrams is explained. 
 
@@ -163,7 +162,7 @@ So the complex conjugate of $z = a + bi$ is the complex number with the same rea
 
 ::: {.callout-note appearance="simple"}
 
-## Example 3
+## Example 4
 
 In Example 1, you saw six complex numbers $z_1$ to $z_6$. Here, their complex conjugates are given.
 
@@ -183,9 +182,73 @@ In Example 1, you saw six complex numbers $z_1$ to $z_6$. Here, their complex co
 
 You can see from Examples 2 and 3 (and the definition of complex conjugate) that if $\textsf{Re}(z) = a$ then $\textsf{Re}(\bar{z}) = a$, and if $\textsf{Im}(z) = b$ then $\textsf{Im}(\bar{z}) = -b$.
 
-
-
 # Argand diagrams {-}
+
+Because every complex number is writable as $a + bi$ for $a,b\in \mathbb{R}$, you can express every complex number $a+bi$ as a point $(a,b)$ in two-dimensional space. Such a graph is known as an **Argand diagram**.
+
+An Argand diagram has two axes called the **real** and **imaginary** axes. The real axis takes the place of the $x$-axis and the imaginary axis takes the place of the $y$-axis. See @fig-1 for more.
+
+::: {.content-visible when-format="html"}
+
+![A blank Argand diagram, with axes labelled Re and Im for real and imaginary parts respectively.](./FiguresPNG/introtocomplex-fig1-3.png){width="150%" fig-alt="Two labelled axes; the horizontal axis labelled Re for real and the vertical axis labelled Im for imaginary. There are no other points on the graph." #fig-1}
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![A blank Argand diagram, with axes labelled Re and Im for real and imaginary parts respectively.](./FiguresPNG/introtocomplex-fig1-3.png){fig-alt="Two labelled axes; the horizontal axis labelled Re for real and the vertical axis labelled Im for imaginary. There are no other points on the graph." #fig-1}
+
+:::
+
+To draw a complex number on an Argand diagram, you can plot the complex number $z = a + bi$ at the point $(a,b) = (\mathsf{Re}(z), \mathsf{Im}(z))$. See @fig-2 for a representation of $z = 2 + i$ on an Argand diagram. 
+
+::: {.content-visible when-format="html"}
+
+![An Argand diagram with the complex number $2 + i$ displayed.](./FiguresPNG/introtocomplex-fig2-2.png){width="150%" fig-alt="Two labelled axes; the horizontal axis labelled Re for real and the vertical axis labelled Im for imaginary. There is a point on the graph in the top-right quadrant, representing the complex number 2+i." #fig-2}
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![An Argand diagram with the complex number $2 + i$ displayed.](./FiguresPNG/introtocomplex-fig2-2.png){fig-alt="Two labelled axes; the horizontal axis labelled Re for real and the vertical axis labelled Im for imaginary. There is a point on the graph in the top-right quadrant, representing the complex number 2+i." #fig-2}
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 5
+
+In Example 1, you saw six complex numbers $z_1$ to $z_6$, and Example 3 demonstrated the real and imaginary parts of these. 
+
+- The real part of $z_1 = 1 + 3i$ is $\textsf{Re}(z_1) = 1$, and the imaginary part of $z_1$ is $\textsf{Im}(z_1) = 3$, so this corresponds to the point $(1,3)$.
+
+- The real part of $z_2 = -4 + 6i$ is $\textsf{Re}(z_2) = -4$, and the imaginary part of $z_2$ is $\textsf{Im}(z_2) = 6$. This corresponds to the point $(-4,6)$.
+
+- The real part of $z_3 = 8/3 - 13i/5$ is $\textsf{Re}(z_3) = 8/3$, and the imaginary part of $z_3$ is $\textsf{Im}(z_3) = -13/5$. This corresponds to the point $(8/3,-13/5)$ on the plane.
+
+- The real part of $z_4 = -\pi - i\pi$ is $\textsf{Re}(z_4) = -\pi$, and the imaginary part of $z_4$ is $\textsf{Im}(z_4) = -\pi$. This corresponds to the point $(-\pi,-\pi)$. 
+
+- The real part of $z_5 = 4i$ is $\textsf{Re}(z_5) = 0$, as $z_5 = 4i = 0 + 4i$. The imaginary part of $z_5$ is $\textsf{Im}(z_5) = 4$. This corresponds to a point $(0,4)$, on the $y$-axis.
+
+- The real part of $z_6 = -2$ is $\textsf{Re}(z_6) = -2$. The imaginary part of $z_6$ is $\textsf{Im}(z_6) = 0$, as $z_6 = -2 = -2 + 0i$. This corresponds to $(2,0)$ on the $x$-axis.
+
+See @fig-3 for an Argand diagram. 
+
+:::
+
+::: {.content-visible when-format="html"}
+
+![An Argand diagram with the six complex numbers $z_1,z_2,z_3,z_4,z_5,z_6$ in Example 5.](./FiguresPNG/introtocomplex-fig3-1.png){width="150%" fig-alt="Two labelled axes; the horizontal axis labelled Re for real and the vertical axis labelled Im for imaginary. There are points representing the complex numbers considered in Example 5. There is one point in each quadrant, with z5 and z6 on the positive imaginary axis and negative real axis respectively." #fig-3}
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![An Argand diagram with the six complex numbers $z_1,z_2,z_3,z_4,z_5,z_6$ in Example 5.](./FiguresPNG/introtocomplex-fig3-1.png){fig-alt="Two labelled axes; the horizontal axis labelled Re for real and the vertical axis labelled Im for imaginary. There are points representing the complex numbers considered in Example 5. There is one point in each quadrant, with z5 and z6 on the positive imaginary axis and negative real axis respectively." #fig-3}
+
+:::
+
+
 
 # Quick check problems {-}
 
@@ -197,21 +260,27 @@ You can see from Examples 2 and 3 (and the definition of complex conjugate) that
 
 ::: {.webex-check .webex-box}
 
-1. What is the discriminant of the quadratic equation $x^2 - x - 1 = 0$?
+1. Give the real and imaginary parts of the following complex numbers: $w_1 = 3+6i$, $w_2 = -5 - 6i$, $w_3 = 8 - i$, $w_4 = 0$, and $w_5 = x + 5i$. 
 
-Answer: The discriminant $D$ is equal to `r fitb(5)`.
+Answers: 
 
-2. You are given the quadratic equation $4h^2 - h + 101 = 0$. Identify the variable, and the coefficients $a,b,c$. 
+$\textsf{Re}(w_1) =$ `r fitb(3)` and $\textsf{Im}(w_1) =$ `r fitb(6)`.
 
-Answer: The variable is `r fitb("h")`, and the coefficients are $a=$ `r fitb(4)`, $b=$ `r fitb(-1)`, and $c=$ `r fitb(101)`.
+$\textsf{Re}(w_2) =$ `r fitb(-5)` and $\textsf{Im}(w_2) =$ `r fitb(-6)`.
 
-3. You are given three statements below. Decide whether they are true or false.
+$\textsf{Re}(w_3) =$ `r fitb(8)` and $\textsf{Im}(w_3) =$ `r fitb(-1)`.
 
-(a) The quadratic equation $m^2 + 4m + 4 = 0$ has two distinct real roots. Answer: `r torf(FALSE)`.
+$\textsf{Re}(w_4) =$ `r fitb(0)` and $\textsf{Im}(w_4) =$ `r fitb(0)`.
 
-(b) The quadratic equation $m^2 - 4m - 4 = 0$ has exactly one real root. Answer: `r torf(FALSE)`.
+$\textsf{Re}(w_5) =$ `r fitb("x")` and $\textsf{Im}(w_5) =$ `r fitb(5)`.
 
-(c) The quadratic equation $4m^2 + 4m + 4 = 0$ has no real roots. Answer: `r torf(TRUE)`.
+2. You are given three statements below. Decide whether they are true or false.
+
+(a) The complex conjugate of any purely imaginary number is a real number. Answer: `r torf(FALSE)`.
+
+(b) The complex conjugate of $a - bi$ is $a + bi$ for all real numbers $a,b$. Answer: `r torf(TRUE)`.
+
+(c) Any real number is also a complex number. Answer: `r torf(TRUE)`.
 
 :::
 
@@ -219,17 +288,15 @@ Answer: The variable is `r fitb("h")`, and the coefficients are $a=$ `r fitb(4)`
 
 ::: {.content-hidden when-format="html"}
 
-1. What is the discriminant of the quadratic equation $x^2 - x - 1 = 0$?
+1. Give the real and imaginary parts of the following complex numbers: $w_1 = 3+6i$, $w_2 = -5 - 6i$, $w_3 = 8 - i$, $w_4 = 0$, and $w_5 = x + 5i$. 
 
-2. You are given the quadratic equation $4h^2 - h + 101 = 0$. Identify the variable, and the coefficients $a,b,c$. 
+2. You are given three statements below. Decide whether they are true or false.
 
-3. You are given three statements below. Decide whether they are true or false.
+(a) The complex conjugate of any purely imaginary number is a real number.
 
-(a) The quadratic equation $m^2 + 4m + 4 = 0$ has two distinct real roots.
+(b) The complex conjugate of $a - bi$ is $a + bi$ for all real numbers $a,b$.
 
-(b) The quadratic equation $m^2 - 4m - 4 = 0$ has exactly one real root.
-
-(c) The quadratic equation $4m^2 + 4m + 4 = 0$ has no real roots.
+(c) Any real number is also a complex number.
 
 :::
 
@@ -241,7 +308,7 @@ Answer: The variable is `r fitb("h")`, and the coefficients are $a=$ `r fitb(4)`
 
 ## Version history {-}
 
-v1.0: initial version created 09/24 by tdhc.
+v1.0: initial version created 10/24 by tdhc.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

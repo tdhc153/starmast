@@ -1,0 +1,52 @@
+\documentclass[preview,border=5pt]{standalone}
+\usepackage{teaching}
+\begin{document}
+
+\pagecolor{white}
+
+\centering
+\pgfplotsset{compat=newest}
+\begin{tikzpicture}[inner sep=0.3mm]
+\begin{axis}[
+axis x line=center,
+axis y line=center,
+axis line style={black!50!white},
+xlabel={$\textsf{Re}$},
+ylabel={$\textsf{Im}$},
+xlabel style={right,black!50!white},
+ylabel style={above,black!50!white},
+domain=(-6.5):(6.5),
+samples=128,
+ticks=none,
+no marks,
+xmin=(-5.5), xmax=(5.5),
+ymin=(-5.5), ymax=(5.5)
+]
+
+\node at (2,3) [circle=draw, fill=black] {};
+\node at (2.4, 3.25) {$z_1$};
+
+\node at (-3,-2) [circle=draw, fill=black] {};
+\node at (-3.4,-2.25) {$z_5$};
+
+\node at (0,3) [circle=draw, fill=black] {};
+\node at (-0.5,2.75) {$z_4$};
+
+\node at (2,0) [circle=draw, fill=black] {};
+\node at (2, -0.5) {$z_7 = \bar{z}_7$};
+
+\node at (2,-3) [circle=draw, fill=black] {};
+\node at (2.4, -3.25) {$\bar{z}_1$};
+
+\node at (-3,2) [circle=draw, fill=black] {};
+\node at (-3.4,2.25) {$\bar{z}_5$};
+
+\node at (0,-3) [circle=draw, fill=black] {};
+\node at (-0.5,-3.25) {$\bar{z}_4$};
+
+%\addplot [black] {\x^2 - 2*\x};
+%\node at (2.5,4) [black!50!white] {$a > 0, D > 0$};
+\end{axis} 
+\end{tikzpicture}
+
+\end{document}
