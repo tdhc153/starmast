@@ -11,8 +11,6 @@
 axis x line=center,
 axis y line=center,
 axis line style={black!50!white},
-xlabel={$x$},
-ylabel={$y$},
 xlabel style={right,black!50!white},
 ylabel style={above,black!50!white},
 domain=(-5):(5),
@@ -22,10 +20,25 @@ no marks,
 xmin=(-5.5), xmax=(5.5),
 ymin=(-0.1), ymax=(0.5)
 ]
+\addplot [fill=sblupas, draw=none, domain=3:5] {{gauss(0,1.5)+0.024}} \closedcycle;
+\addplot [fill=sblupas, draw=none, domain=-5:-3] {{gauss(0,1.5)+0.024}} \closedcycle;
+\addplot [black] {{gauss(0,1.5)+0.025}};
+\draw [color=sblu] (axis cs:3, 0) -- (axis cs:3, 0.06);
+\draw [color=sblu] (axis cs:-3, 0) -- (axis cs:-3, 0.06);
+\addplot[black!50!white, domain=3:5] {0};
+\addplot[black!50!white, domain=-5:-3] {0};
 
-\addplot [fill=cyan!20, draw=none, domain=0:5.96] {gauss(6.5,1)} \closedcycle;
-\addplot [black] {gauss(0,1.5)};
 \end{axis} 
+
+\node at (1,5) {\footnotesize $\alpha = 0.05$};
+\node at (6,5) {${\footnotesize \begin{matrix}\textsf{two-tail test}\\[-0.5em] (\mu \neq \mu_0)\end{matrix}}$};
+\node at (0.5,2) [color=sblu] {${\footnotesize \begin{matrix}\textsf{critical region}\\[-0.5em] (p=0.025)\end{matrix}}$};
+\node at (6.5,2) [color=sblu] {${\footnotesize \begin{matrix}\textsf{critical region}\\[-0.5em] (p=0.025)\end{matrix}}$};
+\node at (1.5,0.5) {${\footnotesize \begin{matrix}z = -1.96\\[-0.5em] \textsf{critical value}\end{matrix}}$};
+\node at (5.2,0.5) {${\footnotesize \begin{matrix}z = 1.96\\[-0.5em] \textsf{critical value}\end{matrix}}$};
 \end{tikzpicture}
 
 \end{document}
+
+xlabel={$x$},
+ylabel={$y$},

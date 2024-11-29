@@ -106,6 +106,8 @@ cookieconsent.run({
   });
 </script>
 
+<script src="https://www.desmos.com/api/v1.9/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
@@ -196,8 +198,8 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <div id="quarto-announcement" data-announcement-id="58bd5d2782db7566a4a0c39298a8f11b" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
-<p><strong>Latest content:</strong> Guide: Introduction to complex numbers is now available! (25/10/24)</p>
+  <div id="quarto-announcement" data-announcement-id="5e3f5d7ed60b95817d47166e82ba27d1" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> Interactive figures powered by Desmos are now here! See Guide: Introduction to quadratic equations for more. (29/11/24)</p>
 </div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 </header>
 <!-- content -->
@@ -278,17 +280,17 @@ Definition of quadratic equation, root
 </div>
 </div>
 <p>Here, <span class="math inline">\(a\neq 0\)</span> as if it was, then the equation would no longer be a quadratic equation!</p>
-<p>The general shape of a quadratic equation is known as a <strong>parabola</strong>. A figure of two parabolas is given in <a href="#fig-1" class="quarto-xref">Figure&nbsp;1</a>; the left hand graph is if <span class="math inline">\(a &gt; 0\)</span>, whereas the right hand graph is when <span class="math inline">\(a &lt; 0\)</span>.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./FiguresPNG/introtoquadratics-fig1-1.png" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively.">
+<p>The general shape of a quadratic equation is known as a <strong>parabola</strong>. The shape of a parabola is given in the following interactive figure: you can use the slider to show what happens to the shape of the parabola <span class="math inline">\(y = ax^2\)</span> as <span class="math inline">\(a\)</span> changes.</p>
+<!-- ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1} -->
+<div id="calculator" style="width: 100%; height: 450px;">
+
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span>.
-</figcaption>
-</figure>
-</div>
+<script>
+  var elt = document.getElementById('calculator');
+  var calculator = Desmos.GraphingCalculator(elt);
+  calculator.setExpression({ id: 'a', latex: 'a=1' });
+  calculator.setExpression({ id: 'line1', latex: 'y=ax^2', color: '#DB4315' });
+</script>
 <p>It is very important to be able to identify the variable in a quadratic equation, as well as the coefficients <span class="math inline">\(a,b,c\)</span>. In the course of your mathematical study, it may be that the variable of a quadratic equation is not only letters like <span class="math inline">\(x,y,z\)</span>, but squares or cubes like <span class="math inline">\(x^2\)</span> and <span class="math inline">\(y^3\)</span>, or even functions like <span class="math inline">\(e^x\)</span>, <span class="math inline">\(\cos(x)\)</span>, and <span class="math inline">\(\sin(y)\)</span>.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -371,44 +373,22 @@ The discriminant
 </div>
 <p>There are then three separate cases for solutions to quadratic equations.</p>
 <ul>
-<li>If <span class="math inline">\(D = b^2 - 4ac\)</span> is positive, then <span class="math inline">\(\sqrt{D}\)</span> is a real number and the two roots of the quadratic equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> are <span class="math display">\[x = \frac{-b + \sqrt{D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - \sqrt{D}}{2a}\]</span> These two roots are both real numbers and distinct from each other. You can observe this behaviour on a graph in <a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a>; the parabola crosses the <span class="math inline">\(x\)</span>-axis in two places.</li>
+<li><p>If <span class="math inline">\(D = b^2 - 4ac\)</span> is positive, then <span class="math inline">\(\sqrt{D}\)</span> is a real number and the two roots of the quadratic equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> are <span class="math display">\[x = \frac{-b + \sqrt{D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - \sqrt{D}}{2a}\]</span> These two roots are both real numbers and distinct from each other. You can observe this behaviour on the interactive figure below, where <span class="math inline">\(D\)</span> is greater than <span class="math inline">\(0\)</span>; the parabola crosses the <span class="math inline">\(x\)</span>-axis in two places.</p></li>
+<li><p>If <span class="math inline">\(D = b^2 - 4ac = 0\)</span> is zero, then <span class="math inline">\(\sqrt{D} = 0\)</span>. In this case, the two roots of the quadratic equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> are <span class="math display">\[x = \frac{-b}{2a} \qquad\textsf{ and }\qquad x = \frac{-b}{2a}\]</span> These two roots are given by the same real number. To be sure that you express both roots, you can write ‘<span class="math inline">\(x = -b/2a\)</span> twice’. You can observe this behaviour on the interactive figure below, where <span class="math inline">\(D\)</span> is equal to <span class="math inline">\(0\)</span>; the parabola touches the <span class="math inline">\(x\)</span>-axis in one place.</p></li>
+<li><p>If <span class="math inline">\(D = b^2 - 4ac\)</span> is negative, then <span class="math inline">\(\sqrt{D}\)</span> is not a real number. In this case, the two roots of the quadratic equation are <strong>complex numbers</strong>. You can express the two roots of the quadratic equation by <span class="math display">\[x = \frac{-b + i\sqrt{-D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - i\sqrt{-D}}{2a}\]</span> where <span class="math inline">\(i\)</span> is the imaginary unit (so <span class="math inline">\(i^2 = -1\)</span>; see <a href="../studyguides/introtocomplexnumbers.html">Guide: Introduction to complex numbers</a>). In a graph, the parabola does not cross the <span class="math inline">\(x\)</span>-axis at all; this indicates that there are no real solutions to this quadratic equation. You can see this behaviour in the interactive graph below where <span class="math inline">\(D &lt; 0\)</span>.</p></li>
 </ul>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./FiguresPNG/introtoquadratics-fig2-2.png" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image.">
+<div id="calculator2" style="width: 100%; height: 450px;">
+
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>.
-</figcaption>
-</figure>
-</div>
-<ul>
-<li>If <span class="math inline">\(D = b^2 - 4ac = 0\)</span> is zero, then <span class="math inline">\(\sqrt{D} = 0\)</span>. In this case, the two roots of the quadratic equation <span class="math inline">\(ax^2 + bx + c = 0\)</span> are <span class="math display">\[x = \frac{-b}{2a} \qquad\textsf{ and }\qquad x = \frac{-b}{2a}\]</span> These two roots are given by the same real number. To be sure that you express both roots, you can write ‘<span class="math inline">\(x = -b/2a\)</span> twice’. You can observe this behaviour on a graph in <a href="#fig-3" class="quarto-xref">Figure&nbsp;3</a>; the parabola touches the <span class="math inline">\(x\)</span>-axis in exactly one place.</li>
-</ul>
-<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and touches the $x$-axis in precisely one place. The parabola on the right looks like an n, and touches the $x$-axis in precisely one place. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D=0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./FiguresPNG/introtoquadratics-fig3-3.png" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and touches the $x$-axis in precisely one place. The parabola on the right looks like an n, and touches the $x$-axis in precisely one place. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D=0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D = 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D = 0\)</span>.
-</figcaption>
-</figure>
-</div>
-<ul>
-<li>If <span class="math inline">\(D = b^2 - 4ac\)</span> is negative, then <span class="math inline">\(\sqrt{D}\)</span> is not a real number. In this case, the two roots of the quadratic equation are <strong>complex numbers</strong>. You can express the two roots of the quadratic equation by <span class="math display">\[x = \frac{-b + i\sqrt{-D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - i\sqrt{-D}}{2a}\]</span> where <span class="math inline">\(i\)</span> is the imaginary unit (so <span class="math inline">\(i^2 = -1\)</span>; see <a href="../studyguides/introtocomplexnumbers.html">Guide: Introduction to complex numbers</a>). In a graph, the parabola does not cross the <span class="math inline">\(x\)</span>-axis at all; this indicates that there are no real solutions to this quadratic equation. See <a href="#fig-4" class="quarto-xref">Figure&nbsp;4</a> for a picture.</li>
-</ul>
-<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and lies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./FiguresPNG/introtoquadratics-fig4-4.png" class="img-fluid figure-img" style="width:150.0%" alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and lies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: A pair of parabolas. (left) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &gt; 0\)</span> and <span class="math inline">\(D &gt; 0\)</span>. (right) A graph of a quadratic <span class="math inline">\(ax^2 + bx + c\)</span> where <span class="math inline">\(a &lt; 0\)</span> and <span class="math inline">\(D &lt; 0\)</span>.
-</figcaption>
-</figure>
-</div>
+<script>
+  var elt = document.getElementById('calculator2');
+  var calculator2 = Desmos.GraphingCalculator(elt);
+  calculator2.setExpression({ id: 'a', latex: 'a=1' });
+  calculator2.setExpression({ id: 'b', latex: 'b=0' });
+  calculator2.setExpression({ id: 'c', latex: 'c=0' });
+  calculator2.setExpression({ id: 'line1', latex: 'y=ax^2 + bx + c', color: '#DB4315' });
+  calculator2.setExpression({ id: 'D', latex: 'D=b^2 - 4ac' });
+</script>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -509,7 +489,8 @@ Example 8
 <h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
 <p>v1.0: initial version created 06/23 by tdhc.</p>
 <ul>
-<li>v1.1: edited 04/24 by tdhc.</li>
+<li><p>v1.1: edited 04/24 by tdhc.</p></li>
+<li><p>v1.2: addition of interactive Desmos figures 11/24 by tdhc.</p></li>
 </ul>
 <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
 
@@ -724,6 +705,23 @@ window.onload = function() {
 }
 
 </script>
+<h1>Feedback</h1>
+<p>
+    Your feedback is appreciated and useful. Feel free to leave a
+    comment here.
+</p>
+<form action="https://mohit.uk/cgi-bin/starmast/post-form.php" method="POST">
+    <label for="name">Name: </label>
+    <input type="text" name="name">
+    <br><br>
+    <label for="email">E-mail: </label>
+    <input type="text" name="email">
+    <br><br>
+    <label for="feedback">Feedback: </label>
+    <textarea rows="5" cols="50" placeholder="Feedback" name="feedback"></textarea>
+    <br><br>
+    <input type="submit" value="Submit">
+</form>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -1288,10 +1286,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<script src="https://giscus.app/client.js" data-repo="tdhc153/starmast" data-repo-id="R_kgDOJhaqiA" data-category="General" data-category-id="DIC_kwDOJhaqiM4CWZev" data-mapping="title" data-reactions-enabled="0" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" data-loading="lazy" async="">
-</script>
-<input type="hidden" id="giscus-base-theme" value="light">
-<input type="hidden" id="giscus-alt-theme" value="light">
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">

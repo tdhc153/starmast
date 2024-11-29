@@ -34,15 +34,26 @@ Values of $x$ that satisfy the equation $ax^2 + bx + c = 0$ are known as **roots
 
 Here, $a\neq 0$ as if it was, then the equation would no longer be a quadratic equation!
 
-The general shape of a quadratic equation is known as a **parabola**. A figure of two parabolas is given in @fig-1; the left hand graph is if $a > 0$, whereas the right hand graph is when $a < 0$.
-
 ::: {.content-visible when-format="html"}
 
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1}
+The general shape of a quadratic equation is known as a **parabola**. The shape of a parabola is given in the following interactive figure: you can use the slider to show what happens to the shape of the parabola $y = ax^2$ as $a$ changes.
+
+<!-- ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1} -->
+
+<div id="calculator" style="width: 100%; height: 450px;"></div>
+
+<script>
+  var elt = document.getElementById('calculator');
+  var calculator = Desmos.GraphingCalculator(elt);
+  calculator.setExpression({ id: 'a', latex: 'a=1' });
+  calculator.setExpression({ id: 'line1', latex: 'y=ax^2', color: '#DB4315' });
+</script>
 
 :::
 
 ::: {.content-hidden when-format="html"}
+
+The general shape of a quadratic equation is known as a **parabola**. A figure of two parabolas is given in @fig-1; the left hand graph is if $a > 0$, whereas the right hand graph is when $a < 0$.
 
 ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1}
 
@@ -110,48 +121,43 @@ The term $D = b^2 - 4ac$ is known as the **discriminant** of the quadratic equat
 
 There are then three separate cases for solutions to quadratic equations.
 
-- If $D = b^2 - 4ac$ is positive, then $\sqrt{D}$ is a real number and the two roots of the quadratic equation $ax^2 + bx + c = 0$ are $$x = \frac{-b + \sqrt{D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - \sqrt{D}}{2a}$$ These two roots are both real numbers and distinct from each other. You can observe this behaviour on a graph in @fig-2; the parabola crosses the $x$-axis in two places.
-
 ::: {.content-visible when-format="html"}
 
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D > 0$.](./FiguresPNG/introtoquadratics-fig2-2.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-2}
+- If $D = b^2 - 4ac$ is positive, then $\sqrt{D}$ is a real number and the two roots of the quadratic equation $ax^2 + bx + c = 0$ are $$x = \frac{-b + \sqrt{D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - \sqrt{D}}{2a}$$ These two roots are both real numbers and distinct from each other. You can observe this behaviour on the interactive figure below, where $D$ is greater than $0$; the parabola crosses the $x$-axis in two places.
+
+- If $D = b^2 - 4ac = 0$ is zero, then $\sqrt{D} = 0$. In this case, the two roots of the quadratic equation $ax^2 + bx + c = 0$ are $$x = \frac{-b}{2a} \qquad\textsf{ and }\qquad x = \frac{-b}{2a}$$ These two roots are given by the same real number. To be sure that you express both roots, you can write '$x = -b/2a$ twice'. You can observe this behaviour on the interactive figure below, where $D$ is equal to $0$; the parabola touches the $x$-axis in one place.
+
+- If $D = b^2 - 4ac$ is negative, then $\sqrt{D}$ is not a real number. In this case, the two roots of the quadratic equation are **complex numbers**. You can express the two roots of the quadratic equation by $$x = \frac{-b + i\sqrt{-D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - i\sqrt{-D}}{2a}$$ where $i$ is the imaginary unit (so $i^2 = -1$; see [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd)). In a graph, the parabola does not cross the $x$-axis at all; this indicates that there are no real solutions to this quadratic equation. You can see this behaviour in the interactive graph below where $D < 0$.
+
+<div id="calculator2" style="width: 100%; height: 450px;"></div>
+
+<script>
+  var elt = document.getElementById('calculator2');
+  var calculator2 = Desmos.GraphingCalculator(elt);
+  calculator2.setExpression({ id: 'a', latex: 'a=1' });
+  calculator2.setExpression({ id: 'b', latex: 'b=0' });
+  calculator2.setExpression({ id: 'c', latex: 'c=0' });
+  calculator2.setExpression({ id: 'line1', latex: 'y=ax^2 + bx + c', color: '#DB4315' });
+  calculator2.setExpression({ id: 'D', latex: 'D=b^2 - 4ac' });
+</script>
 
 :::
 
 ::: {.content-hidden when-format="html"}
+
+- If $D = b^2 - 4ac$ is positive, then $\sqrt{D}$ is a real number and the two roots of the quadratic equation $ax^2 + bx + c = 0$ are $$x = \frac{-b + \sqrt{D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - \sqrt{D}}{2a}$$ These two roots are both real numbers and distinct from each other. You can observe this behaviour on a graph in @fig-2; the parabola crosses the $x$-axis in two places.
 
 ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D > 0$.](./FiguresPNG/introtoquadratics-fig2-2.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and crosses the $x$-axis in precisely two places. The parabola on the right looks like a lowercase n, and crosses the $x$-axis in precisely two places. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D > 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-2}
 
-:::
-
 - If $D = b^2 - 4ac = 0$ is zero, then $\sqrt{D} = 0$. In this case, the two roots of the quadratic equation $ax^2 + bx + c = 0$ are $$x = \frac{-b}{2a} \qquad\textsf{ and }\qquad x = \frac{-b}{2a}$$ These two roots are given by the same real number. To be sure that you express both roots, you can write '$x = -b/2a$ twice'. You can observe this behaviour on a graph in @fig-3; the parabola touches the $x$-axis in exactly one place.
-
-::: {.content-visible when-format="html"}
-
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D = 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D = 0$.](./FiguresPNG/introtoquadratics-fig3-3.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and touches the $x$-axis in precisely one place. The parabola on the right looks like an n, and touches the $x$-axis in precisely one place. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D=0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-3}
-
-:::
-
-::: {.content-hidden when-format="html"}
 
 ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D = 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D = 0$.](./FiguresPNG/introtoquadratics-fig3-3.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and touches the $x$-axis in precisely one place. The parabola on the right looks like an n, and touches the $x$-axis in precisely one place. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D=0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-3}
 
-:::
-
 - If $D = b^2 - 4ac$ is negative, then $\sqrt{D}$ is not a real number. In this case, the two roots of the quadratic equation are **complex numbers**. You can express the two roots of the quadratic equation by $$x = \frac{-b + i\sqrt{-D}}{2a}\qquad\textsf{ and }\qquad x = \frac{-b - i\sqrt{-D}}{2a}$$ where $i$ is the imaginary unit (so $i^2 = -1$; see [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd)). In a graph, the parabola does not cross the $x$-axis at all; this indicates that there are no real solutions to this quadratic equation. See @fig-4 for a picture.
-
-::: {.content-visible when-format="html"}
-
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D < 0$.](./FiguresPNG/introtoquadratics-fig4-4.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and lies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-4}
-
-:::
-
-::: {.content-hidden when-format="html"}
 
 ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$ and $D > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$ and $D < 0$.](./FiguresPNG/introtoquadratics-fig4-4.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and lies above the $x$-axis. The parabola on the right looks like an n, and lies below the $x$-axis. These are graphs of quadratic expressions $ax^2 + bx + c$ both with $D < 0$ and $a > 0$ and $a < 0$ respectively, and these labels appear on the image." #fig-4}
 
 :::
-
 
 ::: {.callout-warning}
 
@@ -254,6 +260,8 @@ Answer: The variable is `r fitb("h")`, and the coefficients are $a=$ `r fitb(4)`
 v1.0: initial version created 06/23 by tdhc.
 
   - v1.1: edited 04/24 by tdhc.
+  
+  - v1.2: addition of interactive Desmos figures 11/24 by tdhc.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 
