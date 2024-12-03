@@ -103,6 +103,34 @@ ul.task-list li input[type="checkbox"] {
   
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-news .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-news'] = new List('listing-news', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
     const listingTargetEl = window.document.querySelector('#listing-gotm .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
@@ -225,6 +253,10 @@ window.Quarto = {
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./fullindex.html"> 
 <span class="menu-text">Index</span></a>
   </li>  
@@ -235,14 +267,6 @@ window.Quarto = {
   <li class="nav-item">
     <a class="nav-link" href="./qalist.html"> 
 <span class="menu-text">Questions and answers</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./fslist.html"> 
-<span class="menu-text">Fact sheets</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./pslist.html"> 
-<span class="menu-text">Proof sheets</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -270,6 +294,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome">Welcome!</a></li>
+  <li><a href="#latest-news" id="toc-latest-news" class="nav-link" data-scroll-target="#latest-news">Latest news</a></li>
   <li><a href="#guide-of-the-month" id="toc-guide-of-the-month" class="nav-link" data-scroll-target="#guide-of-the-month">Guide of the month</a></li>
   <li><a href="#materials" id="toc-materials" class="nav-link" data-scroll-target="#materials">Materials</a>
   <ul class="collapse">
@@ -305,31 +330,69 @@ window.Quarto = {
 <section id="welcome" class="level1">
 <h1>Welcome!</h1>
 <p>Welcome to STARMAST, an accessible online bank of resources in mathematics (and statistics, eventually) made by University of St Andrews staff and students for any student of mathematics or statistics. Please see our <a href="./about.html">about</a> page if you would like to learn more about the project, or <a href="./contribs.html">our page for contributors</a> if you would like to get involved!</p>
-<p>So far, we have <strong>17</strong> study guides on <strong>15</strong> topics, with <strong>17</strong> question sheets, <strong>17</strong> answer sheets, <strong>2</strong> fact sheets and <strong>2</strong> proof sheets.</p>
+<!-- So far, we have **17** study guides on **15** topics, with **17** question sheets, **17** answer sheets, **2** fact sheets and **2** proof sheets. -->
+</section>
+<section id="latest-news" class="level1 unnumbered">
+<h1 class="unnumbered">Latest news</h1>
+<div id="listing-news" class="quarto-listing quarto-listing-container-default">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-listing-date-sort="NaN" data-listing-file-modified-sort="1733242135931" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="273">
+<div class="thumbnail">
+<p><a href="./news/desmos031224.html" class="no-external"></a></p><a href="./news/desmos031224.html" class="no-external">
+<p class="card-img-top"><img src="desmos-centre.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./news/desmos031224.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title" data-anchor-id="latest-news">
+<a href="./news/desmos031224.html" class="no-external">Desmos now in STARMAST</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./news/desmos031224.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./news/desmos031224.html" class="no-external">Desmos figures now included in STARMAST resources</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./news/desmos031224.html" class="no-external">
+<div class="listing-date">
+Invalid Date
+</div>
+<div class="listing-author">
+Tom Coleman
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
 </section>
 <section id="guide-of-the-month" class="level1 unnumbered">
 <h1 class="unnumbered">Guide of the month</h1>
 <div id="listing-gotm" class="quarto-listing quarto-listing-container-default">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Key skills,Algebra" data-listing-file-modified-sort="1729779651359" data-listing-reading-time-sort="12" data-listing-word-count-sort="2321">
+<div class="quarto-post image-right" data-index="0" data-categories="Algebra,Solving equations" data-listing-file-modified-sort="1732119484317" data-listing-reading-time-sort="15" data-listing-word-count-sort="2884">
 <div class="thumbnail">
-<p><a href="./studyguides/introtocomplexnumbers.html" class="no-external"></a></p><a href="./studyguides/introtocomplexnumbers.html" class="no-external">
-<p><img loading="lazy" src="./studyguides/FiguresPNG/introtocomplex-image.png" class="thumbnail-image"></p>
-</a><p><a href="./studyguides/introtocomplexnumbers.html" class="no-external"></a></p>
+<p><a href="./studyguides/introtoquadratics.html" class="no-external"></a></p><a href="./studyguides/introtoquadratics.html" class="no-external">
+<p><img loading="lazy" src="./studyguides/FiguresPNG/introtoquadratics-image.png" class="thumbnail-image"></p>
+</a><p><a href="./studyguides/introtoquadratics.html" class="no-external"></a></p>
 </div>
 <div class="body">
 <h3 class="no-anchor listing-title" data-anchor-id="guide-of-the-month">
-<a href="./studyguides/introtocomplexnumbers.html" class="no-external">Introduction to complex numbers</a>
+<a href="./studyguides/introtoquadratics.html" class="no-external">Introduction to quadratic equations</a>
 </h3>
 <div class="listing-subtitle">
-<a href="./studyguides/introtocomplexnumbers.html" class="no-external"></a>
+<a href="./studyguides/introtoquadratics.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<a href="./studyguides/introtocomplexnumbers.html" class="no-external">Complex numbers are an extremely important concept in mathematics, as you can express a solution to any algebraic equation using complex numbers. This guide introduces the idea of a complex number in the form <span class="math inline">\(z = a + bi\)</span>, as well as the concepts of real and imaginary parts, complex conjugates, and Argand diagrams.</a>
+<a href="./studyguides/introtoquadratics.html" class="no-external">Solving quadratic equations of the form <span class="math inline">\(ax^2 + bx + c\)</span> is a core skill in mathematics. Identifying variables and coefficients of quadratic equations, as well as finding the discriminant <span class="math inline">\(D = b^2 - 4ac\)</span>, are essential steps in solving quadratic equations.</a>
 </div>
 </div>
 <div class="metadata">
-<p><a href="./studyguides/introtocomplexnumbers.html" class="no-external"></a></p><a href="./studyguides/introtocomplexnumbers.html" class="no-external">
+<p><a href="./studyguides/introtoquadratics.html" class="no-external"></a></p><a href="./studyguides/introtoquadratics.html" class="no-external">
 <div class="listing-author">
 Tom Coleman
 </div>
@@ -390,7 +453,7 @@ No matching items
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1732114720721" data-listing-reading-time-sort="5" data-listing-word-count-sort="828">
+<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1733234817670" data-listing-reading-time-sort="5" data-listing-word-count-sort="826">
 <div class="thumbnail">
 <p><a href="./fullindex.html" class="no-external"></a></p><a href="./fullindex.html" class="no-external">
 <p class="card-img-top"><img src="logo50mm.png"  class="thumbnail-image card-img"/></p>
@@ -404,7 +467,7 @@ No matching items
 <a href="./fullindex.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<a href="./fullindex.html" class="no-external">This is a complete index of links to all available materials on the STARMAST site. Hello there!</a>
+<a href="./fullindex.html" class="no-external">This is a complete index of links to all available materials on the STARMAST site.</a>
 </div>
 </div>
 <div class="metadata">
