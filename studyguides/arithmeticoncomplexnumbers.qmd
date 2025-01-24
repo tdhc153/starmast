@@ -1,0 +1,477 @@
+---
+title: "Arithmetic on complex numbers"
+author: "Charlotte McCarthy"
+abstract-title: Summary
+abstract: Doing arithmetic using complex numbers is a core concept in mathematics as it allows you to perform calculations in the complex plane. This guide covers addition, subtraction, multiplication, and division on complex numbers.
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+*Before reading this guide, it is recommended that you read [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd).*
+
+
+# Introduction to arithmetic on complex numbers {-}
+
+In [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd), you learned that complex numbers help you solve equations such as $x^2 = -1$ by introducing the imaginary unit $i$. 
+
+However, what should you do if you want to add together or divide two or more different complex numbers?
+
+Arithmetic on real numbers underpins almost every aspect of life. Since the complex numbers extend the real numbers, it is natural to ask how arithmetic operations work on complex numbers. 
+It turns out that this type of arithmetic is a powerful tool used to solve a variety of problems across mathematics, physics, engineering, and computer science.
+It can be used to solve problems relating to fluid dynamics, oscillations, computer graphics, and many more!
+
+Understanding how to do arithmetic using complex numbers allows you to perform operations - addition, subtraction, multiplication, and division - providing a framework for studying electrical circuits, wave behaviour and even quantum mechanics.
+
+This guide will focus on how to perform these operations: starting with addition and subtraction, moving on to multiplication, then division, and finishing with quick-check questions at the end where you can test yourself. Throughout, Argand diagrams (see [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd) for further information) are used to visualize complex numbers. 
+
+::: {.callout-important}
+
+Throughout the guide $z = a + bi$ and $w = c + di$ are two different complex numbers where $a,b,c,d \in R$
+:::
+
+## Addition and subtraction
+
+
+In [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd), you learned that a complex number has both a real part and an imaginary part.\
+When you want to add or subtract complex numbers you should **add/subtract the real parts** and **add/subtract the imaginary parts**.
+
+
+If you want to calculate $z + w$ then you could use this general form:
+<!-- \begin{align*} -->
+$$z + w = (a + bi) + (c + di)$$
+$$= a + bi + c + di$$
+<!-- \end{align*} -->
+Now you can group together the real and imaginary parts to simplify the expression:
+<!-- \begin{align*} -->
+$$z + w = (a + c) + (b + d)i$$ 
+<!-- \end{align*} -->
+If you want to calculate $z - w$ then you could use this general form (very similar to the general form for addition) paying special attention to the signs:
+\begin{align*}
+z - w &= (a + bi) - (c + di)\\[0.5em]
+&= a + bi - c - di\\[0.5em]
+&= (a - c) + (b - d)i
+\end{align*} 
+
+It follows that $\textsf{Re}(z \pm w) = \textsf{Re}(z) \pm \textsf{Re}(w)$ and $\textsf{Im}(z \pm w) = \textsf{Im}(z) \pm \textsf{Im}(w)$.
+
+Here are some examples of adding and subtracting complex numbers. 
+
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+What is $(2 + 3i) + (5 + 7i)$?\
+
+To work this out you should add the real parts of the two complex numbers and then add the imaginary parts of the two complex numbers.\
+
+$\textsf{Re}(2 + 3i) = 2$\
+$\textsf{Re}(5 + 7i) = 5$
+
+So the real part should be $2 + 5 = 7$.\
+
+$\textsf{Im}(2 + 3i) = 3$\
+$\textsf{Im}(5 + 7i) = 7$
+
+So the imaginary part should be $3 + 7 = 10$.\
+
+Therefore, $$(2 + 3i) + (5 + 7i) = 7 + 10i$$ 
+
+You do not need to write this working every time - once you are confident you can then write like this:  
+\begin{align*}
+(2 + 3i) + (5 + 7i) &= 2 + 3i + 5 + 7i\\[0.5em]
+&= 2 + 5 + 3i + 7i \\[0.5em]
+&= (2 + 5) + (3 + 7)i\\[0.5em]
+&= 7 + 10i
+\end{align*} 
+Therefore, $$(2 + 3i) + (5 + 7i) = 7 + 10i$$
+
+:::
+
+
+::: {.callout-note appearance="simple"}
+## Example 2
+What is $(10 + i) - (3 - 4i)$?\
+
+Be very careful when dealing with different signs ($-$, $+$)!\
+This is where being very explicit could help - if you want to, do not be afraid to clearly identify the real and imaginary parts of the complex numbers first (like in Example 1).\
+
+$\textsf{Re}(10 + i) = 10$\
+$\textsf{Re}(3 - 4i) = 3$
+
+So the real part should be $10 - 3 = 7$ (as you are  subtracting these complex numbers).\
+
+$\textsf{Im}(10 + i) = 1$\
+$\textsf{Im}(3 - 4i) = -4$
+
+So the imaginary part should be $1 - (-4) = 1 + 4 = 5$.\
+
+Therefore, $$(10 + i) - (3 - 4i) = 7 + 5i$$ 
+
+You do not need to write this working if you do not want to - once you are confident you can then write like this:  
+\begin{align*}
+(10 + i) - (3 - 4i) &= 10 + i - 3 + 4i\\[0.5em] 
+&= 10 - 3 + i + 4i \\[0.5em]
+&= (10 - 3) + (1 + 4)i\\[0.5em]
+&= 7 + 5i
+\end{align*} 
+Therefore, $$(10 + i) - (3 - 4i) = 7 + 5i$$
+
+:::
+  
+
+::: {.callout-note appearance="simple"}
+## Example 3
+What is $(2\sqrt5 - 3i) - (4 + i\sqrt3)$?
+
+\begin{align*}
+(2\sqrt5 - 3i) - (4 + i\sqrt3) &= 2\sqrt5 -3i - 4 - i\sqrt3\\[0.5em]
+&= 2\sqrt5 - 4 -3i - i\sqrt3\\[0.5em]
+&= (2\sqrt5 - 4) - (3 + \sqrt3)i
+\end{align*} 
+
+Therefore, $$(2\sqrt5 - 3i) - (4 + i\sqrt3) = (2\sqrt5 - 4) - (3 + \sqrt3)i$$
+:::
+
+::: {.content-visible when-format="html"}
+
+In @fig-1 you can see two points plotted on an Argand diagram (see [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd) for further information on Argand diagrams):\
+
+![An Argand diagram with two complex fnumbers: $-1+5i$ and $3-4i$ displayed.](./FiguresPNG/complexarithmetic-fig1.png){width="150%" fig-alt="An Argand diagram with two complex numbers - $z = -1+5i$ and $w = 3-4i$ displayed." #fig-1}
+:::
+
+::: {.content-hidden when-format="html"}
+In @fig-1 you can see two points plotted on an Argand diagram (see [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd) for further information on Argand diagrams):\
+
+![An Argand diagram with two complex numbers: $-1+5i$ and $3-4i$ displayed.](./FiguresPNG/complexarithmetic-fig1.png){fig-alt="An Argand diagram with two complex numbers - $z = -1+5i$ and $w = 3-4i$ displayed." #fig-1}
+
+:::
+
+@Fig-1 allows you to visualize the addition of $3-4i$ and $-1+5i$.\
+Start at the point $-1+5i$ in @fig-1.
+If you add $3-4i$, you are adding $3$ to the real part and $-4$ to the imaginary part.
+This means that you move the point $3$ units to the right and $4$ units down.\
+Where is your new point going to be on @fig-1?\
+The answer is given in @fig-2.
+
+
+
+::: {.content-visible when-format="html"}
+
+![An Argand diagram with two complex numbers: $w = -1+5i$ and $z = 3-4i$ displayed alongside the point generated by adding these two complex numbers together: $z+w = 2+i$.](./FiguresPNG/complexarithmetic-fig2.png){width="150%" fig-alt="An Argand diagram with two complex numbers: $z = -1+5i$ and $w = 3-4i$ displayed along with the point generated by adding these two complex numbers together: $z+w = 2+i$."  #fig-2}
+:::
+
+::: {.content-hidden when-format="html"}
+
+![An Argand diagram with two complex numbers: $w = -1+5i$ and $z = 3-4i$ displayed alongside the point generated by adding these two complex numbers together: $z+w = 2+i$.](./FiguresPNG/complexarithmetic-fig2.png){fig-alt="An Argand diagram with two complex numbers: $z = -1+5i$ and $w = 3-4i$ displayed along with the point generated by adding these two complex numbers together: $z+w = 2+i$." #fig-2}
+
+
+
+
+
+
+
+:::
+\
+
+## Multiplication
+
+In this section, you will learn how to multiply complex numbers together.\
+You can do this by expanding the brackets and using the fact that **$i^2 = -1$** (for more information on this please see [Guide: Introduction Expanding Brackets]).
+
+If you want to calculate $zw$ then you could use this general form:
+\begin{align*}
+zw &= (a + bi)(c+di)\\[0.5em]
+&= ac + adi + bci + bdi^2
+\end{align*} 
+Here you use $i^2 = -1$ to simplify this expression:
+\begin{align*}
+&= ac + adi + bci - bd\\[0.5em]
+&= (ac - bd) + (ad + bc)i
+\end{align*}
+
+::: {.callout-note icon="false"}
+
+If you are multiplying a complex number by a **real number**, you can multiply the real part and the imaginary part by this number.\
+For example, if $p$ is a real number then:
+\begin{align*}
+p(a + bi) = pa + pbi
+\end{align*} 
+
+:::
+
+Consider the point $z=3-4i$ from @fig-1 which is plotted again on @fig-3.
+
+::: {.content-visible when-format="html"}
+
+![An Argand diagram with the complex number: $3-4i$ displayed.](./FiguresPNG/complexarithmetic-fig3.png){width="150%" fig-alt="An Argand diagram with the complex number: $z = 3-4i$ displayed." #fig-3}
+:::
+
+::: {.content-hidden when-format="html"}
+\
+
+![An Argand diagram with the complex number: $3-4i$ displayed.](./FiguresPNG/complexarithmetic-fig3.png){fig-alt="An Argand diagram with the complex number: $z = 3-4i$ displayed." #fig-3} 
+
+:::
+Visualize the result of $2(3-4i)$.
+What does it mean to multiply a complex number by a real number?
+ 
+$$2(3-4i) = 6-8i$$
+
+Where is this point in relation to @fig-3?\
+The answer is given in @fig-4.
+
+::: {.content-visible when-format="html"}
+
+![An Argand diagram with the complex numbers: $z=3-4i$ and the product $2(3-4i) = 6-8i$ displayed.](./FiguresPNG/complexarithmetic-fig4.png){width="150%" fig-alt="An Argand diagram with the complex number: $z = 3-4i$ displayed." #fig-4}
+:::
+
+::: {.content-hidden when-format="html"}
+![An Argand diagram with the complex numbers: $z=3-4i$ and the product $2(3-4i) = 6-8i$ displayed.](./FiguresPNG/complexarithmetic-fig4.png){fig-alt="An Argand diagram with the complex number: $z = 3-4i$ displayed." #fig-4}
+
+::: 
+
+Notice that by multiplying $z=3-4i$ by $2$ you have scaled both the real and the imaginary parts by $2$.
+Visually, this means the point $z=3-4i$ has been stretched outwards, away from the origin. 
+
+
+Here are some examples of multiplying complex numbers. 
+
+
+::: {.callout-note appearance="simple"}
+## Example 4
+
+What is $(5 - 7i)\cdot(2 + i)$?
+
+\begin{align*}
+(5 - 7i)\cdot(2 + i) &= 10 + 5i -14i - 7i^2
+\end{align*} 
+Here you can use $i^2 = -1$ to simplify this expression:
+\begin{align*}
+&= 10 + 5i - 14i + 7\\[0.5em]
+&= 10 + 7 + 5i - 14i\\[0.5em]
+&= 17 - 9i
+\end{align*} 
+Therefore, $$(5 - 7i)\cdot(2 + i) = 17 - 9i$$
+
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 5
+What is $(2 + i\sqrt3)\cdot(1 - i\sqrt2)$?
+
+\begin{align*}
+(2 + i\sqrt3)\cdot(1 - i\sqrt2)  &= 2 - i2\sqrt2 + i\sqrt3 - i^2\sqrt6
+\end{align*} 
+Here you can use $i^2 = -1$ to simplify this expression:
+\begin{align*}
+&= 2 - i2\sqrt2 + i\sqrt3 + \sqrt6\\[0.5em]
+&= (2 + \sqrt6) + (\sqrt3 - 2\sqrt2 )i
+\end{align*} 
+Therefore, $$(2 + i\sqrt3)\cdot(1 - i\sqrt2) = (2 + \sqrt6) + (\sqrt3 - 2\sqrt2 )i$$
+
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 6
+What is $(5 + 3i)\cdot(5 - 3i)$?
+  
+\begin{align*}
+(5 + 3i)\cdot(5 - 3i)  &= 25 - 15i + 15i - 9i^2
+\end{align*} 
+Here you can see that $- 15i + 15i = 0$, therefore you are left with:
+\begin{align*}
+&= 25 - 9i^2
+\end{align*} 
+
+Now you can use the fact that $i^2 = -1$ to simplify this expression to give:
+\begin{align*}
+25 - 9i^2 &= 25 + 9\\[0.5em]
+&= 34
+\end{align*} 
+Therefore, $$(5+3i)\cdot(5-3i) = 34$$
+
+You are left with a real number which might seem strange because you multiplied two complex numbers together. However, you can see that $5 - 3i$ is the complex conjugate of $5 + 3i$.\
+This leads to an important result regarding the product of a complex number and its complex conjugate.
+
+:::
+
+::: {.callout-important}
+
+When you **multiply** any **two complex conjugates together**, the **result is a real number** (see Example 6).\
+Consider the complex number you have been working with $z=a+bi$, the complex conjugate of $z$ is $\bar{z}=a-bi$ (please see [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd) for further information on complex conjugates).
+What happens if you multiply these complex numbers together?
+\begin{align*}
+(a+bi)(a-bi) &= a^2 - abi + abi - bi^2 \\[0.5em]
+&= a^2 - bi^2 \\[0.5em]
+&= a^2 + b^2
+\end{align*} 
+Feel free to try this out yourself with any two complex conjugates you can think of!
+:::
+
+
+## Division
+
+Dividing complex numbers requires using the complex conjugate which you have seen in [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd) to ensure the denominator is a real number (see Example 6).
+
+
+If you want to calculate $\dfrac{z}{w}$ then you could use this general form:
+
+
+$$\dfrac{z}{w} = \dfrac{a + bi}{c + di}$$
+
+Multiply the top and the bottom of the fraction by the complex conjugate of the denominator as this does not change the value of the number because you are multiplying it by $1$: $\dfrac{c - di}{c - di} = 1$.\
+However, from the result obtained from Example 6, it does eliminate the complex part of the denominator, making it into a real number! 
+\begin{align*}
+\dfrac{a + bi}{c + di}&= \dfrac{a + bi}{c + di}\cdot\dfrac{c - di}{c - di}\\[0.5em] 
+&= \dfrac{(a + bi)(c - di)}{(c + di)(c - di)}
+\end{align*}
+Now you can expand the brackets in the numerator and the denominator.
+
+$$\dfrac{(a + bi)(c - di)}{(c + di)(c - di)} = \dfrac{ac - adi + bci - bdi^2}{c^2 - cdi + cdi - d^2i^2}$$
+Now that you have expanded the brackets, you can see that the terms $- cdi$ and $cdi$ in the denominator will cancel each other out.
+$$\dfrac{ac - adi + bci - bdi^2}{c^2 - cdi + cdi - d^2i^2} = \dfrac{ac - adi + bci - bdi^2}{c^2 - d^2i^2}$$
+
+You can also use the fact that $i^2 = -1$ to simplify the denominator (and numerator) further.
+(Be careful - this involves a sign change!)
+\begin{align*}
+\dfrac{ac - adi + bci - bdi^2}{c^2 - d^2i^2} &= \dfrac{ac - adi + bci + bd}{c^2 + d^2}\\[0.5em] 
+&= \dfrac{(ac + bd) + (bc - ad)i}{c^2 + d^2}
+\end{align*}
+
+Therefore, your final answer is:
+$$\dfrac{z}{w} = \dfrac{a + bi}{c + di} = \dfrac{(ac + bd) + (bc - ad)i}{c^2 + d^2}$$
+
+
+
+Here are some examples of dividing by complex numbers. 
+
+
+::: {.callout-note appearance="simple"}
+## Example 7
+
+What is $\dfrac{1}{5 - 2i}$?
+
+The complex conjugate of $5 - 2i$ is $5 + 2i$. 
+Therefore you can multiply $\dfrac{1}{5 - 2i}$ by $\dfrac{5 + 2i}{5 + 2i}$ to get: 
+
+\begin{align*}
+\dfrac{1}{5 - 2i} &= \dfrac{1}{5 - 2i}\cdot\dfrac{5 + 2i}{5 + 2i}\\[0.5em]
+&= \dfrac{5 + 2i}{(5 - 2i)(5 + 2i)}\\[0.5em]
+&= \dfrac{5 + 2i}{25 + 10i - 10i -4i^2}
+\end{align*}
+Now that you have expanded the brackets in the denominator, you can see that the terms $10i$ and $-10i$ will cancel each other out.\
+You can also use the fact that $i^2 = -1$ to simplify the denominator further.
+\begin{align*}
+\dfrac{1}{5 - 2i} &= \dfrac{5 + 2i}{25 + 4}\\[0.5em] 
+&= \dfrac{(5 + 2i)}{29}
+\end{align*}
+
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 8
+
+What is $\dfrac{2 - 4i}{\sqrt3 + i}$?
+
+The complex conjugate of $\sqrt3 + i$ is $\sqrt3 - i$. Therefore you can multiply $\dfrac{2 - 4i}{\sqrt3 + i}$ by $\dfrac{\sqrt3 - i}{\sqrt3 - i}$ 
+  
+\begin{align*}
+\dfrac{2 - 4i}{\sqrt3 + i} &= \dfrac{2 - 4i}{\sqrt3 + i}\cdot\dfrac{\sqrt3 - i}{\sqrt3 - i}\\[0.5em]
+&= \dfrac{(2 - 4i)(\sqrt3 - i)}{(\sqrt3 + i)(\sqrt3 - i)}\\[0.5em]
+&= \dfrac{2\sqrt3 - 2i - i4\sqrt3 + 4i^2}{3 - i\sqrt3 + i\sqrt3 - i^2}
+\end{align*}
+
+Now that you have expanded the brackets in the denominator, you can see that the terms $- i\sqrt3$ and $i\sqrt3$ will cancel each other out.\
+You can also use the fact that $i^2 = -1$ to simplify the denominator (and numerator) further.
+
+\begin{align*}
+\dfrac{2 - 4i}{\sqrt3 + i} &= \dfrac{2\sqrt3 - 2i - i4\sqrt3 - 4}{3 + 1}\\[0.5em] 
+&= \dfrac{(2\sqrt3 - 4) - (2 + 4\sqrt3)i }{4}\\[0.5em] 
+&= \dfrac{2(\sqrt3 - 2) - 2(1 + 2\sqrt3)i }{4}\\[0.5em] 
+&= \dfrac{(\sqrt3 - 2) - (1 + 2\sqrt3)i }{2}
+\end{align*}
+
+Therefore, $$\dfrac{2 - 4i}{\sqrt3 + i} = \dfrac{(\sqrt3 - 2) - (1 + 2\sqrt3)i }{2}$$
+
+:::
+
+## Quick check problems {-}
+
+::: {.content-visible when-format="html"}
+
+::: {.webex-check .webex-box}
+
+Work out the following arithmetic questions, giving your answers in the form $a + bi$ where a is the real part and b is the imaginary part. (If your answer is a fraction please write it in decimal form).
+
+
+1. What is $(-4 - i) - (7 - 6i)$?
+
+Answer: a = `r fitb(-11)`, b = `r fitb(5)`
+
+2. What is $(3 - 4i) + (-2 - 9i) - (6 + 4i)$?
+
+Answer: a = `r fitb(-5)`, b = `r fitb(-17)`
+
+3. What is $(3 - 4i)^2$?
+
+Answer: a = `r fitb(-7)`, b = `r fitb(-24)`
+
+4. What is $(7-i)(4+6i)$?
+
+Answer: a = `r fitb(34)`, b = `r fitb(38)`
+
+5. What is $\dfrac{6 - i}{-5i}$?
+
+Answer: a = `r fitb(0.2)`, b = `r fitb(1.2)`
+
+6. Determine whether the following statements are true or false:
+
+(a) Multiplying together $(2-2i)$ and $(2+2i)$ will give you a complex number.\ 
+Answer: `r torf(FALSE)`
+
+(b) The real part of the answer to the sum $(-4-5i)-(-6\sqrt2- i)$ is positive.\ 
+Answer: `r torf(TRUE)`
+
+:::
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+Work out the following arithmetic questions, giving your answers in the form $a + bi$ where a is the real part and b is the imaginary part. (If your answer is a fraction please write it in decimal form).
+
+
+1. What is $(-4 - i) - (7 - 6i)$?
+
+2. What is $(3 - 4i) + (-2 - 9i) - (6 + 4i)$?
+
+3. What is $(3 - 4i)^2$?
+
+4. What is $(7-i)(4+6i)$?
+
+5. What is $\dfrac{6 - i}{-5i}$?
+
+6. Determine whether the following statements are true or false:
+
+(a) Multiplying together $(2-2i)$ and $(2+2i)$ will give you a complex number.
+
+(b) The real part of the answer to the sum $(-4-5i)-(-6\sqrt2- i)$ is positive.
+
+:::
+
+
+## Further reading
+
+[For more questions on the subject, please go to Questions: Arithmetic on complex numbers](../questions/qs-arithmeticoncomplexnumbers.qmd)
+
+---
+
+## Version history and licensing {-}
+
+v1.0: initial version created 11/24 by Charlotte McCarthy as part of a University of St Andrews VIP project. 
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

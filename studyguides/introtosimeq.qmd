@@ -1,0 +1,252 @@
+---
+title: Introduction to solving simultaneous equations
+author: Ollie Brooke
+abstract-title: Summary
+abstract: Solving simultaneous equations is a crucial skill in algebra. Understanding this concept allows you to find the common solution to a set of two equations. This guide will introduce you to two ways of solving a pair of simultaneous equations — the substitution method and the elimination method.
+categories:
+  - Algebra
+  - Solving equations
+image: FiguresPNG/introtoquadratics-image.png
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, it is highly recommended that you read [Guide: Introduction to rearranging equations](../studyguides/introtorearrange.qmd).*
+
+# What are simultaneous equations? {-}
+
+Simultaneous equations are sets of algebraic equations with two or more variables that share common solutions. For instance, the equations $x-2y=4$ and $2x+y=6$ can be considered simultaneous equations as they involve the same set of unknown quantities, $x$ and $y$. Solving a set of simultaneous equations means finding the value of each variable such that all the given equations are satisfied at the same time.
+
+::: {.callout-note}
+
+## Definition of a simultaneous equation
+
+A simultaneous equation is a set of two or more equations that share common variables and are solved together to find a solution that satisfies all the equations in the set. 
+:::
+
+Solving simultaneous equations is such an essential skill within the world of mathematics that you can find its use in various fields ranging from physics to economics to engineering. For instance, any time you use your phone or computer to find your location on a map, it is through solving a series of navigation equations that satellites are able to triangulate your position.
+
+In this guide, you will focus specifically on solving sets of simultaneous linear equations in two variables. To learn about linear equations in two variables and their properties, see [Guide: Introduction to linear equations](../studyguide/introtolineareq.qmd).
+
+# Thinking about simultaneous equations graphically {-}
+
+Since linear equations in two variables can be plotted along an $x$ and $y$ axis (see [Guide: Introduction to linear equations](../studyguide/introtolineareq.qmd)), it helps to think about simultaneous equations from a graphical perspective. For example, the equation $x+y=1$ can be represented as:
+
+![The line, $x+y=1$ plotted on an axis](./FiguresPNG/Graph1.png){width=50%}
+
+Like all linear equations in two variables, the equation $x+y=1$ has infinitely many solutions. This is because for any value of $x$ there is a value of $y$ which solves the equation. For instance, when $x=1$, $y=0$. Equally, when $x=2$, $y=-1$. In this way, there are infinite combinations of $x$ and $y$ which satisfy the equation, each of them resting on the plotted line.
+
+However, this changes when you try solving $x-y=1$ simultaneously with another linear equation, such as $x-2y=-1$:
+
+![The lines, $x+y=1$ and $x-2y=-1$ plotted on an axis](./FiguresPNG/Graph2.png){width=50%}
+
+Although each linear equation has its own infinite set of solutions, there is only one pair of $x$ and $y$ values which satisfies them both at the same time. This is represented graphically as the point at which the two equations intersect. The $x$ and $y$ coordinates of this intersection are the solution to the simultaneous equations' common $x$ and $y$ variables. 
+
+When you solve a set of simultaneous equations, you are locating the point at which the two equations meet.
+
+Now consider the set of simultaneous equations, $2x+2y=1$ and $2x+2y=2$. 
+
+![The lines, $2x+2y=1$ and $2x+2y=2$ plotted on an axis](./FiguresPNG/Graph3.png){width=50%}
+
+When you graph the two equations together, you can see that they are parallel to one another. They do not have any point of intersection. It follows that the set of simultaneous equations has no solution. This is a principle that applies to all pairs of simultaneous equations which share the same gradient but have different $y$-axis intercepts.
+
+::: {.callout-tip}
+Two equations can share the same gradient even if their $x$ and $y$ coefficients are not matching. If one equation has a pair of $x$ and $y$ coefficients that is a multiple of the other equation's $x$ and $y$ coefficients, then the two equations have the same slope. For instance, the equation $x-y=1$ has the same gradient as $2x-2y=1$.
+:::
+
+Compare this with a different set of simultaneous equations like $x+3y=2$ and $2x+6y=4$.
+
+![The lines, $x+3y=2$ and $2x+6y=4$ plotted on an axis](./FiguresPNG/Graph4.png){width=50%}
+
+Once you plot these equations alongside one another, you find that they both describe the same line. In other words, the two equations are equivalent to one another. This is because the equation, $2x+6y=4$ is a multiple of the equation, $x+3y=2$. Since the two equations overlap entirely, there are infinite points of intersection. In this way, the set of simultaneous equations has an infinite number of solutions. This is always the case whenever one simultaneous equation is a multiple of the other.
+
+In short, a set of simultaneous linear equations may have: one unique solution, no solution or infinitely many solutions. Any set of simultaneous linear equations can be solved by plotting each linear equation and finding any existing point of intersection. 
+
+Although understanding the graphical context of simultaneous equations is useful, drawing equations can be tedious. Instead, you can solve simultaneous equations algebraically. This can be done either by the substitution method or by the elimination method.
+
+# The substitution method {-}
+The substitution method works by rearranging simultaneous equations to solve for one variable at a time. This process can be broadly broken down into four different steps:
+
+1. Rearrange one of the given simultaneous equations such that a single variable is isolated on one side of the equation. By doing this, you can find a way to express one variable ($x$, for example) in terms of another variable (like $y$).
+
+2. Substitute this expression (for instance, $x$ in terms of $y$) into the other simultaneous equation. This produces a new equation in one variable.
+
+3. Using this new equation, solve for the first variable.
+
+4. Having calculated one variable, substitute it for its value in one of the original equations. This will create an equation in the remaining variable which can then be solved.
+
+The examples below show this methodology in action.
+
+::: {.callout-note}
+## Example 1
+Suppose you are given the following set of simultaneous equations: $x + 2y = 5$ and $3x + 3y = 6$.
+
+Using the first simultaneous equation, $x + 2y = 5$, you can make $x$ the subject of the equation by subtracting the variable $2y$ from both sides of the equation. This will give you:
+$$x = 5 − 2y$$
+You have now found a way of expressing the value of $x$ in terms of $y$. Using the second simultaneous equation, $3x+3y=6$, you can then substitute $x$ for the expression $5 - 2y$:
+$$3(5 - 2y) + 3y = 6$$
+This leaves you with an equation with only one variable, $y$. By expanding the brackets and simplifying the equation, you arrive at $y=3$.
+
+Now that you have solved for the value of $y$, you can use the first given simultaneous equation to find $x$. To do this, you substitute $y$ with 3:
+$$x+2(3)=5$$
+Finally, this gives you $x=-1$.
+
+So, $x=-1$ and $y=3$ is the solution to the simultaneous equations.
+:::
+
+::: {.callout-note}
+## Example 2
+Suppose you are given the following set of simultaneous equations: $2x+3y=7$ and $4x-y=5$.
+
+Start by using the second equation, $4x−y=5$, to solve for $y$ in terms of $x$. You can do this by adding $y$ to both sides of the equation and then subtracting 5 from either side:
+$$y=4x-5$$
+Now you have expressed $y$ in terms of $x$. Next, substitute this expression for $y$ into the first equation, $2x+3y=7$:
+$$2x+3(4x-5)=7$$
+This gives you an equation with only $x$. After simplifying the equation, you find that $x=11/7$.
+
+With $x$ found, substitute $x=11/7$ back into the equation for $y$:
+$$y=4(11/7)-5$$
+This becomes $y=9/7$.
+
+In this way, $x=11/7$ and $y=9/7$ is the solution to the simultaneous equations.
+:::
+
+You will notice that the substitution method works best when applied to problems where one of the simultaneous equations can be easily rearranged to isolate a single variable. As you will discover further into this guide, it is also arguably the quicker method to use when coefficients between simultaneous equations are not matching. 
+
+# The elimination method {-}
+Similar to the substitution method, the elimination method also relies on rearranging simultaneous equations to remove one variable at a time. Instead of substitution, however, this process uses the addition and subtraction of equations to single out a variable. This can be summed up by the following steps:
+
+1. Align one variable ($x$, for example) across both simultaneous equations so that the corresponding coefficients match. If necessary, this can be done by multiplying or dividing either of the simultaneous equations by a constant. This makes it easier to compare or combine them.
+
+2. To cancel out the aligned variable, combine the equations by adding them together or subtracting one from the other. This gives a new equation in the other variable.
+
+3. Solve for the first variable using this single-variable equation.
+
+4. Substitute the found value of the first variable into one of the original simultaneous equations. This produces an equation that solves for the remaining variable.
+
+The examples below demonstrate how to apply this method.
+
+::: {.callout-note}
+## Example 3
+Suppose you are given the following set of simultaneous equations: $x+2y=5$ and $3x+3y=6$.
+
+To solve this using the elimination method, the goal is to eliminate one of the variables by making the coefficients of either $x$ or $y$ the same in both equations. In this case, you can eliminate $x$ by multiplying the first equation by 3:
+$$3x+6y=15$$
+Now that the $x$ coefficients match you can subtract the second simultaneous equation from $3x+6y=15$:
+$$(3x+6y)-(3x+3y)=15-6$$
+This simplifies to $3y=9$.
+
+Accordingly, it follows that $y=3$.
+
+Now that you know $y=3$, substitute this value into the first equation to solve for $x$:
+$$x+2(3)=5$$
+
+So, $x=-1$.
+
+Accordingly, $x=-1$ and $y=3$ is the solution to the simultaneous equations.
+:::
+
+::: {.callout-note}
+## Example 4
+Suppose you are given the following set of simultaneous equations: $2x-y=3$ and $4x+3y=12$.
+
+First, align the variables so that one of them can be eliminated. In this instance, you can start to eliminate the $y$ variable by multiplying the first simultaneous equation by 3. This gives:
+$$6x-3y=9$$
+You can now remove the $y$ variable by adding this equation to the second simultaneous equation:
+$$(6x-3y)+(4x+3y)=9+12$$
+This simplifies to $10x=21$.
+
+Using this simplified equation, you find that $x=2.1$.
+
+Now that you have found $x=2.1$, substitute this value into the first simultaneous equation to solve for $y$:
+$$2(2.1)-y=3$$
+From this, you arrive at $y=1.2$.
+
+So, $x=2.1$ and $y=1.2$ is the solution the simultaneous equations.
+:::
+
+You might find using elimination method to be particularly effective when the coefficients of one variable are already aligned or can be easily adjusted by multiplying the simultaneous equations. This method is best used in situations where manipulating the equations to eliminate a variable is more straightforward than isolating a variable. Additionally, the elimination method can be faster than substitution when dealing with equations that have fractions or complicated numbers, since it skips the step of creating expressions with multiple variables.
+
+# Quick check problems {.unnumbered}
+
+<!-- add facility for webexercises to work on html -->
+
+:::: {.content-visible when-format="html"}
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box}
+1.  How many solutions are there to the set of simultaneous equations $2x+y= 0$ and $4x+2y=10$?
+
+Answer: `r fitb(0)`
+
+2.  How many solutions are there to the set of simultaneous equations $x-y=0$ and $3x+y=4$?
+
+Answer: `r fitb(1)`
+
+3. Use the substitution method to find the values of $x$ and $y$ in the following set of simultaneous equations
+
+<!-- -->
+
+(a) $2x+3y=12$ and $4x-y=10$ Answer: $x$=`r fitb(3)`, $y$=`r fitb(2)`
+
+(b) $10x+2y=28$ and $3x+y=12$ Answer: $x$=`r fitb(1)`, $y$=`r fitb(9)`
+
+(c) $8x+9y=53$ and $5x+8y=45$ Answer: $x$=`r fitb(1)`, $y$=`r fitb(5)`
+
+4. Use the elimination method to find the values of $x$ and $y$ in the following set of simultaneous equations
+
+<!-- -->
+
+(a) $2x+y=-9$ and $10x+6y=-48$ Answer: $x$=`r fitb(-3)`, $y$=`r fitb(-3)`
+
+(b) $8x+4y=-56$ and $3x+10y=-89$ Answer: $x$=`r fitb(-3)`, $y$=`r fitb(-8)`
+
+(c) $x+5y=3$ and $2x+10y=6$ Answer: $x$=`r fitb(8)`, $y$=`r fitb(-1)`
+
+:::
+
+:::
+
+:::: {.content-hidden when-format="html"}
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box}
+1.  How many solutions are there to the set of simultaneous equations $2x+y= 0$ and $4x+2y=10$?
+
+2.  How many solutions are there to the set of simultaneous equations $x-y=0$ and $3x+y=4$?
+
+3. Use the substitution method to find the values of $x$ and $y$ in the following sets of simultaneous equations
+
+(a) $2x+3y=12$ and $4x-y=10$
+
+(b) $10x+2y=28$ and $3x+y=12$
+
+(c) $8x+9y=53$ and $5x+8y=45$
+
+4. Use the elimination method to find the values of $x$ and $y$ in the following set of simultaneous equations
+
+<!-- -->
+
+(a) $2x+y=-9$ and $10x+6y=-48$ 
+
+(b) $8x+4y=-56$ and $3x+10y=-89$
+
+(c) $x+5y=3$ and $2x+10y=6$ 
+
+:::
+
+:::
+
+# Further reading {-}
+
+[For more questions on the subject, please go to Questions: Introduction to simultaneous equations.](../questions/qs-introtosimeq.qmd)
+
+
+## Version history {-}
+
+v1.0: initial version created 12/24 by Ollie Brooke as part of a University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

@@ -129,18 +129,27 @@ This definition extends the trigonometric functions to situations outside right-
 
 ::: {.content-visible when-format="html"}
 
-<!-- <div id="calculator3" style="width: 100%; height: 450px;"></div> -->
+<div id="calculator3" style="width: 100%; height: 450px;"></div>
 
-<!-- <script> -->
-<!--   var elt = document.getElementById('calculator3'); -->
-<!--   var calculator3 = Desmos.GraphingCalculator(elt); -->
-<!--   calculator3.setMathBounds({ left: -3, right: 3, bottom: -3, top: 3}); -->
-<!--   calculator3.setExpression({ id: 't', latex: 't=0' }); -->
-<!--   calculator3.setExpression({ id: "1", type: "expression", latex: "(\\cos(t),\\sin(t))", pointStyle: "POINT", hidden: false, secret: false, color: "#DB4315"}); -->
-<!--   calculator3.setExpression({ id: 'line1', latex: 'x^2 + y^2 = 1', color: '#000000' }); -->
-<!--   calculator3.setExpression({ id: 'ct', latex: '\\cos(t)' }); -->
-<!--   calculator3.setExpression({ id: 'st', latex: '\\sin(t)' }); -->
-<!-- </script> -->
+<script>
+  var elt = document.getElementById('calculator3');
+  var calculator3 = Desmos.GraphingCalculator(elt);
+  calculator3.setMathBounds({ left: -1.5, right: 1.5, bottom: -1.5, top: 1.5});
+  calculator3.setExpression({ id: 't', latex: 't=0', sliderBounds: { min: '0', max: '2\\pi', step: '\\pi/24'}});
+  calculator3.setExpression({ id: 'line1', latex: 'x^2 + y^2 = 1', secret: true, color: '#000000' });
+  calculator3.setExpression({ id: "line2", type: "expression", latex: "(0,0), (\\cos(t),\\sin(t))", pointStyle: "POINT", hidden: false, secret: true, color: "#000000", lines: true});
+  calculator3.setExpression({ id: "line3", type: "expression", latex: "x = 0.15\\cos(t), y = 0.15\\sin(t)", pointStyle: "POINT", hidden: false, secret: true, color: "#000000"});
+  calculator3.setExpression({ id: "1", type: "expression", latex: "(\\cos(t),\\sin(t))", pointStyle: "POINT", hidden: false, secret: true, color: "#DB4315"});
+  calculator3.setExpression({ id: "3", type: "expression", latex: "(0,\\sin(t)), (\\cos(t),\\sin(t))", pointStyle: "POINT", hidden: false, secret: true, color: "#3F68B6", lines: true});
+  calculator3.setExpression({ id: "2", type: "expression", latex: "[(\\cos(t),0), (\\cos(t),\\sin(t))]", pointStyle: "POINT", hidden: false, secret: true, color: "#DB4315", lines: true});
+  calculator3.setExpression({ id: "4", type: "expression", latex: "[(\\cos(t)+\\sin(t)\\tan(t),0), (\\cos(t),\\sin(t))]", pointStyle: "POINT", hidden: false, secret: true, color: "#FFCB00", lines: true});
+  calculator3.setExpression({ id: "5", type: "expression", latex: "(\\cos(t)/2,\\sin(t))", pointStyle: "POINT", hidden: true, secret: true, color: "#3F68B6", label: 'cos(t)', showLabel: true});
+  calculator3.setExpression({ id: "6", type: "expression", latex: "(\\cos(t),\\sin(t)/2)", pointStyle: "POINT", hidden: true, secret: true, color: "#DB4315", label: 'sin(t)', showLabel: true});
+  calculator3.setExpression({ id: "7", type: "expression", latex: "(\\cos(t)+\\sin(t)\\tan(t)/2,\\sin(t)/2)", pointStyle: "POINT", hidden: true, secret: true, color: "#FFCB00", label: 'tan(t)', showLabel: true});
+  calculator3.setExpression({ id: 'ct', latex: '\\cos(t)', text: 'length of horizontal line segement', color: "#3F68B6" });
+  calculator3.setExpression({ id: 'st', latex: '\\sin(t)', color: "#DB4315" });
+  calculator3.setExpression({ id: 'tt', latex: '\\tan(t)', color: "#FFCB00" });
+</script>
 
 ![The unit circle, labelled with what each function represents.](./FiguresPNG/intrototrig-fig3-3.png){width="100%" fig-alt="The unit circle; a circle of radius $1$ centred on an $xy$-axis. On it, the $y$ coordinates of any point on the circle represent $\sin(\theta)$ and the $x$ coordinates $\cos(\theta)$. A line is drawn tangent to the radius of the circle and the point where this crosses the $x$-axis will represent $\tan(\theta)$" #fig-2}
 
@@ -268,12 +277,12 @@ These, together with $\sin$, $\cos$ and $\tan$, are known as the **circular trig
 
 ## Example 3
 
-What is $\csc(45) + \cot(30) + \sec(60)$ equal to?
+What is $\csc(\pi/4) + \cot(\pi/6) + \sec(\pi/3)$ equal to?
 
-Using the definitions of $\sec, \csc$ and $\cot$, you can write $$\csc(45) + \cot(30) + \sec(60) = \frac{1}{\sin(45)} + \frac{1}{\tan(30)} + \frac{1}{\cos(60)}$$ Using the table of known angles, and not forgetting to reciprocate, gives
+Using the definitions of $\sec, \csc$ and $\cot$, you can write $$\csc(\pi/4) + \cot(\pi/6) + \sec(\pi/3) = \frac{1}{\sin(\pi/4)} + \frac{1}{\tan(\pi/6)} + \frac{1}{\cos(\pi/3)}$$ Using the table of known angles, and not forgetting to reciprocate, gives
 \begin{align*}
-\csc(45) + \cot(30) + \sec(60) &= \frac{1}{\sin(45)} + \frac{1}{\tan(30)} + \frac{1}{\cos(60)}\\[1em]
-&= \frac{1}{1/\sqrt{2}} + \frac{1}{1/\sqrt{3}} + \frac{1}{1/2} 
+\csc(\pi/4) + \cot(\pi/6) + \sec(\pi/3) &= \frac{1}{\sin(\pi/4)} + \frac{1}{\tan(\pi/6)} + \frac{1}{\cos(\pi/3)}\\[1em]
+&= \frac{1}{1/\sqrt{2}} + \frac{1}{1/\sqrt{3}} + \frac{1}{1/2}\\[1em]
 &= \sqrt{2} + \sqrt{3} + 2\\[1em]
 \end{align*}
 and this is as far as you can go.
