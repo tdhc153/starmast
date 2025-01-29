@@ -1,0 +1,30 @@
+\documentclass[preview,border=5pt]{standalone}
+\usepackage{teaching}
+\begin{document}
+
+\pagecolor{white}
+
+\centering
+\pgfplotsset{compat=newest}
+\begin{tikzpicture}[scale=0.95]
+\begin{axis}[
+axis x line=center,
+axis y line=center,
+axis line style={black!30!white},
+xlabel={$x$},
+ylabel={$y$},
+xlabel style={right,black!30!white},
+ylabel style={above,black!30!white},
+domain=(-4):(4),
+samples=128,
+ticks=none,
+no marks,
+xmin=(-4), xmax=(4),
+ymin=(-2), ymax=(6),
+]
+\addplot [sblu] {1 - \x}; 
+\addplot [sred] {0.5 + 0.5*\x}; 
+\end{axis} 
+\end{tikzpicture}
+
+\end{document}

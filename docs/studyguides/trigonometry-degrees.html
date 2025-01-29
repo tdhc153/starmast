@@ -194,8 +194,8 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <div id="quarto-announcement" data-announcement-id="65de738f1625391b8448d1859a4554fc" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
-<p><strong>Latest content:</strong> Students on VIP S1 complete their work! See news section for more. (24/01/24)</p>
+  <div id="quarto-announcement" data-announcement-id="fa444c0a8067789768ff5f2f81f230f3" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> Guide on rationalizing the denominator available now! (28/01/25)</p>
 </div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 </header>
 <!-- content -->
@@ -320,7 +320,7 @@ Example 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You are given a triangle in #fig-0.</p>
+<p>You are given a triangle in <a href="#fig-0" class="quarto-xref">Figure&nbsp;2</a>.</p>
 <div id="fig-0" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Right-angled triangle with side lengths $4,7,10$, used in Example 1.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -393,17 +393,30 @@ Definition of sin, cos, tan in terms of the unit circle
 <p>Let <span class="math inline">\((x,y)\)</span> be a point on the unit circle centred at the origin <span class="math inline">\((0,0)\)</span>. Let <span class="math inline">\(\theta\)</span> be the angle defined by the positive <span class="math inline">\(x\)</span>-axis and the line segment from centre to the point <span class="math inline">\((x,y)\)</span>. Define <span class="math display">\[\cos(\theta) = x \qquad \sin(\theta) = y\]</span> and <span class="math display">\[\tan(\theta) = \frac{y}{x} = \frac{\sin(\theta)}{\cos(\theta)}\]</span></p>
 </div>
 </div>
-<p>This definition extends the trigonometric functions to situations outside right-angled triangles; dramatically increasing their usability.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The unit circle; a circle of radius $1$ centred on an $xy$-axis. On it, the $y$ coordinates of any point on the circle represent $\sin(\theta)$ and the $x$ coordinates $\cos(\theta)$. A line is drawn tangent to the radius of the circle and the point where this crosses the $x$-axis will represent $\tan(\theta)$">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./FiguresPNG/intrototrig-fig3-3.png" class="img-fluid figure-img" style="width:100.0%" alt="The unit circle; a circle of radius $1$ centred on an $xy$-axis. On it, the $y$ coordinates of any point on the circle represent $\sin(\theta)$ and the $x$ coordinates $\cos(\theta)$. A line is drawn tangent to the radius of the circle and the point where this crosses the $x$-axis will represent $\tan(\theta)$">
+<p>This definition extends the trigonometric functions to situations outside right-angled triangles; dramatically increasing their usability. The figure below details how the values of <span class="math inline">\(\cos(t), \sin(t), \tan(t)\)</span> change as the angle <span class="math inline">\(t\)</span> changes.</p>
+<div id="calculator4" style="width: 100%; height: 450px;">
+
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: The unit circle, labelled with what each function represents.
-</figcaption>
-</figure>
-</div>
+<script>
+  var elt = document.getElementById('calculator4');
+  var calculator4 = Desmos.GraphingCalculator(elt, {degreeMode: true});
+  calculator4.setMathBounds({ left: -1.5, right: 1.5, bottom: -1.5, top: 1.5});
+  calculator4.setExpression({ id: 't', latex: 't=0', sliderBounds: { min: '0', max: '360', step: '3'}});
+  calculator4.setExpression({ id: 'line1', latex: 'x^2 + y^2 = 1', secret: true, color: '#000000' });
+  calculator4.setExpression({ id: "line2", type: "expression", latex: "(0,0), (\\cos(t),\\sin(t))", pointStyle: "POINT", hidden: false, secret: true, color: "#000000", lines: true});
+  calculator4.setExpression({ id: "line3", type: "expression", latex: "x = 0.15\\cos(t), y = 0.15\\sin(t)", pointStyle: "POINT", hidden: false, secret: true, color: "#000000"});
+  calculator4.setExpression({ id: "1", type: "expression", latex: "(\\cos(t),\\sin(t))", pointStyle: "POINT", hidden: false, secret: true, color: "#DB4315"});
+  calculator4.setExpression({ id: "3", type: "expression", latex: "(0,\\sin(t)), (\\cos(t),\\sin(t))", pointStyle: "POINT", hidden: false, secret: true, color: "#3F68B6", lines: true});
+  calculator4.setExpression({ id: "2", type: "expression", latex: "[(\\cos(t),0), (\\cos(t),\\sin(t))]", pointStyle: "POINT", hidden: false, secret: true, color: "#DB4315", lines: true});
+  calculator4.setExpression({ id: "4", type: "expression", latex: "[(\\cos(t)+\\sin(t)\\tan(t),0), (\\cos(t),\\sin(t))]", pointStyle: "POINT", hidden: false, secret: true, color: "#FFCB00", lines: true});
+  calculator4.setExpression({ id: "5", type: "expression", latex: "(\\cos(t)/2,\\sin(t))", pointStyle: "POINT", hidden: true, secret: true, color: "#3F68B6", label: 'cos(t)', showLabel: true});
+  calculator4.setExpression({ id: "6", type: "expression", latex: "(\\cos(t),\\sin(t)/2)", pointStyle: "POINT", hidden: true, secret: true, color: "#DB4315", label: 'sin(t)', showLabel: true});
+  calculator4.setExpression({ id: "7", type: "expression", latex: "(\\cos(t)+\\sin(t)\\tan(t)/2,\\sin(t)/2)", pointStyle: "POINT", hidden: true, secret: true, color: "#FFCB00", label: 'tan(t)', showLabel: true});
+  calculator4.setExpression({ id: 'ct', latex: '\\cos(t)', text: 'length of horizontal line segement', color: "#3F68B6" });
+  calculator4.setExpression({ id: 'st', latex: '\\sin(t)', color: "#DB4315" });
+  calculator4.setExpression({ id: 'tt', latex: '\\tan(t)', color: "#FFCB00" });
+</script>
+<p>&nbsp;</p>
 <p>In the unit circle, the angle <span class="math inline">\(\theta\)</span> ranges from <span class="math inline">\(0^\circ\)</span> to <span class="math inline">\(360^\circ\)</span>. Over this range, the values of the co-ordinates <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> range from positive to negative. Therefore, the three main trigonometric functions <span class="math inline">\(\sin\)</span>, <span class="math inline">\(\cos\)</span> and <span class="math inline">\(\tan\)</span> take different signs in different positions.</p>
 <ol type="1">
 <li><p>If <span class="math inline">\(x &gt; 0\)</span> and <span class="math inline">\(y &gt; 0\)</span> (so <span class="math inline">\(0^\circ&lt; \theta &lt; 90^\circ\)</span>), then both <span class="math inline">\(\cos(\theta) &gt; 0\)</span> and <span class="math inline">\(\sin(\theta) &gt; 0\)</span>, and therefore <span class="math inline">\(\tan\theta &gt; 0\)</span>.</p></li>
@@ -411,14 +424,14 @@ Figure&nbsp;5: The unit circle, labelled with what each function represents.
 <li><p>If <span class="math inline">\(x &lt; 0\)</span> and <span class="math inline">\(y &lt; 0\)</span> (so <span class="math inline">\(180^\circ &lt; \theta &lt; 270^\circ\)</span>), then both <span class="math inline">\(\cos(\theta) &lt; 0\)</span> and <span class="math inline">\(\sin(\theta) &lt; 0\)</span>, and therefore <span class="math inline">\(\tan(\theta) &gt; 0\)</span>.</p></li>
 <li><p>If <span class="math inline">\(x &gt; 0\)</span> and <span class="math inline">\(y &lt; 0\)</span> (so <span class="math inline">\(270^\circ &lt; \theta &lt; 360^\circ\)</span>), then <span class="math inline">\(\cos(\theta) &gt; 0\)</span> and <span class="math inline">\(\sin(\theta) &lt; 0\)</span>, and therefore <span class="math inline">\(\tan(\theta) &lt; 0\)</span>.</p></li>
 </ol>
-<p>See <a href="#fig-5" class="quarto-xref">Figure&nbsp;6</a> for a picture of this behaviour.</p>
+<p>See <a href="#fig-5" class="quarto-xref">Figure&nbsp;5</a> for a picture of this behaviour.</p>
 <div id="fig-5" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A graphical depiction of signs of trigonometric functions in each quadrant.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./FiguresPNG/intrototrig-fig5-5.png" class="img-fluid figure-img" style="width:100.0%" alt="A graphical depiction of signs of trigonometric functions in each quadrant.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: A graphical depiction of signs of trigonometric functions in each quadrant.
+Figure&nbsp;5: A graphical depiction of signs of trigonometric functions in each quadrant.
 </figcaption>
 </figure>
 </div>
@@ -503,14 +516,14 @@ Figure&nbsp;6: A graphical depiction of signs of trigonometric functions in each
 </tr>
 </tbody>
 </table>
-<p>These common values are also observed in the diagrams of three important triangles; see <a href="#fig-6" class="quarto-xref">Figure&nbsp;7</a> for more.</p>
+<p>These common values are also observed in the diagrams of three important triangles; see <a href="#fig-6" class="quarto-xref">Figure&nbsp;6</a> for more.</p>
 <div id="fig-6" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A picture of three important triangles demonstrating important trigonometric values.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="./FiguresPNG/intrototrigd-fig6-1.png" class="img-fluid figure-img" style="width:100.0%" alt="A picture of three important triangles demonstrating important trigonometric values.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Three triangles to remember; these give values for <span class="math inline">\(\sin\)</span>, <span class="math inline">\(\cos\)</span> and <span class="math inline">\(\tan\)</span> of the angles <span class="math inline">\(30^\circ\)</span>, <span class="math inline">\(45^\circ\)</span> and <span class="math inline">\(60^\circ\)</span>.
+Figure&nbsp;6: Three triangles to remember; these give values for <span class="math inline">\(\sin\)</span>, <span class="math inline">\(\cos\)</span> and <span class="math inline">\(\tan\)</span> of the angles <span class="math inline">\(30^\circ\)</span>, <span class="math inline">\(45^\circ\)</span> and <span class="math inline">\(60^\circ\)</span>.
 </figcaption>
 </figure>
 </div>
@@ -1424,7 +1437,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
     <a class="nav-link" href="../license.html">
-<p>STARMAST © 2024 is licensed under CC BY-NC-SA 4.0.</p>
+<p>STARMAST © 2025 is licensed under CC BY-NC-SA 4.0.</p>
 </a>
   </li>  
 </ul>
