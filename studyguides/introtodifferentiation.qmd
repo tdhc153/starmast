@@ -24,47 +24,92 @@ Sometimes it is necessary to examine the rate of change of a particular process 
 
 The idea of investigating the rate of change of functions and their associated applications is known as **differential calculus**. The process of **differentiation** allows you to examine these properties of rates of change of functions. Importantly, this process is *general*, allowing you to investigate the rate of change of a function at any point. Differentiating a function $y = f(x)$ gives its *derivative*, which is written as $\dfrac{dy}{dx}$ or $f'(x)$.
 
-This guide will look at the idea of differentiation; where it comes from 
+This guide will look at the idea of differentiation; where it comes from, how it can be used, and how you can apply its techniques to functions that you may be familiar with. 
 
 ## Gradients of a graph
 
-The rate of change of a straight line $y = mx + c$ is its gradient $m$, and this doesn't change wherever you are on the line. However, the rate of change of a function like $f(x) = x^2$ (see Figure \@ref(fig:I311fig)) is dependent on what point you are at --- when $x$ is small, the rate of change is correspondingly small; when $x$ is large, the rate of change is larger. You can see this in the variable 'steepness' of the curve.
+The rate of change of a straight line $y = mx + c$ is its gradient $m$, and this doesn't change wherever you are on the line. However, the rate of change of a function like $f(x) = x^2$ is dependent on what point you are at --- when $x$ is small, the rate of change is correspondingly small; when $x$ is large, the rate of change is larger. You can see this in the variable 'steepness' of the curve.
+
+[FIGURE HERE]
+
+The idea of examining the rate of change of a function is to look at the gradients of straight lines, with endpoints as values on the graph, that approximate the function. The smaller the straight line is, the better the approximation. So let $h$ be some small real number. Then the line with endpoints $f(x+h)$ and $f(x)$ has vertical change $f(x+h) - f(x)$, and horizontal change $(x+h) - x = h$. Therefore, the gradient of this line is $$\frac{f(x+h) - f(x)}{h}.$$
+
+[FIGURE HERE]
+
+The problem is when $h$ tends towards $0$, then $f(x+h)$ and $f(x)$ get closer and closer to one another, and the length of the line gets smaller and smaller. What use is there measuring the gradient of a line if the line disappears? The idea is to look at a parallel line, which has the same gradient.
+ 
+Here, this convenient parallel line is the **tangent of $f(x)$ at $x$**; this is the straight line touching the curve at the point $(x,f(x))$, but does not intersect it at that point (see [Guide: Tangents]). Therefore, you can say that the gradient of the tangent to the curve at the point $x$ is $$\lim_{h\to 0}\frac{f(x+h) - f(x)}{h}$$ and this consideration defines the **derivative** of a function.
+
+## Derivatives and differentiation
+
+Following the investigation in the previous section, the derivative of a function can now be defined.
 
 ::: {.callout-note}
 
-## Definition of quadratic equation, root
+## Definition of the derivative $f'(x)$
 
-A **quadratic equation** is an equation that can be rearranged into the form $$ax^2 + bx + c = 0$$ where $x$ is a variable and $a,b,c$ are real numbers with $a \neq 0$.
+The **derivative of $f(x)$ with respect to $x$** is defined to be the function $$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h}$$ The derivative of $f(x)$ with respect to $x$ is a function in its own right. The value of the derivative $f'(x)$ at the point $x = a$, defined by $$f'(a) = \lim_{h\to 0}\frac{f(a+h) - f(a)}{h}$$
+is the gradient of the tangent to $f(x)$ at the point $a$. 
 
-Values of $x$ that satisfy the equation $ax^2 + bx + c = 0$ are known as **roots** of the equation. Typically, roots of a quadratic are expressed in the form of the variable. So here, the roots of $ax^2 + bx + c = 0$ are 'roots in $x$'.
-
-:::
-
-Here, $a\neq 0$ as if it was, then the equation would no longer be a quadratic equation!
-
-The general shape of a quadratic equation is known as a **parabola**. A figure of two parabolas is given in @fig-1; the left hand graph is if $a > 0$, whereas the right hand graph is when $a < 0$.
-
-::: {.content-visible when-format="html"}
-
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1}
+If this limit exists, then $f(x)$ is **differentiable at $x = a$**. If $f(x)$ is differentiable at every point of its domain, then it is a **differentiable function**. The process of finding $f'(x)$ given a function $f(x)$ is called **differentiating with respect to $x$**.
 
 :::
 
-::: {.content-hidden when-format="html"}
+The function $f(x)$ is often defined in terms of a second variable $y$. If a function is written $y = f(x)$, then there is alternative notation for writing the derivative with respect to $x$:
 
-![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1}
+::: {.callout-note}
+
+## Definition of $dy/dx$
+
+Let $y = f(x)$ be a function of $x$. Then the **derivative of $y$ with respect to $x$** can be written as $\dydx{y}{x} = f'(x)$
+
+The derivative of $y$ with respect to $x$ at a point $x = a$ is written as $$\left.\dydx{y}{x}\right|_{x = a} = f'(a)$$.
+
+:::
+
+
+::: {.callout-warning}
+
+Although $\ds\dydx{y}{x}$ *looks* like a fraction, it **isn't**. However, sometimes it *behaves* like a fraction, and you can use this to remember certain results. However, this isn't an excuse to treat it as a fraction in standard mathematical work.
+  
+:::
+
+This notation was used by [Leibniz](https://mathshistory.st-andrews.ac.uk/Biographies/Leibniz/) to represent the derivative of a function $y = f(x)$. It's useful because it codifies the derivative as a rate of change (ratio of change in $y$ to change in $x$) as well as explicitly naming the variable that you are differentiating with respect to. (This will be extremely useful in [Guide: Introduction to partial differentiation].) However, it's not so useful for expressing the value of the derivative at a particular point $x = a$; for instance
+$$f'(a)\quad\textsf{ compared to }\quad \left.\dydx{y}{x}\right|_{x = a}.$$
+The important thing to consider is this:
+
+::: {.callout-tip}
+
+As both notations $f'(x)$ and $\dydx{f}{x}$ have their advantages over the other, **it's important to be able to use both sets of notation interchangeably**.
 
 :::
 
-It is very important to be able to identify the variable in a quadratic equation, as well as the coefficients $a,b,c$. In the course of your mathematical study, it may be that the variable of a quadratic equation is not only letters like $x,y,z$, but squares or cubes like $x^2$ and $y^3$, or even functions like $e^x$, $\cos(x)$, and $\sin(y)$.
+There is one other thing that you should know before proceeding. What happens if you try and differentiate a function $f(x)$ on the variable $x$ with respect to a *different* variable $t$? Well, as the derivative with respect to $t$ measures the rate of change of a function with respect to $t$, and since $f(x)$ does not change as $t$ changes, it follows that $$\ddx{t}\left(f(x)\right) = 0$$
 
-::: {.callout-note appearance="simple"}
+So differentiating a function of some variable with respect to a different variable results in nothing. This is why it's important to specify the variable you are differentiating with respect to, and it will be particularly important when it comes to differentiating functions of **more than one** variable: see [Guide: Introduction to partial differentiation].
 
-## Example 1
+## Differentiating well known functions
 
-You are given the quadratic equation $2x^2 + 4x - 8 = 0$. The variable of the quadratic equation is $x$, and the coefficients are $a = 2, b = 4, c = -8$.
+You can use the limit definition of the derivative to show that the following key functions have the following derivatives:
+
+::: {.callout-note}
+
+## List of derivatives
+
+- For any number $a$, the derivative of the constant function $f(x) = a$ is $f'(x) = 0$. 
+
+- For any number $n\neq 0$, the derivative of any function $f(x) = x^n$ is $f'(x) = nx^{n-1}$.
+
+- The derivative of the exponential function $f(x) = e^x$ is $f'(x) = e^x$. 
+
+- The derivative of the sine function $f(x) = \sin(x)$ is $f'(x) = \cos(x)$, and the derivative of the cosine function $g(x) = \cos(x)$ is $g'(x) = -\sin(x)$. (Notice the minus sign here!)
+
+- The derivative of the natural logarithm function $f(x) = \ln(x)$ is $f'(x) = \dfrac{1}{x}$. 
 
 :::
+
+All of these results are explained in [Proof sheet: Derivatives of functions from first principles].
+
 
 
 ::: {.callout-note appearance="simple"}
