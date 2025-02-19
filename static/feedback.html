@@ -1,8 +1,9 @@
  <!-- Feedback box for webpage ---------------------------------------
         Compiled into each .html page by Quarto.
         Sends user feedback to private server.
-        Future goal to move to STARMAST hosted server.
-    Author: Mohit Agarwal (Mohit-Agarwa1)
+        Website and form handled by Netlify now
+    Authors: Mohit Agarwal (Mohit-Agarwa1)
+             Tristin Doherty (Trido)
 --------------------------------------------------------------------->
 
 <h1>Feedback</h1>
@@ -10,19 +11,21 @@
     Your feedback is appreciated and useful. Feel free to leave a
     comment here.
 </p>
-<form action="https://mohit.uk/cgi-bin/starmast/post-form.php"
-      method="POST">
+<form name="feedback" method="POST" data-netlify="true">
     <label for="name">Name: </label>
     <br>
-    <input type="text" name="name">
+    <input type="text" name="name" required>
     <br><br>
+    
     <label for="email">E-mail: </label>
     <br>
-    <input type="text" name="email">
+    <input type="email" name="email" required>
     <br><br>
+    
     <label for="feedback">Feedback: </label>
     <br>
-    <textarea rows="5" cols="50" placeholder="Feedback" name="feedback"></textarea>
+    <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required></textarea>
     <br><br>
-    <input type="submit" value="Submit">
+    
+    <button type="submit">Submit</button>
 </form>
