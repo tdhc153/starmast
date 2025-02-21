@@ -2,16 +2,18 @@
         Compiled into each .html page by Quarto.
         Sends user feedback to private server.
         Website and form handled by Netlify now
+        Input verified by reCaptcha2 
     Authors: Mohit Agarwal (Mohit-Agarwa1)
              Tristin Doherty (Trido)
 --------------------------------------------------------------------->
 
 <h1>Feedback</h1>
-<p>
-    Your feedback is appreciated and useful. Feel free to leave a
-    comment here.
-</p>
-<form name="feedback" method="POST" netlify>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here.</p>
+<form name="feedback" method="POST" netlify netlify-honeypot="bot-field">
+    <p style="display: none;">
+        <label>Don't fill this out if you're human: <input name="bot-field"></label>
+    </p>
+
     <label for="name">Name: </label>
     <br>
     <input type="text" name="name" required>
@@ -26,6 +28,13 @@
     <br>
     <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required></textarea>
     <br><br>
-    
+
+    <!-- Google reCAPTCHA Widget -->
+    <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+    <br>
+
     <button type="submit">Submit</button>
 </form>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
