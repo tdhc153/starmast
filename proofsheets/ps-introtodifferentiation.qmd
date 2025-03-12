@@ -1,0 +1,151 @@
+---
+title: "Proof: Derivatives of functions from first principles"
+author: "Tom Coleman"
+abstract-title: Summary
+abstract: The proof sheet finds derivatives of common functions using the limit definition of the derivative.
+draft: true
+---
+
+*Before reading this proof sheet, it is essential that you read [Guide: Introduction to differentiation and the derivative](../studyguides/introtodifferentiation.qmd). In addition, reading [Guide: Introduction to limits] is useful. Further reading will be illustrated where required.*
+
+The starting point of this proof sheet is the limit definition of the derivative of a function:
+
+::: callout-note
+## Reminder of limit definition of the derivative
+The **derivative of $f(x)$ with respect to $x$** is defined to be the function $$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h}.$$
+:::
+
+To find the derivative of a function $f(x)$, replace the function $f$ in the right-hand side of the above limit, and then evaluate the limit. Care has to be taken to remove the $h$ in the denominator of the fraction, as you cannot evaluate the limit as $h$ tends to $0$ with it still there! (Remember, dividing by $0$ can be extremely hazardous to your health.)
+
+From here, the proof sheet will start with the proof of the derivative of $x^2$, which will then be expanded using the binomial theorem to find the derivative of $x^n$. Then, the derivative of $e^x$ is found. Finally, the derivatives of $\sin(x)$ and $\cos(x)$ are demonstrated. 
+
+
+# Derivatives of $x^2$ and $x^n$ {-}
+
+*Before reading this section, it may be useful to read [Guide: The binomial theorem].*
+
+### Derivative of $x^2$ {-}
+
+:::{.callout-note}
+## Derivative of $x^2$
+The derivative of $f(x) = x^2$ is $f'(x) = 2x$. 
+:::
+
+Using the limit definition of the derivative and the definition of $f(x)$ gives
+$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{(x+h)^2 - x^2}{h}$$
+Expanding $(x+h)^2$ gives
+$$\lim_{h\to 0}\frac{(x+h)^2 - x^2}{h} = \lim_{h\to 0}\frac{x^2 + 2hx + h^2 - x^2}{h}$$
+Cancelling the $x^2$ in the numerator and then cancelling the $h$ from the denominator gives $$\lim_{h\to 0}\frac{x^2 + 2hx + h^2 - x^2}{h}=\lim_{h\to 0}\frac{2hx + h^2}{h} =\lim_{h\to 0}(2x + h)$$
+Now, as there is no longer a $h$ in the denominator, and the function is defined at $h = 0$, you can evaluate the limit as $h\to 0$ to be
+$$f'(x) = \lim_{h\to 0}(2x + h) = 2x$$
+
+### Derivative of $x^n$ {-}
+
+The difficulty with finding the derivative of $x^n$ is that you don't know what $n$ is, and therefore simplifying the expression $(x+h)^n$ requires a far more general approach. The tool for this is the **binomial theorem**, which states that if $n$ is a natural number, then $$(x+y)^n = \sum_{k=0}^n \binom{n}{k}x^{n-k}y^k.$$ See [Guide: The binomial theorem] for more.
+
+:::{.callout-note}
+## Derivative of $x^n$
+For $n$ a natural number, the derivative of $f(x) = x^n$ is $f'(x) = nx^{n-1}$. 
+:::
+
+In this case, the binomial theorem needs to be used on the $(x+h)^n$ term. For notational efficiency (and to encourage you to be unafraid of using it), sigma notation for summations will be used throughout (see [Guide: Introduction to sigma notation](../studyguides/sigmanotation.qmd) for more). You can then use careful algebraic manipulation and justification to work your way towards the answer.
+
+Again, by the rules of function composition $f(x+h) = (x+h)^n$. So, using the limit definition of the derivative.
+$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{(x+h)^n - x^n}{h}$$
+This is the point where you'll need to use the binomial theorem to get
+$$\lim_{h\to 0}\frac{(x+h)^n - x^n}{h} = \lim_{h\to 0}\frac{\sum_{k=0}^n\binom{n}{k}x^{n-k}h^k - x^n}{h}$$
+The next step is to cancel down this expression, which should be handled with care. First of all, let's get rid of the '$-x^n$' term. You can notice that when $k = 0$, the term of the sum is $\binom{n}{0}x^{n-0}h^0 = x^n$. Therefore, you can take this out of the sum (so that the sum now starts at $k = 1$) to get:
+$$\lim_{h\to 0}\frac{\sum_{k=0}^n\binom{n}{k}x^{n-k}h^k - x^n}{h} = \lim_{h\to 0}\frac{x^n + \sum_{k=1}^n\binom{n}{k}x^{n-k}h^k - x^n}{h} = \lim_{h\to 0}\frac{\sum_{k=1}^n\binom{n}{k}x^{n-k}h^k}{h}$$
+The next thing to focus on is getting rid of the $h$ in the denominator. As the sum inside this limit starts at $k = 1$, and has a $h^k$ term in it, you can notice that every term of the sum has a $h$ in it. Therefore, you can divide through this entire sum by $h$. Since $h^k/h = h^{k-1}$, you can say that
+$$\lim_{h\to 0}\left(\frac{\sum_{k=1}^n\binom{n}{k}x^{n-k}h^k}{h}\right) = \lim_{h\to 0}\left(\,\sum_{k=1}^n\binom{n}{k}x^{n-k}h^{k-1}\right)$$
+Now, you can evaluate the limit as $h\to 0$. Are there any terms which do not involve a $h$? The answer is yes: when $k = 1$, the term of the sum is 
+$$\binom{n}{1}x^{n-1}h^{1-1} = nx^{n-1}$$
+Taking this out (so that the sum now starts at $k = 2$) gives
+$$\lim_{h\to 0}\left(\,\sum_{k=1}^n\binom{n}{k}x^{n-k}h^{k-1}\right) = \lim_{h\to 0}\left(nx^{n-1} + \sum_{k=2}^n\binom{n}{k}x^{n-k}h^{k-1}\right)$$
+Since every term in the sum involves a $h$, the limit of this sum as $h\to 0$ is $0$. Therefore (finally)
+$$f'(x) = \lim_{h\to 0}\left(nx^{n-1} + \sum_{k=2}^n\binom{n}{k}x^{n-k}h^{k-1}\right) = nx^{n-1}$$
+
+### Extending to all non-zero real numbers {-}
+
+This is harder to do, and so you need more tools.
+
+You can now extend this to negative integers by using the quotient rule, and then to all rational numbers by using implicit differentiation. To extend to all real numbers uses the chain rule, and this relies on the derivative of $e^x$. For more on these, see [Proof sheet: Derivatives of other common functions].
+
+
+# Derivative of $e^x$ {-}
+
+*Before this proof, you may find it useful to read [Guide: Laws of indices]*
+
+There is an important limit that needs to be used to find the derivative of $e^x$, which is given by:
+
+$$\lim_{h\to 0}\frac{e^h - 1}{h} = 1$$
+The proof that this is true relies on some *real analysis* and the fact that the constant $e$ can be defined by $\lim_{x\to \infty}\left(1 + \frac{1}{x}\right)^x = e$.
+
+:::{.callout-note}
+## Derivative of $e^x$
+The derivative of $f(x) = e^x$ is $f'(x) = e^x$. 
+:::
+
+Again, let's use the limit definition of the derivative with $f(x) = e^x$. This gives:
+$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{e^{x+h} - e^x}{h}$$
+Typically, the goal has been to remove the $h$ in the denominator; however, it is not possible in this case, as expanding $e^{x+h}$ doesn't give a $h$ that you can get rid of while factorizing. In this case, what you can do is try and reduce to a known limit. In particular, the known limit involving $e^h$ is $\lim_{h\to 0}\frac{e^h - 1}{h} = 1$ and so you may be able to manufacture this limit by manipulation of the expression above. Using the laws of indices, you can write that
+$$\lim_{h\to 0}\frac{e^{x+h} - e^x}{h} = \lim_{h\to 0}\frac{e^x\cdot e^h - e^x}{h}$$
+Factorising out $e^x$ gives
+$$\lim_{h\to 0}\frac{e^x\cdot e^h - e^x}{h} = \lim_{h\to 0}\left(e^x\left(\frac{e^h - 1}{h}\right)\right)$$
+Now, $e^x$ is constant as $h$ varies, and so you can take this out of the limit to get: 
+$$\lim_{h\to 0}\left(e^x\left(\frac{e^h - 1}{h}\right)\right) = e^x\lim_{h\to 0}\left(\frac{e^h - 1}{h}\right)$$
+
+You can now evaluate the limit to get: $$e^x\lim_{h\to 0}\left(\frac{e^h - 1}{h}\right) = e^x(1) = e^x$$ It follows that $f'(x) = e^x$, as required.
+
+# Derivative of $\sin(x)$ and $\cos(x)$ {-}
+
+*Before reading this section, it may be useful to read [Guide: Trigonometric identities (radians)](../studyguide/trigonometricidentities-radians.qmd).*
+
+As with the derivative of $e^x$ in the previous section, there are two important limits involving $\cos$ and $\sin$ that are needed before continuing. These are: $$\lim_{h\to 0}\dfrac{\sin(h)}{h} = 1\quad\textsf{ and }\quad\lim_{h\to 0}\dfrac{\cos(h) - 1}{h}.$$ To show these are true, you need techniques from *real analysis*, which is the study of functions on real numbers.
+
+### Derivative of $\sin(x)$
+
+:::{.callout-note}
+## Derivative of $\sin(x)$
+The derivative of $f(x) = \sin(x)$ is $f'(x) = \cos(x)$. 
+:::
+
+Starting off with the limit definition of differentiation and $f(x) = \sin(x)$ gives 
+$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{\sin(x+h) - \sin(x)}{h}$$
+As in the case of $e^x$, expanding $\sin(x+h)$ won't give a single $h$ to cancel with! However, it could be that you can reduce this expression to the limits given above. Using the sum rule for $\sin$ (see [Guide: Trigonometric identities (radians)](../studyguides/trigonometricidentities-radians.qmd)), you can write that
+$$\lim_{h\to 0}\frac{\sin(x+h) - \sin(x)}{h} = \lim_{h\to 0}\frac{\sin(x)\cos(h) + \sin(h)\cos(x) - \sin(x)}{h}$$
+The bones of the two given limits are here, and now it's time to uncover them. Factorising out $\sin(x)$ and $\cos(x)$ gives
+$$\lim_{h\to 0}\frac{\sin(x)\cos(h) + \sin(h)\cos(x) - \sin(x)}{h} = \lim_{h\to 0}\left(\sin(x)\left(\frac{\cos(h) - 1}{h}\right) + \cos(x)\left(\frac{\sin(h)}{h}\right)\right)$$
+
+Using the two limits given above, and the fact that the values of $\sin(x)$ and $\cos(x)$ are independent of $h$:
+$$\lim_{h\to 0}\left(\sin(x)\left(\frac{\cos(h) - 1}{h}\right) + \cos(x)\left(\frac{\sin(h)}{h}\right)\right) = \sin(x)(0) + \cos(x)(1) = \cos(x)$$ and so $f'(x) = \cos(x)$ is the derivative of $\sin(x)$.
+
+### Derivative of $\cos(x)$ {-}
+
+:::{.callout-note}
+## Derivative of $\cos(x)$
+The derivative of $f(x) = \cos(x)$ is $f'(x) = -\cos(x)$. 
+:::
+
+Starting off with the limit definition of differentiation and $f(x) = \cos(x)$ gives 
+$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{\cos(x+h) - \cos(x)}{h}$$
+As in the case of $e^x$, expanding $\cos(x+h)$ won't give a single $h$ to cancel with! However, it could be that you can reduce this expression to the limits given above. Using the sum rule for $\cos$ (see [Guide: Trigonometric identities (radians)](../studyguides/trigonometricidentities-radians.qmd)), you can write that
+$$\lim_{h\to 0}\frac{\cos(x+h) - \cos(x)}{h} = \lim_{h\to 0}\frac{\cos(x)\cos(h) - \sin(x)\sin(h) - \cos(x)}{h}$$
+The bones of the two given limits are here, and now it's time to uncover them. Factorizing out $\cos(x)$ and $\sin(x)$ gives
+$$\lim_{h\to 0}\frac{\cos(x)\cos(h) - \sin(x)\sin(h) - \cos(x)}{h} = \lim_{h\to 0}\left(\cos(x)\left(\frac{\cos(h) - 1}{h}\right) - \sin(x)\left(\frac{\sin(h)}{h}\right)\right)$$
+
+Using the two limits given above, and the fact that the values of $\sin(x)$ and $\cos(x)$ are independent of $h$:
+$$\lim_{h\to 0}\left(\cos(x)\left(\frac{\cos(h) - 1}{h}\right) - \sin(x)\left(\frac{\sin(h)}{h}\right)\right) = \cos(x)(0) - \sin(x)(1) = -\sin(x)$$ and so $f'(x) = -\sin(x)$ is the derivative of $\cos(x)$.
+
+# Further reading {-}
+
+[Click this link to go back to Guide: Introduction to differentiation and the derivative.](../studyguides/introtodifferentiation.qmd)
+
+<!-- [For questions on this topic, please go to Questions: Introduction to differentation and the derivative.](../questions/qs-scalarproduct.qmd) -->
+
+## Version history {-}
+
+v1.0: created in 03/25 by tdhc.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
