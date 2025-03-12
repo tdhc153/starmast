@@ -517,30 +517,59 @@ window.onload = function() {
  <!-- Feedback box for webpage ---------------------------------------
         Compiled into each .html page by Quarto.
         Sends user feedback to private server.
-        Future goal to move to STARMAST hosted server.
-    Author: Mohit Agarwal (Mohit-Agarwa1)
+        Website and form handled by Netlify now
+        Input verified by reCaptcha2 
+    Authors: Mohit Agarwal (Mohit-Agarwa1)
+             Tristin Doherty (Trido)
 --------------------------------------------------------------------->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var form = document.querySelector("form[name='feedback']");
+        if (form) { 
+            form.addEventListener("submit", function(event) {
+                var emailInput = document.querySelector("input[name='email']");
+                var subjectInput = document.querySelector("input[name='subject']");
+
+                if (emailInput && subjectInput) {
+                    event.preventDefault();
+                    subjectInput.value = "Feedback from " + emailInput.value;
+                    form.submit();
+                }
+            });
+        }
+    });
+</script>
 
 <h1>Feedback</h1>
-<p>
-    Your feedback is appreciated and useful. Feel free to leave a
-    comment here.
-</p>
-<form action="https://mohit.uk/cgi-bin/starmast/post-form.php" method="POST">
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here.</p>
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+    <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+    <input type="hidden" name="subject" value="Feedback from unknown">
+
     <label for="name">Name: </label>
     <br>
-    <input type="text" name="name">
+    <input type="text" name="name" required="">
     <br><br>
+    
     <label for="email">E-mail: </label>
     <br>
-    <input type="text" name="email">
+    <input type="email" name="email" required="">
     <br><br>
+    
     <label for="feedback">Feedback: </label>
     <br>
-    <textarea rows="5" cols="50" placeholder="Feedback" name="feedback"></textarea>
+    <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
     <br><br>
-    <input type="submit" value="Submit">
+
+    <!-- Google reCAPTCHA Widget -->
+    <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+    <br>
+
+    <button type="submit">Submit</button>
 </form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
