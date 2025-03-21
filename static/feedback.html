@@ -1,4 +1,4 @@
- <!-- Feedback box for webpage ---------------------------------------
+<!-- Feedback box for webpage ---------------------------------------
         Compiled into each .html page by Quarto.
         Sends user feedback to private server.
         Website and form handled by Netlify now
@@ -8,20 +8,53 @@
 --------------------------------------------------------------------->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var form = document.querySelector("form[name='feedback']");
-        if (form) { 
-            form.addEventListener("submit", function(event) {
-                var emailInput = document.querySelector("input[name='email']");
-                var subjectInput = document.querySelector("input[name='subject']");
+      const form = document.querySelector("form[name='feedback']"); 
+      
+      form.addEventListener("submit", function(event) {
+          const nameInput = document.querySelector("input[name='name']")?.value.trim();
+          const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+          const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+  
+          if (!nameInput)    { alert("Please enter a name."); return; }
+          if (!emailInput)   { alert("Please enter an email."); return; }
+          if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+          
+          event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+          const subjectInput = document.querySelector("input[name='subject']");
+                  
+          // sanitise inputs
+          const sanitizedName = sanitizeInput(nameInput); 
+          const sanitizedEmail = sanitizeEmail(emailInput);
+          const sanitizedFeedback = sanitizeInput(feedbackInput);
 
-                if (emailInput && subjectInput) {
-                    event.preventDefault();
-                    subjectInput.value = "Feedback from " + emailInput.value;
-                    form.submit();
-                }
-            });
-        }
-    });
+          // validate email
+          if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+          subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+          form.submit();
+      });
+  });
+  
+  // Removes leading and trailing whitespace for formatting, replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+  function sanitizeInput(input) {
+    input = input.trim();                                      
+    input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return input;
+  }
+
+  // remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+  function sanitizeEmail(email) {
+    email = email.trim(); 
+    email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+    return email;
+  }
+
+  // This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+  function validateEmail(email) {
+    const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+    return re.test(email);
+  }
+  
 </script>
 
 <h1>Feedback</h1>
@@ -53,4 +86,3 @@
 </form>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
