@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<head>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta charset="utf-8" />
+<meta name="generator" content="quarto-1.5.57" />
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
-<title>Webexercises template – STARMAST</title>
+<meta name="author" content="Ifan Howells-Baines, Mark Toner" />
+
+<title>Answers: Introduction to radians – STARMAST</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,64 +23,9 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
-
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./favicon.png" rel="icon" type="image/png">
-<script src="site_libs/cookie-consent/cookie-consent.js"></script>
-<link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<!-- htmldependencies:E3FAD763 -->
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +52,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
 
 <script type="text/plain" cookie-consent="tracking">
 
@@ -141,49 +89,80 @@ cookieconsent.run({
 
 <script src="https://www.desmos.com/api/v1.10/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="webexfiles/webex.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css" />
 </head>
 
-<body class="nav-fixed">
+<body>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="/index.html">
     <span class="navbar-title">STARMAST</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+  aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation"
+  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link" href="/index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="/about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./newsindex.html"> 
+    <a class="nav-link" href="/newsindex.html"> 
 <span class="menu-text">News</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./fullindex.html"> 
+    <a class="nav-link" href="/fullindex.html"> 
 <span class="menu-text">Index</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./studyguidelist.html"> 
+    <a class="nav-link" href="/studyguidelist.html"> 
 <span class="menu-text">Study guides</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./qalist.html"> 
+    <a class="nav-link" href="/qalist.html"> 
 <span class="menu-text">Questions and answers</span></a>
   </li>  
 </ul>
@@ -198,197 +177,114 @@ cookieconsent.run({
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <div id="quarto-announcement" data-announcement-id="635d10ed61dad50d9ad43f6da5ace47f" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
-<p><strong>Latest content:</strong> Guide on arithmetic on complex numbers available now! (12/03/25)</p>
-</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+  <div id="quarto-announcement" data-announcement-id="635d10ed61dad50d9ad43f6da5ace47f" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">**Latest content:** Guide on arithmetic on complex numbers available now! (12/03/25)</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#example-questions" id="toc-example-questions" class="nav-link active" data-scroll-target="#example-questions">Example Questions</a>
-  <ul class="collapse">
-  <li><a href="#fill-in-the-blanks-fitb" id="toc-fill-in-the-blanks-fitb" class="nav-link" data-scroll-target="#fill-in-the-blanks-fitb">Fill-In-The-Blanks (<code>fitb()</code>)</a></li>
-  <li><a href="#multiple-choice-mcq" id="toc-multiple-choice-mcq" class="nav-link" data-scroll-target="#multiple-choice-mcq">Multiple Choice (<code>mcq()</code>)</a></li>
-  <li><a href="#true-or-false-torf" id="toc-true-or-false-torf" class="nav-link" data-scroll-target="#true-or-false-torf">True or False (<code>torf()</code>)</a></li>
-  <li><a href="#longer-mcqs-longmcq" id="toc-longer-mcqs-longmcq" class="nav-link" data-scroll-target="#longer-mcqs-longmcq">Longer MCQs (<code>longmcq()</code>)</a></li>
-  </ul></li>
-  <li><a href="#checked-sections" id="toc-checked-sections" class="nav-link" data-scroll-target="#checked-sections">Checked sections</a></li>
-  <li><a href="#hidden-solutions-and-hints" id="toc-hidden-solutions-and-hints" class="nav-link" data-scroll-target="#hidden-solutions-and-hints">Hidden solutions and hints</a></li>
-  </ul>
-</nav>
+        <div id="quarto-toc-target"></div>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Webexercises template</h1>
+<h1 class="title">Answers: Introduction to radians</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ifan Howells-Baines, Mark Toner </p>
+          </div>
+  </div>
     
   
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    Answers to the questions relating to the guide on radians.
+  </div>
+</div>
 
 
 </header>
 
-
-<p>This is a Web Exercise template created by the <a href="http://www.psy.gla.ac.uk">psychology teaching team at the University of Glasgow</a>, based on ideas from <a href="https://software-carpentry.org/lessons/">Software Carpentry</a>. This template shows how instructors can easily create interactive web documents that students can use in self-guided learning.</p>
-<p>The <code>{webexercises}</code> package provides a number of functions that you use in <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">inline R code</a> or through code chunk options to create HTML widgets (text boxes, pull down menus, buttons that reveal hidden content). Examples are given below. Render this file to HTML to see how it works.</p>
-<p><strong>NOTE: To use the widgets in the compiled HTML file, you need to have a JavaScript-enabled browser.</strong></p>
-<section id="example-questions" class="level2">
-<h2 class="anchored" data-anchor-id="example-questions">Example Questions</h2>
-<section id="fill-in-the-blanks-fitb" class="level3">
-<h3 class="anchored" data-anchor-id="fill-in-the-blanks-fitb">Fill-In-The-Blanks (<code>fitb()</code>)</h3>
-<p>Create fill-in-the-blank questions using <code>fitb()</code>, providing the answer as the first argument.</p>
-<ul>
-<li>2 + 2 is <input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></li>
-</ul>
-<p>You can also create these questions dynamically, using variables from your R session.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<ul>
-<li>The square root of 16 is: <input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></li>
-</ul>
-<p>The blanks are case-sensitive; if you don’t care about case, use the argument <code>ignore_case = TRUE</code>.</p>
-<ul>
-<li>What is the letter after D? <input class="webex-solveme nospaces ignorecase" size="1" data-answer="[&quot;E&quot;]"></li>
-</ul>
-<p>If you want to ignore differences in whitespace use, use the argument <code>ignore_ws = TRUE</code> (which is the default) and include spaces in your answer anywhere they could be acceptable.</p>
-<ul>
-<li>How do you load the tidyverse package? <input class="webex-solveme nospaces" size="20" data-answer="[&quot;library( tidyverse )&quot;,&quot;library( \&quot;tidyverse\&quot; )&quot;,&quot;library( 'tidyverse' )&quot;]"></li>
-</ul>
-<p>You can set more than one possible correct answer by setting the answers as a vector.</p>
-<ul>
-<li>Type a vowel: <input class="webex-solveme nospaces ignorecase" size="1" data-answer="[&quot;A&quot;,&quot;E&quot;,&quot;I&quot;,&quot;O&quot;,&quot;U&quot;]"></li>
-</ul>
-<p>You can use regular expressions to test answers against more complex rules.</p>
-<ul>
-<li>Type any 3 letters: <input class="webex-solveme nospaces regex" size="3" data-answer="[&quot;^[a-zA-Z]{3}$&quot;]"></li>
-</ul>
+<nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#q1" id="toc-q1">Q1</a></li>
+  <li><a href="#q2" id="toc-q2">Q2</a></li>
+  <li><a href="#q3" id="toc-q3">Q3</a></li>
+  <li><a href="#version-history-and-licensing" id="toc-version-history-and-licensing">Version history and licensing</a></li>
+  </ul>
+</nav>
+<p><em>These are the answers to <a href="../questions/qs-radians.qmd">Questions: Introduction to radians</a>.</em></p>
+<p><strong>Please attempt the questions before reading these answers!</strong></p>
+<section id="q1" class="level2 unnumbered">
+<h2 class="unnumbered">Q1</h2>
+<p>1.1. Multiplying <span class="math inline">\(30^\circ\)</span> by <span class="math inline">\(\pi\)</span> and dividing by <span class="math inline">\(180\)</span> gives <span class="math inline">\(\dfrac{30\pi}{180} \textsf{ rad} = \dfrac{\pi}{6} \textsf{ rad} = 0.524 \textsf{ rad}\)</span> to three decimal places.</p>
+<p>1.2. Multiplying <span class="math inline">\(105^\circ\)</span> by <span class="math inline">\(\pi\)</span> and dividing by <span class="math inline">\(180\)</span> gives <span class="math inline">\(\dfrac{105\pi}{180} \textsf{ rad} = \dfrac{7\pi}{12} \textsf{ rad} = 1.833 \textsf{ rad}\)</span> to three decimal places.</p>
+<p>1.3. Multiplying <span class="math inline">\(298^\circ\)</span> by <span class="math inline">\(\pi\)</span> and dividing by <span class="math inline">\(180\)</span> gives <span class="math inline">\(\dfrac{298\pi}{180} \textsf{ rad} = \dfrac{149\pi}{90} \textsf{ rad} = 5.201 \textsf{ rad}\)</span> to three decimal places.</p>
+<p>1.4. Multiplying <span class="math inline">\(61^\circ\)</span> by <span class="math inline">\(\pi\)</span> and dividing by <span class="math inline">\(180\)</span> gives <span class="math inline">\(\dfrac{61\pi}{180} \textsf{ rad} = 1.064 \textsf{ rad}\)</span> to three decimal places.</p>
+<p>1.5. Multiplying <span class="math inline">\(353^\circ\)</span> by <span class="math inline">\(\pi\)</span> and dividing by <span class="math inline">\(180\)</span> gives <span class="math inline">\(\dfrac{353\pi}{180} \textsf{ rad} = 6.161 \textsf{ rad}\)</span> to three decimal places.</p>
+<p>1.6. Multiplying <span class="math inline">\(197^\circ\)</span> by <span class="math inline">\(\pi\)</span> and dividing by <span class="math inline">\(180\)</span> gives <span class="math inline">\(\dfrac{197\pi}{180} \textsf{ rad} = 3.438 \textsf{ rad}\)</span> to three decimal places.</p>
 </section>
-<section id="multiple-choice-mcq" class="level3">
-<h3 class="anchored" data-anchor-id="multiple-choice-mcq">Multiple Choice (<code>mcq()</code>)</h3>
+<section id="q2" class="level2 unnumbered">
+<h2 class="unnumbered">Q2</h2>
+<p>2.1. Multiplying <span class="math inline">\(\dfrac{\pi}{3} \textsf{ rad}\)</span> by <span class="math inline">\(180\)</span> and dividing by <span class="math inline">\(\pi\)</span> gives <span class="math inline">\(\dfrac{180\pi}{3\pi} ^\circ = 60 ^\circ\)</span>.</p>
+<p>2.2. Multiplying <span class="math inline">\(\dfrac{2\pi}{3}\textsf{ rad}\)</span> by <span class="math inline">\(180\)</span> and dividing by <span class="math inline">\(\pi\)</span> gives <span class="math inline">\(\dfrac{360\pi}{3\pi} ^\circ = 120 ^\circ\)</span>.</p>
+<p>2.3. Multiplying <span class="math inline">\(\dfrac{\pi}{7} \textsf{ rad}\)</span> by <span class="math inline">\(180\)</span> and dividing by <span class="math inline">\(\pi\)</span> gives <span class="math inline">\(\dfrac{180\pi}{7\pi} ^\circ = 25.714 ^\circ\)</span> to three decimal places.</p>
+<p>2.4. Multiplying <span class="math inline">\(\dfrac{5\pi}{7}\textsf{ rad}\)</span> by <span class="math inline">\(180\)</span> and dividing by <span class="math inline">\(\pi\)</span> gives <span class="math inline">\(\dfrac{900\pi}{7\pi} ^\circ = 128.571 ^\circ\)</span> to three decimal places.</p>
+<p>2.5. Multiplying <span class="math inline">\(5\textsf{ rad}\)</span> by <span class="math inline">\(180\)</span> and dividing by <span class="math inline">\(\pi\)</span> gives <span class="math inline">\(\dfrac{900}{\pi} ^\circ = 286.479 ^\circ\)</span> to three decimal places.</p>
+<p>2.6. Multiplying <span class="math inline">\(\dfrac{3}{4} \textsf{ rad}\)</span> by <span class="math inline">\(180\)</span> and dividing by <span class="math inline">\(\pi\)</span> gives <span class="math inline">\(\dfrac{540}{4\pi} ^\circ = \dfrac{135}{\pi} ^\circ = 42.972 ^\circ\)</span> to three decimal places.</p>
+</section>
+<section id="q3" class="level2 unnumbered">
+<h2 class="unnumbered">Q3</h2>
+<p>3.1. In this case, the length of the arc is <span class="math inline">\(\dfrac{7\pi}{8} = 2.749\)</span> (to 3dp) and the area of the sector is <span class="math inline">\(\dfrac{49\pi}{16} = 9.621\)</span> (to 3dp).</p>
+<p>3.2. In this case, the length of the arc is <span class="math inline">\(\dfrac{\pi}{2} = 1.571\)</span> (to 3dp) and the area of the sector is <span class="math inline">\(\dfrac{\pi}{12} = 0.262\)</span> (to 3dp).</p>
+<p>3.3. In this case, the length of the arc is <span class="math inline">\(14\pi = 43.982\)</span> (to 3dp) and the area of the sector is <span class="math inline">\(\dfrac{525\pi}{2} = 824.668\)</span> (to 3dp).</p>
+<hr />
+<hr />
+</section>
+<section id="version-history-and-licensing" class="level2 unnumbered">
+<h2 class="unnumbered">Version history and licensing</h2>
+<p>v1.0: initial version created 08/23 by Ifan Howells-Baines, Mark Toner as part of a University of St Andrews STEP project.</p>
 <ul>
-<li>“Never gonna give you up, never gonna: <select class="webex-select"><option value="blank"></option><option value="">let you go</option><option value="">turn you down</option><option value="">run away</option><option value="answer">let you down</option></select>”</li>
-<li>“I <select class="webex-select"><option value="blank"></option><option value="answer">bless the rains</option><option value="">guess it rains</option><option value="">sense the rain</option></select> down in Africa” -Toto</li>
+<li>v1.1: edited 05/24 by tdhc.</li>
 </ul>
-</section>
-<section id="true-or-false-torf" class="level3">
-<h3 class="anchored" data-anchor-id="true-or-false-torf">True or False (<code>torf()</code>)</h3>
-<ul>
-<li>True or False? You can permute values in a vector using <code>sample()</code>. <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select></li>
-</ul>
-</section>
-<section id="longer-mcqs-longmcq" class="level3">
-<h3 class="anchored" data-anchor-id="longer-mcqs-longmcq">Longer MCQs (<code>longmcq()</code>)</h3>
-<p>When your answers are very long, sometimes a drop-down select box gets formatted oddly. You can use <code>longmcq()</code> to deal with this. Since the answers are long, It’s probably best to set up the options inside an R chunk with <code>echo=FALSE</code>.</p>
-<p><strong>What is a p-value?</strong></p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>opts_p <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"the probability that the null hypothesis is true"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">answer =</span> <span class="st">"the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true"</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">"the probability of making an error in your conclusion"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+<div id="quarto-navigation-envelope" class="hidden">
+<p><span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-sidebar-title">STARMAST</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar-title">STARMAST</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:Home">Home</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:/index.html">/index.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:About">About</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:/about.html">/about.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:News">News</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:/newsindex.html">/newsindex.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:Index">Index</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:/fullindex.html">/fullindex.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:Study guides">Study guides</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:/studyguidelist.html">/studyguidelist.html</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:Questions and answers">Questions and answers</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-int-navbar:/qalist.html">/qalist.html</span></p>
+<div class="hidden quarto-markdown-envelope-contents" data-render-id="footer-center-/about.html">
+<p>About</p>
 </div>
-<div id="radio_FTUBXAALXZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_FTUBXAALXZ" value=""> <span>the probability that the null hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_FTUBXAALXZ" value="answer"> <span>the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_FTUBXAALXZ" value=""> <span>the probability of making an error in your conclusion</span></label>
+<div class="hidden quarto-markdown-envelope-contents" data-render-id="footer-center-/fullindex.html">
+<p>Index</p>
 </div>
-<p><strong>What is true about a 95% confidence interval of the mean?</strong></p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use sample() to randomise the order</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>opts_ci <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">answer =</span> <span class="st">"if you repeated the process many times, 95% of intervals calculated in this way contain the true mean"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"there is a 95% probability that the true mean lies within this range"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"95% of the data fall within this range"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<div class="hidden quarto-markdown-envelope-contents" data-render-id="footer-center-/cookies.html">
+<p>Cookie policy</p>
 </div>
-<div id="radio_YVHKLMDHDA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YVHKLMDHDA" value="answer"> <span>if you repeated the process many times, 95% of intervals calculated in this way contain the true mean</span></label><label><input type="radio" autocomplete="off" name="radio_YVHKLMDHDA" value=""> <span>95% of the data fall within this range</span></label><label><input type="radio" autocomplete="off" name="radio_YVHKLMDHDA" value=""> <span>there is a 95% probability that the true mean lies within this range</span></label>
+<div class="hidden quarto-markdown-envelope-contents" data-render-id="footer-right-/license.html">
+<p>STARMAST © 2025 is licensed under CC BY-NC-SA 4.0.</p>
 </div>
-</section>
-</section>
-<section id="checked-sections" class="level2">
-<h2 class="anchored" data-anchor-id="checked-sections">Checked sections</h2>
-<p>Create sections with the class <code>webex-check</code> to add a button that hides feedback until it is pressed. Add the class <code>webex-box</code> to draw a box around the section (or use your own styles).</p>
-<div class="webex-check webex-box">
-<p>I am going to learn a lot: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select></p>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>opts <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>   <span class="st">"the probability that the null hypothesis is true"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">answer =</span> <span class="st">"the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">"the probability of making an error in your conclusion"</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"What is a p-value?"</span>, <span class="fu">longmcq</span>(opts))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-What is a p-value?
-<div id="radio_VLDBGNDNQA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_VLDBGNDNQA" value=""> <span>the probability that the null hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_VLDBGNDNQA" value="answer"> <span>the probability of the observed, or more extreme, data, under the assumption that the null-hypothesis is true</span></label><label><input type="radio" autocomplete="off" name="radio_VLDBGNDNQA" value=""> <span>the probability of making an error in your conclusion</span></label>
+<div class="hidden quarto-markdown-envelope-contents" data-render-id="announcement">
+<p><strong>Latest content:</strong> Guide on arithmetic on complex numbers available now! (12/03/25)</p>
 </div>
 </div>
-</section>
-<section id="hidden-solutions-and-hints" class="level2">
-<h2 class="anchored" data-anchor-id="hidden-solutions-and-hints">Hidden solutions and hints</h2>
-<p>You can fence off a solution area that will be hidden behind a button using <code>hide()</code> before the solution and <code>unhide()</code> after, each as inline R code. Pass the text you want to appear on the button to the <code>hide()</code> function.</p>
-<p>If the solution is a code chunk, instead of using <code>hide()</code> and <code>unhide()</code>, simply set the <code>webex.hide</code> chunk option to TRUE, or set it to the string you wish to display on the button.</p>
-<p><strong>Recreate the scatterplot below, using the built-in <code>cars</code> dataset.</strong></p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(cars, <span class="fu">plot</span>(speed, dist))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="webexercises_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="1440"></p>
-</figure>
+<div id="quarto-meta-markdown" class="hidden">
+<p><span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-metatitle">Answers: Introduction to radians – STARMAST</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-twittercardtitle">Answers: Introduction to radians – STARMAST</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-ogcardtitle">Answers: Introduction to radians – STARMAST</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-metasitename">STARMAST</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-twittercarddesc">Answers to the questions relating to the guide on radians.</span> <span class="hidden quarto-markdown-envelope-contents" data-render-id="quarto-ogcardddesc">Answers to the questions relating to the guide on radians.</span></p>
 </div>
-</div>
-</div>
-<div class="webex-solution">
-<button>
-I need a hint
-</button>
-<p>See the documentation for <code>plot()</code> (<code>?plot</code>)</p>
-</div>
-<!-- note: you could also just set webex.hide to TRUE -->
-<div class="cell" data-webex.hide="Click here to see the solution">
-<div class="webex-solution">
-<button>
-Click here to see the solution
-</button>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cars<span class="sc">$</span>speed, cars<span class="sc">$</span>dist)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-</div>
-
-
 </section>
 
 </main> <!-- /main -->
@@ -659,23 +555,23 @@ window.onload = function() {
 
 <h1>Feedback</h1>
 <p>Your feedback is appreciated and useful. Feel free to leave a comment here.</p>
-<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+<form name="feedback" method="POST" netlify netlify-honeypot="bot-field">
     <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
-    <input type="hidden" name="subject" value="Feedback from unknown">
+    <input type="hidden" name="subject" value="Feedback from unknown" />
 
     <label for="name">Name: </label>
     <br>
-    <input type="text" name="name" required="">
+    <input type="text" name="name" required>
     <br><br>
     
     <label for="email">E-mail: </label>
     <br>
-    <input type="email" name="email" required="">
+    <input type="email" name="email" required>
     <br><br>
     
     <label for="feedback">Feedback: </label>
     <br>
-    <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+    <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required></textarea>
     <br><br>
 
     <!-- Google reCAPTCHA Widget -->
@@ -685,8 +581,8 @@ window.onload = function() {
     <button type="submit">Submit</button>
 </form>
 
-<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
-<script id="quarto-html-after-body" type="application/javascript">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script id = "quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1259,35 +1155,34 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="./about.html">
-<p>About</p>
-</a>
+    <a class="nav-link" href="/about.html">
+ About
+    </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="./fullindex.html">
-<p>Index</p>
-</a>
+    <a class="nav-link" href="/fullindex.html">
+ Index
+    </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="./cookies.html">
-<p>Cookie policy</p>
-</a>
+    <a class="nav-link" href="/cookies.html">
+ Cookie policy
+    </a>
   </li>  
 </ul>
-    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    </div>
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item">
-    <a class="nav-link" href="./license.html">
-<p>STARMAST © 2025 is licensed under CC BY-NC-SA 4.0.</p>
-</a>
+    <a class="nav-link" href="/license.html">
+ STARMAST © 2025 is licensed under CC BY-NC-SA 4.0.
+    </a>
   </li>  
 </ul>
     </div>
   </div>
 </footer>
 
+</body>
 
-
-
-</body></html>
+</html>
