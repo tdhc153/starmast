@@ -1,0 +1,145 @@
+---
+title: "Proof: Additive commutivity and associativity applied to Matrices"
+author: "Jessica Taberner"
+abstract-title: Summary
+abstract: Proof of commutivity of addition, associativity of addition and multiplication and distrubutivity for matrices.
+categories:
+  - Key skills
+  - Algebra
+draft: true
+---
+
+Before reading this proof sheet, it is recommended that you read **Guide: Introduction to matrices.**
+
+# Proof
+
+Remember from **Guide: Introduction to matrices** that a matrix is a rectangular array or table, with entries in rows and columns.
+
+::: callout-note
+## A matrix
+
+A $m \times n$ **matrix** is a rectangular array of $mn$ entries set out in $m$ **rows** and $n$ **columns**. You can write it like so:
+
+$$
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{bmatrix}
+$$
+
+This matrix has **dimension** $m \times n$.
+:::
+
+In this sheet you will prove how some axioms hold when working with matrices, assuming those same axioms hold in the underlying set, that is the set the entries in our matrix are from. In **Guide: Introduction to matrices** you assumed that the entries in our matrix where from the complex numbers, and that same assumption is used here.
+
+## Commutivity of addition proof
+
+For any two matrices $A$ and $B$ of the same dimensions, matrix addition is commutative, that is,
+$$A + B = B + A.$$
+
+Let $A$ and $B$ be two $m \times n$ matrices, where:
+
+$$A = [a_{ij}] \quad \text{and} \quad B = [b_{ij}].$$
+By definition of matrix addition, the sum of $A$ and $B$ is given by:
+
+$$(A + B)_{ij} = a_{ij} + b_{ij},$$
+
+for all $1 \leq i \leq m$ and $1 \leq j \leq n$.
+
+Similarly, the sum of $B$ and $A$ is given by:
+$$(B + A)_{ij} = b_{ij} + a_{ij}.$$
+
+Since you are assuming the underlying set is the complex numbers:
+$$a_{ij} + b_{ij} = b_{ij} + a_{ij}.$$
+
+So, for all entries, $(A + B)_{ij} = (B + A)_{ij}$, which implies:
+
+$$A + B = B + A.$$
+
+So you have that matrix addition is commutative.
+
+## Associativity of addition proof
+
+For any three matrices $A$, $B$, and $C$ of the same dimensions, matrix addition is associative, that is,
+$$(A + B) + C = A + (B + C).$$
+Let $A$, $B$, and $C$ be three $m \times n$ matrices, where:
+
+$$A = [a_{ij}], \quad B = [b_{ij}], \quad C = [c_{ij}].$$
+
+By definition of matrix addition:
+
+$$(A + B) + C = [(a_{ij} + b_{ij})] + C.$$
+
+Applying matrix addition again:
+
+$$((A + B) + C)_{ij} = (a_{ij} + b_{ij}) + c_{ij}.$$
+
+Similarly, for $A + (B + C)$:
+$$A + (B + C) = A + [(b_{ij} + c_{ij})].$$
+Applying matrix addition:
+
+$$(A + (B + C))_{ij} = a_{ij} + (b_{ij} + c_{ij}).$$
+
+Since you are assuming addition of the underlying set is the complex numbers:
+
+$$(a_{ij} + b_{ij}) + c_{ij} = a_{ij} + (b_{ij} + c_{ij}).$$
+
+So, for all entries, $((A + B) + C)_{ij} = (A + (B + C))_{ij}$, which implies:
+
+$$(A + B) + C = A + (B + C).$$
+
+So you have that matrix addition is associative.
+
+## Associativity of multiplication proof
+
+For any three matrices $A$, $B$, and $C$ with dimensions such that the following operations make sense, matrix multiplication is associative, that is,
+$$(A  B)  C = A  (B  C).$$
+Let $A$ be an $m \times n$ matrix, $B$ be an $n \times p$ matrix, and $C$ be a $p \times q$ matrix. 
+
+By definition of matrix multiplication, the product $(A B)$ is an $m \times p$ matrix, whose entries are given by:
+$$(A B)_{ik} = \sum_{j=1}^{n} a_{ij} b_{jk}.$$
+
+Multiplying $(A B)$ with $C$, you get:
+
+$$((A B) C)_{il} = \sum_{k=1}^{p} (A B)_{ik} c_{kl} = \sum_{k=1}^{p} \left( \sum_{j=1}^{n} a_{ij} b_{jk} \right) c_{kl}.$$
+Similarly, the product $(B C)$ is an $n \times q$ matrix, whose entries are given by:
+$$(B C)_{jk} = \sum_{r=1}^{p} b_{jr} c_{rk}.$$
+
+Multiplying $A$ with $(B C)$, you get:
+$$(A (B C))_{il} = \sum_{j=1}^{n} a_{ij} (B C)_{jl} = \sum_{j=1}^{n} a_{ij} \left( \sum_{k=1}^{p} b_{jk} c_{kl} \right).$$
+
+Rearranging the summation order:
+
+$$\sum_{j=1}^{n} a_{ij} \left( \sum_{k=1}^{p} b_{jk} c_{kl} \right) = \sum_{k=1}^{p} \left( \sum_{j=1}^{n} a_{ij} b_{jk} \right) c_{kl}.$$
+Since both expressions are equal, you can conclude:
+$$(A B) C = A (B C).$$
+
+So, you have that matrix multiplication is associative.
+
+## Distributive property for matrices proof
+
+For any three matrices $A$, $B$, and $C$ with compatible dimensions, matrix multiplication has the distributive property:
+$$A (B + C) = A B + A C \quad\textsf{or} \quad (B + C) A = B A + C A.$$
+By definition of matrix addition:
+$$(B + C)_{ij} = b_{ij} + c_{ij}.$$
+
+Multiplying by $A$:
+$$(A (B + C))_{ij} = \sum_{k} a_{ik} (b_{kj} + c_{kj}).$$
+
+Using the distributive property of complex numbers:
+$$(A (B + C))_{ij} = \sum_{k} (a_{ik} b_{kj} + a_{ik} c_{kj}).$$
+
+Splitting the sum:
+$$(A (B + C))_{ij} = \sum_{k} a_{ik} b_{kj} + \sum_{k} a_{ik} c_{kj}.$$
+
+Recognizing the definitions of matrix products:
+$$(A (B + C))_{ij} = (A B)_{ij} + (A C)_{ij}.$$
+
+So, $A (B + C) = A B + A C$. Similarly, you can prove $(B + C) A = B A + C A$. So, matrix multiplication distributes over addition.
+
+## Version history {-}
+
+v1.0: initial version created 04/25 by ect6 (as part of a University of St Andrews VIP project)
+  
