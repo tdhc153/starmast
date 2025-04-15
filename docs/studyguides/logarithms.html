@@ -277,8 +277,8 @@ Definition of a logarithm
 </div>
 <div class="callout-body-container callout-body">
 <p>In its simplest form, a logarithm answers ‘How many of one number multiply together to make another number?’. This is what motivates the following definition:</p>
-<p>If <span class="math display">\[ a^x = b\]</span> then</p>
-<p><span class="math display">\[\log_a(b) = x \]</span> where <span class="math inline">\(a,b &gt; 0\)</span> and <span class="math inline">\(a\neq 1\)</span>. Here, <span class="math inline">\(x\)</span> is known as the <em>exponent</em>, <span class="math inline">\(a\)</span> is the <em>base</em> and <span class="math inline">\(b\)</span> is the <em>argument</em>. You would read the equation above as “logarithm of <span class="math inline">\(b\)</span> to the base <span class="math inline">\(a\)</span> is equal to <span class="math inline">\(x\)</span>”.</p>
+<p>If <span class="math display">\[a^x = b\]</span> then</p>
+<p><span class="math display">\[\log_a(b) = x\]</span> where <span class="math inline">\(a,b &gt; 0\)</span> and <span class="math inline">\(a\neq 1\)</span>. Here, <span class="math inline">\(x\)</span> is known as the <em>exponent</em>, <span class="math inline">\(a\)</span> is the <em>base</em> and <span class="math inline">\(b\)</span> is the <em>argument</em>. You would read the equation above as “logarithm of <span class="math inline">\(b\)</span> to the base <span class="math inline">\(a\)</span> is equal to <span class="math inline">\(x\)</span>”.</p>
 </div>
 </div>
 <div class="{callout-important}">
@@ -310,7 +310,7 @@ Example 2
 <p>Now consider the equation <span class="math inline">\(\log_x(8) = 3\)</span>. Rewriting this, you can see that this is equal to <span class="math inline">\(x^3 = 8\)</span>. Therefore <span class="math inline">\(x = 2\)</span>.</p>
 </div>
 </div>
-<p>Generally, if the base is not specified, it is assumed that the base is 10. For example, <span class="math inline">\(\log(a) = b\)</span> means that the logarithm of <span class="math inline">\(a\)</span> to the base <span class="math inline">\(10\)</span> is equal to <span class="math inline">\(b\)</span>.</p>
+<p>Generally, if the base is not specified, it is assumed that the base is <span class="math inline">\(10\)</span>. For example, <span class="math inline">\(\log(a) = b\)</span> means that the logarithm of <span class="math inline">\(a\)</span> to the base <span class="math inline">\(10\)</span> is equal to <span class="math inline">\(b\)</span>.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -553,13 +553,19 @@ Example 9
 <p>Using the definition of a <a href="#definition-2-link">natural logarithm</a>, you can show that <span class="math inline">\(\log_e(x) = 4\)</span>. Then, using the definition of a <a href="#definition-1-link">logarithm</a>, you can conclude that <span class="math inline">\(x = e^4\)</span>.</p>
 </div>
 </div>
-<p>The natural logarithm is useful as it is the <strong>inverse</strong> of the exponential function <span class="math inline">\(e^x\)</span>. A graph of the natural logarithm, as well as its corresponding exponential curve, is shown in Figure 1.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="./FiguresPNG/log_curve.png" class="img-fluid figure-img" alt="A graph of the natural logarithm and its inverse, the exponential function with Euler's number as the base."></p>
-<figcaption>Figure 1: A graph that shows the natural logarithm <span class="math inline">\(\ln(x)\)</span>, along with the <span class="math inline">\(e^x\)</span> curve. Each curve is a reflection of the other in the line <span class="math inline">\(y = x\)</span>, making them inverses of each other. Note that <span class="math inline">\(\ln(x)\)</span> only takes positive <span class="math inline">\(x\)</span> values, and is undefined for <span class="math inline">\(x = 0\)</span>.</figcaption>
-</figure>
+<p>The natural logarithm is useful as it is the <strong>inverse</strong> of the exponential function <span class="math inline">\(e^x\)</span>. A graph of the natural logarithm, as well as its corresponding exponential curve, is shown in the interactive figure below.</p>
+<!-- ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1} -->
+<div id="calculator" style="width: 100%; height: 450px;">
+
 </div>
+<script>
+  var elt = document.getElementById('calculator');
+  var calculator = Desmos.GraphingCalculator(elt);
+  calculator.setMathBounds({ left: -2, right: 6, bottom: -2, top: 6 });
+  calculator.setExpression({ id: 'line1', latex: 'y=e^x', color: '#DB4315' });
+  calculator.setExpression({ id: 'line2', latex: 'y=\\ln(x)', color: '#3F68B6' });
+  calculator.setExpression({ id: 'line3', latex: 'y=x', color: '#000000', lineStyle: Desmos.Styles.DASHED, lineOpacity: 0.2, secret: true });
+</script>
 <div id="example-5-link" class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -658,7 +664,8 @@ Example 11
 <h2 class="unnumbered anchored" data-anchor-id="version-history-and-licensing">Version history and licensing</h2>
 <p>v1.0: initial version created 08/23 by Ritwik Anand as part of a University of St Andrews STEP project.</p>
 <ul>
-<li>v1.1: edited 04/24 by tdhc.</li>
+<li><p>v1.1: edited 04/24 by tdhc.</p></li>
+<li><p>v1.2: addition of interactive Desmos figures 04/25 by tdhc.</p></li>
 </ul>
 <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
 

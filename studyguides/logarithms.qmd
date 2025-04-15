@@ -27,9 +27,9 @@ In this guide, you will learn the definition of a logarithm, the laws concerning
 
 In its simplest form, a logarithm answers 'How many of one number multiply together to make another number?'. This is what motivates the following definition:
 
-If $$ a^x = b$$ then
+If $$a^x = b$$ then
 
-$$\log_a(b) = x $$ where $a,b > 0$ and $a\neq 1$. Here, $x$ is known as the *exponent*, $a$ is the *base* and $b$ is the *argument*. You would read the equation above as "logarithm of $b$ to the base $a$ is equal to $x$".
+$$\log_a(b) = x$$ where $a,b > 0$ and $a\neq 1$. Here, $x$ is known as the *exponent*, $a$ is the *base* and $b$ is the *argument*. You would read the equation above as "logarithm of $b$ to the base $a$ is equal to $x$".
 :::
 
 ::: {callout-important}
@@ -48,7 +48,7 @@ Suppose you are given the equation $\log_{10}(1000) = x$, and you need to find $
 Now consider the equation $\log_x(8) = 3$. Rewriting this, you can see that this is equal to $x^3 = 8$. Therefore $x = 2$.
 :::
 
-Generally, if the base is not specified, it is assumed that the base is 10. For example, $\log(a) = b$ means that the logarithm of $a$ to the base $10$ is equal to $b$.  
+Generally, if the base is not specified, it is assumed that the base is $10$. For example, $\log(a) = b$ means that the logarithm of $a$ to the base $10$ is equal to $b$.  
 
 ::: {.callout-note appearance="simple"}
 ## Example 3
@@ -207,9 +207,32 @@ Using the definition of a [natural logarithm](#definition-2-link), you can show 
 
 :::
 
+::: {.content-visible when-format="html"}
+
+The natural logarithm is useful as it is the **inverse** of the exponential function $e^x$. A graph of the natural logarithm, as well as its corresponding exponential curve, is shown in the interactive figure below.
+
+<!-- ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1} -->
+
+<div id="calculator" style="width: 100%; height: 450px;"></div>
+
+<script>
+  var elt = document.getElementById('calculator');
+  var calculator = Desmos.GraphingCalculator(elt);
+  calculator.setMathBounds({ left: -2, right: 6, bottom: -2, top: 6 });
+  calculator.setExpression({ id: 'line1', latex: 'y=e^x', color: '#DB4315' });
+  calculator.setExpression({ id: 'line2', latex: 'y=\\ln(x)', color: '#3F68B6' });
+  calculator.setExpression({ id: 'line3', latex: 'y=x', color: '#000000', lineStyle: Desmos.Styles.DASHED, lineOpacity: 0.2, secret: true });
+</script>
+
+:::
+
+::: {.content-hidden when-format="html"}
+
 The natural logarithm is useful as it is the **inverse** of the exponential function $e^x$. A graph of the natural logarithm, as well as its corresponding exponential curve, is shown in Figure 1.
 
 ![Figure 1: A graph that shows the natural logarithm $\ln(x)$, along with the $e^x$ curve. Each curve is a reflection of the other in the line $y = x$, making them inverses of each other. Note that $\ln(x)$ only takes positive $x$ values, and is undefined for $x = 0$.](./FiguresPNG/log_curve.png){fig-alt="A graph of the natural logarithm and its inverse, the exponential function with Euler's number as the base."}
+
+:::
 
 ::: {#example-5-link .callout-note appearance="simple"}
 
@@ -332,6 +355,8 @@ Answer: `r mcq(c(4, answer = 3, 2, 1))`
 v1.0: initial version created 08/23 by Ritwik Anand as part of a University of St Andrews STEP project.
 
   - v1.1: edited 04/24 by tdhc. 
+  
+  - v1.2: addition of interactive Desmos figures 04/25 by tdhc.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

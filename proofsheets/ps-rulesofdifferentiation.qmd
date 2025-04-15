@@ -1,0 +1,129 @@
+---
+title: "Proof: Rules of differentiation"
+author: "Tom Coleman"
+abstract-title: Summary
+abstract: The proof sheet demonstrates that the common rules of differentiation - the sum, difference, product, chain, and quotient rules - are true.
+draft: true
+---
+
+*Before reading this proof sheet, it is essential that you read [Guide: Introduction to differentiation and the derivative](../studyguides/introtodifferentiation.qmd). In addition, reading [Guide: Introduction to limits] is useful. Further reading will be illustrated where required.*
+
+The starting point of this proof sheet is the limit definition of the derivative of a function:
+
+::: {.callout-note}
+## Reminder of limit definition of the derivative
+The **derivative of $f(x)$ with respect to $x$** is defined to be the function $$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h}.$$
+:::
+
+To find the derivative of a function $f(x)$, replace the function $f$ in the right-hand side of the above limit, and then evaluate the limit. Care has to be taken to remove the $h$ in the denominator of the fraction, as you cannot evaluate the limit as $h$ tends to $0$ with it still there! (Remember, dividing by $0$ can be extremely hazardous to your health.)
+
+From here, the proof sheet will start with the proof of the derivative of $x^2$, which will then be expanded using the binomial theorem to find the derivative of $x^n$. Then, the derivative of $e^x$ is found. Finally, the derivatives of $\sin(x)$ and $\cos(x)$ are demonstrated. 
+
+
+# Sum and difference rules {-}
+
+# Scaling rules {-}
+
+# Product rule {-}
+
+Here is the product rule, restated with $f(x) = u(x)$ and $g(x) = v(x)$ for visual ease in the proof that follows.
+
+::: {.callout-note}
+
+## The product rule
+
+Let $f(x)$ and $g(x)$ be two differentiable functions. Then the **product rule** says that
+$$(fg)'(x) = \frac{d}{dx}\left(f(x)g(x)\right) = f(x)g'(x) + f'(x)g(x)$$
+that is, the derivative of the product of $f(x)$ and $g(x)$ is equal to the product of $f(x)$ and the derivative of $g(x)$, plus the product of $g(x)$ and the derivative of $f(x)$.
+
+This can also be written as $$\frac{d}{dx}\left(f(x)g(x)\right) = f\frac{\textrm{d}g}{\textrm{d}x} + g\frac{\textrm{d}f}{\textrm{d}x}.$$
+:::
+
+## Proof of the product rule {-}
+
+Here's why the product rule works. It's not quite as straightforward as the proof of the sum rule and the constant rule; you have to manufacture the definition of the derivative in one place by using a creative addition by $0$.
+
+So, let's start with $f(x)$ and $g(x)$ as two differentiable real-valued functions, with product $(fg)(x) = f(x)g(x)$. Putting this into the limit definition of the derivative given above:
+$$(fg)'(x) = \lim_{h\to 0}\frac{(fg)(x+h) - (fg)(x)}{h}$$
+Since $(fg)(x) = f(x)g(x)$, this becomes
+$$(fg)'(x) = \lim_{h\to 0}\frac{f(x+h)g(x+h) - f(x)g(x)}{h}$$
+
+# Quotient rule {-}
+
+*Before this proof, you may find it useful to read [Guide: Laws of indices]*
+
+There is an important limit that needs to be used to find the derivative of $e^x$, which is given by:
+
+$$\lim_{h\to 0}\frac{e^h - 1}{h} = 1$$
+The proof that this is true relies on some *real analysis* and the fact that the constant $e$ can be defined by $\lim_{x\to \infty}\left(1 + \frac{1}{x}\right)^x = e$.
+
+:::{.callout-note}
+## Derivative of $e^x$
+The derivative of $f(x) = e^x$ is $f'(x) = e^x$. 
+:::
+
+Again, let's use the limit definition of the derivative with $f(x) = e^x$. This gives:
+$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{e^{x+h} - e^x}{h}$$
+Typically, the goal has been to remove the $h$ in the denominator; however, it is not possible in this case, as expanding $e^{x+h}$ doesn't give a $h$ that you can get rid of while factorizing. In this case, what you can do is try and reduce to a known limit. In particular, the known limit involving $e^h$ is $\lim_{h\to 0}\frac{e^h - 1}{h} = 1$ and so you may be able to manufacture this limit by manipulation of the expression above. Using the laws of indices, you can write that
+$$\lim_{h\to 0}\frac{e^{x+h} - e^x}{h} = \lim_{h\to 0}\frac{e^x\cdot e^h - e^x}{h}$$
+Factorising out $e^x$ gives
+$$\lim_{h\to 0}\frac{e^x\cdot e^h - e^x}{h} = \lim_{h\to 0}\left(e^x\left(\frac{e^h - 1}{h}\right)\right)$$
+Now, $e^x$ is constant as $h$ varies, and so you can take this out of the limit to get: 
+$$\lim_{h\to 0}\left(e^x\left(\frac{e^h - 1}{h}\right)\right) = e^x\lim_{h\to 0}\left(\frac{e^h - 1}{h}\right)$$
+
+You can now evaluate the limit to get: $$e^x\lim_{h\to 0}\left(\frac{e^h - 1}{h}\right) = e^x(1) = e^x$$ It follows that $f'(x) = e^x$, as required.
+
+# Derivative of $\sin(x)$ and $\cos(x)$ {-}
+
+*Before reading this section, it may be useful to read [Guide: Trigonometric identities (radians)](../studyguides/trigonometricidentities-radians.qmd).*
+
+As with the derivative of $e^x$ in the previous section, there are two important limits involving $\cos$ and $\sin$ that are needed before continuing. These are: $$\lim_{h\to 0}\dfrac{\sin(h)}{h} = 1\quad\textsf{ and }\quad\lim_{h\to 0}\dfrac{\cos(h) - 1}{h}.$$ To show these are true, you need techniques from *real analysis*, which is the study of functions on real numbers.
+
+### Derivative of $\sin(x)$
+
+:::{.callout-note}
+## Derivative of $\sin(x)$
+The derivative of $f(x) = \sin(x)$ is $f'(x) = \cos(x)$. 
+:::
+
+Starting off with the limit definition of differentiation and $f(x) = \sin(x)$ gives 
+$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{\sin(x+h) - \sin(x)}{h}$$
+As in the case of $e^x$, expanding $\sin(x+h)$ won't give a single $h$ to cancel with! However, it could be that you can reduce this expression to the limits given above. Using the sum rule for $\sin$ (see [Guide: Trigonometric identities (radians)](../studyguides/trigonometricidentities-radians.qmd)), you can write that
+$$\lim_{h\to 0}\frac{\sin(x+h) - \sin(x)}{h} = \lim_{h\to 0}\frac{\sin(x)\cos(h) + \sin(h)\cos(x) - \sin(x)}{h}$$
+The bones of the two given limits are here, and now it's time to uncover them. Factorising out $\sin(x)$ and $\cos(x)$ gives
+$$\lim_{h\to 0}\frac{\sin(x)\cos(h) + \sin(h)\cos(x) - \sin(x)}{h} = \lim_{h\to 0}\left(\sin(x)\left(\frac{\cos(h) - 1}{h}\right) + \cos(x)\left(\frac{\sin(h)}{h}\right)\right)$$
+
+Using the two limits given above, and the fact that the values of $\sin(x)$ and $\cos(x)$ are independent of $h$:
+$$\lim_{h\to 0}\left(\sin(x)\left(\frac{\cos(h) - 1}{h}\right) + \cos(x)\left(\frac{\sin(h)}{h}\right)\right) = \sin(x)(0) + \cos(x)(1) = \cos(x)$$ and so $f'(x) = \cos(x)$ is the derivative of $\sin(x)$.
+
+### Derivative of $\cos(x)$ {-}
+
+:::{.callout-note}
+## Derivative of $\cos(x)$
+The derivative of $f(x) = \cos(x)$ is $f'(x) = -\cos(x)$. 
+:::
+
+Starting off with the limit definition of differentiation and $f(x) = \cos(x)$ gives 
+$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{\cos(x+h) - \cos(x)}{h}$$
+As in the case of $e^x$, expanding $\cos(x+h)$ won't give a single $h$ to cancel with! However, it could be that you can reduce this expression to the limits given above. Using the sum rule for $\cos$ (see [Guide: Trigonometric identities (radians)](../studyguides/trigonometricidentities-radians.qmd)), you can write that
+$$\lim_{h\to 0}\frac{\cos(x+h) - \cos(x)}{h} = \lim_{h\to 0}\frac{\cos(x)\cos(h) - \sin(x)\sin(h) - \cos(x)}{h}$$
+The bones of the two given limits are here, and now it's time to uncover them. Factorizing out $\cos(x)$ and $\sin(x)$ gives
+$$\lim_{h\to 0}\frac{\cos(x)\cos(h) - \sin(x)\sin(h) - \cos(x)}{h} = \lim_{h\to 0}\left(\cos(x)\left(\frac{\cos(h) - 1}{h}\right) - \sin(x)\left(\frac{\sin(h)}{h}\right)\right)$$
+
+Using the two limits given above, and the fact that the values of $\sin(x)$ and $\cos(x)$ are independent of $h$:
+$$\lim_{h\to 0}\left(\cos(x)\left(\frac{\cos(h) - 1}{h}\right) - \sin(x)\left(\frac{\sin(h)}{h}\right)\right) = \cos(x)(0) - \sin(x)(1) = -\sin(x)$$ and so $f'(x) = -\sin(x)$ is the derivative of $\cos(x)$.
+
+# Further reading {-}
+
+[Click this link to go back to Guide: Introduction to differentiation and the derivative.](../studyguides/introtodifferentiation.qmd)
+
+[Click this link to go back to Guide: The product rule](../studyguides/productrule.qmd)
+
+[For questions on differentiation and the derivative, please go to Questions: Introduction to differentation and the derivative.](../questions/qs-introtodifferentiation.qmd)
+
+## Version history {-}
+
+v1.0: initial version created in 04/25 by tdhc.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
