@@ -36,12 +36,33 @@ The general shape of a quadratic equation is known as a **parabola**. The shape 
   calculator.setExpression({ id: 'line1', latex: 'y=x^2', color: '#DB4315' });
   calculator.setExpression({ id: 'a', latex: 'a=0', sliderBounds: { min: '-2', max: '2'}});
   calculator.setExpression({ id: 'b', latex: 'b=1', sliderBounds: { min: '0', max: '4'}});
-  calculator.setExpression({ id: "3", type: "expression", latex: "(a,0), (a,a^2), (0,0), (a,0)", pointStyle: "POINT", hidden: false, secret: true, lines: true, fill: true, color: "#3F68B6", fillOpacity: 0.4});
-  calculator.setExpression({ id: "1", type: "expression", latex: "(t,t^2),", pointStyle: "POINT", hidden: false, secret: true, lines: true, fill: true, color: "#3F68B6", fillOpacity: 0.4});
+  calculator.setExpression({ id: "3", type: "expression", latex: "[(a,0), (a,a^2), (0,0)]", pointStyle: "POINT", hidden: false, secret: true, lines: true, fill: true, color: "#3F68B6", fillOpacity: 0.4});
+  calculator.setExpression({ id: 't', parametricBounds: { min: '0', max: '1'}});
+  calculator.setExpression({ id: "1", type: "expression", latex: "[(t,0), (1,t), (t,t^2)]", pointStyle: "POINT", hidden: false, secret: true, lines: true, fill: true, color: "#3F68B6", fillOpacity: 0.4});
 </script>
 
 :::
 
+::: {.content-visible when-format="html"}
+
+The general shape of a quadratic equation is known as a **parabola**. The shape of a parabola is given in the following interactive figure: you can use the slider to show what happens to the shape of the parabola $y = ax^2$ as $a$ changes.
+
+<!-- ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1} -->
+
+<div id="calculator2" style="width: 100%; height: 600px;"></div>
+
+<script>
+  var elt2 = document.getElementById('calculator2');
+  var calculator2 = Desmos.GraphingCalculator(elt2);
+  calculator2.setMathBounds({ left: -3.5, right: 3.5, bottom: -0.1, top: 0.5});
+  calculator2.setExpression({ id: 'explanation', type: 'text', text: 'This interactive figure helps you calculate p-values from a one-tailed Z-test, provided that your data is normally distributed.'});
+  calculator2.setExpression({ id: 'mu', latex: '\\mu=0', secret: true});
+  calculator2.setExpression({ id: 'sigma', latex: '\\sigma=1', secret: true});
+  calculator2.setExpression({ id: 'explanation2', type: 'text', text: 'Click on Find Cumulative Probability. For a lower tailed test, enter your Z-score in the Max box; for an upper-tailed test, enter your Z-score in the Min box. The answer is the p-value for your test.'});
+  calculator2.setExpression({ id: 'line1', latex: 'y=\\normaldist(\\mu,\\sigma)', color: '#DB4315' });
+</script>
+
+:::
 
 
 ::: {.callout-note appearance="simple"}

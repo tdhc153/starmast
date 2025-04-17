@@ -1,8 +1,8 @@
 ---
-title: Factorization
+title: Introduction to factorization
 author: Millie Pike
 abstract-title: Summary
-abstract: Factorization is an important concept in mathematics, especially in algebra. It involves breaking down expressions into smaller parts called factors, which, when multiplied together, give the original expression. This process is essential for simplifying expressions, solving equations, and gaining a deeper understanding of mathematical structures. Factorization plays a key role in various areas of mathematics and is a valuable tool for tackling problems more efficiently.
+abstract: Factorization is an important concept in mathematics, especially in algebra. It involves breaking down expressions into smaller parts called factors which, when multiplied together, give the original expression. This process is essential for simplifying expressions, solving equations, and gaining a deeper understanding of mathematical structures. Factorization plays a key role in various areas of mathematics and is a valuable tool for tackling problems more efficiently.
 categories:
   - Algebra
   - Solving equations
@@ -14,29 +14,17 @@ draft: true
 library("webexercises")
 ```
 
-*Before reading this guide, it is recommended that you read [Guide: Introduction to quadratic equations](introtoquadratics.qmd). Additionally, you may find it useful to read [Guide: Completing the square](completingthesquare.qmd)*
+*Before reading this guide, it is recommended that you read [Guide: Introduction to quadratic equations](introtoquadratics.qmd). Additionally, you may find it useful to read [Guide: Completing the square](completingthesquare.qmd) for factorizing with a remainder.*
 
 # What is factorization? {.unnumbered}
 
-Factorization is a process that involves rewriting an expression as a product of expressions. By doing this, you can break down complex algebraic equations into manageable parts, to then be solved.
+Factorization is the process of rewriting an expression as a product of simpler expressions. This makes it easier to work with and understand more complicated expressions.
 
-As you have seen in [Guide: Introduction to quadratic equations](introtoquadratics.qmd), quadratic expressions are important in mathematics, and these can be manipulated using factorization to help you solve them. For example, factorizing the expression $x^2 + 5x + 6$ can transform it into $(x+3)(x+2)$, which makes it easier for you to find the values of x that satisfy the equation.
+As you have seen in [Guide: Introduction to quadratic equations](introtoquadratics.qmd), quadratic expressions are important in mathematics, and these can be manipulated by using factorization to help you solve them. For example, factorizing the expression $x^2 + 5x + 6$ transforms it into $(x+3)(x+2)$, which makes it easier for you to find the values of $x$ that satisfy the equation.
 
 This guide will introduce you to different methods of factorization, such as identifying common factors, and factorizing quadratics of the form $ax^2 + bx + c$, both where $a=1$, and $a \neq 1$.
 
-# Introducing key mathematical definitions
-
-::: {.callout-note}
-## Definition of expression
-
-An **expression** is a combination of numbers, variables, operations (such as addition or multiplication), and sometimes brackets. An expression represents a value or relationship but does not have an equals sign.
-:::
-
-::: {.callout-note appearance="simple"}
-## Example 1
-
-$3x + 5$ is an expression. It contains the number $3$, the variable $x$, and the addition operation.
-:::
+# Introducing key concepts
 
 ::: {.callout-note}
 ## Definition of term
@@ -45,42 +33,64 @@ A **term** is a single string of numbers, variables, and/or exponents, and it ma
 :::
 
 ::: {.callout-note appearance="simple"}
-## Example 2
+## Example 1
 
 In the expression $4x + 7$, both $4x$ and $7$ are terms.
+:::
+
+::: {.callout-note}
+## Definition of expression
+
+An **expression** is a combination of numbers, variables, operations (such as addition or multiplication), and sometimes brackets. An expression represents a value or relationship but does not have an equals sign.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 2
+
+$3x + 5$ is an expression. It contains the number $3$, multiplied by the variable $x$, and the addition operation.
 :::
 
 
 ::: {.callout-note}
 ## Definition of factor
 
-A **factor** is a term that divides exactly into another term without leaving a remainder.
+A **factor** is an expression that divides exactly into another expression. 
 :::
 
 ::: {.callout-note appearance="simple"}
 
 ## Example 3
+When working in whole numbers:
 
-The factors of $6$ are $1, 2, 3$ and $6$. $3$ is a factor of $12$, because $12 \div 3 = 4$. Similarly, $2x$ is a factor of $6x$, because $6x \div 2x = 3$.
+The factors of $6$ are $1, 2, 3$ and $6$. 
+
+$3$ is a factor of $12$, because $12 \div 3 = 4$. Similarly, $2x$ is a factor of $6x$, because $6x \div 2x = 3$.
 
 :::
 
 ::: {.callout-important}
 
-When working with fractions, any non-zero number can be a common factor. For example, $\frac{1}{2}$ is a factor of $1$ and $2$. However, for simplicity, this guide will focus on whole number factorizations.
+When working with fractions, any non-zero number can be a common factor. For example, $\frac{1}{2}$ is a factor of $1$ and $2$. 
+
+**This guide will focus on whole number factorizations.**
 
 :::
 
 ::: {.callout-note}
 ## Definition of common factor
 
-A **common factor is a number**, variable or expression that divides evenly into each term of an expression.
+A **common factor** is a number, variable or expression that divides evenly into each term of an expression.
 :::
 
 ::: {.callout-note appearance="simple"}
 ## Example 4
+What is a common factor of $4x$ and $6$?
 
-$$4x \div 2 = 2x$$ $$6 \div 2 = 3$$ $2$ is a common factor of $4x$ and $6$, because both $4x$ and $6$ can be divided by $2$.
+Here,
+
+$4x \div 2 = 2x \quad  \text {and} \quad 6 \div 2 = 3$.
+
+$2$ is a common factor of $4x$ and $6$, because both $4x$ and $6$ can be divided by $2$.
 :::
 
 ::: {.callout-note}
@@ -93,11 +103,9 @@ The **highest common factor (HCF)** is the largest factor by which two or more t
 ## Example 5
 What is the HCF of $8$ and $12$?
 
-The factors of $8$ are $1, 2, 4$ and $8$.
+The factors of $8$ are $1, 2, 4$ and $8$. The factors of $12$ are $1, 2, 3, 4, 6,$ and $12$.
 
-The factors of $12$ are $1, 2, 3, 4, 6,$ and $12$.
-
-They both share the factors $1, 2, and 4,$ so these are all common factors.
+They both share the factors $1, 2,$ and $4,$ so these are all common factors.
 
 The largest is $4$, so the HCF of $8$ and $12$ is $4$.
 :::
@@ -106,15 +114,15 @@ The largest is $4$, so the HCF of $8$ and $12$ is $4$.
 
 One approach to factorizing an expression is by identifying common factors in each term.
 
-For example, expressions of the form $ax+ab$ can be factorized to become $a(x+b)$ where $a$ is the common factor. To factorize an expression into its simplest form, you must factorize using the HCF.
+For example, expressions of the form $ax+ab$ can be factorized to become $a(x+b)$ where $a$ is the common factor. To factorize an expression into its **simplest form**, you must factorize using the HCF.
 
 When factorizing, you can take out any common factor shared by the terms in an expression. In real numbers, this means you can take out factors that appear in every term. For example, if an expression contains terms that are all divisible by a common number or variable, you can factor that out to simplify the expression.
 
-The Steps to factorize an expression fully:
+The steps to factorize an expression fully:
 
-1.  Find a common factor for all the numbers in the expression
+1.  Find all common factors for all the terms in the expression.
 
-2.  Determine the HCF of all the common factors
+2.  Determine the HCF of all the common factors.
 
 3.  Write a bracket, with the HCF on the outside, and the remaining terms inside.
 
@@ -127,95 +135,87 @@ Always check for the highest common factor before using other factorization meth
 
 Factorize $5x+15$.
 
-The terms are $5x$ and $15$.
+The terms are $5x$ and $15$ and the terms have a common factor of $5$.
 
-The terms have a common factor of $5$.
-
-factorizing out the $5$ from both terms gives: $$5x+15=5(x)+5(3)$$There are no other common factors between $x$ and $3$, so $5$ is the HCF. You can then factorize out the HCF, which gives the final form: $$5x+15=5(x+3)$$
+Factorizing out the $5$ from both terms gives: $$5x+15=5(x)+5(3)$$There are no other common factors of $x$ and $3$, so $5$ is the HCF. So, the final factorized form is: $$5x+15=5(x+3)$$
 :::
 
 ::: {.callout-note appearance="simple"}
 ## Example 7
 
-Factorize $6x^2+9x$
+Factorize $6x^2+9x$.
 
-The terms have a common factor of $3$.
+The terms have a common factor of $3$.Factorizing out the $3$ from both terms gives: $$6x^2+9x=3(2x^2)+3(3x)$$ 
 
-Factorizing out the $3$ from both terms gives: $$6x^2+9x=3(2x^2)+3(3x)$$ Now looking at $2x^2$ and $3x$, both terms also contain an $x$, so you can factorize $x$ out as-well to give: $$6x^2+9x=3x(2x)+3x(3)$$
+Now looking at $2x^2$ and $3x$, both terms also contain an $x$, so you can factorize $x$ out aswell to give: $$6x^2+9x=3x(2x)+3x(3)$$
 
-There are no other common factors between $2x$ and $3$, so the HCF is $3$.
-
-You can then factorize out the HCF, which gives the final form: $$6x^2+9x=3x(2x+3)$$
+There are no other common factors between $2x$ and $3$, so the HCF is $3$. So, the final factorized form is: $$6x^2+9x=3x(2x+3)$$
 :::
 
 ::: {.callout-note appearance="simple"}
 ## Example 8
 
-Factorize $x(x-4)+3(2x-8)$
+Factorize $x(x-4)+3(2x-8)$.
 
 Here, instead of the common factor being a single term, such as $2$ or $x$, the common factor is the bracketed expression $(x-4)$.
 
-factorizing out $(x-4)$ from both terms gives: $$x(x-4)+3(2x-8)= (x-4)(x)+(3)(2(x-4))$$ $$x(x-4)+3(2x-8)= (x-4)(x)+(6)(x-4)$$ There are no further factors between $x$ and $6$, so $(x-4)$ is the HCF. You can then factorize out the HCF, which gives the final form: $$x(x-4)+3(2x-8)= (x-4)(x+6)$$
+Factorizing out $(x-4)$ from both terms gives: $$x(x-4)+3(2x-8)= (x-4)(x)+(3)(2(x-4))$$ 
+Expanding $(3)(2(x-4))$ out gives: $$(3)(2(x-4)) = (6)(x-4)$$
+So the expression becomes:$$x(x-4)+3(2x-8)= (x-4)(x)+(6)(x-4)$$ 
+
+There are no further common factors of $x$ and $6$, so $(x-4)$ is the HCF. So, the final factorized form is: $$x(x-4)+3(2x-8)= (x-4)(x+6)$$
 :::
 
 # Factorizing double brackets
 
-Factorizing quadratic expressions involves rewriting a quadratic equation (in the form $ax^2+bx+ c$) as a product of two bracketed expressions. This process is essential in algebra and helps simplify expressions, whilst also being able to solve quadratic equations and find their roots.
+Factorizing quadratic expressions involves rewriting a quadratic expression (in the form $ax^2+bx+ c$, where $a \neq 0$) as a product of expressions. This process is essential in algebra and helps simplify expressions, whilst also being able to solve quadratic equations and find their roots. For more information on this, see [Guide: Introduction to quadratic equations](introtoquadratics.qmd).
 
-There are two main cases when factorizing quadratics that you will learn about:
-
-1.  When $a = 1$
-
-2.  When $a \neq 1$
+There are two main cases when factorizing quadratics that you will learn about. One, where $a = 1$, and another where $a \neq 1$.
 
 ## Case 1: $a = 1$
 
-When the quadratic expression has the form $x^2+bx+c$, you need to find two numbers that multiply to $c$, and add to $b$. This can be seen as: $$x^2+(d+e)x+de=(x+d)(x+e)$$ However, it is best to see this explained with an example.
+When the quadratic expression has the form $x^2+bx+c$, the aim is to find numbers $d$ and $e$ that multiply to $c$, and add to $b$, such that $de = c$ and $d+e=b$. 
+
+This works because: $$(x+d)(x+e) = x^2+dx+ex+de$$ 
+
+And when factorising the $x$ term, you get:$$(x+d)(x+e) = x^2+(d+e)x+de$$ 
+
+Which is the desired form of the quadratic expression.
+
+However, it is best to see this explained with an example.
 
 ::: {.callout-note appearance="simple"}
 ## Example 9
 
-Factorize $x^2+7x+10$
+Factorize $x^2+7x+10$.
 
 You want to find two numbers that multiply to make $10$ and add to make $7$.
 
-The positive, whole number, factors of $10$ are $1, 2, 5,$ and $10.$
+The positive factors of $10$ are $1, 2, 5,$ and $10.$
 
-You want to look at the factors and see which pairings multiply to make $10$.These are:
+You want to look at the factors and see which pairings multiply to make $10$. These are:
 
-$$1\cdot 10=10$$ $$2 \cdot 5=10$$
-
-Using this, you need to select the pairing that adds to make $7$:
-
-$$1+10=11\neq7 $$
-
-So, this factor pairing does not have the ability to factorize this quadratic.
-
-$$2+5=7$$
-
-This is true, so the correct factors are $2$ and $5$. You can now write the factorized form by writing two brackets and putting the variable $x$ at the start of each one:
+$$1\cdot 10=10 \quad \text{and} \quad2 \cdot 5=10$$
+Since $2+5=7$ and $1+10=11\neq7$, you pick the correct factors of $10$, which are $2$ and $5$. You can now write the factorized form of your quadratic expression by writing two brackets and putting the variable $x$ at the start of each one:
 
 $$(x  + ?  )(x + ?  )$$
 
-Write one factor in the first bracket and the other factor in the second bracket, to give:
+Write one factor in the first bracket and the other factor in the second bracket, to give the final factorized form:
 
 $$x^2+7x+10=(x+2)(x+5)$$
 :::
 
-::: {.callout-important}
-The order of the factors don't matter, but the signs do! (EXAMPLE)
-:::
 
-Now consider an example with a negative $bx$ term.
+Here's an example with a negative $bx$ term.
 
 ::: {.callout-tip}
-If the $bx$ term is negative, and the $+c$ is positive, the two factors must both be negative, as two negatives multiplied together creates a positive!
+If the $bx$ term is negative, and the $+c$ is positive, the two factors must both be negative, as two negatives multiplied together creates a positive.
 :::
 
 ::: {.callout-note appearance="simple"}
 ## Example 10
 
-Factorize $x^2-5x+6$
+Factorize $x^2-5x+6$.
 
 You want to find two numbers that multiply to make $6$ and add to make $-5$.
 
@@ -225,25 +225,20 @@ The factors of $6$ are $1, -1, 2, -2, 3, -3, 6,$ and $-6$.
 
 You want to look at the factors and see which pairings multiply to make $6$ and add to $-5$. These are:
 
-$$-2 \cdot -3=6$$ $$-2+-3=-5$$
+$$(-2) \cdot (-3)=6$$ $$(-2)+(-3)=-5$$
 
 So, $-2$ and $-3$ are factors of the quadratic.
 
-Now, put them into the brackets like you practised in Example 9: $$x^2-5x+6=(x-2)(x-3)$$
+Now, put them into the brackets in a similar fashion to Example 9, to give the final factorized form: $$x^2-5x+6=(x-2)(x-3)$$
 :::
 
-Now consider an example where the $+c$ term is negative
+Finally, here's an example where the $+c$ term is negative
 
 ::: {.callout-tip}
-If the $+c$ term is negative, and the $bx$ term is positive, one factor must be negative, and the other positive, as a positive and a negative multiplied together creates a negative!
+If the $+c$ term is negative, and the $bx$ term is positive, one factor must be negative, and the other positive, as a positive and a negative multiplied together gives a negative.
 :::
 
 
-::: {.callout-important}
-The order of the factors don't matter, but the signs do!
-:::
-
-Example 11 is an example of this - if the signs of the factors were swapped, it would result in a different quadratic to the one you have been asked to factorize. 
 
 ::: {.callout-note appearance="simple"}
 ## Example 11
@@ -252,20 +247,31 @@ Factorize $x^2+x-2$
 
 Now, you need to consider all the factors, positive and negative, of $-2$.
 
-The factors of $6$ are $1, -1, 2$, and $-2$.
+The factors of $-2$ are $1, -1, 2$, and $-2$. You want to look at the factors and see which pairings multiply to make $-2$ and add to $1$. These are: $$2 \cdot (-1)=-2$$ $$2+(-1)=1$$So $2$ and $-1$ are factors of the quadratic.
 
-You want to look at the factors and see which pairings multiply to make $-2$ and add to $1$. These are: $$2 \cdot -1=-2$$ $$2+-1=1$$So $2$ and $-1$ are factors of the quadratic.
-
-Now, put them into the brackets like you practised in Example 9: $$x^2+x-1=(x+2)(x-1)$$
+Now, put them into the brackets in a similar fashion to Example 9, to give the final factorized form: $$x^2+x-1=(x+2)(x-1)$$
 :::
 
+::: {.callout-important}
+The order of the factors don't matter, but the signs do!
+:::
+
+Example 11 is an example of this - if the signs of the factors were swapped, it would result in a different quadratic to the one you have been asked to factorize. If you swapped the signs, you would get $(x-2)(x+1)$. When expanded, this gives: $$(x-2)(x+1) = x^2 -2x +x -2$$
+$$(x-2)(x+1) = x^2 -x -2$$
+$$x^2 -x -2 \neq x^2+x-2$$
+
+$x^2 -x -2$ is not the original quadratic expression you were asked to factorize, which shows you how if a factor has the incorrect sign, it will not correctly factorize the quadratic expression you are trying to factorize.
+
 ## Case 2: $a \neq 1$
+When the quadratic expression has the form $ax^2+bx+c$, it can be factorized as follows: $$ax^2+bx+c=(ax+b)(x+c)$$
+The aim is to find two numbers $d$ and $e$ such that:
+$$d \cdot e = a \cdot c \quad \text{and} \quad d + e =b$$
+This works because:
+$$(dx+e)(x+f) = dx^2+ex+dfx+ef$$
+And when factorizing the $x$ term you get:$$(dx+e)(x+f) = dx^2+(e+df)x+ef$$
+Which is the desired factorized form. 
 
-For quadratic expressions of the form $ax^2+bx+c$ they can be factorized as follows:
-
-$$ax^2+bx+c=(ax+b)(x+c)$$
-
-You need to multiply $a$ and $b$ together and write out the factor pairs. You must then select the factor pairs that add to $b$, and so you find it more helpful to visualise the quadratic equation in this way: $$dx^2+(e+df)x+ef=(dx+e)(x+f)$$ These are the steps to factorize a quadratic:
+These are the steps to factorize a quadratic:
 
 1.  Multiply $a$ and $c$ together
 
@@ -273,7 +279,7 @@ You need to multiply $a$ and $b$ together and write out the factor pairs. You mu
 
 3.  Rewrite the middle term using these two numbers.
 
-4.  factorize by grouping.
+4.  Factorize by grouping.
 
 This is best seen with an example.
 
@@ -285,12 +291,12 @@ Factorize $2x^2+5x+3$
 You need to multiply $2$ and $3$ together;
 
 $$2 \cdot 3=6$$
+Now you need to consider all the factors of $6$. 
 
-Write out the factor pairs of $6$ that add to make $5$:
+The factors of $6$ are $1,2,3,$ and $6$.
 
-The factor pairs of $6$ are $(1,6)$ and $(2,3)$
+You want to look at the factors and see which pairings multiply to make $6$, and add to $5$. These are:
 
-The factor pair that multiplies to give $6$ and adds to give $5$ is $(2,3)$.
 
 $$2+3=5$$ $$2\cdot 3=6$$
 
@@ -314,13 +320,13 @@ And this gives you your final factorized answer: $$2x^2+5x+3=(2x+3)(x+1)$$
 
 Factorize $3x^2-2x-5$
 
-You need to multiply $3$ and $-5$ together: $$3 \cdot -5=-15$$ Write out the factor pairs of $-15$ that add to make $-2$
+You need to multiply $3$ and $-5$ together: $$3 \cdot -5=-15$$ 
 
-The factor pairs of $-15$ are $(1,-15), (-1,15), (3,-5),$ and $(-3,5)$.
+You need to find the factors of $-15$ that multiply to give $-15$, and add to give $-2$. These are:
 
-The factor pair that multiplies to give $-15$ and adds to give $-2$ is $(3,-5)$.
+$$3 + (-5) =-2$$ $$3 \cdot (-5)=-15$$ 
 
-$$3 + -5=-2 $$ $$3 \cdot -5=-15$$ Now you can rewrite the original expression, but this time splitting the middle ($bx$) term into the two factors you found earlier.
+Now you can rewrite the original expression, but this time splitting the middle ($bx$) term into the two factors you found earlier.
 
 $$3x^2-2x-5= 3x^2+3x-5x-5$$
 
@@ -344,9 +350,10 @@ Factorize $4x^2+4x-3$
 
 You need to multiply $4$ and $-3$ together, which gives $-12$.
 
-Write out the number pair that multiplies to make $-12$, and that adds to make $4$:
+You need to find the factors of $-12$ that multiply to give $-12$, and add to give $4$. These are:
 
-$$(-2,6)$$
+
+$$(-2) + 6 =4$$ $$(-2) \cdot 5=-12$$ 
 
 Now you can rewrite the original expression, but this time splitting the middle ($bx$) term into the two factors you found earlier.
 
@@ -367,9 +374,9 @@ And this is your final factorized answer: $$4x^2+4x-3= 2x(2x-1)+3(2x-1)=(2x-1)(2
 
 # Using factorization to solve quadratic equations
 
-By factorizing, you can break down a quadratic expression into simplified expressions, making it easier to find values that satisfy the equation.
+By factorizing, you can break down a quadratic expression into simpler expressions. This process makes it easier to understand the structure of the expression and to identify values that satisfy the equation you are solving.
 
-Once a quadratic expression is factorized, you can solve it by setting each bracket equal to zero.
+Once a quadratic expression is factorized, and the equation is set equal to zero, you can find the values of the variable that make each bracket equal to zero. These values are known as the roots or solutions of the quadratic equation. However, it's important to remember that this method only works directly when the expression is equal to zero—if it's equal to another number, other steps are needed before factorizing.
 
 ::: {.callout-note appearance="simple"}
 ## Example 15
@@ -380,13 +387,13 @@ Setting this equal to zero;
 
 $$(x-2)(x-3)=0$$
 
-Now, set each individual bracket equal to zero.
+Now, you can set each individual bracket equal to zero:
 
-$$(x-2)=0$$
+$$(x-2)=0\quad \text{and} \quad (x-3)=0$$
 
-$$(x-3)=0$$
+Now you can solve each one for $x$: $$x=2\quad \text{and} \quad x=3$$ 
 
-Now you can solve each one for $x$: $$x=2$$ $$x=3$$ Once solved, you can see the solutions of $x^2-5x+6$ are $x=2$ and $x=3$.
+Once solved, you can see the solutions of $x^2-5x+6$ are $x=2$ and $x=3$.
 :::
 
 Using tools like Desmos, you can verify your solutions by graphing the quadratic function and identifying the points where it intersects with the x axis.
@@ -402,7 +409,7 @@ Seen below is an example....
 ::: {.webex-check .webex-box}
 
 
-You are given four expressions below. Match the correct expression to the correct equivalent factorized expression. 
+1. You are given four expressions below. Match the correct expression to the correct equivalent factorized expression. 
 
 (a) $5(2-x)$
 (b) $5(x-2)$
@@ -416,18 +423,18 @@ You are given four expressions below. Match the correct expression to the correc
 
 
 
-You are given three expressions below. Factorize them into their simplest form.
+2. You are given three expressions below. Factorize them into their simplest form.
 
-(1) $4x^2y+6xy^2 = py(p+q)$, where $p=$ `r fitb("2x")` and $q=$ `r fitb("3y")`.
+(a) $4x^2y+6xy^2 = py(p+q)$, where $p=$ `r fitb("2x")` and $q=$ `r fitb("3y")`.
 
-(2) $x^2+6x+9 = (x+p)(x+q)$, where $p=$ `r fitb(3)` and $q=$ `r fitb(3)`.
+(b) $x^2+6x+9 = (x+p)(x+q)$, where $p=$ `r fitb(3)` and $q=$ `r fitb(3)`.
 
-(3) $4x^2-x-3 = (4x+p)(x+q)$, where $p=$ `r fitb(3)` and $q=$ `r fitb(-1)`.
+(c) $4x^2-x-3 = (4x+p)(x+q)$, where $p=$ `r fitb(3)` and $q=$ `r fitb(-1)`.
 
 
-Find the solution of the quadratic equation below. If the answer is not a whole number, put the answer in as a decimal. Write the solutions in ascending order.
+3. Find the solution of the quadratic equation $2x^2+3x-2=0$. If the answer is not a whole number, put the answer in as a decimal. Write the solutions in ascending order.
 
-(4) The solutions of $2x^2+3x-2=0$ are $x=$ `r fitb(-2)` and $x=$ `r fitb(0.5)`.
+The solutions of $2x^2+3x-2=0$ are $x=$ `r fitb(-2)` and $x=$ `r fitb(0.5)`.
 
 :::
 
@@ -437,7 +444,7 @@ Find the solution of the quadratic equation below. If the answer is not a whole 
 
 ::: {.content-hidden when-format="html"}
 
-You are given four expressions below. Match the correct expression to the correct equivalent factorized expression. 
+1. You are given four expressions below. Match the correct expression to the correct equivalent factorized expression. 
 
 (a) $5(2-x)$
 (b) $5(x-2)$
@@ -451,29 +458,27 @@ You are given four expressions below. Match the correct expression to the correc
 
 
 
-You are given three expressions below. Factorize them into their simplest form.
+2. You are given three expressions below. Factorize them into their simplest form.
 
-(1) $4x^2y+6xy^2$
+(a) $4x^2y+6xy^2$
 
-(2) $x^2+6x+9$
+(b) $x^2+6x+9$
 
-(3) $4x^2-x-3$
+(c) $4x^2-x-3$
 
 
-Find the solutions of the quadratic equation below. 
-
-(4) $2x^2+3x-2=0$
+3. Find the solutions of the quadratic equation $2x^2+3x-2=0$.
 
 :::
 
 
 # Further reading {-}
 
-[For more questions on the subject, please go to Questions: Completing the square.](../questions/qs-completingthesquare.qmd)
+[For more questions on the subject, please go to Questions: Introduction to factorization.](../questions/qs-completingthesquare.qmd)
 
 ## Version history {-}
 
-v1.0: initial version created 03/25 by Millie Pike
+v1.0: initial version created 03/25 by Millie Pike, as part of a University of St Andrews VIP project.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

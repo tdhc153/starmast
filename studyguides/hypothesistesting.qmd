@@ -1,5 +1,5 @@
 ---
-title: Hypothesis Testing
+title: Hypothesis testing
 author: Ellie Trace
 abstract-title: Summary
 abstract: A hypothesis test is a statistical process used to determine whether there is enough evidence in a sample to support or reject a claim about a population. It involves comparing a null hypothesis, which represents the status quo, against an alternative hypothesis using sample data, a chosen significance level, and either critical values or $p$-values. This guide will focus on the general structure of a hypothesis test, critical values, how to choose which type of test to use, as well as when to reject, or not reject a hypothesis.  
@@ -248,13 +248,13 @@ If your test statistic falls in the critical regions as defined by your test, th
 
 To form a conclusion you then use the test to decide whether or not to reject your null hypothesis $H_0$. 
 
-If the test statistic falls in the critical region or if the $P$-value is less than $\alpha$ then you would **reject $H_0$**. This suggests there is enough evidence to support the alternative hypothesis.
+If the test statistic falls in the critical region, or if the $p$-value is less than $\alpha$, then you would **reject $H_0$**. This suggests there is enough evidence to support the alternative hypothesis.
 
-If the test statistic does not fall in the critical region or if the $P$-value is greater than or equal to $\alpha$. This means there is not enough evidence to support the alternative hypothesis and you **fail to reject $H_0$**.
+If the test statistic does not fall in the critical region, or if the $p$-value is greater than or equal to $\alpha$, this means there is not enough evidence to support the alternative hypothesis and you **fail to reject $H_0$**.
 
 ::: {.callout-tip}
 
-To complete the problem, you then must formally state your conclusion. It's important that any conclusion is robust: you could use the following templates for help.
+To complete the problem, you then must formally state your conclusion. It's important that any conclusion is robust. You could use the following templates for help.
 
 > "I reject $H_0$ as there is sufficient evidence to conclude that the mean is greater than $50$."
 
@@ -266,13 +266,13 @@ or
 
 ::: {.callout-warning}
 
-Hypothesis tests are based on sample data, not on the entire population so you can never accept either hypothesis; it is always a rejection or a failure to reject. This is because you cannot definitively "prove" the null hypothesis to be true. 
+Hypothesis tests are based on sample data, not on the entire population. This means **you can never accept either hypothesis**; it is always a rejection or a failure to reject. This is because you cannot definitively 'prove' the null hypothesis to be true. 
 
-If you do not reject $H_0$, this does not mean that the null hypothesis is necessarily correct; it means that the sample data didn’t provide strong enough evidence against it.
+If you do not reject $H_0$, this does not mean that the null hypothesis is necessarily correct; it means that the sample data didn’t provide strong enough evidence against it. If you do not reject $H_0$ but the null hypothesis is incorrect, this is a **false negative** or a **Type 2 error**.
 
-Similarly, if you reject $H_0$, this does not mean that the null hypothesis is necessarily incorrect; it means that the sample data provided strong enough evidence for the alternative hypothesis.
+Similarly, if you reject $H_0$, this does not mean that the null hypothesis is necessarily incorrect; it means that the sample data provided strong enough evidence for the alternative hypothesis. If you reject $H_0$ but the null hypothesis is correct, this is a **false positive** or a **Type 1 error**.
 
-For more information about this see [Guide: Errors in hypothesis testing]*
+For more information about this see [Guide: Errors in hypothesis testing].
 
 :::
 
@@ -282,42 +282,35 @@ For more information about this see [Guide: Errors in hypothesis testing]*
 
 Your local mathematical sweet shop, Cantor's Confectionery, claims that the average weight of its popular Boole Bar is $5$ grams. You suspect that the actual average weight is less than $5$ grams, so you decide to perform a hypothesis test. You take a random sample of $30$ Boole Bars and find that the sample mean weight of the sample is $\bar{x} = 4.5$ grams with a sample standard deviation of $s=1.5$ grams. Because of the amazing production methods of Cantor's Confectionery, you can safely assume that the population standard deviation $\sigma = 1.5$ grams.
 
-You want to test if the average weight of the Boole Bars is less than $5$ grams at a significance level of $5\%$.
+You want to test if the average weight of the Boole Bars is less than $5$ grams at a significance level of $5\%$. This means that $\alpha = 0.05$.
 
 **State your hypotheses**
 
-Your null hypothesis is that the average weight of the bars is $\mu_0 = 5$ grams and your alternative hypothesis is the average weight of bars is less than $\mu_0 = 5$ grams. 
-
-$$H_0:\mu=5$$
-
-$$H_1:\mu<5$$
+Your null hypothesis is that the average weight of the bars is $\mu_0 = 5$ grams and your alternative hypothesis is the average weight of bars is less than $\mu_0 = 5$ grams. So $H_0:\mu=5$ and $H_1:\mu<5$.
 
 **Calculating the test statistic**
 
-In this case you have one sample of $30$ bars and you know the population standard deviation. You are also testing the alternative hypothesis that $\mu < 5$. This implies that you would want to use a **lower one-tailed $Z$-test**. This means calculating a test statistic according to a $Z$-test, which is outlined here.
+In this case you have a sample of $30$ bars and you know the population standard deviation $\sigma = 1.5$. You are also testing the alternative hypothesis that $\mu < 5$. This implies that you would want to use a **lower one-tailed $Z$-test**. This means calculating a test statistic according to a $Z$-test, which is outlined here.
 
-First, you would need to calculate the standard error from the mean is calculated to be $$SE = \frac{\sigma}{\sqrt{n}} = \frac{1.5}{\sqrt{30}}$$
-
-Next, the standard score is given by 
-
-$$Z = \frac{\bar{x} - \mu_0}{SE} = \frac{4.5 - 5}{\frac{1.5}{\sqrt{30}}} \approx -1.826$$
-(See [Guide: Introduction to $Z$-testing] for more.)
+First, you would need to calculate the standard error from the mean. This is $$SE = \frac{\sigma}{\sqrt{n}} = \frac{1.5}{\sqrt{30}}$$ Next, the test statistic ($Z$-score) is given by  $$Z = \frac{\bar{x} - \mu_0}{SE} = \frac{4.5 - 5}{\frac{1.5}{\sqrt{30}}} \approx -1.826$$ (See [Guide: Introduction to $Z$-testing] for more.)
 
 **Find the critical value or $p$-value**
 
-Since this is a lower one-tailed test, you need to find the critical value for $\alpha=0.05$ from the $Z-$table. The critical $Z-$value for a significance level of $0.05$ in a lower one-tailed test is $-1.645$.
+Since this is a lower one-tailed test, you need to find the critical value for $\alpha=0.05$ from a $Z-$table. The critical $Z-$value for a significance level of $0.05$ in a lower one-tailed test is $-1.645$.
 
-Alternatively, you can find the $p-$value associated with the test statistic $Z=−1.826$. From the $Z-$table, you will find that a $Z-$score of $-1.826$ corresponds to a $P-$value of approximately $0.033925$.
+Alternatively, you can find the $p$-value associated with the test statistic $Z=−1.826$. You can use [Calculator: $Z$-testing] to see that a $Z$-score of $-1.826$ corresponds to a $p-$value of approximately $0.033925$.
 
 **Conclusion**
 
-If your $Z-$score is less than the critical value $-1.645$ or $P≤\alpha$, you can reject the null hypothesis $H_0$.If neither condition is met, you fail to reject the null hypothesis.
+If your test statistic is less than the critical value $-1.645$ or $p\leq \alpha$, you can reject the null hypothesis $H_0$. If neither condition is met, you fail to reject the null hypothesis.
 
-In this case, the calculated $Z=-1.826$, which is less than the critical value of $-1.645$. Similarly, $p=0.033925$, which is smaller than $\alpha=0.05$.
+In this case, $Z=-1.826$, which is less than the critical value of $-1.645$. Similarly, $p=0.033925$, which is smaller than $\alpha=0.05$. 
 
-Since $Z=−1.826$ is less than $-1.645$ (equivalently, the $p-$value is smaller than $0.05$), you can reject the null hypothesis $H_0$. There is enough evidence to conclude that the average weight of the Boole Bars is less than $5$ grams.
+So you can reject the null hypothesis $H_0$. There is enough evidence to conclude that the average weight of the Boole Bars is less than $5$ grams. It looks like Cantor Confectionery need to get to work...
 
 :::
+
+::: 
 
 <!-- ::: {.content-hidden when-format="html"} -->
 <!-- ::: {.callout-note appearance="simple"} -->

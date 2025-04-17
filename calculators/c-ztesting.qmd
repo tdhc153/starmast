@@ -1,0 +1,163 @@
+---
+title: "Calculator: $Z$-testing"
+author: Tom Coleman
+format: html
+abstract-title: Summary
+abstract: The idea of integration...
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+*Before reading this guide, it is recommended that you read [Guide: Properties of functions], [Guide: Laws of indices](lawsofindices.qmd), [Guide: Logarithms](logarithms.qmd), and [Guide: Tangents].*
+
+# How to  {-}
+
+<div id="calculator2" style="width: 100%; height: 600px;"></div>
+
+<script>
+  var elt2 = document.getElementById('calculator2');
+  var calculator2 = Desmos.GraphingCalculator(elt2);
+  calculator2.setMathBounds({ left: -3.5, right: 3.5, bottom: -0.1, top: 0.5});
+  calculator2.setExpression({ id: 'explanation', type: 'text', text: 'This interactive figure helps you calculate p-values from a one-tailed Z-test, provided that your data is normally distributed.'});
+  calculator2.setExpression({ id: 'mu', latex: '\\mu=0', secret: true});
+  calculator2.setExpression({ id: 'sigma', latex: '\\sigma=1', secret: true});
+  calculator2.setExpression({ id: 'explanation2', type: 'text', text: 'Click on Find Cumulative Probability. For a lower tailed test, enter your Z-score in the Max box; for an upper-tailed test, enter your Z-score in the Min box. The answer is the p-value for your test.'});
+  calculator2.setExpression({ id: 'line1', latex: 'y=\\normaldist(\\mu,\\sigma)', color: '#DB4315' });
+</script>
+
+:::
+
+
+::: {.callout-note appearance="simple"}
+
+## Example 4
+
+Determine the behaviour of the function $f(x) = 2\ln(3x) - x$ when $x = 1$. 
+
+Here, you will first need to differentiate the function $f(x)$ to find $f'(x)$. Then, you will need to evaluate the derivative $f'(x)$ when $x = 1$ to see how the function behaves.
+
+Using your rules of differentiation as you found above, you can say that the derivative of $2\ln(3x)$ is $2/x$, and the derivative of $x$ is $1$. Therefore, the derivative of the function $f(x) = 2\ln(3x) - x$ is $$f'(x) = \frac{2}{x} - 1.$$ You can evaluate the derivative $f'(x)$ at $x = 1$ to get $$f'(1) = \frac{2}{1} - 1 = 2 - 1 = 1$$ and so the derivative is positive at $x = 1$. This implies that the function $f(x) = 2\ln(3x) - x$ is increasing at the point $x = 1$.
+
+It also means that the gradient of the tangent to the function $f(x)$ at the point $(1,2\ln(3) - 1)$ is $1$. You can see this in the figure below. 
+
+:::
+
+::: {.content-visible when-format="html"}
+
+<div id="calculator3" style="width: 100%; height: 450px;"></div>
+
+<script>
+  var elt = document.getElementById('calculator3');
+  var calculator3 = Desmos.GraphingCalculator(elt);
+  calculator3.setMathBounds({ left: -0.5, right: 3, bottom: -0.5, top: 4});
+  calculator3.setExpression({ id: 'line1', latex: 'y=2\\ln(3x)-x', color: '#3F68B6'});
+  calculator3.setExpression({ id: "2", type: "expression", latex: "(1,2\\ln(3) - 1)", pointStyle: "POINT", hidden: false, secret: true, color: "#DB4315", lines: true});
+  calculator3.setExpression({ id: 'line2', latex: 'y = x - 2 + 2\\ln(3)', color: '#DB4315', secret: true});
+</script>
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![The graph of $f(x) = 2\ln(3x) - x$, with the tangent to the graph at $(1,2\ln(3) - 1)$ illustrated, demonstrating that the function is increasing at $x = 1$.](./FiguresPNG/introtodifferentiation-fig3-3.png){width="80%" #fig-3}
+
+:::
+
+ 
+
+## Summary
+
+Here's a table of derivatives that you should remember going into any further reading on differentiation. Here, $a,b,c,n$ are any real numbers. 
+
+| Function $f(x)$ | Derivative $f'(x)$ | Notes |
+|:-----------|:-------------------|:--------|
+| $f(x) = c$ | $f'(x) = 0$ |  |
+| $f(x) = ax + b$ | $f'(x) = a$ | |
+| $f(x) = ax^n$ | $f'(x) = anx^{n-1}$ | $n \neq 0$ |
+| $f(x) = ae^{bx}$ | $f'(x) = abe^{bx}$ |  |
+| $f(x) = a\sin(bx)$ | $f'(x) = ab\cos(bx)$ |  |
+| $f(x) = a\cos(bx)$ | $f'(x) = -ab\sin(bx)$ |  |
+| $f(x) = a\ln(bx)$ | $f'(x) = \dfrac{a}{x}$ |  |
+
+
+# Quick check problems {-}
+
+<!-- add facility for webexercises to work on html -->
+
+::: {.content-visible when-format="html"}
+
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box}
+
+1. Answer the following questions true or false:
+
+(a) The derivative of a function at $x = a$ is equal to the gradient of the tangent to $f(x)$ at $x = a$. Answer: `r torf(TRUE)`.
+
+(b) If $f'(a) < 0$, then the function is increasing at $x = a$. Answer: `r torf(FALSE)`.
+
+(c) If $f(x) = c$, then the derivative $f'(x) = c-1$. Answer: `r torf(FALSE)`.
+
+(d) The derivative of $f(x) = \cos(x)$ is $f'(x) = -\sin(x)$. Answer: `r torf(TRUE)`.
+
+(e) The derivative of $f(x) = \dfrac{1}{x}$ is $f'(x) = \ln(x)$. Answer: `r torf(FALSE)`.
+
+(f) The power of $x$ in the derivative of $f(x) = \dfrac{1}{\sqrt{x}}$ is $-3/2$. Answer: `r torf(TRUE)`.
+
+2. Fill in the gaps of the statements below. 
+
+(a) If $f(x) = 3x^7 - 14x$, then $f'(x) =$ `r fitb("21")` $x^6 -$ `r fitb("14")`.
+
+(b) If $f(x) = -4\cos(3x)$, then $f'(x) =$ `r fitb("12")` $\sin\big($ `r fitb("3x")` $\big)$.
+
+(c) If $f(x) = -15\sin(x) + e^{8x}$, then $f'(x) =$ `r fitb("-15")` $\cos\big($ `r fitb("x")` $\big) +$ `r fitb("8")` $e^{8x}$.
+
+:::
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+1. Answer the following questions true or false:
+
+(a) The derivative of a function at $x = a$ is equal to the gradient of the tangent to $f(x)$ at $x = a$.
+
+(b) If $f'(a) < 0$, then the function is increasing at $x = a$.
+
+(c) If $f(x) = c$, then the derivative $f'(x) = c-1$.
+
+(d) The derivative of $f(x) = \cos(x)$ is $f'(x) = -\sin(x)$.
+
+(e) The derivative of $f(x) = \dfrac{1}{x}$ is $f'(x) = \ln(x)$.
+
+(f) The power of $x$ in the derivative of $f(x) = \dfrac{1}{\sqrt{x}}$ is $-3/2$.
+
+2. Differentiate the following functions with respect to $x$.
+
+(a) $f(x) = 3x^7 - 14x$
+
+(b) $f(x) = -4\cos(3x)$
+
+(c) $f(x) = -15\sin(x) + e^{8x}$
+
+:::
+
+# Further reading {-}
+
+[For more questions on the subject, please go to Questions: Introduction to differentiation and the derivative.](../questions/qs-introtodifferentiation.qmd)
+
+For more about techniques of differentiation, please see [Guide: The product rule], [Guide: The quotient rule], and [Guide: The chain rule].
+
+For more about where the derivatives in the above table come from, please see [Proof sheet: Derivatives of functions from first principles](../proofsheets/ps-introtodifferentiation.qmd) and [Proof sheet: Derivatives of other common functions]. For more about why the rules of differentiation are true, please see [Proof sheet: Rules of differentiation].
+
+## Version history {-}
+
+v1.0: initial version created 03/25 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
