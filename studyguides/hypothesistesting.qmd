@@ -1,29 +1,33 @@
 ---
-title: Hypothesis testing
+title: Introduction to hypothesis testing
 author: Ellie Trace
 abstract-title: Summary
 abstract: A hypothesis test is a statistical process used to determine whether there is enough evidence in a sample to support or reject a claim about a population. It involves comparing a null hypothesis, which represents the status quo, against an alternative hypothesis using sample data, a chosen significance level, and either critical values or $p$-values. This guide will focus on the general structure of a hypothesis test, critical values, how to choose which type of test to use, as well as when to reject, or not reject a hypothesis.  
 categories:
   - Statistics
-  - Key skills
   - Probability
 image: FiguresPNG/hypothesistesting-fig1-1.png
-draft: true
+filters:
+  - shinylive
 ---
 
 ```{r, setup, include = FALSE}
 library("webexercises")
 ```
 
-*Before reading this guide, it is recommended that you read [Guide: Introduction to probability]*
+*Before reading this guide, it is recommended that you read [Guide: Introduction to probability], [Guide: Mean, variance, and standard deviation], and [Guide: PMFs, PDFs, CDFs](pmfspdfscdfs.qmd).*
 
 # What is a hypothesis test? {-}
 
-**Hypothesis testing** is one of the most important and most useful tools in statistics. They help you to use data from a sample to test whether or not it is reasonable to believe a certain statistical characteristic is true for the whole population.
+Statistics is the science of collecting, organizing and interpreting data. Making statements about characteristics of entire populations is important in statistics, as it gives a complete picture of the data. However, in real life, taking data from the entire population is incredibly difficult and could be impossible; for instance, could you imagine trying to co-ordinate the entire population of the world to measure their height?
 
-For example, Cantor's confectionery shop have 50 customers on average one week. Can they say that their daily average customers has now probably increased compared to their previous average of 45 per day?
+Instead, statisticians take **samples** of data and use tools to potentially extend an observation to the entire population. This leads to the idea of a **hypothesis test**, one of the most important and most useful tools in statistics. Hypothesis tests help you to use data from a sample to test whether or not it is reasonable to believe a certain statistical characteristic is true for a whole population.
 
-MOTIVATION
+For example, the flagship branch of Cantor's Confectionery have $50$ customers on average one week. Can they say that their daily average customers has now probably increased compared to their previous average of $45$ per day? This is the sort of scenario that a hypothesis test can assess; trying to infer a statistical characteristic from a sample size. Hypothesis testing is therefore used extensively in any field that requires statistical analysis, such as biology and ecology, psychology and neuroscience, geography, sociology, and even in medicine.
+
+This guide will introduce the idea of a hypothesis test. First, the null and alternative hypotheses are introduced. Then, a list of tests is introduced to assess certain statistical qualities such as mean and variance. The level of confidence required to make a conclusion from the test is introduced via statistical significance, and the equivalent ideas of critical and $p$-values are demonstrated and a fully worked example is given.
+
+It's important to say that this guide is intended to be an overview as to how hypothesis testing works, rather than exploring the particular details of each hypothesis test. For more on this, see our associated guides.
 
 # Setting up a hypothesis test
 
@@ -33,7 +37,7 @@ MOTIVATION
 
 A **statistical hypothesis** (shortened to **hypothesis** in this guide) is a statement showing an idea, or something that could possibly be true, about the whole of a particular data set. 
 
-A **hypothesis test** allows you to say, with a defined level of certainty, whether or not a hypothesis can be rejected. This determines whether there is enough statistical evidence to show that the original hypothesis is unlikely to be true.
+A **hypothesis test** allows you to say, with a defined level of certainty, whether or not a hypothesis can be **rejected**. This determines whether there is enough statistical evidence to show that the original hypothesis is unlikely to be true.
 
 :::
 
@@ -98,7 +102,196 @@ So the null hypothesis is $H_0: \mu=15$ and the alternative hypothesis is $H_1: 
 
 Choosing the appropriate test statistic is really important because they all have different inputs depending on the data you have available to you. You can use this interactive flow chart of which test statistic you would want to use in whichever situation! Once you have found the test you want to use, you can refer to their relevant guide to make sure you are doing the correct calculations.
 
-<iframe src="https://slides.com/ellietrace/what-would-you-like-to-test-today/embed" width="576" height="420" title="What would you like to test today?" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 340
+library(shiny)
+library(bslib)
+
+# Define the decision tree structure (removed don't know options)
+decision_tree <- list(
+  question = "Are you comparing means in your hypothesis test μ?",
+  yes = list(
+    question = "Do you have one sample or two? Click yes for one, no for two.",
+    yes = list(
+      question = "Brilliant, one sample. Do you know the population standard deviation σ?",
+      yes = list(
+        result = "You should use a Z-test."
+      ),
+      no = list(
+        question = "Ok, so you don't know σ. Is your sample size n > 30?",
+          yes = list(
+            result = "You should use a Z-test."
+          ),
+          no = list(
+            result = "You should use a t-test."
+          )
+        )
+      ),
+    no = list(
+      question = "Ok, so you have two samples. Are they independent or are they paired? Click yes for independent, no for paired.",
+      yes = list(
+        question = "Ok, your two samples are independent. Do you know the population standard deviation σ for both samples?",
+      yes = list(
+        result = "You should use a Z-test."
+      ),
+      no = list(
+        question = "Ok, so you don't know σ for both samples. Is your sample size n > 30?",
+          yes = list(
+            result = "You should use a two-sample Z-test."
+          ),
+          no = list(
+            result = "You should use a two-sample t-test."
+          )
+        )
+      ),
+      no = list(
+        result = "You should use a paired t-test."
+      )
+    )
+  ),
+  no = list(
+    question = "Are you testing for variance?",
+    yes = list(
+      result = "You should use an F-test for variance."
+      ),
+    no = list(
+      question = "Are you testing for goodness of fit?",
+      yes = list(
+        result = "You should use a chi-squared test for goodness of fit."
+      ),
+      no = list(
+        question = "Are you testing for independence?",
+          yes = list(
+            result = "You should use a chi-squared test for independence."
+          ),
+          no = list(
+            result = "Unfortunately this is not covered in the interactive figure; please start again."
+          )
+        )
+      )
+    )
+  )
+
+# Define button color hex codes
+button_colors <- list(
+  yes = "#3F6BB6",        # Green
+  no = "#DB4315",         # Red
+  back = "#9E9E9E",       # Gray
+  start_over = "#FFCB00", # syellow
+  result_bg = "#C0D6FF",  # Light green background for results
+  result_border = "#3F6BB6", # Slightly darker green border for results
+  result_text = "#000000"  # Dark green text for results
+)
+
+
+ui <- page_fluid(
+  # Add some custom CSS to style buttons with hex colors
+  tags$head(
+    tags$style(HTML(
+      paste0(
+        ".yes-btn { background-color: ", button_colors$yes, "; border-color: ", button_colors$yes, "; color: white; }",
+        ".no-btn { background-color: ", button_colors$no, "; border-color: ", button_colors$no, "; color: white; }",
+        ".back-btn { background-color: ", button_colors$back, "; border-color: ", button_colors$back, "; color: white; }",
+        ".start-over-btn { background-color: ", button_colors$start_over, "; border-color: ", button_colors$start_over, "; color: white; }",
+        ".result-box { background-color: ", button_colors$result_bg, "; border-color: ", button_colors$result_border, "; color: ", button_colors$result_text, "; border: 1px solid; padding: 15px; border-radius: 5px; }"
+      )
+    ))
+  ),
+  card(
+    card_header(
+      h2("Hypothesis testing interactive flowchart", class = "text-center")
+    ),
+    card_body(
+      uiOutput("question_ui"),
+      uiOutput("result_ui"),
+      div(
+        class = "d-flex justify-content-between mt-4",
+        actionButton("back_btn", "Back", icon = icon("arrow-left"), class = "back-btn"),
+        actionButton("start_over_btn", "Start Over", icon = icon("refresh"), class = "start-over-btn")
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  # Keep track of the path through the decision tree
+  path_history <- reactiveVal(list())
+  
+  # Current node in the decision tree
+  current_node <- reactiveVal(decision_tree)
+  
+  # Update the UI based on the current node
+  output$question_ui <- renderUI({
+    node <- current_node()
+    if (is.null(node) || !hasName(node, "question")) {
+      return(NULL)
+    }
+    
+    div(
+      h4(node$question, class = "mb-4"),
+      div(
+        class = "d-flex justify-content-center gap-2",
+        actionButton("yes_btn", "Yes", class = "yes-btn"),
+        actionButton("no_btn", "No", class = "no-btn")
+      )
+    )
+  })
+  
+  output$result_ui <- renderUI({
+    node <- current_node()
+    if (is.null(node) || !hasName(node, "result")) {
+      return(NULL)
+    }
+    
+    div(
+      class = "result-box", # Using custom class instead of alert-success
+      h4("Recommendation:", class = "mb-3"),
+      p(node$result)
+    )
+  })
+  
+  # Navigate to the next node based on user choice
+  observeEvent(input$yes_btn, {
+    node <- current_node()
+    if (!is.null(node$yes)) {
+      path_history(c(path_history(), list(node)))
+      current_node(node$yes)
+    }
+  })
+  
+  observeEvent(input$no_btn, {
+    node <- current_node()
+    if (!is.null(node$no)) {
+      path_history(c(path_history(), list(node)))
+      current_node(node$no)
+    }
+  })
+  
+  # Go back to the previous question
+  observeEvent(input$back_btn, {
+    history <- path_history()
+    if (length(history) > 0) {
+      # Set current node to the last node in history
+      current_node(history[[length(history)]])
+      # Remove the last node from history
+      path_history(history[-length(history)])
+    }
+  })
+  
+  # Start over - reset to the root of the decision tree
+  observeEvent(input$start_over_btn, {
+    current_node(decision_tree)
+    path_history(list())
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+<!-- <iframe src="https://slides.com/ellietrace/what-would-you-like-to-test-today/embed" width="576" height="420" title="What would you like to test today?" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+
+ 
 
 :::
 
@@ -149,7 +342,7 @@ Rejecting a true null hypothesis is known as a **Type I error**; better known as
 
 # Critical values and $p$-values
 
-You can use two different but equivalent methods to decide whether or not to reject your hypothesis to the stated significance level. These methods depend on **the probability distribution being used**; see [Guide: PMFs, PDFs, CDFs](./studyguides/pmfspdfscdfs.qmd) and [Overview: Probability distributions] for more.
+You can use two different but equivalent methods to decide whether or not to reject your hypothesis to the stated significance level. These methods depend on **the probability distribution being used**; see [Guide: PMFs, PDFs, CDFs](pmfspdfscdfs.qmd) and [Overview: Probability distributions] for more.
 
 ::: {.callout-note}
 
@@ -165,11 +358,11 @@ For a **one-tailed test**, this critical region is at one end of the probability
     
 - $\displaystyle \int_{z}^\infty f(x)\,\textrm{d}x = \alpha$ for an upper tail test.
 
-For a **two-tailed test**, this critical region occupies **both ends** of the probability distribution with PDF $f(x)$. The **critical values** $z_1,z_2$ are the two boundaries such that $$\int_{-\infty}^{z_1} f(x)\,\textrm{d}x = \frac{\alpha}{2}\quad\textsf{and}\quad\int_{z_2}^{\infty} f(x)\,\textrm{d}x = \frac{\alpha}{2}$$ You can notice that you want $\alpha/2$ in a two tailed test; this is because the critical region is split in half!
+For a **two-tailed test**, this critical region occupies **both ends** of the probability distribution with PDF $f(x)$. The **critical values** $z_1,z_2$ are the two boundaries such that $$\int_{-\infty}^{z_1} f(x)\,\textrm{d}x = \frac{\alpha}{2}\quad\textsf{and}\quad\int_{z_2}^{\infty} f(x)\,\textrm{d}x = \frac{\alpha}{2}$$ You can notice that you want $\alpha/2$ in a two-tailed test; this is because the critical region is split in half!
 
 :::{.callout-tip}
 
-If your probability distribution is **symmetric** (like the normal distribution), then $z_1 = -z_2$ in a two-tailed test. If it is not symmetric (like the $\chi^2$ distribution).
+If your probability distribution is **symmetric** (like the normal distribution), then $z_1 = -z_2$ in a two-tailed test. If it is not symmetric (like the $\chi^2$ distribution), then this doesn't happen. 
 
 :::
 
@@ -189,7 +382,7 @@ The **$p$-value** is the probability of obtaining a test statistic as extreme as
 
 The $p$-value will be different depending on the type of test used, whether it was a one-tailed or a two-tailed test.
 
-- If you have an upper-tailed test $$H_1: \mu>\mu_0$$ (where $\mu_0$ is the value you are testing your sample data against), then the $p$-value is the area to the **right** of the test statistic under the probability distribution curve. See @fig-1 for a picture.
+- If you have an upper-tailed test $$H_1: \mu>\mu_0$$ (where $\mu_0$ is the value you are testing your sample data against), then the $p$-value is the area to the **right** of the test statistic under the probability distribution curve. 
 
 - If you have a lower-tailed test $$H_1: \mu<\mu_0$$ the $p$-value is the area to the left of the test statistic under the probability distribution curve. 
 
@@ -202,45 +395,151 @@ You would then compare the $p$-value to $\alpha$. If the $p$-value is less than 
 
 <!-- A **significance level** (often called alpha ($\alpha$)) is the level of certainty you want to test your hypothesis with, or the line at which you would reject **$H_0$**. Most commonly, $\alpha$ is set to $0.05$ $(5$%$)$, $0.01$ $(1$%$)$ or $0.10$ $(10$%$)$. The most common choice is $\alpha=0.05$ (so a significance level of $5$$\%$). **This means you are willing to accept a $5\%$ risk of rejecting a true null hypothesis.** -->
 
-This has a different impact based on whether you are performing a one-tailed or a two-tailed test. As shown in the graph below, for a one-tailed test, that whole $5\%$ rejection region will be at one end of the results. This is because you are only testing whether the characteristic is greater than or equal to our comparative characteristic. In the case of a two-tailed test, that $5\%$ will be split across either end of the distribution to reject the $2.5\%$ at both far left and far right of the curve. This is because you are testing whether the test characteristic is both greater than or less than the comparative characteristic. 
+::: {.content-visible when-format="html"}
 
-
+This has a different impact based on whether you are performing a one-tailed or a two-tailed test. You can use the interactive figure below to investigate this behaviour. For a lower one-tailed test, set $Z = -1.67$; for an upper one-tailed test, set $Z=1.67$.  You can see that the whole $5\%$ rejection region will be at one end of the results. This is because you are only testing whether the characteristic is greater than or equal to our comparative characteristic. In the case of a two-tailed test, set $Z = 1.96$. You can then see that the $5\%$ will be split across either end of the distribution to reject the $2.5\%$ at both far left and far right of the curve. This is because you are testing whether the test characteristic is both greater than or less than the comparative characteristic. 
 
 If your test statistic falls in the critical regions as defined by your test, that is when **you reject the null hypothesis $H_0$**.
 
-::: {.content-visible when-format="html"}
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 620
 
-![A **two-tailed test on the normal distribution** where $\alpha=5\%$, the critical value is 1.96 and there is a highlighted area on both the left and right tails of the curve representing a probability area of $p=0.025$ each. These highlighted areas represent the critical regions or the areas where you would reject the null hypothesis $H_0$](./FiguresPNG/hypothesistesting-fig1-1.png){width="150%" fig-alt="A two-tailed symmetric probability distribution where $\alpha=5\%$, the critical value is 1.96 and there is a highlighted blue area on both the left and right tails of the curve representing a probability area of $p=0.025$ each. These blue areas represent the area where you would reject the null hypothesis $H_0$. The curve is an n shape sloping out at the bottom on both sides. " #fig-3}
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Example of lower, upper, two-tailed tests",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Input parameters
+    card(
+      card_header("Input parameters"),
+      card_body(
+        numericInput("zscore", "Z-score", value = 1.96, step = 0.01),
+        radioButtons("test_type", "Test Type",
+                    choices = list("Two-tailed" = "two",
+                                  "One-tailed (upper)" = "upper",
+                                  "One-tailed (lower)" = "lower"),
+                    selected = "two"),
+        hr(),
+        helpText("This app demonstrates p-values in the normal distribution, for use in Z-testing (see Example 4).")
+      )
+    ),
+    
+    # Right column - Graphical representation
+    card(
+      card_header("Graphical representation"),
+      card_body(
+        plotOutput("density_plot", height = "300px")
+      )
+    )
+  ),
+  
+  # Results at the bottom
+  card(
+    card_header("Result"),
+    card_body(
+      verbatimTextOutput("pvalue_result")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Calculate p-value based on test type
+  p_value <- reactive({
+    z <- input$zscore
+    test <- input$test_type
+    
+    if (test == "two") {
+      p <- 2 * pnorm(-abs(z))
+      result <- paste0("Two-tailed p-value: ", round(p, 6))
+    } else if (test == "upper") {
+      p <- pnorm(z, lower.tail = FALSE)
+      result <- paste0("Upper-tailed p-value: ", round(p, 6))
+    } else if (test == "lower") {
+      p <- pnorm(z, lower.tail = TRUE)
+      result <- paste0("Lower-tailed p-value: ", round(p, 6))
+    }
+    
+    return(list(p = p, result = result, test = test))
+  })
+  
+  # Display p-value
+  output$pvalue_result <- renderText({
+    p_value()$result
+  })
+  
+  # Create density plot
+  output$density_plot <- renderPlot({
+    z <- input$zscore
+    test <- p_value()$test
+    
+    # Generate x values for normal distribution
+    x <- seq(-4, 4, length.out = 1000)
+    y <- dnorm(x)
+    df <- data.frame(x = x, y = y)
+    
+    # Base plot
+    p <- ggplot(df, aes(x = x, y = y)) +
+      geom_line() +
+      labs(x = "Z-score", y = "Density") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5)
+    
+    # Add shaded area based on test type, using #3F6BB6 as the color
+    if (test == "two") {
+      # Two-tailed test: shade both tails
+      if (z > 0) {
+        p <- p + 
+          geom_area(data = subset(df, x >= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_area(data = subset(df, x <= -z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_vline(xintercept = z, color = "#3F6BB6") +
+          geom_vline(xintercept = -z, color = "#3F6BB6")
+      } else {
+        p <- p + 
+          geom_area(data = subset(df, x <= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_area(data = subset(df, x >= -z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_vline(xintercept = z, color = "#3F6BB6") +
+          geom_vline(xintercept = -z, color = "#3F6BB6")
+      }
+    } else if (test == "upper") {
+      # Upper-tailed test: shade area above z
+      p <- p + 
+        geom_area(data = subset(df, x >= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+        geom_vline(xintercept = z, color = "#3F6BB6")
+    } else if (test == "lower") {
+      # Lower-tailed test: shade area below z
+      p <- p + 
+        geom_area(data = subset(df, x <= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+        geom_vline(xintercept = z, color = "#3F6BB6")
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui, server)
+```
 
 :::
 
 ::: {.content-hidden when-format="html"}
 
-![A **two-tailed test on the normal distribution** where $\alpha=5\%$, the critical value is 1.96 and there is a highlighted area on both the left and right tails of the curve representing a probability area of $p=0.025$ each. These highlighted areas represent the critical regions or the areas where you would reject the null hypothesis $H_0$](./FiguresPNG/hypothesistesting-fig1-1.png){fig-alt="A two-tailed symmetric probability distribution where $\alpha=5\%$, the critical value is 1.96 and there is a highlighted blue area on both the left and right tails of the curve representing a probability area of $p=0.025$ each. These blue areas represent the area where you would reject the null hypothesis $H_0$. The curve is an n shape sloping out at the bottom on both sides. " #fig-3}
+This has a different impact based on whether you are performing a one-tailed or a two-tailed test. As shown in @fig-1 and @fig-2, for a one-tailed test, that whole $5\%$ rejection region will be at one end of the results. This is because you are only testing whether the characteristic is greater than or equal to our comparative characteristic. In the case of a two-tailed test, that $5\%$ will be split across either end of the distribution to reject the $2.5\%$ at both far left and far right of the curve; this is shown in @fig-3. This is because you are testing whether the test characteristic is both greater than or less than the comparative characteristic. 
 
-:::
+If your test statistic falls in the critical regions as defined by your test, that is when **you reject the null hypothesis $H_0$**.
 
-::: {.content-visible when-format="html"}
+![A **lower one-tailed probability distribution** where $\alpha=5\%$, the critical value is -1.67 and there is a highlighted area on the left tail of the curve representing a probability area of $p=0.05$. This highlighted area represents the critical region or area where you would reject the null hypothesis $H_0$](./FiguresPNG/hypothesistesting-fig3-3.png){fig-alt="A lower one-tailed probability distribution where $\alpha=5\%$, the critical value is -1.67 and there is a highlighted area on the left tail of the curve representing a probability area of $p=0.05$. This highlighted area represents the critical region or area where you would reject the null hypothesis $H_0$ The curve is an n shape sloping out at the bottom on both sides." #fig-1}
 
-![An **upper one-tail probability distribution** where $\alpha=5\%$, the critical value is 1.67 and there is a highlighted area on the right tail of the curve representing a probability area of $p=0.05$. This highlighted area represents the critical region or the area where you would reject the null hypothesis $H_0$](./FiguresPNG/hypothesistesting-fig2-2.png){width="150%" fig-alt="An upper one-tail probability distribution where $\alpha=5\%$, the critical value is 1.67 and there is a highlighted area on the right tail of the curve representing a probability area of $p=0.05$. This highlighted areas represent the area where you would reject the null hypothesis $H_0$ The curve is an n shape sloping out at the bottom on both sides. " #fig-2}
+![An **upper one-tail probability distribution** where $\alpha=5\%$, the critical value is 1.67 and there is a highlighted area on the right tail of the curve representing a probability area of $p=0.05$. This highlighted area represents the critical region or the area where you would reject the null hypothesis $H_0$.](./FiguresPNG/hypothesistesting-fig2-2.png){fig-alt="An upper one-tail probability distribution where $\alpha=5\%$, the critical value is 1.67 and there is a highlighted area on the right tail of the curve representing a probability area of $p=0.05$. This highlighted areas represent the area where you would reject the null hypothesis $H_0$ The curve is an n shape sloping out at the bottom on both sides. " #fig-2}
 
-:::
-
-::: {.content-hidden when-format="html"}
-
-![An **upper one-tail probability distribution** where $\alpha=5\%$, the critical value is 1.67 and there is a highlighted area on the right tail of the curve representing a probability area of $p=0.05$. This highlighted area represents the critical region or the area where you would reject the null hypothesis $H_0$](./FiguresPNG/hypothesistesting-fig2-2.png){fig-alt="An upper one-tail probability distribution where $\alpha=5\%$, the critical value is 1.67 and there is a highlighted area on the right tail of the curve representing a probability area of $p=0.05$. This highlighted areas represent the area where you would reject the null hypothesis $H_0$ The curve is an n shape sloping out at the bottom on both sides. " #fig-2}
-
-:::
-
-::: {.content-visible when-format="html"}
-
-![A **lower one-tailed probability distribution** where $\alpha=5\%$, the critical value is -1.67 and there is a highlighted area on the left tail of the curve representing a probability area of $p=0.05$. This highlighted area represents the critical region or area where you would reject the null hypothesis $H_0$](./FiguresPNG/hypothesistesting-fig3-3.png){width="150%" fig-alt="A lower one-tailed probability distribution where $\alpha=5\%$, the critical value is -1.67 and there is a highlighted area on the left tail of the curve representing a probability area of $p=0.05$. This highlighted area represents the critical region or area where you would reject the null hypothesis $H_0$ The curve is an n shape sloping out at the bottom on both sides. " #fig-1}
-
-:::
-
-::: {.content-hidden when-format="html"}
-
-![A **lower one-tailed probability distribution** where $\alpha=5\%$, the critical value is -1.67 and there is a highlighted area on the left tail of the curve representing a probability area of $p=0.05$. This highlighted area represents the critical region or area where you would reject the null hypothesis $H_0$](./FiguresPNG/hypothesistesting-fig3-3.png){fig-alt="A lower one-tailed probability distribution where $\alpha=5\%$, the critical value is -1.67 and there is a highlighted area on the left tail of the curve representing a probability area of $p=0.05$. This highlighted area represents the critical region or area where you would reject the null hypothesis $H_0$ The curve is an n shape sloping out at the bottom on both sides. " #fig-1}
+![A **two-tailed test on the normal distribution** where $\alpha=5\%$, the critical value is 1.96 and there is a highlighted area on both the left and right tails of the curve representing a probability area of $p=0.025$ each. These highlighted areas represent the critical regions or the areas where you would reject the null hypothesis $H_0$.](./FiguresPNG/hypothesistesting-fig1-1.png){fig-alt="A two-tailed symmetric probability distribution where $\alpha=5\%$, the critical value is 1.96 and there is a highlighted blue area on both the left and right tails of the curve representing a probability area of $p=0.025$ each. These blue areas represent the area where you would reject the null hypothesis $H_0$. The curve is an n shape sloping out at the bottom on both sides. " #fig-3}
 
 :::
 
@@ -266,15 +565,69 @@ or
 
 ::: {.callout-warning}
 
-Hypothesis tests are based on sample data, not on the entire population. This means **you can never accept either hypothesis**; it is always a rejection or a failure to reject. This is because you cannot definitively 'prove' the null hypothesis to be true. 
+Hypothesis tests are based on sample data, not on the entire population. This means **you can never accept either hypothesis**; it is always a rejection or a failure to reject. This is because you cannot definitively 'prove' the null hypothesis to be true.
 
-If you do not reject $H_0$, this does not mean that the null hypothesis is necessarily correct; it means that the sample data didn’t provide strong enough evidence against it. If you do not reject $H_0$ but the null hypothesis is incorrect, this is a **false negative** or a **Type 2 error**.
+<!-- If you do not reject $H_0$, this does not mean that the null hypothesis is necessarily correct; it means that the sample data didn’t provide strong enough evidence against it. If you do not reject $H_0$ but the null hypothesis is incorrect, this is a **false negative** or a **Type 2 error**. -->
 
-Similarly, if you reject $H_0$, this does not mean that the null hypothesis is necessarily incorrect; it means that the sample data provided strong enough evidence for the alternative hypothesis. If you reject $H_0$ but the null hypothesis is correct, this is a **false positive** or a **Type 1 error**.
+<!-- Similarly, if you reject $H_0$, this does not mean that the null hypothesis is necessarily incorrect; it means that the sample data provided strong enough evidence for the alternative hypothesis. If you reject $H_0$ but the null hypothesis is correct, this is a **false positive** or a **Type 1 error**. -->
 
-For more information about this see [Guide: Errors in hypothesis testing].
+<!-- For more information about this see [Guide: Errors in hypothesis testing]. -->
 
 :::
+
+ 
+
+::: {.content-visible when-format="pdf"}
+
+::: {.callout-note appearance="simple"}
+
+## Example 4
+
+Your local mathematical sweet shop, Cantor's Confectionery, claims that the average weight of its popular Boole Bar is $5$ grams. You suspect that the actual average weight is less than $5$ grams, so you decide to perform a hypothesis test. You take a random sample of $30$ Boole Bars and find that the sample mean weight of the sample is $\bar{x} = 4.5$ grams with a sample standard deviation of $s=1.5$ grams. Because of the amazing production methods of Cantor's Confectionery, you can safely assume that the population standard deviation $\sigma = 1.5$ grams.
+
+You want to test if the average weight of the Boole Bars is less than $5$ grams at a significance level of $5\%$. This means that $\alpha = 0.05$.
+
+ 
+
+**State your hypotheses**
+
+Your null hypothesis is that the average weight of the bars is $\mu_0 = 5$ grams and your alternative hypothesis is the average weight of bars is less than $\mu_0 = 5$ grams. So $H_0:\mu=5$ and $H_1:\mu<5$.
+
+ 
+
+**Calculating the test statistic**
+
+In this case you have a sample of $30$ bars and you know the population standard deviation $\sigma = 1.5$. You are also testing the alternative hypothesis that $\mu < 5$. This implies that you would want to use a **lower one-tailed $Z$-test**. This means calculating a test statistic according to a $Z$-test, which is outlined here.
+
+First, you would need to calculate the standard error from the mean. This is $$SE = \frac{\sigma}{\sqrt{n}} = \frac{1.5}{\sqrt{30}}$$ Next, the test statistic ($Z$-score) is given by  $$Z = \frac{\bar{x} - \mu_0}{SE} = \frac{4.5 - 5}{\frac{1.5}{\sqrt{30}}} \approx -1.826$$ (See [Guide: Introduction to $Z$-testing] for more.)
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 4 continued
+
+**Find the critical value or $p$-value**
+
+Since this is a lower one-tailed test, you need to find the critical value for $\alpha=0.05$ from a $Z$-table. The critical $Z$-value for a significance level of $0.05$ in a lower one-tailed test is $-1.645$.
+
+Alternatively, you can find the $p$-value associated with the test statistic $Z=−1.826$. You can use [Calculator: $Z$-testing](../apps/calculators/c-ztesting.qmd) to see that a $Z$-score of $-1.826$ corresponds to a $p$-value of approximately $0.033925$.
+
+ 
+
+**Conclusion**
+
+If your test statistic is less than the critical value $-1.645$ or $p\leq \alpha$, you can reject the null hypothesis $H_0$. If neither condition is met, you fail to reject the null hypothesis. 
+
+In this case, $Z=-1.826$, which is less than the critical value of $-1.645$. Similarly $p=0.033925$, which is smaller than $\alpha=0.05$. 
+
+So you can reject the null hypothesis $H_0$. There is enough evidence to conclude that the average weight of the Boole Bars is less than $5$ grams. It looks like Cantor Confectionery need to get to work...
+
+:::
+
+:::
+
+::: {.content-hidden when-format="pdf"}
 
 ::: {.callout-note appearance="simple"}
 
@@ -296,65 +649,21 @@ First, you would need to calculate the standard error from the mean. This is $$S
 
 **Find the critical value or $p$-value**
 
-Since this is a lower one-tailed test, you need to find the critical value for $\alpha=0.05$ from a $Z-$table. The critical $Z-$value for a significance level of $0.05$ in a lower one-tailed test is $-1.645$.
+Since this is a lower one-tailed test, you need to find the critical value for $\alpha=0.05$ from a $Z$-table. The critical $Z$-value for a significance level of $0.05$ in a lower one-tailed test is $-1.645$.
 
-Alternatively, you can find the $p$-value associated with the test statistic $Z=−1.826$. You can use [Calculator: $Z$-testing] to see that a $Z$-score of $-1.826$ corresponds to a $p-$value of approximately $0.033925$.
+Alternatively, you can find the $p$-value associated with the test statistic $Z=−1.826$. You can use [Calculator: $Z$-testing](../apps/calculators/c-ztesting.qmd) to see that a $Z$-score of $-1.826$ corresponds to a $p$-value of approximately $0.033925$.
 
 **Conclusion**
 
-If your test statistic is less than the critical value $-1.645$ or $p\leq \alpha$, you can reject the null hypothesis $H_0$. If neither condition is met, you fail to reject the null hypothesis.
+If your test statistic is less than the critical value $-1.645$ or $p\leq \alpha$, you can reject the null hypothesis $H_0$. If neither condition is met, you fail to reject the null hypothesis. 
 
-In this case, $Z=-1.826$, which is less than the critical value of $-1.645$. Similarly, $p=0.033925$, which is smaller than $\alpha=0.05$. 
+In this case, $Z=-1.826$, which is less than the critical value of $-1.645$. Similarly $p=0.033925$, which is smaller than $\alpha=0.05$. 
 
 So you can reject the null hypothesis $H_0$. There is enough evidence to conclude that the average weight of the Boole Bars is less than $5$ grams. It looks like Cantor Confectionery need to get to work...
 
 :::
 
-::: 
-
-<!-- ::: {.content-hidden when-format="html"} -->
-<!-- ::: {.callout-note appearance="simple"} -->
-<!-- ## Example 4.1 -->
-
-<!-- Your local mathematical sweet shop, Cantor's Confectionery, claims that the average weight of its popular Boole Bar is $5$ grams. You suspect that the actual average weight is less than $5$ grams, so you decide to perform a hypothesis test. You take a random sample of $30$ Boole Bars and find that the average weight of the sample is $4.5$ grams with a standard deviation of $1.5$ grams. Assume you know the population standard deviation is also known to be $1.5$ grams. -->
-
-<!-- You want to test if the average weight of the Boole Bars is less than $5$ grams at a significance level of $5\%$ -->
-
-<!-- **State your hypotheses** -->
-
-<!-- Your null hypothesis is that the average weight of the bars is $5$ grams and your alternative hypothesis is the average weight of bars is less than $5$ grams.  -->
-
-<!-- $$H_0:\mu=5$$ -->
-
-<!-- $$H_1:\mu<5$$ -->
-<!-- ::: -->
-<!-- ::: {.callout-note appearance="simple"} -->
-<!-- ## Example 4.2 -->
-<!-- **Calculating the test statistic** -->
-
-<!-- In this case you have one sample of $30$ bars and you know the population standard deviation so you would want to use a $Z-$test. If you follow the steps given in the [Guide: Introduction to $Z$-testing] you would get the following: -->
-
-<!-- $$z= \frac{4.5 - 5}{\frac{1.5}{\sqrt{30}}}$$ -->
-<!-- Which results in a test statistic of $-1.826$ -->
-
-<!-- **Find the critical value or $P-$value** -->
-
-<!-- Since this is a one-tailed test (lower tail), you need to find the critical value for $\alpha=0.05$ from the $Z-$table. The critical $Z-$value for a significance level of $0.05$ in a one tailed test is $-1.645$ (negative because you are looking for evidence that the mean is less than $5$ grams). -->
-
-<!-- Alternatively, you can find the $P-$value associated with $Z=−1.826$. From the $Z-$table, you will find that a $Z-$score of $-1.826$ corresponds to a $P-$value of approximately $0.033925$. -->
-<!-- ::: -->
-<!-- ::: {.callout-note appearance="simple"} -->
-<!-- ## Example 4.3 -->
-<!-- **Conclusion** -->
-
-<!-- If your $Z-$score is less than the critical value $-1.645$ or $P≤\alpha$, you can reject the null hypothesis $H_0$ -->
-
-<!-- If neither condition is met, you fail to reject the null hypothesis. -->
-<!-- In this case, the calculated $Z=-1.826$, which is less than the critical value of $-1.645$, and $P=0.033925$, which is smaller than $\alpha=0.05$. -->
-
-<!-- Since $Z=−1.826$ is less than $-1.645$ and the $P-$value is smaller than $0.05$, you can reject the null hypothesis. There is enough evidence to conclude that the average weight of the Boole Bars is less than $5$ grams. -->
-<!-- ::: -->
-<!-- ::: -->
+:::
 
 # Quick check problems {-}
 
@@ -380,12 +689,11 @@ Answer: `r mcq(c("a", "b", answer = "c"))`.
 
 Answer: $\alpha=$ `r fitb("0.1")`.
 
-
 3. What test would you use to compare means when you have one sample and you know the population standard deviation?
 
-Answer:`r mcq(c("T test", "F Test", answer = "Z Test", "Chi Squared Goodness of Fit", "Chi Squared Test for Independence", "Paired T Test", "Z Test for Proportion"))`.
+Answer:`r mcq(c("t-test", "F-test", answer = "Z-test", "Chi-squared goodness of fit", "Chi-squared test for independence", "Paired t-test", "Z-test for proportion"))`.
 
-4. You are performing a two tail test with $\alpha=0.05$ and critical values of $1.96$ and $-1.96$. Your test statistic is $-2.34$. What conclusion do you draw?
+4. You are performing a two-tailed $Z$-test with $\alpha=0.05$ and critical values of $1.96$ and $-1.96$. Your test statistic is $-2.34$. What conclusion do you draw?
 
 Answer:`r mcq(c("I do not reject $H_0$", answer = "I reject H0"))`.
 
@@ -407,7 +715,7 @@ Answer:`r mcq(c("I do not reject $H_0$", answer = "I reject H0"))`.
 
 3. What test would you use to compare means when you have one sample and you know the population standard deviation?
 
-4. You are performing a two tail test with $\alpha=0.05$ and critical values of $1.96$ and $-1.96$. Your test statistic is $-2.34$. What conclusion do you draw?
+4. You are performing a two-tailed test with $\alpha=0.05$ and critical values of $1.96$ and $-1.96$. Your test statistic is $-2.34$. What conclusion do you draw?
 
 :::
 
@@ -415,12 +723,13 @@ Answer:`r mcq(c("I do not reject $H_0$", answer = "I reject H0"))`.
 
 [For more questions on the subject, please go to Questions: Hypothesis testing.](../questions/qs-hypothesistesting.qmd)
 
-[For more information on how to perform a $Z$-test please see guide: $Z$-testing]
-[For more information on type I and type II errors please see guide: Errors in hypothesis testing]
+[For more information on how to perform a $Z$-test, please see Guide: $Z$-testing.]
+
+[For more information on type I and type II errors please see Guide: Errors in hypothesis testing.]
 
 ## Version history {-}
 
-v1.0: initial version created 12/24 by Ellie Trace as part of a University of St Andrews VIP project
+v1.0: initial version created 12/24 by Ellie Trace as part of a University of St Andrews VIP project.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

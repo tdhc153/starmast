@@ -5,6 +5,9 @@ project:
 execute: 
   cache: true
   freeze: auto
+  
+filters:
+  - shinylive
 
 website:
   title: STARMAST
@@ -27,7 +30,9 @@ website:
     - href: qalist.qmd
       text: Questions and answers
     - href: olist.qmd
-      text: Other resources
+      text: Facts and proofs
+    - href: applist.qmd
+      text: Apps
   reader-mode: true
   page-footer:
     center: 
@@ -51,7 +56,7 @@ website:
   announcement:
     icon: database-add
     dismissable: true
-    content: "**Latest content:** New guide on PDFs, PMFs, CDFs available now! (14/04/25)"
+    content: "**Latest content:** New guide on introduction to hypothesis testing available now! (25/04/25)"
     type: success
     position: below-navbar
   
@@ -69,11 +74,14 @@ format:
     css: webexfiles/webex.css
     include-in-header: 
     - header.html
+    - text: <script src="https://esm.sh/shinylive-r"></script>
     include-after-body: 
     - webexfiles/webex.js
     - static/feedback.html
     default-image-extension: svg
     fig-width: 15
+    resources:
+      - shinylive-sw.js
           
   pdf:
     engine: xelatex
@@ -117,7 +125,8 @@ format:
   docx:
     reference-doc: starmast-doc-formatting.docx
     default-image-extension: pdf
-    
+  
+  
 # - href: fslist.qmd
 # text: Fact sheets
 # - href: pslist.qmd

@@ -1,2 +1,1783 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ellie Trace">
+
+<title>Introduction to hypothesis testing – STARMAST</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, and this is the sole reason for use of cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.10/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<script src="https://esm.sh/shinylive-r"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html"> 
+<span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../studyguidelist.html"> 
+<span class="menu-text">Study guides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../qalist.html"> 
+<span class="menu-text">Questions and answers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../olist.html"> 
+<span class="menu-text">Facts and proofs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../applist.html"> 
+<span class="menu-text">Apps</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="676f7048d68ffa478efc20310eb54d5a" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> New guide on introduction to hypothesis testing available now! (25/04/25)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-a-hypothesis-test" id="toc-what-is-a-hypothesis-test" class="nav-link active" data-scroll-target="#what-is-a-hypothesis-test">What is a hypothesis test?</a></li>
+  <li><a href="#setting-up-a-hypothesis-test" id="toc-setting-up-a-hypothesis-test" class="nav-link" data-scroll-target="#setting-up-a-hypothesis-test">Setting up a hypothesis test</a></li>
+  <li><a href="#test-selection-and-statistic-calculation" id="toc-test-selection-and-statistic-calculation" class="nav-link" data-scroll-target="#test-selection-and-statistic-calculation">Test selection and statistic calculation</a></li>
+  <li><a href="#significance-levels" id="toc-significance-levels" class="nav-link" data-scroll-target="#significance-levels">Significance levels</a></li>
+  <li><a href="#critical-values-and-p-values" id="toc-critical-values-and-p-values" class="nav-link" data-scroll-target="#critical-values-and-p-values">Critical values and <span class="math inline">\(p\)</span>-values</a></li>
+  <li><a href="#forming-a-conclusion" id="toc-forming-a-conclusion" class="nav-link" data-scroll-target="#forming-a-conclusion">Forming a conclusion</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="hypothesistesting.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="hypothesistesting.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to hypothesis testing</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Statistics</div>
+    <div class="quarto-category">Probability</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ellie Trace </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    A hypothesis test is a statistical process used to determine whether there is enough evidence in a sample to support or reject a claim about a population. It involves comparing a null hypothesis, which represents the status quo, against an alternative hypothesis using sample data, a chosen significance level, and either critical values or <span class="math inline">\(p\)</span>-values. This guide will focus on the general structure of a hypothesis test, critical values, how to choose which type of test to use, as well as when to reject, or not reject a hypothesis.
+  </div>
+</div>
+
+
+</header>
+
+
+<p><em>Before reading this guide, it is recommended that you read [Guide: Introduction to probability], [Guide: Mean, variance, and standard deviation], and <a href="../studyguides/pmfspdfscdfs.html">Guide: PMFs, PDFs, CDFs</a>.</em></p>
+<section id="what-is-a-hypothesis-test" class="level1 unnumbered">
+<h1 class="unnumbered">What is a hypothesis test?</h1>
+<p>Statistics is the science of collecting, organizing and interpreting data. Making statements about characteristics of entire populations is important in statistics, as it gives a complete picture of the data. However, in real life, taking data from the entire population is incredibly difficult and could be impossible; for instance, could you imagine trying to co-ordinate the entire population of the world to measure their height?</p>
+<p>Instead, statisticians take <strong>samples</strong> of data and use tools to potentially extend an observation to the entire population. This leads to the idea of a <strong>hypothesis test</strong>, one of the most important and most useful tools in statistics. Hypothesis tests help you to use data from a sample to test whether or not it is reasonable to believe a certain statistical characteristic is true for a whole population.</p>
+<p>For example, the flagship branch of Cantor’s Confectionery have <span class="math inline">\(50\)</span> customers on average one week. Can they say that their daily average customers has now probably increased compared to their previous average of <span class="math inline">\(45\)</span> per day? This is the sort of scenario that a hypothesis test can assess; trying to infer a statistical characteristic from a sample size. Hypothesis testing is therefore used extensively in any field that requires statistical analysis, such as biology and ecology, psychology and neuroscience, geography, sociology, and even in medicine.</p>
+<p>This guide will introduce the idea of a hypothesis test. First, the null and alternative hypotheses are introduced. Then, a list of tests is introduced to assess certain statistical qualities such as mean and variance. The level of confidence required to make a conclusion from the test is introduced via statistical significance, and the equivalent ideas of critical and <span class="math inline">\(p\)</span>-values are demonstrated and a fully worked example is given.</p>
+<p>It’s important to say that this guide is intended to be an overview as to how hypothesis testing works, rather than exploring the particular details of each hypothesis test. For more on this, see our associated guides.</p>
+</section>
+<section id="setting-up-a-hypothesis-test" class="level1">
+<h1>Setting up a hypothesis test</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hypothesis, hypothesis test
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>statistical hypothesis</strong> (shortened to <strong>hypothesis</strong> in this guide) is a statement showing an idea, or something that could possibly be true, about the whole of a particular data set.</p>
+<p>A <strong>hypothesis test</strong> allows you to say, with a defined level of certainty, whether or not a hypothesis can be <strong>rejected</strong>. This determines whether there is enough statistical evidence to show that the original hypothesis is unlikely to be true.</p>
+</div>
+</div>
+<p>Generally speaking, when you define hypotheses in statistics, they follow a very specific format, and refer to the <em>entire population</em> being studied.</p>
+<ul>
+<li><p><strong>Null hypothesis (<span class="math inline">\(H_0\)</span>):</strong> This hypothesis represents the ‘status quo’ or no effect. It is always a statement of equality.</p></li>
+<li><p><strong>Alternative hypothesis (<span class="math inline">\(H_1\)</span>):</strong> This is the hypothesis that you are trying to test. It is always a statement of <strong>inequality</strong>.</p>
+<p>Depending on the question, the alternative hypothesis <span class="math inline">\(H_1\)</span> can either be <strong>one-tailed</strong> or <strong>two-tailed</strong>:</p>
+<ul>
+<li>One-tailed means you are you are testing whether the characteristic has increased or decreased.</li>
+<li>Two-tailed means you are testing whether the tested characteristic is equal to the comparative characteristic or not.</li>
+</ul></li>
+</ul>
+<p>Here’s some examples of hypotheses that require testing. In these examples, the Greek letter <span class="math inline">\(\mu\)</span> (mu) is used for the <strong>population mean</strong>; see [Guide: Means, variance, and standard deviation] for more.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cantor’s Confectionery wants to determine whether their waiting times in their corporate headquarters are longer than their target of <span class="math inline">\(15\)</span> minutes per person.</p>
+<p>You can set up a hypothesis test to evaluate this claim.</p>
+<p><strong>Null hypothesis (<span class="math inline">\(H_0\)</span>)</strong>: The average waiting time is equal to the target waiting time of <span class="math inline">\(15\)</span> minutes. (Remember that the null hypothesis is always statement of equality!)</p>
+<p><strong>Alternative hypothesis (<span class="math inline">\(H_1\)</span>)</strong>: The average waiting time is longer than the target waiting time of <span class="math inline">\(15\)</span> minutes.</p>
+<p>So the null hypothesis is <span class="math inline">\(H_0: \mu=15\)</span> and the alternative hypothesis is <span class="math inline">\(H_1: \mu &gt; 15\)</span>. This is a one-tailed alternative hypothesis.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Context</strong>: Cantor’s Confectionery wants to determine if a new sweet production method produces different average approval scores compared to their traditional method.</p>
+<p><strong>Null hypothesis (<span class="math inline">\(H_0\)</span>)</strong>: The mean approval score for the new method <span class="math inline">\(n\)</span> is equal to the mean approval score for the traditional method <span class="math inline">\(t\)</span>. So the null hypothesis is <span class="math inline">\(H_0:\mu_n=\mu_t\)</span>.</p>
+<p><strong>Alternative hypothesis (<span class="math inline">\(H_1\)</span>)</strong>: The mean approval score for the new method <span class="math inline">\(n\)</span> is not equal to the mean approval score for the traditional method, indicating a difference in performance. So the alternative hypothesis here is <span class="math inline">\(H_1: \mu_n\neq \mu_t\)</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Context</strong>: Cantor’s Confectionery wants to test if the proportion <span class="math inline">\(P\)</span> of defective products produced is lower than last year’s average of <span class="math inline">\(2\%\)</span>.</p>
+<p><strong>Null hypothesis (<span class="math inline">\(H_0\)</span>)</strong>: Here, the proportion would be equal to <span class="math inline">\(2\%\)</span>; which means your null hypothesis is <span class="math inline">\(H_0: P=0.02\)</span>.</p>
+<p><strong>Alternative hypothesis (<span class="math inline">\(H_1\)</span>)</strong>: The hypothesis that you want to test is that the proportion of defective products is less than <span class="math inline">\(2\%\)</span>; so your alternative hypothesis should be <span class="math inline">\(H_1: P&lt;0.02\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="test-selection-and-statistic-calculation" class="level1">
+<h1>Test selection and statistic calculation</h1>
+<p>Choosing the appropriate test statistic is really important because they all have different inputs depending on the data you have available to you. You can use this interactive flow chart of which test statistic you would want to use in whichever situation! Once you have found the test you want to use, you can refer to their relevant guide to make sure you are doing the correct calculations.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 340
+library(shiny)
+library(bslib)
+
+# Define the decision tree structure (removed don't know options)
+decision_tree &lt;- list(
+  question = "Are you comparing means in your hypothesis test μ?",
+  yes = list(
+    question = "Do you have one sample or two? Click yes for one, no for two.",
+    yes = list(
+      question = "Brilliant, one sample. Do you know the population standard deviation σ?",
+      yes = list(
+        result = "You should use a Z-test."
+      ),
+      no = list(
+        question = "Ok, so you don't know σ. Is your sample size n &gt; 30?",
+          yes = list(
+            result = "You should use a Z-test."
+          ),
+          no = list(
+            result = "You should use a t-test."
+          )
+        )
+      ),
+    no = list(
+      question = "Ok, so you have two samples. Are they independent or are they paired? Click yes for independent, no for paired.",
+      yes = list(
+        question = "Ok, your two samples are independent. Do you know the population standard deviation σ for both samples?",
+      yes = list(
+        result = "You should use a Z-test."
+      ),
+      no = list(
+        question = "Ok, so you don't know σ for both samples. Is your sample size n &gt; 30?",
+          yes = list(
+            result = "You should use a two-sample Z-test."
+          ),
+          no = list(
+            result = "You should use a two-sample t-test."
+          )
+        )
+      ),
+      no = list(
+        result = "You should use a paired t-test."
+      )
+    )
+  ),
+  no = list(
+    question = "Are you testing for variance?",
+    yes = list(
+      result = "You should use an F-test for variance."
+      ),
+    no = list(
+      question = "Are you testing for goodness of fit?",
+      yes = list(
+        result = "You should use a chi-squared test for goodness of fit."
+      ),
+      no = list(
+        question = "Are you testing for independence?",
+          yes = list(
+            result = "You should use a chi-squared test for independence."
+          ),
+          no = list(
+            result = "Unfortunately this is not covered in the interactive figure; please start again."
+          )
+        )
+      )
+    )
+  )
+
+# Define button color hex codes
+button_colors &lt;- list(
+  yes = "#3F6BB6",        # Green
+  no = "#DB4315",         # Red
+  back = "#9E9E9E",       # Gray
+  start_over = "#FFCB00", # syellow
+  result_bg = "#C0D6FF",  # Light green background for results
+  result_border = "#3F6BB6", # Slightly darker green border for results
+  result_text = "#000000"  # Dark green text for results
+)
+
+
+ui &lt;- page_fluid(
+  # Add some custom CSS to style buttons with hex colors
+  tags$head(
+    tags$style(HTML(
+      paste0(
+        ".yes-btn { background-color: ", button_colors$yes, "; border-color: ", button_colors$yes, "; color: white; }",
+        ".no-btn { background-color: ", button_colors$no, "; border-color: ", button_colors$no, "; color: white; }",
+        ".back-btn { background-color: ", button_colors$back, "; border-color: ", button_colors$back, "; color: white; }",
+        ".start-over-btn { background-color: ", button_colors$start_over, "; border-color: ", button_colors$start_over, "; color: white; }",
+        ".result-box { background-color: ", button_colors$result_bg, "; border-color: ", button_colors$result_border, "; color: ", button_colors$result_text, "; border: 1px solid; padding: 15px; border-radius: 5px; }"
+      )
+    ))
+  ),
+  card(
+    card_header(
+      h2("Hypothesis testing interactive flowchart", class = "text-center")
+    ),
+    card_body(
+      uiOutput("question_ui"),
+      uiOutput("result_ui"),
+      div(
+        class = "d-flex justify-content-between mt-4",
+        actionButton("back_btn", "Back", icon = icon("arrow-left"), class = "back-btn"),
+        actionButton("start_over_btn", "Start Over", icon = icon("refresh"), class = "start-over-btn")
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  # Keep track of the path through the decision tree
+  path_history &lt;- reactiveVal(list())
+  
+  # Current node in the decision tree
+  current_node &lt;- reactiveVal(decision_tree)
+  
+  # Update the UI based on the current node
+  output$question_ui &lt;- renderUI({
+    node &lt;- current_node()
+    if (is.null(node) || !hasName(node, "question")) {
+      return(NULL)
+    }
+    
+    div(
+      h4(node$question, class = "mb-4"),
+      div(
+        class = "d-flex justify-content-center gap-2",
+        actionButton("yes_btn", "Yes", class = "yes-btn"),
+        actionButton("no_btn", "No", class = "no-btn")
+      )
+    )
+  })
+  
+  output$result_ui &lt;- renderUI({
+    node &lt;- current_node()
+    if (is.null(node) || !hasName(node, "result")) {
+      return(NULL)
+    }
+    
+    div(
+      class = "result-box", # Using custom class instead of alert-success
+      h4("Recommendation:", class = "mb-3"),
+      p(node$result)
+    )
+  })
+  
+  # Navigate to the next node based on user choice
+  observeEvent(input$yes_btn, {
+    node &lt;- current_node()
+    if (!is.null(node$yes)) {
+      path_history(c(path_history(), list(node)))
+      current_node(node$yes)
+    }
+  })
+  
+  observeEvent(input$no_btn, {
+    node &lt;- current_node()
+    if (!is.null(node$no)) {
+      path_history(c(path_history(), list(node)))
+      current_node(node$no)
+    }
+  })
+  
+  # Go back to the previous question
+  observeEvent(input$back_btn, {
+    history &lt;- path_history()
+    if (length(history) &gt; 0) {
+      # Set current node to the last node in history
+      current_node(history[[length(history)]])
+      # Remove the last node from history
+      path_history(history[-length(history)])
+    }
+  })
+  
+  # Start over - reset to the root of the decision tree
+  observeEvent(input$start_over_btn, {
+    current_node(decision_tree)
+    path_history(list())
+  })
+}
+
+shinyApp(ui = ui, server = server)</code></pre>
+<!-- <iframe src="https://slides.com/ellietrace/what-would-you-like-to-test-today/embed" width="576" height="420" title="What would you like to test today?" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+<p>&nbsp;</p>
+</section>
+<section id="significance-levels" class="level1">
+<h1>Significance levels</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>significance level</strong> <span class="math inline">\(\alpha\)</span> (alpha) is the level of certainty you want to test your hypothesis with, or the line at which you would reject the null hypothesis <span class="math inline">\(H_0\)</span>.</p>
+<p>This significance level is the percentage of risk that you are willing to accept rejecting a true null hypothesis. The smaller the <span class="math inline">\(\alpha\)</span>, the smaller the risk of a false conclusion.</p>
+</div>
+</div>
+<p>Most commonly, <span class="math inline">\(\alpha\)</span> is set to <span class="math inline">\(0.05\)</span> <span class="math inline">\((5\%)\)</span>, <span class="math inline">\(0.01\)</span> <span class="math inline">\((1\%)\)</span> or <span class="math inline">\(0.10\)</span> <span class="math inline">\((10\%)\)</span>. Usually, the most common choice is <span class="math inline">\(\alpha=0.05\)</span> (so a significance level of <span class="math inline">\(5\%\)</span>). <strong>This means you are willing to accept a <span class="math inline">\(5\%\)</span> risk of rejecting a true null hypothesis.</strong></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Rejecting a true null hypothesis is known as a <strong>Type I error</strong>; better known as a false positive. There is also a <strong>Type II error</strong> (a false negative), which is where you fail to reject the null hypothesis (resulting in a negative test) but in fact the alternative hypothesis is true. For more information on these, see [Guide: Errors in hypothesis testing].</p>
+</div>
+</div>
+</section>
+<section id="critical-values-and-p-values" class="level1">
+<h1>Critical values and <span class="math inline">\(p\)</span>-values</h1>
+<p>You can use two different but equivalent methods to decide whether or not to reject your hypothesis to the stated significance level. These methods depend on <strong>the probability distribution being used</strong>; see <a href="../studyguides/pmfspdfscdfs.html">Guide: PMFs, PDFs, CDFs</a> and [Overview: Probability distributions] for more.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Critical value
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>critical value</strong> is a boundary that defines the <strong>rejection region</strong> (or <strong>critical region</strong>) based on the significance level <span class="math inline">\(\alpha\)</span>.</p>
+</div>
+</div>
+<p>For a <strong>one-tailed test</strong>, this critical region is at one end of the probability distribution with PDF <span class="math inline">\(f(x)\)</span>. The critical value is then the unique <span class="math inline">\(z\)</span> such that</p>
+<ul>
+<li><p><span class="math inline">\(\displaystyle \int_{-\infty}^z f(x)\,\textrm{d}x = \alpha\)</span> for a lower tail test</p></li>
+<li><p><span class="math inline">\(\displaystyle \int_{z}^\infty f(x)\,\textrm{d}x = \alpha\)</span> for an upper tail test.</p></li>
+</ul>
+<p>For a <strong>two-tailed test</strong>, this critical region occupies <strong>both ends</strong> of the probability distribution with PDF <span class="math inline">\(f(x)\)</span>. The <strong>critical values</strong> <span class="math inline">\(z_1,z_2\)</span> are the two boundaries such that <span class="math display">\[\int_{-\infty}^{z_1} f(x)\,\textrm{d}x = \frac{\alpha}{2}\quad\textsf{and}\quad\int_{z_2}^{\infty} f(x)\,\textrm{d}x = \frac{\alpha}{2}\]</span> You can notice that you want <span class="math inline">\(\alpha/2\)</span> in a two-tailed test; this is because the critical region is split in half!</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If your probability distribution is <strong>symmetric</strong> (like the normal distribution), then <span class="math inline">\(z_1 = -z_2\)</span> in a two-tailed test. If it is not symmetric (like the <span class="math inline">\(\chi^2\)</span> distribution), then this doesn’t happen.</p>
+</div>
+</div>
+<p>Finding critical values for different significance levels is hard for <strong>humans</strong> to do, let alone any reader of this guide! You can use statistical tables or a computer to find the critical value for the chosen test and then compare your test statistic to the critical value you find.</p>
+<p>It can be helpful to sketch or visualize the graph whilst doing this to make sure you are not missing any negatives and you are using the right critical region depending on if you are doing a one-tailed or a two-tailed test.</p>
+<p>Once the critical value(s) and critical region has been located, you can then perform your test. This is usually expressed in the language of <strong><span class="math inline">\(p\)</span>-values:</strong></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="math inline">\(p\)</span>-value
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <strong><span class="math inline">\(p\)</span>-value</strong> is the probability of obtaining a test statistic as extreme as the observed statistic, and is defined to be to the area under the distribution curve corresponding to the test statistic.</p>
+</div>
+</div>
+<p>The <span class="math inline">\(p\)</span>-value will be different depending on the type of test used, whether it was a one-tailed or a two-tailed test.</p>
+<ul>
+<li><p>If you have an upper-tailed test <span class="math display">\[H_1: \mu&gt;\mu_0\]</span> (where <span class="math inline">\(\mu_0\)</span> is the value you are testing your sample data against), then the <span class="math inline">\(p\)</span>-value is the area to the <strong>right</strong> of the test statistic under the probability distribution curve.</p></li>
+<li><p>If you have a lower-tailed test <span class="math display">\[H_1: \mu&lt;\mu_0\]</span> the <span class="math inline">\(p\)</span>-value is the area to the left of the test statistic under the probability distribution curve.</p></li>
+<li><p>In the case of a two-tailed test <span class="math display">\[H_1:\mu\neq\mu_0\]</span>, then the <span class="math inline">\(p\)</span>-value corresponds to the areas beyond the critical values in both cases; you would need to <strong>halve</strong> <span class="math inline">\(p\)</span> in this case.</p></li>
+</ul>
+<p>You would then compare the <span class="math inline">\(p\)</span>-value to <span class="math inline">\(\alpha\)</span>. If the <span class="math inline">\(p\)</span>-value is less than <span class="math inline">\(\alpha\)</span>, <strong>you reject <span class="math inline">\(H_0\)</span></strong>. If the <span class="math inline">\(p\)</span>-value is greater than or equal to <span class="math inline">\(\alpha\)</span>, <strong>you fail to reject <span class="math inline">\(H_0\)</span></strong>.</p>
+<!-- # Significance levels -->
+<!-- A **significance level** (often called alpha ($\alpha$)) is the level of certainty you want to test your hypothesis with, or the line at which you would reject **$H_0$**. Most commonly, $\alpha$ is set to $0.05$ $(5$%$)$, $0.01$ $(1$%$)$ or $0.10$ $(10$%$)$. The most common choice is $\alpha=0.05$ (so a significance level of $5$$\%$). **This means you are willing to accept a $5\%$ risk of rejecting a true null hypothesis.** -->
+<p>This has a different impact based on whether you are performing a one-tailed or a two-tailed test. You can use the interactive figure below to investigate this behaviour. For a lower one-tailed test, set <span class="math inline">\(Z = -1.67\)</span>; for an upper one-tailed test, set <span class="math inline">\(Z=1.67\)</span>. You can see that the whole <span class="math inline">\(5\%\)</span> rejection region will be at one end of the results. This is because you are only testing whether the characteristic is greater than or equal to our comparative characteristic. In the case of a two-tailed test, set <span class="math inline">\(Z = 1.96\)</span>. You can then see that the <span class="math inline">\(5\%\)</span> will be split across either end of the distribution to reject the <span class="math inline">\(2.5\%\)</span> at both far left and far right of the curve. This is because you are testing whether the test characteristic is both greater than or less than the comparative characteristic.</p>
+<p>If your test statistic falls in the critical regions as defined by your test, that is when <strong>you reject the null hypothesis <span class="math inline">\(H_0\)</span></strong>.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 620
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui &lt;- page_fluid(
+  title = "Example of lower, upper, two-tailed tests",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Input parameters
+    card(
+      card_header("Input parameters"),
+      card_body(
+        numericInput("zscore", "Z-score", value = 1.96, step = 0.01),
+        radioButtons("test_type", "Test Type",
+                    choices = list("Two-tailed" = "two",
+                                  "One-tailed (upper)" = "upper",
+                                  "One-tailed (lower)" = "lower"),
+                    selected = "two"),
+        hr(),
+        helpText("This app demonstrates p-values in the normal distribution, for use in Z-testing (see Example 4).")
+      )
+    ),
+    
+    # Right column - Graphical representation
+    card(
+      card_header("Graphical representation"),
+      card_body(
+        plotOutput("density_plot", height = "300px")
+      )
+    )
+  ),
+  
+  # Results at the bottom
+  card(
+    card_header("Result"),
+    card_body(
+      verbatimTextOutput("pvalue_result")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  
+  # Calculate p-value based on test type
+  p_value &lt;- reactive({
+    z &lt;- input$zscore
+    test &lt;- input$test_type
+    
+    if (test == "two") {
+      p &lt;- 2 * pnorm(-abs(z))
+      result &lt;- paste0("Two-tailed p-value: ", round(p, 6))
+    } else if (test == "upper") {
+      p &lt;- pnorm(z, lower.tail = FALSE)
+      result &lt;- paste0("Upper-tailed p-value: ", round(p, 6))
+    } else if (test == "lower") {
+      p &lt;- pnorm(z, lower.tail = TRUE)
+      result &lt;- paste0("Lower-tailed p-value: ", round(p, 6))
+    }
+    
+    return(list(p = p, result = result, test = test))
+  })
+  
+  # Display p-value
+  output$pvalue_result &lt;- renderText({
+    p_value()$result
+  })
+  
+  # Create density plot
+  output$density_plot &lt;- renderPlot({
+    z &lt;- input$zscore
+    test &lt;- p_value()$test
+    
+    # Generate x values for normal distribution
+    x &lt;- seq(-4, 4, length.out = 1000)
+    y &lt;- dnorm(x)
+    df &lt;- data.frame(x = x, y = y)
+    
+    # Base plot
+    p &lt;- ggplot(df, aes(x = x, y = y)) +
+      geom_line() +
+      labs(x = "Z-score", y = "Density") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5)
+    
+    # Add shaded area based on test type, using #3F6BB6 as the color
+    if (test == "two") {
+      # Two-tailed test: shade both tails
+      if (z &gt; 0) {
+        p &lt;- p + 
+          geom_area(data = subset(df, x &gt;= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_area(data = subset(df, x &lt;= -z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_vline(xintercept = z, color = "#3F6BB6") +
+          geom_vline(xintercept = -z, color = "#3F6BB6")
+      } else {
+        p &lt;- p + 
+          geom_area(data = subset(df, x &lt;= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_area(data = subset(df, x &gt;= -z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_vline(xintercept = z, color = "#3F6BB6") +
+          geom_vline(xintercept = -z, color = "#3F6BB6")
+      }
+    } else if (test == "upper") {
+      # Upper-tailed test: shade area above z
+      p &lt;- p + 
+        geom_area(data = subset(df, x &gt;= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+        geom_vline(xintercept = z, color = "#3F6BB6")
+    } else if (test == "lower") {
+      # Lower-tailed test: shade area below z
+      p &lt;- p + 
+        geom_area(data = subset(df, x &lt;= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+        geom_vline(xintercept = z, color = "#3F6BB6")
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</section>
+<section id="forming-a-conclusion" class="level1">
+<h1>Forming a conclusion</h1>
+<p>To form a conclusion you then use the test to decide whether or not to reject your null hypothesis <span class="math inline">\(H_0\)</span>.</p>
+<p>If the test statistic falls in the critical region, or if the <span class="math inline">\(p\)</span>-value is less than <span class="math inline">\(\alpha\)</span>, then you would <strong>reject <span class="math inline">\(H_0\)</span></strong>. This suggests there is enough evidence to support the alternative hypothesis.</p>
+<p>If the test statistic does not fall in the critical region, or if the <span class="math inline">\(p\)</span>-value is greater than or equal to <span class="math inline">\(\alpha\)</span>, this means there is not enough evidence to support the alternative hypothesis and you <strong>fail to reject <span class="math inline">\(H_0\)</span></strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To complete the problem, you then must formally state your conclusion. It’s important that any conclusion is robust. You could use the following templates for help.</p>
+<blockquote class="blockquote">
+<p>“I reject <span class="math inline">\(H_0\)</span> as there is sufficient evidence to conclude that the mean is greater than <span class="math inline">\(50\)</span>.”</p>
+</blockquote>
+<p>or</p>
+<blockquote class="blockquote">
+<p>“I do not reject <span class="math inline">\(H_0\)</span> as there is not sufficient evidence to conclude that the mean is greater than <span class="math inline">\(50\)</span>.”</p>
+</blockquote>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hypothesis tests are based on sample data, not on the entire population. This means <strong>you can never accept either hypothesis</strong>; it is always a rejection or a failure to reject. This is because you cannot definitively ‘prove’ the null hypothesis to be true.</p>
+<!-- If you do not reject $H_0$, this does not mean that the null hypothesis is necessarily correct; it means that the sample data didn’t provide strong enough evidence against it. If you do not reject $H_0$ but the null hypothesis is incorrect, this is a **false negative** or a **Type 2 error**. -->
+<!-- Similarly, if you reject $H_0$, this does not mean that the null hypothesis is necessarily incorrect; it means that the sample data provided strong enough evidence for the alternative hypothesis. If you reject $H_0$ but the null hypothesis is correct, this is a **false positive** or a **Type 1 error**. -->
+<!-- For more information about this see [Guide: Errors in hypothesis testing]. -->
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Your local mathematical sweet shop, Cantor’s Confectionery, claims that the average weight of its popular Boole Bar is <span class="math inline">\(5\)</span> grams. You suspect that the actual average weight is less than <span class="math inline">\(5\)</span> grams, so you decide to perform a hypothesis test. You take a random sample of <span class="math inline">\(30\)</span> Boole Bars and find that the sample mean weight of the sample is <span class="math inline">\(\bar{x} = 4.5\)</span> grams with a sample standard deviation of <span class="math inline">\(s=1.5\)</span> grams. Because of the amazing production methods of Cantor’s Confectionery, you can safely assume that the population standard deviation <span class="math inline">\(\sigma = 1.5\)</span> grams.</p>
+<p>You want to test if the average weight of the Boole Bars is less than <span class="math inline">\(5\)</span> grams at a significance level of <span class="math inline">\(5\%\)</span>. This means that <span class="math inline">\(\alpha = 0.05\)</span>.</p>
+<p><strong>State your hypotheses</strong></p>
+<p>Your null hypothesis is that the average weight of the bars is <span class="math inline">\(\mu_0 = 5\)</span> grams and your alternative hypothesis is the average weight of bars is less than <span class="math inline">\(\mu_0 = 5\)</span> grams. So <span class="math inline">\(H_0:\mu=5\)</span> and <span class="math inline">\(H_1:\mu&lt;5\)</span>.</p>
+<p><strong>Calculating the test statistic</strong></p>
+<p>In this case you have a sample of <span class="math inline">\(30\)</span> bars and you know the population standard deviation <span class="math inline">\(\sigma = 1.5\)</span>. You are also testing the alternative hypothesis that <span class="math inline">\(\mu &lt; 5\)</span>. This implies that you would want to use a <strong>lower one-tailed <span class="math inline">\(Z\)</span>-test</strong>. This means calculating a test statistic according to a <span class="math inline">\(Z\)</span>-test, which is outlined here.</p>
+<p>First, you would need to calculate the standard error from the mean. This is <span class="math display">\[SE = \frac{\sigma}{\sqrt{n}} = \frac{1.5}{\sqrt{30}}\]</span> Next, the test statistic (<span class="math inline">\(Z\)</span>-score) is given by <span class="math display">\[Z = \frac{\bar{x} - \mu_0}{SE} = \frac{4.5 - 5}{\frac{1.5}{\sqrt{30}}} \approx -1.826\]</span> (See [Guide: Introduction to <span class="math inline">\(Z\)</span>-testing] for more.)</p>
+<p><strong>Find the critical value or <span class="math inline">\(p\)</span>-value</strong></p>
+<p>Since this is a lower one-tailed test, you need to find the critical value for <span class="math inline">\(\alpha=0.05\)</span> from a <span class="math inline">\(Z\)</span>-table. The critical <span class="math inline">\(Z\)</span>-value for a significance level of <span class="math inline">\(0.05\)</span> in a lower one-tailed test is <span class="math inline">\(-1.645\)</span>.</p>
+<p>Alternatively, you can find the <span class="math inline">\(p\)</span>-value associated with the test statistic <span class="math inline">\(Z=−1.826\)</span>. You can use <a href="../apps/calculators/c-ztesting.html">Calculator: <span class="math inline">\(Z\)</span>-testing</a> to see that a <span class="math inline">\(Z\)</span>-score of <span class="math inline">\(-1.826\)</span> corresponds to a <span class="math inline">\(p\)</span>-value of approximately <span class="math inline">\(0.033925\)</span>.</p>
+<p><strong>Conclusion</strong></p>
+<p>If your test statistic is less than the critical value <span class="math inline">\(-1.645\)</span> or <span class="math inline">\(p\leq \alpha\)</span>, you can reject the null hypothesis <span class="math inline">\(H_0\)</span>. If neither condition is met, you fail to reject the null hypothesis.</p>
+<p>In this case, <span class="math inline">\(Z=-1.826\)</span>, which is less than the critical value of <span class="math inline">\(-1.645\)</span>. Similarly <span class="math inline">\(p=0.033925\)</span>, which is smaller than <span class="math inline">\(\alpha=0.05\)</span>.</p>
+<p>So you can reject the null hypothesis <span class="math inline">\(H_0\)</span>. There is enough evidence to conclude that the average weight of the Boole Bars is less than <span class="math inline">\(5\)</span> grams. It looks like Cantor Confectionery need to get to work…</p>
+</div>
+</div>
+</section>
+<section id="quick-check-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Quick check problems</h1>
+<!-- add facility for webexercises to work on html -->
+<!-- add facility to check answers at end rather than one at a time -->
+<div class="webex-check webex-box">
+<ol type="1">
+<li>What would your hypotheses be when testing whether the average battery life of a laptop is less than 10 hours?</li>
+</ol>
+<ol type="a">
+<li><p><span class="math inline">\(H_0:\mu&gt;10\)</span> <span class="math inline">\(H_1:\mu&lt;10\)</span></p></li>
+<li><p><span class="math inline">\(H_0:\mu=10\)</span> <span class="math inline">\(H_1:\mu\neq10\)</span></p></li>
+<li><p><span class="math inline">\(H_0:\mu=10\)</span> <span class="math inline">\(H_1:\mu&lt;10\)</span></p></li>
+</ol>
+<p>Answer: <select class="webex-select"><option value="blank"></option><option value="">a</option><option value="">b</option><option value="answer">c</option></select>.</p>
+<ol start="2" type="1">
+<li>What <span class="math inline">\(\alpha\)</span> corresponds to a <span class="math inline">\(10\%\)</span> level of significance?</li>
+</ol>
+<p>Answer: <span class="math inline">\(\alpha=\)</span> <input class="webex-solveme nospaces" size="3" data-answer="[&quot;0.1&quot;]">.</p>
+<ol start="3" type="1">
+<li>What test would you use to compare means when you have one sample and you know the population standard deviation?</li>
+</ol>
+<p>Answer:<select class="webex-select"><option value="blank"></option><option value="">t-test</option><option value="">F-test</option><option value="answer">Z-test</option><option value="">Chi-squared goodness of fit</option><option value="">Chi-squared test for independence</option><option value="">Paired t-test</option><option value="">Z-test for proportion</option></select>.</p>
+<ol start="4" type="1">
+<li>You are performing a two-tailed <span class="math inline">\(Z\)</span>-test with <span class="math inline">\(\alpha=0.05\)</span> and critical values of <span class="math inline">\(1.96\)</span> and <span class="math inline">\(-1.96\)</span>. Your test statistic is <span class="math inline">\(-2.34\)</span>. What conclusion do you draw?</li>
+</ol>
+<p>Answer:<select class="webex-select"><option value="blank"></option><option value="">I do not reject \(H_0\)</option><option value="answer">I reject H0</option></select>.</p>
+</div>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../questions/qs-hypothesistesting.html">For more questions on the subject, please go to Questions: Hypothesis testing.</a></p>
+<p>[For more information on how to perform a <span class="math inline">\(Z\)</span>-test, please see Guide: <span class="math inline">\(Z\)</span>-testing.]</p>
+<p>[For more information on type I and type II errors please see Guide: Errors in hypothesis testing.]</p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 12/24 by Ellie Trace as part of a University of St Andrews VIP project.</p>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  update_total_correct();
+}
+
+</script>
+<!-- Feedback box for webpage ---------------------------------------
+        Compiled into each .html page by Quarto.
+        Sends user feedback to private server.
+        Website and form handled by Netlify now
+        Input verified by reCaptcha2 
+    Authors: Mohit Agarwal (Mohit-Agarwa1)
+             Tristin Doherty (Trido)
+--------------------------------------------------------------------->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const form = document.querySelector("form[name='feedback']"); 
+      
+      form.addEventListener("submit", function(event) {
+          const nameInput = document.querySelector("input[name='name']")?.value.trim();
+          const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+          const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+  
+          if (!nameInput)    { alert("Please enter a name."); return; }
+          if (!emailInput)   { alert("Please enter an email."); return; }
+          if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+          
+          event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+          const subjectInput = document.querySelector("input[name='subject']");
+                  
+          // sanitise inputs
+          const sanitizedName = sanitizeInput(nameInput); 
+          const sanitizedEmail = sanitizeEmail(emailInput);
+          const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+          // validate email
+          if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+          subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+          form.submit();
+      });
+  });
+  
+  // Removes leading and trailing whitespace for formatting, replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+  function sanitizeInput(input) {
+    input = input.trim();                                      
+    input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return input;
+  }
+
+  // remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+  function sanitizeEmail(email) {
+    email = email.trim(); 
+    email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+    return email;
+  }
+
+  // This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+  function validateEmail(email) {
+    const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+    return re.test(email);
+  }
+  
+</script>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here.</p>
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+    <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+    <input type="hidden" name="subject" value="Feedback from unknown">
+
+    <label for="name">Name: </label>
+    <br>
+    <input type="text" name="name" required="">
+    <br><br>
+    
+    <label for="email">E-mail: </label>
+    <br>
+    <input type="email" name="email" required="">
+    <br><br>
+    
+    <label for="feedback">Feedback: </label>
+    <br>
+    <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+    <br><br>
+
+    <!-- Google reCAPTCHA Widget -->
+    <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+    <br>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>STARMAST © 2025 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

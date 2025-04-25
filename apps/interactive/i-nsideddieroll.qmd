@@ -1,0 +1,144 @@
+---
+title: "Interactive: n-sided die roll"
+author: Michelle Arnetta and Tom Coleman
+abstract-title: Summary
+abstract: Interactive $n$-sided die roll for use in the guide on introduction to probability.
+draft: true
+format: html
+filters:
+  - shinylive
+---
+
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 420
+
+library(shiny)
+library(bslib)
+
+# Hard-coded hex color for the button (a nice teal color)
+BUTTON_COLOR <- "#3F6BB6"
+
+ui <- page_fluid(
+  title = "Dice roller with n sides",
+  
+  card(
+    card_header("Dice roller with n sides"),
+    card_body(
+      # Use a row layout for landscape orientation
+      layout_columns(
+        col_widths = c(4, 4, 4), # Equal width columns
+        
+        # Left column: Description and settings
+        card(
+          card_body(
+            div(
+              style = "display: flex; flex-direction: column; height: 100%; justify-content: center;",
+              p("Click the button to roll a die.", style = "font-size: 18px;"),
+              br(),
+              div(
+                style = "background-color: #f8f9fa; padding: 15px; border-radius: 5px;",
+                h5("Die Settings:"),
+                numericInput("sides", "Number of sides:", value = 6, min = 3, step = 1),
+                helpText("Enter a number 3 or greater")
+              )
+            )
+          )
+        ),
+        
+        # Middle column: Dice display
+        card(
+          card_body(
+            div(
+              style = "height: 100%; display: flex; align-items: center; justify-content: center;",
+              div(
+                style = "font-size: 120px; line-height: 1; width: 150px; height: 150px; 
+                       margin: 0 auto; border: 2px solid #ccc; border-radius: 15px;
+                       display: flex; align-items: center; justify-content: center;",
+                textOutput("diceValue")
+              )
+            )
+          )
+        ),
+        
+        # Right column: Button
+        card(
+          card_body(
+            div(
+              style = "display: flex; height: 100%; align-items: center; justify-content: center;",
+              actionButton("rollButton", "Roll Dice", class = "btn-lg", 
+                          style = paste0("background-color: ", BUTTON_COLOR, "; color: white;"))
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Validate the sides input
+  sides <- reactive({
+    sides_value <- input$sides
+    
+    # Ensure it's a valid number (integer ≥ 3)
+    if (!is.numeric(sides_value) || sides_value < 3 || sides_value != round(sides_value)) {
+      # Default to 6 if invalid
+      return(6)
+    }
+    
+    return(as.integer(sides_value))
+  })
+  
+  # Create a reactive value to store the current roll
+  diceValue <- reactiveVal(1)
+  
+  # Initialize with a valid roll
+  observe({
+    # Update the initial value when the number of sides changes
+    current_sides <- sides()
+    current_value <- diceValue()
+    
+    # If current value is out of range for the new number of sides, reset it
+    if (current_value > current_sides) {
+      diceValue(sample(1:current_sides, 1))
+    }
+  })
+  
+  # Update the dice value when the roll button is clicked
+  observeEvent(input$rollButton, {
+    current_sides <- sides()
+    
+    # Rolling animation - this is a simplified version using invalidateLater
+    # to simulate the dice rolling
+    for(i in 1:5) {
+      invalidateLater(i * 100)
+    }
+    
+    # Final roll
+    diceValue(sample(1:current_sides, 1))
+  })
+  
+  # Display the current dice value
+  output$diceValue <- renderText({
+    diceValue()
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+# Further reading {-}
+
+[This interactive element appears in Guide: Introduction to probability. Please click this link to go to the guide.]
+
+## Version history {-}
+
+v1.0: initial version created 04/25 by Michelle Arnetta (as part of a University of St Andrews VIP project) and tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
