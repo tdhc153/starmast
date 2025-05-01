@@ -1,11 +1,40 @@
 <script>
 
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
 /* update total correct if #webex-total_correct exists */
 update_total_correct = function() {
   console.log("webex: update total_correct");
+  let allCorrect = false;
 
   var t = document.getElementsByClassName("webex-total_correct");
-  for (var i = 0; i < t.length; i++) {
+  for (var i = 0; i < t.length; i++) 
+  {
     p = t[i].parentElement;
     var correct = p.getElementsByClassName("webex-correct").length;
     var solvemes = p.getElementsByClassName("webex-solveme").length;
@@ -13,7 +42,24 @@ update_total_correct = function() {
     var selects = p.getElementsByClassName("webex-select").length;
 
     t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
   }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
 }
 
 /* webex-solution button toggling function */
@@ -21,11 +67,8 @@ b_func = function() {
   console.log("webex: toggle hide");
 
   var cl = this.parentElement.classList;
-  if (cl.contains('open')) {
-    cl.remove("open");
-  } else {
-    cl.add("open");
-  }
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
 }
 
 /* check answers */
@@ -49,12 +92,8 @@ solveme_func = function(e) {
   var real_answers = JSON.parse(this.dataset.answer);
   var my_answer = this.value;
   var cl = this.classList;
-  if (cl.contains("ignorecase")) {
-    my_answer = my_answer.toLowerCase();
-  }
-  if (cl.contains("nospaces")) {
-    my_answer = my_answer.replace(/ /g, "")
-  }
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
 
   if (my_answer == "") {
     cl.remove("webex-correct");
@@ -68,22 +107,18 @@ solveme_func = function(e) {
   }
 
   // match numeric answers within a specified tolerance
-  if(this.dataset.tol > 0){
+  if (this.dataset.tol > 0)
+  {
     var tol = JSON.parse(this.dataset.tol);
     var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
-    if (matches.reduce((a, b) => a + b, 0) > 0) {
-      cl.add("webex-correct");
-    } else {
-      cl.remove("webex-correct");
-    }
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
   }
 
   // added regex bit
   if (cl.contains("regex")){
     answer_regex = RegExp(real_answers.join("|"))
-    if (answer_regex.test(my_answer)) {
-      cl.add("webex-correct");
-    }
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
   }
 
   update_total_correct();
@@ -98,11 +133,8 @@ select_func = function(e) {
   /* add style */
   cl.remove("webex-incorrect");
   cl.remove("webex-correct");
-  if (this.value == "answer") {
-    cl.add("webex-correct");
-  } else if (this.value != "blank") {
-    cl.add("webex-incorrect");
-  }
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
 
   update_total_correct();
 }
@@ -122,11 +154,8 @@ radiogroups_func = function(e) {
   }
 
   /* add style */
-  if (checked_button.value == "answer") {
-    cl.add("webex-correct");
-  } else {
-    cl.add("webex-incorrect");
-  }
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
 
   update_total_correct();
 }
@@ -136,14 +165,12 @@ window.onload = function() {
   /* set up solution buttons */
   var buttons = document.getElementsByTagName("button");
 
-  for (var i = 0; i < buttons.length; i++) {
-    if (buttons[i].parentElement.classList.contains('webex-solution')) {
-      buttons[i].onclick = b_func;
-    }
-  }
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
 
   var check_sections = document.getElementsByClassName("webex-check");
   console.log("check:", check_sections.length);
+
   for (var i = 0; i < check_sections.length; i++) {
     check_sections[i].classList.add("unchecked");
 
@@ -172,12 +199,9 @@ window.onload = function() {
     /* adjust answer for ignorecase or nospaces */
     var cl = solveme[i].classList;
     var real_answer = solveme[i].dataset.answer;
-    if (cl.contains("ignorecase")) {
-      real_answer = real_answer.toLowerCase();
-    }
-    if (cl.contains("nospaces")) {
-      real_answer = real_answer.replace(/ /g, "");
-    }
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
     solveme[i].dataset.answer = real_answer;
 
     /* attach checking function */
@@ -189,9 +213,7 @@ window.onload = function() {
 
   /* set up radiogroups */
   var radiogroups = document.getElementsByClassName("webex-radiogroup");
-  for (var i = 0; i < radiogroups.length; i++) {
-    radiogroups[i].onchange = radiogroups_func;
-  }
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
 
   /* set up selects */
   var selects = document.getElementsByClassName("webex-select");
@@ -200,7 +222,21 @@ window.onload = function() {
     selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
   }
 
+  /* check each question to see whether it was answered correctly */
   update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
 }
 
 </script>
