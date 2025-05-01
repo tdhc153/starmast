@@ -1,0 +1,232 @@
+---
+title: "Calculator: Poisson distribution"
+author: Michelle Arnetta and Tom Coleman
+format: html
+abstract-title: Summary
+abstract: A calculator to work out pmfs and cdfs for the Poisson distribution.
+filters: 
+  - shinylive
+embed-resources: false
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 670
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Poisson distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("lambda", "Rate parameter (λ):", value = 5, min = 0.1, step = 0.1),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X = x)" = "exact", 
+                                  "P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "exact"),
+        conditionalPanel(
+          condition = "input.prob_type == 'exact'",
+          sliderInput("x_exact", "x value:", min = 0, max = 20, value = 5, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 20, value = 5, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 20, value = 5, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 3, step = 1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 7, step = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Poisson distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # When lambda changes, adjust the range of sliders
+  observe({
+    # Set a reasonable max value as 3*lambda or at least 10
+    max_x <- max(round(input$lambda * 3), 10)
+    
+    updateSliderInput(session, "x_exact", max = max_x)
+    updateSliderInput(session, "x_less", max = max_x)
+    updateSliderInput(session, "x_greater", max = max_x)
+    updateSliderInput(session, "x_lower", max = max_x)
+    updateSliderInput(session, "x_upper", max = max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Poisson(λ = %.1f)", input$lambda)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "exact") {
+      prob <- dpois(input$x_exact, lambda = input$lambda)
+      explanation <- sprintf("P(X = %d) = %.6f or %.4f%%", 
+                           input$x_exact, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "exact", x = input$x_exact))
+      
+    } else if (input$prob_type == "less") {
+      prob <- ppois(input$x_less, lambda = input$lambda)
+      explanation <- sprintf("P(X ≤ %d) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1)
+      if (input$x_greater == 0) {
+        prob <- 1  # P(X ≥ 0) is always 1
+      } else {
+        prob <- 1 - ppois(input$x_greater - 1, lambda = input$lambda)
+      }
+      explanation <- sprintf("P(X ≥ %d) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # Exact probability for a single value
+        prob <- dpois(input$x_lower, lambda = input$lambda)
+      } else {
+        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
+        upper_prob <- ppois(input$x_upper, lambda = input$lambda)
+        if (input$x_lower == 0) {
+          lower_prob <- 0
+        } else {
+          lower_prob <- ppois(input$x_lower - 1, lambda = input$lambda)
+        }
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%d ≤ X ≤ %d) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the Poisson distribution plot
+  output$distPlot <- renderPlot({
+    # Determine the range for the x-axis
+    lambda <- input$lambda
+    max_x <- max(round(lambda * 3), 10)
+    
+    # Create data frame for plotting
+    x_values <- 0:max_x
+    prob_mass <- dpois(x_values, lambda = lambda)
+    df <- data.frame(x = x_values, probability = prob_mass)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = probability)) +
+      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
+      labs(x = "number of events (X)", y = "probability mass function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      scale_x_continuous(breaks = seq(0, max_x, by = ifelse(max_x > 20, 2, 1)))
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "exact") {
+      highlight_x <- res$x
+      highlight_df <- df[df$x == highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "less") {
+      highlight_x <- 0:res$x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "greater") {
+      highlight_x <- res$x:max_x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "between") {
+      highlight_x <- res$lower:res$upper
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+# Further reading {-}
+
+[This interactive element appears in Overview: Probability distributions. Please click this link to go to the guide.]
+
+## Version history {-}
+
+v1.0: initial version created 12/24 by Ellie Trace as part of a University of St Andrews VIP project.
+
+  - v1.1: updated to R Shiny interface by tdhc 04/25.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

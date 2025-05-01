@@ -2,7 +2,9 @@
 title: Introduction to probability
 author: Michelle Arnetta
 abstract-title: Summary
-abstract: Probability theory is an important branch of mathematics, which is foundational to statistics. This guide covers sample space, independent events, dependent events, and tree diagrams.
+abstract: Probability theory is an important branch of mathematics, which is foundational to statistics and is used in quantum mechanics. This guide on an introduction to probability covers the ideas of sample space events, independent events, dependent events, and tree diagrams to work out probabilities.
+categories:
+  - Probability
 draft: true
 ---
 
@@ -14,11 +16,80 @@ library("webexercises")
 
 Uncertain situations are everywhere: from rolling a dice and flipping a coin, to weather forecasting and financial markets. How exactly can you approach decision making in the face of uncertainty? For example, should you bring an umbrella tomorrow? Or, should you invest in a certain stock?
 
-When you are facing these situations, you could turn to **probability theory** to predict the likelihood of certain outcomes, especially when you have to make important decisions.
+When you are facing these situations, you could turn to **probability theory** to predict the likelihood of certain outcomes, especially when you have to make important decisions. Probability theory is not only foundational to the study of statistics, but also has uses in pure mathematics and quantum mechanics.
 
-This guide introduces you to probability. First, a distinction will be made between theoretical probability and experimental probability, and the concept of sample space will be explained. Then, you will learn about independent and dependent events.
+This guide introduces you to probability theory. First, a distinction will be made between theoretical probability and experimental probability, and the concept of sample space will be explained. Then, you will learn about independent and dependent events.
+
+# Sample Space
+
+When thinking about probability, it is important to consider what all the possible outcomes are. This is known as **sample space**.
+
+::: callout-note
+## Definition of sample space
+
+The **sample space** is the set of all possible outcomes in an experiment or situation.
+:::
+
+The **sample space** can be represented in various different ways, but one common example is to represent them as a **list**.
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+Try to flip this coin!
+
+**PUT APP HERE TOM**
+
+There are two possible outcomes when you flip a coin: heads (H) or tails (T). Therefore, the sample space of flipping a coin can be represented as $\{H, T\}$.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 2
+
+Try to roll this six-sided die!
+
+**PUT APP HERE TOM**
+
+There are six possible outcomes when you roll a die: 1, 2, 3, 4, 5, and 6. Therefore, the sample space of rolling a die can be represented as $\{1, 2, 3, 4, 5, 6\}$.
+:::
+
+But what if the coin was flipped, then the die was rolled? When you are representing the sample space or all possible outcomes of two events, it would be helpful to use a **table**. When you are representing the sample space of two or more events, it could also be helpful to use a **tree diagram**.
+
+::: {.callout-note appearance="simple"}
+## Example 3
+
+You flip a coin and roll a die. When you flip a coin, the outcome can either be heads or tails. When you flip a die, the possible outcomes are 1, 2, 3, 4, 5, 6. Combining these together, there are 12 total possible outcomes. When representing this as a list, you could write this as $\{H1, H2, H3, H4, H5, H6, T1, T2, T3, T4, T5, T6\}$.
+
+Since you are working with two events, you could also represent this as a **table**:
+
+|       | 1   | 2   | 3   | 4   | 5   | 6   |
+|-------|-----|-----|-----|-----|-----|-----|
+| **H** | H1  | H2  | H3  | H4  | H5  | H6  |
+| **T** | T1  | T2  | T3  | T4  | T5  | T6  |
+
+Alternatively, you could represent it as a **tree diagram**, which is especially useful if you are working with two or more events:
+
+**PUT FIGURE: TREE DIAGRAM**
+
+Notice that since the coin flipping occurred first, the tree diagram begins with this event. It then branches out to the possible outcomes for when the die is rolled.
+:::
 
 ## Theoretical Probability vs. Experimental Probability
+
+::: callout-note
+## Definition of probability
+
+**Probability** refers to the likelihood of an outcome happening over a sample space.
+:::
+
+::: callout-tip
+To represent the probability of certain outcomes over the sample space, it would be helpful to use the notation $\mathbb{P}$.
+
+-   The probability of event A occurring can be written as $\mathbb{P}(A)$.
+
+-   The probability of event A not occurring can be written as $\mathbb{P}(A')$.
+
+You will see this notation used below.
+:::
 
 There are two main types of probability: theoretical probability and experimental probability.
 
@@ -30,8 +101,7 @@ There are two main types of probability: theoretical probability and experimenta
 
 Here is how you can find theoretical probability:
 
-$$Theoretical\:Probability=\frac{number\:of\:desired\:outcomes}{total\:number\:of\:possible\:outcomes}
-$$
+$$\mathbb{P}(event)=\frac{\textsf{number of desired outcomes}}{\textsf{total number of possible outcomes}}$$
 
 ::: callout-note
 ## Definition of experimental probability
@@ -42,28 +112,12 @@ $$
 Here is how you can find experimental probability:
 
 $$
-Experimental\:Probability=\frac{number\:of\:times\:that\:a\:desired\:event\:occurs}{total\:number\:of\:trials\:in\:an\:experiment}
+\mathbb{P}(event)=\frac{\textsf{number of times that a desired event occurs}}{\textsf{total number of trials in an experiment}}
 $$
 
-You can try this out for yourself!
-
-::: {.callout-note appearance="simple"}
-## Example 1
-
-Try to "flip this coin".
-
-**SLIDES ONE**
-:::
-
-::: {.callout-note appearance="simple"}
-## Example 2
-
-Try to "roll a six-sided die".
-
-**SLIDES TWO**
-:::
-
 ::: callout-tip
+Probability has to be a number in between 0 and 1. When the probability is 0, there is no possibility of the outcome happening, and when the probability is 1, the outcome will definitely happen. Therefore, probability cannot be less than 0, and it cannot be more than 1.
+
 There are three common ways of representing probability:
 
 -   As a fraction, such as $\frac{1}{2},\frac{1}{5},\frac{3}{4}$
@@ -71,100 +125,94 @@ There are three common ways of representing probability:
 -   As a decimal, such as 0.5, 0.2, 0.75
 
 -   As a percentage, such as 50%, 20%, 75%
-:::
 
-::: callout-tip
-The more trials you do, the closer your experimental probability will get to theoretical probability.
+All three will be used throughout the guide.
 
-**POSSIBLE FIGURE: graph showing the more coins you flip, the closer it gets to 50/50 for heads or tails**
-:::
-
-::: callout-tip
-Did you realize that the probabilities of all outcomes in an event add up to 1? When flipping a coin, the probability of getting heads is $\frac{1}{2}$, and the probability of getting tails is $\frac{1}{2}$. Add these up together to get: $$
+The probabilities of all outcomes in an event add up to 1. When flipping a coin, the probability of getting heads is $\frac{1}{2}$, and the probability of getting tails is $\frac{1}{2}$. Add these up together to get: $$
 \frac{1}{2}+\frac{1}{2}=1
 $$
 
-Notice that, in this case, the probability of 'heads' is equal to the probability of 'tails' **not** occurring, and the probability of 'tails' is equal to the probability of 'heads' **not** occurring. Therefore, 'heads' and 'tails' can be called **complementary events**. You could then, for example, subtract the probability of 'heads' to get the probability of 'tails'. $$
-1-\frac{1}{2}=\frac{1}{2}
-$$ This is known as the **complement rule**.
+Notice that, in this case, the probability of 'heads' is equal to the probability of 'tails' **not** occurring, and the probability of 'tails' is equal to the probability of 'heads' **not** occurring. Therefore, 'heads' and 'tails' can be called **complementary events**. You could then, for example, subtract the probability of 'heads' from 1 to get the probability of 'tails'. $$
+\mathbb{P}(tails)=1-\mathbb{P}(tails')=1-\mathbb{P}(heads)=1-\frac{1}{2}=\frac{1}{2}
+$$
+
+This is known as the **complement rule**. It also applies when probability is represented as a decimal or percentage: $$
+\mathbb{P}(tails)=1-\mathbb{P}(tails')=1-\mathbb{P}(heads)=1-0.5=0.5
+$$ $$
+\mathbb{P}(tails)=1-\mathbb{P}(tails')=1-\mathbb{P}(heads)=1-50\%=50\%
+$$
 :::
 
-# Sample Space
+::: callout-tip
+The more trials you do, the closer your experimental probability will get to the theoretical probability.
 
-When thinking about probability, it is important to consider what all the possible outcomes are. This is known as **sample space**.
+Suppose you flip a coin 1000 times. The probability of 'tails' may initially be higher or lower than 0.5. However, the more flips you do, the more the probability of 'tails' will tend to 0.5. This is an example of the **law of large numbers**. You can try this for yourself!
 
-::: callout-note
-## Definition of sample space
+**PUT APP HERE TOM**
 
-**Sample space** is the set of all possible outcomes in an experiment.
-:::
+You can also see this visually demonstrated in the graph below:
 
-The **sample space** can be represented in various different ways, but one common example is to represent them as a **list**. To clarify this, you can look back to the previous two examples and try representing their sample space as a list.
+<!-- ![Cumulative Coin Flip](./FiguresPNG/cumulativecoinflip.png) -->
 
-::: {.callout-note appearance="simple"}
-## Example 3
+<!-- For reference, here is the R code to generate this figure: -->
 
-There are two possible outcomes when you flip a coin: heads (H) or tails (T). Therefore, the sample space of flipping a coin can be represented as {H, T}.
-:::
+<!-- coin \<- c(0, 1) -->
 
-::: {.callout-note appearance="simple"}
-## Example 4
+<!-- maxn \<- 1000 -->
 
-There are six possible outcomes when you roll a die: 1, 2, 3, 4, 5, and 6. Therefore, the sample space of rolling a die can be represented as {1, 2, 3, 4, 5, 6}.
-:::
+<!-- flips \<- sample(x=coin, size=maxn, replace=TRUE) -->
 
-But what if the coin was flipped, then the die was rolled? When you are representing the sample space or all possible outcomes of two events, it would be helpful to use a **table**. When you are representing the sample space of two or more events, it could also be helpful to use a **tree diagram**.
+<!-- cum.flips \<- cumsum(flips) -->
 
-::: {.callout-note appearance="simple"}
-## Example 5
+<!-- ntrials \<- 1:maxn -->
 
-You flip a coin and roll a die. There are twelve possible outcomes when you do this: heads and 1, heads and 2, heads and 3, heads and 4, heads and 5, heads and 6, tails and 1, tails and 2, tails and 3, tails and 4, tails and 5, tails and 6. When representing this as a **list**, you could write this as {H1, H2, H3, H4, H5, H6, T1, T2, T3, T4, T5, T6}.
+<!-- prop.flips \<- cum.flips/ntrials -->
 
-Since you are working with two events, you could also represent this as a **table**:
+<!-- plot(x=ntrials, y=prop.flips, type="b", xlab="Number of flips", ylab="Probability of tails") -->
 
-|       | 1   | 2   | 3   | 4   | 5   | 6   |
-|-------|-----|-----|-----|-----|-----|-----|
-| **H** | H1  | H2  | H3  | H4  | H5  | H6  |
-| **T** | T1  | T2  | T3  | T4  | T5  | T6  |
+ 
 
-Alternatively, you could represent it as a **tree diagram** because you are working with two or more events:
-
-**POSSIBLE FIGURE: TREE DIAGRAM**
-
-Notice that since the coin flipping occurred first, the tree diagram begins with this event. It then branches out to the possible outcomes for when the die is rolled.
 :::
 
 # Outcomes that Vary in Probability
 
-The examples you have examined so far involve events with equally probable outcomes. For instance, you have a 50/50 chance of getting either heads or tails after flipping a coin. Similarly, it is equally likely for you to get any number between 1 and 6 after rolling a die, a $\frac{1}{6}$ chance. But what if the outcomes varied in probability? It becomes all the more useful to represent these outcomes with tree diagrams.
+The examples you have examined so far involve events with equally probable outcomes. For instance, you have a 50/50 chance of getting either heads or tails after flipping a coin. Similarly, it is equally likely for you to get any number between 1 and 6 after rolling a die, a $\frac{1}{6}$ chance. But what if the outcomes vary in probability?
 
-For example, suppose that you have a bag containing 5 marbles in total, with 2 red marbles and 3 blue marbles. If you draw one marble from the bag, what is the probability of it being a red marble, and what is the probability of it being a blue one? This can be represented as a tree diagram:
+::: callout-tip
+When all outcomes are equally likely, the sample space is **uniform**. When the outcomes vary in probability, the sample space is **not uniform**.
 
-POSSIBLE FIGURE: tree diagram 1 for candy jar
+However, you can still represent non-uniform sample spaces in a way that is similar to uniform sample spaces. For example, even if you flip a biased coin that is more likely to get 'heads', the sample space can still be represented as $\{H, T\}$.
+:::
 
-As shown in the diagram, the probability of the drawn marble being red is $\frac{2}{5}$, and the probability of it being blue is $\frac{3}{5}$.
+It also becomes all the more useful to represent these outcomes with tree diagrams.
+
+::: {.callout-note appearance="simple"}
+## Example 4
+
+Suppose that you have a bag containing 5 marbles in total, with 2 red marbles and 3 blue marbles. If you draw one marble from the bag, what is the probability of it being a red marble, and what is the probability of it being a blue one? This can be represented as a tree diagram:
+
+**PUT FIGURE: tree diagram 1 for candy jar**
+
+As shown in the diagram, $\mathbb{P}(red)$ is $\frac{2}{5}$, and $\mathbb{P}(blue)$ is $\frac{3}{5}$.
 
 You can also use a tree diagram to represent events with more than two outcomes. Imagine a jar containing 10 candies. It has 1 yellow candy, 4 green candies, and 5 purple candies. If you take one candy from the jar, what is the probability of each color being taken?
 
-**POSSIBLE FIGURE: tree diagram 2 for marble bag**
+**PUT FIGURE: tree diagram 2 for marble bag**
 
 Since $\frac{4}{10}=\frac{2}{5}$ and $\frac{5}{10}=\frac{1}{2}$, the diagram can be simplified as follows:
 
-**POSSIBLE FIGURE: tree diagram 1 for candy jar (simplified)**
+**PUT FIGURE: tree diagram 1 for candy jar (simplified)**
 
-As shown in the diagram, the probability of the taken candy being yellow is $\frac{1}{10}$, the probability of it being green is $\frac{2}{5}$, and the probability of it being purple is $\frac{1}{2}$.
-
-::: {.callout-note appearance="simple"}
-## Example 6
+As shown in the diagram, $\mathbb{P}(yellow)$ is $\frac{1}{10}$, $\mathbb{P}(green)$ is $\frac{2}{5}$, and $\mathbb{P}(purple)$ is $\frac{1}{2}$.
 
 The **complement rule** also applies here. Consider the candy jar example. What if you knew the probability of taking a yellow or purple candy, but not the probability of taking a green candy?
 
-**POSSIBLE FIGURE: tree diagram with ? for candy jar**
+**PUT FIGURE: tree diagram with ? for candy jar**
 
-To apply the complement rule, you should first find the probability of **not** taking the green candy. You can do this by adding together the probabilities of taking a yellow or purple candy. $$\frac{1}{10}+\frac{1}{2}=\frac{1}{10}+\frac{5}{10}=\frac{6}{10}
+To apply the complement rule, you should first find the probability of **not** taking the green candy. You can do this by adding together the probabilities of taking a yellow or purple candy. $$\mathbb{P}(green')=\frac{1}{10}+\frac{1}{2}=\frac{1}{10}+\frac{5}{10}=\frac{6}{10}
 $$
 
-The probability of taking the green candy is **complementary** to the probability of not taking the green candy. From this, you can calculate the mystery probability: $$1-\frac{6}{10}=\frac{4}{10}=\frac{2}{5}
+The probability of taking the green candy is **complementary** to the probability of not taking the green candy. From this, you can calculate the mystery probability: $$\mathbb{P}(green)=1-\frac{6}{10}=\frac{4}{10}=\frac{2}{5}
 $$
 :::
 
@@ -178,6 +226,9 @@ When you are representing the probabilities of two or more events, it can be imp
 Two events are **independent** if the occurrence of one event does not affect the likelihood of the other event happening.
 :::
 
+::: {.callout-note appearance="simple"}
+## Example 5
+
 To illustrate this, you can return to the marble bag example. What if two events occurred?
 
 -   Event 1: One marble is drawn, and the color of the marble is recorded.
@@ -186,19 +237,30 @@ To illustrate this, you can return to the marble bag example. What if two events
 
 These events can be outlined by a tree diagram:
 
-**POSSIBLE FIGURE: tree diagram 2 for marble bag**
+**PUT FIGURE: tree diagram 2 for marble bag**
 
 No matter what the color of the marble from event 1 is, the probabilities of each marble color will remain the same for event 2. This is because the first marble was drawn and replaced by the same color. Hence, this is an example of **probability with replacement**. Considering this, you can conclude that 1 and 2 are **independent** **events**, as the outcome of event 1 does not influence the outcome of event 2.
 
 You can also use the tree diagram as a guide to calculating the probabilities of two particular events occurring:
 
--   Probability of drawing a red marble, then a red marble: $(\frac{2}{5})(\frac{2}{5})=\frac{4}{25}$
+-   Probability of drawing a red marble, then a red marble: $\mathbb{P}(red,red)=(\frac{2}{5})(\frac{2}{5})=\frac{4}{25}$
 
--   Probability of drawing a red marble, then a blue marble: $(\frac{2}{5})(\frac{3}{5})=\frac{6}{25}$
+-   Probability of drawing a red marble, then a blue marble: $\mathbb{P}(red,blue)=(\frac{2}{5})(\frac{3}{5})=\frac{6}{25}$
 
--   Probability of drawing a blue marble, then a red marble: $(\frac{3}{5})(\frac{2}{5})=\frac{6}{25}$
+-   Probability of drawing a blue marble, then a red marble: $\mathbb{P}(blue,red)=(\frac{3}{5})(\frac{2}{5})=\frac{6}{25}$
 
--   Probability of drawing a blue marble, then a blue marble: $(\frac{3}{5})(\frac{3}{5})=\frac{9}{25}$
+-   Probability of drawing a blue marble, then a blue marble: $\mathbb{P}(blue,blue)=(\frac{3}{5})(\frac{3}{5})=\frac{9}{25}$
+
+Here are the probabilities represented in decimal and percentage forms:
+
+-   $\mathbb{P}(red,red)=\frac{4}{25}=0.16=16\%$
+
+-   $\mathbb{P}(red,blue)=\frac{6}{25}=0.24=24\%$
+
+-   $\mathbb{P}(blue,red)=\frac{6}{25}=0.24=24\%$
+
+-   $\mathbb{P}(blue,blue)=\frac{9}{25}=0.36=36\%$
+:::
 
 # Dependent Events
 
@@ -208,6 +270,9 @@ You can also use the tree diagram as a guide to calculating the probabilities of
 Two events are **dependent** when the occurrence of one event affects the likelihood of another event happening.
 :::
 
+::: {.callout-note appearance="simple"}
+## Example 6
+
 The previous marble bag example can be adjusted to demonstrate **dependent events**. What if the two events occurred in this way instead?
 
 -   Event 1: One marble is drawn, and the color of the marble is recorded.
@@ -216,7 +281,7 @@ The previous marble bag example can be adjusted to demonstrate **dependent event
 
 This is how the events would look on a tree diagram:
 
-**POSSIBLE FIGURE: tree diagram 3 for marble bag**
+**PUT FIGURE: tree diagram 3 for marble bag**
 
 You can observe that the **denominators** of the probabilities change from 5 to 4. This is because there were initially 5 marbles in the bag, and one marble was drawn without replacement, leaving 4 marbles in the bag for event 2.
 
@@ -226,17 +291,28 @@ Therefore, the probabilities of outcomes in event 2 are **dependent** on the out
 
 Because $\frac{2}{4}=\frac{1}{2}$, the diagram can be simplified:
 
-**POSSIBLE FIGURE: tree diagram 3 for marble bag (simplified)**
+**PUT FIGURE: tree diagram 3 for marble bag (simplified)**
 
 As with independent events, you can use the tree diagram as a guide to calculating the probabilities of two particular events occurring:
 
--   Probability of drawing a red marble, then a red marble: $(\frac{2}{5})(\frac{1}{4})=\frac{2}{20}=\frac{1}{10}$
+-   Probability of drawing a red marble, then a red marble: $\mathbb{P}(red,red)=(\frac{2}{5})(\frac{1}{4})=\frac{2}{20}=\frac{1}{10}$
 
--   Probability of drawing a red marble, then a blue marble: $(\frac{2}{5})(\frac{3}{4})=\frac{6}{20}=\frac{3}{10}$
+-   Probability of drawing a red marble, then a blue marble: $\mathbb{P}(red,blue)=(\frac{2}{5})(\frac{3}{4})=\frac{6}{20}=\frac{3}{10}$
 
--   Probability of drawing a blue marble, then a red marble: $(\frac{3}{5})(\frac{1}{2})=\frac{3}{10}$
+-   Probability of drawing a blue marble, then a red marble: $\mathbb{P}(blue,red)=(\frac{3}{5})(\frac{1}{2})=\frac{3}{10}$
 
--   Probability of drawing a blue marble, then a blue marble: $(\frac{3}{5})(\frac{1}{2})=\frac{3}{10}$
+-   Probability of drawing a blue marble, then a blue marble: $\mathbb{P}(blue,blue)=(\frac{3}{5})(\frac{1}{2})=\frac{3}{10}$
+
+Here are the probabilities represented in decimal and percentage forms:
+
+-   $\mathbb{P}(red,red)=\frac{1}{10}=0.1=10\%$
+
+-   $\mathbb{P}(red,blue)=\frac{3}{10}=0.3=30\%$
+
+-   $\mathbb{P}(blue,red)=\frac{3}{10}=0.3=30\%$
+
+-   $\mathbb{P}(blue,blue)=\frac{3}{10}=0.3=30\%$
+:::
 
 # Quick check problems
 
@@ -246,15 +322,19 @@ As with independent events, you can use the tree diagram as a guide to calculati
 <!-- add facility to check answers at end rather than one at a time -->
 
 ::: {.webex-check .webex-box}
-1.  Today, it can either rain or not rain. Suppose that the probability of rain is 0.7. What is the probability of no rain?
+1.  Today, it can either rain or not rain. Suppose that the probability of rain is 0.7. What is the probability of no rain? (Provide your answer in decimal format.)
 
 Answer: The probability of no rain is `r fitb(0.3)`.
 
-2.  A researcher flips a coin 10 times, and it lands on heads 7 times. Therefore, the researcher concludes that the probability of 'heads' is $\frac{7}{10}$. What type of probability is this?
+2.  You roll a die three times. What is the probability of getting a 6 thrice? (Provide your answer as the simplest fraction.)
 
-Answer: This is an example of `r fitb("experimental")` probability.
+Answer: The probability of getting a 6 thrice is `r fitb(1/216)`.
 
-3.  You are given three statements below. Decide whether they are true or false.
+3.  A researcher flips a coin 10 times, and it lands on heads 7 times. Therefore, the researcher concludes that $\mathbb{P}(heads)$ is $\frac{7}{10}$. What type of probability is this?
+
+Answer: This is an example of `r mcq(c("theoretical", answer = "experimental"))` probability.
+
+4.  You are given three statements below. Decide whether they are true or false.
 
 <!-- -->
 
@@ -267,11 +347,13 @@ Answer: This is an example of `r fitb("experimental")` probability.
 ::::
 
 ::: {.content-hidden when-format="html"}
-1.  Today, it can either rain or not rain. Suppose that the probability of it raining is 0.7. What is the probability of it not raining?
+1.  Today, it can either rain or not rain. Suppose that the probability of it raining is 0.7. What is the probability of it not raining? (Provide your answer in decimal format.)
 
-2.  A researcher flips a coin 10 times, and it lands on heads 7 times. Therefore, the researcher concludes that the probability of 'heads' is $\frac{7}{10}$. What type of probability is this?
+2.  You flip a coin three times. What is the probability of getting a 6 thrice? (Provide your answer as the simplest fraction.)
 
-3.  You are given three statements below. Decide whether they are true or false.
+3.  A researcher flips a coin 10 times, and it lands on heads 7 times. Therefore, the researcher concludes that $\mathbb{P}(heads)$ is $\frac{7}{10}$. What type of probability is this?
+
+4.  You are given three statements below. Decide whether they are true or false.
 
 <!-- -->
 

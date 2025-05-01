@@ -1,0 +1,208 @@
+---
+title: "Calculator: Exponential distribution"
+author: Michelle Arnetta and Tom Coleman
+format: html
+abstract-title: Summary
+abstract: A calculator to work out cdfs for the exponential distribution.
+filters: 
+  - shinylive
+embed-resources: false
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 640
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Exponential distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("rate", "Rate parameter (λ):", value = 0.5, min = 0.01, step = 0.01),
+        # Removed the helpText about mean and variance
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 10, value = 2, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 10, value = 2, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 1, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 3, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Exponential distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # When rate changes, adjust the range of sliders
+  observe({
+    # For exponential distribution with parameter rate, the mean is 1/rate
+    # Set a reasonable max value based on this
+    max_x <- max(round(5 / input$rate, 1), 10)
+    
+    updateSliderInput(session, "x_less", max = max_x)
+    updateSliderInput(session, "x_greater", max = max_x)
+    updateSliderInput(session, "x_lower", max = max_x)
+    updateSliderInput(session, "x_upper", max = max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Exponential(λ = %.2f)", input$rate)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pexp(input$x_less, rate = input$rate)
+      explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pexp(input$x_greater, rate = input$rate)
+      explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # For continuous distributions, P(X = a) = 0
+        prob <- 0
+      } else {
+        upper_prob <- pexp(input$x_upper, rate = input$rate)
+        lower_prob <- pexp(input$x_lower, rate = input$rate)
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the Exponential distribution plot
+  output$distPlot <- renderPlot({
+    # Determine the range for the x-axis
+    rate <- input$rate
+    max_x <- max(round(5 / rate, 1), 10)
+    
+    # Create data frame for plotting
+    x_values <- seq(0, max_x, length.out = 500)
+    density_values <- dexp(x_values, rate = rate)
+    df <- data.frame(x = x_values, density = density_values)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "darkgray") +
+      labs(x = "Time (X)", y = "probability density function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank())
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      # Create data for the filled area
+      fill_x <- seq(0, res$x, length.out = 200)
+      fill_y <- dexp(fill_x, rate = rate)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      # Create data for the filled area
+      fill_x <- seq(res$x, max_x, length.out = 200)
+      fill_y <- dexp(fill_x, rate = rate)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      # Create data for the filled area
+      fill_x <- seq(res$lower, res$upper, length.out = 200)
+      fill_y <- dexp(fill_x, rate = rate)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+# Further reading {-}
+
+[This interactive element appears in Overview: Probability distributions. Please click this link to go to the guide.]
+
+## Version history {-}
+
+v1.0: initial version created 04/24 by tdhc and Michelle Arnetta as part of a University of St Andrews VIP project.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

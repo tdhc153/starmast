@@ -2,7 +2,7 @@
 title: The product rule
 author: Tom Coleman
 abstract-title: Summary
-abstract: The product rule is one of the three central techniques of differentiation, allowing you to differentiate a product of two functions. This guide introduces the product rule and explains examples of where it is used. 
+abstract: The product rule is one of the three central techniques of differentiation, allowing you to differentiate any product of two differentiable functions. This guide introduces the product rule and explains examples of where it is used. 
 categories:
   - Calculus
 image: FiguresPNG/introtodifferentiation-image.png
@@ -20,9 +20,9 @@ library("webexercises")
 
 [MOTIVATION AND BLURB]
 
-This guide will look at the idea of differentiation; where it comes from, how it can be used, and how you can apply its techniques to functions that you may be familiar with. 
+This guide will look at the product rule for differentiation; where it comes from, how it can be used, and how you can apply its techniques to functions that you may be familiar with. 
 
-The summary table of key derivatives from [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd) is reproduced here.
+The summary table of key derivatives from [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd) is reproduced here for reference:
 
 | Function $f(x)$ | Derivative $f'(x)$ | Notes |
 |:-----------|:-------------------|:--------|
@@ -44,42 +44,85 @@ Let $u(x)$ and $v(x)$ be two differentiable functions. Then the **product rule**
 $$(uv)'(x) = \frac{d}{dx}\left(u(x)v(x)\right) = u(x)v'(x) + u'(x)v(x)$$
 that is, the derivative of the product of $u(x)$ and $v(x)$ is equal to the product of $u(x)$ and the derivative of $v(x)$, plus the product of $v(x)$ and the derivative of $u(x)$.
 
-This can also be written as $$\frac{d}{dx}\left(u(x)v(x)\right) = u\frac{\textrm{d}v}{\textrm{d}x} + v\frac{\textrm{d}u}{\textrm{d}x}.$$
+This can also be written as $$\frac{\mathrm{d}}{\mathrm{d}x}\left(u(x)v(x)\right) = u\frac{\textrm{d}v}{\textrm{d}x} + v\frac{\textrm{d}u}{\textrm{d}x}.$$
 
 :::
 
 Sometimes $f(x)$ and $g(x)$ are written instead of $u(x)$ and $v(x)$ in the statement of the product rule. The reason that $u(x)$ and $v(x)$ is used here is that sometimes the product function is called $f(x)$; and you then can't use it again!
 
+It does not matter which function you pick to be $u(x)$ and which function you pick to be $v(x)$; this is because $u(x)v(x) = v(x)u(x)$. 
+
+To see why this really is the derivative of the product of two functions, please see [Proof sheet: Rules of differentiation.]
+
 # Examples
+
+$f(x) = e^x\sqrt{x} + x^3$
+
+$f(x) = \ln(x)/x^5$
+
+$f(x) = 4x^4\cos(4x) + e^{-4x}\cos(4x)$
+
+$f(x) = e^x\sin(2x)\cos(4x)$
+
 
 ::: {.callout-note appearance="simple"}
 
 ## Example 1
 
-Find the derivative of the function $f(x) = \dfrac{x^2}{2} + 1$.
+What is the derivative of $y = x^3e^x$?
 
-Here, you can use the sum and scaling rules to differentiate this function. Using the sum rule, you can see that $$\dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2} + 1\right) = \dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2}\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right)$$ Now, using the scaling rule on the first of these terms, you can get $$\dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2}\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right) = \frac{1}{2}\cdot\dfrac{\mathrm{d}}{\mathrm{d}x}\left(x^2\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right)$$
+In this case, you have two functions multiplied together to make $y$. The two functions are $u(x) = x^3$ and $v(x) = e^x$. In order to use the product rule on $y$, you could differentiate $u(x)$ and $v(x)$ beforehand and then substitute them into the product rule. Doing this gives
 
-Now you can use the derivatives of common functions. The function $x^2$ is of the form $x^n$, so the derivative of $x^2$ is $2x^{2-1} = 2x^1 = 2x$. The function $1$ is a constant, so the derivative of $1$ is $0$. Putting these results in gives 
-$$\frac{1}{2}\cdot\dfrac{\mathrm{d}}{\mathrm{d}x}\left(x^2\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right) = \frac{1}{2}(2x) + 0$$ Simplifying gives the answer: $\dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2} + 1\right) = x$ and so the derivative of $f(x) = x^2/2 + 1$ is equal to $f'(x) = x$.
+- For $u(x) = x^3$, then $u'(x) = 3x^2$ by the power rule.
 
-You can then say that this function $f(x) = x^2/2 + 1$ is increasing if $x > 0$, decreasing if $x < 0$, and is stationary exactly when $x = 0$.
+- For $v(x) = e^x$, then $v'(x) = e^x$.
+
+Putting these into the statement of the product rule gives
+$$
+\begin{aligned}
+\frac{\textrm{d}y}{\textrm{d}x} &= u(x)v'(x) + u'(x)v(x)\\[0.5em]
+&= (x^3)(e^x) + (3x^2)(e^x)\\[0.5em]
+&= x^3e^x + 3x^2e^x
+\end{aligned}
+$$
+and this is your answer. You could also factorise the answer if you wanted to to get $y'(x) = (x^3 + 3x^2)e^x$.
 
 :::
 
-You do not need to be so meticulous in your general practice when differentiating. You can differentiate functions without stating what rules you are using. 
+Here's another example of the product rule, which is included solely for a chance to remember the signs for the derivatives of $\sin(x)$ and $\cos(x)$!
 
 ::: {.callout-note appearance="simple"}
 
 ## Example 2
 
-Find the derivative of the function $f(x) = 4e^{3x} - \sqrt{x}$.
+Find the derivative of the function $f(x) = 2\sin(x)\cos(x)$.
 
-Of these two terms, $4e^{3x}$ looks like a common function, but you have not seen how to differentiate $\sqrt{x}$ yet. In fact, this is another case of $x^n$; in this case, $n = 1/2$. (See [Guide: Laws of indices](lawsofindices.qmd) for why this is.)
+In this case, there are two options. You can either 
 
-You can then rewrite the function as $$f(x) = 4e^{3x} - x^{1/2}$$ which you can then apply your knowledge of differentiation to. Using the results above, the derivative of $4e^{3x}$ is $4\cdot3\cdot e^{3x} = 12e^{3x}$. The derivative of $x^{1/2}$ is $\left(\dfrac{1}{2}\right)x^{1/2 - 1} = \dfrac{x^{-1/2}}{2}$. Therefore, the derivative of $4e^{3x} - \sqrt{x}$ is $$f'(x) = 12e^{3x} - \frac{x^{-1/2}}{2}$$
+- use the constant rule to take the $2$ out and differentiate $\sin(x)\cos(x)$ using the product rule, or
+- take $u(x) = 2\sin(x)$ and $v(x) = \cos(x)$ and differentiate directly. 
 
-You could turn $x^{-1/2}$ into $1/\sqrt{x}$; however, you may be asked to differentiate this function again (particularly if you are looking into behaviour of a function), and often it is best to leave the power as a real number rather than using the square root notation.
+Let's do the first of these. To use the product rule take $u(x) = \sin(x)$ and $v(x) = \cos(x)$. Then $u'(x) = \cos(x)$ and $v'(x) = -\sin(x)$. Therefore, using the product rule gives
+
+$$
+\begin{aligned}
+\frac{\textrm{d}}{\textrm{d}x}\left(\sin(x)\cos(x)\right) &= u(x)v'(x) + u'(x)v(x)\\[0.5em]
+&= (\sin(x))(-\sin(x)) + (\cos(x))(\cos(x))\\[0.5em]
+&= \cos^2(x) - \sin^2(x)
+\end{aligned}
+$$
+
+Therefore, the derivative of $f(x) = 2\sin(x)\cos(x)$ is $$f'(x) = 2\left(\cos^2(x) - \sin^2(x)\right).$$
+
+:::
+
+::: {.callout-tip}
+
+You don't always need the product rule to differentiate the product of two functions if that product of two functions can be expressed in a different way. 
+
+For instance, the function in Example 2 is $f(x) = 2\sin(x)\cos(x)$, which by a trigonometric identity is equal to $f(x) = \sin(2x)$. (See [Guide: Trigonometric identities (radians)](trigonometricidentities-radians.qmd) for more.) You can then differentiate $\sin(2x)$ by the rules above to get $2\cos(2x)$. By trigonometric identities, this is also equal to $2\left(\cos^2(x) - \sin^2(x)\right)$, which is the same answer as in Example 2. 
+
+This shows you should explore all potential avenues before starting to use differentiation techniques.
 
 :::
 
@@ -111,42 +154,33 @@ It also means that the gradient of the tangent to the function $f(x)$ at the poi
 
 :::
 
-::: {.content-visible when-format="html"}
+::: {.callout-note appearance="simple"}
 
-<div id="calculator3" style="width: 100%; height: 450px;"></div>
+## Example 5
 
-<script>
-  var elt = document.getElementById('calculator3');
-  var calculator3 = Desmos.GraphingCalculator(elt);
-  calculator3.setMathBounds({ left: -0.5, right: 3, bottom: -0.5, top: 4});
-  calculator3.setExpression({ id: 'line1', latex: 'y=2\\ln(3x)-x', color: '#3F68B6'});
-  calculator3.setExpression({ id: "2", type: "expression", latex: "(1,2\\ln(3) - 1)", pointStyle: "POINT", hidden: false, secret: true, color: "#DB4315", lines: true});
-  calculator3.setExpression({ id: 'line2', latex: 'y = x - 2 + 2\\ln(3)', color: '#DB4315', secret: true});
-</script>
+Determine the behaviour of the function $f(x) = 2\ln(3x) - x$ when $x = 1$. 
 
-:::
+Here, you will first need to differentiate the function $f(x)$ to find $f'(x)$. Then, you will need to evaluate the derivative $f'(x)$ when $x = 1$ to see how the function behaves.
 
-::: {.content-hidden when-format="html"}
+Using your rules of differentiation as you found above, you can say that the derivative of $2\ln(3x)$ is $2/x$, and the derivative of $x$ is $1$. Therefore, the derivative of the function $f(x) = 2\ln(3x) - x$ is $$f'(x) = \frac{2}{x} - 1.$$ You can evaluate the derivative $f'(x)$ at $x = 1$ to get $$f'(1) = \frac{2}{1} - 1 = 2 - 1 = 1$$ and so the derivative is positive at $x = 1$. This implies that the function $f(x) = 2\ln(3x) - x$ is increasing at the point $x = 1$.
 
-![The graph of $f(x) = 2\ln(3x) - x$, with the tangent to the graph at $(1,2\ln(3) - 1)$ illustrated, demonstrating that the function is increasing at $x = 1$.](./FiguresPNG/introtodifferentiation-fig3-3.png){width="80%" #fig-3}
+It also means that the gradient of the tangent to the function $f(x)$ at the point $(1,2\ln(3) - 1)$ is $1$. You can see this in the figure below. 
 
 :::
 
- 
+::: {.callout-note appearance="simple"}
 
-## Summary
+## Example 6
 
-Here's a table of derivatives that you should remember going into any further reading on differentiation. Here, $a,b,c,n$ are any real numbers. 
+Determine the behaviour of the function $f(x) = 2\ln(3x) - x$ when $x = 1$. 
 
-| Function $f(x)$ | Derivative $f'(x)$ | Notes |
-|:-----------|:-------------------|:--------|
-| $f(x) = c$ | $f'(x) = 0$ |  |
-| $f(x) = ax + b$ | $f'(x) = a$ | |
-| $f(x) = ax^n$ | $f'(x) = anx^{n-1}$ | $n \neq 0$ |
-| $f(x) = ae^{bx}$ | $f'(x) = abe^{bx}$ |  |
-| $f(x) = a\sin(bx)$ | $f'(x) = ab\cos(bx)$ |  |
-| $f(x) = a\cos(bx)$ | $f'(x) = -ab\sin(bx)$ |  |
-| $f(x) = a\ln(bx)$ | $f'(x) = \dfrac{a}{x}$ |  |
+Here, you will first need to differentiate the function $f(x)$ to find $f'(x)$. Then, you will need to evaluate the derivative $f'(x)$ when $x = 1$ to see how the function behaves.
+
+Using your rules of differentiation as you found above, you can say that the derivative of $2\ln(3x)$ is $2/x$, and the derivative of $x$ is $1$. Therefore, the derivative of the function $f(x) = 2\ln(3x) - x$ is $$f'(x) = \frac{2}{x} - 1.$$ You can evaluate the derivative $f'(x)$ at $x = 1$ to get $$f'(1) = \frac{2}{1} - 1 = 2 - 1 = 1$$ and so the derivative is positive at $x = 1$. This implies that the function $f(x) = 2\ln(3x) - x$ is increasing at the point $x = 1$.
+
+It also means that the gradient of the tangent to the function $f(x)$ at the point $(1,2\ln(3) - 1)$ is $1$. You can see this in the figure below. 
+
+:::
 
 
 # Quick check problems {-}
