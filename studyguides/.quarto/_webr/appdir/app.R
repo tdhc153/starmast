@@ -1,148 +1,154 @@
 library(shiny)
 library(bslib)
-library(ggplot2)
+
+# Hard-coded hex color for the button (blue color requested)
+BUTTON_COLOR <- "#3F6BB6"
 
 ui <- page_fluid(
-  title = "Normal distribution calculator",
+  title = "Coin Flipper",
   
-  layout_columns(
-    col_widths = c(4, 8),
-    
-    # Left column - Inputs
-    card(
-      card_header("Parameters"),
-      card_body(
-        numericInput("mean", "Mean (μ):", value = 0),
-        numericInput("sd", "Standard deviation (σ):", value = 1, min = 0.01),
-        hr(),
-        radioButtons("prob_type", "Probability to calculate:",
-                    choices = list("P(X ≤ x)" = "less", 
-                                  "P(X ≥ x)" = "greater", 
-                                  "P(x ≤ X ≤ y)" = "between"),
-                    selected = "less"),
-        conditionalPanel(
-          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
-          numericInput("x_value", "x value:", value = 0)
+  card(
+    card_header("Coin Flipper"),
+    card_body(
+      # Use a row layout for landscape orientation
+      layout_columns(
+        col_widths = c(4, 4, 4), # Equal width columns
+        
+        # Left column: Description and stats
+        card(
+          card_body(
+            div(
+              style = "display: flex; flex-direction: column; height: 100%; justify-content: center;",
+              p("Click the button to flip a coin.", style = "font-size: 18px;"),
+              br(),
+              div(
+                style = "background-color: #f8f9fa; padding: 15px; border-radius: 5px;",
+                h5("Statistics:"),
+                div(
+                  style = "display: flex; justify-content: space-between;",
+                  div("Total flips:"),
+                  textOutput("totalFlips", inline = TRUE)
+                ),
+                div(
+                  style = "display: flex; justify-content: space-between;",
+                  div("Heads:"),
+                  textOutput("headsCount", inline = TRUE)
+                ),
+                div(
+                  style = "display: flex; justify-content: space-between;",
+                  div("Tails:"),
+                  textOutput("tailsCount", inline = TRUE)
+                )
+              )
+            )
+          )
         ),
-        conditionalPanel(
-          condition = "input.prob_type == 'between'",
-          numericInput("x_lower", "Lower bound (x):", value = -1),
-          numericInput("x_upper", "Upper bound (y):", value = 1)
+        
+        # Middle column: Coin display
+        card(
+          card_body(
+            div(
+              style = "height: 100%; display: flex; align-items: center; justify-content: center;",
+              div(
+                id = "coinDisplay",
+                style = "font-size: 40px; line-height: 1; width: 150px; height: 150px; 
+                       margin: 0 auto; border: 2px solid #ccc; border-radius: 50%;
+                       display: flex; align-items: center; justify-content: center;
+                       background-color: #f0f0f0;",
+                textOutput("coinResult")
+              )
+            )
+          )
+        ),
+        
+        # Right column: Button
+        card(
+          card_body(
+            div(
+              style = "display: flex; flex-direction: column; height: 100%; 
+                     align-items: center; justify-content: center; gap: 20px;",
+              actionButton("flipButton", "Flip Coin", class = "btn-lg", 
+                          style = paste0("background-color: ", BUTTON_COLOR, "; color: white;")),
+              actionButton("resetButton", "Reset Stats", class = "btn-sm")
+            )
+          )
         )
       )
-    ),
-    
-    # Right column - Plot
-    card(
-      card_header("Normal distribution plot"),
-      card_body(
-        uiOutput("plot_title"),
-        plotOutput("distPlot", height = "300px")
-      )
-    )
-  ),
-  
-  # Bottom row - Results
-  card(
-    card_header("Results"),
-    card_body(
-      # Removed the LaTeX formula display
-      textOutput("explanation")
     )
   )
 )
 
 server <- function(input, output, session) {
   
-  # Display the plot title with distribution parameters
-  output$plot_title <- renderUI({
-    title <- sprintf("N(μ = %.2f, σ = %.2f)", input$mean, input$sd)
-    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
-  })
+  # Create reactive values to store the current state
+  flips <- reactiveValues(
+    current = sample(c("HEADS", "TAILS"), 1),
+    total = 0,
+    heads = 0,
+    tails = 0,
+    flipping = FALSE,
+    timer = NULL  # Track the timer
+  )
   
-  # Calculate the probability based on user selection
-  probability <- reactive({
-    if (input$prob_type == "less") {
-      prob <- pnorm(input$x_value, mean = input$mean, sd = input$sd)
-      explanation <- sprintf("P(X ≤ %.2f) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
-      
-    } else if (input$prob_type == "greater") {
-      prob <- 1 - pnorm(input$x_value, mean = input$mean, sd = input$sd)
-      explanation <- sprintf("P(X ≥ %.2f) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
-      
-    } else if (input$prob_type == "between") {
-      lower_prob <- pnorm(input$x_lower, mean = input$mean, sd = input$sd)
-      upper_prob <- pnorm(input$x_upper, mean = input$mean, sd = input$sd)
-      prob <- upper_prob - lower_prob
-      explanation <- sprintf("P(%.2f ≤ X ≤ %.2f) = %.4f or %.2f%%", 
-                            input$x_lower, input$x_upper, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "between", 
-                 lower = input$x_lower, upper = input$x_upper))
+  # Initialize the display
+  output$coinResult <- renderText({
+    if(flips$flipping) {
+      return("")  # Show blank state during animation
+    } else {
+      return(flips$current)
     }
   })
   
-  # Display an explanation of the calculation
-  output$explanation <- renderText({
-    res <- probability()
-    return(res$explanation)
+  # Update the statistics displays
+  output$totalFlips <- renderText({
+    flips$total
   })
   
-  # Generate the normal distribution plot
-  output$distPlot <- renderPlot({
-    # Calculate range for x-axis (covering 99.7% of the distribution)
-    x_min <- input$mean - 3.5 * input$sd
-    x_max <- input$mean + 3.5 * input$sd
+  output$headsCount <- renderText({
+    paste0(flips$heads, " (", round(ifelse(flips$total > 0, flips$heads/flips$total*100, 0), 1), "%)")
+  })
+  
+  output$tailsCount <- renderText({
+    paste0(flips$tails, " (", round(ifelse(flips$total > 0, flips$tails/flips$total*100, 0), 1), "%)")
+  })
+  
+  # Handle the coin flip
+  observeEvent(input$flipButton, {
+    # Set the flipping state to true to show blank state
+    flips$flipping <- TRUE
     
-    # Create data frame for plotting
-    x <- seq(x_min, x_max, length.out = 500)
-    y <- dnorm(x, mean = input$mean, sd = input$sd)
-    df <- data.frame(x = x, y = y)
+    # Create a separate reactive timer that will complete the flip after delay
+    # This fixes the delay issue in the previous version
+    flips$timer <- reactiveTimer(500)
     
-    # Create base plot
-    p <- ggplot(df, aes(x = x, y = y)) +
-      geom_line() +
-      labs(x = "X", y = "Density") +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank())
-    
-    # Add bold line at X = 0
-    p <- p + geom_vline(xintercept = 0, linetype = "solid", color = "black", linewidth = 0.8)
-    
-    # Add shaded area based on selected probability type
-    res <- probability()
-    
-    if (res$type == "less") {
-      shade_x <- seq(x_min, res$x, length.out = 200)
-      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
-      shade_df <- data.frame(x = shade_x, y = shade_y)
+    # This observer will fire when the timer triggers
+    observeEvent(flips$timer(), {
+      # Determine the result
+      result <- sample(c("HEADS", "TAILS"), 1)
       
-      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
-        geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315")
+      # Update the state
+      flips$current <- result
+      flips$total <- flips$total + 1
       
-    } else if (res$type == "greater") {
-      shade_x <- seq(res$x, x_max, length.out = 200)
-      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
-      shade_df <- data.frame(x = shade_x, y = shade_y)
+      # Update the appropriate counter
+      if(result == "HEADS") {
+        flips$heads <- flips$heads + 1
+      } else {
+        flips$tails <- flips$tails + 1
+      }
       
-      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
-        geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315")
-      
-    } else if (res$type == "between") {
-      shade_x <- seq(res$lower, res$upper, length.out = 200)
-      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
-      shade_df <- data.frame(x = shade_x, y = shade_y)
-      
-      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
-        geom_vline(xintercept = res$lower, linetype = "dashed", color = "#db4315") +
-        geom_vline(xintercept = res$upper, linetype = "dashed", color = "#db4315")
-    }
-    
-    return(p)
+      # End the flipping state
+      flips$flipping <- FALSE
+    }, once = TRUE) # This ensures it only fires once per button click
+  })
+  
+  # Reset button to clear statistics
+  observeEvent(input$resetButton, {
+    flips$total <- 0
+    flips$heads <- 0
+    flips$tails <- 0
   })
 }
 
+# Run the application 
 shinyApp(ui = ui, server = server)

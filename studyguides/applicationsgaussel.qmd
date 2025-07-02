@@ -1,0 +1,362 @@
+---
+title: Applications of Gaussian elimination 
+author: Sara Delgado Garcia 
+abstract-title: Summary 
+abstract: You can use Gaussian Elimination to simplify matrices and get the inverse or solve equations. Using Gaussian Elimination you can solve systems of linear equations written as matrices. 
+categories: 
+  - Linear mathematics 
+draft: true 
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, it is recommended that you read [Guide: Introduction to Matrices](introtomatrices.qmd)* [*Guide: Gaussian Elimination*](introtofractions) *and [Guide:Introduction to Solving Simulataneous Equation](introtosimeqs.qmd)*.
+
+In previous guides you saw that doing a series of elementary row operations can help you find the equivalent of a matrix in a 'nicer form'. In this guide, you will learn how e.r.o.s on the augmented matrix can help you find the inverse of a matrix and solve systems of linear equations.
+
+# Using the row echelon form to find the inverse of a matrix
+
+::: callout-note
+## Definition of the augmented matrix
+
+You construct the augmented matrix of a matrix A by adjoining it with any other matrix which has the same number of rows. You show it is an augmented matrix by leaving a separation bar $|$ between the two matrices. You refer to the left block (matrix values before the bar) and the right block (matrix values after the bar) of the matrix.
+:::
+
+You can construct the augmented matrix $n \times 2n$ from the original matrix A and the $n \times n$ identity matrix $I_n$. The left block is the original matrix A before the separation bar $|$ and the right block is the identity matrix $I_n$.
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+Let $$\begin{aligned}M = 
+\left[\begin{array}{cc} 1 & 1 \\ 0 & 3\end{array}\right]
+\end{aligned}$$ be a $2 \times 2$ matrix. Then you can build the augmented matrix M' of M with the identity matrix $I_n$ such that: $$\begin{aligned} M'=
+\left[\begin{array}{cc|cc} 1 & 1 & 1 & 0 \\ 0 & 3 & 0 & 1\end{array}\right]
+\end{aligned}$$
+:::
+
+To find the inverse of matrices (when they have one) using e.r.o.s you can use Gaussian elimination on the extended matrix (with the identity matrix) of the matrix whose inverse you want to find.
+
+::: callout-note
+## Warning
+
+You can only invert matrices that are square (same number of rows and columns), so this strategy also works only with square matrices!
+:::
+
+::: callout-note
+## E.r.o.s on extended matrices
+
+When performing elementary row operations on an extended matrix, each row operation acts equally on both sides of the extended matrix. That is, if you do e.r.o.s on the left block you have to do the same e.r.o.s on the right block. This is because the augmented matrix is actually a $n \times 2n$ matrix.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 2
+
+Let $$\begin{aligned}A=
+\left[\begin{array}{cc} 4 & 7 \\ 2 & 6\end{array}\right]
+\end{aligned}$$ be the matrix you want to invert. You start by extending it such that:
+
+$$\begin{aligned}B'=
+\left[\begin{array}{cc|cc}
+4 & 7 & 1 & 0\\
+2 & 6 & 0 & 1
+\end{array}\right].
+\end{aligned}$$
+
+Now you want to perform e.r.o.s until the left block is $I_2$. First subtract row 2 to row 1 so as to get a zero above the leading entry of row 1:
+
+$$\begin{aligned}
+\left[\begin{array}{cc|cc}
+4 & 7 & 1 & 0\\
+2 & 6 & 0 & 1
+\end{array}\right]\begin{matrix}r_1 \to r_1 - 2r_2 \end{matrix} & \left[\begin{array}{cc|cc}0 & -5 & 1 & -2\\
+2 & 6 & 0 & 1\end{array}\right].
+\end{aligned}$$
+
+You can multiply row 1 by $\frac{-1}{5}$ to get the left block in the right form:
+
+$$\begin{aligned}
+\left[\begin{array}{cc|cc}
+0 & -5 & 1 & -2\\
+2 & 6 & 0 & 1
+\end{array}\right]\begin{matrix}r_1 \to r_1 - 2r_2 \end{matrix} & \left[\begin{array}{cc|cc}0 & 1 & \frac{-1}{5} & \frac{2}{5}\\
+2 & 6 & 0 & 1\end{array}\right]
+\end{aligned}$$
+
+You can do two operations at the same time: first, you can multiply row 2 by $\frac{1}{2}$ to get a leading entry of one, then you can exchange row 1 and row 2 to have the diagonal of 1s you need for the identity matrix form:
+
+$$\begin{aligned}
+\left[\begin{array}{cc|cc}0 & 1 & \frac{-1}{5} & \frac{2}{5}\\
+2 & 6 & 0 & 1\end{array}\right]\begin{matrix}r_1 \to r_2 - \frac{1}{2}r_2 \\ r_1 \leftrightarrow r_2 \end{matrix} & \left[\begin{array}{cc|cc}
+1 & 3 & 0 & \frac{1}{2} \\ 0 & 1 & \frac{-1}{5} & \frac{2}{5}\\\end{array}\right].
+\end{aligned}$$
+
+Finally you subtract 3 times row 2 to row 1 to get rid of the non-zero values in the column of the leading entry:
+
+$$\begin{aligned}
+\left[\begin{array}{cc|cc}1 & 3 & 0 & \frac{1}{2} \\ 0 & 1 & \frac{-1}{5} & \frac{2}{5}\end{array}\right]\begin{matrix}r_1 \to r_1 - 3r_2 \end{matrix} & \left[\begin{array}{cc|cc}
+1 & 0 & \frac{3}{5} & \frac{-7}{10} \\ 0 & 1 & \frac{-1}{5} & \frac{2}{5}\end{array}\right]
+\end{aligned}$$
+
+Since you have the identity matrix in the left block, this means the matrix you have in the right block is the inverse of G! So
+
+$$\begin{aligned}B^{-1}=
+\left[\begin{array}{cc} \frac{3}{5} & \frac{7}{10} \\ \frac{-1}{5} & \frac{2}{5}\end{array}\right].
+\end{aligned}$$
+:::
+
+Now you will see another example with a bigger matrix, where the identity matrix you will use is $I_3$ instead of $I_2$.
+
+::: {.callout-note appearance="simple"}
+## Example 3
+
+The square matrix you want to invert is
+
+$$\begin{aligned}B= 
+\left[\begin{array}{ccc} 1 & 3 & 2 \\ 0 & 6 & 2 \\ 1 & 3 & 3\end{array}\right]
+\end{aligned}$$
+
+So the extended matrix will be:
+
+$$\begin{aligned} H' =
+\left[\begin{array}{ccc|ccc} 1 & 3 & 2 & 1 & 0 & 0\\ 0 & 6 & 2 & 0 & 1 & 0\\ 1 & 3 & 3 & 0 & 0 & 1\end{array}\right]
+\end{aligned}$$ You can see that row 1 has a leading entry of 1, this is good because you can use that to make all the other entries in the first column 0. Row 2 has already 0, this is good! Now subtract row 1 to row 3 to have zero in the first column (notice by doing this you will also get a zero in the second column, which is helpful since row 3 only needs a non-zero entry in the third column).
+
+$$\begin{aligned}
+\left[\begin{array}{ccc|ccc}1 & 3 & 2 & 1 & 0 & 0\\ 0 & 6 & 2 & 0 & 1 & 0\\ 1 & 3 & 3 & 0 & 0 & 1\end{array}\right]\begin{matrix}r_1 \to r_3 - r_1 \end{matrix} & \left[\begin{array}{ccc|ccc}1 & 3 & 2 & 1 & 0 & 0\\ 0 & 6 & 2 & 0 & 1 & 0\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]
+\end{aligned}$$
+
+The only non zero entry in row 3 is the leading entry in the third column, row 3 is ready! Now you want to have row 2 in 'identity form' too. To do this, use row 3. Again you can do two e.r.o.s at the same time. First, subtract two times row 3 to row 2 to get a zero in the third entry, then divide row 2 by six so that the leading entry of the row is 1:
+
+$$\begin{aligned}
+\left[\begin{array}{ccc|ccc}1 & 3 & 2 & 1 & 0 & 0\\ 0 & 6 & 2 & 0 & 1 & 0\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]\begin{matrix}r_2 \to r_2 - 2r_3 \\ r_2 \to \frac{1}{6}r_2 \end{matrix} & \left[\begin{array}{ccc|ccc}1 & 3 & 2 & 1 & 0 & 0\\ 0 & 1 & 0 & \frac{1}{3} & \frac{1}{6} & -\frac{1}{3}\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]
+\end{aligned}$$ So row 2 is also in the right form! Now you need to get row 1 in the right form (make all non leading entries 0). Start by using row 2 to make the second entry 0: $$\begin{aligned}
+\left[\begin{array}{ccc|ccc}1 & 3 & 2 & 1 & 0 & 0\\ 0 & 1 & 0 & \frac{1}{3} & \frac{1}{6} & -\frac{1}{3}\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]\begin{matrix}r_1 \to r_1 - 3r_2 \end{matrix} & \left[\begin{array}{ccc|ccc}1 & 0 & 2 & 0 & -\frac{1}{2} & 1\\ 0 & 1 & 0 & \frac{1}{3} & \frac{1}{6} & -\frac{1}{3}\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]
+\end{aligned}$$
+
+Almost there! Now subtract two times row 3 to row 1 and you will get 'identity form' in row 1:
+
+$$\begin{aligned}
+\left[\begin{array}{ccc|ccc}1 & 0 & 2 & 0 & -\frac{1}{2} & 1\\ 0 & 1 & 0 & \frac{1}{3} & \frac{1}{6} & -\frac{1}{3}\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]\begin{matrix}r_1 \to r_1 - 2r_3 \end{matrix} & \left[\begin{array}{ccc|ccc}1 & 0 & 0 & 2 & -\frac{1}{2} & -1\\ 0 & 1 & 0 & \frac{1}{3} & \frac{1}{6} & -\frac{1}{3}\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]
+\end{aligned}$$
+
+The left block is in the identity matrix form, so you are done! Now the inverse of H is given by the right block. So
+
+$$\begin{aligned}H^{-1}= 
+\left[\begin{array}{ccc} 2 & -\frac{1}{2} & -1 \\ \frac{1}{3} & \frac{1}{6} & -\frac{1}{3} \\-1 & 0 & 1\end{array}\right]
+\end{aligned}$$
+:::
+
+# Using Gaussian elimination to solve systems of equations
+
+You can use inverse matrices to solve systems of linear equations, following these steps:
+
+**Step 1** Write the system of linear equations as a matrix, by writing the coefficients of each variable as an entry in the matrix (each column corresponds to one variable), the variables (x, y, z, t...) as a column vector and the coefficients (on the other side of the equality of each equation) as another column vector.
+
+**Step 2** Find the inverse of the matrix using the row echelon form.
+
+**Step 3** Perform matrix multiplication to find $X$, where $X$ is an array giving the solution to all the variables.
+
+::: {.callout-note appearance="simple"}
+## Why does this work?
+
+If A is the matrix with all the coefficients of the system of linear equations, and $X$ is the $(1 \times n)$ vector with all the variables the matrix has, the system can be written as:
+
+$AX = B$. By multiplying both sides by the inverse $A^{-1}$(if A has an inverse), you get:
+
+$A^{-1}AX = A^{-1}B$. By definition of the inverse matrix $A^{-1}A = I_n$ so
+
+$I_n X= A^{-1} B$, and by definition of the identity matrix $I_n X = X$.
+
+So the solution to the array of variables X is:
+
+$X = A^{-1}B$. Since you know be, by finding $A^{-1}$ you can get the solution to the system of equations.
+:::
+
+The following examples use the inverses of previous examples to show how this can work:
+
+::: {.callout-note appearance="simple"}
+## Example 10
+
+Suppose you have this system of equations:
+
+$$\begin{aligned} 4x + 7y = 1 \\ 2x + 6y = 0.\end{aligned}$$
+
+Following the steps above, start by taking the coefficients of the variables in the system and organising them by columns. So, in the first column you will have the coefficients of the x variable (that is, 4 and 2) and in the second column you will have the coefficients of the y variable (that is, 2 and 6):
+
+$$\begin{aligned}
+\left[\begin{array}{cc} 4 & 7 \\ 2 & 6\end{array}\right].
+\end{aligned}$$
+
+Notice this is the same matrix as G from example 8! So, we know its inverse is:
+
+$$\begin{aligned}G^{-1}=
+\left[\begin{array}{cc} \frac{3}{5} & \frac{7}{10} \\ \frac{-1}{5} & \frac{2}{5}\end{array}\right]
+\end{aligned}$$
+
+B is given by the constants of the system of equations, so$$ B=
+\begin{bmatrix}
+1\\
+0
+\end{bmatrix}
+$$
+
+Similarly as X depends on the variables, $$X=
+\begin{bmatrix}
+x\\
+y
+\end{bmatrix}
+$$
+
+Now that you have $X$, $B$, $G$ and $G^{-1}$, we can find the values of the variables! Recall you will use the equation $GX = B$ to get $X = G^{-1}B$.
+
+So you have:
+
+$$
+\begin{aligned}
+\begin{bmatrix}
+4 & 7 \\
+2 & 6
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+&=
+\begin{bmatrix}
+1 \\
+0
+\end{bmatrix}.
+\end{aligned}$$
+
+Now multiply both sides by the inverse:
+
+$$\begin{aligned}
+\begin{bmatrix}
+\frac{3}{5} & \frac{7}{10} \\ \frac{-1}{5} & \frac{2}{5} 
+\end{bmatrix}
+\begin{bmatrix}
+4 & 7 \\
+2 & 6
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+&=
+\begin{bmatrix}
+\frac{3}{5} & \frac{7}{10} \\ \frac{-1}{5} & \frac{2}{5} 
+\end{bmatrix}
+\begin{bmatrix}
+1 \\0
+\end{bmatrix}. \end{aligned}$$
+
+Since $A^{-1}A = I_n$ and $I_nX = X$, this gives:
+
+$$ \begin{aligned}
+\begin{bmatrix}
+x \\
+y
+\end{bmatrix}
+&=
+\begin{bmatrix}
+\frac{3}{5} & \frac{7}{10} \\ \frac{-1}{5} & \frac{2}{5} 
+\end{bmatrix}
+\begin{bmatrix}
+1 \\
+0
+\end{bmatrix}
+= \begin{bmatrix} \frac{3}{5} \\ -\frac{1}{5} \end{bmatrix}.
+\end{aligned} $$
+
+So you can solve $$x= \frac{3}{5}$$ and $$y = -\frac{1}{5}$$.
+:::
+
+Another option is to turn your system of linear equations into an extended matrix, where the left block represents the coefficients of the variables and the right block represents the constants, and with Gaussian elimination turn the left block into the reduced echelon form. Then you can rewrite the system of equations with the new coefficients and the new constants and solve for the variables (start from the bottom, there is at least one row with just one entry in the left block). To show this, you will work through an example with a matrix you have already seen, but this time you will be doing the e.r.o.s on the augmented form.
+
+::: {.callout-note appearance="simple"}
+## Example 11
+
+You want to solve this system of equations:\\ $4x + 2y = 1 \\ 2x + 2y =2 \\ x + 3y = 0$. Let's build the augmented matrix, the left block is given by the coefficients so: $$C_{Left}=
+\begin{bmatrix}
+4 & 2  \\
+2 & 2  \\
+1 & 3 
+\end{bmatrix}$$ where the first column gives the values of the coefficients of the x-variables and the second column gives the values of the y-variables.
+
+Now you can obtain the right block from the coefficients: $$C_{Right}=
+\begin{bmatrix}
+1  \\
+2  \\
+0
+\end{bmatrix}$$ Now combine the two in the augmented matrix: $$\begin{aligned}
+\left[\begin{array}{cc|c}4 & 2& 1\\ 2 & 2 & 2\\ 1 & 3 & 0\end{array}\right].
+\end{aligned}$$
+
+Notice this is the matrix from **Example 6**: $$C=
+\begin{bmatrix}
+4 & 2 & 1 \\
+2 & 2 & 2 \\
+1 & 3 & 0
+\end{bmatrix}$$ with slightly different notation (two blocks instead of one).
+
+But this does not change how you get the row echelon form, since with e.r.o.s you perform the same operation simultaneously on both blocks. In fact, with e.r.o.s yoiu 'ignore' the middle bar making the matrix. It is just there to remind you which part corresponds to the coefficients, and which part corresponds to the constants at the other side of the equality.
+
+So, if we do the same e.r.o.s as in **Example 6** we get: $$\begin{aligned}\left[\begin{array}{cc|c}1 & 0 & 0\\
+0 & 1 & 0 \\0 & 0 & 1
+\end{array}\right]
+\end{aligned}$$
+
+Remember the first column gives the x-variable coefficients and the second column gives the y-variable coefficients, so we get:
+
+$x + 0y = 0 \\ 0x + y = 0 \\ 0x + 0y= 0$, which is a contradiction, so the system has no solutions.
+:::
+
+# Quick check problems {.unnumbered}
+
+<!-- add facility for webexercises to work on html -->
+
+::: {.content-visible when-format="html"}
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box}
+1.  If $$3x + 5y - 3z = 0 \\ 4y + 3z = 1 \\ 3x+ 4y + 5z = 5$$ is a system of equations and you write it as a matrix equation $AX= B$, where A gives the coefficients of the variables, what is the leading entry of row 2?
+
+Answer: The leading entry of row 2 is `r fitb(4)`.
+
+2.  If you build an augmented matrix with $$\begin{bmatrix} 4 & 5 & 6\\ 1& 1 &0 \\ 5& 0 & 5 \end{bmatrix}$$ how many rows and columns will it have?
+
+Answer: The augmented matrix will have `r fitb(3)` rows and `r fitb(6)` columns.
+
+3.  You are given three statements below. Decide whether they are true or false.
+
+<!-- -->
+
+(a) Can you create an augmented matrix with $$\begin{bmatrix} 1 & 1& 1& 1 \\ 7 & 2 & 6 & 1\\0& 0 & 2& 1\\ 1 & 0 & 0 & 0 \end{bmatrix}$$ and $$\begin{bmatrix} 2 & 2 &1 \\ 0 & 1 & 1\\ 0 & 1& 1 \end{bmatrix}$$? . Answer: `r torf(FALSE)`.
+
+(b) The matrix $$C=\begin{bmatrix} 1 & 0 \\ 0 & 3  \\  0 & \frac{2}{3} \end{bmatrix}$$ has an inverse. Answer: `r torf(FALSE)`.
+
+(c)The matrix $$\left[\begin{matrix}
+\frac{2}{3} & -2 & \frac{-1}{3} \\
+0 & 1 & 0 \\
+\frac{-1}{3} & 1 & \frac{2}{3}
+\end{matrix}\right]$$ is the inverse of $$\left[\begin{matrix}
+2 & 3 & 1 \\
+0 & 1 & 0 \\
+1 & 0 & 2
+\end{matrix}\right]$$. Answer: `r torf(TRUE)`.
+:::
+:::
+
+# Further reading {.unnumbered}
+
+\[For more questions on the subject, please go to Questions: Gaussian elimination.\]
+
+[For an introduction on matrices, please see Guide: Introduction to Matrices.](.qmd) [For an introduction systems of linear equations, please see Guide: Solving systems of linear equations.](.qmd)
+
+## Version history {.unnumbered}
+
+v1.0: initial version created 04/25 by sdg.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

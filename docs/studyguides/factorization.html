@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Millie Pike">
+
+<title>Factorization – STARMAST</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, alongside enabling our non-identifiable QuickCheck problem tracking. These are the sole purposes of enabling cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<!-- Mailerlite snippet -->
+ <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '1477275');
+</script>
+
+<script src="https://esm.sh/shinylive-r"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html"> 
+<span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../studyguidelist.html"> 
+<span class="menu-text">Study guides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../qalist.html"> 
+<span class="menu-text">Questions and answers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../olist.html"> 
+<span class="menu-text">Facts and proofs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../applist.html"> 
+<span class="menu-text">Apps</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="e29912798153cb26ed22c614d2ad3356" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> New website features and statistical calculators available now! (02/05/25)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-factorization" id="toc-what-is-factorization" class="nav-link active" data-scroll-target="#what-is-factorization">What is factorization?</a></li>
+  <li><a href="#introducing-key-concepts" id="toc-introducing-key-concepts" class="nav-link" data-scroll-target="#introducing-key-concepts">Introducing key concepts</a></li>
+  <li><a href="#factorizing-single-brackets" id="toc-factorizing-single-brackets" class="nav-link" data-scroll-target="#factorizing-single-brackets">Factorizing single brackets</a></li>
+  <li><a href="#factorizing-double-brackets" id="toc-factorizing-double-brackets" class="nav-link" data-scroll-target="#factorizing-double-brackets">Factorizing double brackets</a>
+  <ul class="collapse">
+  <li><a href="#case-1-a-1" id="toc-case-1-a-1" class="nav-link" data-scroll-target="#case-1-a-1">Case 1: <span class="math inline">\(a = 1\)</span></a></li>
+  <li><a href="#case-2-a-neq-1" id="toc-case-2-a-neq-1" class="nav-link" data-scroll-target="#case-2-a-neq-1">Case 2: <span class="math inline">\(a \neq 1\)</span></a></li>
+  </ul></li>
+  <li><a href="#using-factorization-to-solve-quadratic-equations" id="toc-using-factorization-to-solve-quadratic-equations" class="nav-link" data-scroll-target="#using-factorization-to-solve-quadratic-equations">Using factorization to solve quadratic equations</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="factorization.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="factorization.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Factorization</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Algebra</div>
+    <div class="quarto-category">Solving equations</div>
+    <div class="quarto-category">Key skills</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Millie Pike </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    Factorization is an important concept in mathematics, especially in algebra. It involves breaking down expressions into smaller parts called factors which, when multiplied together, give the original expression. This process is essential for simplifying expressions, solving equations, and gaining a deeper understanding of mathematical structures. Factorization plays a key role in various areas of mathematics and is a valuable tool for tackling problems more efficiently.
+  </div>
+</div>
+
+
+</header>
+
+
+<p><em>Before reading this guide, it is recommended that you read <a href="../studyguides/introtoquadratics.html">Guide: Introduction to quadratic equations</a>. Additionally, you may find it useful to read <a href="../studyguides/completingthesquare.html">Guide: Completing the square</a> for factorizing with a remainder.</em></p>
+<table><tbody><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls=""><source src="./Narrations/factorization.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></td></tr></tbody></table>
+<section id="what-is-factorization" class="level1 unnumbered">
+<h1 class="unnumbered">What is factorization?</h1>
+<p>Factorization is the process of rewriting an expression as a product of other expressions. This transformation helps when working with more complicated expressions.</p>
+<p>Factorization is a key concept in mathematics - anywhere where you may be asked to solve equations, chances are that you will need to utilise factorization. As you have seen in <a href="../studyguides/introtoquadratics.html">Guide: Introduction to quadratic equations</a>, quadratic expressions are important in mathematics, and these can be manipulated by using factorization to help you solve them. For example, factorizing the expression <span class="math inline">\(x^2 + 5x + 6\)</span> transforms it into <span class="math inline">\((x+3)(x+2)\)</span>, which could help you to find the values of <span class="math inline">\(x\)</span> that satisfy the equation <span class="math inline">\(x^2 + 5x + 6 =0\)</span>.</p>
+<p>This guide will introduce you to the key concepts behind factorization. First, you will learn how to identifying common factors and use these to factorizing single expressions. From there, you can use your knowledge to move towards factorizing quadratics of the form <span class="math inline">\(ax^2 + bx + c\)</span>; both where <span class="math inline">\(a=1\)</span>, and <span class="math inline">\(a \neq 1\)</span>.</p>
+</section>
+<section id="introducing-key-concepts" class="level1">
+<h1>Introducing key concepts</h1>
+<p>The first section introduces definitions that you will need throughout this guide.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of term
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>term</strong> is a string of numbers, variables, and/or exponents, multiplied or divided together. An <strong>expression</strong> is a combination of terms by the operations of addition and subtraction. An expression represents a value or relationship but does not have an equals sign.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(3x + 5\)</span> is an expression. It contains the number <span class="math inline">\(3\)</span>, multiplied by the variable <span class="math inline">\(x\)</span>, and the addition operation. The terms are <span class="math inline">\(3x\)</span> and <span class="math inline">\(5\)</span>.</p>
+</div>
+</div>
+<p>The introduction of <strong>brackets</strong> turns an expression into a term, as seen in the following example.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Take the expression <span class="math inline">\(t-4\)</span>. You can turn this into a term by putting brackets around it to get <span class="math inline">\((t-4)\)</span>. This allows you to multiply or divide everything in the bracket by the same number. For instance, <span class="math inline">\(4(t-4)\)</span> is a term consisting of the multiple of <span class="math inline">\(4\)</span> and <span class="math inline">\((t-4)\)</span>.</p>
+</div>
+</div>
+<p>Next, you can ask when you can write an expression as a term. This requires the use of <strong>factors</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of factor
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>factor</strong> is a term (or expression) that divides exactly into another term (or expression).</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When working in whole numbers:</p>
+<p>The factors of <span class="math inline">\(6\)</span> are <span class="math inline">\(1, 2, 3\)</span> and <span class="math inline">\(6\)</span>.</p>
+<p><span class="math inline">\(3\)</span> is a factor of <span class="math inline">\(12\)</span>, because <span class="math inline">\(\dfrac{12}{3} = 4\)</span>. Similarly, <span class="math inline">\(2x\)</span> is a factor of <span class="math inline">\(6x\)</span>, because <span class="math inline">\(\dfrac{6x}{2x} = 3\)</span>.</p>
+<p>The term <span class="math inline">\(4\)</span> and expression <span class="math inline">\(t-4\)</span> are both factors of <span class="math inline">\(4(t-4)\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When working with fractions or decimals, any non-zero number can be a common factor. For example, <span class="math inline">\(\dfrac{1}{2}\)</span> is a factor of <span class="math inline">\(1\)</span> and <span class="math inline">\(2\)</span> - and any other fraction or decimal number!</p>
+<p>So, <strong>this guide will focus on whole number factorizations.</strong></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of common factor
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>common factor</strong> is a term or expression that divides exactly into each term of an expression.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is a common factor of <span class="math inline">\(4x\)</span> and <span class="math inline">\(6\)</span>?</p>
+<p>Here,</p>
+<p><span class="math display">\[\dfrac{4x}{2} = 2x \quad  \textsf {and} \quad \dfrac{6}{2} = 3.\]</span></p>
+<p><span class="math inline">\(2\)</span> is a common factor of <span class="math inline">\(4x\)</span> and <span class="math inline">\(6\)</span>, because both <span class="math inline">\(4x\)</span> and <span class="math inline">\(6\)</span> can be divided by <span class="math inline">\(2\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of highest common factor (HCF)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <strong>highest common factor (HCF)</strong> is the largest factor by which two or more terms can be divided by, without leaving a remainder. It is the greatest number that divides all the given terms exactly and is divisible by all other common factors of terms involved.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is the HCF of <span class="math inline">\(8\)</span> and <span class="math inline">\(12\)</span>?</p>
+<p>The factors of <span class="math inline">\(8\)</span> are <span class="math inline">\(1, 2, 4\)</span> and <span class="math inline">\(8\)</span>. The factors of <span class="math inline">\(12\)</span> are <span class="math inline">\(1, 2, 3, 4, 6\)</span>, and <span class="math inline">\(12\)</span>.</p>
+<p>They both share the factors <span class="math inline">\(1, 2,\)</span> and <span class="math inline">\(4\)</span>; so these are all common factors.</p>
+<p>The largest of these is <span class="math inline">\(4\)</span>, so the HCF of <span class="math inline">\(8\)</span> and <span class="math inline">\(12\)</span> is <span class="math inline">\(4\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="factorizing-single-brackets" class="level1">
+<h1>Factorizing single brackets</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of factorization
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The method of rewriting a term or expression as a single product of factors is known as <strong>factorization</strong>.</p>
+</div>
+</div>
+<p>One approach to factorizing an expression is by identifying common factors in each term.</p>
+<p>For example, expressions of the form <span class="math inline">\(ax+ab\)</span> can be factorized to become <span class="math inline">\(a(x+b)\)</span> where <span class="math inline">\(a\)</span> is a common factor. To factorize an expression into its <strong>simplest form</strong>, you must factorize using the HCF.</p>
+<p>When factorizing, you can take out any common factor shared by the terms in an expression. In real numbers, this means you can take out factors that appear in every term. For example, if an expression contains terms that are all divisible by a common number or variable, you can factor that out to simplify the expression.</p>
+<p>The steps to factorize an expression fully:</p>
+<ol type="1">
+<li><p>Find all common factors for all the terms in the expression.</p></li>
+<li><p>Determine the HCF of all the common factors.</p></li>
+<li><p>Write a bracket, with the HCF on the outside, and the remaining terms inside.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Always check for the highest common factor before using other factorization methods!</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Factorize the expression <span class="math inline">\(5x+15\)</span>.</p>
+<p>The terms in this expression are <span class="math inline">\(5x\)</span> and <span class="math inline">\(15\)</span>, and they have a common factor of <span class="math inline">\(5\)</span>.</p>
+<p>Factorizing out the <span class="math inline">\(5\)</span> from both terms gives: <span class="math display">\[5x+15=5(x)+5(3).\]</span> There are no other common factors of <span class="math inline">\(x\)</span> and <span class="math inline">\(3\)</span>, so <span class="math inline">\(5\)</span> is the HCF. The final factorized form is: <span class="math display">\[5x+15=5(x+3).\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fully factorize <span class="math inline">\(6x^2+9x\)</span>.</p>
+<p>The terms of this expression are <span class="math inline">\(6x^2\)</span> and <span class="math inline">\(9x\)</span>. They have a common factor of <span class="math inline">\(3\)</span>. Factorizing out the <span class="math inline">\(3\)</span> from both terms gives: <span class="math display">\[6x^2+9x=3(2x^2)+3(3x).\]</span></p>
+<p>Now looking at <span class="math inline">\(2x^2\)</span> and <span class="math inline">\(3x\)</span>, both terms also contain an <span class="math inline">\(x\)</span>, so you can factorize <span class="math inline">\(x\)</span> out to give: <span class="math display">\[6x^2+9x=3x(2x)+3x(3).\]</span></p>
+<p>There are no other common factors between <span class="math inline">\(2x\)</span> and <span class="math inline">\(3\)</span>, so the HCF of <span class="math inline">\(6x^2\)</span> and <span class="math inline">\(9x\)</span> is <span class="math inline">\(3x\)</span>. So, the final, fully factorized form is: <span class="math display">\[6x^2+9x=3x(2x+3).\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Factorize <span class="math inline">\(x(x-4)+3(2x-8)\)</span>.</p>
+<p>Here, the common factor of both terms <span class="math inline">\(x(x-4)\)</span> and <span class="math inline">\(3(2x-8)\)</span>, the common factor is the bracketed expression <span class="math inline">\((x-4)\)</span>. This is because <span class="math inline">\((x-4)\)</span> divides <span class="math inline">\((2x-8)\)</span> exactly.</p>
+<p>So, you can factorize <span class="math inline">\((x-4)\)</span> from both terms to get: <span class="math display">\[x(x-4)+3(2x-8)= (x-4)(x)+(3)(2(x-4)).\]</span> You can tidy up the second of these terms to get: <span class="math display">\[(3)(2(x-4)) = (6)(x-4).\]</span> The expression then becomes: <span class="math display">\[x(x-4)+3(2x-8)= (x-4)(x)+(6)(x-4).\]</span></p>
+<p>There are no further common factors of <span class="math inline">\(x\)</span> and <span class="math inline">\(6\)</span>, so <span class="math inline">\((x-4)\)</span> is the HCF. So the final factorized form is: <span class="math display">\[x(x-4)+3(2x-8)= (x-4)(x+6).\]</span></p>
+</div>
+</div>
+</section>
+<section id="factorizing-double-brackets" class="level1">
+<h1>Factorizing double brackets</h1>
+<p>Factorizing quadratic expressions involves breaking down quadratic expressions (of the form <span class="math inline">\(ax^2+bx+c\)</span>, where <span class="math inline">\(a \neq 0\)</span>) into a product of two brackets, which can make it easier to solve the quadratic expression. This process is essential in algebra, and is used to help simplify expressions, whilst also being able to solve quadratic equations and find their roots. For more information on this, see <a href="../studyguides/introtoquadratics.html">Guide: Introduction to quadratic equations</a>.</p>
+<p>There are two main cases when factorizing quadratics that you will learn about. One where <span class="math inline">\(a = 1\)</span>, and another where <span class="math inline">\(a \neq 1\)</span>.</p>
+<section id="case-1-a-1" class="level2">
+<h2 class="anchored" data-anchor-id="case-1-a-1">Case 1: <span class="math inline">\(a = 1\)</span></h2>
+<p>When the quadratic expression has the form <span class="math inline">\(x^2+bx+c\)</span>, the aim is to find two numbers <span class="math inline">\(d\)</span> and <span class="math inline">\(e\)</span> that multiply to <span class="math inline">\(c\)</span>, and add to <span class="math inline">\(b\)</span>, such that <span class="math inline">\(de = c\)</span> and <span class="math inline">\(d+e=b\)</span>. If you can do this, then you can rewrite the expression as <span class="math display">\[x^2 + bx + c = x^2+(d+e)x+de.\]</span> You can expand the brackets to see that <span class="math display">\[x^2+(d+e)x+de = x^2+dx+ex+de.\]</span> <span class="math inline">\(x\)</span> is a common factor of the first two terms, and <span class="math inline">\(e\)</span> is a common factor of the second two terms, you can factorize using the techniques above to get <span class="math display">\[x^2+dx+ex+de = x(x+d) + e(x+d)\]</span> Since <span class="math inline">\((x+d)\)</span> is a common factor of both of the terms <span class="math inline">\(x(x+d)\)</span> and <span class="math inline">\(e(x+d)\)</span>, you can factorize again to get <span class="math display">\[x^2 + bx + c = x(x+d) + e(x+d) = (x+d)(x+e).\]</span></p>
+<p>This is the desired form of the quadratic expression! It is best to see this process explained with an example.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Factorize <span class="math inline">\(x^2+7x+10\)</span> into a product of two bracketed expressions.</p>
+<p>You want to find two numbers that multiply to make <span class="math inline">\(10\)</span> and add to make <span class="math inline">\(7\)</span>.</p>
+<p>The positive factors of <span class="math inline">\(10\)</span> are <span class="math inline">\(1, 2, 5,\)</span> and <span class="math inline">\(10.\)</span></p>
+<p>You want to look at the factors and see which pairings multiply to make <span class="math inline">\(10\)</span>. These are:</p>
+<p><span class="math display">\[1\cdot 10=10 \quad \textsf{and} \quad2 \cdot 5=10.\]</span> Since <span class="math inline">\(2+5=7\)</span> and <span class="math inline">\(1+10=11\neq7\)</span>, you pick the correct factors of <span class="math inline">\(10\)</span>, which are <span class="math inline">\(2\)</span> and <span class="math inline">\(5\)</span>. You can now write the factorized form of your quadratic expression by writing two brackets and putting the variable <span class="math inline">\(x\)</span> at the start of each one:</p>
+<p><span class="math display">\[(x  + ?  )(x + ?  )\]</span></p>
+<p>Write one factor in the first bracket and the other factor in the second bracket, to give the final factorized form:</p>
+<p><span class="math display">\[x^2+7x+10=(x+2)(x+5).\]</span></p>
+</div>
+</div>
+<p>Here’s an example with a negative <span class="math inline">\(bx\)</span> term.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the <span class="math inline">\(bx\)</span> term is negative, and the <span class="math inline">\(+c\)</span> is positive, the two factors must both be negative, as two negatives multiplied together creates a positive.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Factorize <span class="math inline">\(x^2-5x+6\)</span>.</p>
+<p>You want to find two numbers that multiply to make <span class="math inline">\(6\)</span> and add to make <span class="math inline">\(-5\)</span>.</p>
+<p>Now, you need to consider all the factors, positive and negative, of <span class="math inline">\(6\)</span>.</p>
+<p>The factors of <span class="math inline">\(6\)</span> are <span class="math inline">\(1, -1, 2, -2, 3, -3, 6,\)</span> and <span class="math inline">\(-6\)</span>.</p>
+<p>You want to look at the factors and see which pairings multiply to make <span class="math inline">\(6\)</span> and add to <span class="math inline">\(-5\)</span>. These are:</p>
+<p><span class="math display">\[(-2) \cdot (-3)=6\quad \textsf{and} \quad(-2)+(-3)=-5.\]</span></p>
+<p>So, <span class="math inline">\(-2\)</span> and <span class="math inline">\(-3\)</span> are the correct factors to use.</p>
+<p>Now, put them into the brackets in a similar fashion to Example 9, to give the final factorized form: <span class="math display">\[x^2-5x+6=(x-2)(x-3).\]</span></p>
+</div>
+</div>
+<p>Finally, here’s an example where the <span class="math inline">\(+c\)</span> term is negative.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the <span class="math inline">\(+c\)</span> term is negative, and the <span class="math inline">\(bx\)</span> term is positive, one factor must be negative, and the other positive, as a positive and a negative multiplied together gives a negative.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Factorize <span class="math inline">\(x^2+x-2\)</span>.</p>
+<p>Now, you need to consider all the factors, positive and negative, of <span class="math inline">\(-2\)</span>.</p>
+<p>The factors of <span class="math inline">\(-2\)</span> are <span class="math inline">\(1, -1, 2\)</span>, and <span class="math inline">\(-2\)</span>. You want to look at the factors and see which pairings multiply to make <span class="math inline">\(-2\)</span> and add to <span class="math inline">\(1\)</span>. These are: <span class="math display">\[2 \cdot (-1)=-2\quad \textsf{and} \quad 2+(-1)=1.\]</span></p>
+<p>So <span class="math inline">\(2\)</span> and <span class="math inline">\(-1\)</span> are the correct factors to use.</p>
+<p>Now, put them into the brackets in a similar fashion to Example 9, to give the final factorized form: <span class="math display">\[x^2+x-1=(x+2)(x-1).\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The order of the factors don’t matter, but the signs do!</p>
+<p>Example 11 is an example of this - if the signs of the factors were swapped, it would result in a different quadratic to the one you have been asked to factorize. If you swapped the signs, you would get <span class="math inline">\((x-2)(x+1)\)</span>. When expanded, this gives: <span class="math display">\[(x-2)(x+1) = x^2 -2x +x -2\]</span> <span class="math display">\[ = x^2 -x -2\]</span> <span class="math display">\[x^2 -x -2 \neq x^2+x-2.\]</span></p>
+<p><span class="math inline">\(x^2 -x -2\)</span> is not the original quadratic expression you were asked to factorize, which shows you how if a factor has the incorrect sign, the required quadratic expression will not be factorized correctly.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If <span class="math inline">\(c=0\)</span>, you can factorize the quadratic expression using the common factor <span class="math inline">\(x\)</span>. This is because if <span class="math inline">\(c=0\)</span>, then: <span class="math display">\[ax^2 +bx +c = ax^2 + bx.\]</span> Which can then be factorized as: <span class="math display">\[ax^2 + bx = x(ax + b).\]</span> If <span class="math inline">\(a=1\)</span>, this is still true, and is factorized as: <span class="math display">\[x^2 + bx = x(x + b).\]</span></p>
+<p>Example 7 is an example where <span class="math inline">\(a \neq 0\)</span> and <span class="math inline">\(c=0\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="case-2-a-neq-1" class="level2">
+<h2 class="anchored" data-anchor-id="case-2-a-neq-1">Case 2: <span class="math inline">\(a \neq 1\)</span></h2>
+<p>When a quadratic expression has the form <span class="math inline">\(ax^2+bx+c\)</span>, it can still be factorized, but it requires a different method from the one you used when <span class="math inline">\(a=1\)</span>.</p>
+<p>The aim is to find two numbers <span class="math inline">\(d\)</span> and <span class="math inline">\(e\)</span> such that: <span class="math display">\[d \cdot e = a \cdot c \quad \textsf{and} \quad d + e =b.\]</span></p>
+<p>This works because you can rewrite the middle term (<span class="math inline">\(bx\)</span>) as <span class="math inline">\(dx+ex\)</span>, which allows you to factorize by grouping. So if you rewrite the expression, it becomes: <span class="math display">\[ax^2+bx+c= ax^2+dx + ex+c.\]</span> You can now group the expression: <span class="math display">\[ax^2+dx + ex+c = (ax^2+dx) + (ex+c).\]</span> Factorizing each bracket gives: <span class="math display">\[\left( ax^2 + dx \right) + \left( ex+c \right) = a x \left( x+\dfrac{d}{a} \right) + e \left( x+\dfrac{c}{e} \right).\]</span> Since <span class="math inline">\(d \cdot e = a \cdot c\)</span> from the start of your working, dividing both sides by <span class="math inline">\(ae\)</span> gives <span class="math inline">\(\dfrac{d}{a}=\dfrac{c}{e}\)</span>. You can define this as a value <span class="math inline">\(f\)</span>, where <span class="math inline">\(f=\dfrac{d}{a}=\dfrac{c}{e}\)</span>, and substitute this in to give: <span class="math display">\[(ax^2+dx) + (ex+c) = ax(x+f) + e(x + f).\]</span> This means that both groups will share the common factor <span class="math inline">\((x+f)\)</span>, and the expression can be factorized further to give: <span class="math display">\[(ax^2+dx) + (ex+c) = (ax+e)(x+f).\]</span> This is the fully factorized form of the quadratic expression <span class="math inline">\(ax^2+bx+c\)</span> when <span class="math inline">\(a \neq 1\)</span>.</p>
+<p>These are the steps to factorize a quadratic of the form <span class="math inline">\(ax^2 + bx + c\)</span>:</p>
+<ol type="1">
+<li><p>Multiply <span class="math inline">\(a\)</span> and <span class="math inline">\(c\)</span> together.</p></li>
+<li><p>Find two numbers that multiply to give <span class="math inline">\(a \cdot c\)</span>, and add to give <span class="math inline">\(b\)</span>.</p></li>
+<li><p>Rewrite the middle term using these two numbers.</p></li>
+<li><p>Factorize by grouping as above.</p></li>
+</ol>
+<p>You can see that this method extends Case 1 (where <span class="math inline">\(a = 1\)</span>). If <span class="math inline">\(a=1\)</span>, then in this case <span class="math inline">\(a\cdot c = c\)</span> and this method then reduces to the above. Let’s see an example</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 12
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Factorize <span class="math inline">\(2x^2+5x+3\)</span>.</p>
+<p>You can follow the steps above.</p>
+<ol type="1">
+<li><p>First, you need to multiply <span class="math inline">\(2\)</span> and <span class="math inline">\(3\)</span> together: <span class="math inline">\(2 \cdot 3=6.\)</span></p></li>
+<li><p>Now you need to consider all the factors of <span class="math inline">\(6\)</span>, which are <span class="math inline">\(1,2,3,\)</span> and <span class="math inline">\(6\)</span>. You want to look at the factors and see which pairings multiply to make <span class="math inline">\(6\)</span>, and add to <span class="math inline">\(5\)</span>. These are: <span class="math display">\[2+3=5\quad \textsf{and} \quad 2\cdot 3=6.\]</span></p></li>
+<li><p>Now you can rewrite the original expression, but this time splitting the middle (<span class="math inline">\(bx\)</span>) term into the two factors you found earlier: <span class="math display">\[2x^2+5x+3= 2x^2+2x+3x+3.\]</span></p></li>
+<li><p>If you now look at the expression in two halves, there is a common factor for each half, and you can factorize by grouping:</p></li>
+</ol>
+<p><span class="math display">\[2x^2+5x+3= 2x^2+2x+3x+3= 2x(x+1)+3(x+1).\]</span> Now, this is similar to the type of factorizing you did in single bracket factorization!</p>
+<p>You can now take out the the <span class="math inline">\((x+1)\)</span> common factor, to give the result: <span class="math display">\[2x(x+1)+3(x+1)=(2x+3)(x+1).\]</span> And this gives you your final factorized answer: <span class="math display">\[2x^2+5x+3=(2x+3)(x+1).\]</span></p>
+</div>
+</div>
+<p>You don’t have to use the steps prescriptively in every example; it was only for instructive purposes.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 13
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Factorize <span class="math inline">\(3x^2-2x-5\)</span>.</p>
+<p>You need to multiply <span class="math inline">\(3\)</span> and <span class="math inline">\(-5\)</span> together: <span class="math display">\[3 \cdot (-5)=-15.\]</span></p>
+<p>You need to find the factors of <span class="math inline">\(-15\)</span> that multiply to give <span class="math inline">\(-15\)</span>, and add to give <span class="math inline">\(-2\)</span>. These are: <span class="math display">\[3 + (-5) =-2\quad \textsf{and} \quad 3 \cdot (-5)=-15.\]</span></p>
+<p>Now you can rewrite the original expression, but this time splitting the middle (<span class="math inline">\(bx\)</span>) term into the two factors you found earlier: <span class="math display">\[3x^2-2x-5= 3x^2+3x-5x-5.\]</span></p>
+<p>If you look at the expression in two halves, there is a common factor for each half, and you can factorize by grouping: <span class="math display">\[3x^2-2x-5= 3x^2+3x-5x-5= 3x(x+1)-5(x+1).\]</span></p>
+<p>You can now remove the <span class="math inline">\((x+1)\)</span> common factor, to give the result: <span class="math display">\[3x(x+1)-5(x+1)=(3x-5)(x+1).\]</span></p>
+<p>And you can write your final factorized answer: <span class="math display">\[3x^2-2x-5=(3x+5)(x+1).\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that a quadratic <span class="math inline">\(ax^2+bx+c\)</span> can sometimes be factorized in the form: <span class="math display">\[(px+q)(rx+s)\quad \textsf{where} \quad p,r \neq 0.\]</span></p>
+<p>However, if you factorize out <span class="math inline">\(r\)</span> from each term you get:</p>
+<p><span class="math display">\[\left( px+q \right)\left( rx+s \right) = \dfrac{1}{r^2} \left( \left( \dfrac{px}{r} + \dfrac{q}{r} \right) \left( x+\dfrac{s}{r} \right) \right).\]</span></p>
+<p>This matches the factorized result of <span class="math inline">\(ax^2+bx+c\)</span>, so a factorization like <span class="math inline">\((px+q)(rx+s)\)</span> can be expressed using rational numbers to match any desired form. This can be seen as: <span class="math display">\[\left( \dfrac{px}{r} + \dfrac{q}{r} \right) \left( x+\dfrac{s}{r} \right) = \left( dx+e \right) \left( x+f \right),
+\quad \textsf{where} \quad d=\dfrac{p}{r} \textsf{,} \quad e=\dfrac{q}{r} \quad \textsf{and} \quad f=\dfrac{s}{r}.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 14
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Factorize <span class="math inline">\(4x^2+4x-3\)</span>.</p>
+<p>First, you need to multiply <span class="math inline">\(4\)</span> and <span class="math inline">\(-3\)</span> together: <span class="math display">\[4 \cdot (-3) = -12.\]</span></p>
+<p>You need to find the factors of <span class="math inline">\(-12\)</span> that multiply to give <span class="math inline">\(-12\)</span>, and add to give <span class="math inline">\(4\)</span>. These are:</p>
+<p><span class="math display">\[(-2) + 6 =4\quad \textsf{and} \quad(-2) \cdot 6=-12.\]</span></p>
+<p>Now you can rewrite the original expression, but this time splitting the middle (<span class="math inline">\(bx\)</span>) term into the two factors you found earlier.</p>
+<p><span class="math display">\[4x^2+4x-3= 4x^2-2x+6x-3.\]</span></p>
+<p>If you look at the expression in two halves, there is a common factor for each half, and you can factorize by grouping. Remember to use the HCF here so you can factorize fully!</p>
+<p><span class="math display">\[4x^2+4x-3= 4x^2-2x+6x-3= 2x(2x-1)+3(2x-1).\]</span> Finally, you can remove the <span class="math inline">\((2x+3)\)</span> common factor, to give the result: <span class="math display">\[2x(2x-1)+3(2x-1)=(2x-1)(2x+3).\]</span></p>
+<p>And this is your final factorized answer: <span class="math display">\[4x^2+4x-3= 2x(2x-1)+3(2x-1)=(2x-1)(2x+3).\]</span></p>
+</div>
+</div>
+</section>
+</section>
+<section id="using-factorization-to-solve-quadratic-equations" class="level1">
+<h1>Using factorization to solve quadratic equations</h1>
+<p>By factorizing, you can potentially break down a quadratic expression into simpler expressions. This process makes it easier to understand the structure of the expression and to identify values that satisfy the equation you are solving.</p>
+<p>Once a quadratic expression is factorized, and the equation is set equal to zero, you can find the values of the variable that make each bracket equal to zero. These values are known as the <strong>roots</strong>, <strong>zeroes</strong>, or <strong>solutions</strong> of the quadratic equation. This works because <span class="math inline">\((x+d)(x+e) = 0\)</span> if and only if <span class="math inline">\((x+d) = 0\)</span> or <span class="math inline">\((x+e) = 0\)</span>. This happens precisely when <span class="math inline">\(x = -d\)</span> or when <span class="math inline">\(x = -e\)</span>.</p>
+<p>However, it’s important to remember that this method only works directly when the expression is equal to zero—if it’s equal to another number, other steps are needed before factorizing.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 15
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Solve <span class="math inline">\(x^2-5x+6=0\)</span>.</p>
+<p>You worked out from Example 10 that <span class="math display">\[x^2-5x+6=(x-2)(x-3).\]</span> Setting this equal to zero gives <span class="math inline">\((x-2)(x-3)=0.\)</span></p>
+<p>Now, you can set each individual bracket equal to zero:</p>
+<p><span class="math display">\[(x-2)=0\quad \textsf{and} \quad (x-3)=0\]</span></p>
+<p>and you can solve each one for <span class="math inline">\(x\)</span>: <span class="math display">\[x=2\quad \textsf{and} \quad x=3.\]</span></p>
+<p>Therefore the solutions of <span class="math inline">\(x^2-5x+6\)</span> are <span class="math inline">\(x=2\)</span> and <span class="math inline">\(x=3\)</span>.</p>
+</div>
+</div>
+<p>Using tools like Desmos, you can verify your solutions by graphing the quadratic equation and identifying the points where it intersects with the <span class="math inline">\(x\)</span>-axis. The roots of the quadratic equations are the points of intersection with the <span class="math inline">\(x\)</span>-axis. See <a href="../apps/calculators/c-solvingquadratics.html">Calculator: Solving quadratic equations</a> for a full calculator.</p>
+<p>This is illustrated in the following interactive figure:</p>
+<div id="calculator2" style="width: 100%; height: 500px;">
+
+</div>
+<script>
+  var elt = document.getElementById('calculator2');
+  var calculator2 = Desmos.GraphingCalculator(elt);
+  calculator2.setMathBounds({ left: -20, right: 20, bottom: -20, top: 20});
+  calculator2.setExpression({ id: 'a', latex: 'a=1', sliderBounds: {min: '-10', max: '10', step: '1'}});
+  calculator2.setExpression({ id: 'b', latex: 'b=0', sliderBounds: {min: '-20', max: '20', step: '1'}});
+  calculator2.setExpression({ id: 'c', latex: 'c=0', sliderBounds: {min: '-40', max: '40', step: '1'}});
+  calculator2.setExpression({ id: 'line1', latex: 'y=ax^2 + bx + c', color: '#DB4315', secret: true});
+  calculator2.setExpression({ id: "r1", type: "expression", latex: "(-b/(2a)-\\sqrt{b^2 - 4ac}/(2a),0)", pointStyle: "POINT", hidden: false, secret: true, showLabel: true, color: "#DB4315"});
+  calculator2.setExpression({ id: "r2", type: "expression", latex: "(-b/(2a)+\\sqrt{b^2 - 4ac}/(2a),0)", pointStyle: "POINT", hidden: false, secret: true, showLabel: true, color: "#DB4315"});
+</script>
+</section>
+<section id="quick-check-problems" class="level1">
+<h1>Quick check problems</h1>
+<div class="webex-check webex-box" data-topic="FACT1">
+<ol type="1">
+<li>You are given four expressions below. Match the correct expression to the correct equivalent factorized expression.</li>
+</ol>
+<ol type="a">
+<li><span class="math inline">\(5(2-x)\)</span></li>
+<li><span class="math inline">\(5(x-2)\)</span></li>
+<li><span class="math inline">\(10(1-x)\)</span></li>
+<li><span class="math inline">\(5(2+x)\)</span></li>
+</ol>
+<ol type="A">
+<li><span class="math inline">\(10+5x =\)</span> <select class="webex-select"><option value="blank"></option><option value="">(a)</option><option value="">(b)</option><option value="">(c)</option><option value="answer">(d)</option></select></li>
+<li><span class="math inline">\(-10+5x =\)</span> <select class="webex-select"><option value="blank"></option><option value="">(a)</option><option value="answer">(b)</option><option value="">(c)</option><option value="">(d)</option></select></li>
+<li><span class="math inline">\(10-5x =\)</span> <select class="webex-select"><option value="blank"></option><option value="answer">(a)</option><option value="">(b)</option><option value="">(c)</option><option value="">(d)</option></select></li>
+<li><span class="math inline">\(10-10x =\)</span> <select class="webex-select"><option value="blank"></option><option value="">(a)</option><option value="">(b)</option><option value="answer">(c)</option><option value="">(d)</option></select></li>
+</ol>
+<ol start="2" type="1">
+<li>You are given three expressions below. Factorize them into their simplest form.</li>
+</ol>
+<ol type="a">
+<li><p><span class="math inline">\(4x^2y+6xy^2 = py(p+q)\)</span>, where <span class="math inline">\(p=\)</span> <input class="webex-solveme nospaces" size="2" data-answer="[&quot;2x&quot;]"> and <span class="math inline">\(q=\)</span> <input class="webex-solveme nospaces" size="2" data-answer="[&quot;3y&quot;]">.</p></li>
+<li><p><span class="math inline">\(x^2+6x+9 = (x+p)(x+q)\)</span>, where <span class="math inline">\(p=\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]"> and <span class="math inline">\(q=\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]">.</p></li>
+<li><p><span class="math inline">\(4x^2-x-3 = (4x+p)(x+q)\)</span>, where <span class="math inline">\(p=\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]"> and <span class="math inline">\(q=\)</span> <input class="webex-solveme nospaces" size="2" data-answer="[&quot;-1&quot;]">.</p></li>
+</ol>
+<ol start="3" type="1">
+<li>Find the solution of the quadratic equation <span class="math inline">\(2x^2+3x-2=0\)</span>. If the answer is not a whole number, put the answer in as a decimal. Write the solutions in ascending order.</li>
+</ol>
+<p>The solutions of <span class="math inline">\(2x^2+3x-2=0\)</span> are <span class="math inline">\(x=\)</span> <input class="webex-solveme nospaces" size="2" data-answer="[&quot;-2&quot;]"> and <span class="math inline">\(x=\)</span> <input class="webex-solveme nospaces" size="3" data-answer="[&quot;0.5&quot;,&quot;.5&quot;]">.</p>
+</div>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../questions/qs-factorization.html">For more questions on the subject, please go to Questions: Introduction to factorization.</a></p>
+<p>For more information on solving quadratic equations, please see <a href="../studyguides/introtoquadratics.html">Guide: Introduction to quadratic equations</a> and <a href="../studyguides/quadraticformula.html">Guide: Using the quadratic formula</a>.</p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 03/25 by Millie Pike, as part of a University of St Andrews VIP project.</p>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+  let allCorrect = false;
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) 
+  {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
+  }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if (this.dataset.tol > 0)
+  {
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* check each question to see whether it was answered correctly */
+  update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
+}
+
+</script>
+<!--------------------  Email Forms -----------------------------------
+        Compiled into each .html page by Quarto.
+        Website hosted and form handled by Netlify now
+        Mailing list provided by mailerlite
+        Input verified by reCaptcha2 
+        
+        Authors (recent to latest): 
+           Tristin Doherty (Trido)
+           Mohit Agarwal (Mohit-Agarwa1)
+--------------------------------------------------------------------->
+<script>
+  // Adds an extra layer of validation to aid user input,
+  // some of these are covered by basic html form validations as well, but netlify handles everything else
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[name='feedback']"); 
+    
+    form.addEventListener("submit", function(event) {
+        const nameInput = document.querySelector("input[name='name']")?.value.trim();
+        const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+        const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+
+        if (!nameInput)    { alert("Please enter a name."); return; }
+        if (!emailInput)   { alert("Please enter an email."); return; }
+        if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+        
+        event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+        const subjectInput = document.querySelector("input[name='subject']");
+                
+        // sanitise inputs
+        const sanitizedName = sanitizeInput(nameInput); 
+        const sanitizedEmail = sanitizeEmail(emailInput);
+        const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+        // validate email
+        if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+        subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+        form.submit();
+    });
+});
+
+// Removes leading and trailing whitespace for formatting, and replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+function sanitizeInput(input) {
+  input = input.trim();                                      
+  input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return input;
+}
+
+// remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+function sanitizeEmail(email) {
+  email = email.trim(); 
+  email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+  return email;
+}
+
+// This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+function validateEmail(email) {
+  const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+  return re.test(email);
+}
+
+</script>
+
+<h1>Mailing List</h1>
+<div class="ml-embedded" data-form="PEpZNW"></div>
+<br><br>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here, <br>
+but please be specific with any issues you encounter so we can help to resolve them <br>
+(for example, what page it occured on, what you tried, and so on). </p>
+
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+  <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+  <input type="hidden" name="subject" value="Feedback from unknown">
+
+  <label for="name">Name: </label>
+  <br>
+  <input type="text" name="name" required="">
+  <br><br>
+  
+  <label for="email">E-mail: </label>
+  <br>
+  <input type="email" name="email" required="">
+  <br><br>
+  
+  <label for="feedback">Feedback: </label>
+  <br>
+  <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+  <br><br>
+
+  <!-- Google reCAPTCHA Widget -->
+  <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+  <br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>STARMAST © 2025 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

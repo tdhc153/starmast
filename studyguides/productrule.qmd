@@ -2,11 +2,11 @@
 title: The product rule
 author: Tom Coleman
 abstract-title: Summary
-abstract: The product rule is one of the three central techniques of differentiation, allowing you to differentiate any product of two differentiable functions. This guide introduces the product rule and explains examples of where it is used. 
+abstract: The product rule is one of three central techniques of differentiation, allowing you to differentiate any product of two differentiable functions. This guide introduces the product rule and explains examples of where it is used. 
 categories:
   - Calculus
-image: FiguresPNG/introtodifferentiation-image.png
-draft: true
+  - Differentiation
+image: FiguresPNG/productrule-image.png
 ---
 
 ```{r, setup, include = FALSE}
@@ -16,11 +16,21 @@ library("webexercises")
 
 *Before reading this guide, it is recommended that you read [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd).*
 
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/productrule.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
+
 # What is the product rule? {-}
 
-[MOTIVATION AND BLURB]
+In [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd), you saw how valuable the idea of a derivative of a function is in determining the behaviour of that function. For instance, the derivative can be used to show if a function is increasing or decreasing at a point. Differentiation is commonly used in many subjects (physics, chemistry, biology, economics to name a few) to analyse behaviour of systems that change, and equations involving derivatives can be solved to explain this behaviour. 
 
-This guide will look at the product rule for differentiation; where it comes from, how it can be used, and how you can apply its techniques to functions that you may be familiar with. 
+It was mentioned in that same guide that you are able to differentiate certain combinations of functions, such as the sum and difference of two functions, or scalar multiple of a single function. You need extra techniques to differentiate products, quotients, and compositions of functions; you will need the **product rule**, **quotient rule**, and **chain rule** respectively. 
+
+This guide will look at the **product rule for differentiation** in order to find the derivative of a product $u(x)v(x)$ of two functions. This guide explains the rule, where it comes from, how it can be used, and how you can apply its techniques to functions that you may be familiar with. 
 
 The summary table of key derivatives from [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd) is reproduced here for reference:
 
@@ -36,15 +46,23 @@ The summary table of key derivatives from [Guide: Introduction to differentiatio
 
 # Statement of the product rule
 
+Here is the statement of the product rule:
+
 ::: {.callout-note}
 
 ## The product rule
 
 Let $u(x)$ and $v(x)$ be two differentiable functions. Then the **product rule** says that
-$$(uv)'(x) = \frac{d}{dx}\left(u(x)v(x)\right) = u(x)v'(x) + u'(x)v(x)$$
-that is, the derivative of the product of $u(x)$ and $v(x)$ is equal to the product of $u(x)$ and the derivative of $v(x)$, plus the product of $v(x)$ and the derivative of $u(x)$.
+$$(uv)'(x) = \frac{\mathrm{d}}{\mathrm{d}x}\left(u(x)v(x)\right) = u'(x)v(x) + u(x)v(x)$$
+that is, the derivative of the product of $u(x)$ and $v(x)$ is equal to the product of $v(x)$ and the derivative of $u(x)$, plus the product of $u(x)$ and the derivative of $v(x)$.
 
-This can also be written as $$\frac{\mathrm{d}}{\mathrm{d}x}\left(u(x)v(x)\right) = u\frac{\textrm{d}v}{\textrm{d}x} + v\frac{\textrm{d}u}{\textrm{d}x}.$$
+This can also be written as $$\frac{\mathrm{d}}{\mathrm{d}x}\left(u(x)v(x)\right) = v\frac{\textrm{d}u}{\textrm{d}x} + u\frac{\textrm{d}v}{\textrm{d}x}.$$
+
+:::
+
+::: {.callout-tip}
+
+The discovery of the product rule is often credited to [Gottfried Leibniz (link to Mactutor biography, external site)](https://mathshistory.st-andrews.ac.uk/Biographies/Leibniz/), one of the co-founders of calculus (along with Isaac Newton).
 
 :::
 
@@ -55,13 +73,6 @@ It does not matter which function you pick to be $u(x)$ and which function you p
 To see why this really is the derivative of the product of two functions, please see [Proof sheet: Rules of differentiation.]
 
 # Examples
-
-$f(x) = \ln(x)/x^5$
-
-$f(x) = 4x^4\cos(4x) + e^{-4x}\cos(4x)$
-
-$f(x) = e^x\sin(2x)\cos(4x)$
-
 
 ::: {.callout-note appearance="simple"}
 
@@ -76,14 +87,37 @@ In this case, you have two functions multiplied together to make $y$. The two fu
 - For $v(x) = e^x$, then $v'(x) = e^x$.
 
 Putting these into the statement of the product rule gives
+
 $$
 \begin{aligned}
-\frac{\textrm{d}y}{\textrm{d}x} &= u(x)v'(x) + u'(x)v(x)\\[0.5em]
-&= (x^3)(e^x) + (3x^2)(e^x)\\[0.5em]
-&= x^3e^x + 3x^2e^x
+\frac{\textrm{d}y}{\textrm{d}x} &= u'(x)v(x) + u(x)v'(x)\\[0.5em]
+&= (3x^2)(e^x)+ (x^3)(e^x) \\[0.5em]
+&= 3x^2e^x + x^3e^x
 \end{aligned}
 $$
-and this is your answer. You could also factorise the answer if you wanted to to get $y'(x) = (x^3 + 3x^2)e^x$.
+and this is your answer. You could also factorize the answer if you wanted to get $y'(x) = (x^3 + 3x^2)e^x$.
+
+:::
+
+You don't need to be so rigorous in your own working. Here's another example of using the product rule.
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+What is the derivative of $f(z) = e^{3z}z^{1/3}$ with respect to $z$?
+
+You can use the product rule on $f(z)$ to differentiate with respect to $z$. Set $u(z) = e^{3z}$ and $v(z) = z^{1/3}$.  Differentiating both with respect to $z$ gives $u'(z) = 3e^{3z}$ and $v'(x) = \frac{1}{3}z^{-2/3}$. Putting these into the statement of the product rule gives
+
+$$
+\begin{aligned}
+f'(z) &= u'(z)v(z) + u(z)v'(z)\\[0.5em]
+&= (3e^{3z})(z^{1/3}) + (e^{3z})\left(\frac{1}{3}z^{-2/3}\right)\\[0.5em]
+&= e^{3z}\left(3z^{1/3} + \frac{1}{3}z^{-2/3}\right)
+\end{aligned}
+$$
+
+and this is your answer. Here, the answer has been factorized given the common $e^{3z}$ term. 
 
 :::
 
@@ -91,7 +125,7 @@ Here's another example of the product rule, which is included solely for a chanc
 
 ::: {.callout-note appearance="simple"}
 
-## Example 2
+## Example 3
 
 Find the derivative of the function $f(x) = 2\sin(x)\cos(x)$.
 
@@ -100,12 +134,12 @@ In this case, there are two options. You can either
 - use the constant rule to take the $2$ out and differentiate $\sin(x)\cos(x)$ using the product rule, or
 - take $u(x) = 2\sin(x)$ and $v(x) = \cos(x)$ and differentiate directly. 
 
-Let's do the first of these. To use the product rule take $u(x) = \sin(x)$ and $v(x) = \cos(x)$. Then $u'(x) = \cos(x)$ and $v'(x) = -\sin(x)$. Therefore, using the product rule gives
+Let's do the first of these. To use the product rule, take $u(x) = \sin(x)$ and $v(x) = \cos(x)$. Then $u'(x) = \cos(x)$ and $v'(x) = -\sin(x)$. Therefore, using the product rule gives
 
 $$
 \begin{aligned}
-\frac{\textrm{d}}{\textrm{d}x}\left(\sin(x)\cos(x)\right) &= u(x)v'(x) + u'(x)v(x)\\[0.5em]
-&= (\sin(x))(-\sin(x)) + (\cos(x))(\cos(x))\\[0.5em]
+\frac{\textrm{d}}{\textrm{d}x}\left(\sin(x)\cos(x)\right) &= u'(x)v(x) + u(x)v'(x)\\[0.5em]
+&= (\cos(x))(\cos(x))+(\sin(x))(-\sin(x))\\[0.5em]
 &= \cos^2(x) - \sin^2(x)
 \end{aligned}
 $$
@@ -118,7 +152,7 @@ Therefore, the derivative of $f(x) = 2\sin(x)\cos(x)$ is $$f'(x) = 2\left(\cos^2
 
 You don't always need the product rule to differentiate the product of two functions if that product of two functions can be expressed in a different way. 
 
-For instance, the function in Example 2 is $f(x) = 2\sin(x)\cos(x)$, which by a trigonometric identity is equal to $f(x) = \sin(2x)$. (See [Guide: Trigonometric identities (radians)](trigonometricidentities-radians.qmd) for more.) You can then differentiate $\sin(2x)$ by the rules above to get $2\cos(2x)$. By trigonometric identities, this is also equal to $2\left(\cos^2(x) - \sin^2(x)\right)$, which is the same answer as in Example 2. 
+For instance, the function in Example 3 is $f(x) = 2\sin(x)\cos(x)$, which by a trigonometric identity is equal to $f(x) = \sin(2x)$. (See [Guide: Trigonometric identities (radians)](trigonometricidentities-radians.qmd) for more.) You can then differentiate $\sin(2x)$ by the rules above to get $2\cos(2x)$. By trigonometric identities, this is also equal to $2\left(\cos^2(x) - \sin^2(x)\right)$, which is the same answer as in Example 3. 
 
 This shows you should explore all potential avenues before starting to use differentiation techniques.
 
@@ -128,55 +162,134 @@ Here's an example which combines two separate differentiation rules; both the su
 
 ::: {.callout-note appearance="simple"}
 
-## Example 3
+## Example 4
 
 Find the derivative of the function $f(x) = e^x\sqrt{x} + x^3$.
 
 Here, you could use the sum rule for differentiation to write $$\frac{\textrm{d}}{\textrm{d}x}\left(f(x)\right) = \frac{\textrm{d}}{\textrm{d}x}\left(e^x\sqrt{x}\right) + \frac{\textrm{d}}{\textrm{d}x}\left(x^3\right)$$
 
-You can then rewrite the function as $$f(x) = x^{-4} + 4\sin(x) - \cos(4x)$$ and use the familiar rules of differentiation above. Using the results above with $n = -4$, the derivative of $x^{-4}$ is $-4x^{-4-1} = -4x^{-5}$. The derivative of $4\sin(x)$ is $4(\cos(x)) = 4\cos(x)$. The derivative of $\cos(4x)$ is $-4\sin(4x)$. Taking care of your signs you can write the derivative of $\dfrac{1}{x^4} + 4\cos(x) - \sin(4x)$ as $$f'(x) = -4x^{-5} + 4\cos(x) - (-4\sin(4x)) = -4x^{-5} + 4\cos(x) + 4\sin(4x).$$
+The first term needs the product rule to differentiate. To help with this, you can rewrite $e^x\sqrt{x}$ as $e^xx^{1/2}$. To use the product rule, take $u(x) = e^x$ and $v(x) = x^{1/2}$. Then $u'(x) = e^x$ and $v'(x) = \frac{1}{2}x^{-1/2}$. Therefore, using the product rule gives 
+$$
+\begin{aligned}
+\frac{\textrm{d}}{\textrm{d}x}\left(e^x\sqrt{x}\right) &= u'(x)v(x) + u(x)v'(x)\\[0.5em]
+&= (x^{1/2})(e^x) + \left(\frac{1}{2}x^{-1/2}\right)e^x\\[0.5em]
+&= e^x\left(\sqrt{x}+\frac{1}{2\sqrt{x}}\right)
+\end{aligned}
+$$
+
+The second of these terms is differentiable using the power rule, and you can write $$\frac{\textrm{d}}{\textrm{d}x}\left(x^3\right) = 3x^2$$
+
+Therefore, your final answer is 
+$$
+\begin{aligned}
+\frac{\textrm{d}}{\textrm{d}x}\left(f(x)\right) &= \frac{\textrm{d}}{\textrm{d}x}\left(e^x\sqrt{x}\right) + \frac{\textrm{d}}{\textrm{d}x}\left(x^3\right)\\[0.5em]
+&= e^x\left(\sqrt{x}+\frac{1}{2\sqrt{x}}\right) + 3x^2
+\end{aligned}
+$$
+and this is your final answer. You can tidy this up if you want to, but it's not necessary.
 
 :::
 
-::: {.callout-note appearance="simple"}
-
-## Example 4
-
-Determine the behaviour of the function $f(x) = 2\ln(3x) - x$ when $x = 1$. 
-
-Here, you will first need to differentiate the function $f(x)$ to find $f'(x)$. Then, you will need to evaluate the derivative $f'(x)$ when $x = 1$ to see how the function behaves.
-
-Using your rules of differentiation as you found above, you can say that the derivative of $2\ln(3x)$ is $2/x$, and the derivative of $x$ is $1$. Therefore, the derivative of the function $f(x) = 2\ln(3x) - x$ is $$f'(x) = \frac{2}{x} - 1.$$ You can evaluate the derivative $f'(x)$ at $x = 1$ to get $$f'(1) = \frac{2}{1} - 1 = 2 - 1 = 1$$ and so the derivative is positive at $x = 1$. This implies that the function $f(x) = 2\ln(3x) - x$ is increasing at the point $x = 1$.
-
-It also means that the gradient of the tangent to the function $f(x)$ at the point $(1,2\ln(3) - 1)$ is $1$. You can see this in the figure below. 
-
-:::
+The next example demands that the function be rephrased in order to use the product rule.
 
 ::: {.callout-note appearance="simple"}
 
 ## Example 5
 
-Determine the behaviour of the function $f(x) = 2\ln(3x) - x$ when $x = 1$. 
+Find the derivative of $y = \dfrac{\ln(x)}{x^5}$.
 
-Here, you will first need to differentiate the function $f(x)$ to find $f'(x)$. Then, you will need to evaluate the derivative $f'(x)$ when $x = 1$ to see how the function behaves.
+Although this looks like one function divided by another, you can use the laws of indices (see [Guide: Laws of indices](lawsofindices.qmd) to write as a product of two functions instead. Doing this gives $$y = \dfrac{\ln(x)}{x^5} = \ln(x) \cdot x^{-5}.$$ Now you can use the product rule on this function. Take $u(x) = \ln(x)$ and $v(x) = x^{-5}$. Then $u'(x) = \dfrac{1}{x} = x^{-1}$ and $v'(x) = -5x^{-6}$. Therefore, using the product rule gives
 
-Using your rules of differentiation as you found above, you can say that the derivative of $2\ln(3x)$ is $2/x$, and the derivative of $x$ is $1$. Therefore, the derivative of the function $f(x) = 2\ln(3x) - x$ is $$f'(x) = \frac{2}{x} - 1.$$ You can evaluate the derivative $f'(x)$ at $x = 1$ to get $$f'(1) = \frac{2}{1} - 1 = 2 - 1 = 1$$ and so the derivative is positive at $x = 1$. This implies that the function $f(x) = 2\ln(3x) - x$ is increasing at the point $x = 1$.
+$$
+\begin{aligned}
+\frac{\textrm{d}y}{\textrm{d}x} &= u'(x)v(x) + u(x)v'(x)\\[0.5em]
+&=\left(x^{-1}\right)(x^{-5}) +(\ln(x))(-5x^{-6})\\[0.5em]
+&= x^{-6}-5x^{-6}\ln(x) + = \frac{1}{x^6}\left(1 - 5\ln(x)\right)
+\end{aligned}
+$$
 
-It also means that the gradient of the tangent to the function $f(x)$ at the point $(1,2\ln(3) - 1)$ is $1$. You can see this in the figure below. 
+and so $$\frac{\textrm{d}y}{\textrm{d}x} = \frac{1}{x^6}\left(1 - 5\ln(x)\right).$$
 
 :::
+
+::: {.callout-important}
+
+This technique does **not** work for all functions in a denominator without the use of other rules. For instance, consider the function $$f(x) = \frac{x^5}{\ln(x)}$$ There are two ways you can differentiate this function with respect to $x$:
+
+- use the **quotient rule** which deals with functions of the form $\dfrac{u(x)}{v(x)}$ - see [Guide: The quotient rule](quotientrule.qmd) (where this function is Example 3) for more, or
+
+- write $f(x) = x^5\cdot (\ln(x))^{-1}$, then use the product rule together with the **chain rule** to differentiate the composite function $(\ln(x))^{-1}$ (see [Guide: The chain rule](chainrule.qmd) for more).
+
+In particular, you cannot only use the product rule to differentiate $f(x)$ in this case.
+
+:::
+
+Here's an example that again could use a rewrite before differentiating. This will save you a whole other application of the product rule!
 
 ::: {.callout-note appearance="simple"}
 
 ## Example 6
 
-Determine the behaviour of the function $f(x) = 2\ln(3x) - x$ when $x = 1$. 
+Find the derivative of $f(t) = 4t^4\cos(4t) + e^{-4t}\cos(4t)$ with respect to $t$.
 
-Here, you will first need to differentiate the function $f(x)$ to find $f'(x)$. Then, you will need to evaluate the derivative $f'(x)$ when $x = 1$ to see how the function behaves.
+It seems here that you will have to use the product rule twice; once on the $4t^4\cos(4t)$ term, and once on the $e^{-4t}\cos(4t)$ term. However, you could notice here that $\cos(4t)$ is common to both terms, and so you can factorize. This gives $$f(t) = 4t^4\cos(4t) + e^{-4t}\cos(4t) = (4t^4 + e^{-4t})\cos(4t).$$
 
-Using your rules of differentiation as you found above, you can say that the derivative of $2\ln(3x)$ is $2/x$, and the derivative of $x$ is $1$. Therefore, the derivative of the function $f(x) = 2\ln(3x) - x$ is $$f'(x) = \frac{2}{x} - 1.$$ You can evaluate the derivative $f'(x)$ at $x = 1$ to get $$f'(1) = \frac{2}{1} - 1 = 2 - 1 = 1$$ and so the derivative is positive at $x = 1$. This implies that the function $f(x) = 2\ln(3x) - x$ is increasing at the point $x = 1$.
+You can now differentiate $f(t)$ using one application of the product rule. Set $u(t) = 4t^4 + e^{-4t}$ and $v(t) = \cos(4t)$; it follows that $u'(t) = 16t^3 - 4e^{-4t}$ and $v'(t) = -4\sin(4t)$. Putting these into the statement of the product rule gives
 
-It also means that the gradient of the tangent to the function $f(x)$ at the point $(1,2\ln(3) - 1)$ is $1$. You can see this in the figure below. 
+$$
+\begin{aligned}
+f'(t) &= u'(t)v(t) + u(t)v'(t)\\[0.5em]
+&= (16t^3 - 4e^{-4t})(\cos(4t)) + \left(4t^4 + e^{-4t}\right)\left(-4\sin(4t)\right)\\[0.5em]
+&= (16t^3 - 4e^{-4t})\cos(4t) - 4\left(4t^4 + e^{-4t}\right)\sin(4t)
+\end{aligned}
+$$
+
+and this is a final answer. You could factorize this in any number of different ways; but the amount of times using the product rule can be minimized!
+
+:::
+
+::: {.callout-warning}
+
+If you are differentiating a function that has terms in brackets multiplied together, **don't expand the brackets!** This not only leads to extra work (and more opportunities for mistakes), but it will also result in using the product rule more times than is necessary.
+
+:::
+
+Finally, here's an example where a second application of the product rule is unavoidable. 
+
+::: {.callout-note appearance="simple"}
+
+## Example 7
+
+What is the derivative of $\displaystyle y = e^x\sin(2x)\cos(4x)$?
+
+In this case, $y$ is a product of **three** distinct functions. The only option is to take either $u(x)$ or $v(x)$ as a product of two functions, and then use the product rule to find that derivative. Let's take $u(x) = e^x$ and $v(x) = \sin(2x)\cos(4x)$. (The other three potential choices are perfectly acceptable!) 
+
+Now, you can differentiate both of these with respect to $x$:
+
+- when $u(x) = e^x$, then $u'(x) = e^x$ (thanks to the indestructibility of $e^x$).
+
+- Now, when $v(x) = \sin(2x)\cos(4x)$, what is $v'(x)$? You're going to have to use the product rule to find out! In this case, you're going to have to pick different names for the functions, since $u(x)$ and $v(x)$ have been used already. (The product rule still works fine even with different names.) In this case - since $f$ has not yet been used - you can set $f(x) = \sin(2x)$ and $g(x) = \cos(4x)$. Therefore $f'(x) = 2\cos(2x)$ and $g'(x) = -4\sin(4x)$.
+
+    You can use the product rule to say that
+    $$
+    \begin{aligned}
+    v'(x) &= f'(x)g(x) + f(x)g'(x)\\[0.5em]
+    &= (2\cos(2x))\cos(4x) + \sin(2x)(-4\sin(4x))\\[0.5em]
+    &= 2\cos(2x)\cos(4x) - 4\sin(2x)\sin(4x)
+    \end{aligned}
+    $$
+
+Finally, putting $u'(x)$ and $v'(x)$ into the product rule for $y$ and simplifying gives
+
+$$
+\begin{aligned}
+\frac{\mathrm{d}y}{\mathrm{d}x} &= u'(x)v(x) + u(x)v'(x)\\[0.5em]
+&= \left(e^x\right)\left(\sin(2x)\cos(4x)\right) + \left(e^x\right)\left(2\cos(2x)\cos(4x) - 4\sin(2x)\sin(4x)\right) + \\[0.5em]
+&= e^x\left(\sin(2x)\cos(4x) + 2\cos(2x)\cos(4x) - 4\sin(2x)\sin(4x)\right)
+\end{aligned}
+$$
+
+and this (finally) is your answer.
 
 :::
 
@@ -189,29 +302,30 @@ It also means that the gradient of the tangent to the function $f(x)$ at the poi
 
 <!-- add facility to check answers at end rather than one at a time -->
 
-::: {.webex-check .webex-box}
+::: {.webex-check .webex-box data-topic="PROD1"}
 
-1. Answer the following questions true or false:
+Using the product rule, match the following six functions to their derivatives with respect to $x$. One of the derivatives given does not match a function; you should select which one in the final sentence below.
 
-(a) The derivative of a function at $x = a$ is equal to the gradient of the tangent to $f(x)$ at $x = a$. Answer: `r torf(TRUE)`.
+| | Function | Derivative |
+|:---|:-------------------|:-----------|
+1. | $3x^2\cos(2x)$ | `r mcq(c("(a)", "(b)", "(c)", "(d)", "(e)", answer = "(f)", "(g)"))`
+2. | $2x^3\sin(3x)$ | `r mcq(c("(a)", "(b)", "(c)", "(d)", answer = "(e)", "(f)", "(g)"))`
+3. | $x^2\cos(3x)$  | `r mcq(c(answer = "(a)", "(b)", "(c)", "(d)", "(e)", "(f)", "(g)"))`
+4. | $3x^3\cos(2x)$ | `r mcq(c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)",answer = "(g)"))`
+5. | $x^2\sin(3x)$  | `r mcq(c("(a)", answer = "(b)", "(c)", "(d)", "(e)", "(f)", "(g)"))`
+6. | $3x^2\sin(2x)$ | `r mcq(c("(a)", "(b)", answer = "(c)", "(d)", "(e)", "(f)", "(g)"))`
 
-(b) If $f'(a) < 0$, then the function is increasing at $x = a$. Answer: `r torf(FALSE)`.
+where 
 
-(c) If $f(x) = c$, then the derivative $f'(x) = c-1$. Answer: `r torf(FALSE)`.
+(a) $2x\cos(3x) - 3x^2\sin(3x)$
+(b) $3x^2\cos(3x) + 2x\sin(3x)$
+(c) $6x^2\cos(2x) + 6x\sin(2x)$
+(d) $6x\sin(2x) + 6x^2\cos(2x)$
+(e) $6x^3\cos(3x) + 6x\sin(3x)$
+(f) $6x\cos(2x) - 6x^2\sin(2x)$
+(g) $9x^2\cos(2x) - 6x^3\sin(2x)$
 
-(d) The derivative of $f(x) = \cos(x)$ is $f'(x) = -\sin(x)$. Answer: `r torf(TRUE)`.
-
-(e) The derivative of $f(x) = \dfrac{1}{x}$ is $f'(x) = \ln(x)$. Answer: `r torf(FALSE)`.
-
-(f) The power of $x$ in the derivative of $f(x) = \dfrac{1}{\sqrt{x}}$ is $-3/2$. Answer: `r torf(TRUE)`.
-
-2. Fill in the gaps of the statements below. 
-
-(a) If $f(x) = 3x^7 - 14x$, then $f'(x) =$ `r fitb("21")` $x^6 -$ `r fitb("14")`.
-
-(b) If $f(x) = -4\cos(3x)$, then $f'(x) =$ `r fitb("12")` $\sin\big($ `r fitb("3x")` $\big)$.
-
-(c) If $f(x) = -15\sin(x) + e^{8x}$, then $f'(x) =$ `r fitb("-15")` $\cos\big($ `r fitb("x")` $\big) +$ `r fitb("8")` $e^{8x}$.
+So `r mcq(c("(a)", "(b)", "(c)", answer = "(d)", "(e)", "(f)", "(g)"))` is the odd derivative out.
 
 :::
 
@@ -219,41 +333,31 @@ It also means that the gradient of the tangent to the function $f(x)$ at the poi
 
 ::: {.content-hidden when-format="html"}
 
-1. Answer the following questions true or false:
+Using the product rule, match the six functions to their derivatives with respect to $x$. One of the derivatives given does not match a function; you should circle the odd derivative out. 
 
-(a) The derivative of a function at $x = a$ is equal to the gradient of the tangent to $f(x)$ at $x = a$.
-
-(b) If $f'(a) < 0$, then the function is increasing at $x = a$.
-
-(c) If $f(x) = c$, then the derivative $f'(x) = c-1$.
-
-(d) The derivative of $f(x) = \cos(x)$ is $f'(x) = -\sin(x)$.
-
-(e) The derivative of $f(x) = \dfrac{1}{x}$ is $f'(x) = \ln(x)$.
-
-(f) The power of $x$ in the derivative of $f(x) = \dfrac{1}{\sqrt{x}}$ is $-3/2$.
-
-2. Differentiate the following functions with respect to $x$.
-
-(a) $f(x) = 3x^7 - 14x$
-
-(b) $f(x) = -4\cos(3x)$
-
-(c) $f(x) = -15\sin(x) + e^{8x}$
+| Function | Derivative  |
+|:-------------------|:-------------------------------|
+| $3x^2\cos(2x)\qquad\qquad$ | $2x\cos(3x) - 3x^2\sin(3x)$ |
+| $2x^3\sin(3x)\qquad\qquad$ | $3x^2\cos(3x) + 2x\sin(3x)$ |
+| $x^2\cos(3x)\qquad\qquad$  | $6x^2\cos(2x) + 6x\sin(2x)$ |
+| $3x^3\cos(2x)\qquad\qquad$ | $6x\sin(2x) + 6x^2\cos(2x)$ |
+| $x^2\sin(3x)\qquad\qquad$  | $6x^3\cos(3x) + 6x\sin(3x)$ |
+| $3x^2\sin(2x)\qquad\qquad$ | $6x\cos(2x) - 6x^2\sin(2x)$ |
+| | $9x^2\cos(2x) - 6x^3\sin(2x)$ |
 
 :::
 
 # Further reading {-}
 
-[For more questions on the subject, please go to Questions: The product rule](../questions/qs-introtodifferentiation.qmd)
+[For more questions on the subject, please go to Questions: The product rule](../questions/qs-productrule.qmd).
 
-For more about techniques of differentiation, please see [Guide: The quotient rule], and [Guide: The chain rule].
+For more about techniques of differentiation, please see [Guide: The quotient rule](quotientrule.qmd), and [Guide: The chain rule](chainrule.qmd).
 
-For more about why the rules and techniques of differentiation are true, please see [Proof sheet: Rules of differentiation].
+For more about why the rules and techniques of differentiation are true, please see [Proof sheet: Rules of differentiation](../proofsheets/ps-rulesofdifferentiation.qmd).
 
 ## Version history {-}
 
-v1.0: initial version created 04/25 by tdhc.
+v1.0: initial version created 05/25 by tdhc.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

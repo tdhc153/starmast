@@ -5,6 +5,7 @@ abstract-title: Summary
 abstract: The idea of differentiation is everywhere in modern mathematics and in the sciences as it is related to the rate of change of an object or process. In this guide, the idea of differentiation and the derivative is introduced from first principles, its role in explaining the behaviour of functions is explained, and derivatives of common functions are introduced and used.
 categories:
   - Calculus
+  - Differentiation
 image: FiguresPNG/introtodifferentiation-image.png
 ---
 
@@ -12,8 +13,15 @@ image: FiguresPNG/introtodifferentiation-image.png
 library("webexercises")
 ```
 
-
 *Before reading this guide, it is recommended that you read [Guide: Properties of functions], [Guide: Laws of indices](lawsofindices.qmd), [Guide: Logarithms](logarithms.qmd), and [Guide: Tangents].*
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/introtodifferentiation.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
 
 # What is differentiation? {-}
 
@@ -108,14 +116,23 @@ The derivative of $y$ with respect to $x$ at a point $x = a$ is written as $$\le
 
 :::
 
+::: {.callout-tip}
+
+Although the functions in this guide are defined in terms of the variable $x$, you can express and differentiate functions with respect to any variable. This explains the terminology 'with respect to $x$'; as this can change depending on the variable. For instance, if you are differentiating $z = f(t)$, you would say 'with respect to $t$', and you could write $$f'(t) = \frac{\mathrm{d}z}{\mathrm{d}t}$$ in this instance. Any combination of variables is acceptable; you may see $x,y,z,t,u,w,v$ commonly, and maybe even Greek letters such as $\omega$.
+  
+:::
 
 ::: {.callout-warning}
 
 Although $\dfrac{\mathrm{d}y}{\mathrm{d}x}$ *looks* like a fraction, it **isn't**. However, sometimes it *behaves* like a fraction, and you can use this to remember certain results. However, this isn't an excuse to treat it as a fraction in standard mathematical work.
+
+What $\dfrac{\mathrm{d}y}{\mathrm{d}x}$ really represents is the application of an **operator**, specifically $\dfrac{\mathrm{d}}{\mathrm{d}x}$, to a function $y = f(x)$. It is correct to write the following: $$f(x) = \dfrac{\mathrm{d}}{\mathrm{d}x}(f(x)) = \dfrac{\mathrm{d}y}{\mathrm{d}x}$$
+
+For more about this, see [Guide: The differential operator and higher derivatives].
   
 :::
 
-This notation was used by [Leibniz](https://mathshistory.st-andrews.ac.uk/Biographies/Leibniz/) to represent the derivative of a function $y = f(x)$. It's useful because it codifies the derivative as a rate of change (ratio of change in $y$ to change in $x$) as well as explicitly naming the variable that you are differentiating with respect to. (This will be extremely useful in [Guide: Introduction to partial differentiation].) However, it's not so useful for expressing the value of the derivative at a particular point $x = a$; for instance
+The $\dfrac{\mathrm{d}y}{\mathrm{d}x}$ notation was used by [Leibniz](https://mathshistory.st-andrews.ac.uk/Biographies/Leibniz/) to represent the derivative of a function $y = f(x)$. It's useful because it codifies the derivative as a rate of change (ratio of change in $y$ to change in $x$) as well as explicitly naming the variable that you are differentiating with respect to. (This will be extremely useful in [Guide: Introduction to partial differentiation].) However, it's not so useful for expressing the value of the derivative at a particular point $x = a$; for instance
 $$f'(a)\quad\textsf{ compared to }\quad \left.\dfrac{\mathrm{d}y}{\mathrm{d}x}\right|_{x = a}.$$
 The important thing to consider is this:
 
@@ -172,11 +189,11 @@ From here, you can combine two functions into one and differentiate. The followi
 
 Let $f(x)$ and $g(x)$ be differentiable functions, and $c$ be a non-zero real number. Then:
 
-- (**sum rule**) The derivative of two functions $f(x)$ and $g(x)$ added together is the same as their derivatives $f'(x)$ and $g'(x)$ added together; that is, $$\dfrac{\mathrm{d}}{\mathrm{d}x}(f + g) = \dfrac{\mathrm{d}f}{\mathrm{d}x} + \dfrac{\mathrm{d}g}{\mathrm{d}x}$$
+- (**sum rule**) The derivative of two functions $f(x)$ and $g(x)$ added together is the same as their derivatives $f'(x)$ and $g'(x)$ added together; that is, $(f+g)'(x) = f'(x) + g'(x)$ or $$\dfrac{\mathrm{d}}{\mathrm{d}x}(f + g) = \dfrac{\mathrm{d}f}{\mathrm{d}x} + \dfrac{\mathrm{d}g}{\mathrm{d}x}$$
 
-- (**difference rule**) The derivative of one function $g(x)$ subtracted from another $f(x)$ is the same as the derivative $g'(x)$ subtracted from the derivative of $f'(x)$; that is $$\dfrac{\mathrm{d}}{\mathrm{d}x}(f - g) = \dfrac{\mathrm{d}f}{\mathrm{d}x} -\dfrac{\mathrm{d}g}{\mathrm{d}x}$$
+- (**difference rule**) The derivative of one function $g(x)$ subtracted from another $f(x)$ is the same as the derivative $g'(x)$ subtracted from the derivative of $f'(x)$; that is $(f-g)'(x) = f'(x) - g'(x)$ or $$\dfrac{\mathrm{d}}{\mathrm{d}x}(f - g) = \dfrac{\mathrm{d}f}{\mathrm{d}x} -\dfrac{\mathrm{d}g}{\mathrm{d}x}$$
 
-- (**scaling rule**) The derivative of a function $f(x)$ multiplied by a real number $c$ is the same as the derivative $f'(x)$ multiplied by $c$; that is
+- (**scaling rule**) The derivative of a function $f(x)$ multiplied by a real number $c$ is the same as the derivative $f'(x)$ multiplied by $c$; that is $(cf)'(x) = cf'(x)$ or
 $$\dfrac{\mathrm{d}}{\mathrm{d}x}(cf(x)) = c\dfrac{\mathrm{d}f}{\mathrm{d}x}$$
 
 :::
@@ -189,11 +206,17 @@ These differentiation rules do not tell you how to differentiate all possible co
 - you need the **quotient rule** (and $g(x)\neq 0$) to differentiate the quotient $f(x)/g(x)$ of two functions
 - you need the **chain rule** to differentiate the composition $f(g(x))$ of two functions
 
-These techniques are important enough to merit their own guides. For more about these, see [Guide: The product rule], [Guide: The quotient rule], [Guide: The chain rule]. For more on where these results come from, see [Proof sheet: Rules of differentiation.]
+These techniques are important enough to merit their own guides. For more about these, see [Guide: The product rule](productrule.qmd), [Guide: The quotient rule](quotientrule.qmd), [Guide: The chain rule](chainrule.qmd). For more on where these results come from, see [Proof sheet: Rules of differentiation.](../proofsheets/ps-rulesofdifferentiation.qmd)
 
 :::
 
-Specifically, using the scaling and chain rule can be used to show the following results, which are incredibly useful for any work involving differentiation.
+::: {.callout-tip}
+
+The sum rule and scaling rule says that $\dfrac{\mathrm{d}}{\mathrm{d}x}$ is a **linear operator**; see [Guide: The differential operator and higher derivatives] for more.
+
+:::
+
+Specifically, using the scaling and chain rule (see [Guide: The chain rule](chainrule.qmd)) can be used to show the following results, which are incredibly useful for any work involving differentiation.
 
 ::: {.callout-note}
 
@@ -223,7 +246,7 @@ Here's some examples of differentiation in action.
 
 ## Example 1
 
-Find the derivative of the function $f(x) = \dfrac{x^2}{2} + 1$.
+Find the derivative of the function $f(x) = \dfrac{x^2}{2} + 1$ with respect to $x$.
 
 Here, you can use the sum and scaling rules to differentiate this function. Using the sum rule, you can see that $$\dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2} + 1\right) = \dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2}\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right)$$ Now, using the scaling rule on the first of these terms, you can get $$\dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2}\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right) = \frac{1}{2}\cdot\dfrac{\mathrm{d}}{\mathrm{d}x}\left(x^2\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right)$$
 
@@ -240,7 +263,7 @@ You do not need to be so meticulous in your general practice when differentiatin
 
 ## Example 2
 
-Find the derivative of the function $f(x) = 4e^{3x} - \sqrt{x}$.
+Differentiate $f(x) = 4e^{3x} - \sqrt{x}$ with respect to $x$.
 
 Of these two terms, $4e^{3x}$ looks like a common function, but you have not seen how to differentiate $\sqrt{x}$ yet. In fact, this is another case of $x^n$; in this case, $n = 1/2$. (See [Guide: Laws of indices](lawsofindices.qmd) for why this is.)
 
@@ -250,17 +273,17 @@ You could turn $x^{-1/2}$ into $1/\sqrt{x}$; however, you may be asked to differ
 
 :::
 
-As a rule of thumb, you should always write an $n$th root using a fractional power instead. Here's another example of where you should write a term involving a power of $x$:
+As a rule of thumb, you should always write an $n$th root using a fractional power instead. Here's another example of where you should write a term involving a power of $x$.
 
 ::: {.callout-note appearance="simple"}
 
 ## Example 3
 
-Find the derivative of the function $f(x) = \dfrac{1}{x^4} + 4\cos(x) - \sin(4x)$.
+Find the derivative of the function $f(t) = \dfrac{1}{t^4} + 4\cos(t) - \sin(4t)$ with respect to $t$.
 
-Again, the cosine and sine terms are manageable from the derivative above, it is only the $1/x^4$ term that needs a little thought. In fact, this is yet *another* case of $x^n$; this time when $n = - 4$. (See [Guide: Laws of indices](lawsofindices.qmd) for why this is.)
+Again, the cosine and sine terms are manageable from the derivative above, it is only the $1/t^4$ term that needs a little thought. In fact, this is yet *another* case of $t^n$; this time when $n = -4$. (See [Guide: Laws of indices](lawsofindices.qmd) for why this is.)
 
-You can then rewrite the function as $$f(x) = x^{-4} + 4\sin(x) - \cos(4x)$$ and use the familiar rules of differentiation above. Using the results above with $n = -4$, the derivative of $x^{-4}$ is $-4x^{-4-1} = -4x^{-5}$. The derivative of $4\sin(x)$ is $4(\cos(x)) = 4\cos(x)$. The derivative of $\cos(4x)$ is $-4\sin(4x)$. Taking care of your signs you can write the derivative of $\dfrac{1}{x^4} + 4\cos(x) - \sin(4x)$ as $$f'(x) = -4x^{-5} + 4\cos(x) - (-4\sin(4x)) = -4x^{-5} + 4\cos(x) + 4\sin(4x).$$
+You can then rewrite the function as $$f(t) = t^{-4} + 4\sin(t) - \cos(4t)$$ and use the familiar rules of differentiation above. Using the results above with $n = -4$, the derivative of $t^{-4}$ is $-4t^{-4-1} = -4t^{-5}$. The derivative of $4\sin(t)$ is $4(\cos(t)) = 4\cos(t)$. The derivative of $\cos(4t)$ is $-4\sin(4t)$. Taking care of your signs you can write the derivative of $\dfrac{1}{t^4} + 4\cos(t) - \sin(4t)$ as $$f'(t) = -4t^{-5} + 4\cos(t) - (-4\sin(4t)) = -4t^{-5} + 4\cos(t) + 4\sin(4t).$$
 
 :::
 
@@ -382,13 +405,17 @@ Here's a table of derivatives that you should remember going into any further re
 
 [For more questions on the subject, please go to Questions: Introduction to differentiation and the derivative.](../questions/qs-introtodifferentiation.qmd)
 
-For more about techniques of differentiation, please see [Guide: The product rule], [Guide: The quotient rule], and [Guide: The chain rule].
+For more about techniques of differentiation, please see [Guide: The product rule](productrule.qmd), [Guide: The quotient rule](quotientrule.qmd), and [Guide: The chain rule](chainrule.qmd).
 
-For more about where the derivatives in the above table come from, please see [Proof sheet: Derivatives of functions from first principles](../proofsheets/ps-introtodifferentiation.qmd) and [Proof sheet: Derivatives of other common functions]. For more about why the rules of differentiation are true, please see [Proof sheet: Rules of differentiation].
+For more about the differential operator, and its application to finding derivatives of derivatives, please see [Guide: The differential operator and higher derivatives].
+
+For more about where the derivatives in the above table come from, please see [Proof sheet: Derivatives of functions from first principles](../proofsheets/ps-introtodifferentiation.qmd) and [Proof sheet: Derivatives of other common functions]. For more about why the rules of differentiation are true, please see [Proof sheet: Rules of differentiation](../proofsheets/ps-rulesofdifferentiation.qmd).
 
 ## Version history {-}
 
 v1.0: initial version created 03/25 by tdhc.
+
+  - v1.1 updated version with section on differentiating with respect to different variables 05/25 by tdhc.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

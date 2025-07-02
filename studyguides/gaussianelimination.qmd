@@ -1,33 +1,37 @@
 ---
-title: Introduction to Gaussian Elimination 
+title: Introduction to Gaussian elimination
 author: Sara Delgado Garcia 
 abstract-title: Summary 
-abstract: You can use Gaussian Elimination to simplify matrices and get the inverse or solve equations. Using Gaussian Elimination you can solve systems of linear equations written as matrices.
+abstract: Gaussian elimination is integral to solving systems of simultaneous linear equations. You can use Gaussian elimination to get a 'nicer' equivalent of a matrix.
 categories: 
   - Linear mathematics 
-draft: true
+draft: true 
 ---
 
 ```{r, setup, include = FALSE}
 library("webexercises")
 ```
 
-*Before reading this guide, it is recommended that you read [Guide: Introduction to Matrices](introtomatrices.qmd)* *and [Guide: Introduction to fractions](introtofractions.qmd). For the last section of this guide (Using Gaussian elimination to solve systems of equations) it is recommended that you read [Guide: Introdution to Solving Simultaneous Equations](introtosimeqs.qmd)*.
+*Before reading this guide, it is recommended that you read [Guide: Introduction to Matrices](introtomatrices.qmd)* *and [Guide: Introduction to fractions](introtofractions). For the last section of this guide (Using Gaussian elimination to solve systems of equations) it is recommended that you read [Guide: Introdution to solving simultaneous equations](introtosimeqs.qmd)*.
 
-In Introduction to Matrices you saw what a Matrix is and how to do arithmetic operations with it such as summing, subtracting and multiplying. In this guide, you will learn about operations that are done with the rows of the matrix to change the matrix.
+# What is Gaussian elimination? {.unnumbered}
 
-# What is Gaussian Elimination? {.unnumbered}
-
-**Gaussian Elimination** is a method used to transform matrices into 'nicer' forms so that you can get some information from the matrix. This nicer form is usually an 'upper triangle' where you only have non-zeros in the entries to right of the main diagonal, and the entries to the left are zeros (sometimes you can have more zeros than that). You can also use it to get the identity matrix. This guide will show you how to do Gaussian elimination and some of the applications of this technique. You will first study the row echelon form. Then you will learn the three types of row operations that you need to do Gaussian elimination. Finally you will discover the augmented matrix and how to apply Gaussian elimination to it to find the inverse of a matrix and solve many equations at once.
+**Gaussian Elimination** is a method used to transform matrices into 'nicer' forms so that you can get some information from the matrix. This nicer form is usually an 'upper triangle' where you only have non-zeros in the entries to right of the main diagonal, and the entries to the left are zeros (sometimes you can have more zeros than that). This is very usefull to find the inverse of a matrix or to solve many linear equations at once. In this guide you will study the operations you can use to do Gaussian elimination and then you will discover the row echelon form and the reduced row echelon form, and how to get them using Gaussian elimination.
 
 ::: callout-note
+
 ## Definition of row echelon form and of reduced row echelon form
 
-A matrix is in row echelon form (or upper triangular form) if:
+A matrix is in **row echelon form** (or upper triangular form) if:
 
-(i)All the zero rows are at the bottom (this does not mean there are any zero rows!)
+(a) All the zero rows are at the bottom (this does not mean there are any zero rows!).
 
-(ii)The first entry in a (non-zero) row - this is the leading entry - is to the right of the first entry of the row above it.
+(b) The first entry in a (non-zero) row - this is the leading entry - is to the right of the first entry of the row above it.
+
+:::
+
+::: callout-note
+## Example 1
 
 $$A = 
 \begin{bmatrix}
@@ -36,12 +40,18 @@ $$A =
 0 & 0 & 9 \end{bmatrix}$$
 
 The leading entries of A are 2, 5 and 9.
+:::
 
-A matrix is in reduced row echelon form if:
+::: callout-note
+A matrix is in **reduced row echelon form** if:
 
-(i)In each non-zero row, the first entry of the row is 1, and
+(a)In each non-zero row, the leading entry of the row is 1, and
 
-(ii)In each column that contains a first entry for some row, all other entries in that column are zero.
+(b)In each column that contains a leading entry for some row, all other entries in that column are zero.
+:::
+
+::: callout-note
+## Example 2
 
 $$B =
      \begin{bmatrix}
@@ -53,24 +63,30 @@ $$B =
 The leading entries of B are the two 1s of the matrix and B has one zero-row.
 :::
 
-## Definition of elementary row operations (e.r.os)
+# Elementary row operations (e.r.o.s)
 
-In order to get to the (reduced) echelon form you have to do row operations. There are three elementary operations:
+In order to get to the row echelon form or reduced echelon form you have to do **row operations**. There are three elementary row operations that make sure the new matrix is 'equivalent' to the original one:
 
-(1)Multiplying a row number by a scalar $\lambda$
+(E1) Multiplying a row number by a scalar $\lambda$
 
-When multiplying a row number by a scalar you 'freeze' all the other rows of the matrix, and multiply the values of the row you have chosen by the scalar $\lambda$. This gives you a modified matrix where only the row you choose to multiplicate has changed.
+When multiplying a row number by a scalar you 'freeze' all the other rows of the matrix, and multiply the values of the row you have chosen by the scalar $\lambda$. This gives you a modified matrix where only the row you choose to multiply has changed.
 
-(2)Add one multiple of one row to another row
+(E2) Add one multiple of one row to another row
 
-This can be very useful when you want to get zeros in certain entries of your matrix. You can multiply one of the rows by a scalar $\lambda$ and then add it or subtract it to another row.
+You can multiply one of the rows by a scalar $\lambda$ and then add it or subtract it to another row. This can be very useful when you want to get zeros in certain entries of your matrix.
 
-(3)Interchanging two rows
+(E3) Interchanging any two rows
 
-Altering the order of the rows does not change the essential properties of the matrix. You can exchange the order of the rows in your matrix to get to the upper triangular form or to move the zero-rows to the bottom.
+You can exchange the order of the rows in your matrix to get to the upper triangular form or to move the zero-rows to the bottom.Altering the order of the rows does not change the essential properties of the matrix.
+
+::: callout-note
+## Fun fact
+
+It is also possible to do column operations! These are less used, and you usually transpose (turn columns into rows) the matrix and do row operations, but column operations exist!
+:::
 
 ::: {.callout-note appearance="simple"}
-## Example 1
+## Example 3
 
 Let $$A=
 \begin{bmatrix}
@@ -79,151 +95,179 @@ Let $$A=
 4 & 0 & 9
 \end{bmatrix}$$
 
-You want to multiply the second row by 2:
+Multiply the second row by 2 (E1):
 
 $$\begin{aligned}
 & \left[\begin{array}{ccc}3 & 0 & 3  \\2 & 2 & 6  \\4 & 0 & 9  \end{array}\right] \begin{matrix}r_2 \to 2r_2 \end{matrix} & \left[\begin{array}{ccc}3 & 0 & 3  \\4 & 4 & 12  \\4 & 0 & 9\end{array}\right]
 \end{aligned}$$
 
-Hence only the second row has changed and now is a scalar multiple of the original second row.
+You can see only row 2 has changed and now is a scalar multiple of the original row 2.
 :::
 
 ::: {.callout-note appearance="simple"}
-## Example 2
+## Example 4
 
-Let A be the same matrix as in Example 1. You can now try the second elementary row operation: add one multiple of one row to another row. Suppose you decide to add $\frac{1}{2}r_2$ to $r_1$,you will be adding $[ 1 \quad 1 \quad 3 ]$ to $[3 \quad 0 \quad 3]$ such that:
+Let $A$ be the same matrix as in Example 1. You can now try E2: adding one multiple of one row to another row. Suppose you decide to add $\frac{1}{2}r_2$ to $r_1$,you will be adding $[ 1 \quad 1 \quad 3 ]$ to $[3 \quad 0 \quad 3]$ such that:
 
 $$\begin{aligned}
-& \left[\begin{array}{ccc}3 & 0 & 3  \\2 & 2 & 6  \\4 & 0 & 9  \end{array}\right] \begin{matrix}r_1 \to \frac{1}{2}r_2 + r_1 \end{matrix} & \left[\begin{array}{ccc}4 & 1 & 6  \\4 & 4 & 12  \\4 & 0 & 9\end{array}\right]
+& \left[\begin{array}{ccc}3 & 0 & 3  \\2 & 2 & 6  \\4 & 0 & 9  \end{array}\right] \begin{matrix}r_1 \to r_1 + \frac{1}{2}r_2\end{matrix} & \left[\begin{array}{ccc}4 & 1 & 6  \\2 & 2 & 6  \\4 & 0 & 9\end{array}\right]
 \end{aligned}$$
 
 The matrix remains unchanged except for the first row, that is now a sum of the original row 1 and a half of row 2.
 :::
 
 ::: {.callout-note appearance="simple"}
-## Example 3
+## Example 5
 
-Finally you can interchange two rows. In this example you interchange row 3 and row 1.
+Finally you can interchange two rows (E3). In this example you interchange row 3 and row 1 of matrix $A$.
 
 $$\begin{aligned}
 & \left[\begin{array}{ccc}3 & 0 & 3  \\2 & 2 & 6  \\4 & 0 & 9  \end{array}\right] \begin{matrix}r_1 \leftrightarrow r_3 \end{matrix} & \left[\begin{array}{ccc}4 & 0 & 9  \\2 & 2 & 6  \\3 & 0 & 3\end{array}\right]
 \end{aligned}$$
 :::
 
+::: callout-note
+## Warning
+
+The matrix you get after doing e.r.o.s on a matrix is not equal to the original one! You can say they are equivalent and write $A \sim B$, where B is the matrix in row echelon form.
+:::
+
 # Reducing a matrix to echelon form (or reduced echelon form)
 
-You can use elementary row operations to find the echelon form or the reduced echelon form a matrix.
+All these e.r.o.s can always be undone (swap back, divide, subtract), so no information about the original matrix disappears. You can use elementary row operations to find the echelon form or the reduced echelon form of a matrix.
 
 You can do this in a series of steps:
 
-**Step 1**: Identify the zeros of your Matrix. If there are any all-zero rows interchange rows until all the zero rows are at the bottom of the matrix.
+**Step 1**: Identify the zeros of your matrix. If there are any all-zero rows interchange rows using E3 until all the zero rows are at the bottom of the matrix, so that the rows with values can be part of the upper triangle in the top rows.
 
-**Step 2**: You can save some time if before doing other e.r.o.s you look at the leading entries of each row. Again interchange the rows of your Matrix until the first entry in each row is under or to the right of the first entry in the row above it.
+**Step 2**: You can save some time if before doing other e.r.o.s you look at the leading entries of each row. Again interchange the rows of your matrix until the first entry in each row is under or to the right of the first entry in the row above it.
 
-**Step 3**: Now it is time to start using other e.r.os. Focus on the leading entries, add or subtract multiples of different rows so that, for any leading entries in the same column, the lower leading entry becomes zero. Don't worry about having negative numbers or fractions in the other entries of such rows when you do this.
+**Step 3**: Now it is time to start using other e.r.o.s. Focus on the leading entries, add or subtract multiples of different rows using E2 so that, for any leading entries in the same column, the lower leading entry becomes zero. Try to use rows with more zero-entries to start doing these operations so that you have to make less calculations. You don't need to worry about having negative numbers or fractions in the other entries of such rows when you do this. You're writing the row different, but it is still equivalent to the original row.
 
-**Step 4**: Repeat step 3 until you have the echelon form.
+**Step 4**: Repeat Step 3 until you have the echelon form.
 
 ::: callout-note
 ## Tip
 
-These steps are interchangeable and sometimes different steps work for different people! Maybe you prefer having all leading entries as single entries per column before you start interchanging rows, or you spot a e.r.o. that would work before another one. Many approaches can work!
+These steps are interchangeable and sometimes different steps work for different people! Experience helps you to shape your own approach and decide which e.r.o.s to do first. Many approaches can work! But the above guide is useful if you are very unsure about how to proceed.
+:::
+
+Now you are going to see a few examples of how you can use e.r.o.s to get the reduced echelon form. The first two will be very clearly following the steps mentioned above, the others will have a more flexible approach.
+
+::: {.callout-note appearance="simple"}
+## Example 6
+
+Let $$C=
+\begin{bmatrix}
+2 & 3 & 1 \\
+0 & 0 & 0 \\
+1 & 0 & 2
+\end{bmatrix}$$
+
+**Step 1**: Identify the zeros of your matrix and if there are any zero rows, move these to the bottom. Notice row 2 has only zeros, so you can interchange it with row 3 it using E3. $$\begin{aligned}
+& \left[\begin{array}{ccc}2 & 3 & 1 \\
+0 & 0 & 0 \\
+1 & 0 & 2\end{array}\right] \begin{matrix}r_2 \leftrightarrow r_3\end{matrix} & \left[\begin{array}{ccc}2 & 3 & 1 \\
+1 & 0 & 2 \\0 & 0 & 0\end{array}\right]
+\end{aligned}$$
+
+**Step 2**: Look at the leading entries and see if there is any that could be the upper corner corner of the upper triangular form. Row 2 has leading entry 1 in the first column, this works! Interchange row 2 and row 1 using E3. $$\begin{aligned}
+& \left[\begin{array}{ccc}2 & 3 & 1 \\
+1 & 0 & 2 \\0 & 0 & 0\end{array}\right] \begin{matrix}r_2 \leftrightarrow r_3\end{matrix} & \left[\begin{array}{ccc}
+1 & 0 & 2 \\ 2 & 3 & 1 \\0 & 0 & 0\end{array}\right]
+\end{aligned}$$ Row 1 is in the first line and has a leading entry in the first column, so that row is already in the right form. Continue following the steps to know what to do next. **Step 3**: Now you need to focus on the leading entries, to make sure each leading entry is to the right of the leading entry above it. The leading entry in row 2 is 2, and is in the first column, so you need to perform e.r.o.s to fix this. If you subtract two times row 1 to row 2 (E2), the leading entry of row 2 will change: $$\begin{aligned}
+& \left[\begin{array}{ccc}2 & 3 & 1 \\
+1 & 0 & 2 \\0 & 0 & 0\end{array}\right] \begin{matrix}r_2 \to r_2 - 2r_1\end{matrix} & \left[\begin{array}{ccc}
+1 & 0 & 2 \\ 0 & -6 & -3 \\0 & 0 & 0\end{array}\right]
+\end{aligned}$$ **Step 4** Repeat Step 3 to check all the leading entries. The leading entry of row 1 is ok - it is the first leading entry of the matrix and in the first column. The leading entry in row 2 is -6 and is in column three, so on the right of the leading entry above it, so row 2 is ok. Row 3 is an all zeros row so it has no leading entry. So you are done! The row echelon form of the matrix is: $$\begin{bmatrix} 1 & 0 & 2 \\ 0 & -6 & -3 \\0 & 0 & 0 \end{bmatrix}$$
 :::
 
 ::: {.callout-note appearance="simple"}
-## Example 4
+## Example 7
 
-Let $$C=
+Let $$D=
 \begin{bmatrix}
 1 & 1 & 1 \\
 2 & 4 & 0 \\
 1 & 0 & 0
-\end{bmatrix}$$
-
-Look at row 3. It only has one entry and it is on the far left, you can use this to get 0 on the other entries of the first column and, since it only has one entry, you can focus on only that column for each operation you do with row 3. Start by doing this with row 1:
+\end{bmatrix}$$ There are no zero-rows so **Step 1** is done. All the rows have leading entry in the first column, so you can wait before doing **Step 2**. Now you can start **Step 3**. Any leading entries that can be useful? Look at row 3. It only has one entry and it is on the far left, you can use this to get 0 on the other entries of the first column and, since it only has one entry, you can focus on only that column for each operation you do with row 3. Start by doing this with row 1:
 
 $$\begin{aligned}
 & \left[\begin{array}{ccc}1 & 1 & 1  \\2 & 4 & 0  \\1 & 0 & 0  \end{array}\right] \begin{matrix}r_1 \to r_1 - r_3 \end{matrix} & \left[\begin{array}{ccc}0 & 1 & 1  \\2 & 4 & 0  \\1 & 0 & 0 \end{array}\right]
 \end{aligned}$$
 
-And now do the same for row 2. Note that because the leading entry of row 2 is 2, you need to multiply row 3 by a scalar 2 when you subtract it from row 2.
+Following **Step 4** repeat **Step 3** until you have the row echelon form. Do the same for row 2. Because the leading entry of row 2 is 2, you need to multiply row 3 by a scalar 2 when you subtract it from row 2.
 
 $$\begin{aligned}
 & \left[\begin{array}{ccc}0 & 1 & 1  \\2 & 4 & 0  \\1 & 0 & 0  \end{array}\right] \begin{matrix}r_1 \to r_2 - 2r_3 \end{matrix} & \left[\begin{array}{ccc}0 & 1 & 1  \\0 & 4 & 0  \\1 & 0 & 0 \end{array}\right]
 \end{aligned}$$
 
-Great! Now there is only one entry on row 3, if we interchange row 1 and row 3, we can get the first line of the upper triangle form (left corner of the triangle)!
+Great! Now there is only one entry on row 3, if you interchange row 1 and row 3, you can get the first line of the upper triangle form (left corner of the triangle)!
 
 $$\begin{aligned}
 & \left[\begin{array}{ccc}0 & 1 & 1  \\0 & 4 & 0  \\1 & 0 & 0  \end{array}\right] \begin{matrix}r_1 \leftrightarrow  r_3 \end{matrix} & \left[\begin{array}{ccc}1 & 0 & 0  \\0 & 4 & 0  \\0 & 1 & 1 \end{array}\right]
 \end{aligned}$$
 
-Now, if you look at four, you can see that it only has one entry, in the middle column. This is good since it means you don't need to use the other rows to make sure the first entry is to the right of the row above it. Finally row 3 has its leading entry on the same column as the leading entry of 4, so you need to make that entry zero. To get the row echelon form, subtract $\frac{1}{4}$ of row 2 from row 3:
+Now, if you look at four in row 2, you can see that it only has one entry, in the middle column. This is good since it means you don't need to use the other rows to make sure the first entry is to the right of the row above it. Finally row 3 has its leading entry on the same column as the leading entry of 4, so you need to make that entry zero. To get the row echelon form, subtract $\frac{1}{4}$ of row 2 from row 3:
 
 $$\begin{aligned}
-& \left[\begin{array}{ccc}1 & 0 & 0  \\0 & 4 & 0  \\0 & 1 & 1 \end{array}\right] \begin{matrix}r_3 \to r_3 - \frac{1}{4}r_2 \end{matrix} & \left[\begin{array}{ccc}1 & 0 & 0  \\0 & 4 & 0  \\0 & 0 & 1 \end{array}\right]
+& \left[\begin{array}{ccc}1 & 0 & 0  \\0 & 4 & 0  \\0 & 1 & 1 \end{array}\right] \begin{matrix}r_3 \to r_3 - \frac{1}{4}r_2 \end{matrix} & \left[\begin{array}{ccc}1 & 0 & 0  \\0 & 4 & 0  \\0 & 0 & 1 \end{array}\right].
 \end{aligned}$$
 
-So the echelon form of C is $$C=
+So the echelon form of D is $$D \sim
 \begin{bmatrix}
 1 & 0 & 0 \\
 0 & 4 & 0 \\
 0 & 0 & 1
-\end{bmatrix}$$
+\end{bmatrix}.$$
 :::
 
-::: {.callout-note appearance="simple"}
-## Example 5
+You don't always need to be so rigurous with the steps when doing Gaussian elimination, here are two examples where the approach is a bit more flexible. ::: {.callout-note appearance="simple"} \## Example 8
 
-Let $$D=
+Let $$E=
 \begin{bmatrix}
 0 & 0 & 0 \\
 5 & 2 & 2 \\
 1 & 0 & 1
-\end{bmatrix}$$Following the first step identify all the zeros of the matrix. Since the first row is a zero-row, you need to move it to the bottom. So the first e.r.o. you perform is interchanging rows:
+\end{bmatrix}$$ Following the first step identify all the zeros of the matrix. Since the first row is a zero-row, you should move it to the bottom. So the first e.r.o. you perform is interchanging rows:
 
 $$\begin{aligned}
 & \left[\begin{array}{ccc}0 & 0 & 0 \\
 5 & 2 & 2 \\
 1 & 1 & 1\end{array}\right] \begin{matrix}r_1 \leftrightarrow  r_3 \end{matrix} & \left[\begin{array}{ccc}1 & 1 & 1 \\
 5 & 2 & 2 \\0 & 0 & 0 
-\end{array}\right]
+\end{array}\right].
 \end{aligned}$$
 
-Now row 1 has the most-left entry so it is ok for row echelon form. However, row 2 has its leading entry directly under the leading entry of row 1. To fix this, perform the second e.r.o., add a scalar multiple (-5) of row 1 to row 2.
+Now row 1 has the leading entry on the first column so it is ok for row echelon form. However, row 2 has its leading entry directly under the leading entry of row 1. To fix this, you can perform the second e.r.o., subtract 5 times row 1 to row 2.
 
 $$\begin{aligned}
 & \left[\begin{array}{ccc}1 & 1 & 1 \\
 5 & 2 & 2 \\0 & 0 & 0\end{array}\right] \begin{matrix}r_2 \to r_2 - 5r_1 \end{matrix} & \left[\begin{array}{ccc}1 & 1 & 1 \\
-0 & 2 & -3 \\0 & 0 & 0
-\end{array}\right]
+0 & -3 & -3 \\0 & 0 & 0
+\end{array}\right].
 \end{aligned}$$
 
-So the row echelon form of D is
+So, the row echelon form of D is
 
 $$\begin{bmatrix}
 1 & 1 & 1 \\
-0 & 2 & -3 \\0 & 0 & 0
-\end{bmatrix}$$
+0 & -3 & -3 \\0 & 0 & 0
+\end{bmatrix}.$$ :::
 
- 
-
-:::
-
-Now you will see a couple of examples where you get the reduced echelon form.
+Now you will see a couple of examples where you get the reduced echelon form. To do this, once you get the row echelon form, you will have to keep doing e.r.o.s until all leading entries are 1 and the other entries in the columns where there are leading entries are 0.
 
 ::: {.callout-note appearance="simple"}
+## Example 9
 
-## Example 6
-
-Let $$E=
+Let $$F=
 \begin{bmatrix}
 4 & 2 & 1 \\
 2 & 2 & 2 \\
 1 & 3 & 0
 \end{bmatrix}$$
 
-There are no zero-rows in this matrix, so you can start looking at leading entries. Using the first entry of row 3 you can make the rest of the first column zero (you use row 3 because the leading is one). $$\begin{aligned}
+There are no zero-rows in this matrix, so you can start looking at leading entries. Using the first entry of row 3 you can make the rest of the first column 0 (you use row 3 because the leading entry is 1). $$\begin{aligned}
 & \left[\begin{array}{ccc}4 & 2 & 1 \\
 2 & 2 & 2 \\
 1 & 3 & 0\end{array}\right] \begin{matrix}r_2 \to r_2 - 2r_3 \end{matrix} & \left[\begin{array}{ccc}4 & 2 & 1 \\
@@ -252,14 +296,14 @@ $$\begin{aligned}
 \end{array}\right]
 \end{aligned}$$
 
-Now if you subtract (-5) times row 2 to row 3, you get the matrix in row echelon form: $$\begin{aligned}
+Now if you subtract 5 times row 2 to row 3, you get the matrix in row echelon form: $$\begin{aligned}
 & \left[\begin{array}{ccc}1 & 3 & 0\\
 0 & -2 & 1 \\0 & -10 & 1 \end{array}\right] \begin{matrix}r_3 \to r_3 - 5r_2 \end{matrix} & \left[\begin{array}{ccc}1 & 3 & 0\\
 0 & -2 & 1 \\0 & 0 & -4 
 \end{array}\right]
 \end{aligned}$$
 
-Now multiply row 3 by $\frac{-1}{4}$ so that its first (and only) entry is 1
+This is in the row echelon form! But you still need to take a few steps to get the reduced row echelon form. Multiply row 3 by $\frac{-1}{4}$ so that its first (and only) entry is 1
 
 $$\begin{aligned}
 & \left[\begin{array}{ccc}1 & 3 & 0\\
@@ -273,14 +317,16 @@ $$\begin{aligned}
 0 & -2 & 1 \\0 & 0 & 1\end{array}\right] \begin{matrix}r_2 \to r_2 -r_3 \end{matrix} & \left[\begin{array}{ccc}1 & 3 & 0\\
 0 & -2 & 0 \\0 & 0 & 1
 \end{array}\right]
-\end{aligned}$$ Similar to how you did it for row 3, we multiply row 2 by $\frac{-1}{2}$ to have a leading entry 1.
+\end{aligned}$$ Similar to how you did it for row 3, multiply row 2 by $\frac{-1}{2}$ to have a leading entry 1.
 
 $$\begin{aligned}
 & \left[\begin{array}{ccc}1 & 3 & 0\\
 0 & -2 & 0 \\0 & 0 & 1\end{array}\right] \begin{matrix}r_2 \to \frac{-1}{2}r_2 \end{matrix} & \left[\begin{array}{ccc}1 & 3 & 0\\
 0 & 1 & 0 \\0 & 0 & 1
 \end{array}\right]
-\end{aligned}$$ Finally use row 2 to eliminate all other non-zero entries in the second column (i.e. where the leading entry of row 2 is)
+\end{aligned}$$
+
+Finally use row 2 to eliminate all other non-zero entries in the second column (that is, where the leading entry of row 2 is)
 
 $$\begin{aligned}
 & \left[\begin{array}{ccc}1 & 3 & 0\\
@@ -290,16 +336,14 @@ $$\begin{aligned}
 \end{aligned}$$
 
 This is in the reduced echelon form since every line has only one entry, there is only one leading entry per column, and all leading entries are 1.
-
 :::
 
 Now you can try an example with a matrix that is larger. This usually means more e.r.o.s!
 
-::: {.callout-note appearance="simple"}
+:::: {.callout-note appearance="simple"}
+## Example 10
 
-## Example 7
-
-Let $$F=
+Let $$G=
 \begin{bmatrix}
 0 & 6 & 0 & 3\\
 2 & 1 & 2 & 1\\
@@ -307,7 +351,7 @@ Let $$F=
 1 & 2 & 0 & 0
 \end{bmatrix}.$$
 
-This matrix is larger than the ones in the previous examples, but the method is still the same! You can start by looking at the zeros to choose how to order your rows. Notice that row 4 has a leading entry of one and the last two entries are zeros, so this could be a good first row! We exchange it with row 1:
+This matrix is larger than those in the previous examples, but the method is still the same! You can start by looking at the zeros to choose how to order your rows. Notice that row 4 has a leading entry of 1 and the last two entries are 0's, so this could be a good first row! Exchange it with row 1:
 
 $$\begin{aligned}
 & \left[\begin{array}{cccc}0 & 6 & 0 & 3\\
@@ -320,7 +364,7 @@ $$\begin{aligned}
 \end{array}\right]
 \end{aligned}$$
 
-Now if you look at the two bottom rows you can see that they are multiples of each other (row 4 is three times row 3), so you can subtract one from the other to get a zero-row. $$\begin{aligned}
+Now if you look at the two bottom rows you can see that they are multiples of each other (row 4 is three times row 3), so you can subtract a multiple of 1 from the other to get a zero-row. $$\begin{aligned}
 & \left[\begin{array}{cccc}1 & 2 & 0 & 0\\
 2 & 1 & 2 & 1\\
 0 & 2 & 0 & 1\\
@@ -328,10 +372,10 @@ Now if you look at the two bottom rows you can see that they are multiples of ea
 2 & 1 & 2 & 1\\
 0 & 2 & 0 & 1\\
 0 & 0 & 0 & 0
-\end{array}\right]
+\end{array}\right].
 \end{aligned}$$
 
-You want all the entries in the first column to be zero except for the first row, so we subtract the first row to the second: $$\begin{aligned}
+You want all the entries in the first column to be zero except for the first row, so you can subtract the first row to the second: $$\begin{aligned}
 & \left[\begin{array}{cccc}1 & 2 & 0 & 0\\
 2 & 1 & 2 & 1\\
 0 & 2 & 0 & 1\\
@@ -339,8 +383,8 @@ You want all the entries in the first column to be zero except for the first row
 0 & -3 & 2 & 1\\
 0 & 2 & 0 & 1\\
 0 & 0 & 0 & 0
-\end{array}\right]
-\end{aligned}$$ To get 0 in all the entries in the column where -3 is the leading entry, we add $\frac{2}{3}r_2$ to row 3:
+\end{array}\right].
+\end{aligned}$$ To get 0 in all the entries in the column where $-3$ is the leading entry, add $\frac{2}{3}r_2$ to row 3:
 
 $$\begin{aligned}
 & \left[\begin{array}{cccc}1 & 2 & 0 & 0\\
@@ -353,9 +397,9 @@ $$\begin{aligned}
 \end{array}\right]
 \end{aligned}$$
 
-
-If you prefer not working with fractions when doing e.r.o.s, you can multiply all the entries in your row by a scalar and this will not change the result!
-
+<!-- ::: callout-tip -->
+<!-- If you prefer not working with fractions when doing e.r.o.s, you can multiply all the entries in your row by a scalar and this will not change the result! -->
+<!-- ::: -->
 
 Multiply row 3 by 3 to get rid of fractional expressions: $$\begin{aligned}
 & \left[\begin{array}{cccc}1 & 2 & 0 & 0\\
@@ -368,7 +412,7 @@ Multiply row 3 by 3 to get rid of fractional expressions: $$\begin{aligned}
 \end{array}\right]
 \end{aligned}$$
 
-For the reduced row echelon form you need all leading entries to be one and all the columns with a leading entry to be 0 everywhere except the leading entry. If you look at the matrix so far, the leading entries you have to change are -3 and 4. You also need the third entry of the second row to be zero and the second entry in the first row to be 0. Start by subtracting $\frac{1}{2}$ $r_3$ to $r_2$: $$\begin{aligned}
+For the reduced row echelon form you need all leading entries to be one and all the columns with a leading entry to be 0 everywhere except the leading entry. If you look at the matrix so far, the leading entries you have to change are $-3$ and $4$. You also need the third entry of the second row to be zero and the second entry in the first row to be 0. Start by subtracting $\frac{1}{2}$ $r_3$ to $r_2$: $$\begin{aligned}  
 & \left[\begin{array}{cccc}1 & 2 & 0 & 0\\
 0 & -3 & 2 & 1\\
 0 & 0 & 4 & 5\\
@@ -376,340 +420,78 @@ For the reduced row echelon form you need all leading entries to be one and all 
 0 & -3 & 0 & \frac{-3}{2}\\
 0 & 0 & 4 & 5\\
 0 & 0 & 0 & 0
-\end{array}\right]
+\end{array}\right].
 \end{aligned}$$
 
-Now try doing two operations at once. Divide row 2 by $\frac{-1}{3}$ to get a leading entry of 1 and add $\frac{2}{3}$ of (the old) row 2 to row 1 to eliminate all non-zero entries in column two that are not leading entries such that: $$\begin{aligned}
+Now divide row 2 by $\frac{-1}{3}$ to get a leading entry of 1 $$\begin{aligned}
 & \left[\begin{array}{cccc}1 & 2 & 0 & 0\\
 0 & -3 & 0 & \frac{-3}{2}\\
 0 & 0 & 4 & 5\\
-0 & 0 & 0 & 0\end{array}\right] \begin{matrix}r_2 \to \frac{-1}{3}r_2 \\ r_1 \to r_1 + \frac{2}{3}r_2 \end{matrix} & \left[\begin{array}{cccc}1 & 0 & 0 & -1\\
+0 & 0 & 0 & 0\end{array}\right] \begin{matrix}r_2 \to \frac{-1}{3}r_2 \end{matrix} & \left[\begin{array}{cccc}1 & 2 & 0 & 0\\
 0 & 1 & 0 & \frac{1}{2}\\
 0 & 0 & 4 & 5\\
 0 & 0 & 0 & 0
-\end{array}\right]
+\end{array}\right].
+\end{aligned}$$
+
+Add $\frac{2}{3}$ of (the old) row 2 to row 1 to eliminate all non-zero entries in column two that are not leading entries such that: $$\begin{aligned}
+& \left[\begin{array}{cccc}1 & 2 & 0 & 0\\
+0 & 1 & 0 & \frac{1}{2}\\
+0 & 0 & 4 & 5\\
+0 & 0 & 0 & 0\end{array}\right] \begin{matrix}r_1 \to r_1 + \frac{2}{3}r_2 \end{matrix} & \left[\begin{array}{cccc}1 & 0 & 0 & -1\\
+0 & 1 & 0 & \frac{1}{2}\\
+0 & 0 & 4 & 5\\
+0 & 0 & 0 & 0
+\end{array}\right].
 \end{aligned}$$ Finally divide row 3 by 4 to get a leading entry of one: $$\begin{aligned}
 & \left[\begin{array}{cccc}1 & 0 & 0 & -1\\
 0 & 1 & 0 & \frac{1}{2}\\
 0 & 0 & 4 & 5\\
-0 & 0 & 0 & 0\end{array}\right] \begin{matrix}r_2 \to r_2 - \frac{1}{2}r_3 \end{matrix} & \left[\begin{array}{cccc}1 & 0 & 0 & -1\\
+0 & 0 & 0 & 0\end{array}\right] \begin{matrix}r_3 \to \frac{1}{4}r_3 \end{matrix} & \left[\begin{array}{cccc}1 & 0 & 0 & -1\\
 0 & 1 & 0 & \frac{1}{2}\\
 0 & 0 & 1 & \frac{5}{4}\\
 0 & 0 & 0 & 0
 \end{array}\right].
-\end{aligned}$$ Since you have only non-zero entries in the upper triangle, all leading entries are 1 and the columns with leading entries have 0 on every other entry, the matrix is in the reduced echelon form.
+\end{aligned}$$ Since you have only non-zero entries in the upper triangle, all leading entries are 1 and the columns with leading entries have 0 on every other entry, the matrix is in reduced echelon form.
+::::
+
+# Quick check problems {.unnumbered}
+
+<!-- add facility for webexercises to work on html -->
+
+:::: {.content-visible when-format="html"}
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box}
+1.  What are the leading entries of $$A=\begin{bmatrix} 1 & 0 & 2\\ 0 & 3 & 1 \\ 0 & 0 & \frac{1}{2} \end{bmatrix}$$?
+
+Answer: The leading entries of $A$ are equal to `r fitb(1,3,1/2)`(write as a list separated by commas).
+
+2.  How many zero-rows do you have if you write $$B=\begin{bmatrix} 1 & 1 & 2 & 2\\ 2 & 0 & 3 & 1 \\ 0 & 0 & \frac{1}{2} & 6 \\ 3 & 1 & 5 & 3\end{bmatrix}$$ .
+
+Answer: If you perform e.r.o.s on B to get its reduced echelon form you will have a matrix with `r fitb(1)` zero row.
+
+3.  You are given four statements below. Decide whether they are true or false.
+
+<!-- -->
+
+(a) Adding a constant to a row in the matrix is an elementary row operation. Answer: `r torf(FALSE)`.
+
+(b) The matrix $$C=\begin{bmatrix} 1 & 0 \\ 0 & 3  \\  0 & \frac{2}{3} \end{bmatrix}$$ has an inverse. Answer: `r torf(FALSE)`.
+
+(c)The matrix $$D=\begin{bmatrix} 5 & 2 & 0 & 1 \\ 0 & 3 & 0 & 1 \\  0 & 0 & 4 & 5 \\ 0 & 0 & 0 & 0 \end{bmatrix}$$ is in row echelon form. Answer: `r torf(TRUE)`.
+
+(d) The matrix $D$ from question (c) is in reduced row echelon form. Answer: `r torf(FALSE)`.
 :::
-
-# Using the row echelon form to find the inverse of a matrix
-
-::: callout-note
-## Definition of the Augmented Matrix
-
-You construct the augmented matrix of a matrix A by combining it with any other matrix which has the same number of rows as A. You show it is an augmented matrix by leaving a separation bar $|$ between the two matrices. Yprefer to the left block (matrix values before the bar) and the right block (matrix values after the bar) of the matrix.
-:::
-
-You can construct the augmented matrix $n \times 2n$ from the original matrix A and the $n \times n$ identity matrix $I_n$. The left block is the original matrix A before the separation bar \| and the right block is the identity matrix $I_n$.
-
-::: {.callout-note appearance="simple"}
-## Example
-
-Let $$\begin{aligned}M = 
-\left[\begin{array}{cc} 1 & 1 \\ 0 & 3\end{array}\right]
-\end{aligned}$$ be a $2 \times 2$ matrix. Then we can build the augmented matrix M' of M with the identity matrix $I_n$ such that: $$\begin{aligned} M'=
-\left[\begin{array}{cc|cc} 1 & 1 & 1 & 0 \\ 0 & 3 & 0 & 1\end{array}\right]
-\end{aligned}$$
-:::
-
-To find the inverse of matrices using e.r.o.s you use Gaussian Elimination on the extended matrix (with the identity matrix) of the matrix whose inverse you want to find.
-
-::: callout-note
-## Warning
-
-You can only invert matrices that are square (same number of rows and columns), so this strategy also works only with square matrices!
-:::
-
-::: callout-note
-## E.r.o.s on extended matrices
-
-When performing elementary row operations on an extended matrix, each row operation acts equally on both sides of the extended matrix. That is, if you do e.r.o.s on the left block you have to do the same e.r.o.s on the right block.
-:::
-
-::: {.callout-note appearance="simple"}
-
-## Example 8
-
-Let $$\begin{aligned}G=
-\left[\begin{array}{cc} 4 & 7 \\ 2 & 6\end{array}\right]
-\end{aligned}$$ be the matrix you want to invert. You start by extending it such that:
-
-$$\begin{aligned}G'=
-\left[\begin{array}{cc|cc}
-4 & 7 & 1 & 0\\
-2 & 6 & 0 & 1
-\end{array}\right].
-\end{aligned}$$
-
-Now you want to perform e.r.o.s until the left block is $I_2$. First subtract row 2 to row 1 so as to get a zero above the leading entry of row 1:
-
-$$\begin{aligned}
-\left[\begin{array}{cc|cc}
-4 & 7 & 1 & 0\\
-2 & 6 & 0 & 1
-\end{array}\right]\begin{matrix}r_1 \to r_1 - 2r_2 \end{matrix} & \left[\begin{array}{cc|cc}0 & -5 & 1 & -2\\
-2 & 6 & 0 & 1\end{array}\right].
-\end{aligned}$$
-
-You can multiply row 1 by $\frac{-1}{5}$ to get the left block in the right form:
-
-$$\begin{aligned}
-\left[\begin{array}{cc|cc}
-0 & -5 & 1 & -2\\
-2 & 6 & 0 & 1
-\end{array}\right]\begin{matrix}r_1 \to r_1 - 2r_2 \end{matrix} & \left[\begin{array}{cc|cc}0 & 1 & \frac{-1}{5} & \frac{2}{5}\\
-2 & 6 & 0 & 1\end{array}\right]
-\end{aligned}$$
-
-Now you will do two operations at the same time: first, you will multiply row 2 by $\frac{1}{2}$ to get a leading entry of one, then you will exchange row 1 and row 2 to have the diagonal of 1s you need for the identity matrix form:
-
-$$\begin{aligned}
-\left[\begin{array}{cc|cc}0 & 1 & \frac{-1}{5} & \frac{2}{5}\\
-2 & 6 & 0 & 1\end{array}\right]\begin{matrix}r_1 \to r_2 - \frac{1}{2}r_2 \\ r_1 \leftrightarrow r_2 \end{matrix} & \left[\begin{array}{cc|cc}
-1 & 3 & 0 & \frac{1}{2} \\ 0 & 1 & \frac{-1}{5} & \frac{2}{5}\\\end{array}\right].
-\end{aligned}$$
-
-Finally you subtract 3 times row 2 to row 1 to get rid of the non-zero values in the column of the leading entry:
-
-$$\begin{aligned}
-\left[\begin{array}{cc|cc}1 & 3 & 0 & \frac{1}{2} \\ 0 & 1 & \frac{-1}{5} & \frac{2}{5}\end{array}\right]\begin{matrix}r_1 \to r_1 - 3r_2 \end{matrix} & \left[\begin{array}{cc|cc}
-1 & 0 & \frac{3}{5} & \frac{-7}{10} \\ 0 & 1 & \frac{-1}{5} & \frac{2}{5}\end{array}\right]
-\end{aligned}$$
-
-Since you have the identity matrix in the left block, this means the matrix you have in the right block is the inverse of G! So
-
-$$\begin{aligned}G^{-1}=
-\left[\begin{array}{cc} \frac{3}{5} & \frac{7}{10} \\ \frac{-1}{5} & \frac{2}{5}\end{array}\right].
-\end{aligned}$$
-:::
-
-Now you will see another example with a bigger matrix, where the identity matrix you will use is $I_3$ instead of $I_2$
-
-::: {.callout-note appearance="simple"}
-
-## Example 9
-
-The square matrix you want to invert is
-
-H= $$\begin{aligned}
-\left[\begin{array}{ccc} 1 & 3 & 2 \\ 0 & 6 & 2 \\ 1 & 3 & 3\end{array}\right]
-\end{aligned}$$
-
-So the extended matrix will be:
-
-$$\begin{aligned} H' =
-\left[\begin{array}{ccc|ccc} 1 & 3 & 2 & 1 & 0 & 0\\ 0 & 6 & 2 & 0 & 1 & 0\\ 1 & 3 & 3 & 0 & 0 & 1\end{array}\right]
-\end{aligned}$$ You can see that row 1 has a leading entry of 1, this is good because we can use that to make all the other entries in the first column 0. Row 2 has already 0, this is good! Now subtract row 1 to row 3 to have zero in the first column (notice by doing this you will also get a zero in the second column, which is helpful since row 3 only needs a non-zero entry in the third column).
-
-$$\begin{aligned}
-\left[\begin{array}{ccc|ccc}1 & 3 & 2 & 1 & 0 & 0\\ 0 & 6 & 2 & 0 & 1 & 0\\ 1 & 3 & 3 & 0 & 0 & 1\end{array}\right]\begin{matrix}r_1 \to r_3 - r_1 \end{matrix} & \left[\begin{array}{ccc|ccc}1 & 3 & 2 & 1 & 0 & 0\\ 0 & 6 & 2 & 0 & 1 & 0\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]
-\end{aligned}$$
-
-The only non zero entry in row 3 is the leading entry in the third column, row 3 is ready! Now you want to have row 2 in 'identity form' too. To do this, use row 3. Again you can do two e.r.o.s at the same time. First, subtract two times row 3 to row 2 to get a zero in the third entry, then divide row 2 by six so that the leading entry of the row is 1:
-
-$$\begin{aligned}
-\left[\begin{array}{ccc|ccc}1 & 3 & 2 & 1 & 0 & 0\\ 0 & 6 & 2 & 0 & 1 & 0\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]\begin{matrix}r_2 \to r_2 - 2r_3 \\ r_2 \to \frac{1}{6}r_2 \end{matrix} & \left[\begin{array}{ccc|ccc}1 & 3 & 2 & 1 & 0 & 0\\ 0 & 1 & 0 & \frac{1}{3} & \frac{1}{6} & -\frac{1}{3}\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]
-\end{aligned}$$ So row 2 is also in the right form! Now you need to get row 1 in the right form (make all non leading entries 0). Start by using row 2 to make the second entry 0: $$\begin{aligned}
-\left[\begin{array}{ccc|ccc}1 & 3 & 2 & 1 & 0 & 0\\ 0 & 1 & 0 & \frac{1}{3} & \frac{1}{6} & -\frac{1}{3}\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]\begin{matrix}r_1 \to r_1 - 3r_2 \end{matrix} & \left[\begin{array}{ccc|ccc}1 & 0 & 2 & 0 & -\frac{1}{2} & 1\\ 0 & 1 & 0 & \frac{1}{3} & \frac{1}{6} & -\frac{1}{3}\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]
-\end{aligned}$$
-
-Almost there! Now subtract two times row 3 to row 1 and you will get 'identity form' in row 1:
-
-$$\begin{aligned}
-\left[\begin{array}{ccc|ccc}1 & 0 & 2 & 0 & -\frac{1}{2} & 1\\ 0 & 1 & 0 & \frac{1}{3} & \frac{1}{6} & -\frac{1}{3}\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]\begin{matrix}r_1 \to r_1 - 2r_3 \end{matrix} & \left[\begin{array}{ccc|ccc}1 & 0 & 0 & 2 & -\frac{1}{2} & -1\\ 0 & 1 & 0 & \frac{1}{3} & \frac{1}{6} & -\frac{1}{3}\\ 0 & 0 & 1 & -1 & 0 & 1\end{array}\right]
-\end{aligned}$$
-
-The left block is the identity matrix form, so you are done! Now the inverse of H is given by the right block. So
-
-$$\begin{aligned}H^{-1}= 
-\left[\begin{array}{ccc} 2 & -\frac{1}{2} & -1 \\ \frac{1}{3} & \frac{1}{6} & -\frac{1}{3} \\-1 & 0 & 1\end{array}\right]
-\end{aligned}$$
-:::
-
-# Using Gaussian elimination to solve systems of equations
-
-You can use inverse matrices to solve systems of linear equations, following these steps:
-
-**Step 1** Write the system of linear equations as a matrix, by writing the coefficients of each variable as an entry in the matrix (each column corresponds to one variable), the variables X as a column vector and the coefficients (on the other side of the equality of each equation) as another column vector.
-
-**Step 2** Find the inverse of the matrix using the row echelon form.
-
-**Step 3** Perform matrix multiplication to find X, where X is an array giving the solution to all the variables.
-
-::: {.callout-note appearance="simple"}
-## Why does this work?
-
-If A is the matrix with all the coefficients of the system of linear equations, and X is the $(1 \times n)$ vector with all the variables the matrix has, the system can be written as:
-
-$AX = B$. By multiplying both sides by the inverse $A^{-1}$ we get:
-
-$A^{-1}AX = A^{-1}B$. But we know by definition of the inverse matrix that $A^{-1}A = I_n$ so
-
-$I_n X= A^{-1} B$, and by definition of the identity matrix $I_n X = X$.
-
-So the solution to the array of variables X is:
-
-$X = A^{-1}B$. Since you know be, by finding $A^{-1}$ you can get the solution to the system of equations.
-:::
-
-The following examples use the inverses of previous examples to show how this can work:
-
-::: {.callout-note appearance="simple"}
-## Example 10
-
-Suppose you have this system of equations:
-
-$$\begin{aligned} 4x + 7y = 1 \\ 2x + 6y = 0\end{aligned}$$
-
-Following the steps above, start by taking the coefficients of the variables in the system and organising them by columns. So in the first column you will the coefficients of the x variable (that is, 4 and 2) and in the second column you will have the coefficients of the y variable (that is, 2 and 6):
-
-$$\begin{aligned}
-\left[\begin{array}{cc} 4 & 7 \\ 2 & 6\end{array}\right]
-\end{aligned}$$
-
-Notice this is the same matrix as G from example 8! So, we know its inverse is:
-
-$$\begin{aligned}G^{-1}=
-\left[\begin{array}{cc} \frac{3}{5} & \frac{7}{10} \\ \frac{-1}{5} & \frac{2}{5}\end{array}\right]
-\end{aligned}$$
-
-B is given by the constants of the system of equations, so B=$$
-\begin{bmatrix}
-1\\
-0
-\end{bmatrix}
-$$
-
-Similarly as X depends on the variables, X= $$
-\begin{bmatrix}
-x\\
-y
-\end{bmatrix}
-$$
-
-Now that you have $X$, $B$, $G$ and $G^{-1}$, we can find the values of the variables! Recall you will use the equation $GX = B$ to get $X = G^{-1}B$.
-
-So you have:
-
-$$
-\begin{aligned}
-\begin{bmatrix}
-4 & 7 \\
-2 & 6
-\end{bmatrix}
-\begin{bmatrix}
-x \\
-y
-\end{bmatrix}
-&=
-\begin{bmatrix}
-1 \\
-0
-\end{bmatrix}
-\end{aligned}
-$$
-
-Now multiply both sides by the inverse:
-
-$$\begin{aligned}
-\begin{bmatrix}
-\frac{3}{5} & \frac{7}{10} \\ \frac{-1}{5} & \frac{2}{5} 
-\end{bmatrix}
-\begin{bmatrix}
-4 & 7 \\
-2 & 6
-\end{bmatrix}
-\begin{bmatrix}
-x \\
-y
-\end{bmatrix}
-&=
-\begin{bmatrix}
-\frac{3}{5} & \frac{7}{10} \\ \frac{-1}{5} & \frac{2}{5} 
-\end{bmatrix}
-\begin{bmatrix}
-1 \\0
-\end{bmatrix} \end{aligned}$$
-
-Since $A^{-1}A = I_n$ and $I_nX = X$, this gives:
-
-$$ \begin{aligned}
-\begin{bmatrix}
-x \\
-y
-\end{bmatrix}
-&=
-\begin{bmatrix}
-\frac{3}{5} & \frac{7}{10} \\ \frac{-1}{5} & \frac{2}{5} 
-\end{bmatrix}
-\begin{bmatrix}
-1 \\
-0
-\end{bmatrix}
-= \begin{bmatrix} \frac{3}{5} \\ -\frac{1}{5} \end{bmatrix}
-\end{aligned} $$
-
-So you can solve $$x= \frac{3}{5}$$ and $$y = -\frac{1}{5}$$.
-:::
-
-Another option is to turn your system of linear equations into an extended matrix, where the left block represents the coefficients of the variables and the right block represents the constants, and with Gaussian elimination turn the left block into the reduced echelon form. Then you can rewrite the system of equations with the new coefficients and the new constants and solve for the variables (start from the bottom, there is at least one row with just one entry in the left block). To show this, you will work through an example with a matrix you have already seen, but this time you will be doing the e.r.o.s on the augmented form.
-
-::: {.callout-note appearance="simple"}
-
-## Example 11
-
-We want to solve this system of equations:\\ $4x + 2y = 1 \\ 2x + 2y =2 \\ x + 3y = 0$. Let's build the augmented matrix, the left block is given by the coefficients so: $$E_{Left}=
-\begin{bmatrix}
-4 & 2  \\
-2 & 2  \\
-1 & 3 
-\end{bmatrix}$$ where the first column gives the values of the coefficients of the x-variables and the second column gives the values of the y-variables.
-
-Now you can obtain the right block from the coefficients: $$E_{Right}=
-\begin{bmatrix}
-1  \\
-2  \\
-0
-\end{bmatrix}$$ Now we combine the two in the augmented matrix: $$\begin{aligned}
-\left[\begin{array}{cc|c}4 & 2& 1\\ 2 & 2 & 2\\ 1 & 3 & 0\end{array}\right]
-\end{aligned}$$
-
-Notice this is the matrix from **Example 6**: $$E=
-\begin{bmatrix}
-4 & 2 & 1 \\
-2 & 2 & 2 \\
-1 & 3 & 0
-\end{bmatrix}$$ with slightly different notation (two blocks instead of one).
-
-But this does not change how we get the row echelon form, since with e.r.o.s we perform the same operation simultaneously on both blocks. In fact, with e.r.o.s we 'ignore' the middle bar making the matrix. It is just there to remind us which part corresponds to the coefficients, and which part corresponds to the constants at the other side of the equality.
-
-So, if we do the same e.r.o.s as in **Example 6** we get: $$\begin{aligned}\left[\begin{array}{cc|c}1 & 0 & 0\\
-0 & 1 & 0 \\0 & 0 & 1
-\end{array}\right]
-\end{aligned}$$
-
-Remember the first column gives the x-variable coefficients and the second column gives the y-variable coefficients, so we get:
-
-$x + 0y = 0 \\ 0x + y = 0 \\ 0x + 0y= 0$, which is a contradiction, so the system has no solutions.
-:::
+::::
 
 The `echo: false` option disables the printing of code (only output is displayed).
 
 # Further reading {.unnumbered}
 
-[For more questions on the subject, please go to Questions: Gaussian elimination.]
+[For more questions on the subject, please go to Questions: Gaussian elimination.](../questions/qs-introtoquadratics.qmd)
 
-[For an introduction on matrices, please see Guide: Introduction to Matrices.](introtomatrices.qmd) 
-
-[For an introduction systems of linear equations, please see Guide: Solving systems of linear equations.]
+[For an introduction on matrices, please see Guide: Introduction to Matrices.](.qmd) [For an introduction systems of linear equations, please see Guide: Solving systems of linear equations.For examples of using Gaussian elimination, please see Guide: Applications of Gaussian elimination](.qmd)
 
 ## Version history {.unnumbered}
 

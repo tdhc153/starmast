@@ -1,8 +1,8 @@
 ---
-title: "Introduction to Matrices"
+title: "Introduction to matrices"
 author: "Jessica Taberner"
 abstract-title: Summary
-abstract: Matrices are rectangular arrays of numbers with entries arranged in rows and columns. Matrices are a very useful tool within mathematics, this guide will explain what they are and how to perform arithmatic with matrices.
+abstract: Matrices are rectangular arrays of mathematical objects with entries arranged in rows and columns. Matrices are a very useful concept within mathematics, you'll see them used for solving simultaneous equations and much more, this guide will explain what they are and how to perform arithmetic with matrices.
 categories:
   - Key skills
   - Algebra
@@ -11,10 +11,10 @@ draft: true
 
 # What is a matrix? {.unnumbered}
 
-You can think of a matrix as a rectangular array or table, with entries in rows and columns. Understanding matrices can make solving equations more efficient and can open the door to learning much more mathematics.
+A matrix is a rectangular array or table, with entries in rows and columns. Understanding matrices can make solving equations more efficient and can open the door to learning much more mathematics.
 
 ::: callout-note
-## Definition a matrix
+## Definition of a matrix
 
 A $m \times n$ **matrix** is a rectangular array of $mn$ entries set out in $m$ **rows** and $n$ **columns**. You can write it like so:
 
@@ -30,13 +30,13 @@ $$
 This matrix has **dimension** $m \times n$.
 :::
 
-The entries in a matrix are usually numbers, but they can be other mathematical objects. Any type of number may be an entry in your matrix, positive or negative, rational or irrational, real or complex. If complex numbers are unfamiliar to you, you can read more about them at **Guide: Introduction to complex numbers.** Note here that while entries can be other mathematical object, for this study guide you will just use entries within the complex numbers.
+The entries in a matrix are usually numbers, but they can be other mathematical objects. Any type of number may be an entry in your matrix, positive or negative, rational or irrational, real or complex. If complex numbers are unfamiliar to you, you can read more about them at [Guide: Introduction to complex numbers]. Note here that while entries can be other mathematical objects, for this study guide you will use entries within the real numbers.
 
-If you have read **Guide: Introduction to solving simultaneous equations** then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations.
+If you have read [Guide: Introduction to solving simultaneous equations] then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations.
 
-Matrices are a fundamental tool within linear algebra, and they have a wide range of real-life applications. They are used in computer graphics, data analysis, search engine optimization, cryptography, economics, robotics, genetics, quantum mechanics, and many more. Matrices are used anywhere where information needs to be analysed and calculated efficiently. 
+Matrices are a fundamental tool within linear algebra, and they have a wide range of real-life applications. They are used in computer graphics, data analysis, search engine optimization, cryptography, economics, robotics, genetics, quantum mechanics, and many more areas of study. Matrices are used anywhere where information needs to be analyzed and calculated efficiently. 
 
-In this guide, you will see how you can read, write, and understand matrices, you will learn how to do arithmetic with matrices, and see some examples of special matrices. 
+In this guide, you will see how you can read, write, and understand matrices, and you will learn how to do arithmetic with matrices. 
 
 # Working with matrices
 
@@ -49,66 +49,54 @@ $$A =\begin{bmatrix}
 0 & -2  \\
 \pi & 5  \\
 1/3 & 0 
-\end{bmatrix} \quad\textsf{ and }\quad B = 
+\end{bmatrix},\quad\textsf{and}\quad B = 
 \begin{bmatrix}
 -1 & 2/5 & 0 & \sqrt{3} 
-\end{bmatrix} \quad\textsf{ and }\quad C =
-\begin{bmatrix}
-\pi & -1 & 0 & 7/3 \\
-0 & 5/6 & -\sqrt{2} & -3 \\
-4/9 & 7 & -\pi & 0
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
-Matrix $A$ here has dimension $3 \times 2$. The entry in the 2nd row and 1st column is called $a_{2,1}$, and here that is equal to $\pi$.The entry in the 1st row and 2nd column is called $a_{1,2}$, and here that is equal to $-2$. You can notice her that $a_{2,1}$ is not equal to $a_{1,2}$.
+Matrix $A$ here has dimension $3 \times 2$. The entry in the 2nd row and 1st column is called $a_{21}$, and here that is equal to $\pi$. The entry in the 1st row and 2nd column is called $a_{12}$, and here that is equal to $-2$. You can notice here that $a_{21}$ is not equal to $a_{12}$.
 \
-Matrix $B$ here has dimension $1 \times 4$. The entry in the 1st row and 2nd column is called $b_{1,2}$, and here that is equal to $2/5$.The entry in the 1st row and 4th column is called $b_{1,4}$, and here that is equal to $\sqrt{3}$.
+Matrix $B$ here has dimension $1 \times 4$. The entry in the 1st row and 2nd column is called $b_{12}$, and here that is equal to $2/5$.The entry in the 1st row and 4th column is called $b_{14}$, and here that is equal to $\sqrt{3}$.
 \
-Matrix $C$ here has dimension $3 \times 4$. The entry in the 2nd row and 3rd column is called $c_{2,3}$, and here that is equal to $-\sqrt{2}$.
 
-$$D =\begin{bmatrix}
+$$C =\begin{bmatrix}
 \sqrt{2} \\
 11 \\
 -3/8
-\end{bmatrix} \quad\textsf{ and }\quad E=
+\end{bmatrix}, \quad\textsf{ and }\quad D=
 \begin{bmatrix}
 -5 & 1/2 & 0  \\
 0 & -\pi & 4/9 \\
 7 & 0 & -\sqrt{3} \\
 -1 & 5 & 0 \\
 1/4 & 0 & 8
-\end{bmatrix}\quad\textsf{ and }\quad F=
-\begin{bmatrix}
-9
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
-Matrix $D$ here has dimension $3 \times 1$. 
+Matrix $C$ here has dimension $3 \times 1$. 
 \
-Matrix $E$ here has dimension $5 \times 3$. 
+Matrix $D$ here has dimension $5 \times 3$. 
 \
-Matrix $F$ here has dimension $1 \times 1$.
 :::
 
-You will notice that $B$ only has one row, you call such a matrix a **row matrix**. Similarly you would call a matrix like $D$, with only one column, a **column matrix**. You can also describe these as **vectors**. You can read more about vectors in **Guide: Introduction to vectors**.
+You can notice that $B$ only has one row; you can call such a matrix a **row matrix**. Similarly, you would call a matrix like $C$, with only one column, a **column matrix**. These are commonly known as **vectors**. You can read more about vectors in [Guide: Introduction to vectors].
 
 ::: callout-tip
-The entry $a_{ij}$ refers to the $(ij)^{th}$ entry of your matrix, that is the $i^{th}$ row and the $j^{th}$ column. You can write your matrix as $[a_{ij}]_{mn}.$
+The entry $a_{ij}$ refers to the $ij^{th}$ entry of your matrix, that is the $i^{th}$ row and the $j^{th}$ column. You can write your matrix as $[a_{ij}]_{mn}.$
 :::
 
 ::: {.callout-note appearance="simple"}
 ## Example 2
-So, for example the $3 \times 2$ matrix, $$\begin{bmatrix}
-1 & 1  \\
-1 & 1  \\
-1 & 1 
-\end{bmatrix}$$ could be writen as $[1]_{3,2}$
+For example the $3 \times 2$ matrix, $\begin{bmatrix} 1 & 1  \\1 & 1  \\1 & 1 \end{bmatrix}$ could be written as $[1]_{32}$.
 
 :::
 ::: callout-note
-## Definition a main diagonal
+## Definition of a main diagonal
 
-The entries ${a_{11},a_{22},...,a_{nn}}$ make up the **main diagonal**. You can define the **main diagonal** like so:
+For a matrix $A=[a_{ij}]_{mn}$, the entries ${a_{11},a_{22},\ldots,a_{nn}}$ make up the **main diagonal** of $A$. You can define the **main diagonal** like so:
 
-$$diagA = ({a_{11},a_{22},...,a_{nn}})$$
+$$\textsf{diag}A = ({a_{11},a_{22},\ldots,a_{nn}})$$
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -116,58 +104,59 @@ $$diagA = ({a_{11},a_{22},...,a_{nn}})$$
 
 For the matrices in Example 1, the main diagonals are:
 
-$diagA = (0,5)$
+$\textsf{diag}A = (0,5)$
 
-$diagB = (-1)$
+$\textsf{diag}B = (-1)$
 
-$diagD = (\sqrt{2})$
+$\textsf{diag}C = (\sqrt{2})$
 
-$diagE = (-5,-\pi,-\sqrt{3})$
+$\textsf{diag}D = (-5,-\pi,-\sqrt{3})$
 
 :::
 
 # Addition and subtraction with matrices {.unnumbered}
 
-In this section you will see how you can add and subtract matrices.
-
-::: callout-note
-## Definition of matrix addition and subtraction
-
-The **matrix sum of** $A$ and $B$ can be calculated by adding corresponding entries of $A$ and $B$,
-
-$$(a + b)_{ij} = a_{ij} + b_{ij}$$
-
-Similarly, the **matrix difference of** $A$ and $B$ can be calculated by subtracting corresponding entries of $A$ and $B$,
-
-$$(a - b)_{ij} = a_{ij} - b_{ij}$$
-:::
+In this section, you will see when and how you can add and subtract matrices.
 
 ::: callout-important
 You can only add and subtract matrices if they share the same dimensions.
 :::
 
+::: callout-note
+## Definition of matrix addition and subtraction
+
+Let $A$ and $B$ be matrixes of the same dimension.
+The **matrix sum of** $A$ and $B$ can be calculated by adding corresponding entries of $A$ and $B$,
+
+$$(A + B)_{ij} = a_{ij} + b_{ij}$$
+
+Similarly, the **matrix difference of** $A$ and $B$ can be calculated by subtracting corresponding entries of $A$ and $B$,
+
+$$(A - B)_{ij} = a_{ij} - b_{ij}$$
+:::
+
 ::: {.callout-note appearance="simple"}
 ## Example 4
 
-Let’s add two $( 2 \times 2 )$ matrices.
+Let $A$ and $B$ be two $( 2 \times 2 )$ matrices.
 
 $$A =\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \quad\textsf{ and }\quad B =
 \begin{bmatrix} 5 & 6 \\ 7 & 8 \end{bmatrix}$$
 
-The sum $(A + B)$ is:
+The sum $A + B$ is:
 
-$$A + B = \begin{bmatrix} 1+5 & 2+6 \\ 3+7 & 4+8 \end{bmatrix}$$
-So, the sum of the two matrices is:
+$$A + B = \begin{bmatrix} 1+5 & 2+6 \\ 3+7 & 4+8 \end{bmatrix}= \begin{bmatrix} 6 & 8 \\ 10 & 12 \end{bmatrix}$$
+The difference $A-B$ is:
 
-$$A + B = \begin{bmatrix} 6 & 8 \\ 10 & 12 \end{bmatrix}$$
 
+$$A - B = \begin{bmatrix} 1-5 & 2-6 \\ 3-7 & 4-8 \end{bmatrix}= \begin{bmatrix} -4 & -4 \\ -4 & -4 \end{bmatrix}$$
 
 :::
 
 ::: {.callout-note appearance="simple"}
 ## Example 5
 
-Let’s subtract two $3 \times 4$ matrices.
+Now let $A$ and $B$ be two $3 \times 4$ matrices.
 
 \
 $$A = \begin{bmatrix} 
@@ -196,12 +185,7 @@ A-B= \begin{bmatrix}
 1 + 1 & -3 - 4 & 5 - 3 & -4 + 2 \\
 3 - 2 & 0 - 3 & -1/2 & 2 - 1 \\
 -7 + 6 & 8 + 3 & 4 - 5 & 3 - 1/2
-\end{bmatrix}
-$$
-So, the difference of the two matrices is:
-
-$$
-A-B= \begin{bmatrix}
+\end{bmatrix} = \begin{bmatrix}
 2 & -7 & 2 & -2 \\
 1 & -3 & -1/2 & 1 \\
 -1 & 11 & -1 & 5/2
@@ -213,16 +197,12 @@ $$
 You saw earlier that you can only add and subtract matrices if they share the same dimensions. You can look to this non-example to see why this is the case.
 
 ::: {.callout-note appearance="simple"}
-
-## Non-Example
-
-$$
-A =\begin{bmatrix}
+## Non-example
+$$A =\begin{bmatrix}
 1 & 2 & -3 \\
 4/5 & 0 & 6 \end{bmatrix} \quad \textsf{(a $2 \times 3$ matrix)} \quad B =\begin{bmatrix}
 -8 & 8 \\
-0 & 11\end{bmatrix} \quad \textsf{(a $2 \times 2$ matrix)}
-$$
+0 & 11\end{bmatrix} \quad \textsf{(a $2 \times 2$ matrix)}$$
 
 Why can you not add $A$ and $B$?
 
@@ -231,19 +211,19 @@ Matrix addition requires that each entry in one matrix corresponds to an entry i
 - Matrix $A$ has dimensions $2 \times 3$, that is, 2 rows and 3 columns 
 - Matrix $B$ has dimensions $2 \times 2$, that is, 2 rows and 2 columns 
 
-they do **not** have the same dimensions. Consider how you would attempt to calculate entries $ab_{1,3}$ and $ab_{2,3}$. The operation: $A+B$ is **undefined**.
+they do **not** have the same dimensions. How you would attempt to calculate entries $AB_{13}$ and $AB_{23}$? 
 :::
 
 # Scalar multiplication {.unnumbered}
 
-In this section you will see how you can multiply a matrix by a number or variable. You call this scalar multiplication.
+Sometimes you will multiply a matrix by a number or variable. This is called **scalar multiplication**.
 
 ::: callout-note
 ## Definition of Scalar multipication with matrices
 
 A **scalar multiplication** of a matrix $A$, by a number or variable $k$, is obtained by multiplying each entry in $A$ by $k$,
 
-$$kA =\begin{bmatrix} k \cdot a_{ij} \end{bmatrix}$$
+$$kA =[k \cdot a_{ij}]$$
 :::
 
 You can now see a few examples of this.
@@ -253,23 +233,19 @@ You can now see a few examples of this.
 
 Let’s multiply a $3 \times 2$ matrix by a scalar.
 
-$$
-A =\begin{bmatrix} 
+$$A =\begin{bmatrix} 
 0 & 4/3 \\
 -3 & \sqrt{2} \\
 -7 & 12 
-\end{bmatrix} \quad\quad k=3
-$$
+\end{bmatrix} \quad\quad k=3$$
 
 To multiply this matrix by $3$, you multiply each element by $3$:
 
-$$kA=\begin{bmatrix} 
+$$3A=\begin{bmatrix} 
 {3 \cdot 0} & {3 \cdot 4/3} \\
 {3 \cdot -3} & {3 \cdot \sqrt{2}} \\
 {3 \cdot -7} & {3 \cdot 12}
-\end{bmatrix}$$
-By carrying out these multiplications in the entries here, you can arrive at,
-$$kA=\begin{bmatrix} 
+\end{bmatrix}=\begin{bmatrix} 
 0 & 4 \\
 -9 & 3\sqrt{2} \\
 -21 & 36
@@ -284,22 +260,19 @@ Let’s multiply a $1 \times 4$ matrix by a scalar.
 $$A =\begin{bmatrix} 
 -6 & 7/3 & \pi & 12 \end{bmatrix} \quad\quad k=-1/2$$
 
-To multiply this matrix by $-1/2$, you multiply each element by $-1/2$:
+To multiply this matrix by $-1/2$, you can multiply each element by $-1/2$:
 
-$$kA=\begin{bmatrix} 
-{-1/2 \cdot -6} & {-1/2 \cdot 7/3} & {-1/2 \cdot \pi} & {-1/2 \cdot 12} \end{bmatrix}$$
-By carrying out these multiplications in the entries here, you can arrive at,
-$$kA=\begin{bmatrix} 
+$$-1/2 A=\begin{bmatrix} 
+{-1/2 \cdot -6} & {-1/2 \cdot 7/3} & {-1/2 \cdot \pi} & {-1/2 \cdot 12} \end{bmatrix} =\begin{bmatrix} 
 -3 & -7/6 & -\pi/2 & -6 \end{bmatrix}$$
 :::
 
-Now you can combine you're understanding of matrix addition and scalar multiplication to tackle questions that combine both of these skills.
+Now you can combine your understanding of matrix addition and scalar multiplication to tackle questions that combine both of these skills.
 
 ::: {.callout-note appearance="simple"}
 ## Example 8
 
-Let's calculate $A + (2 \cdot B)$, for 
-$$A =\begin{bmatrix} 
+Let's calculate $A + 2B$, for $$A =\begin{bmatrix} 
 -2 & 3 \\
 0 & 1 \\
 \end{bmatrix} \quad\quad B =\begin{bmatrix} 
@@ -307,23 +280,21 @@ $$A =\begin{bmatrix}
 -1 & -3 \\
 \end{bmatrix}$$
 
-First, let's work out $2 \cdot B$,
-$$2 \cdot B =
+First, let's work out $2B$,
+$$2 B =
 \begin{bmatrix}\
 2 \cdot -1 & 2 \cdot 2 \\
 2 \cdot -1 & 2 \cdot -3 \end{bmatrix}$$
 By carrying out these multiplications, you can arrive at,
-$$2 \cdot B =
+$$2  B =
 \begin{bmatrix}\
 -2 & 4 \\
 -2 & -6 \end{bmatrix}$$
-Now $A + 2 \cdot B$,
-$$A + 2 \cdot B = \begin{bmatrix}
+Now $A + 2  B$,
+$$A +  2B = \begin{bmatrix}
 -1 + (-2) & 2 +4 \\
 -1 + (-2) & -3+(-6) \\
-\end{bmatrix}$$
-By computing the sums here, you can arrive at your answer,
-$$A + 2 \cdot B = \begin{bmatrix}
+\end{bmatrix} = \begin{bmatrix}
 -3 & 6 \\
 -3 & -9 \\
 \end{bmatrix}$$
@@ -333,7 +304,7 @@ $$A + 2 \cdot B = \begin{bmatrix}
 
 Now you can look at how and when you can two multiply matrices together.
 
-First, lets see how you multiply two $2 \times 2$ matrices.
+First, let's see how you can multiply two $2 \times 2$ matrices. Let $A$ and $B$ be $2 \times 2$ matrices:
 
 $$A =
 \begin{bmatrix} 
@@ -347,16 +318,46 @@ $$A =
 The product $C = AB$ is also a $2 \times 2$ matrix:
 
 $$C =\begin{bmatrix} 
-(\textcolor{red}{a_{11}}{b_{11}}) + (\textcolor{blue}{a_{12}} b_{21}) & (\textcolor{red}{a_{11}} \textcolor{orange}{b_{12}}) + (\textcolor{blue}{a_{12}} \textcolor{orange}{b_{22}}) \\ 
-(\textcolor{red}{a_{21}} b_{11}) + (\textcolor{blue}{a_{22}} b_{21}) & (\textcolor{red}{a_{21}} \textcolor{orange}{b_{12}}) + (\textcolor{blue}{a_{22}} \textcolor{orange}{b_{22}}) 
+\textcolor{red}{a_{11}\textcolor{black}{b_{11}}} + \textcolor{blue}{a_{12} \textcolor{black}{b_{21}}} & \textcolor{red}{a_{11} \textcolor{orange}{b_{12}}} + \textcolor{blue}{a_{12} \textcolor{orange}{b_{22}}} \\ 
+\textcolor{red}{a_{21} \textcolor{black}{b_{11}}} + \textcolor{blue}{a_{22} \textcolor{black}{b_{21}}} & \textcolor{red}{a_{21} \textcolor{orange}{b_{12}}} + \textcolor{blue}{a_{22} \textcolor{orange}{b_{22}}} 
 \end{bmatrix}$$
 
 Here you can see that in order to calculate the first entry of $C$ you multiply the corresponding elements from the first row of $A$ by the elements from the first column of $B$, and sum together the results.
 
-Now you can see the definition of matrix multiplication for more general matrices.
+::: {.callout-note appearance="simple"}
+## Example 9
 
-::: {.callout-note}
+Let $A$ and $B$ be two $2\times 2$ matrices.
+$$A =\begin{bmatrix} 
+1 & 2 \\ 
+3 & 4 
+\end{bmatrix} \quad\textsf{ and }\quad B =
+\begin{bmatrix} 
+0 & 5 \\ 
+6 & 7 
+\end{bmatrix}$$
 
+Since both matrices are $2 \times 2$, their product $AB$ is also $2 \times 2$:
+
+$$AB =
+\begin{bmatrix} 
+1 \cdot 0 + 2 \cdot 6 & 1 \cdot 5 + 2 \cdot 7 \\ 
+3 \cdot 0 + 4 \cdot 6 & 3 \cdot 5 + 4 \cdot 7 
+\end{bmatrix}$$
+
+By carrying out these multiplications you will have,
+$$AB=\begin{bmatrix} 
+0 + 12 & 5 + 14 \\ 
+0 + 24 & 15 + 28 
+\end{bmatrix}=\begin{bmatrix} 
+12 & 19 \\ 
+24 & 43 
+\end{bmatrix}$$
+:::
+
+Here is a definition of matrix multiplication for more general matrices.
+
+::: callout-note
 ## Definition of matrix multiplication
 
 Let $A$ be an $m \times n$ matrix and $B$ be an $n \times p$ matrix:
@@ -371,73 +372,41 @@ b_{21} & b_{22} & \cdots & b_{2p} \\
 b_{n1} & b_{n2} & \cdots & b_{np} 
 \end{bmatrix}$$
 
-The product $C = AB$ is an $m \times p$ matrix, where each entry $c_{ij}$ is given by the summation formula:
+The product $C = AB$ is an $m \times p$ matrix, where each entry $c_{ij}$ is given by the following summation formula:
 
 $$c_{ij} = \sum_{k=1}^{n} a_{ik} b_{kj} \quad\textsf{ where } 1 \le i \le m \textsf{ and } 1 \le j \le p$$
+In the context of vectors, this is the scalar product, read more about this at [Guide: The scalar product].
 :::
 
-If sigma notation is unfamiliar to you, you can read more about it in **Guide: Introduction to sigma notation**.
+If sigma notation is unfamiliar to you, you can read more about it in [Guide: Introduction to sigma notation].
 
 ::: callout-important
-You can only multiply matrices $A$ and $B$ if $A$ has the same number of columns as $B$ has rows.
+You can only multiply matrices $A$ and $B$ if $A$ has the same number of columns as $B$ has rows, otherwise this operation is **undefined**.
 :::
 
 ::: callout-warning 
-Matrix multiplication is **non-commutative**. This means that its not always true for matrices that $AB = BA$. In fact, in some cases $AB$ may be defined and $BA$ wouldn't be.
+Matrix multiplication is **non-commutative**. This means that it is not always true for matrices that $AB = BA$. In fact, in some cases, $AB$ may be defined when $BA$ is not defined.
 :::
 
 To take a better look at this unusual property, you can now see some examples of this in action.
 
 ::: {.callout-note appearance="simple"}
-## Example 9
+## Example 10
 
-Lets multiply two $2\times 2$ matrices.
-$$A =\begin{bmatrix} 
-1 & 2 \\ 
-3 & 4 
-\end{bmatrix} \quad\textsf{ and }\quad B =
-\begin{bmatrix} 
-0 & 5 \\ 
-6 & 7 
-\end{bmatrix}$$
-
-Since both matrices are $2 \times 2$, their product $AB$ is also $2 \times 2$:
-
-$$AB =
-\begin{bmatrix} 
-(1 \cdot 0) + (2 \cdot 6) & (1 \cdot 5) + (2 \cdot 7) \\ 
-(3 \cdot 0) + (4 \cdot 6) & (3 \cdot 5) + (4 \cdot 7) 
-\end{bmatrix}$$
-
-By carrying out these multiplications you will have,
-$$AB=\begin{bmatrix} 
-0 + 12 & 5 + 14 \\ 
-0 + 24 & 15 + 28 
-\end{bmatrix}$$
-And by computing the sums, you will get,
-$$AB=\begin{bmatrix} 
-12 & 19 \\ 
-24 & 43 
-\end{bmatrix}$$
-
-
-Now lets compute $BA$:
+Now, using the $A$ and $B$ from example $9$, lets compute $BA$:
 
 $$BA =\begin{bmatrix} 
-(0 \cdot 1) + (5 \cdot 3) & (0 \cdot 2) + (5 \cdot 4) \\ 
-(6 \cdot 1) + (7 \cdot 3) & (6 \cdot 2) + (7 \cdot 4) 
+0 \cdot 1 + 5 \cdot 3 & 0 \cdot 2 + 5 \cdot 4 \\ 
+6 \cdot 1 + 7 \cdot 3 & 6 \cdot 2 + 7 \cdot 4 
 \end{bmatrix}$$
 By carrying out these multiplications you will have,
 $$BA=\begin{bmatrix} 
 0 + 15 & 0 + 20 \\ 
 6 + 21 & 12 + 28 
-\end{bmatrix}$$
-And by computing the sums, you will get,
-$$BA=\begin{bmatrix} 
+\end{bmatrix}=BA=\begin{bmatrix} 
 15 & 20 \\ 
 27 & 40 
 \end{bmatrix}$$
-
 
 Compare $AB$ and $BA$.
 
@@ -455,8 +424,8 @@ Since $AB \neq BA$, this example confirms that **matrix multiplication is not co
 :::
 
 :::{.callout-note appearance="simple"}
-## Example 10
-Let $A$ be a $2 \times 3$ matrix and $B$ be a $3 \times 2$.
+## Example 11
+Let $A$ be a $2 \times 3$ matrix and $B$ be a $3 \times 2$ matrix.
 
 $$A = \begin{bmatrix} 
 -2 & 1 & 3 \\ 
@@ -467,20 +436,17 @@ $$A = \begin{bmatrix}
 1 & -2
 \end{bmatrix}$$
 
-
 Since $A$ is $2 \times 3$ and $B$ is $3 \times 2$, the product $AB$ is a $2 \times 2$ matrix:
 
 $$AB = \begin{bmatrix} 
-(-2 \cdot 3) + (1 \cdot -2) + (3 \cdot 1) & (-2 \cdot -1) + (1 \cdot 5) + (3 \cdot -2) \\ 
-(4 \cdot 3) + (-5 \cdot -2) + (2 \cdot 1) & (4 \cdot -1) + (-5 \cdot 5) + (2 \cdot -2) 
+(-2) \cdot 3 + 1 \cdot (-2) + 3 \cdot 1 & (-2) \cdot (-1) + 1 \cdot 5 + 3 \cdot (-2) \\ 
+4 \cdot 3 + (-5) \cdot (-2) + 2 \cdot 1 & 4 \cdot (-1) + (-5) \cdot 5 + 2 \cdot (-2) 
 \end{bmatrix}$$
 By carrying out these multiplications you will have,
 $$AB =\begin{bmatrix} 
 - 6 - 2 + 3 & 2 + 5 - 6 \\ 
 12 + 10 + 2 & -4 - 25 - 4
-\end{bmatrix}$$
-And by computing the sums, you will get,
-$$AB =\begin{bmatrix} 
+\end{bmatrix} =\begin{bmatrix} 
 -5 & 1\\ 
 24 & -33
 \end{bmatrix}$$
@@ -488,48 +454,44 @@ $$AB =\begin{bmatrix}
 Since $B$ is $3 \times 2$ and $A$ is $2 \times 3$, the product $BA$ is a $3 \times 3$ matrix:
 
 $$BA = \begin{bmatrix} 
-(3 \cdot -2) + (-1 \cdot 4) & (3 \cdot 1) + (-1 \cdot -5) & (3 \cdot 3) + (-1 \cdot 2) \\ 
-(-2 \cdot -2) + (5 \cdot 4) & (-2 \cdot 1) + (5 \cdot -5) & (-2 \cdot 3) + (5 \cdot 2) \\ 
-(1 \cdot -2) + (-2 \cdot 4) & (1 \cdot 1) + (-2 \cdot -5) & (1 \cdot 3) + (-2 \cdot 2) 
+3 \cdot (-2) + (-1) \cdot 4 & 3 \cdot 1 + (-1) \cdot (-5) & 3 \cdot 3 + (-1) \cdot 2 \\ 
+(-2) \cdot (-2) + 5 \cdot 4 & (-2) \cdot 1 + 5 \cdot (-5) & (-2) \cdot 3 + 5 \cdot 2 \\ 
+1 \cdot (-2) + (-2) \cdot 4 & 1 \cdot 1 + (-2) \cdot (-5) & 1 \cdot 3 + (-2) \cdot 2 
 \end{bmatrix}$$
 By carrying out these multiplications you will have,
 $$BA=\begin{bmatrix} 
 -6 - 4 & 3 + 5 & 9 - 2 \\ 
 4 + 20 & -2 - 25 & -6 + 10 \\ 
 -2 - 8 & 1 + 10 & 3 - 4
-\end{bmatrix}$$
-And by computing the sums, you will get,
-$$BA =\begin{bmatrix} 
+\end{bmatrix} =\begin{bmatrix} 
 -10 & 8 & 7 \\ 
 24 & -27 & 4 \\ 
 -10 & 11 & -1 
 \end{bmatrix}$$
 
-Here you can see that not only are then entries in $AB$ not equal to those in $BA$, $AB$ is of different dimension to $BA$.
-
+Here you can see that not only are the entries in $AB$ not equal to those in $BA$, $AB$ is of different dimension to $BA$.
 :::
 
 :::{.callout-note appearance="simple"}
+## Example 12
 
-## Example 11
-
-Now, lets let try using a $2 \times 3$ matrix and a $3 \times 1$ matrix.
+Now, you can try using a $2 \times 3$ matrix and a $3 \times 1$ matrix.
 
 $$A =\begin{bmatrix} 
 0 & 2 & -1\\ 
 4 & 0 & 3 \\ 
-\end{bmatrix} B =\begin{bmatrix} 
+\end{bmatrix}\quad\textsf{and}\quad B =\begin{bmatrix} 
 1\\
 -2\\
 0
 \end{bmatrix}$$
 
-You can compute $AB$ since, in order to multiply matrices, you require our first matrix to have the same number of columns as our second matrix has rows. Here $A$ has 3 columns, and $B$ has 3 rows.
+You can compute $AB$ since, in order to multiply matrices, you require the first matrix to have the same number of columns as our second matrix has rows. Here $A$ has 3 columns, and $B$ has 3 rows.
 Lets calculate $AB$,
 
 $$AB = \begin{bmatrix}
-0 \cdot 1 + 2 \cdot -2 + -1 \cdot 0 \\
-4 \cdot 1 + 0 \cdot -2 + 3 \cdot 0 
+0 \cdot 1 + 2 \cdot (-2) + (-1) \cdot 0 \\
+4 \cdot 1 + 0 \cdot (-2) + 3 \cdot 0 
 \end{bmatrix}$$
 By carrying out these multiplications you will have,
 
@@ -544,54 +506,47 @@ $$AB = \begin{bmatrix}
 4
 \end{bmatrix}$$
 
-So here $AB$ is the $2 \times 1$ matrix given above. However, in this example, $BA$ is undefined, as you require our first matrix to have the same number of columns as our second matrix has rows, $B$ here only has 1 column, where as $A$ has 2 rows.
-
+So here $AB$ is the $2 \times 1$ matrix given above. However, in this example, $BA$ is undefined, as you require the first matrix to have the same number of columns as the second matrix has rows, $B$ here only has 1 column, whereas $A$ has 2 rows.
 ::: 
 
-Let's begin to explore how matrices can be linked to simultaneous equations.
+Matrix multiplication can be linked to simultaneous equations. This involves multiplying a multiplying a matrix by a vector, $\mathbf{v}$, where the entries are variables.
 
 :::{.callout-note appearance="simple"}
-## Example 12
+## Example 13
 
-Lets explore the equation $AX=B$ for
+Lets explore the equation $A\mathbf{v}=B$ for
 
 $$A =\begin{bmatrix} 
--2 & 1\\ 
-3 & 7 \\ 
-\end{bmatrix} X=\begin{bmatrix} 
+1 & 2\\ 
+3 & 3 \\ 
+\end{bmatrix} \mathbf{v}=\begin{bmatrix} 
 x\\ 
 y \end{bmatrix} B =\begin{bmatrix} 
-4\\ 
-2 \end{bmatrix}$$ 
+5\\ 
+6 \end{bmatrix}$$ 
 
-$$AX= \begin{bmatrix}
--2 \cdot x + 1 \cdot y\\
-3 \cdot x + 7 \cdot y \\
-\end{bmatrix}$$
+$$A\mathbf{v}= \begin {bmatrix}
+1 \cdot x + 2 \cdot y\\
+3 \cdot x + 3 \cdot y \\
+\end {bmatrix}$$
 By carrying out these multiplications you will have,
-$$AX= \begin{bmatrix}
--2x + y\\
-3x + 7y
-\end{bmatrix}$$
-and if $AX=B$, then
+$$A\mathbf{v}= \begin {bmatrix}
+x + 2y\\
+3x + 3y
+\end {bmatrix}= \begin {bmatrix}
+5\\
+6
+\end {bmatrix}$$
 
-$$\begin{bmatrix}
--2x + y\\
-3x + 7y
-\end{bmatrix} = \begin{bmatrix}
-4\\
-2
-\end{bmatrix}$$
-
-Here you can see, the equation $AX=B$ is equivalent to the following set simultaneous equations:
-$$-2x+y=4$$
-$$3x+7y=2$$
-So you could solve for $x$ and $y$ in $AX=B$, using tools you can learn in **Guide: Introduction to solving simultaneous equations**.
+Here you can see, the equation $A\mathbf{v}=B$ is equivalent to the following set simultaneous equations:
+$$x+2y=5$$
+$$3x+3y=6$$
+So you could solve for $x$ and $y$ in $A\mathbf{v}=B$, using tools you can learn in [Guide: Introduction to solving simultaneous equations]. You'll see this solved in example 1 of that guide.
 :::
 
-In some cases, it may be most efficient for you to solve a system of simultaneous equations using matrices, you can read more about this in **Guide: Introduction to Gaussian elimination**.
+It may be most efficient for you to solve a system of simultaneous equations using matrices, you can read more about this in [Guide: Introduction to Gaussian elimination].
 
-Now you've seen matrix addition and subtraction, scalar multiplication and matrix multiplication you can state some key properties that hold through arithmetic with matrices. Note here again that for this study guide you are assuming that matrices have entries within the complex numbers, without that assumption the following theorem is not always true.
+Now you've seen matrix addition and subtraction, scalar multiplication, and matrix multiplication, you can state some key properties that hold through arithmetic with matrices. Note here again that for this study guide, you are assuming that matrices have entries within the real numbers, without that assumption the following theorem is not always true. If the set you're taking entries from does not have these properties, then a matrix with entries from the set will not have them either. If sets are unfamiliar to you, you can read [Overview: Number sets].
 
 ::: {.callout-note}
 ## Properties of matrix arithmetic
@@ -605,120 +560,9 @@ For any three matrices, $A,B,C$, the following four properties hold, where the o
 3. Matrix multiplication is associative, that is $(AB)C=A(BC)$
 
 4. The distributive property holds for matrices, that is $A(B+C)=AB+AC$ and $(A+B)C=AC+BC$
-
 :::
 
-You can see a proof of this in **Proof: Properties of matrix arithmetic**.
-
-
-# Special matrices {.unnumbered}
-
-The case where $n=m$ is a very important one.
-
-:::{.callout-note}
-
-## Definition a square matrix
-
-A **square matrix** is a matrix with $n=m$.
-
-$$
-\begin{bmatrix}
-a_{11} & a_{12} & \cdots & a_{1n} \\
-a_{21} & a_{22} & \cdots & a_{2n} \\
-\vdots & \vdots & \ddots & \vdots \\
-a_{n1} & a_{n2} & \cdots & a_{nn}
-\end{bmatrix}
-$$
-
-:::
-
-::: {.callout-note appearance="simple"}
-## Example 13
-
-Here are some square matrices:
-
-$$
-\begin{bmatrix}
--3 & 0 \\
-7/4 & 2
-\end{bmatrix} \begin{bmatrix}
-1 & 0 & -5/6 & 7 \\
--2 & 4/3 & 8 & 0 \\
-9/2 & -1 & 0 & -3 \\
-0 & 6 & 7/5 & 2\end{bmatrix}\begin{bmatrix}
-5/2\end{bmatrix}\begin{bmatrix}
-0 & -1/3 & 5 \\
-4 & 2/7 & -6 \\
--2 & 3 & 0\end{bmatrix}
-$$
-
-:::
-
-Now you can define a special kind of square matrix.
-
-::: callout-note
-## Definition of a diagonal matrix
-
-A **diagonal matrix** is a square matrix in which all non-diagonal entries are $0$.\
-
-$$
-\begin{bmatrix}
-d_1 & 0 & 0 & \cdots & 0 \\
-0 & d_2 & 0 & \cdots & 0 \\
-0 & 0 & d_3 & \cdots & 0 \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-0 & 0 & 0 & \cdots & d_n
-\end{bmatrix}
-$$
-
-A diagonal matrix can be defined entirely in terms of its main diagonal.
-
-:::
-
-Here you can define one important example of a diagonal matrix.
-
-::: callout-note
-## Definition of a identity matrix
-
-An **identity matrix** is a diagonal matrix where the main diagonal consists only of ones.
-
-$$I_n =\begin{bmatrix}
-1 & 0 & 0 & \cdots & 0 \\
-0 & 1 & 0 & \cdots & 0 \\
-0 & 0 & 1 & \cdots & 0 \\
-\vdots & \vdots & \vdots & \ddots & \vdots \\
-0 & 0 & 0 & \cdots & 1
-\end{bmatrix}
-$$
-
-:::
-
-The identity matrix is important as it leaves matrices unchanged under multiplication, that is for a $m \times n$ matrix $A$
-$$ A \cdot 1_{n} = 1_{n} \cdot A = A $$.
-
-There is have one final, special type of matrix for you to define in this section.
-
-::: callout-note
-## Definition of a zero matrix
-
-A **zero matrix** is a matrix where all entries are $0$. 
-
-$$
-0_{mn}=\begin{bmatrix}
-0 & 0 & \cdots & 0 \\
-0 & 0 & \cdots & 0 \\
-\vdots & \vdots & \ddots &\vdots \\
-0 & 0 & \cdots & 0
-\end{bmatrix}
-$$
-:::
-
-The zero matrix is important as it leaves matrices unchanged under addition, that is for a $m \times n$ matrix $A$
-$$ A + 0_{mn} = 0_{mn} + A = A $$.
-
-::: callout-warning
-You should note here that a zero matrix does not have to be square.
-:::
+You can see a proof of this in [Proof: Properties of matrix arithmetic].
 
 # Quick check problems {-}
 
@@ -747,10 +591,6 @@ $$A = \begin{bmatrix}
 0 & 5 \\ 
 7/8 & -9 \\
 0 & -2
-\end{bmatrix} \quad\textsf{ and }\quad D =
-\begin{bmatrix} 
-5/6 & -1 & 3 & 7 \\ 
--2 & 0 & 4 & -9/5 
 \end{bmatrix}$$
 
 Answers: 
@@ -761,27 +601,24 @@ The dimension of $B =$ `r fitb(3)`$\times$ `r fitb(3)`.
 
 The dimension of $C =$ `r fitb(5)`$\times$ `r fitb(2)`.
 
-The dimension of $D =$ `r fitb(2)`$\times$ `r fitb(4)`.
-
 
 2. You are given three statements below. Decide whether they are true or false.
 
 (a) If $A$ is a $2 \times 3$ matrix, and $B$ is a $3 \times 2$ matrix, then $AB$ is a $3 \times 3$ matrix. Answer: `r torf(FALSE)`.
 
-(b) For the matrix $B$ in question $1$, the entry $b_{12} = 1/3$. Answer: `r torf(TRUE)`.
+(b) For the matrix $B$ in Q$1$, the entry $b_{12} = 1/3$. Answer: `r torf(TRUE)`.
 
 (c) You can only add or subtract matrices that share the same dimensions. Answer: `r torf(TRUE)`.
 
-3. Multiply the following matrices, $$E = \begin{bmatrix} 
+3. Multiply the following matrices, $$D = \begin{bmatrix} 
 3 & 0 \\ 
 4 & -2
-\end{bmatrix} \quad\textsf{ and }\quad F =
+\end{bmatrix} \quad\textsf{ and }\quad E =
 \begin{bmatrix} 
 1 \\
-1/3\end{bmatrix}$$, give the first entry, $ef_{11}$, of the product $EF$.
-Answer: 
+1/3\end{bmatrix}.$$ Give the first entry, $de_{11}$, of the product $DE$.
 
-The entry $ef_{11} =$ `r fitb(3)`.
+Answer: The entry $de_{11} =$ `r fitb(3)`.
 
 :::
 
@@ -806,35 +643,34 @@ $$A = \begin{bmatrix}
 0 & 5 \\ 
 7/8 & -9 \\
 0 & -2
-\end{bmatrix} \quad\textsf{ and }\quad D =
-\begin{bmatrix} 
-5/6 & -1 & 3 & 7 \\ 
--2 & 0 & 4 & -9/5 
 \end{bmatrix}$$
 
 2. You are given three statements below. Decide whether they are true or false.
 
 (a) If $A$ is a $2 \times 3$ matrix, and $B$ is a $3 \times 2$ matrix, then $AB$ is a $3 \times 3$ matrix.
 
-(b) For the matrix $B$ in question $1$, the entry $b_{12} = 1/3$.
+(b) For the matrix $B$ in Q$1$, the entry $b_{12} = 1/3$.
 
 (c) You can only add or subtract matrices that share the same dimensions.
 
-3. Multiply the following matrices, $$E = \begin{bmatrix} 
+3. Multiply the following matrices, $$D = \begin{bmatrix} 
 3 & 0 \\ 
 4 & -2
-\end{bmatrix} \quad\textsf{ and }\quad F =
+\end{bmatrix} \quad\textsf{ and }\quad E =
 \begin{bmatrix} 
 1 \\
-1/3\end{bmatrix}$$, give the first entry, $ef_{11}$, of the product $EF$.
+1/3\end{bmatrix}.$$ Give the first entry, $de_{11}$, of the product $DE$.
 :::
 
 # Further reading
 
-For more questions on this topic, please go to **Questions: Introduction to matrices.**
+For more questions on this topic, please go to [Questions: Introduction to matrices].
+
+For more on this topic, please go to [Guide: Introduction to Gaussian elimination].
 
 ## Version history {-}
 
-v1.0: initial version created 04/25 by ect6 (as part of a University of St Andrews VIP project)
+v1.0: initial version created 04/25 by Jessica Taberner as part of a University of St Andrews VIP project.
   
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

@@ -2,8 +2,7 @@
 title: "Proof: Rules of differentiation"
 author: "Tom Coleman"
 abstract-title: Summary
-abstract: The proof sheet demonstrates that the common rules of differentiation - the sum, difference, product, chain, and quotient rules - are true.
-draft: true
+abstract: The proof sheet demonstrates that the common rules of differentiation - the sum, difference, product, quotient, and chain rules - are true.
 ---
 
 *Before reading this proof sheet, it is essential that you read [Guide: Introduction to differentiation and the derivative](../studyguides/introtodifferentiation.qmd). In addition, reading [Guide: Introduction to limits] is useful. Further reading will be illustrated where required.*
@@ -15,16 +14,128 @@ The starting point of this proof sheet is the limit definition of the derivative
 The **derivative of $f(x)$ with respect to $x$** is defined to be the function $$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h}.$$
 :::
 
-To find the derivative of a function $f(x)$, replace the function $f$ in the right-hand side of the above limit, and then evaluate the limit. Care has to be taken to remove the $h$ in the denominator of the fraction, as you cannot evaluate the limit as $h$ tends to $0$ with it still there! (Remember, dividing by $0$ can be extremely hazardous to your health.)
-
-From here, the proof sheet will start with the proof of the derivative of $x^2$, which will then be expanded using the binomial theorem to find the derivative of $x^n$. Then, the derivative of $e^x$ is found. Finally, the derivatives of $\sin(x)$ and $\cos(x)$ are demonstrated. 
-
-
 # Sum and difference rules {-}
 
-# Scaling rules {-}
+::: {.callout-note}
+
+## The sum and difference rules
+
+(**sum rule**) The derivative of two functions $f(x)$ and $g(x)$ added together is the same as their derivatives $f'(x)$ and $g'(x)$ added together; that is, $(f+g)'(x) = f'(x) + g'(x)$ or $$\dfrac{\mathrm{d}}{\mathrm{d}x}(f + g) = \dfrac{\mathrm{d}f}{\mathrm{d}x} + \dfrac{\mathrm{d}g}{\mathrm{d}x}$$
+
+(**difference rule**) The derivative of one function $g(x)$ subtracted from another $f(x)$ is the same as the derivative $g'(x)$ subtracted from the derivative of $f'(x)$; that is $(f-g)'(x) = f'(x) - g'(x)$ or $$\dfrac{\mathrm{d}}{\mathrm{d}x}(f - g) = \dfrac{\mathrm{d}f}{\mathrm{d}x} -\dfrac{\mathrm{d}g}{\mathrm{d}x}$$
+
+:::
+
+## Proof of the sum rule
+
+The strategy here is direct; put the function $(f+g)$ into the definition and pull the fraction apart to reveal the definitions of derivatives of $f$ and $g$.
+
+Let's start with $f(x)$ and $g(x)$ as two differentiable real-valued functions, with sum $(f+g)(x) = f(x)+g(x)$. Putting this into the limit definition of the derivative given above:
+$$(f+g)'(x) = \lim_{h\to 0}\frac{(f+g)(x+h) - (f+g)(x)}{h}$$
+Since $(f+g)(x) = f(x)+g(x)$, this becomes
+$$
+\begin{aligned}
+(f+g)'(x) &= \lim_{h\to 0}\frac{f(x+h)+g(x+h) - (f(x)+g(x))}{h}\\[0.5em]
+&= \lim_{h\to 0}\frac{f(x+h)+g(x+h) - f(x)-g(x)}{h}
+\end{aligned}
+$$
+You can now split this into two fractions, one of which sets up the definition of $f'(x)$, and the other sets up the definition of $g'(x)$. So here
+
+$$
+\begin{aligned}
+(f+g)'(x) &= \lim_{h\to 0}\frac{f(x+h)+g(x+h) - f(x)-g(x)}{h}\\[0.5em]
+&= \lim_{h\to 0}\left(\frac{f(x+h) - f(x)}{h} + \frac{g(x+h) - g(x)}{h}\right)
+\end{aligned}
+$$
+
+Now, use properties of limits (see [Guide: Introduction to limits]) to split the limits gives
+
+$$
+\begin{aligned}
+(f+g)'(x) &= \lim_{h\to 0}\left(\frac{f(x+h) - f(x)}{h} + \frac{g(x+h) - g(x)}{h}\right)\\[0.5em]
+&= \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} + \lim_{h\to 0}\frac{g(x+h) -g(x)}{h}\\[0.5em]
+\end{aligned}
+$$
+and so, by the limit definition of the derivative
+$$
+(f+g)'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} + \lim_{h\to 0}\frac{g(x+h) -g(x)}{h} = f'(x) + g'(x)
+$$
+as required.
+
+## Proof of the difference rule
+
+Let's start with $f(x)$ and $g(x)$ as two differentiable real-valued functions, with difference $(f-g)(x) = f(x)-g(x)$. Putting this into the limit definition of the derivative given above:
+$$(f-g)'(x) = \lim_{h\to 0}\frac{(f-g)(x+h) - (f-g)(x)}{h}$$
+Using the fact that $(f-g)(x) = f(x)-g(x)$, and taking care of the signs in expansion, gives
+$$
+\begin{aligned}
+(f-g)'(x) &= \lim_{h\to 0}\frac{f(x+h)-g(x+h) - (f(x)-g(x))}{h}\\[0.5em]
+&= \lim_{h\to 0}\frac{f(x+h)-g(x+h) - f(x) +g(x)}{h}
+\end{aligned}
+$$
+You can now split this into two fractions, one of which sets up the definition of $f'(x)$, and the other sets up the definition of $g'(x)$. So here
+
+$$
+\begin{aligned}
+(f-g)'(x) &= \lim_{h\to 0}\frac{f(x+h)-g(x+h) - f(x)+g(x)}{h}\\[0.5em]
+&= \lim_{h\to 0}\left(\frac{f(x+h) - f(x)}{h} - \frac{g(x+h) - g(x)}{h}\right)
+\end{aligned}
+$$
+
+Now, use properties of limits (see [Guide: Introduction to limits]) to split the limits gives
+
+$$
+\begin{aligned}
+(f-g)'(x) &= \lim_{h\to 0}\left(\frac{f(x+h) - f(x)}{h} - \frac{g(x+h) - g(x)}{h}\right)\\[0.5em]
+&= \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} - \lim_{h\to 0}\frac{g(x+h) -g(x)}{h}\\[0.5em]
+\end{aligned}
+$$
+and so, by the limit definition of the derivative
+$$
+(f-g)'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} - \lim_{h\to 0}\frac{g(x+h) -g(x)}{h} = f'(x) - g'(x)
+$$
+as required.
+
+# Scaling rule {-}
+
+::: {.callout-note}
+
+## The scaling rule
+
+The derivative of a function $f(x)$ multiplied by a real number $c$ is the same as the derivative $f'(x)$ multiplied by $c$; that is $(cf)'(x) = cf'(x)$ or
+$$\dfrac{\mathrm{d}}{\mathrm{d}x}(cf(x)) = c\dfrac{\mathrm{d}f}{\mathrm{d}x}$$
+:::
+
+## Proof of the scaling rule
+
+This is similar to that of the sum and difference rules. Let's start with $f(x)$ as a differentiable real-valued function, with scaling $(cf)(x) = cf(x)$. Putting this into the limit definition of the derivative given above:
+$$(cf)'(x) = \lim_{h\to 0}\frac{(cf)(x+h) + (cf)(x)}{h}$$
+Using the fact that $(cf)(x) = cf(x)$ and factorizing out the $c$ gives
+
+$$
+\begin{aligned}
+(cf)'(x) &= \lim_{h\to 0}\frac{(cf)(x+h)- (cf)(x)}{h}\\[0.5em]
+&= \lim_{h\to 0}\frac{cf(x+h) - cf(x)}{h} = \lim_{h\to 0}\frac{c(f(x+h) - f(x))}{h}
+\end{aligned}
+$$
+
+Since the constant $c$ does not depend on the variable in the limit $h$, you can use properties of limits (see [Guide: Introduction to limits]) to take the constant $c$ out of the limit. This gives
+
+$$
+\begin{aligned}
+(cf)'(x) &= \lim_{h\to 0}\frac{c(f(x+h) - f(x))}{h}\\[0.5em]
+&= c\cdot \lim_{h\to 0}\frac{f(x+h) - f(x)}{h}\\[0.5em]
+\end{aligned}
+$$
+and so, by the limit definition of the derivative
+$$
+(cf)'(x) = c\cdot \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = cf'(x)
+$$
+as required.
 
 # Product rule {-}
+
+*See [Guide: The product rule](productrule.qmd) for more about the product rule.*
 
 Here is the product rule, restated with $f(x) = u(x)$ and $g(x) = v(x)$ for visual ease in the proof that follows.
 
@@ -33,97 +144,219 @@ Here is the product rule, restated with $f(x) = u(x)$ and $g(x) = v(x)$ for visu
 ## The product rule
 
 Let $f(x)$ and $g(x)$ be two differentiable functions. Then the **product rule** says that
-$$(fg)'(x) = \frac{d}{dx}\left(f(x)g(x)\right) = f(x)g'(x) + f'(x)g(x)$$
+$$(fg)'(x) = \frac{\mathrm{d}}{\mathrm{d}x}\left(f(x)g(x)\right) = f(x)g'(x) + f'(x)g(x)$$
 that is, the derivative of the product of $f(x)$ and $g(x)$ is equal to the product of $f(x)$ and the derivative of $g(x)$, plus the product of $g(x)$ and the derivative of $f(x)$.
 
-This can also be written as $$\frac{d}{dx}\left(f(x)g(x)\right) = f\frac{\textrm{d}g}{\textrm{d}x} + g\frac{\textrm{d}f}{\textrm{d}x}.$$
+This can also be written as $$\frac{\mathrm{d}}{\mathrm{d}x}\left(f(x)g(x)\right) = f\frac{\textrm{d}g}{\textrm{d}x} + g\frac{\textrm{d}f}{\textrm{d}x}.$$
 :::
 
 ## Proof of the product rule {-}
 
-Here's why the product rule works. It's not quite as straightforward as the proof of the sum rule and the constant rule; you have to manufacture the definition of the derivative in one place by using a creative addition by $0$.
+Here's why the product rule works. It requires a little more thought than the proof of the sum rule and the scaling rule; you have to manufacture the definition of the derivative in one place by using a creative addition by $0$.
 
 So, let's start with $f(x)$ and $g(x)$ as two differentiable real-valued functions, with product $(fg)(x) = f(x)g(x)$. Putting this into the limit definition of the derivative given above:
 $$(fg)'(x) = \lim_{h\to 0}\frac{(fg)(x+h) - (fg)(x)}{h}$$
 Since $(fg)(x) = f(x)g(x)$, this becomes
 $$(fg)'(x) = \lim_{h\to 0}\frac{f(x+h)g(x+h) - f(x)g(x)}{h}$$
+Now, there's no way of pulling this apart. You have to force the issue slightly by creatively adding $0$. The way to do this is to add $-f(x+h)g(x) + f(x+h)g(x)$ into the numerator, and factorize in slightly different ways. This is fine to do, as $-f(x+h)g(x) + f(x+h)g(x) = 0$. Doing this, and factorizing to manufacture the definitions of $f'(x)$ and $g'(x)$ gives:
+
+$$
+\begin{aligned}
+(fg)'(x) &= \lim_{h\to 0}\frac{f(x+h)g(x+h) - f(x)g(x)}{h}\\[0.5em]
+&= \lim_{h\to 0}\frac{f(x+h)g(x+h) - f(x+h)g(x) + f(x+h)g(x) - f(x)g(x)}{h}\\[0.5em]
+&= \lim_{h\to 0}\left(f(x+h)\frac{g(x+h) - g(x)}{h} + g(x)\frac{f(x+h) - f(x)}{h}\right)
+\end{aligned}
+$$
+Using properties of limits, and the fact that $g(x)$ is constant as $h$ varies to take it outside the limit gives
+
+$$
+\begin{aligned}
+(fg)'(x) &=\lim_{h\to 0}\left(f(x+h)\frac{g(x+h) - g(x)}{h} + g(x)\frac{f(x+h) - f(x)}{h}\right)\\[0.5em]
+&= \left(\lim_{h\to 0}f(x+h)\right)\left(\lim_{h\to 0}\frac{g(x+h) - g(x)}{h}\right) + g(x)\left(\lim_{h\to 0}\frac{f(x+h) - f(x)}{h}\right)
+\end{aligned}
+$$
+
+Now, as $h$ tends to $0$, it follows that $f(x+h)$ tends to $f(x)$. The other two limits are the definitions of $g'(x)$ and $f'(x)$ respectively. Therefore, you can write that
+
+$$
+\begin{aligned}
+(fg)'(x) &= \left(\lim_{h\to 0}f(x+h)\right)\left(\lim_{h\to 0}\frac{g(x+h) - g(x)}{h}\right) + g(x)\left(\lim_{h\to 0}\frac{f(x+h) - f(x)}{h}\right)\\[0.5em]
+&= f(x)g'(x) + g(x)f'(x)
+\end{aligned}
+$$
+which is the product rule.
 
 # Quotient rule {-}
 
-*Before this proof, you may find it useful to read [Guide: Laws of indices]*
+*See [Guide: The quotient rule](quotientrule.qmd) for more about the quotient rule.*
 
-There is an important limit that needs to be used to find the derivative of $e^x$, which is given by:
+Here is the quotient rule, restated with $f(x) = u(x)$ and $g(x) = v(x)$ for visual ease in the proof that follows.
 
-$$\lim_{h\to 0}\frac{e^h - 1}{h} = 1$$
-The proof that this is true relies on some *real analysis* and the fact that the constant $e$ can be defined by $\lim_{x\to \infty}\left(1 + \frac{1}{x}\right)^x = e$.
+::: {.callout-note}
 
-:::{.callout-note}
-## Derivative of $e^x$
-The derivative of $f(x) = e^x$ is $f'(x) = e^x$. 
+## The quotient rule
+
+Let $f(x)$ and $g(x)$ be two differentiable functions. Then the **quotient rule** says that
+$$\left(\frac{f}{g}\right)'(x) = \frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{f(x)}{g(x)}\right) = \frac{f'(x)g(x) - f(x)g'(x)}{\left(g(x)\right)^2}  $$
+that is, the derivative of $u(x)$ divided by $v(x)$ is equal to the difference of $u'(x)v(x)$ and $u(x)v'(x)$, divided by the square of the function $v(x)$.
+
+This can also be written as $$\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u(x)}{v(x)}\right) = \frac{v\frac{\textrm{d}u}{\textrm{d}x} - u\frac{\textrm{d}v}{\textrm{d}x}}{v^2}.$$
+
 :::
 
-Again, let's use the limit definition of the derivative with $f(x) = e^x$. This gives:
-$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{e^{x+h} - e^x}{h}$$
-Typically, the goal has been to remove the $h$ in the denominator; however, it is not possible in this case, as expanding $e^{x+h}$ doesn't give a $h$ that you can get rid of while factorizing. In this case, what you can do is try and reduce to a known limit. In particular, the known limit involving $e^h$ is $\lim_{h\to 0}\frac{e^h - 1}{h} = 1$ and so you may be able to manufacture this limit by manipulation of the expression above. Using the laws of indices, you can write that
-$$\lim_{h\to 0}\frac{e^{x+h} - e^x}{h} = \lim_{h\to 0}\frac{e^x\cdot e^h - e^x}{h}$$
-Factorising out $e^x$ gives
-$$\lim_{h\to 0}\frac{e^x\cdot e^h - e^x}{h} = \lim_{h\to 0}\left(e^x\left(\frac{e^h - 1}{h}\right)\right)$$
-Now, $e^x$ is constant as $h$ varies, and so you can take this out of the limit to get: 
-$$\lim_{h\to 0}\left(e^x\left(\frac{e^h - 1}{h}\right)\right) = e^x\lim_{h\to 0}\left(\frac{e^h - 1}{h}\right)$$
+## Proof of the quotient rule {-}
 
-You can now evaluate the limit to get: $$e^x\lim_{h\to 0}\left(\frac{e^h - 1}{h}\right) = e^x(1) = e^x$$ It follows that $f'(x) = e^x$, as required.
+Here's why the quotient rule works. Again, there is a step beyond algebraic manipulation where you have to manufacture the definition of the derivative in one place by using a creative addition by $0$.
 
-# Derivative of $\sin(x)$ and $\cos(x)$ {-}
+So, let's start with $f(x)$ and $g(x)$ as two differentiable real-valued functions (with $g(x)$ not the zero function), with quotient $(f/g)(x) = f(x)/g(x)$. Putting this into the limit definition of the derivative gives
+$$
+\left(\frac{f}{g}\right)'(x) = \lim_{h\to 0}\frac{\left(\frac{f}{g}\right)(x+h) - \left(\frac{f}{g}\right)(x)}{h} = \lim_{h\to 0}\frac{\frac{f(x+h)}{g(x+h)} - \frac{f(x)}{g(x)}}{h}
+$$
+You can try your best to reduce this down by cross-multiplying to get a common denominator of the numerator of the limit. Then, you can drop that denominator down to get a single fraction. Doing this:
 
-*Before reading this section, it may be useful to read [Guide: Trigonometric identities (radians)](../studyguides/trigonometricidentities-radians.qmd).*
+$$
+\begin{aligned}
+\left(\frac{f}{g}\right)'(x) &= \lim_{h\to 0}\frac{\frac{f(x+h)}{g(x+h)} - \frac{f(x)}{g(x)}}{h}\\[0.5em]
+&= \lim_{h\to 0}\frac{\frac{f(x+h)g(x) - f(x)g(x+h)}{g(x)g(x+h)}}{h}\\[0.5em]
+&= \lim_{h\to 0}\frac{f(x+h)g(x) - f(x)g(x+h)}{hg(x)g(x+h)}
+\end{aligned}
+$$
+Now, the hope is to pull this apart into two separate limits. Since you have no way of cancelling the $h$, you could try and manufacture the definitions of the derivatives of $f(x)$ and $g(x)$. You have to force the issue slightly by creatively adding $0$; in this case, by adding $-f(x)g(x) + f(x)g(x) = 0$ to the numerator. In addition, you can use properties of limits to get rid of the $g(x)g(x+h)$ in the denominator. Doing these steps and simplifying gives:
 
-As with the derivative of $e^x$ in the previous section, there are two important limits involving $\cos$ and $\sin$ that are needed before continuing. These are: $$\lim_{h\to 0}\dfrac{\sin(h)}{h} = 1\quad\textsf{ and }\quad\lim_{h\to 0}\dfrac{\cos(h) - 1}{h}.$$ To show these are true, you need techniques from *real analysis*, which is the study of functions on real numbers.
+$$
+\begin{aligned}
+\left(\frac{f}{g}\right)'(x) &= \lim_{h\to 0}\frac{f(x+h)g(x) - f(x)g(x+h)}{hg(x)g(x+h)}\\[0.5em]
+&= \left(\lim_{h\to 0}\frac{f(x+h)g(x) - f(x)g(x+h)}{h}\right)\left(\lim_{h\to 0}\frac{1}{g(x)g(x+h)}\right)\\[0.5em]
+&= \left(\lim_{h\to 0}\frac{f(x+h)g(x) - f(x)g(x) + f(x)g(x) - f(x)g(x+h)}{h}\right)\left(\lim_{h\to 0}\frac{1}{g(x)g(x+h)}\right)
+\end{aligned}
+$$
 
-### Derivative of $\sin(x)$
+Now, factorizing this expression, using the properties of limits) and moving $g(x)$ and $-f(x)$ (notice that this needs to be done to ensure the correct definition of the derivative) out of the limits where appropriate gives
+$$
+\begin{aligned}
+\left(\tfrac{f}{g}\right)'(x) &= \left(\lim_{h\to 0}\tfrac{f(x+h)g(x) - f(x)g(x) + f(x)g(x) - f(x)g(x+h)}{h}\right)\left(\lim_{h\to 0}\tfrac{1}{g(x)g(x+h)}\right)\\[0.5em]
+&= \left(\lim_{h\to 0}\tfrac{g(x)(f(x+h) - f(x))- f(x)(g(x+h)-g(x))}{h}\right)\left(\lim_{h\to 0}\tfrac{1}{g(x)g(x+h)}\right)\\[0.5em]
+&= \left(\left(\lim_{h\to 0}\tfrac{g(x)(f(x+h) - f(x))}{h}\right) + \left(\lim_{h\to 0}\tfrac{-f(x)(g(x+h) -g(x))}{h}\right)\right)\left(\lim_{h\to 0}\tfrac{1}{g(x)g(x+h)}\right)\\[0.5em]
+&= \left(g(x)\left(\lim_{h\to 0}\tfrac{f(x+h) - f(x)}{h}\right) - f(x)\left(\lim_{h\to 0}\tfrac{g(x+h) -g(x)}{h}\right)\right)\left(\lim_{h\to 0}\tfrac{1}{g(x)g(x+h)}\right)
+\end{aligned}
+$$
+Now, as $h$ tends to $0$, it follows that $g(x+h)$ tends to $g(x)$, implying that the final limit tends to $1/(g(x))^2$. The other two limits are precisely the definitions of $f'(x)$ and $g'(x)$. Therefore, you can write that
+$$
+\begin{aligned}
+\left(\frac{f}{g}\right)'(x) &= \left(g(x)\left(\lim_{h\to 0}\frac{f(x+h) - f(x)}{h}\right)  -f(x)\left(\lim_{h\to 0}\frac{g(x+h) -g(x)}{h}\right)\right)\left(\lim_{h\to 0}\frac{1}{g(x)g(x+h)}\right)\\[0.5em]
+&=(g(x)f'(x) - g'(x)f(x))\cdot \frac{1}{(g(x))^2} = \frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}
+\end{aligned}
+$$
+which is the quotient rule.
 
-:::{.callout-note}
-## Derivative of $\sin(x)$
-The derivative of $f(x) = \sin(x)$ is $f'(x) = \cos(x)$. 
+
+# Chain rule {-}
+
+*See [Guide: The chain rule](chainrule.qmd) for more about the chain rule.*
+
+Here is the chain rule, restated with $f(x) = u(x)$ and $g(x) = v(x)$ for visual ease in the proof that follows.
+
+::: {.callout-note}
+
+## The chain rule
+
+Let $f(x)$ and $g(x)$ be two differentiable functions. Then the **chain rule** says that
+$$\left(f\circ g\right)'(x) = \frac{\mathrm{d}}{\mathrm{d}x}\left(f(g(x))\right) = f'(g(x))\cdot g'(x)$$
+that is, the derivative of $f(x)$ composed with $g(x)$ with respect to $x$ is equal to the product of the derivative of $f$ with respect to $g$ and the derivative of $g$ with respect to $x$.
+
+This can also be written as $$\frac{\mathrm{d}}{\mathrm{d}x}\left(f(g(x))\right) = \frac{\textrm{d}f}{\textrm{d}g}\cdot \frac{\textrm{d}g}{\textrm{d}x}.$$
+
 :::
 
-Starting off with the limit definition of differentiation and $f(x) = \sin(x)$ gives 
-$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{\sin(x+h) - \sin(x)}{h}$$
-As in the case of $e^x$, expanding $\sin(x+h)$ won't give a single $h$ to cancel with! However, it could be that you can reduce this expression to the limits given above. Using the sum rule for $\sin$ (see [Guide: Trigonometric identities (radians)](../studyguides/trigonometricidentities-radians.qmd)), you can write that
-$$\lim_{h\to 0}\frac{\sin(x+h) - \sin(x)}{h} = \lim_{h\to 0}\frac{\sin(x)\cos(h) + \sin(h)\cos(x) - \sin(x)}{h}$$
-The bones of the two given limits are here, and now it's time to uncover them. Factorising out $\sin(x)$ and $\cos(x)$ gives
-$$\lim_{h\to 0}\frac{\sin(x)\cos(h) + \sin(h)\cos(x) - \sin(x)}{h} = \lim_{h\to 0}\left(\sin(x)\left(\frac{\cos(h) - 1}{h}\right) + \cos(x)\left(\frac{\sin(h)}{h}\right)\right)$$
+## Proof of the chain rule {-}
 
-Using the two limits given above, and the fact that the values of $\sin(x)$ and $\cos(x)$ are independent of $h$:
-$$\lim_{h\to 0}\left(\sin(x)\left(\frac{\cos(h) - 1}{h}\right) + \cos(x)\left(\frac{\sin(h)}{h}\right)\right) = \sin(x)(0) + \cos(x)(1) = \cos(x)$$ and so $f'(x) = \cos(x)$ is the derivative of $\sin(x)$.
+Here's why the chain rule can be used. The idea is to take the limit definition of $(f\circ g)'(x)$ and split the limit into the product of the two derivatives $f'(g(x))$ and $g'(x)$. It requires more thought than the proofs of the product and chain rule, primarily due to the reliance on definitions of differentiation and the fact that it isn't a creative addition of $0$ that splits the derivative, but a creative multiplication by $1$ instead.
 
-### Derivative of $\cos(x)$ {-}
+### Alternative definition of derivative {-}
 
-:::{.callout-note}
-## Derivative of $\cos(x)$
-The derivative of $f(x) = \cos(x)$ is $f'(x) = -\cos(x)$. 
+Proving the chain rule requires the restatement of the limit definition of a derivative at a point $a$. Here are the two definitions side by side.
+
+::: {.callout-note}
+## Limit definition of the derivative (1)
+The **derivative of $f(x)$ with respect to $x$ at the point $a$** is defined to be $$f'(a) = \lim_{h\to 0}\frac{f(a+h) - f(a)}{h}.$$
 :::
 
-Starting off with the limit definition of differentiation and $f(x) = \cos(x)$ gives 
-$$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} = \lim_{h\to 0}\frac{\cos(x+h) - \cos(x)}{h}$$
-As in the case of $e^x$, expanding $\cos(x+h)$ won't give a single $h$ to cancel with! However, it could be that you can reduce this expression to the limits given above. Using the sum rule for $\cos$ (see [Guide: Trigonometric identities (radians)](../studyguides/trigonometricidentities-radians.qmd)), you can write that
-$$\lim_{h\to 0}\frac{\cos(x+h) - \cos(x)}{h} = \lim_{h\to 0}\frac{\cos(x)\cos(h) - \sin(x)\sin(h) - \cos(x)}{h}$$
-The bones of the two given limits are here, and now it's time to uncover them. Factorizing out $\cos(x)$ and $\sin(x)$ gives
-$$\lim_{h\to 0}\frac{\cos(x)\cos(h) - \sin(x)\sin(h) - \cos(x)}{h} = \lim_{h\to 0}\left(\cos(x)\left(\frac{\cos(h) - 1}{h}\right) - \sin(x)\left(\frac{\sin(h)}{h}\right)\right)$$
+ 
 
-Using the two limits given above, and the fact that the values of $\sin(x)$ and $\cos(x)$ are independent of $h$:
-$$\lim_{h\to 0}\left(\cos(x)\left(\frac{\cos(h) - 1}{h}\right) - \sin(x)\left(\frac{\sin(h)}{h}\right)\right) = \cos(x)(0) - \sin(x)(1) = -\sin(x)$$ and so $f'(x) = -\sin(x)$ is the derivative of $\cos(x)$.
+::: {.callout-note}
+## Limit definition of the derivative (2)
+The **derivative of $f(x)$ with respect to $x$ at the point $a$** is defined to be $$f'(a) = \lim_{x\to a}\frac{f(x) - f(a)}{x-a}.$$
+:::
+
+(See [Guide: Introduction to differentiability] for more.) To see that these are equal, start with definition (1). Here, $h$ is the variable as the limit depends on $h$. Now, rescale the limit by setting $h = x - a$ (see [Guide: Properties of limits] for more). This gives 
+
+$$
+\begin{aligned}
+f'(a) &= \lim_{h\to 0}\frac{f(a+h) - f(a)}{h}\\[0.5em] 
+&= \lim_{x-a\to 0}\frac{f(a+(x-a)) - f(a)}{x-a}.
+\end{aligned}
+$$
+As $x - a \to 0$, it follows that $x\to a$; in addition, $a + (x-a) = x$. So the limit becomes
+$$f'(a) = \lim_{x-a\to 0}\frac{f(a+(x-a)) - f(a)}{x-a} = \lim_{x\to a}\frac{f(x) - f(a)}{x-a}$$
+so the definitions are the same at a point. Since a function $f$ is differentiable on an interval $I$ of real numbers if and only if $f'(a)$ exists for all $a$ in $I$, it follows that you can use this definition for a differentiable function.
+
+### Intuition
+
+The idea is to start with the second limit definition of the derivative above and put the function $(f\circ g)(x) = f(g(x))$ into the definition to get: $$(f\circ g)'(a) = \lim_{x\to a}\frac{f(g(x)) - f(g(a))}{x-a}.$$ 
+
+Now, you would want to generate the derivative of $f$ with respect to $g(x)$ at $a$ and the derivative of $g$ with respect to $x$ at $a$. To do this, you can notice that the $x-a$ is already there for the derivative of $g$. You can multiply top and bottom of the fraction by $g(x) - g(a)$. Since $\frac{(g(x) - g(a))}{(g(x) - g(a))} = 1$, this does not change the value of the limit. This gives $$(f\circ g)'(a) = \lim_{x\to a}\left(\frac{f(g(x)) - f(g(a))}{x-a}\cdot \frac{(g(x) - g(a))}{(g(x) - g(a))}\right).$$ You can now pull this limit apart to attempt to make the two definitions of $f'(g(a))$ and $g'(a)$. Using the properties of limits to do this gives
+$$
+\begin{aligned}
+(f\circ g)'(a) &= \lim_{x\to a}\left(\frac{f(g(x)) - f(g(a))}{x-a}\cdot \frac{(g(x) - g(a))}{(g(x) - g(a))}\right)\\[0.5em]
+&= \lim_{x\to a}\frac{f(g(x)) - f(g(a))}{g(x)-g(a)}\cdot \lim_{x\to a}\frac{(g(x) - g(a))}{x-a}.
+\end{aligned}
+$$
+The second of these terms is $g'(a)$, which is what you want. The first of these terms **would** be the definition of $f'(g(a))$... if the limit was $g(x)\to g(a)$ rather than $x\to a$. Here is the problem, because you **cannot guarantee** the behaviour of $g(x) - g(a)$ as $x$ gets closer to $a$; it could be that $g(x) - g(a) = 0$, which is a big problem. In fact, it could be that as $x$ gets closer to $a$, then $g(x) - g(a)$ could be $0$ in infinitely many different places. This needs to be rectified.
+
+### Overcoming the technicality
+
+The idea is to 'fill in' the places where $g(x) - g(a) = 0$, by defining the value of the function $\frac{f(g(x)) - f(g(a))}{g(x)-g(a)}$ at these points. You can define the function $$\phi(y) = \begin{cases} \dfrac{f(y) - f(g(a))}{y-g(a)} & \textsf{ if }y\neq g(a)\\[0.5em] f'(g(a)) & \textsf{ if }y=g(a)\end{cases}$$ You can notice here that $f'(g(a))$ is already defined as $f$ is a differentiable function, meaning that $f'(y)$ exists for all $y$.
+
+Now, consider the expression $$\phi(g(x))\cdot \frac{(g(x) - g(a))}{x-a}.$$ The idea is to prove that
+$$\dfrac{f(g(x)) - f(g(a))}{x-a} = \phi(g(x))\cdot \frac{(g(x) - g(a))}{x-a}$$ for all $x$. This way, you can evaluate the limit of the right hand side instead of the left hand side. However, this does depend on whether or not $g(x) = g(a)$.
+
+- If $g(x)\neq g(a)$, then $g(x) - g(a) \neq 0$. You can use the first part of the definition to say that $$\phi(g(x))\cdot \frac{(g(x) - g(a))}{x-a} = \dfrac{f(g(x)) - f(g(a))}{g(x)-g(a)}\cdot \frac{(g(x) - g(a))}{x-a}$$ Since $g(x) - g(a) \neq 0$, you can cancel these to get $$\phi(g(x))\cdot \frac{(g(x) - g(a))}{x-a} = \dfrac{f(g(x)) - f(g(a))}{x-a}.$$
+
+- If $g(x) = g(a)$ then $g(x) - g(a) = 0$ and also $f(g(x)) - f(g(a)) = 0$. This implies that  $$\phi(g(x))\cdot \frac{(g(x) - g(a))}{x-a} = \phi(g(x))\cdot 0 = 0.$$
+
+So they really are equal. Using this expression, together with the properties of limits gives
+$$
+\begin{aligned}
+(f\circ g)'(a) &= \left(\frac{f(g(x)) - f(g(a))}{x-a}\right)\\[0.5em]
+&= \lim_{x\to a}\phi\left(g(x)\right)\cdot \lim_{x\to a}\frac{g(x) - g(a)}{x-a}
+\end{aligned}
+$$
+The idea is then to prove that these two limits exist; as then $(f\circ g)'(a)$ would exist. The second of these limits is precisely the definition of $g'(a)$, so let's focus on the limit of $\phi(g(x))$ as $x$ tends to $a$. If this function $\phi \circ g$ is continuous at $a$ (see [Guide: Introduction to continuity]) then this limit exists and is equal to $\phi(g(a))$. The function $\phi$ is defined whenever $f$ is. Since $f$ is differentiable, then it is continuous at every point, including $g(a)$; therefore, $\phi$ is continuous at $g(a)$. Since $g$ is differentiable at $a$, then $g$ is continuous at $a$. Therefore, by properties of continuous functions (see [Guide: Introduction to continuity]), $\phi\circ g$ is continuous at $a$. It follows that $$\lim_{x\to a}\phi\left(g(x)\right) = \phi(g(a)) = f'(g(a))$$ by definition and so 
+
+$$
+\begin{aligned}
+(f\circ g)'(a) &= \lim_{x\to a}\phi\left(g(x)\right)\cdot \lim_{x\to a}\frac{g(x) - g(a)}{x-a}\\[0.5em]
+&= f'(g(a))\cdot g'(a)
+\end{aligned}
+$$
+
+and this is the chain rule!
 
 # Further reading {-}
 
 [Click this link to go back to Guide: Introduction to differentiation and the derivative.](../studyguides/introtodifferentiation.qmd)
 
-[Click this link to go back to Guide: The product rule](../studyguides/productrule.qmd)
+[Click this link to go back to Guide: The product rule.](../studyguides/productrule.qmd)
+
+[Click this link to go back to Guide: The quotient rule.](../studyguides/quotientrule.qmd)
+
+[Click this link to go back to Guide: The chain rule](../studyguides/chainrule.qmd)
 
 [For questions on differentiation and the derivative, please go to Questions: Introduction to differentation and the derivative.](../questions/qs-introtodifferentiation.qmd)
 
 ## Version history {-}
 
-v1.0: initial version created in 04/25 by tdhc.
+v1.0: initial version created in 05/25 by tdhc.
 
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

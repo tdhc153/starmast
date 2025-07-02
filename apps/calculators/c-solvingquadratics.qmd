@@ -1,0 +1,48 @@
+---
+title: "Calculator: Solving quadratic equations"
+author: Tom Coleman and Millie Pike
+format: html
+abstract-title: Summary
+abstract: A calculator to work out roots for quadratic equations.
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+<div id="calculator2" style="width: 100%; height: 500px;"></div>
+
+<script>
+  var elt = document.getElementById('calculator2');
+  var calculator2 = Desmos.GraphingCalculator(elt);
+  calculator2.setMathBounds({ left: -20, right: 20, bottom: -20, top: 20});
+  calculator2.setExpression({ id: "n0", type: "text", text: 'You can click on a,b,c below and type in your values for these, or use the sliders. You can then scroll down for the discriminant and roots.'});
+  calculator2.setExpression({ id: 'a', latex: 'a=1', sliderBounds: {min: '-10', max: '10', step: '1'}});
+  calculator2.setExpression({ id: 'b', latex: 'b=0', sliderBounds: {min: '-20', max: '20', step: '1'}});
+  calculator2.setExpression({ id: 'c', latex: 'c=0', sliderBounds: {min: '-40', max: '40', step: '1'}});
+  calculator2.setExpression({ id: 'line1', latex: 'y=ax^2 + bx + c', color: '#DB4315', secret: true});
+  calculator2.setExpression({ id: "n1", type: "text", text: 'The discriminant is'});
+  calculator2.setExpression({ id: 'D', latex: 'D=b^2 - 4ac'});
+  calculator2.setExpression({ id: "r1", type: "expression", latex: "(-b/(2a)-\\sqrt{b^2 - 4ac}/(2a),0)", pointStyle: "POINT", hidden: false, secret: true, showLabel: true, color: "#DB4315"});
+  calculator2.setExpression({ id: "r2", type: "expression", latex: "(-b/(2a)+\\sqrt{b^2 - 4ac}/(2a),0)", pointStyle: "POINT", hidden: false, secret: true, showLabel: true, color: "#DB4315"});
+  calculator2.setExpression({ id: "n2", type: "text", text: 'If D > 0 or D = 0, the expression y = ax^2 + bx + c has real roots p and q and factorizes to y = (x-p)(x-q), where'});
+  calculator2.setExpression({ id: 'number1', latex: 'p = \\frac{-b-\\sqrt{D}}{2a}'});
+  calculator2.setExpression({ id: 'number2', latex: 'q = \\frac{-b+\\sqrt{D}}{2a}'});
+  calculator2.setExpression({ id: "n3", type: "text", text: 'If D < 0, the expression y = ax^2 + bx + c has complex roots z and w, where'});
+  calculator2.setExpression({ id: 'number3', latex: 'z = \\frac{-b-i\\sqrt{-D}}{2a}', hidden: true});
+  calculator2.setExpression({ id: 'number4', latex: 'w = \\frac{-b+i\\sqrt{-D}}{2a}', hidden: true});
+</script>
+
+# Further reading {-}
+
+Versions of this interactive element appear in [Guide: Introduction to quadratic equations](../../studyguides/introtoquadratics.qmd) and [Guide: Factorization](../../studyguides/factorization.qmd), and it is mentioned in [Guide: Using the quadratic formula](../../studyguides/quadraticformula.qmd). Please click the relevant links to go to the guides.
+
+## Version history {-}
+
+v1.0: initial version created 06/25 by tdhc and Millie Pike as part of a University of St Andrews VIP project.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

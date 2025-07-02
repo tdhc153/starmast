@@ -1,2 +1,2067 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Michelle Arnetta">
+
+<title>Introduction to probability – STARMAST</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, alongside enabling our non-identifiable QuickCheck problem tracking. These are the sole purposes of enabling cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<!-- Mailerlite snippet -->
+ <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '1477275');
+</script>
+
+<script src="https://esm.sh/shinylive-r"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html"> 
+<span class="menu-text">Index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../studyguidelist.html"> 
+<span class="menu-text">Study guides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../qalist.html"> 
+<span class="menu-text">Questions and answers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../olist.html"> 
+<span class="menu-text">Facts and proofs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../applist.html"> 
+<span class="menu-text">Apps</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="e29912798153cb26ed22c614d2ad3356" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> New website features and statistical calculators available now! (02/05/25)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-probability" id="toc-what-is-probability" class="nav-link active" data-scroll-target="#what-is-probability">What is probability?</a></li>
+  <li><a href="#sample-space" id="toc-sample-space" class="nav-link" data-scroll-target="#sample-space">Sample space</a>
+  <ul class="collapse">
+  <li><a href="#probability-and-the-complement-rule" id="toc-probability-and-the-complement-rule" class="nav-link" data-scroll-target="#probability-and-the-complement-rule">Probability and the complement rule</a></li>
+  <li><a href="#theoretical-probability-and-experimental-probability" id="toc-theoretical-probability-and-experimental-probability" class="nav-link" data-scroll-target="#theoretical-probability-and-experimental-probability">Theoretical probability and experimental probability</a></li>
+  </ul></li>
+  <li><a href="#outcomes-that-vary-in-probability" id="toc-outcomes-that-vary-in-probability" class="nav-link" data-scroll-target="#outcomes-that-vary-in-probability">Outcomes that vary in probability</a></li>
+  <li><a href="#independent-events" id="toc-independent-events" class="nav-link" data-scroll-target="#independent-events">Independent events</a></li>
+  <li><a href="#dependent-events" id="toc-dependent-events" class="nav-link" data-scroll-target="#dependent-events">Dependent events</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="introtoprobability.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="introtoprobability.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to probability</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Statistics</div>
+    <div class="quarto-category">Probability</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Michelle Arnetta </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    Probability theory is an important branch of mathematics, which is foundational to statistics and is used in quantum mechanics. This guide on an introduction to probability covers the ideas of sample space events, independent events, dependent events, and tree diagrams to work out probabilities.
+  </div>
+</div>
+
+
+</header>
+
+
+<table><tbody><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls=""><source src="./Narrations/introtoprobability.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></td></tr></tbody></table>
+<section id="what-is-probability" class="level1 unnumbered">
+<h1 class="unnumbered">What is probability?</h1>
+<p>Uncertain situations are everywhere: from rolling a dice and flipping a coin, to weather forecasting and financial markets. How exactly can you approach decision making in the face of uncertainty? For example, should you bring an umbrella tomorrow? Or, should you invest in a certain stock?</p>
+<p>When you are facing these situations, you could turn to <strong>probability theory</strong> to predict the likelihood of certain outcomes, especially when you have to make important decisions. Probability theory is not only foundational to the study of statistics, but also has uses in pure mathematics, quantum mechanics, economics, biology, and even in manufacturing.</p>
+<p>This guide introduces you to probability theory. First, the concept of sample space will be explained. Next, the complement rule will be demonstrated, and a distinction will be made between theoretical probability and experimental probability. Then you will learn about independent and dependent events.</p>
+</section>
+<section id="sample-space" class="level1">
+<h1>Sample space</h1>
+<p>When thinking about probability of something happening, it is important to consider what all the possible <strong>outcomes</strong> are in that situation. The collection of all possible outcomes is known as the <strong>sample space</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of sample space
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An <strong>outcome</strong> is a single result of an experiment or situation. An <strong>event</strong> is some collection of outcomes. The <strong>sample space</strong> is the set of <em>all possible</em> <strong>outcomes</strong>.</p>
+<p>Mathematically speaking, an outcome is an element of the sample space, and an event is a subset of the sample space.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mathematically speaking, an outcome is an element of the sample space, and an event is a subset of the sample space.</p>
+</div>
+</div>
+<p>The sample space can be represented in various different ways, but one common example is to represent them as a <strong>list</strong> of outcomes.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try to flip a coin using the interactive app below.</p>
+<p>There are two possible outcomes when you flip a coin: heads (H) or tails (T). Therefore, the sample space of flipping a coin once can be represented as <span class="math inline">\(\{H, T\}\)</span>.</p>
+</div>
+</div>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 340
+library(shiny)
+library(bslib)
+
+# Hard-coded hex color for the button (a nice teal color)
+BUTTON_COLOR &lt;- "#3F6BB6"
+
+ui &lt;- page_fluid(
+  title = "Coin flipper",
+  
+  card(
+    card_header("Coin flipper"),
+    card_body(
+      # Use a row layout for landscape orientation
+      layout_columns(
+        col_widths = c(4, 4, 4), # Equal width columns
+        
+        # Left column: Description
+        card(
+          card_body(
+            div(
+              style = "display: flex; height: 100%; align-items: center; justify-content: center;",
+              p("Click the button to flip a coin.", style = "font-size: 18px;")
+            )
+          )
+        ),
+        
+        # Middle column: Coin display
+        card(
+          card_body(
+            div(
+              style = "text-align: center;",
+              div(
+                style = "font-size: 40px; line-height: 1.2; width: 150px; height: 150px; 
+                       margin: 0 auto; border: 2px solid #ccc; border-radius: 50%;
+                       display: flex; align-items: center; justify-content: center;
+                       background-color: #f0f0f0;",
+                textOutput("coinResult")
+              )
+            )
+          )
+        ),
+        
+        # Right column: Button
+        card(
+          card_body(
+            div(
+              style = "display: flex; height: 100%; align-items: center; justify-content: center;",
+              actionButton("flipButton", "Flip Coin", class = "btn-lg", 
+                          style = paste0("background-color: ", BUTTON_COLOR, "; color: white;"))
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  
+  # Create a reactive value to store the current coin side
+  coinResult &lt;- reactiveVal(sample(c("HEADS", "TAILS"), 1))
+  
+  # Update the coin result when the flip button is clicked
+  observeEvent(input$flipButton, {
+    # Flipping animation - this is a simplified version using invalidateLater
+    # to simulate the coin flipping
+    for(i in 1:5) {
+      invalidateLater(i * 100)
+    }
+    
+    # Final result
+    coinResult(sample(c("HEADS", "TAILS"), 1))
+  })
+  
+  # Display the current coin result
+  output$coinResult &lt;- renderText({
+    coinResult()
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)</code></pre>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try rolling a standard six-sided die using the app below!</p>
+<p>There are six possible outcomes when you roll a standard six-sided die: <span class="math inline">\(1, 2, 3, 4, 5,\)</span> and <span class="math inline">\(6\)</span>. Therefore, the sample space of rolling a standard six-sided die can be represented as <span class="math inline">\(\{1, 2, 3, 4, 5, 6\}\)</span>. Here, an event could be something like ‘an even number is rolled’, which is represented by <span class="math inline">\(\{2,4,6\}\)</span>.</p>
+</div>
+</div>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 300
+library(shiny)
+library(bslib)
+
+# Hard-coded hex color for the button (a nice teal color)
+BUTTON_COLOR &lt;- "#3F6BB6"
+
+ui &lt;- page_fluid(
+  title = "Six-sided die roller",
+  
+  card(
+    card_header("Six-sided die roller"),
+    card_body(
+      # Use a row layout for landscape orientation
+      layout_columns(
+        col_widths = c(4, 4, 4), # Equal width columns
+        
+        # Left column: Description
+        card(
+          card_body(
+            div(
+              style = "display: flex; height: 100%; align-items: center; justify-content: center;",
+              p("Click the button to roll a 6-sided die.", style = "font-size: 18px;")
+            )
+          )
+        ),
+        
+        # Middle column: Dice display
+        card(
+          card_body(
+            div(
+              style = "text-align: center;",
+              div(
+                style = "font-size: 120px; line-height: 1.2; width: 150px; height: 150px; 
+                       margin: 0 auto; border: 2px solid #ccc; border-radius: 15px;
+                       display: flex; align-items: center; justify-content: center;",
+                textOutput("diceValue")
+              )
+            )
+          )
+        ),
+        
+        # Right column: Button
+        card(
+          card_body(
+            div(
+              style = "display: flex; height: 100%; align-items: center; justify-content: center;",
+              actionButton("rollButton", "Roll Dice", class = "btn-lg", 
+                          style = paste0("background-color: ", BUTTON_COLOR, "; color: white;"))
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  
+  # Create a reactive value to store the current roll
+  diceValue &lt;- reactiveVal(sample(1:6, 1))
+  
+  # Update the dice value when the roll button is clicked
+  observeEvent(input$rollButton, {
+    # Rolling animation - this is a simplified version using invalidateLater
+    # to simulate the dice rolling
+    for(i in 1:5) {
+      invalidateLater(i * 100)
+    }
+    
+    # Final roll
+    diceValue(sample(1:6, 1))
+  })
+  
+  # Display the current dice value
+  output$diceValue &lt;- renderText({
+    diceValue()
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)</code></pre>
+<p>But what if the coin was flipped, then the die was rolled? When you are representing the sample space of all possible outcomes of two processes, it would be helpful to use a <strong>table</strong>. When you are representing the sample space of two or more processes, it could also be helpful to use a <strong>tree diagram</strong>.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You flip a coin and roll a die. When you flip a coin, the outcome can either be heads or tails. When you flip a die, the possible outcomes are 1, 2, 3, 4, 5, 6. Combining these together, there are 12 total possible outcomes. When representing this as a list, you could write this as <span class="math inline">\(\{H1, H2, H3, H4, H5, H6, T1, T2, T3, T4, T5, T6\}\)</span>.</p>
+<p>Since you are working with two events, you could also represent this as a <strong>table</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>H</strong></td>
+<td>H1</td>
+<td>H2</td>
+<td>H3</td>
+<td>H4</td>
+<td>H5</td>
+<td>H6</td>
+</tr>
+<tr class="even">
+<td><strong>T</strong></td>
+<td>T1</td>
+<td>T2</td>
+<td>T3</td>
+<td>T4</td>
+<td>T5</td>
+<td>T6</td>
+</tr>
+</tbody>
+</table>
+<p>Alternatively, you could represent it as a <strong>tree diagram</strong>, which is especially useful if you are working with two or more events:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoprobability-fig1-8.png" class="img-fluid figure-img"></p>
+<figcaption>Tree diagram for Example 3, flipping a coin then rolling a die.</figcaption>
+</figure>
+</div>
+<p>Notice that since the coin flipping occurred first, the tree diagram begins with this event. It then branches out to the possible outcomes for when the die is rolled.</p>
+</div>
+</div>
+<section id="probability-and-the-complement-rule" class="level2">
+<h2 class="anchored" data-anchor-id="probability-and-the-complement-rule">Probability and the complement rule</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of probability
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Probability</strong> refers to the likelihood of a event happening relative to the sample space it is in.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To represent the probability of events over the sample space, it would be helpful to use the notation <span class="math inline">\(\mathbb{P}\)</span>.</p>
+<ul>
+<li><p>The probability of event <span class="math inline">\(A\)</span> occurring can be written as <span class="math inline">\(\mathbb{P}(A)\)</span>.</p></li>
+<li><p>The probability of event <span class="math inline">\(A\)</span> <strong>not</strong> occurring can be written as <span class="math inline">\(\mathbb{P}(A')\)</span>.</p></li>
+</ul>
+<p>You will see this notation used below.</p>
+</div>
+</div>
+<p>There are three common ways of representing probability:</p>
+<ul>
+<li><p>As a <strong>fraction</strong>, such as <span class="math inline">\(\frac{1}{2},\frac{1}{5},\frac{3}{4}\)</span></p></li>
+<li><p>As a <strong>decimal</strong>, such as 0.5, 0.2, 0.75</p></li>
+<li><p>As a <strong>percentage</strong>, such as 50%, 20%, 75%</p></li>
+</ul>
+<p>All three will be used throughout the guide.</p>
+<p>Here are two important facts about probability:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>Probability <strong>always</strong> has to be a number in between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>. When the probability is <span class="math inline">\(0\)</span>, there is no possibility of the event happening, and when the probability is <span class="math inline">\(1\)</span>, the event will definitely happen. Therefore, probability cannot be less than <span class="math inline">\(0\)</span>, and it cannot be more than <span class="math inline">\(1\)</span>.</p>
+<p>More formally, if <span class="math inline">\(A\)</span> is an event contained in a sample space <span class="math inline">\(S\)</span>, then: <span class="math display">\[0 \leq \mathbb{P}(A) \leq 1.\]</span></p></li>
+<li><p>The probabilities of all outcomes in an event always add up to <span class="math inline">\(1\)</span>.</p>
+<p>This can be expressed more formally as: <span class="math display">\[\sum_{x\in S}P(x)=1\]</span></p></li>
+</ul>
+</div>
+</div>
+<p>For example, when flipping a coin, the probability of getting heads is <span class="math inline">\(\frac{1}{2}\)</span> (a number between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>), and the probability of getting tails is <span class="math inline">\(\frac{1}{2}\)</span>. You can add these up together to get: <span class="math display">\[\frac{1}{2}+\frac{1}{2}=1\]</span></p>
+<p>Notice that, in this case, the probability of ‘heads’ is equal to the probability of ‘tails’ <strong>not</strong> occurring, and the probability of ‘tails’ is equal to the probability of ‘heads’ <strong>not</strong> occurring. Therefore, ‘heads’ and ‘tails’ can be called <strong>complementary events</strong>. You could then, for example, subtract the probability of ‘heads’ from 1 to get the probability of ‘tails’. <span class="math display">\[\mathbb{P}(\textsf{tails})=1-\mathbb{P}(\textsf{tails'})=1-\mathbb{P}(\textsf{heads})=1-\frac{1}{2}=\frac{1}{2}\]</span> This is known as the <strong>complement rule</strong>.</p>
+<!-- It also applies when probability is represented as a decimal or percentage: -->
+<!-- $$ -->
+<!-- \mathbb{P}(\textsf{tails})=1-\mathbb{P}(\textsf{tails'})=1-\mathbb{P}(\textsf{heads})=1-0.5=0.5 -->
+<!-- $$ -->
+<!-- and -->
+<!-- $$ -->
+<!-- \mathbb{P}(\textsf{tails})=1-\mathbb{P}(\textsf{tails'})=1-\mathbb{P}(\textsf{heads})=100\%-50\%=50\% -->
+<!-- $$ -->
+</section>
+<section id="theoretical-probability-and-experimental-probability" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="theoretical-probability-and-experimental-probability">Theoretical probability and experimental probability</h2>
+<p>There are two main types of probability: <strong>theoretical probability</strong> and <strong>experimental probability</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of theoretical probability
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Theoretical probability</strong> is probability based on what you <em>expect</em> to happen.</p>
+</div>
+</div>
+<p>Here is how you can find theoretical probability:</p>
+<p><span class="math display">\[\mathbb{P}(\textsf{event})=\frac{\textsf{number of desired outcomes}}{\textsf{total number of possible outcomes}}\]</span></p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember from Example 2 that there are six possible outcomes when you roll a standard fair six-sided die; <span class="math inline">\(\{1, 2, 3, 4, 5, 6\}\)</span>. It’s important to say here that each of the outcomes are equally likely - you have no more probability to roll a six than you do any other number.</p>
+<p>So, what is the probability of the event where you roll a <span class="math inline">\(6\)</span>? Here, there is one desired outcome - a <span class="math inline">\(6\)</span>. The total number of possible outcomes is <span class="math inline">\(6\)</span>. Therefore, the probability of rolling a <span class="math inline">\(6\)</span> is: <span class="math display">\[\mathbb{P}(\textsf{roll a 6}) = \frac{1}{6}.\]</span></p>
+<p>So, what is the probability of the event where you roll an odd number? Here, there is three desired outcomes - <span class="math inline">\(1\)</span>, <span class="math inline">\(3\)</span> and <span class="math inline">\(5\)</span>. The total number of possible outcomes is still <span class="math inline">\(6\)</span>. Therefore, the probability of rolling an odd number is: <span class="math display">\[\mathbb{P}(\textsf{roll an odd number}) = \frac{3}{6} = \frac{1}{2}.\]</span></p>
+<p>Finally, what is the probability of not rolling a <span class="math inline">\(6\)</span>? You could work this out using the complement rule. The probability of not rolling a <span class="math inline">\(6\)</span> is the same as <span class="math inline">\(1\)</span> minus the probability of rolling a <span class="math inline">\(6\)</span>. Therefore, the probability of not rolling a <span class="math inline">\(6\)</span> is: <span class="math display">\[\mathbb{P}(\textsf{(roll a 6)}') = 1 - \mathbb{P}(\textsf{roll a 6}) = 1- \frac{1}{6} = \frac{5}{6}.\]</span> This is the power of the complement rule!</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of experimental probability
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Experimental probability</strong> is probability based on what actually happens.</p>
+</div>
+</div>
+<p>Here is how you can find experimental probability:</p>
+<p><span class="math display">\[
+\mathbb{P}(\textsf{event})=\frac{\textsf{number of times that a desired event occurs}}{\textsf{total number of trials in an experiment}}
+\]</span></p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose you flip a coin 1000 times. The probability of ‘tails’ may initially be higher or lower than 0.5. However, the more flips you do, the more the probability of ‘tails’ will tend to 0.5. This is an example of the <strong>law of large numbers</strong>: the more trials you do, the closer your experimental probability will get to the theoretical probability.</p>
+<p>You can try this for yourself in the following interactive app:</p>
+</div>
+</div>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 360
+library(shiny)
+library(bslib)
+
+# Hard-coded hex color for the button (blue color requested)
+BUTTON_COLOR &lt;- "#3F6BB6"
+
+ui &lt;- page_fluid(
+  title = "Coin Flipper",
+  
+  card(
+    card_header("Coin Flipper"),
+    card_body(
+      # Use a row layout for landscape orientation
+      layout_columns(
+        col_widths = c(4, 4, 4), # Equal width columns
+        
+        # Left column: Description and stats
+        card(
+          card_body(
+            div(
+              style = "display: flex; flex-direction: column; height: 100%; justify-content: center;",
+              p("Click the button to flip a coin.", style = "font-size: 18px;"),
+              br(),
+              div(
+                style = "background-color: #f8f9fa; padding: 15px; border-radius: 5px;",
+                h5("Statistics:"),
+                div(
+                  style = "display: flex; justify-content: space-between;",
+                  div("Total flips:"),
+                  textOutput("totalFlips", inline = TRUE)
+                ),
+                div(
+                  style = "display: flex; justify-content: space-between;",
+                  div("Heads:"),
+                  textOutput("headsCount", inline = TRUE)
+                ),
+                div(
+                  style = "display: flex; justify-content: space-between;",
+                  div("Tails:"),
+                  textOutput("tailsCount", inline = TRUE)
+                )
+              )
+            )
+          )
+        ),
+        
+        # Middle column: Coin display
+        card(
+          card_body(
+            div(
+              style = "height: 100%; display: flex; align-items: center; justify-content: center;",
+              div(
+                id = "coinDisplay",
+                style = "font-size: 40px; line-height: 1; width: 150px; height: 150px; 
+                       margin: 0 auto; border: 2px solid #ccc; border-radius: 50%;
+                       display: flex; align-items: center; justify-content: center;
+                       background-color: #f0f0f0;",
+                textOutput("coinResult")
+              )
+            )
+          )
+        ),
+        
+        # Right column: Button
+        card(
+          card_body(
+            div(
+              style = "display: flex; flex-direction: column; height: 100%; 
+                     align-items: center; justify-content: center; gap: 20px;",
+              actionButton("flipButton", "Flip Coin", class = "btn-lg", 
+                          style = paste0("background-color: ", BUTTON_COLOR, "; color: white;")),
+              actionButton("resetButton", "Reset Stats", class = "btn-sm")
+            )
+          )
+        )
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  
+  # Create reactive values to store the current state
+  flips &lt;- reactiveValues(
+    current = sample(c("HEADS", "TAILS"), 1),
+    total = 0,
+    heads = 0,
+    tails = 0,
+    flipping = FALSE,
+    timer = NULL  # Track the timer
+  )
+  
+  # Initialize the display
+  output$coinResult &lt;- renderText({
+    if(flips$flipping) {
+      return("")  # Show blank state during animation
+    } else {
+      return(flips$current)
+    }
+  })
+  
+  # Update the statistics displays
+  output$totalFlips &lt;- renderText({
+    flips$total
+  })
+  
+  output$headsCount &lt;- renderText({
+    paste0(flips$heads, " (", round(ifelse(flips$total &gt; 0, flips$heads/flips$total*100, 0), 1), "%)")
+  })
+  
+  output$tailsCount &lt;- renderText({
+    paste0(flips$tails, " (", round(ifelse(flips$total &gt; 0, flips$tails/flips$total*100, 0), 1), "%)")
+  })
+  
+  # Handle the coin flip
+  observeEvent(input$flipButton, {
+    # Set the flipping state to true to show blank state
+    flips$flipping &lt;- TRUE
+    
+    # Create a separate reactive timer that will complete the flip after delay
+    # This fixes the delay issue in the previous version
+    flips$timer &lt;- reactiveTimer(500)
+    
+    # This observer will fire when the timer triggers
+    observeEvent(flips$timer(), {
+      # Determine the result
+      result &lt;- sample(c("HEADS", "TAILS"), 1)
+      
+      # Update the state
+      flips$current &lt;- result
+      flips$total &lt;- flips$total + 1
+      
+      # Update the appropriate counter
+      if(result == "HEADS") {
+        flips$heads &lt;- flips$heads + 1
+      } else {
+        flips$tails &lt;- flips$tails + 1
+      }
+      
+      # End the flipping state
+      flips$flipping &lt;- FALSE
+    }, once = TRUE) # This ensures it only fires once per button click
+  })
+  
+  # Reset button to clear statistics
+  observeEvent(input$resetButton, {
+    flips$total &lt;- 0
+    flips$heads &lt;- 0
+    flips$tails &lt;- 0
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)</code></pre>
+<!-- For reference, here is the R code to generate this figure: -->
+<!-- coin \<- c(0, 1) -->
+<!-- maxn \<- 1000 -->
+<!-- flips \<- sample(x=coin, size=maxn, replace=TRUE) -->
+<!-- cum.flips \<- cumsum(flips) -->
+<!-- ntrials \<- 1:maxn -->
+<!-- prop.flips \<- cum.flips/ntrials -->
+<!-- plot(x=ntrials, y=prop.flips, type="b", xlab="Number of flips", ylab="Probability of tails") -->
+<!-- ::: -->
+</section>
+</section>
+<section id="outcomes-that-vary-in-probability" class="level1">
+<h1>Outcomes that vary in probability</h1>
+<p>The examples you have examined so far involve events with equally probable outcomes. For instance, you have a 50/50 chance of getting either heads or tails after flipping a coin. Similarly, it is equally likely for you to get any number between 1 and 6 after rolling a fair die: a <span class="math inline">\(\frac{1}{6}\)</span> chance. But what if the outcomes vary in probability?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When all outcomes are equally likely, the sample space is <strong>uniform</strong>. When the outcomes vary in probability, the sample space is <strong>not uniform</strong>.</p>
+<p>However, this property is not necessarily reflected in the sample space. For example, even if you flip a biased coin that is more likely to get ‘heads’, the sample space is still represented as <span class="math inline">\(\{H, T\}\)</span>.</p>
+<p>The next step in analyzing non-uniform sample spaces is the use of <strong>probability mass functions</strong> or <strong>probability density functions</strong>. See <a href="../studyguides/pmfspdfscdfs.html">Guide: PMFs, PDFs, CDFs</a> for more.</p>
+</div>
+</div>
+<p>It then becomes all the more useful to represent these outcomes with tree diagrams, since outcomes can have different probabilities.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that you have a bag containing 5 marbles in total, with 2 red marbles and 3 blue marbles. If you draw one marble from the bag, what is the probability of it being a red marble, and what is the probability of it being a blue one? This can be represented as a tree diagram:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoprobability-fig2-9.png" class="img-fluid figure-img"></p>
+<figcaption>Tree diagram for marble bag in Example 6.</figcaption>
+</figure>
+</div>
+<p>As shown in the diagram, <span class="math inline">\(\mathbb{P}(\textsf{red})\)</span> is <span class="math inline">\(\frac{2}{5}\)</span>, and <span class="math inline">\(\mathbb{P}(\textsf{blue})\)</span> is <span class="math inline">\(\frac{3}{5}\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can also use a tree diagram to represent events with more than two outcomes. Imagine a jar containing 10 candies. It has 1 yellow candy, 4 green candies, and 5 purple candies. If you take one candy from the jar, what is the probability of each colour being taken?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoprobability-fig3-10.png" class="img-fluid figure-img"></p>
+<figcaption>Tree diagram for candy jar in Example 7.</figcaption>
+</figure>
+</div>
+<p>Since <span class="math inline">\(\frac{4}{10}=\frac{2}{5}\)</span> and <span class="math inline">\(\frac{5}{10}=\frac{1}{2}\)</span>, the diagram can be simplified as follows:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoprobability-fig4-11.png" class="img-fluid figure-img"></p>
+<figcaption>Simplified tree diagram for candy jar in Example 7.</figcaption>
+</figure>
+</div>
+<p>As shown in the diagram, <span class="math inline">\(\mathbb{P}(\textsf{yellow})\)</span> is <span class="math inline">\(\frac{1}{10}\)</span>, <span class="math inline">\(\mathbb{P}(\textsf{green})\)</span> is <span class="math inline">\(\frac{2}{5}\)</span>, and <span class="math inline">\(\mathbb{P}(\textsf{purple})\)</span> is <span class="math inline">\(\frac{1}{2}\)</span>.</p>
+<p>The <strong>complement rule</strong> also applies to non-uniform sample spaces. Consider the candy jar example. What if you knew the probability of taking a yellow or purple candy, but not the probability of taking a green candy?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoprobability-fig5-12.png" class="img-fluid figure-img"></p>
+<figcaption>Incomplete tree diagram for candy jar in Example 7.</figcaption>
+</figure>
+</div>
+<p>To apply the complement rule, you should first find the probability of <strong>not</strong> taking the green candy. You can do this by adding together the probabilities of taking a yellow or purple candy. <span class="math display">\[\mathbb{P}(\textsf{(green)}')=\mathbb{P}(\textsf{yellow}) + \mathbb{P}(\textsf{purple}) =  \frac{1}{10}+\frac{1}{2}=\frac{1}{10}+\frac{5}{10}=\frac{6}{10}\]</span></p>
+<p>The probability of taking the green candy is <strong>complementary</strong> to the probability of not taking the green candy. From this, you can calculate the mystery probability: <span class="math display">\[\mathbb{P}(\textsf{green})=1-\mathbb{P}(\textsf{(green)}') = 1- \frac{6}{10}=\frac{4}{10}=\frac{2}{5}\]</span></p>
+</div>
+</div>
+</section>
+<section id="independent-events" class="level1">
+<h1>Independent events</h1>
+<p>When you are representing the probabilities of two or more events, it can be important to consider the relationships between the events. Events can either be <strong>dependent</strong> on or <strong>independent</strong> of each other.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of independent events
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Two events <span class="math inline">\(A,B\)</span> are <strong>independent</strong> if the occurrence of one event does not affect the likelihood of the other event happening.</p>
+<p>If two events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are independent, then the probability of both events occurring is: <span class="math display">\[\mathbb{P}(A\cap B) = \mathbb{P}(A)\cdot \mathbb{P}(B)\]</span> The symbol <span class="math inline">\(\cap\)</span> is the ‘intersection’ of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> - here, <span class="math inline">\(\mathbb{P}(A\cap B)\)</span> means <span class="math inline">\(\mathbb{P}(A\textsf{ and }B)\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To illustrate this, you can return to the marble bag example in Example 6. What if two instances of drawing a marble occurred, with the following events:</p>
+<ul>
+<li><p>Event 1: One marble is drawn, and the colour of the marble is recorded.</p></li>
+<li><p>Event 2: After the marble from Event 1 is put back into the bag, another marble is drawn, and the colour of the marble is recorded.</p></li>
+</ul>
+<p>These events can be outlined by a tree diagram:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoprobability-fig6-13.png" class="img-fluid figure-img"></p>
+<figcaption>Tree diagram for two dips in the marble bag in Example 8.</figcaption>
+</figure>
+</div>
+<p>No matter what the colour of the marble from part 1 is, the probabilities of each marble colour will remain the same for part 2. This is because the first marble was drawn and replaced by the same colour. Considering this, you can conclude that 1 and 2 are <strong>independent events</strong>, as the outcome of part 1 does not influence the outcome of part 2.</p>
+<p>You can also use the tree diagram as a guide to calculating the probabilities of two particular events occurring:</p>
+<ul>
+<li><p>Probability of drawing a red marble, then a red marble: <span class="math display">\[\mathbb{P}(\textsf{red and red})=\left(\dfrac{2}{5}\right)\left(\dfrac{2}{5}\right)=\frac{4}{25}\]</span> which is <span class="math inline">\(0.16\)</span> or <span class="math inline">\(16\%\)</span>.</p></li>
+<li><p>Probability of drawing a red marble, then a blue marble: <span class="math display">\[\mathbb{P}(\textsf{red and blue})=\left(\frac{2}{5}\right)\left(\frac{3}{5}\right)=\frac{6}{25}\]</span> which is <span class="math inline">\(0.24\)</span> or <span class="math inline">\(24\%\)</span>.</p></li>
+<li><p>Probability of drawing a blue marble, then a red marble: <span class="math display">\[\mathbb{P}(\textsf{blue and red})=\left(\frac{3}{5}\right)\left(\frac{2}{5}\right)=\frac{6}{25}\]</span> which is <span class="math inline">\(0.24\)</span> or <span class="math inline">\(24\%\)</span>.</p></li>
+<li><p>Probability of drawing a blue marble, then a blue marble: <span class="math display">\[\mathbb{P}(\textsf{blue and blue})=\left(\frac{3}{5}\right)\left(\frac{3}{5}\right)=\frac{9}{25}\]</span> which is <span class="math inline">\(0.36\)</span> or <span class="math inline">\(36\%\)</span>.</p></li>
+</ul>
+<p>As you would expect, all probabilities add up to <span class="math inline">\(1\)</span>!</p>
+</div>
+</div>
+</section>
+<section id="dependent-events" class="level1">
+<h1>Dependent events</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of dependent events
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Two events are <strong>dependent</strong> when the occurrence of one event affects the likelihood of another event happening.</p>
+</div>
+</div>
+<p>Dependent events tend to occur when an event changes the sample space by removal of an outcome.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The previous marble bag example in Example 6 can be adjusted to demonstrate <strong>dependent events</strong>. What if the two events occurred in this way instead?</p>
+<ul>
+<li><p>Event 1: One marble is drawn, and the colour of the marble is recorded.</p></li>
+<li><p>Event 2: The marble from Event 1 is not replaced. Another marble is drawn, and the colour of the marble is recorded.</p></li>
+</ul>
+<p>Here, in the first event, the sample space can be written as <span class="math inline">\(\{\textsf{red},\textsf{red},\textsf{blue},\textsf{blue},\textsf{blue}\}\)</span>. In the second event, the sample space has changed, because the ball is not replaced. For instance, if a red ball is picked, then the sample space changes in the second event to <span class="math inline">\(\{\textsf{red},\textsf{blue},\textsf{blue},\textsf{blue}\}\)</span>. This is how the events would look on a tree diagram:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./FiguresPNG/introtoprobability-fig7-14.png" class="img-fluid figure-img"></p>
+<figcaption>Tree diagram for two dips in the marble bag in Example 9.</figcaption>
+</figure>
+</div>
+<p>You can observe that in the second event the <strong>denominators</strong> of the probabilities change from <span class="math inline">\(5\)</span> to <span class="math inline">\(4\)</span>. This is because there were initially <span class="math inline">\(5\)</span> marbles in the bag, and one marble was drawn without replacement, leaving <span class="math inline">\(4\)</span> marbles in the bag for Event <span class="math inline">\(2\)</span>. This is because the sample space has changed.</p>
+<p>The <strong>numerators</strong> only change for the marble colour already drawn. If a red marble is drawn, then <span class="math inline">\(1\)</span> red marble will be left among the <span class="math inline">\(4\)</span> remaining marbles in the bag, so the probability of drawing a red marble in Event 2 is <span class="math inline">\(\frac{1}{4}\)</span>. On the other hand, if a blue marble is drawn, then <span class="math inline">\(2\)</span> blue marbles will be left among the <span class="math inline">\(4\)</span> remaining marbles in the bag, so the probability of drawing a blue marble in event <span class="math inline">\(2\)</span> is <span class="math inline">\(\frac{2}{4}\)</span>.</p>
+<p>Therefore, the probabilities of outcomes in event 2 are <strong>dependent</strong> on the outcome of event 1.</p>
+<p>As with independent events, you can use the tree diagram as a guide to calculating the probabilities of two particular events occurring:</p>
+<ul>
+<li><p>Probability of drawing a red marble, then a red marble: <span class="math display">\[\mathbb{P}(\textsf{red then red})=\left(\frac{2}{5}\right)\left(\frac{1}{4}\right)=\frac{2}{20}=\frac{1}{10}\]</span> which is <span class="math inline">\(0.1\)</span> or <span class="math inline">\(10\%\)</span>.</p></li>
+<li><p>Probability of drawing a red marble, then a blue marble: <span class="math display">\[\mathbb{P}(\textsf{red then blue})=\left(\frac{2}{5}\right)\left(\frac{3}{4}\right)=\frac{6}{20}=\frac{3}{10}\]</span> which is <span class="math inline">\(0.3\)</span> or <span class="math inline">\(30\%\)</span>.</p></li>
+<li><p>Probability of drawing a blue marble, then a red marble: <span class="math display">\[\mathbb{P}(\textsf{blue then red})=\left(\frac{3}{5}\right)\left(\frac{2}{4}\right)=\frac{6}{20} = \frac{3}{10}\]</span> which is <span class="math inline">\(0.3\)</span> or <span class="math inline">\(30\%\)</span>.</p></li>
+<li><p>Probability of drawing a blue marble, then a blue marble: <span class="math display">\[\mathbb{P}(\textsf{blue then blue})=\left(\frac{3}{5}\right)\left(\frac{2}{4}\right)=\frac{6}{20} = \frac{3}{10}\]</span> which is <span class="math inline">\(0.3\)</span> or <span class="math inline">\(30\%\)</span>.</p></li>
+</ul>
+<p>As you would expect, all probabilities add up to <span class="math inline">\(1\)</span>!</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The study of probabilities given that an event has already happened is known as <strong>conditional probability</strong>. For more about conditional probability, see Guide: Conditional probability.</p>
+</div>
+</div>
+</section>
+<section id="quick-check-problems" class="level1">
+<h1>Quick check problems</h1>
+<!-- add facility for webexercises to work on html -->
+<!-- add facility to check answers at end rather than one at a time -->
+<div class="webex-check webex-box">
+<ol type="1">
+<li>Today, it can either rain or not rain. Suppose that the probability of rain is 0.7. What is the probability of no rain? (Provide your answer in decimal format.)</li>
+</ol>
+<p>Answer: The probability of no rain is <input class="webex-solveme nospaces" size="3" data-answer="[&quot;0.3&quot;,&quot;.3&quot;]">.</p>
+<ol start="2" type="1">
+<li>You roll a six-sided die three times. What is the probability of getting a 6 three times? (Provide your answer as the simplest fraction.)</li>
+</ol>
+<p>Answer: The probability of getting a 6 three times is <input class="webex-solveme nospaces" size="5" data-answer="[&quot;1/216&quot;]">.</p>
+<ol start="3" type="1">
+<li>A researcher flips a coin 10 times, and it lands on heads 7 times. Therefore, the researcher concludes that <span class="math inline">\(\mathbb{P}(\textsf{heads})\)</span> is <span class="math inline">\(\frac{7}{10}\)</span>. What type of probability is this?</li>
+</ol>
+<p>Answer: This is an example of <select class="webex-select"><option value="blank"></option><option value="">theoretical</option><option value="answer">experimental</option></select> probability.</p>
+<ol start="4" type="1">
+<li>You are given three statements below. Decide whether they are true or false.</li>
+</ol>
+<ol type="a">
+<li><p>The sum of the probabilities of two complementary events is 1. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+<li><p>Only tables can be used to represent the sample space of two events. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p>Tree diagrams can be used to represent both dependent and independent events. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+</ol>
+</div>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../questions/qs-introtoprobability.html">For more questions on the subject, please go to Questions: Introduction to probability.</a></p>
+<p>For more about how to represent probabilities as functions on the sample space via probability mass functions and probability density functions, please go to <a href="../studyguides/pmfspdfscdfs.html">Guide: PMFs, PDFs, CDFs</a>.</p>
+<p>For more about how to work out probabilities after certain events have already occurred, please go to Guide: Conditional probability.</p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 04/25 by Michelle Arnetta as part of a University of St Andrews VIP project.</p>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+  let allCorrect = false;
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) 
+  {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
+  }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if (this.dataset.tol > 0)
+  {
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* check each question to see whether it was answered correctly */
+  update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
+}
+
+</script>
+<!--------------------  Email Forms -----------------------------------
+        Compiled into each .html page by Quarto.
+        Website hosted and form handled by Netlify now
+        Mailing list provided by mailerlite
+        Input verified by reCaptcha2 
+        
+        Authors (recent to latest): 
+           Tristin Doherty (Trido)
+           Mohit Agarwal (Mohit-Agarwa1)
+--------------------------------------------------------------------->
+<script>
+  // Adds an extra layer of validation to aid user input,
+  // some of these are covered by basic html form validations as well, but netlify handles everything else
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[name='feedback']"); 
+    
+    form.addEventListener("submit", function(event) {
+        const nameInput = document.querySelector("input[name='name']")?.value.trim();
+        const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+        const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+
+        if (!nameInput)    { alert("Please enter a name."); return; }
+        if (!emailInput)   { alert("Please enter an email."); return; }
+        if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+        
+        event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+        const subjectInput = document.querySelector("input[name='subject']");
+                
+        // sanitise inputs
+        const sanitizedName = sanitizeInput(nameInput); 
+        const sanitizedEmail = sanitizeEmail(emailInput);
+        const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+        // validate email
+        if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+        subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+        form.submit();
+    });
+});
+
+// Removes leading and trailing whitespace for formatting, and replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+function sanitizeInput(input) {
+  input = input.trim();                                      
+  input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return input;
+}
+
+// remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+function sanitizeEmail(email) {
+  email = email.trim(); 
+  email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+  return email;
+}
+
+// This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+function validateEmail(email) {
+  const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+  return re.test(email);
+}
+
+</script>
+
+<h1>Mailing List</h1>
+<div class="ml-embedded" data-form="PEpZNW"></div>
+<br><br>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here, <br>
+but please be specific with any issues you encounter so we can help to resolve them <br>
+(for example, what page it occured on, what you tried, and so on). </p>
+
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+  <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+  <input type="hidden" name="subject" value="Feedback from unknown">
+
+  <label for="name">Name: </label>
+  <br>
+  <input type="text" name="name" required="">
+  <br><br>
+  
+  <label for="email">E-mail: </label>
+  <br>
+  <input type="email" name="email" required="">
+  <br><br>
+  
+  <label for="feedback">Feedback: </label>
+  <br>
+  <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+  <br><br>
+
+  <!-- Google reCAPTCHA Widget -->
+  <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+  <br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>STARMAST © 2025 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

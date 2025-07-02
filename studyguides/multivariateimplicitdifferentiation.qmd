@@ -5,6 +5,7 @@ abstract-title: Summary
 abstract: Multivariate implicit differentiation is used to compute partial derivatives for implicitly defined functions using the multivariate chain rule. It allows you to examine how changes in one variable affect others without explicitly solving for the other variables.
 categories:
   - Calculus
+image: FiguresPNG/introtodifferentiation-image.png
 draft: true
 ---
 
@@ -12,11 +13,17 @@ draft: true
 library("webexercises")
 ```
 
-*Before reading this guide, it is recommended that you read [Guide: Multivariate chain rule](multivariatechainrule.qmd).*
+*Before reading this guide, it is recommended that you read [Guide: Multivariate chain rule](multivariatechainrule.qmd) and \[Guide: Introduction to implicit differentiation\].*
 
-**Implicit differentiation** is a technique used in calculus when you have a relationship between two variables $x$ and $y$ and you can't solve for one in terms of the other. Instead of isolating $y$ explicitly (writing the equation as $y = \text{terms in }x$), you differentiate the entire expression using the **chain rule** and **partial derivatives**.
+# What is multivariate implicit differentiation?
 
-To understand the idea of implicit differentiation with the chain rule, it is important to first define what the differences are between explicit and implicit functions.
+In [Guide: Multivariate chain rule](multivariatechainrule.qmd), you learned how to apply the multivariate chain rule to many different functions, however there are some cases where this rule is impossible to apply. **Implicit differentiation** is a technique used in calculus for when you have a relationship between two variables $x$ and $y$ that would make it difficult to solve for one in terms of the other. Instead of isolating $y$ explicitly (writing the equation as $y = \textsf{terms in }x$), you differentiate the entire expression using the **chain rule** and **partial derivatives**.
+
+For example, consider the surface of a sphere defined by $x^2+y^2+z^2=r^2$. This equation implicitly relates $x$, $y$ and $z$. If you want to know how the height $z$ changes as you move along the $x$-direction, you can use multivariate implicit differentiation without having to even solve for $z$.
+
+The fuel efficiency of a car depends on speed, tire pressures, and engine temperature. These variables are all related, but there is no specific formula that tells you how one affects another directly. To find how one variable changes with respect to another, you need to use multivariate implicit differentiation.
+
+To understand the idea of multivariate implicit differentiation, it is important to define what the differences are between explicit and implicit functions first.
 
 # Explicit and implicit functions
 
@@ -31,7 +38,7 @@ It is a function that can be rearranged into a form where $y$ is distinctly writ
 :::
 
 ::: callout-tip
-A handy way to think of this functional form is as $y = \text{terms involving only } x$.
+A handy way to think of this functional form is as $y = \textsf{terms involving only } x$.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -42,126 +49,96 @@ An example of an explicit function is the function $y = 2x+3$. The function has 
 Another example of an explicit function is the function $x^2 = \dfrac{3y+2}{y-1}$ which can be rearranged into its explicit form $y = \dfrac{x^2+2}{x^2-3}$.
 :::
 
-An **implicit function** defines the relationship between variables while preventing you from solving for one variable in terms of the others. For example, you can't directly express $y$ as a function of $x$ with implicit functions like you can with explicit functions.
+An **implicit function** defines a relationship between variables without necessarily expressing one variable directly in terms of the others. For example, unlike explicit functions where you can write $y$ as a function of $x$, implicit functions may not allow you to isolate $y$. In some cases, isolating $y$ algebraically might be very difficult or impossible, or doing so may give multiple values of $y$ for a single $x$ meaning the result is not a function.
 
 ::: callout-note
 ## Implicit function
 
 An implicit function takes the form $f(x,y) = 0$.
 
-It is a function that cannot be rearranged into a form where $y$ is distinctly written as a function of only $x$.
+It is a function where the variables are so entangled that either you cannot rearrange the equation to write $y$ distinctly as a function of $x$, or the rearranged form would violate the definition of a function (for example, by producing multiple $y$ values for a single $x$). In such cases, you need to treat the relationship implicitly.
 :::
 
 ::: callout-tip
-A handy way to think of this functional form is as $\text{terms involving both } x \text{ and } y = 0$ where you cannot rearrange the equation for a function in the form $y = \text{terms involving only } x$.
+A handy way to think of this functional form is as $\textsf{terms involving both } x \textsf{ and } y = 0$, where solving explicitly for $y$ either leads to multiple values or requires techniques (like implicit differentiation) that do not involve isolating $y$ algebraically.
 :::
 
 ::: {.callout-note appearance="simple"}
 ## Example 2
 
-An example of an implicit function is the equation $x^3 + y^3 - 3xy - 7 = 0$. The equation has been written in the functional form $f(x,y) = 0$. You cannot rearrange the equation to solve for $y$ on its own as with explicit functions.
+An example of an implicit function is the equation $x^3 + y^3 - 3xy - 7 = 0$. The equation has been written in the functional form $f(x,y) = 0$. Rearranging it explicitly for $y$ is not straightforward, and in some cases may not even be possible using standard algebraic techniques.
 
-Another example of an implicit function is $x^2 + y^2 - 25 = 0$ which is the equation of a circle of radius $5$. This has a solution $y = \pm \sqrt{25-x^2}$, however this has not been written as a **single** explicit function as this gives two possible values of $y$ for each $x$. Therefore, it is an implicit function.
+Another example of an implicit function is $x^2 + y^2 - 25 = 0$ which is the equation of a circle of radius $5$. This has a solution $y = \pm \sqrt{25 - x^2}$, which is not a function, as a function cannot take on two values of $y$ for the same value of $x$. So, even though you can rearrange the equation, the result is not an explicit function. Therefore, when written in the form $x^2 + y^2 - 25 = 0$, it has been written implicitly.
 :::
 
 # Paths and contours in the $(x,y)$-plane
 
-Imagine you are walking on a surface defined by a function $z=g(x,y)$ that specifies the $z$-coordinate height above the $(x,y)$-plane. The horizontal coordinates are $x$ and $y$, and the height at each point is $z$.
+Imagine you are walking on a surface defined by a function $z=g(x,y)$ that specifies the $z$-coordinate height above or below the $(x,y)$-plane. The horizontal coordinates are $x$ and $y$, and the height at each point is $z$.
 
-A **path** is a curve you take as you move over the surface. As you move along a path, the $z$-coordinate height changes. The total total rate of change of the height as you move is given by
+A **path** is a curve you take as you move over the surface. As you move along a path, the $z$-coordinate height changes. The total rate of change of the height as you move is given by $$\dfrac{\mathrm{d}z}{\mathrm{d}t} = \dfrac{\partial{z}}{\partial{x}}\dfrac{\mathrm{d}x}{\mathrm{d}t} + \dfrac{\partial{z}}{\partial{y}}\dfrac{\mathrm{d}y}{\mathrm{d}t}$$
 
-$$
-\frac{\mathrm{d}z}{\mathrm{d}t} = \frac{\partial{z}}{\partial{x}}\frac{\mathrm{d}x}{\mathrm{d}t} + \frac{\partial{z}}{\partial{y}}\frac{\mathrm{d}y}{\mathrm{d}t}
-$$
-
-This is the **multivariate chain rule** for two dependent variables $x$ and $y$ with one independent variable $t$.
+As seen in [Guide: Multivariate chain rule](multivariatechainrule.qmd), this is the **multivariate chain rule** for two dependent variables $x$ and $y$ with one independent variable $t$.
 
 A **contour** is a path where the height (or **function value**) $z$ on this surface you are walking along stays the same. On a map, contour lines show regions of constant elevation. Walking along a contour line means you remain at the same height, whereas walking across contour lines means you are either going up or going down.
 
-![Contours on a 3D plot (change later with own plot)](FiguresPNG/3DContourPlot.png){fig-align="center" width="323"}
-
-Suppose you have a surface $z = g(x,y)$. Each pair of points $(x,y)$ has its own height $z$ called the **function value**. A contour is the set of all points for which $z$ is constant. This is often written as $g(x,y) = \text{constant}$.
+This means that a contour of a surface defined by $z=g(x,y)$ is the set of all points for which the function value $z$ is constant. This is often written as $g(x,y) = \textsf{constant}$.
 
 ::: {.callout-note appearance="simple"}
 ## Example 3
 
-For example, suppose you have the function $z = g(x,y) = x^2 + y^2 - 25$. This function represents all the points $(x,y)$ on a paraboloid (a three-dimensional shape).
+Consider the function $z = g(x,y) = x^2 + y^2 - 25$. This function represents all the points $(x,y)$ on a paraboloid (a three-dimensional shape which is shown below).
 
-If you specify $z = g(x,y) = x^2 + y^2 - 25 = 11$, you are defining a contour at height $z=11$. This contour traces out a flat circle of radius $5$. The height is the same for all points $(x,y)$ on this circle.
+If you specify $z = g(x,y) = x^2 + y^2 - 25 = 11$, you are defining a contour at height $z=11$. This contour traces out a flat circle of radius $r=\sqrt{25}=5$. The height is the same for all points $(x,y)$ on this circle.
 
-![Upside-down paraboloid with its contour plot (represent later with own plot and a line on the 3D plot tracing a contour)](FiguresPNG/Paraboloid.png)
+![3D plot of the paraboloid $z=g(x,y)=x^2+y^2-25$.](FiguresPNG/multivariateimplicitdifferentiation-fig1-1.png){fig-align="center" width="60%"}
+
+![Contour plot of the centre of the paraboloid with the contour at height $z=11$ in yellow.](FiguresPNG/multivariateimplicitdifferentiation-fig2-2.png){fig-align="center" width="60%"}
 :::
 
 # Implicit differentiation for one variable
 
-Often it is more convenient to redefine $z = g(x,y) = \text{constant}$ to be $z = f(x,y) = 0$ (a contour of zero height) by including the constant as part of the function.
+In \[Guide: Introduction to implicit differentiation\], you saw how the method of implicit differentiation works. This section looks at an alternative way of thinking about this when considering partial differentiation.
 
-$$
-\begin{aligned}
-&g(x,y) = \text{constant} \\
-&g(x,y) - \text{constant} = 0 \\
+Often it is more convenient to redefine $z = g(x,y) = \text{constant}$ to be $z = f(x,y) = 0$ (a contour of zero height) by including the constant as part of the function. $$\begin{aligned}
+&g(x,y) = \text{constant} \\[0.5em]
+&g(x,y) - \text{constant} = 0 \\[0.5em]
 &f(x,y) = 0
-\end{aligned}
-$$
+\end{aligned}$$
 
 With the example of the paraboloid, this would involve redefining the circular contour of radius $5$ and height $11$ from $z = g(x,y) = x^2 + y^2 - 25 = 11$ to a circular contour of radius $6$ and height $0$ as $z = f(x,y) = x^2 + y^2 - 36 = 0$.
 
-Since the height $z$ is constant (at zero) along the contour, the height neither increases nor decreases as you walk along the contour so the rate of change of height $z$ is zero. This means the derivatives of $z$ with respect to the independent variable $t$ is defined as
+Since the height $z$ is constant (at zero) along the contour, the height neither increases nor decreases as you walk along the contour so the rate of change of height is zero. This means the derivative of $z$ with respect to the independent variable $t$ is defined as $$\dfrac{\mathrm{d}z}{\mathrm{d}t} = 0$$
 
-$$
-\frac{\mathrm{d}z}{\mathrm{d}t} = 0
-$$
+This result can be substituted into the multivariate chain rule: $$\begin{aligned}
+\dfrac{\mathrm{d}z}{\mathrm{d}t} &= \dfrac{\partial{z}}{\partial{x}}\dfrac{\mathrm{d}x}{\mathrm{d}t} + \dfrac{\partial{z}}{\partial{y}}\dfrac{\mathrm{d}y}{\mathrm{d}t} \\[0.5em]
+0 &= \dfrac{\partial{z}}{\partial{x}}\dfrac{\mathrm{d}x}{\mathrm{d}t} + \dfrac{\partial{z}}{\partial{y}}\dfrac{\mathrm{d}y}{\mathrm{d}t}
+\end{aligned}$$
 
-This result can be substituted into the multivariate chain rule:
+Since $f(x,y) = 0$, the total derivative of the function with respect to $x$ must also be zero: $$\dfrac{\mathrm{d}}{\mathrm{d}x} f(x,y) =  \dfrac{\mathrm{d}f}{\mathrm{d}x} = 0$$
 
-$$
-\begin{aligned}
-\frac{\mathrm{d}z}{\mathrm{d}t} &= \frac{\partial{z}}{\partial{x}}\frac{\mathrm{d}x}{\mathrm{d}t} + \frac{\partial{z}}{\partial{y}}\frac{\mathrm{d}y}{\mathrm{d}t} \\
-0 &= \frac{\partial{z}}{\partial{x}}\frac{\mathrm{d}x}{\mathrm{d}t} + \frac{\partial{z}}{\partial{y}}\frac{\mathrm{d}y}{\mathrm{d}t}
-\end{aligned}
-$$
+The function $f(x,y)$ depends on both of the dependent variables $x$ and $y$, so when you differentiate with respect to $x$ you must use the multivariate chain rule. $$\begin{aligned}
+\dfrac{\mathrm{d}f}{\mathrm{d}x} &= \dfrac{\partial{f}}{\partial{x}}\dfrac{\mathrm{d}x}{\mathrm{d}x} + \dfrac{\partial{f}}{\partial{y}}\dfrac{\mathrm{d}y}{\mathrm{d}x} \\[0.5em]
+0 &= \dfrac{\partial{f}}{\partial{x}} + \dfrac{\partial{f}}{\partial{y}}\dfrac{\mathrm{d}y}{\mathrm{d}x}
+\end{aligned}$$
 
-Since $f(x,y) = 0$, the total derivative of the function with respect to $x$ must also be zero:
+The final step is to rearrange for $\dfrac{\mathrm{d}y}{\mathrm{d}x}$. $$\begin{aligned}
+\dfrac{\partial{f}}{\partial{y}}\dfrac{\mathrm{d}y}{\mathrm{d}x} &= -\dfrac{\partial{f}}{\partial{x}} \\[0.5em]
+\dfrac{\mathrm{d}y}{\mathrm{d}x} &= - \dfrac{\partial{f} / \partial{x}}{\partial{f} / \partial{y}}
+\end{aligned}$$
 
-$$
-\frac{\mathrm{d}}{\mathrm{d}x} f(x,y) =  \dfrac{\mathrm{d}f}{\mathrm{d}x} = 0
-$$
-
-The function $f(x,y)$ depends on both of the dependent variables $x$ and $y$, so when you differentiate with respect to $x$ you must use the multivariate chain rule.
-
-$$
-\begin{aligned}
-\dfrac{\mathrm{d}f}{\mathrm{d}x} &= \frac{\partial{f}}{\partial{x}}\frac{\mathrm{d}x}{\mathrm{d}x} + \frac{\partial{f}}{\partial{y}}\frac{\mathrm{d}y}{\mathrm{d}x} \\
-0 &= \frac{\partial{f}}{\partial{x}} + \frac{\partial{f}}{\partial{y}}\frac{\mathrm{d}y}{\mathrm{d}x}
-\end{aligned}
-$$
-
-The final step is to rearrange for $\dfrac{\mathrm{d}y}{\mathrm{d}x}$.
-
-$$
-\begin{aligned}
-\frac{\partial{f}}{\partial{y}}\frac{\mathrm{d}y}{\mathrm{d}x} &= -\frac{\partial{f}}{\partial{x}} \\
-\frac{\mathrm{d}y}{\mathrm{d}x} &= - \frac{\partial{f} / \partial{x}}{\partial{f} / \partial{y}}
-\end{aligned}
-$$
-
-This final result is the equation for implicit differentiation (for one dependent variable) with the chain rule.
+This final result is the multivariate equation for implicit differentiation (for one dependent variable) with the chain rule.
 
 ::: callout-note
 ## Implicit differentiation with the chain rule
 
-If $f(x,y) = 0$ defines $y=y(x)$ implicitly then
-
-$$
-\frac{\mathrm{d}y}{\mathrm{d}x} = - \frac{\partial{f} / \partial{x}}{\partial{f} / \partial{y}} = - \frac{f_x(x,y)}{f_y(x,y)}
-$$
+If $f(x,y) = 0$ defines $y=y(x)$ implicitly then $$\dfrac{\mathrm{d}y}{\mathrm{d}x} = - \dfrac{\partial{f} / \partial{x}}{\partial{f} / \partial{y}} = - \dfrac{f_x(x,y)}{f_y(x,y)}$$
 :::
 
 ::: callout-warning
 Since $\dfrac{\partial{f}}{\partial{y}}$ appears on the denominator, this requires $\dfrac{\partial{f}}{\partial{y}} \neq 0$.
 :::
 
-To apply this equation, the function must be written in the form $f(x,y) = \text{terms in } x \text{ and } y = 0$.
+To apply this equation, the function must be written in the form $f(x,y) = \textsf{terms in } x \textsf{ and } y = 0$.
 
 The following example shows how to use implicit differentiation to find $\dfrac{\mathrm{d}y}{\mathrm{d}x}$ when $y=y(x)$ is defined implicitly by $f(x,y) = x^3y + 2y^2 - 5x^2 - 4y + 7 = 0$.
 
@@ -172,107 +149,69 @@ Let $z = f(x,y) = x^3y + 2y^2 - 5x^2 - 4y + 7 = 0$ and define $y=y(x)$ implicitl
 
 Determine $\dfrac{\mathrm{d}y}{\mathrm{d}x}$.
 
-First, calculate the derivatives required for the implicit differentiation equation.
+Firstly, calculate the derivatives required for the implicit differentiation equation. $$\begin{aligned}
+\dfrac{\partial{f}}{\partial{x}} &= 3x^2y - 10x \\[0.5em]
+\dfrac{\partial{f}}{\partial{y}} &= x^3 + 4y - 4
+\end{aligned}$$
 
-$$
-\begin{aligned}
-\frac{\partial{f}}{\partial{x}} &= 3x^2y - 10x \\
-\frac{\partial{f}}{\partial{y}} &= x^3 + 4y - 4
-\end{aligned}
-$$
-
-Apply the implicit differentiation equation and substitute for the derivatives.
-
-$$
-\begin{aligned}
-\frac{\mathrm{d}y}{\mathrm{d}x} &= - \frac{\partial{f} / \partial{x}}{\partial{f} / \partial{y}} \\
-\frac{\mathrm{d}y}{\mathrm{d}x} &= - \frac{3x^2y-10x}{x^3+4y-4}
-\end{aligned}
-$$
+Apply the implicit differentiation equation and substitute for the derivatives. $$\begin{aligned}
+\dfrac{\mathrm{d}y}{\mathrm{d}x} &= - \dfrac{\partial{f} / \partial{x}}{\partial{f} / \partial{y}} \\[0.5em]
+\dfrac{\mathrm{d}y}{\mathrm{d}x} &= - \dfrac{3x^2y-10x}{x^3+4y-4}
+\end{aligned}$$
 :::
 
 The important point is that implicit differentiation allows you to find $\dfrac{\mathrm{d}y}{\mathrm{d}x}$ without solving explicitly for $y$, which is often difficult or impossible to do.
 
-It would be a lot harder to solve $x^3y + 2y^2 - 5x^2 - 4y + 7 = 0$ for $y$ and then differentiate with respect to $x$.
+While it may still be possible to solve $x^3y + 2y^2 - 5x^2 - 4y + 7 = 0$ for $y$ using standard techniques, it could still be quite difficult to find a way to write $y$ explicitly in terms of $x$. In many cases like these, using the implicit differentiation rule is more practical.
 
 # Implicit differentiation for two or more variables
 
-Suppose you have a function $z = z(x,y)$ of variables $x$ and $y$ that is defined by
+Suppose you have a function $z = z(x,y)$ of variables $x$ and $y$ that is defined by $$4x^2 + 3y^2z^2 - 5x^2y + 2z^3 - 7 = 0$$
 
-$$
-4x^2 + 3y^2z^2 - 5x^2y + 2z^3 - 7 = 0
-$$
-
-It is often impractical to express $z$ as an explicit function of $x$ and $y$. Instead, the function is defined implicitly by an equation of the form
-
-$$
-w = f(x,y,z) = 0
-$$
+It is often impractical to express $z$ as an explicit function of $x$ and $y$. Instead, the function is defined implicitly by an equation of the form $$w = f(x,y,z) = 0$$
 
 This defines a surface in four-dimensional space. Since this surface implicitly defines $z$ in terms of $x$ and $y$, you can use the chain rule to differentiate implicitly and find the partial derivatives $\dfrac{\partial{z}}{\partial{x}}$ and $\dfrac{\partial{z}}{\partial{y}}$ without explicitly solving for $z$.
 
-Since the function value $w$ is constant (at zero) along the contour, the function value neither increases nor decreases as you traverse the contour so the rate of change of the function value $w$ is zero. This means the partial derivatives of $w$ with respect to the independent variables $x$ and $y$ are defined as
+Since the function value $w$ is constant (at zero) along the contour, the function value neither increases nor decreases as you move along the contour so the rate of change of the function value $w$ is zero. This means the partial derivatives of $w$ with respect to the independent variables $x$ and $y$ are defined as $$\dfrac{\partial{w}}{\partial{x}} = 0 \qquad \textsf{and} \qquad \dfrac{\partial{w}}{\partial{y}} = 0$$
 
-$$
-\frac{\partial{w}}{\partial{x}} = 0 \qquad \text{and} \qquad \frac{\partial{w}}{\partial{y}} = 0
-$$You can now use the chain rule to differentiate implicitly with $z=z(x,y)$.
+You can now use the chain rule to differentiate implicitly with $z=z(x,y)$ using a similar method to the last section.
 
-Apply the multivariate chain rule to differentiate $w$ with respect to $x$.
+Apply the multivariate chain rule to differentiate $w$ with respect to $x$. $$\begin{aligned}
+\dfrac{\partial{w}}{\partial{x}} &= \dfrac{\partial{f}}{\partial{x}}\dfrac{\mathrm{d}x}{\mathrm{d}x} + \dfrac{\partial{f}}{\partial{z}}\dfrac{\partial{z}}{\partial{x}} \\[0.5em]
+0 &= \dfrac{\partial{f}}{\partial{x}} + \dfrac{\partial{f}}{\partial{z}}\dfrac{\partial{z}}{\partial{x}}
+\end{aligned}$$
 
-$$
-\begin{aligned}
-\frac{\partial{w}}{\partial{x}} &= \frac{\partial{f}}{\partial{x}}\frac{\mathrm{d}x}{\mathrm{d}x} + \frac{\partial{f}}{\partial{z}}\frac{\partial{z}}{\partial{x}} \\
-0 &= \frac{\partial{f}}{\partial{x}} + \frac{\partial{f}}{\partial{z}}\frac{\partial{z}}{\partial{x}}
-\end{aligned}
-$$
+The next step is to rearrange for $\dfrac{\partial{z}}{\partial{x}}$. $$\begin{aligned}
+\dfrac{\partial{f}}{\partial{z}}\dfrac{\partial{z}}{\partial{x}} &= -\dfrac{\partial{f}}{\partial{x}} \\[0.5em]
+\dfrac{\partial{z}}{\partial{x}} &= - \dfrac{\partial{f} / \partial{x}}{\partial{f} / \partial{z}}
+\end{aligned}$$
 
-The next step is to rearrange for $\dfrac{\partial{z}}{\partial{x}}$.
+Apply the multivariate chain rule to differentiate $w$ with respect to $y$. $$\begin{aligned}
+\dfrac{\partial{w}}{\partial{y}} &= \dfrac{\partial{f}}{\partial{y}}\dfrac{\mathrm{d}y}{\mathrm{d}y} + \dfrac{\partial{f}}{\partial{z}}\dfrac{\partial{z}}{\partial{y}} \\[0.5em]
+0 &= \dfrac{\partial{f}}{\partial{y}} + \dfrac{\partial{f}}{\partial{z}}\dfrac{\partial{z}}{\partial{y}}
+\end{aligned}$$
 
-$$
-\begin{aligned}
-\frac{\partial{f}}{\partial{z}}\frac{\partial{z}}{\partial{x}} &= -\frac{\partial{f}}{\partial{x}} \\
-\frac{\partial{z}}{\partial{x}} &= - \frac{\partial{f} / \partial{x}}{\partial{f} / \partial{z}}
-\end{aligned}
-$$
-
-Apply the multivariate chain rule to differentiate $w$ with respect to $y$.
-
-$$
-\begin{aligned}
-\frac{\partial{w}}{\partial{y}} &= \frac{\partial{f}}{\partial{y}}\frac{\mathrm{d}y}{\mathrm{d}y} + \frac{\partial{f}}{\partial{z}}\frac{\partial{z}}{\partial{y}} \\
-0 &= \frac{\partial{f}}{\partial{y}} + \frac{\partial{f}}{\partial{z}}\frac{\partial{z}}{\partial{y}}
-\end{aligned}
-$$
-
-The next step is to rearrange for $\dfrac{\partial{z}}{\partial{y}}$.
-
-$$
-\begin{aligned}
-\frac{\partial{f}}{\partial{z}}\frac{\partial{z}}{\partial{y}} &= -\frac{\partial{f}}{\partial{y}} \\
-\frac{\partial{z}}{\partial{y}} &= - \frac{\partial{f} / \partial{y}}{\partial{f} / \partial{z}}
-\end{aligned}
-$$
+The next step is to rearrange for $\dfrac{\partial{z}}{\partial{y}}$. $$\begin{aligned}
+\dfrac{\partial{f}}{\partial{z}}\dfrac{\partial{z}}{\partial{y}} &= -\dfrac{\partial{f}}{\partial{y}} \\[0.5em]
+\dfrac{\partial{z}}{\partial{y}} &= - \dfrac{\partial{f} / \partial{y}}{\partial{f} / \partial{z}}
+\end{aligned}$$
 
 ::: callout-note
 ## Implicit differentiation with the chain rule
 
-If $f(x,y,z) = 0$ defines $z = z(x,y)$ implicitly then
-
-$$
-\begin{aligned}
-\frac{\partial{z}}{\partial{x}} &= - \frac{\partial{f} / \partial{x}}{\partial{f} / \partial{z}} = - \frac{f_x(x,y)}{f_z(x,y)} \\
-\frac{\partial{z}}{\partial{y}} &= - \frac{\partial{f} / \partial{y}}{\partial{f} / \partial{z}} = - \frac{f_y(x,y)}{f_z(x,y)}
-\end{aligned}
-$$
+If $f(x,y,z) = 0$ defines $z = z(x,y)$ implicitly then $$\begin{aligned}
+\dfrac{\partial{z}}{\partial{x}} &= - \dfrac{\partial{f} / \partial{x}}{\partial{f} / \partial{z}} = - \dfrac{f_x(x,y)}{f_z(x,y)} \\[0.5em]
+\dfrac{\partial{z}}{\partial{y}} &= - \dfrac{\partial{f} / \partial{y}}{\partial{f} / \partial{z}} = - \dfrac{f_y(x,y)}{f_z(x,y)}
+\end{aligned}$$
 :::
 
 ::: callout-warning
 Since $\dfrac{\partial{f}}{\partial{z}}$ appears on the denominator of both equations, this requires $\dfrac{\partial{f}}{\partial{z}} \neq 0$.
 :::
 
-To apply this equation, the function must be written in the form $f(x,y,z) = \text{terms in } x \text{, y } \text{and } z = 0$
+To apply this equation, the function must be written in the form $f(x,y,z) = \textsf{terms in } x \textsf{, } y \textsf{ and } z = 0$
 
-The following example shows how to use implicit differentiation to find $\dfrac{\partial{z}}{\partial{x}}$ and $\dfrac{\partial{z}}{\partial{y}}$ when $z=z(x,y)$ is defined implicitly by $f(x,y,z) = 4x^2 + 3y^2z^2 - 5x^2y + 2z^3 - 7 = 0$.
+The following example shows you how to use implicit differentiation to find $\dfrac{\partial{z}}{\partial{x}}$ and $\dfrac{\partial{z}}{\partial{y}}$ when $z=z(x,y)$ is defined implicitly by $f(x,y,z) = 4x^2 + 3y^2z^2 - 5x^2y + 2z^3 - 7 = 0$.
 
 ::: {.callout-note appearance="simple"}
 ## Example 5
@@ -281,70 +220,74 @@ Let $w = f(x,y,z) = 4x^2 + 3y^2z^2 - 5x^2y + 2z^3 - 7 = 0$ and define $z=z(x,y)$
 
 Determine $\dfrac{\partial{z}}{\partial{x}}$ and $\dfrac{\partial{z}}{\partial{y}}$.
 
-First, calculate the derivatives required for the implicit differentiation equations.
-
-$$
-\begin{aligned}
-   \frac{\partial{f}}{\partial{x}} &= 8xz - 10xy \\
-   \frac{\partial{f}}{\partial{y}} &= 6yz^2 - 5x^2 \\
-   \frac{\partial{f}}{\partial{z}} &= 4x^2 + 6y^2z + 6z^2
-\end{aligned}
-$$
+First, calculate the derivatives required for the implicit differentiation equations. $$\begin{aligned}
+\dfrac{\partial{f}}{\partial{x}} &= 8x - 10xy \\[0.5em]
+\dfrac{\partial{f}}{\partial{y}} &= 6yz^2 - 5x^2 \\[0.5em]
+\dfrac{\partial{f}}{\partial{z}} &= 4x^2 + 6y^2z + 6z^2
+\end{aligned}$$
 
 Apply the implicit differentiation equation and substitute for the derivatives.
 
-Calculate the partial derivative of $z$ with respect to $x$.
+Calculate the partial derivative of $z$ with respect to $x$. $$\begin{aligned}
+\dfrac{\partial{z}}{\partial{x}} &= - \dfrac{\partial{f} / \partial{x}}{\partial{f} / \partial{z}} \\[0.5em]
+\dfrac{\partial{z}}{\partial{x}} &= - \dfrac{8x - 10xy}{4x^2 + 6y^2z + 6z^2}
+\end{aligned}$$
 
-$$
-\begin{aligned}
-   \frac{\partial{z}}{\partial{x}} &= - \frac{\partial{f} / \partial{x}}{\partial{f} / \partial{z}} \\
-   \frac{\partial{z}}{\partial{x}} &= - \frac{8xz - 10xy}{4x^2 + 6y^2z + 6z^2}
-\end{aligned}
-$$
-
-Calculate the partial derivative of $z$ with respect to $y$.
-
-$$
-\begin{aligned}
-   \frac{\partial{z}}{\partial{y}} &= - \frac{\partial{f} / \partial{y}}{\partial{f} / \partial{z}} \\
-   \frac{\partial{z}}{\partial{y}} &= - \frac{6yz^2 - 5x^2}{4x^2 + 6y^2z + 6z^2}
-\end{aligned}
-$$
+Calculate the partial derivative of $z$ with respect to $y$. $$\begin{aligned}
+\dfrac{\partial{z}}{\partial{y}} &= - \dfrac{\partial{f} / \partial{y}}{\partial{f} / \partial{z}} \\[0.5em]
+\dfrac{\partial{z}}{\partial{y}} &= - \dfrac{6yz^2 - 5x^2}{4x^2 + 6y^2z + 6z^2}
+\end{aligned}$$
 :::
 
 Implicit differentiation allows you to find $\dfrac{\partial{z}}{\partial{x}}$ and $\dfrac{\partial{z}}{\partial{y}}$ without solving explicitly for $z$ which is often difficult or impossible to do.
 
-It would be a lot harder to solve $4x^2 + 3y^2z^2 - 5x^2y + 2z^3 - 7 = 0$ for $z$ and then differentiate with respect to $x$ and $y$.
+While it may still be possible to solve $4x^2 + 3y^2z^2 - 5x^2y + 2z^3 - 7 = 0$ for $z$ using standard techniques, it could still be quite difficult to find a way to write $z$ explicitly in terms of $x$ and $y$. In many cases like these, using the implicit differentiation rule is more practical.
 
 # Quick check problems {.unnumbered}
 
 :::: {.content-visible when-format="html"}
 ::: {.webex-check .webex-box}
-Consider the function $w = f(x,y,z) = x^2y + 2xz + \sin{(xy^2)}$ where $z=z(x,y)$ is defined implicitly.
+1.  Which of the following best represents an implicit function? `r mcq(c("y = 3x - 2", "x^2 = 4y - 1", answer = "x^2 + y^2 = 25"))`
 
-Fill in the blanks of the derivatives required for the multivariate implicit differentiation equations.
+<!-- -->
 
-The partial derivative of $z$ with respect to $x$ is $\dfrac{\partial{z}}{\partial{x}} = -$ `r fitb("2xy+2z+y^2cos(xy^2)", ignore_case = TRUE, regex = TRUE)` $/$ `r fitb("2\\s?x", ignore_case = TRUE, regex = TRUE)`
+2.  Let $w = f(x,y,z) = 0$ be defined implicitly by $z=z(x,y)$. Is it possible to find $\dfrac{\partial z}{\partial x}$ without solving for $z$? `r mcq(c(answer = "Yes", "No"))`
 
-The partial derivative of $z$ with respect to $x$ is $\dfrac{\partial{z} }{\partial{y}} = -$ `r fitb("x^2+2xycos(xy^2)", ignore_case = TRUE, regex = TRUE)` $/$ `r fitb("2\\s?x", ignore_case = TRUE, regex = TRUE)`
+<!-- -->
+
+3.  Consider the function $w = f(x,y,z) = x^2y + 2xz + \sin(xy^2)$ where $z=z(x,y)$ is defined implicitly. Use the multivariate implicit differentiation rule to answer the following questions.
+
+<!-- -->
+
+(a) The partial derivative of $z$ with respect to $x$ is $\dfrac{\partial{z}}{\partial{x}} = -$ `r fitb("2xy+2z+y^2 cos(xy^2)")` $/$ `r fitb("2x")`
+
+(b) The partial derivative of $z$ with respect to $y$ is $\dfrac{\partial{z}}{\partial{y}} = -$ `r fitb("x^2+2xy cos(xy^2)")` $/$ `r fitb("2x")`
 :::
 ::::
 
 ::: {.content-hidden when-format="html"}
-Consider the function $w = f(x,y,z) = x^2y + 2xz + \sin{(xy^2)}$ where $z=z(x,y)$ is defined implicitly.
+1.  Which of the following best represents an implicit function? $$y = 3x-2 \qquad x^2 = 4y - 1 \qquad x^2 + y^2 = 25$$
 
-Fill in the blanks of the derivatives required for the multivariate implicit differentiation equations.
+<!-- -->
 
-The partial derivative of $z$ with respect to $x$ is $\dfrac{\partial{z}}{\partial{x}} = -$ `r fitb("2xy+2z+y^2cos(xy^2)", ignore_case = TRUE, regex = TRUE)` $/$ `r fitb("2\\s?x", ignore_case = TRUE, regex = TRUE)`
+2.  Let $w = f(x,y,z) = 0$ be defined implicitly by $z=z(x,y)$. Is it possible to find $\dfrac{\partial z}{\partial x}$ without solving for $z$? $$\textsf{Yes} \qquad \textsf{No}$$
 
-The partial derivative of $z$ with respect to $x$ is $\dfrac{\partial{z} }{\partial{y}} = -$ `r fitb("x^2+2xycos(xy^2)", ignore_case = TRUE, regex = TRUE)` $/$ `r fitb("2\\s?x", ignore_case = TRUE, regex = TRUE)`
+<!-- -->
+
+3.  Consider the function $w = f(x,y,z) = x^2y + 2xz + \sin(xy^2)$ where $z=z(x,y)$ is defined implicitly.
+
+<!-- -->
+
+(a) Use the multivariate implicit differentiation rule to find the partial derivative of $z$ with respect to $x$ given by $\dfrac{\partial{z}}{\partial{x}}$.
+
+(b) Use the multivariate implicit differentiation rule to find the partial derivative of $z$ with respect to $x$ given by $\dfrac{\partial{z}}{\partial{y}}$.
 :::
 
 # Further reading
 
 [For more questions on the subject, please go to Questions: Multivariate implicit differentiation.](../questions/qs-multivariateimplicitdifferentiation.qmd)
 
-[For a way to consider derivatives with a defined direction, please see Guide: Directional derivatives.]
+\[For a way to consider derivatives with a defined direction, please see Guide: Directional derivatives.\]
 
 ## Version history {.unnumbered}
 

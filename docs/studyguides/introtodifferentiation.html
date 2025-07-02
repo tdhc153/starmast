@@ -249,6 +249,7 @@ window.Quarto = {
 <h1 class="title">Introduction to differentiation and the derivative</h1>
   <div class="quarto-categories">
     <div class="quarto-category">Calculus</div>
+    <div class="quarto-category">Differentiation</div>
   </div>
   </div>
 
@@ -279,6 +280,7 @@ window.Quarto = {
 
 
 <p><em>Before reading this guide, it is recommended that you read [Guide: Properties of functions], <a href="../studyguides/lawsofindices.html">Guide: Laws of indices</a>, <a href="../studyguides/logarithms.html">Guide: Logarithms</a>, and [Guide: Tangents].</em></p>
+<table><tbody><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls=""><source src="./Narrations/introtodifferentiation.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></td></tr></tbody></table>
 <section id="what-is-differentiation" class="level1 unnumbered">
 <h1 class="unnumbered">What is differentiation?</h1>
 <p>Functions can be used to model many real-life processes; such as the speed of a car, the performance of a stock market over time, and the growth rate of animal populations. You can use mathematical tools examined in the first three chapters to solve some of these problems (as well as a host of others).</p>
@@ -350,6 +352,19 @@ Definition of <span class="math inline">\(dy/dx\)</span>
 <p>The derivative of <span class="math inline">\(y\)</span> with respect to <span class="math inline">\(x\)</span> at a point <span class="math inline">\(x = a\)</span> is written as <span class="math display">\[\left.\dfrac{\mathrm{d}y}{\mathrm{d}x}\right|_{x = a} = f'(a)\]</span>.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Although the functions in this guide are defined in terms of the variable <span class="math inline">\(x\)</span>, you can express and differentiate functions with respect to any variable. This explains the terminology ‘with respect to <span class="math inline">\(x\)</span>’; as this can change depending on the variable. For instance, if you are differentiating <span class="math inline">\(z = f(t)\)</span>, you would say ‘with respect to <span class="math inline">\(t\)</span>’, and you could write <span class="math display">\[f'(t) = \frac{\mathrm{d}z}{\mathrm{d}t}\]</span> in this instance. Any combination of variables is acceptable; you may see <span class="math inline">\(x,y,z,t,u,w,v\)</span> commonly, and maybe even Greek letters such as <span class="math inline">\(\omega\)</span>.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -361,9 +376,11 @@ Warning
 </div>
 <div class="callout-body-container callout-body">
 <p>Although <span class="math inline">\(\dfrac{\mathrm{d}y}{\mathrm{d}x}\)</span> <em>looks</em> like a fraction, it <strong>isn’t</strong>. However, sometimes it <em>behaves</em> like a fraction, and you can use this to remember certain results. However, this isn’t an excuse to treat it as a fraction in standard mathematical work.</p>
+<p>What <span class="math inline">\(\dfrac{\mathrm{d}y}{\mathrm{d}x}\)</span> really represents is the application of an <strong>operator</strong>, specifically <span class="math inline">\(\dfrac{\mathrm{d}}{\mathrm{d}x}\)</span>, to a function <span class="math inline">\(y = f(x)\)</span>. It is correct to write the following: <span class="math display">\[f(x) = \dfrac{\mathrm{d}}{\mathrm{d}x}(f(x)) = \dfrac{\mathrm{d}y}{\mathrm{d}x}\]</span></p>
+<p>For more about this, see [Guide: The differential operator and higher derivatives].</p>
 </div>
 </div>
-<p>This notation was used by <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Leibniz/">Leibniz</a> to represent the derivative of a function <span class="math inline">\(y = f(x)\)</span>. It’s useful because it codifies the derivative as a rate of change (ratio of change in <span class="math inline">\(y\)</span> to change in <span class="math inline">\(x\)</span>) as well as explicitly naming the variable that you are differentiating with respect to. (This will be extremely useful in [Guide: Introduction to partial differentiation].) However, it’s not so useful for expressing the value of the derivative at a particular point <span class="math inline">\(x = a\)</span>; for instance <span class="math display">\[f'(a)\quad\textsf{ compared to }\quad \left.\dfrac{\mathrm{d}y}{\mathrm{d}x}\right|_{x = a}.\]</span> The important thing to consider is this:</p>
+<p>The <span class="math inline">\(\dfrac{\mathrm{d}y}{\mathrm{d}x}\)</span> notation was used by <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Leibniz/">Leibniz</a> to represent the derivative of a function <span class="math inline">\(y = f(x)\)</span>. It’s useful because it codifies the derivative as a rate of change (ratio of change in <span class="math inline">\(y\)</span> to change in <span class="math inline">\(x\)</span>) as well as explicitly naming the variable that you are differentiating with respect to. (This will be extremely useful in [Guide: Introduction to partial differentiation].) However, it’s not so useful for expressing the value of the derivative at a particular point <span class="math inline">\(x = a\)</span>; for instance <span class="math display">\[f'(a)\quad\textsf{ compared to }\quad \left.\dfrac{\mathrm{d}y}{\mathrm{d}x}\right|_{x = a}.\]</span> The important thing to consider is this:</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -435,9 +452,9 @@ Rules for differentiation
 <div class="callout-body-container callout-body">
 <p>Let <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span> be differentiable functions, and <span class="math inline">\(c\)</span> be a non-zero real number. Then:</p>
 <ul>
-<li><p>(<strong>sum rule</strong>) The derivative of two functions <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span> added together is the same as their derivatives <span class="math inline">\(f'(x)\)</span> and <span class="math inline">\(g'(x)\)</span> added together; that is, <span class="math display">\[\dfrac{\mathrm{d}}{\mathrm{d}x}(f + g) = \dfrac{\mathrm{d}f}{\mathrm{d}x} + \dfrac{\mathrm{d}g}{\mathrm{d}x}\]</span></p></li>
-<li><p>(<strong>difference rule</strong>) The derivative of one function <span class="math inline">\(g(x)\)</span> subtracted from another <span class="math inline">\(f(x)\)</span> is the same as the derivative <span class="math inline">\(g'(x)\)</span> subtracted from the derivative of <span class="math inline">\(f'(x)\)</span>; that is <span class="math display">\[\dfrac{\mathrm{d}}{\mathrm{d}x}(f - g) = \dfrac{\mathrm{d}f}{\mathrm{d}x} -\dfrac{\mathrm{d}g}{\mathrm{d}x}\]</span></p></li>
-<li><p>(<strong>scaling rule</strong>) The derivative of a function <span class="math inline">\(f(x)\)</span> multiplied by a real number <span class="math inline">\(c\)</span> is the same as the derivative <span class="math inline">\(f'(x)\)</span> multiplied by <span class="math inline">\(c\)</span>; that is <span class="math display">\[\dfrac{\mathrm{d}}{\mathrm{d}x}(cf(x)) = c\dfrac{\mathrm{d}f}{\mathrm{d}x}\]</span></p></li>
+<li><p>(<strong>sum rule</strong>) The derivative of two functions <span class="math inline">\(f(x)\)</span> and <span class="math inline">\(g(x)\)</span> added together is the same as their derivatives <span class="math inline">\(f'(x)\)</span> and <span class="math inline">\(g'(x)\)</span> added together; that is, <span class="math inline">\((f+g)'(x) = f'(x) + g'(x)\)</span> or <span class="math display">\[\dfrac{\mathrm{d}}{\mathrm{d}x}(f + g) = \dfrac{\mathrm{d}f}{\mathrm{d}x} + \dfrac{\mathrm{d}g}{\mathrm{d}x}\]</span></p></li>
+<li><p>(<strong>difference rule</strong>) The derivative of one function <span class="math inline">\(g(x)\)</span> subtracted from another <span class="math inline">\(f(x)\)</span> is the same as the derivative <span class="math inline">\(g'(x)\)</span> subtracted from the derivative of <span class="math inline">\(f'(x)\)</span>; that is <span class="math inline">\((f-g)'(x) = f'(x) - g'(x)\)</span> or <span class="math display">\[\dfrac{\mathrm{d}}{\mathrm{d}x}(f - g) = \dfrac{\mathrm{d}f}{\mathrm{d}x} -\dfrac{\mathrm{d}g}{\mathrm{d}x}\]</span></p></li>
+<li><p>(<strong>scaling rule</strong>) The derivative of a function <span class="math inline">\(f(x)\)</span> multiplied by a real number <span class="math inline">\(c\)</span> is the same as the derivative <span class="math inline">\(f'(x)\)</span> multiplied by <span class="math inline">\(c\)</span>; that is <span class="math inline">\((cf)'(x) = cf'(x)\)</span> or <span class="math display">\[\dfrac{\mathrm{d}}{\mathrm{d}x}(cf(x)) = c\dfrac{\mathrm{d}f}{\mathrm{d}x}\]</span></p></li>
 </ul>
 </div>
 </div>
@@ -457,10 +474,23 @@ Important
 <li>you need the <strong>quotient rule</strong> (and <span class="math inline">\(g(x)\neq 0\)</span>) to differentiate the quotient <span class="math inline">\(f(x)/g(x)\)</span> of two functions</li>
 <li>you need the <strong>chain rule</strong> to differentiate the composition <span class="math inline">\(f(g(x))\)</span> of two functions</li>
 </ul>
-<p>These techniques are important enough to merit their own guides. For more about these, see [Guide: The product rule], [Guide: The quotient rule], [Guide: The chain rule]. For more on where these results come from, see [Proof sheet: Rules of differentiation.]</p>
+<p>These techniques are important enough to merit their own guides. For more about these, see <a href="../studyguides/productrule.html">Guide: The product rule</a>, <a href="../studyguides/quotientrule.html">Guide: The quotient rule</a>, <a href="../studyguides/chainrule.html">Guide: The chain rule</a>. For more on where these results come from, see <a href="../proofsheets/ps-rulesofdifferentiation.html">Proof sheet: Rules of differentiation.</a></p>
 </div>
 </div>
-<p>Specifically, using the scaling and chain rule can be used to show the following results, which are incredibly useful for any work involving differentiation.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The sum rule and scaling rule says that <span class="math inline">\(\dfrac{\mathrm{d}}{\mathrm{d}x}\)</span> is a <strong>linear operator</strong>; see [Guide: The differential operator and higher derivatives] for more.</p>
+</div>
+</div>
+<p>Specifically, using the scaling and chain rule (see <a href="../studyguides/chainrule.html">Guide: The chain rule</a>) can be used to show the following results, which are incredibly useful for any work involving differentiation.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -495,7 +525,7 @@ Example 1
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Find the derivative of the function <span class="math inline">\(f(x) = \dfrac{x^2}{2} + 1\)</span>.</p>
+<p>Find the derivative of the function <span class="math inline">\(f(x) = \dfrac{x^2}{2} + 1\)</span> with respect to <span class="math inline">\(x\)</span>.</p>
 <p>Here, you can use the sum and scaling rules to differentiate this function. Using the sum rule, you can see that <span class="math display">\[\dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2} + 1\right) = \dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2}\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right)\]</span> Now, using the scaling rule on the first of these terms, you can get <span class="math display">\[\dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2}\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right) = \frac{1}{2}\cdot\dfrac{\mathrm{d}}{\mathrm{d}x}\left(x^2\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right)\]</span></p>
 <p>Now you can use the derivatives of common functions. The function <span class="math inline">\(x^2\)</span> is of the form <span class="math inline">\(x^n\)</span>, so the derivative of <span class="math inline">\(x^2\)</span> is <span class="math inline">\(2x^{2-1} = 2x^1 = 2x\)</span>. The function <span class="math inline">\(1\)</span> is a constant, so the derivative of <span class="math inline">\(1\)</span> is <span class="math inline">\(0\)</span>. Putting these results in gives <span class="math display">\[\frac{1}{2}\cdot\dfrac{\mathrm{d}}{\mathrm{d}x}\left(x^2\right) + \dfrac{\mathrm{d}}{\mathrm{d}x}\left(1\right) = \frac{1}{2}(2x) + 0\]</span> Simplifying gives the answer: <span class="math inline">\(\dfrac{\mathrm{d}}{\mathrm{d}x}\left(\dfrac{x^2}{2} + 1\right) = x\)</span> and so the derivative of <span class="math inline">\(f(x) = x^2/2 + 1\)</span> is equal to <span class="math inline">\(f'(x) = x\)</span>.</p>
 <p>You can then say that this function <span class="math inline">\(f(x) = x^2/2 + 1\)</span> is increasing if <span class="math inline">\(x &gt; 0\)</span>, decreasing if <span class="math inline">\(x &lt; 0\)</span>, and is stationary exactly when <span class="math inline">\(x = 0\)</span>.</p>
@@ -512,13 +542,13 @@ Example 2
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Find the derivative of the function <span class="math inline">\(f(x) = 4e^{3x} - \sqrt{x}\)</span>.</p>
+<p>Differentiate <span class="math inline">\(f(x) = 4e^{3x} - \sqrt{x}\)</span> with respect to <span class="math inline">\(x\)</span>.</p>
 <p>Of these two terms, <span class="math inline">\(4e^{3x}\)</span> looks like a common function, but you have not seen how to differentiate <span class="math inline">\(\sqrt{x}\)</span> yet. In fact, this is another case of <span class="math inline">\(x^n\)</span>; in this case, <span class="math inline">\(n = 1/2\)</span>. (See <a href="../studyguides/lawsofindices.html">Guide: Laws of indices</a> for why this is.)</p>
 <p>You can then rewrite the function as <span class="math display">\[f(x) = 4e^{3x} - x^{1/2}\]</span> which you can then apply your knowledge of differentiation to. Using the results above, the derivative of <span class="math inline">\(4e^{3x}\)</span> is <span class="math inline">\(4\cdot3\cdot e^{3x} = 12e^{3x}\)</span>. The derivative of <span class="math inline">\(x^{1/2}\)</span> is <span class="math inline">\(\left(\dfrac{1}{2}\right)x^{1/2 - 1} = \dfrac{x^{-1/2}}{2}\)</span>. Therefore, the derivative of <span class="math inline">\(4e^{3x} - \sqrt{x}\)</span> is <span class="math display">\[f'(x) = 12e^{3x} - \frac{x^{-1/2}}{2}\]</span></p>
 <p>You could turn <span class="math inline">\(x^{-1/2}\)</span> into <span class="math inline">\(1/\sqrt{x}\)</span>; however, you may be asked to differentiate this function again (particularly if you are looking into behaviour of a function), and often it is best to leave the power as a real number rather than using the square root notation.</p>
 </div>
 </div>
-<p>As a rule of thumb, you should always write an <span class="math inline">\(n\)</span>th root using a fractional power instead. Here’s another example of where you should write a term involving a power of <span class="math inline">\(x\)</span>:</p>
+<p>As a rule of thumb, you should always write an <span class="math inline">\(n\)</span>th root using a fractional power instead. Here’s another example of where you should write a term involving a power of <span class="math inline">\(x\)</span>.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -529,9 +559,9 @@ Example 3
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Find the derivative of the function <span class="math inline">\(f(x) = \dfrac{1}{x^4} + 4\cos(x) - \sin(4x)\)</span>.</p>
-<p>Again, the cosine and sine terms are manageable from the derivative above, it is only the <span class="math inline">\(1/x^4\)</span> term that needs a little thought. In fact, this is yet <em>another</em> case of <span class="math inline">\(x^n\)</span>; this time when <span class="math inline">\(n = - 4\)</span>. (See <a href="../studyguides/lawsofindices.html">Guide: Laws of indices</a> for why this is.)</p>
-<p>You can then rewrite the function as <span class="math display">\[f(x) = x^{-4} + 4\sin(x) - \cos(4x)\]</span> and use the familiar rules of differentiation above. Using the results above with <span class="math inline">\(n = -4\)</span>, the derivative of <span class="math inline">\(x^{-4}\)</span> is <span class="math inline">\(-4x^{-4-1} = -4x^{-5}\)</span>. The derivative of <span class="math inline">\(4\sin(x)\)</span> is <span class="math inline">\(4(\cos(x)) = 4\cos(x)\)</span>. The derivative of <span class="math inline">\(\cos(4x)\)</span> is <span class="math inline">\(-4\sin(4x)\)</span>. Taking care of your signs you can write the derivative of <span class="math inline">\(\dfrac{1}{x^4} + 4\cos(x) - \sin(4x)\)</span> as <span class="math display">\[f'(x) = -4x^{-5} + 4\cos(x) - (-4\sin(4x)) = -4x^{-5} + 4\cos(x) + 4\sin(4x).\]</span></p>
+<p>Find the derivative of the function <span class="math inline">\(f(t) = \dfrac{1}{t^4} + 4\cos(t) - \sin(4t)\)</span> with respect to <span class="math inline">\(t\)</span>.</p>
+<p>Again, the cosine and sine terms are manageable from the derivative above, it is only the <span class="math inline">\(1/t^4\)</span> term that needs a little thought. In fact, this is yet <em>another</em> case of <span class="math inline">\(t^n\)</span>; this time when <span class="math inline">\(n = -4\)</span>. (See <a href="../studyguides/lawsofindices.html">Guide: Laws of indices</a> for why this is.)</p>
+<p>You can then rewrite the function as <span class="math display">\[f(t) = t^{-4} + 4\sin(t) - \cos(4t)\]</span> and use the familiar rules of differentiation above. Using the results above with <span class="math inline">\(n = -4\)</span>, the derivative of <span class="math inline">\(t^{-4}\)</span> is <span class="math inline">\(-4t^{-4-1} = -4t^{-5}\)</span>. The derivative of <span class="math inline">\(4\sin(t)\)</span> is <span class="math inline">\(4(\cos(t)) = 4\cos(t)\)</span>. The derivative of <span class="math inline">\(\cos(4t)\)</span> is <span class="math inline">\(-4\sin(4t)\)</span>. Taking care of your signs you can write the derivative of <span class="math inline">\(\dfrac{1}{t^4} + 4\cos(t) - \sin(4t)\)</span> as <span class="math display">\[f'(t) = -4t^{-5} + 4\cos(t) - (-4\sin(4t)) = -4t^{-5} + 4\cos(t) + 4\sin(4t).\]</span></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-note callout-titled">
@@ -643,11 +673,15 @@ Example 4
 <section id="further-reading" class="level1 unnumbered">
 <h1 class="unnumbered">Further reading</h1>
 <p><a href="../questions/qs-introtodifferentiation.html">For more questions on the subject, please go to Questions: Introduction to differentiation and the derivative.</a></p>
-<p>For more about techniques of differentiation, please see [Guide: The product rule], [Guide: The quotient rule], and [Guide: The chain rule].</p>
-<p>For more about where the derivatives in the above table come from, please see <a href="../proofsheets/ps-introtodifferentiation.html">Proof sheet: Derivatives of functions from first principles</a> and [Proof sheet: Derivatives of other common functions]. For more about why the rules of differentiation are true, please see [Proof sheet: Rules of differentiation].</p>
+<p>For more about techniques of differentiation, please see <a href="../studyguides/productrule.html">Guide: The product rule</a>, <a href="../studyguides/quotientrule.html">Guide: The quotient rule</a>, and <a href="../studyguides/chainrule.html">Guide: The chain rule</a>.</p>
+<p>For more about the differential operator, and its application to finding derivatives of derivatives, please see [Guide: The differential operator and higher derivatives].</p>
+<p>For more about where the derivatives in the above table come from, please see <a href="../proofsheets/ps-introtodifferentiation.html">Proof sheet: Derivatives of functions from first principles</a> and [Proof sheet: Derivatives of other common functions]. For more about why the rules of differentiation are true, please see <a href="../proofsheets/ps-rulesofdifferentiation.html">Proof sheet: Rules of differentiation</a>.</p>
 <section id="version-history" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
 <p>v1.0: initial version created 03/25 by tdhc.</p>
+<ul>
+<li>v1.1 updated version with section on differentiating with respect to different variables 05/25 by tdhc.</li>
+</ul>
 <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
 
 

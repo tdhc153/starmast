@@ -1,0 +1,391 @@
+---
+title: The quotient rule
+author: Tom Coleman
+abstract-title: Summary
+abstract: The quotient rule is one of three central techniques of differentiation, allowing you to differentiate any quotient of two differentiable functions. This guide introduces the quotient rule and explains examples of where it is used, as well as use the quotient rule to find some more derivatives of trigonometric functions. 
+categories:
+  - Calculus
+  - Differentiation
+image: FiguresPNG/quotientrule-image.png
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+*Before reading this guide, it is recommended that you read [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd).*
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/quotientrule.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
+
+# What is the quotient rule? {-}
+
+In [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd), you saw how valuable the idea of a derivative of a function is in determining the behaviour of that function. For instance, the derivative can be used to show if a function is increasing or decreasing at a point. Differentiation is commonly used in many subjects (physics, chemistry, biology, economics to name a few) to analyse behaviour of systems that change, and equations involving derivatives can be solved to explain this behaviour. 
+
+It was mentioned in that same guide that you are able to differentiate certain combinations of functions, such as the sum and difference of two functions, or scalar multiple of a single function. You need extra techniques to differentiate products, quotients, and compositions of functions; you will need the **product rule**, **quotient rule**, and **chain rule** respectively. 
+
+This guide will look at the **quotient rule for differentiation** in order to find the derivative of a quotient $u(x)/v(x)$ of two functions. This guide explains the rule, where it comes from, how it can be used, and how you can apply its techniques to functions to find more derivatives of trigonometric functions via the reciprocal rule.
+
+The summary table of key derivatives from [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd) is reproduced here for reference:
+
+| Function $f(x)$ | Derivative $f'(x)$ | Notes |
+|:-----------|:-------------------|:--------|
+| $f(x) = c$ | $f'(x) = 0$ |  |
+| $f(x) = ax + b$ | $f'(x) = a$ | |
+| $f(x) = ax^n$ | $f'(x) = anx^{n-1}$ | $n \neq 0$ |
+| $f(x) = ae^{bx}$ | $f'(x) = abe^{bx}$ |  |
+| $f(x) = a\sin(bx)$ | $f'(x) = ab\cos(bx)$ |  |
+| $f(x) = a\cos(bx)$ | $f'(x) = -ab\sin(bx)$ |  |
+| $f(x) = a\ln(bx)$ | $f'(x) = \dfrac{a}{x}$ |  |
+
+# Statement of the quotient rule
+
+Here is the statement of the quotient rule:
+
+::: {.callout-note}
+
+## The quotient rule
+
+Let $u(x)$ and $v(x)$ be two differentiable functions. Then the **quotient rule** says that
+$$\left(\frac{u}{v}\right)'(x) = \frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u(x)}{v(x)}\right) = \frac{u'(x)v(x) - u(x)v'(x)}{\left(v(x)\right)^2}$$
+that is, the derivative of $u(x)$ divided by $v(x)$ is equal to the difference of $u'(x)v(x)$ and $u(x)v'(x)$, divided by the square of the function $v(x)$.
+
+This can also be written as $$\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u(x)}{v(x)}\right) = \frac{v\frac{\textrm{d}u}{\textrm{d}x} - u\frac{\textrm{d}v}{\textrm{d}x}}{v^2}.$$
+
+:::
+
+::: {.callout-warning}
+
+Because of the minus sign in the numerator, it's really important that you get these derivatives in the right order! If you do not do this, you will end up with the negative of the correct answer.
+
+:::
+
+::: {.callout-tip}
+
+The discovery of the quotient rule is often credited to [Gottfried Leibniz (link to Mactutor biography, external site)](https://mathshistory.st-andrews.ac.uk/Biographies/Leibniz/), one of the co-founders of calculus (along with Isaac Newton).
+
+:::
+
+Unlike the product rule, the choice of functions for the quotient rule is prescribed; $u(x)$ is the numerator and $v(x)$ is the denominator.
+
+Sometimes $f(x)$ and $g(x)$ are written instead of $u(x)$ and $v(x)$ in the statement of the quotient rule. The reason that $u(x)$ and $v(x)$ is used here is that sometimes the function itself is called $f(x)$; and you then can't use it again!
+
+To see why this really is the derivative of the quotient of two functions, please see [Proof sheet: Rules of differentiation.]
+
+# Examples
+
+::: {.callout-note appearance="simple"}
+
+## Example 1
+
+What is the derivative of $y = \dfrac{x^3}{e^x}$?
+
+ 
+
+In this case, you have a quotient of two functions making $y$. The two functions are determined to be $u(x) = x^3$ and $v(x) = e^x$. In order to use the quotient rule on $y$, you could differentiate $u(x)$ and $v(x)$ beforehand and then substitute them into the statement of the quotient rule. Doing this gives
+
+- For $u(x) = x^3$, then $u'(x) = 3x^2$ by the power rule.
+
+- For $v(x) = e^x$, then $v'(x) = e^x$.
+
+Putting these into the statement of the quotient rule gives
+
+$$
+\begin{aligned}
+\frac{\textrm{d}y}{\textrm{d}x} &= \frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u(x)}{v(x)}\right) = \frac{u'(x)v(x) - u(x)v'(x)}{\left(v(x)\right)^2}\\[0.5em]
+&= \frac{(3x^2)(e^x) - (x^3)(e^x)}{(e^x)^2}\\[0.5em]
+&= \frac{3x^2e^x - x^3e^x}{(e^x)^2} 
+\end{aligned}
+$$
+
+and this is your answer. You can use the laws of indices to change the denominator to $e^{2x}$ if you wanted to. 
+
+:::
+
+You don't need to be so rigorous in your own working. Here's another example of using the quotient rule.
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+What is the derivative of $f(x) = \dfrac{\ln(x)}{x^5}$ with respect to $x$?
+
+ 
+
+You can use the product rule on $f(x)$ to differentiate with respect to $x$. You can infer that $u(x) = \ln(x)$ and $v(x) = x^5$. Differentiating both with respect to $x$ gives $u'(x) = 1/x$ and $v'(x) = 5x^4$. Putting these into the statement of the quotient rule gives
+
+$$
+\begin{aligned}
+f'(x) &= \frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u(x)}{v(x)}\right) = \frac{u'(x)v(x) - u(x)v'(x)}{\left(v(x)\right)^2}\\[0.5em]
+&= \frac{\left(\frac{1}{x}\right)(x^5) - (\ln(x))(5x^4)}{(x^5)^2}\\[0.5em]
+&= \frac{x^4 - 5x^4\ln(x)}{x^{10}} = \frac{1-5\ln(x)}{x^{6}} 
+\end{aligned}
+$$
+
+and this is your answer. Here, the answer has been simplified by using the laws of indices.
+
+:::
+
+::: {.callout-tip}
+
+You don't always need the quotient rule to differentiate the quotient of two functions if this expression can be written in a different way.
+
+For instance, the function in Example 2 is $$f(x) = \dfrac{\ln(x)}{x^5}$$ which, by the laws of indices (see [Guide: Laws of indices](lawsofindices.qmd)), is equal to $$f(x) = \dfrac{\ln(x)}{x^5} = x^{-5}\ln(x)$$ You can then use the product rule on this expression if you wanted to; in fact, Example 5 of [Guide: The product rule](productrule.qmd) shows this working in full. You can check and see that these are exactly the same answer! 
+
+:::
+
+In fact, Example 1 can also be written as the product of two functions; here, $y = x^3/e^{x} = x^3e^{-x}$. You might then be thinking; what is the use of the quotient rule if you can always do this? The fact is you can't -- the laws of indices do not apply to all functions. Here's an example of this behaviour.
+
+::: {.callout-note appearance="simple"}
+
+## Example 3
+
+Find the derivative of the function $f(x) = \dfrac{x^5}{\ln(x)}$.
+
+ 
+
+Here, you can see that the denominator is something that is not a power; so you can't use laws of indices on this function to write it as a product.
+
+You can use the quotient rule on $f(x)$ to differentiate with respect to $x$. You can infer that $u(x) = x^5$ and $v(x) = \ln(x)$. Differentiating both with respect to $x$ gives $u'(x) = 5x^4$ and $v'(x) = 1/x$. Putting these into the statement of the quotient rule gives
+
+$$
+\begin{aligned}
+f'(z) &= \frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{u(x)}{v(x)}\right) = \frac{u'(x)v(x) - u(x)v'(x)}{\left(v(x)\right)^2}\\[0.5em]
+&= \frac{(5x^4)(\ln(x)) - (x^5)\left(\frac{1}{x}\right)}{(\ln(x))^2}\\[0.5em]
+&= \frac{5x^4\ln(x) - x^4}{(\ln(x))^2}
+\end{aligned}
+$$
+
+and this is your final answer. 
+
+:::
+
+::: {.callout-warning}
+
+Examples 2 and 3 together show that, in general, the derivative of $1/f(x)$ does **not** equal $1/f'(x)$. You can find the derivative of $1/f(x)$ using the quotient rule; see Example 6 for more. 
+
+:::
+
+Here's an example which combines two separate differentiation rules; both the sum rule and the quotient rule. 
+
+::: {.callout-note appearance="simple"}
+
+## Example 4
+
+Find the derivative of the function $f(t) = \dfrac{\sin(t)}{e^t + t^3}$.
+
+ 
+
+You can't split this fraction up into pieces, as the plus sign is in the denominator. You will need to use the sum rule when differentiating this in the quotient rule, however. 
+
+To use the quotient rule, you have $u(t) = \sin(t)$ and $v(t) = e^t + t^3$. Then $u'(t) = \cos(t)$ and $v'(t) = e^t + 3t^2$. 
+
+$$
+\begin{aligned}
+\frac{\textrm{d}}{\textrm{d}t}\left(\dfrac{\sin(t)}{e^t + t^3}\right) &= \frac{u'(t)v(t) - u(t)v'(t)}{\left(v(t)\right)^2}\\[0.5em]
+&= \frac{\cos(t)(e^t + t^3) - \sin(t)(e^t + 3t^2)}{\left(e^t + t^3\right)^2}
+\end{aligned}
+$$
+
+and this is your final answer. 
+
+:::
+
+# Applications of the quotient rule {-}
+
+You can use the quotient rule to work out some derivatives of some other trigonometric functions. In [Guide: Trigonometry (radians)](trigonometry-radians.qmd), you saw that $$\tan(x) = \frac{\sin(x)}{\cos(x)}\qquad \sec(x) = \frac{1}{\cos(x)}\qquad \csc(x) = \frac{1}{\sin(x)}\qquad \cot(x) = \frac{1}{\tan(x)} = \frac{\cos(x)}{\sin(x)}$$ are four other circular trigonometric functions.
+
+You know how to differentiate $\sin(x)$ and $\cos(x)$; since both appear in the definition of $\tan(x)$, you can use the quotient rule to work out the derivative of $\tan(x)$.
+
+::: {.callout-note appearance="simple"}
+
+## Example 5
+
+Find the derivative of $\tan(x)$ with respect to $x$.
+
+ 
+
+First of all, you can write $\tan(x) = \dfrac{\sin(x)}{\cos(x)}$. Using the statement of the quotient rule, you can say that $u(x) = \sin(x)$ and $v(x) = \cos(x)$; this means that $u'(x) = \cos(x)$ and $v'(x) = -\sin(x)$. Putting these into the statement of the quotient rule gives
+
+$$
+\begin{aligned}
+\frac{\textrm{d}}{\textrm{d}x}\left(\tan(x)\right) &= \frac{\textrm{d}}{\textrm{d}x}\left(\dfrac{\sin(x)}{\cos(x)}\right) = \frac{u'(x)v(x) - u(x)v'(x)}{\left(v(x)\right)^2}\\[0.5em]
+&= \frac{(\cos(x))(\cos(x)) - (\sin(x))(-\sin(x))}{(\cos(x))^2}\\[0.5em]
+&= \frac{\cos^2(x) + \sin^2(x)}{\cos^2(x)}
+\end{aligned}
+$$
+
+Now, using trigonometric identities (see [Guide: Trigonometric identities (radians)](trigonometricidentities-radians.qmd)), you know that $\cos^2(x) + \sin^2(x) = 1$, and so $$\frac{\textrm{d}}{\textrm{d}x}\left(\tan(x)\right) = \frac{\cos^2(x) + \sin^2(x)}{\cos^2(x)} = \frac{1}{\cos^2(x)} = \sec^2(x).$$
+
+:::
+
+
+
+::: {.callout-important}
+
+You should remember this result.
+
+:::
+
+For the other three circular trigonometric functions $\sec(x)$, $\csc(x)$ and $\cot(x)$, you could use the quotient rule to differentiate these individually. However, all of them have the same form; they are $1/f(x)$ for some function $f(x)$. These are known **reciprocals** of functions. If you can use the quotient rule to demonstrate a general formula for the derivative of $1/f(x)$, you can not only use this general formula to differentiate $\sec(x)$, $\csc(x)$ and $\cot(x)$, but **any other** reciprocal function. This is a common technique amongst mathematicians; find the most general formula possible to apply to as many situations as you can. Let's take a look at the **reciprocal rule**:
+
+::: {.callout-note appearance="simple"}
+
+## Example 6 (reciprocal rule)
+
+You can use the quotient rule to prove the **reciprocal rule**, which says that if $f(x)$ is not equal to $0$ for all $x$, then $$\left(\frac{1}{f(x)}\right)' = \frac{-f(x)}{(f(x))^2}.$$
+
+ 
+
+The function you are trying to differentiate is $1/f(x)$, so you can use the quotient rule with $u(x) = 1$ and $v(x) = f(x)$. As $1$ is a constant, it follows that $u'(x) = 0$. You can say that $v'(x) = f'(x)$. Putting these into the quotient rule gives:
+
+$$
+\begin{aligned}
+\frac{\textrm{d}}{\textrm{d}x}\left(\frac{1}{f(x)}\right) &= \frac{u'(x)v(x) - u(x)v'(x)}{\left(v(x)\right)^2}\\[0.5em]
+&= \frac{(0)(f(x)) - (1)(f'(x))}{(f(x))^2}= \frac{-f(x)}{(f(x))^2}
+\end{aligned}
+$$
+
+and this is exactly the reciprocal rule.
+
+:::
+
+::: {.callout-tip}
+
+You could also use the **chain rule** to prove the reciprocal rule is true. See [Guide: The chain rule](chainrule.qmd) for more.
+
+:::
+
+You can now use the reciprocal rule to find the derivatives of $\sec(x)$, $\csc(x)$ and $\cot(x)$. 
+
+::: {.callout-note appearance="simple"}
+
+## Example 7
+
+For $\sec(x) = \dfrac{1}{\cos(x)}$, you can use the reciprocal rule with $f(x) = \cos(x)$ (so $f'(x) = -\sin(x)$) to say that $$\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{1}{\cos(x)}\right) = \frac{-(-\sin(x))}{\cos^2(x)} = \frac{\sin(x))}{\cos^2(x)} = \sec(x)\tan(x).$$
+
+Next, $\csc(x) = \dfrac{1}{\sin(x)}$. You can use the reciprocal rule with $f(x) = \sin(x)$ (so $f'(x) = \cos(x)$) to write that $$\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{1}{\sin(x)}\right) = \frac{-(\cos(x))}{\sin^2(x)} = -\csc(x)\cot(x).$$
+
+Finally, you can differentiate $\cot(x)$. There are two different ways to do this, based on how you write $\cot(x)$.
+
+  - By writing $\cot(x) = \dfrac{1}{\tan(x)}$, you can use the reciprocal rule with $f(x) = \tan(x)$ (so $f'(x) = \sec^2(x)$) to get $$\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{1}{\tan(x)}\right) =\frac{-(\sec^2(x))}{\tan^2(x)}$$ which, since $\sec^2(x) = 1/\cos^2(x)$ and $\tan^2(x) = \sin^2(x)/\cos^2(x)$, gives $$\frac{\mathrm{d}}{\mathrm{d}x}\left(\frac{1}{\tan(x)}\right) = \frac{-\cos^2(x))}{\cos^2(x)\sin^2(x)} = -\frac{1}{\sin^2(x)} = -\csc^2(x).$$
+  
+  - By writing $\cot(x) = \cos(x)/\sin(x)$, you can use the quotient rule with $u(x) = \cos(x)$ and $v(x) = \sin(x)$. This means that $u'(x) = -\sin(x)$ and $v'(x) = \cos(x)$. Then 
+  $$
+  \begin{aligned}
+  \frac{\textrm{d}}{\textrm{d}x}\left(\cot(x)\right) &= \frac{u'(x)v(x) -u(x)v'(x)}{\left(v(x)\right)^2}\\[0.5em]
+  &= \frac{(-\sin(x))(\sin(x)) - (\cos(x))(\cos(x))}{(\sin(x))^2}\\[0.5em]
+  &= \frac{-(\sin^2(x) + \cos^2(x))}{\sin^2(x)}
+  \end{aligned}
+  $$
+  and since $\sin^2(x) + \cos^2(x) = 1$, it follows that $\dfrac{\textrm{d}}{\textrm{d}x}\left(\cot(x)\right) = -\csc^2(x)$.
+
+:::
+
+::: {.callout-tip}
+
+The last of these examples show that you don't need to always use formulas like the reciprocal rule to find derivatives. 
+
+:::
+
+## Summary of new derivatives {-}
+
+You can use the scaling and chain rules to find generalized versions of the new derivatives. Here's an updated table of derivatives that you should remember before any further reading on differentiation, for real numbers  $a,b,c,n$:
+
+| Function $f(x)$ | Derivative $f'(x)$ | Notes |
+|:-----------|:-------------------|:--------|
+| $f(x) = c$ | $f'(x) = 0$ |  |
+| $f(x) = ax + b$ | $f'(x) = a$ | |
+| $f(x) = ax^n$ | $f'(x) = anx^{n-1}$ | $n \neq 0$ |
+| $f(x) = ae^{bx}$ | $f'(x) = abe^{bx}$ |  |
+| $f(x) = a\sin(bx)$ | $f'(x) = ab\cos(bx)$ |  |
+| $f(x) = a\cos(bx)$ | $f'(x) = -ab\sin(bx)$ |  |
+| $f(x) = a\ln(bx)$ | $f'(x) = \dfrac{a}{x}$ |  |
+| $f(x) = a\tan(bx)$ | $f'(x) = ab\sec^2(bx)$ |  |
+| $f(x) = a\sec(bx)$ | $f'(x) = ab\sec(bx)\tan(bx)$ |  |
+| $f(x) = a\csc(bx)$ | $f'(x) = -ab\csc(bx)\cot(bx)$ |  |
+| $f(x) = a\cot(bx)$ | $f'(x) = -ab\csc^2(bx)$ |  |
+
+::: {.content-hidden when-format="html"}
+
+\newpage
+
+:::
+
+# Quick check problems {-}
+
+<!-- add facility for webexercises to work on html -->
+
+::: {.content-visible when-format="html"}
+
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box data-topic="QUOT1"}
+
+Using the quotient rule, match the following six functions to their derivatives with respect to $x$. One of the derivatives given does not match a function on the list; you should select which is the odd derivative out in the final sentence below.
+
+| | Function | Derivative |
+|:---|:-------------------|:-----------|
+1. | $\dfrac{3x^2}{\cos(2x)}$  | `r mcq(c("(a)", answer = "(b)", "(c)", "(d)", "(e)", "(f)", "(g)"))`
+2. | $\dfrac{2x^3}{\sin(3x)}$ | `r mcq(c("(a)", "(b)", "(c)", "(d)", answer = "(e)", "(f)", "(g)"))`
+3. | $\dfrac{3x^2}{\sin(2x)}$ | `r mcq(c("(a)", "(b)", answer = "(c)", "(d)", "(e)", "(f)", "(g)"))`
+4. | $\dfrac{x^2}{\sin(3x)}$ | `r mcq(c("(a)", "(b)", "(c)", answer = "(d)", "(e)", answer = "(f)", "(g)"))`
+5. | $\dfrac{x^2}{\cos(3x)}$  | `r mcq(c(answer = "(a)", "(b)", "(c)", "(d)", "(e)", "(f)", "(g)"))`
+6. | $\dfrac{3x^3}{\cos(2x)}$ | `r mcq(c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)", answer = "(g)"))`
+
+where 
+
+| | | | |
+|:--|:---------------|:--|:---------------|
+(a) | $\dfrac{2x\cos(3x) + 3x^2\sin(3x)}{\cos^2(3x)}$ | (e) | $\dfrac{6x^2\sin(3x) - 6x^3\cos(3x)}{\sin^2(3x)}$ |
+(b) | $\dfrac{6x\cos(2x) + 6x^2\sin(2x)}{\cos^2(2x)}$ | (f) | $\dfrac{6x\cos(2x) + 6x^2\sin(2x)}{\sin^2(2x)}$ |
+(c) | $\dfrac{6x\sin(2x) - 6x^2\cos(2x)}{\sin^2(2x)}$ | (g) | $\dfrac{9x^2\cos(2x) + 6x^3\sin(2x)}{\cos^2(2x)}$ |
+(d) | $\dfrac{2x\sin(3x) - 3x^2\cos(3x)}{\sin^2(3x)}$ | | | 
+
+So `r mcq(c("(a)", "(b)", "(c)", "(d)", "(e)", answer = "(f)", "(g)"))` is the odd derivative out.
+
+:::
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+Using the product rule, match the six functions to their derivatives with respect to $x$. One of the derivatives given does not match a function; you should circle the odd derivative out. 
+
+| Function | Derivative |
+|:-----------:|:-------------------:|
+| $\dfrac{3x^2}{\cos(2x)}$  | $\dfrac{2x\cos(3x) + 3x^2\sin(3x)}{\cos^2(3x)}$ |
+| | |
+| $\dfrac{2x^3}{\sin(3x)}$ | $\dfrac{6x\cos(2x) + 6x^2\sin(2x)}{\cos^2(2x)}$ |
+| | |
+| $\dfrac{3x^2}{\sin(2x)}$ | $\dfrac{6x\sin(2x) - 6x^2\cos(2x)}{\sin^2(2x)}$ |
+| | |
+| $\dfrac{x^2}{\sin(3x)}$ | $\dfrac{2x\sin(3x) - 3x^2\cos(3x)}{\sin^2(3x)}$ |
+| | |
+| $\dfrac{x^2}{\cos(3x)}$  | $\dfrac{6x^2\sin(3x) - 6x^3\cos(3x)}{\sin^2(3x)}$ | 
+| | |
+| $\dfrac{3x^3}{\cos(2x)}$ | $\dfrac{6x\cos(2x) + 6x^2\sin(2x)}{\sin^2(2x)}$ |
+| | |
+| | $\dfrac{9x^2\cos(2x) + 6x^3\sin(2x)}{\cos^2(2x)}$ |
+
+:::
+
+# Further reading {-}
+
+[For more questions on the subject, please go to Questions: The quotient rule](../questions/qs-quotientrule.qmd).
+
+For more about techniques of differentiation, please see [Guide: The product rule](productrule.qmd), and [Guide: The chain rule](chainrule.qmd).
+
+For more about why the rules and techniques of differentiation are true, please see [Proof sheet: Rules of differentiation](../proofsheets/ps-rulesofdifferentiation.qmd).
+
+## Version history {-}
+
+v1.0: initial version created 05/25 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
