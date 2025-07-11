@@ -1,0 +1,109 @@
+---
+title: "Proof: Law of total probability and Bayes' theorem"
+author: "Sophie Chowgule"
+abstract-title: Summary
+abstract: This proof sheet demonstrates that the law of total probability and Bayes' theorem are true.
+---
+
+*Before reading this proof sheet, it is recommended that you read [Guide: Conditional probability](../studyguides/conditionalprobability.qmd) and [Guide: Law of total probability and Bayes' theorem](../studyguides/bayestheorem.qmd).*
+
+# Proof of the law of total probability
+
+First of all, here is a restatement of the law of total probability from [Guide: Law of total probability and Bayes' theorem](../studyguides/bayestheorem.qmd):
+
+::: {.callout-note}
+## Definition of the law of total probability
+
+Suppose an event $B$ depends on several possible scenarios. These scenarios can be described by events $A_1,A_2,\ldots, A_n$, that are:
+
+* **Mutually exclusive**: they cannot occur at the same time, and
+* **Exhaustive**: one of them must always occur.
+
+Then, the **law of total probability** states that the probability of event $B$ is:
+
+$$
+\mathbb{P}(B) = \sum_{i=1}^{n} \mathbb{P}(A_i) \mathbb{P}(B \mid A_i)
+$$
+
+:::
+
+The proof of the law of total probability comes directly from the definition of conditional probability given in [Guide: Conditional probability](../studyguides/conditionalprobability.qmd):
+
+$$
+\mathbb{P}(B \mid A_i) = \frac{\mathbb{P}(B \cap A_i)}{\mathbb{P}(A_i)}
+$$
+
+Multiplying by $\mathbb{P}(A_i)$ gives the multiplication rule (again from [Guide: Conditional probability](../studyguides/conditionalprobability.qmd)) :
+
+$$
+\mathbb{P}(B \cap A_i) = \mathbb{P}(B \mid A_i) \mathbb{P}(A_i)
+$$
+
+As scenarios $A_1, A_2, \dots, A_n$ are mutually exclusive (so $A_i \cap A_j = \emptyset$ for all $1\leq i\neq j \leq n$) and exhaustive ($\bigcup_{1\leq i \leq n}A_i = B$), it follows from results in set theory (see [Guide: Operations on sets]) that:
+
+$$
+\mathbb{P}(B) = \mathbb{P}(B \cap A_1) + \mathbb{P}(B \cap A_2) + \dots + \mathbb{P}(B \cap A_n) = \sum_{i=1}^n \mathbb{P}(B \cap A_i)
+$$
+
+Substituting the above expressions gives:
+
+$$
+\mathbb{P}(B) = \mathbb{P}(B \mid A_1) \mathbb{P}(A_1) + \mathbb{P}(B \mid A_2) \mathbb{P}(A_2) + \dots + \mathbb{P}(B \mid A_n) \mathbb{P}(A_n) = \sum_{i=1}^n \mathbb{P}(B\mid A_i)\mathbb{P}(A_i)
+$$
+
+Which results in the law of total probability:
+
+$$
+\mathbb{P}(B) = \sum_{i=1}^{n} \mathbb{P}(A_i) \mathbb{P}(B \mid A_i)
+$$
+
+# Proof of Bayes' theorem
+
+Here is the statement of Bayes' theorem from [Guide: Law of total probability and Bayes' theorem](../studyguides/bayestheorem.qmd):
+
+::: {.callout-note}
+## Statement of Bayes' Theorem
+
+If $A$ and $B$ are events with $\mathbb{P}(B) > 0$, then Bayes' Theorem states:
+
+$$
+\mathbb{P}(A \mid B) = \dfrac{\mathbb{P}(B \mid A) \mathbb{P}(A)}{\mathbb{P}(B)}.
+$$
+
+where:
+
+* $\mathbb{P}(A \mid B)$ is the probability of $A$ given $B$,
+* $\mathbb{P}(B \mid A)$ is the probability of $B$ given $A$,
+* $\mathbb{P}(A)$ and $\mathbb{P}(B)$ are the individual probabilities of $A$ and $B$, respectively.
+
+:::
+
+Bayes' Theorem is derived directly from the definition of conditional probability: see [Guide: Conditional probability](../studyguides/conditionalprobability.qmd). Start with the conditional probabilities of two events $A$ and $B$:
+
+$$
+(1)\quad \mathbb{P}(A \mid B) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(B)} \quad\textsf{ and }\quad (2)\quad \mathbb{P}(B \mid A) = \frac{\mathbb{P}(A \cap B)}{\mathbb{P}(A)}
+$$
+
+You can rearrange $(2)$ by multiplying both sides by $\mathbb{P}(A)$, giving the multiplication rule:
+
+$$
+\mathbb{P}(A \cap B) = \mathbb{P}(B \mid A) \mathbb{P}(A)
+$$
+
+Substitute this result into equation $(1)$ to get:
+
+$$
+\mathbb{P}(A \mid B) = \frac{\mathbb{P}(B \mid A) \mathbb{P}(A)}{\mathbb{P}(B)}
+$$
+
+This gives Bayes’ Theorem, a way to reverse conditional probabilities when direct calculation is difficult.
+
+# Further reading
+
+[Click this link to go back to Guide: Law of total probability and Bayes' theorem.](../studyguides/bayestheorem.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 04/25 by Sophie Chowgule as part of a University of St Andrews VIP project.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

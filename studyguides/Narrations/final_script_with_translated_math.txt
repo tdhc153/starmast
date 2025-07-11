@@ -18,27 +18,21 @@ Facts and proofs
 
 Apps
 
-Latest content: New website features and statistical calculators available now! (02/05/25)
+Latest content: 21 new pages including five new guides! See our news section for more… (02/07/25)
 
 On this page
 
-What is the chain rule?
+Introduction
 
-Statement of the chain rule
+Law of total probability
 
-Examples
-
-Applications of the chain rule
-  
-  Derivatives of other common functions
-  Other rules for differentiation
-  Derivatives of scaled functions
+Bayes’ theorem
 
 Quick check problems
 
 Further reading
   
-  Version history
+  Version history and licensing
 
 Other Formats
 
@@ -46,266 +40,419 @@ PDF
 
 MS Word
 
-The chain rule
+Law of total probability and Bayes’ theorem
 
-CALCULUS
+PROBABILITY
 
-DIFFERENTIATION
+STATISTICS
 
 AUTHOR
 
-Tom Coleman
+Sophie Chowgule
 
 SUMMARY
-The chain rule is one of three central techniques of differentiation, allowing you to differentiate any composition of two differentiable functions. This guide introduces the chain rule and explains examples of where it is used.
+The law of total probability and Bayes’ theorem build on the fundamentals of conditional probability. They are used to calculate probabilities across different scenarios and to update predictions when information is incomplete. This guide outlines both methods and explains how and when to apply them.
 
-Before reading this guide, it is recommended that you read Guide: Introduction to differentiation and the derivative.
+Before reading this guide, it is highly recommended that you read Guide: Conditional probability.
 
-What is the chain rule?
+Introduction
 
-In Guide: Introduction to differentiation and the derivative, you saw how valuable the idea of a derivative of a function is in determining the behaviour of that function. For instance, the derivative can be used to show if a function is increasing or decreasing at a point. Differentiation is commonly used in many subjects (physics, chemistry, biology, economics to name a few) to analyse behaviour of systems that change, and equations involving derivatives can be solved to explain this behaviour.
+The law of total probability and Bayes’ theorem extend the basic ideas of conditional probability. They provide a way to calculate probabilities when outcomes depend on multiple possible scenarios or when information is incomplete or indirect. These results are widely used across statistics, particularly in problems involving uncertainty, prediction, and statistical inference. This guide introduces both the law of total probability and Bayes’ theorem, explains how they are derived, and shows how to apply them in practical contexts.
 
-It was mentioned in that same guide that you are able to differentiate certain combinations of functions, such as the sum and difference of two functions, or scalar multiple of a single function. You need extra techniques to differentiate products, quotients, and compositions of functions; you will need the product rule, quotient rule, and chain rule respectively.
+Law of total probability
 
-This guide will look at the chain rule for differentiation in order to find the derivative of a composition u of v of x of two functions. This guide explains the rule, where it comes from, and how the chain rule can be used.
+In everyday life, an event can often happen in more ways than one. For example, the chance that a package arrives late might depend on whether it is delivered by courier A or courier B. If each courier is used for a different proportion of deliveries, and each one has a different chance of causing a delay, then the overall chance of delay depends on both which courier is used and how often each one is chosen.
 
-The summary table of key derivatives from Guide: Introduction to differentiation and the derivative is reproduced here for reference:
+The law of total probability allows you to calculate the total probability of an event by combining its conditional probabilities across several possible scenarios. This approach is especially helpful when outcomes depend on mutually exclusive events (only one possible scenario can occur at a time), each with a known probability.
 
-Statement of the chain rule
+Definition of the law of total probability
 
-Here is the statement of the chain rule:
+Suppose an event B depends on several possible scenarios. These scenarios can be described by events A sub 1 comma A sub 2 comma dot dot dot comma A sub n, that are:
 
-The chain rule
+Mutually exclusive: they cannot occur at the same time, and
 
-Let u of x and v of x be two differentiable functions. Then the chain rule says that open paren u composed with v close paren prime of x equals normal d over normal d x times u of v of x equals u prime of v of x times v prime of x that is, the derivative of u of x composed with v of x with respect to x is equal to the product of the derivative of u with respect to v and the derivative of v with respect to x.
+Exhaustive: one of them must always occur.
 
-This can also be written as normal d over normal d x times u of v of x equals d u over d v times d v over d x period
+Then, the law of total probability states that the probability of event B is:
 
-Warning
-
-It’s really important to keep track of variables throughout the chain rule.
+double struck P of B equals the sum from i equals 1 to n of double struck P of open paren A sub i close paren double struck P of open paren B divides A sub i close paren Each term represents the probability of B in one particular scenario.
 
 Tip
 
-The discovery of the chain rule is often credited to Gottfried Leibniz (link to Mactutor biography, external site), one of the co-founders of calculus (along with Isaac Newton); although he only used it on functions of the form the square root of a plus b x plus c x squared. The first ‘modern’ mention of the chain rule, over a century after Leibniz’ original usage, is due to Joseph-Louis Lagrange (link to Mactutor biography, external site).
+The symbol sum is called sigma notation. In this case, it is adding the probabilities for each possible scenario where B could happen. For more, see Guide: Sigma notation.
 
-Unlike the product rule (see Guide: The product rule), the choice of functions for the chain rule is prescribed; u of x is the function on the ‘outside’ and v of x is the function on the ‘inside’.
+Tip
 
-Sometimes f of x and g of x are written instead of u of x and v of x in the statement of the product rule. The reason that u of x and v of x is used here is that sometimes the function itself is called f of x; and you then can’t use it again!
+To apply the law of total probability:
 
-To see why this really is the derivative of the quotient of two functions, please see Proof sheet: Rules of differentiation.
+Calculate each scenario’s conditional probability, double struck P of open paren B divides A sub i close paren.
 
-Examples
+Multiply these conditional probabilities by their scenario likelihoods, double struck P of open paren A sub i close paren.
 
-Warning
+Add these results to find the total probability of event B.
 
-Although the statement of the chain rule uses more than one variable, all of your final answers should be in terms of the variable on the inside. This means that any derivative of f of g of x must be in terms of x, any derivative of u of v of t must be in terms of t and so on.
+This accounts for each possible scenario exactly once.
+
+For more about why the law of total probability is true, please go to Proof: Law of total probability and Bayes’ theorem.
+
+Tip
+
+The examples that follow all stick to a certain pattern, which can be summarized as follows:
+
+Information about probabilities
+
+Renaming of events and probabilities into mathematical terms
+
+Application of the formula
+
+This standard pattern is a useful framework for you to produce answers to these questions. It’s important to have clarity in what information you have and what information you are trying to work out.
 
 Example 1
 
-What is the derivative of y equals e raised to the x cubed power?
+At a hospital:
 
-In this case, you have a composition of two functions making y. The idea is to write y as e to the v-th power where v is a function of x. So here, the two functions are determined to be y equals e to the v-th power and v of x equals x cubed. In order to use the chain rule on y, you could differentiate y with respect to u and v with respect to x beforehand and then substitute them into the statement of the quotient rule. Doing this gives
+70 percent sign of patients are treated in the general ward,
 
-For y of u equals e to the u-th power, then normal d y over normal d u equals e to the u-th power.
+30 percent sign of patients are treated in the emergency unit,
 
-For u of x equals x cubed, then normal d u over normal d x equals 3 x squared.
+The probability a patient in the general ward recovers in 2 days is 0.8.
 
-Putting these into the statement of the chain rule gives
+The probability a patient in the emergency unit recovers in 2 days is 0.6.
 
-1 lines Line 1: d y over d x equals normal d y over normal d v times normal d v over normal d x equals e to the u-th power times 3 x squared but as mentioned, you should always leave your answer in terms of x. Luckily, u equals x cubed, and putting this in gives d y over d x equals 3 x squared e raised to the x cubed power and this is your final answer.
+What is the probability that a randomly selected patient recovers in 2 days?
 
-You don’t need to be so rigorous in your own working. Here’s another example of using the chain rule.
+Let B be the event the patient recovers in 2 days. Let A sub G be the event they are treated in the general ward, and A sub E in the emergency unit.
+
+You know:
+
+double struck P of open paren A sub G close paren equals 0.7,
+
+double struck P of open paren A sub E close paren equals 0.3,
+
+double struck P of open paren B divides A sub G close paren equals 0.8,
+
+double struck P of open paren B divides A sub E close paren equals 0.6.
+
+You want to find double struck P of B. Using the law of total probability:
+
+3 lines Line 1: double struck P of B equals double struck P of open paren A sub G close paren double struck P of open paren B divides A sub G close paren plus double struck P of open paren A sub E close paren double struck P of open paren B divides A sub E close paren Line 2: blank equals 0.7 times 0.8 plus 0.3 times 0.6 Line 3: blank equals 0.56 plus 0.18 equals 0.74
+
+So the probability that a randomly selected patient recovers in 2 days is 0.74, or 74 percent sign.
+
+You don’t have to write quite so much in your final explanation using the law of total probability; see the next example for more.
 
 Example 2
 
-What is the derivative of f of x equals l n of open paren x to the fifth power close paren with respect to x?
+A group of students can choose to study in three different locations; a local library, a cafe, or at home. The students were surveyed, and it was found that students work:
 
-You can use the chain rule on f of x to differentiate with respect to x. You can infer that u of v equals l n of v and v of x equals x to the fifth power. Differentiating u with respect to v gives u prime of v of x equals 1 divided by v equals 1 divided by x to the fifth power and differentiating v with respect to x gives v prime of x equals 5 x to the fourth power. Putting these into the statement of the chain rule gives
+50 percent sign of the time in the library,
 
-1 lines Line 1: f prime of x equals u prime of v of x times v prime of x equals the fraction with numerator 1 and denominator x to the fifth power times 5 x to the fourth power equals the fraction with numerator 5 x to the fourth power and denominator x to the fifth power equals 5 over x
+30 percent sign of the time in a café,
 
-and this is your answer. Here, the answer has been simplified by using the laws of indices.
+20 percent sign of the time home.
 
-Here’s an example which will save you a lot of tedious bracket expanding!
+Research has indicated that students concentrate well:
+
+90 percent sign of the time in the library,
+
+60 percent sign of the time in the café,
+
+40 percent sign of the time at home.
+
+What is the probability that a random student concentrates well on any given day?
+
+Let B be the event the student concentrates well. Let A sub L, A sub C, and A sub H be the events that the student studies in the library, café, and home, respectively.
+
+You know from above that
+
+double struck P of open paren A sub L close paren equals 0.5 and double struck P of open paren B divides A sub L close paren equals 0.9
+
+double struck P of open paren A sub C close paren equals 0.3 and double struck P of open paren B divides A sub C close paren equals 0.6
+
+double struck P of open paren A sub H close paren equals 0.2 and double struck P of open paren B divides A sub H close paren equals 0.4
+
+You want to find double struck P of B. Using the law of total probability:
+
+double struck P of B equals 0.5 times 0.9 plus 0.3 times 0.6 plus 0.2 times 0.4 equals 0.45 plus 0.18 plus 0.08 equals 0.71
+
+So, the probability that the student concentrates well on any given day is 0.71, or 71 percent sign.
 
 Example 3
 
-What is the derivative of y equals open paren x cubed plus 5 close paren to the seventh power with respect to x?
+At Cantor’s Confectionery the customer service team receives emails from three types of senders:
 
-Prior to the chain rule, this may have required using the binomial theorem to expand these brackets and differentiate term by term (see [Guide: Binomial theorem] for more). However, you can use the chain rule on y to differentiate with respect to x. You can infer that u equals x cubed plus 5 and y equals u to the seventh power. Differentiating y with respect to u gives normal d y over normal d u equals 7 u to the sixth power, and differentiating u with respect to x gives normal d u over normal d x equals 3 x squared. Putting these into the statement of the chain rule gives
+40 percent sign of the time from satisfied customers,
 
-1 lines Line 1: normal d y over normal d x equals normal d y over normal d u times normal d u over normal d x equals 7 u to the sixth power times 3 x squared equals 21 x squared times open paren x cubed plus 5 close paren to the sixth power
+35 percent sign from important suppliers,
 
-and this is your answer.
+25 percent sign from dissatisfied customers (who detest mathematics and statistics).
 
-The moral of this story (as it is also in the discussion of the product rule; see Guide: The product rule) is as follows:
+The chance of an email containing a typo is:
 
-Warning
+5 percent sign for satisfied customer emails,
 
-If you are differentiating a function comprising of brackets to a large power, don’t expand the brackets! This only leads to extra work - and more opportunities for mistakes. Use the chain rule instead!
+2 percent sign for important supplier emails,
 
-Here’s an example that combines the sum rule and the chain rule.
+8 percent sign for dissatisfied customer emails.
+
+What is the probability that a randomly selected email contains a typo?
+
+Let B be the event that the email contains a typo. Let A sub S, A sub I, and A sub D represent the sender: satisfied customer, important supplier, or dissatisfied customer.
+
+You know:
+
+double struck P of open paren A sub S close paren equals 0.4 and double struck P of open paren B divides A sub S close paren equals 0.05
+
+double struck P of open paren A sub I close paren equals 0.35 and double struck P of open paren B divides A sub I close paren equals 0.02
+
+double struck P of open paren A sub D close paren equals 0.25 and double struck P of open paren B divides A sub D close paren equals 0.08
+
+You want to find double struck P of B. Using the law of total probability:
+
+double struck P of B equals 0.4 times 0.05 plus 0.35 times 0.02 plus 0.25 times 0.08 equals 0.02 plus 0.007 plus 0.02 equals 0.047
+
+So, the probability that an incoming email contains a typo is 0.047, or 4.7 percent sign.
+
+Bayes’ theorem
+
+Often, the probability of one event given another is known, but the reverse is needed.
+
+For instance, suppose that Cantor’s Confectionery has three candy machines A comma B comma C, and that you know the probability of a bad-tasting candy being made given you know which machine made it. Suppose you wanted to know there reverse conditional probability; given that you have a bad tasting candy, what is the probability that machine C is responsible? (See Example 6 below.)
+
+Bayes’ theorem lets you reverse conditional probabilities, calculating the probability of event A given event B, based on the probability of B given A.
+
+Bayes’ Theorem is especially useful for updating predictions as new information becomes available and when it is difficult to calculate probabilities directly. It is used in such diverse areas as medicine, manufacturing, and even game shows (see Example 7).
+
+Statement of Bayes’ theorem
+
+If A and B are events with double struck P of B is greater than 0, then Bayes’ theorem states:
+
+double struck P of open paren A divides B close paren equals double struck P of open paren B divides A close paren double struck P of A over double struck P of B period
+
+where:
+
+double struck P of open paren A divides B close paren is the probability of A given B,
+
+double struck P of open paren B divides A close paren is the probability of B given A,
+
+double struck P of A and double struck P of B are the individual probabilities of A and B, respectively.
+
+For more about why the Bayes’ theorem is true, please go to Proof: Law of total probability and Bayes’ theorem.
+
+Here are some examples about how to use Bayes’ theorem, including one which could win you a car! (Important notice: STARMAST will not give you a car.)
 
 Example 4
 
-Find the derivative of y equals the square root of 4 t to the fourth power minus 1 plus open paren t to the fourth power plus the cube root of t plus t to the negative 2 power close paren cubed.
+A library survey found:
 
-In this case, you can see that there are two functions comprising y. Here, y equals f plus g where f of t equals the square root of 2 t to the fourth power minus 1 equals open paren 2 t to the fourth power minus 1 close paren raised to the exponent 1 divided by 2 end exponent and g of t equals open paren t to the fourth power plus the square root of t plus t to the negative 2 power close paren cubed You can notice that both f and g are compositions of functions. So you’ll need to use the chain rule on each function separately in order to find the derivative of y. Let’s do these in separate work areas, so that things aren’t confused.
+15 percent sign of people regularly borrow mystery books.
 
-For the derivative of f, you can notice that f of u equals the square root of u equals u raised to the 1 divided by 2 power and u equals 2 t to the fourth power minus 1 Differentiating f with respect to u and u with respect to t gives normal d f over normal d u equals open paren 1 divided by 2 close paren times u raised to the negative 1 divided by 2 power equals 1 over 2 the square root of u and normal d u over normal d t equals 8 t cubed Putting this into the formula for the chain rule and simplifying gives 1 lines Line 1: normal d f over normal d t equals normal d f over normal d u times normal d u over normal d t equals 1 over 2 the square root of u times 8 t cubed equals 8 t cubed over 2 the square root of 2 t to the fourth power plus 1 and this is the derivative of f with respect to t.
+Of people who regularly borrow mystery books, 80 percent sign also borrow science fiction books.
 
-For the derivative of g, you can write that g of v equals v cubed and v equals t to the fourth power plus the square root of t plus t to the negative 2 power (Notice the use of v instead of u here!) Differentiating g with respect to v and v with respect to t gives normal d g over normal d v equals 3 v squared and normal d v over normal d t equals 4 t cubed plus the fraction with numerator t raised to the negative 1 divided by 2 power and denominator 2 minus 2 t to the negative 3 power Putting this into the formula for the chain rule and simplifying gives
+In general, 40 percent sign of people regularly borrow science fiction books.
 
-2 lines Line 1: normal d g over normal d t equals normal d g over normal d v times normal d v over normal d t equals open paren 3 v squared close paren times open paren 4 t cubed plus the fraction with numerator t raised to the negative 1 divided by 2 power and denominator 2 minus 2 t to the negative 3 power close paren Line 2: blank equals open paren 12 t cubed plus 3 t raised to the negative 1 divided by 2 power over 2 minus 6 t to the negative 3 power close paren times open paren t to the fourth power plus the square root of t plus t to the negative 2 power close paren squared and this is the derivative of g with respect to t.
+A person is randomly selected and found to regularly borrow science fiction books. What is the probability they also regularly borrow mystery books?
 
-Finally, using the sum rule, you can say that 2 lines Line 1: normal d y over normal d t equals normal d f over normal d t plus normal d g over normal d t Line 2: blank equals 8 t cubed over 2 the square root of 2 t to the fourth power plus 1 plus open paren 12 t cubed plus 3 t raised to the negative 1 divided by 2 power over 2 minus 6 t to the negative 3 power close paren times open paren t to the fourth power plus the square root of x plus x to the negative 2 power close paren squared and this is your final answer.
+To answer this question, you could use Bayes’ theorem. First of all, define the events using mathematical notations:
 
-Here’s another example:
+M: A student regularly borrows mystery books.
+
+S: A student regularly borrows science fiction books.
+
+You know from the given information above that
+
+double struck P of M equals 0.15,
+
+double struck P of S equals 0.40,
+
+double struck P of open paren S divides M close paren equals 0.80.
+
+You want to work out double struck P of open paren M divides S close paren, which is the probability they they regularly borrow science fiction given that they regularly borrow mystery books. So applying Bayes’ theorem gives:
+
+2 lines Line 1: double struck P of open paren M divides S close paren equals double struck P of open paren S divides M close paren double struck P of M over double struck P of S Line 2: blank equals 0.80 times 0.15 over 0.40 equals 0.30
+
+So, given the person borrows science fiction books regularly, there is a 30 percent sign chance they also regularly borrow mystery books.
+
+Here’s an example that combines both Bayes’ theorem and the law of total probability.
 
 Example 5
 
-Find the derivative of the function f of x equals the fourth power of cosine x minus the fourth power of sine x.
+Commuters to work at Cantor’s Confectionery choose transport as follows:
 
-Both terms of the function the fourth power of cosine x and the fourth power of sine x require the chain rule to differentiate. As in Example 3, you will need to be careful with this and do each term separately.
+60 percent sign travel by bus
 
-To differentiate the fourth power of cosine x, you can recognize this as a function g of h equals the fourth power of h (so g prime of h of x equals 4 h cubed) where h of x equals cosine x (so h prime of x equals negative sine x). Using the chain rule to differentiate this gives 2 lines Line 1: open paren g of open paren h of x close paren prime equals g prime of h of x times h prime of x Line 2: blank equals 4 h cubed times open paren negative sine x close paren equals negative 4 cosine cubed x sine x and so the derivative of the fourth power of cosine x is negative 4 cosine cubed x sine x.
+40 percent sign travel by car.
 
-To differentiate the fourth power of sine x, you can recognize this as a function u of v equals v to the fourth power (so u prime of v of x equals 4 v cubed) where v of x equals sine x (so v prime of x equals cosine x). Using the chain rule to differentiate this gives 2 lines Line 1: open paren u of open paren v of x close paren prime equals u prime of v of x times v prime of x Line 2: blank equals 4 v cubed times cosine x equals 4 sine cubed x sine x and so the derivative of the fourth power of sine x is 4 sine cubed x cosine x.
+But there are some problems:
 
-Therefore, putting these together using the difference rule gives: f prime of x equals minus open paren 4 cosine cubed x sine x plus 4 sine cubed x cosine x and this could be your final answer.
+Bus commuters are late 25 percent sign of the time.
 
-However, a little bit of factorization and knowledge of trigonometric identities (see Guide: Trigonometric identities (radians)) you can trim down this answer. As cosine squared x plus sine squared x equals 1 and sine 2 x equals 2 cosine x sine x, you can write
+Car commuters are late 10 percent sign of the time.
 
-3 lines Line 1: f prime of x equals minus open paren 4 cosine cubed x sine x plus 4 sine cubed x cosine x Line 2: blank equals negative 4 cosine x sine x times open paren cosine squared x plus sine squared x close paren Line 3: blank equals negative 4 cosine x sine x equals negative 2 sine 2 x
+As a high-ranking manager in Cantor’s confectionery, you are a little annoyed at the constant lateness and want to do some research. You randomly select a commuter who arrived late today, and want to find out the probability that they commuted by bus.
 
-and this is another acceptable final answer.
+First, you could define the events as follows
 
-Tip
+B: Commuter travels by bus.
 
-The trimmed answer in Example 5 is nice; you can recognize this as the derivative of cosine 2 x. So was all of this necessary? The answer is no; you don’t always need the chain rule to differentiate if the expression you are trying to differentiate can be written in a different way.
+C: Commuter travels by car.
 
-For instance, the function in Example 4 is f of x equals the fourth power of cosine x minus the fourth power of sine x which, by the difference of two squares is equal to f of x equals open paren cosine squared x plus sine squared x close paren times open paren cosine squared x minus sine squared x close paren period Using trigonometric identities, you can say that cosine squared x plus sine squared x equals 1 and cosine 2 x equals cosine squared x minus sine squared x, and so f of x equals cosine 2 x. This can then be differentiated, with the same answer as in Example 4!
+L: Commuter arrives late.
 
-In short, it’s always good to explore alternative ways of writing mathematical expressions to save you a little work.
+You know double struck P of B equals 0.6, and double struck P of C equals 0.4; you also know that double struck P of open paren L divides B close paren equals 0.2 and double struck P of open paren L divides C close paren equals 0.1. You want to work out double struck P of open paren B divides L close paren using Bayes’ theorem. In order to use Bayes’ theorem, you will need to know double struck P of L, which you don’t know.
 
-Here’s another example which requires multiple uses of the chain rule.
+Thankfully, this can be worked out using the law of total probability. Doing this gives
+
+2 lines Line 1: double struck P of L equals double struck P of open paren L divides B close paren double struck P of B plus double struck P of open paren L divides C close paren double struck P of C Line 2: blank equals 0.25 times 0.60 plus 0.10 times 0.40 equals 0.15 plus 0.04 equals 0.19
+
+Now you can use Bayes’ theorem to get
+
+double struck P of open paren B divides L close paren equals double struck P of open paren L divides B close paren double struck P of B over double struck P of L equals 0.25 times 0.60 over 0.19 almost equals 0.7895 So given the commuter arrived late, there’s about a 79 percent sign chance they commute by bus. Time to suggest earlier buses!
 
 Example 6
 
-Find the derivative of y equals the sine of l n of open paren x to the negative 2 power close paren.
+Cantor’s Confectionery uses three machines to make some of its delicious sweets. There are creatively named Machines A, B, C. Here are their vital statistics.
 
-In this situation you can write y as y of u of x, where y of u equals sine u and u of x equals l n of open paren x to the negative 2 power close paren Differentiating y of u with respect to u is something that you can do, but you can see that in order to differentiate u of x with respect to x, you’ll need to apply the chain rule!
+Machine A produces 50 percent sign of the items and has a 2 percent sign defect rate,
 
-So, to find the derivative of u with respect to x, you can write u of v equals l n of v and v of x equals x to the negative 2 power Differentiating u with respect to v and v with respect to x gives d u over d v equals 1 over v and d v over d x equals negative 2 x to the negative 3 power Putting this into the formula for the chain rule (and carefully using the laws of indices) gives d u over d x equals d u over d v times d v over d x equals 1 over v times open paren negative 2 x to the negative 3 power close paren equals the fraction with numerator negative 2 x to the negative 3 power and denominator x to the negative 2 power equals negative 2 x to the negative 1 power equals negative 2 over x
+Machine B produces 30 percent sign of the items and has a 5 percent sign defect rate,
 
-Now, you can go back to the initial problem. Thanks to your work differentiating u with respect to x, you can say that d y over d u equals cosine u and d u over d x equals negative 2 over x Finally, putting this into the formula for the chain rule, and remembering to give your answer only in terms of x, gives d y over d x equals d y over d u times d u over d x equals cosine u times open paren negative 2 over x close paren equals the fraction with numerator negative 2 the cosine of l n of open paren x to the negative 2 power close paren and denominator x
+Machine C produces 20 percent sign of the items and has a 10 percent sign defect rate.
 
-and this is your final answer.
+You select an item at random and find that it is defective. What is the probability that it was made by Machine C?
 
-Since d u over d x equals d u over d v times d v over d x, it follows that for the composition of three functions y equals u of v of x, the derivative is given by: d y over d x equals d y over d u times d u over d v times d v over d x In fact, you can use repeated applications of the chain rule to find the derivative of any finite number of composed functions.
+Once again, the first thing to do is to give the events names. Let:
 
-Applications of the chain rule
+A, B, and C be the events that the item came from Machine A, B, or C,
 
-Derivatives of other common functions
+D be the event that the item is defective.
 
-You can use the chain rule to work out some derivatives of some other trigonometric functions. In Guide: Trigonometry (radians), you saw that tangent x equals sine x over cosine x secant x equals 1 over cosine x cosecant x equals 1 over sine x cotangent x equals 1 over tangent x equals cosine x over sine x are the other circular trigonometric functions. By using the chain rule, you can find the derivatives of secant x and cosecant x.
+You know from above that
 
-Example 7
+double struck P of A equals 0.5, double struck P of B equals 0.3, double struck P of C equals 0.2,
 
-What is the derivative of f of x equals 1 over cosine x with respect to x?
+double struck P of open paren D divides A close paren equals 0.02, double struck P of open paren D divides B close paren equals 0.05, double struck P of open paren D divides C close paren equals 0.10.
 
-You can use the chain rule on f of x to differentiate with respect to x. You can infer that u of v equals 1 divided by v equals v to the negative 1 power and v of x equals cosine x. Differentiating u with respect to v gives u prime of v of x equals negative the negative second power of v equals negative 1 divided by cosine squared x and differentiating v with respect to x gives v prime of x equals negative sine x. Putting these into the statement of the chain rule gives
+You want to find double struck P of open paren C divides D close paren. To do this, you need double struck P of D which you don’t know, but you can work out using the law of total probability. Doing this gives
 
-1 lines Line 1: f prime of x equals u prime of v of x times v prime of x equals open paren negative 1 over cosine squared x close paren times open paren negative sine x close paren equals sine x over cosine squared x
+double struck P of D equals 0.02 times 0.5 plus 0.05 times 0.3 plus 0.10 times 0.2 equals 0.01 plus 0.015 plus 0.02 equals 0.045
 
-and this is your answer. You could also use the fact that tangent x equals sine x divided by cosine x to say that f prime of x equals sine x over cosine squared x equals secant x tangent x period
+Now you can apply Bayes’ theorem to get:
 
-In a similar way, you can find the derivative of f of x equals cosecant x to be equal to f prime of x equals negative cosecant x cotangent x period
+double struck P of open paren C divides D close paren equals double struck P of open paren D divides C close paren double struck P of C over double struck P of D equals 0.10 times 0.20 over 0.045 almost equals 0.444
 
-Other rules for differentiation
+So, given that the item is defective, there is about a 44% chance it came from Machine C. Time to get some maintenance!
 
-The process of differentiating secant x and cosecant x can be generalized to find the derivative of the reciprocal of any function, not only cosine x and sine x. If you can use the chain rule to demonstrate a general formula for the derivative of 1 divided by f of x, you can not only use this general formula to differentiate secant x and cosecant x, but any other reciprocal function. This is a common technique amongst mathematicians; find the most general formula possible to apply to as many situations as you can. Let’s take a look at the reciprocal rule:
+Finally, here’s an example of how to use Bayes’ theorem to solve a very famous real life problem from a very real TV game show.
 
-Example 8 (reciprocal rule)
+Example 7 (Monty Hall)
 
-You can use the chain rule to prove the reciprocal rule, which says that if f of x is not equal to 0 for all x, then open paren 1 over f of x close paren prime equals the fraction with numerator negative f of x and denominator open paren f of x close paren squared period
+Here’s the situation:
 
-The function you are trying to differentiate is y equals 1 divided by f of x, so you can use the chain rule with y of u equals 1 divided by u equals u to the negative 1 power and u of x equals f of x. Differentiating y with respect to u gives normal d y over normal d u equals negative u to the negative 2 power equals negative 1 divided by u squared, and differentiating u with respect to x gives normal d u over normal d x equals f prime of x. Putting these into the chain rule gives:
+In the climax of a game show, there are three doors A comma B comma C.
 
-1 lines Line 1: d y over d x equals normal d y over normal d u times normal d u over normal d x equals open paren negative the fraction with numerator 1 and denominator u squared close paren times f prime of x equals the fraction with numerator negative f prime of x and denominator open paren f of x close paren squared
+Behind one of the doors is a fantastic new car; behind the other two are goats. The host knows what lies behind each door.
 
-and this is exactly the reciprocal rule.
+You are encouraged to select a door to try and win the car, and you make an initial choice of door.
 
-Tip
+Before your chosen door is opened, the host then opens another door, revealing a goat.
 
-You could also use the quotient rule to prove the reciprocal rule is true. See Guide: The quotient rule for more.
+The host then asks you if you want to switch your door.
 
-For instance, you can use the reciprocal rule with f of x equals sine x (so f prime of x equals cosine x) to write that normal d over normal d x times cosecant x equals normal d over normal d x times open paren 1 over sine x close paren equals the fraction with numerator negative cosine x and denominator sine squared x equals negative cosecant x cotangent x period
+The question is: should you switch your door?
 
-In fact, you can use the chain rule to prove ‘rules’ for differentation of functions composed with other functions. For instance, in Example 1, you saw that the derivative of e raised to the x cubed power is equal to 3 x squared e raised to the x cubed power. Taking f of x equals x cubed, you can see that this is equal to the derivative f prime of x equals 3 x squared multiplied by e raised to the f of x power. It follows that you can use the chain rule to prove that, for any function f of x: normal d over normal d x times open paren e raised to the f of x power close paren equals f prime of x e raised to the f of x power
+Once again, this is an application of Bayes’ theorem, even if it doesn’t look like it to begin with.
 
-Similarly, in Example 2, you saw that the derivative of f of x equals l n of open paren x to the fifth power close paren was 5 x to the fourth power divided by x to the fifth power, which is the derivative of x to the fifth power divided by x to the fifth power. This is no coincidence; using the chain rule, you can show that for any function f of x: normal d over normal d x times l n of f of x equals f prime of x over f of x
+To begin with, write sans serif Car sub A comma sans serif Car sub B comma sans serif Car sub C for the events that the car is behind doors A comma B comma C respectively. At the start, double struck P of open paren sans serif Car sub A close paren equals double struck P of open paren sans serif Car sub B close paren equals double struck P of open paren sans serif Car sub C close paren equals one third period
 
-Derivatives of scaled functions
+For the maths involved in what follows, your initial choice of door is not important; the maths will be the same if you relabelled all doors. (This is known as without loss of generality.) So assume you pick door A.
 
-In Guide: Introduction to differentiation and the derivative, a list of common derivatives was given, and then almost immediately expanded upon - the list is reproduced above. It was mentioned that the chain rule was used to find these expanded derivatives; but why was this the case? The answer is that is because of the b x in the arguments of the function. Technically, an expression like f of x equals a cosine b x is the composition of two functions, f of u equals a cosine u and u of x equals b x. Since the derivative of u equals b x is u prime equals b, this is where the b comes from in f prime of x equals negative a b sine b x.
+This means that the host has a choice of two doors to open; either B or C. There will be a goat behind whichever door they pick. The events of the host opening door B and C can be written as sans serif cap O sub B comma sans serif cap O sub C. You can now work out some conditional probabilities.
 
-In general, you can apply this to any function of x. Using the chain rule, you can prove that if f is any differentiable function, and a comma b comma c are real numbers with b is not equal to 0, then d over d x times open paren a f of open paren b x plus c close paren close paren equals a b f prime of open paren b x plus c close paren period
+If the car is behind door A, then the host has an equal chance to pick either door B or door C. Therefore double struck P of open paren sans serif cap O sub B divides sans serif Car sub A close paren equals double struck P of open paren sans serif cap O sub C divides sans serif Car sub A close paren equals one half period
 
-This then allows you to quickly work out derivatives of powers of linear expressions b x plus c:
+If the car is behind door B, then the host cannot pick door B to open as that would reveal the car; they cannot pick door A as you chose it. So they must pick door C to open, which means that double struck P of open paren sans serif cap O sub B divides sans serif Car sub B close paren equals 0 and double struck P of open paren sans serif cap O sub C divides sans serif Car sub B close paren equals 1 period
 
-Example 9
+Similarly, if the car is behind door C, then the host cannot pick door C to open as that would reveal the car; they cannot pick door A as you chose it. So they must pick door B to open, which means that double struck P of open paren sans serif cap O sub B divides sans serif Car sub B close paren equals 1 and double struck P of open paren sans serif cap O sub C divides sans serif Car sub B close paren equals 0 period
 
-You can use the chain rule to show that: d over d x times open paren open paren b x plus c close paren to the n-th power close paren equals b n times open paren b x plus c close paren raised to the n minus 1 power period
+So, the question is should you switch to the new door or should you stick with the original choice? This means working out the probability of where the car is given that you know which door the host opens, which is a perfect use of Bayes’ theorem.
 
-The function you are trying to differentiate is y equals open paren b x plus c close paren to the n-th power, so you can use the chain rule with y of u equals u to the n-th power and u of x equals b x plus c. Differentiating y with respect to u gives normal d y over normal d u equals n u raised to the n minus 1 power, and differentiating u with respect to x gives normal d u over normal d x equals b. Putting these into the chain rule gives:
+As your original choice of door didn’t matter for the maths, the choice of which door to open by the host doesn’t matter either; let’s say that the host opens door B. However, you don’t yet know double struck P of open paren sans serif cap O sub B close paren, which is needed for Bayes’ theorem. Using the law of total probability, you can write that
 
-1 lines Line 1: d y over d x equals normal d y over normal d u times normal d u over normal d x equals n u raised to the n minus 1 power times b equals b n u raised to the n minus 1 power equals b n times open paren b x plus c close paren raised to the n minus 1 power
+3 lines Line 1: double struck P of open paren sans serif cap O sub B close paren equals double struck P of open paren sans serif cap O sub B divides sans serif Car sub A close paren double struck P of open paren sans serif Car sub A close paren plus double struck P of open paren sans serif cap O sub B divides sans serif Car sub B close paren double struck P of open paren sans serif Car sub B close paren plus double struck P of open paren sans serif cap O sub B divides sans serif Car sub C close paren double struck P of open paren sans serif Car sub C close paren Line 2: blank equals one half times one third plus 0 times one third plus 1 times one third Line 3: blank equals one sixth plus one third equals one half
 
-and this is exactly as said above. A similar method can be applied to powers of any function you know how to differentiate.
+You can now work out the conditional probabilities of the car being behind doors A comma C given that the host opens door B:
+
+Here, you are working out double struck P of open paren sans serif Car sub A divides sans serif cap O sub B close paren, which by Bayes’ theorem is 2 lines Line 1: double struck P of open paren sans serif Car sub A divides sans serif cap O sub B close paren equals the fraction with numerator double struck P of open paren sans serif cap O sub B divides sans serif Car sub A close paren double struck P of open paren sans serif cap O sub B close paren and denominator double struck P of open paren sans serif Car sub A close paren Line 2: blank equals the fraction with numerator open paren 1 divided by 2 close paren times open paren 1 divided by 3 close paren and denominator open paren 1 divided by 2 close paren equals one third
+
+Finally, you are working out double struck P of open paren sans serif Car sub C divides sans serif cap O sub B close paren, which by Bayes’ theorem is 2 lines Line 1: double struck P of open paren sans serif Car sub C divides sans serif cap O sub B close paren equals the fraction with numerator double struck P of open paren sans serif cap O sub B divides sans serif Car sub C close paren double struck P of open paren sans serif cap O sub B close paren and denominator double struck P of open paren sans serif Car sub C close paren Line 2: blank equals the fraction with numerator 1 times open paren 1 divided by 3 close paren and denominator open paren 1 divided by 2 close paren equals two thirds
+
+So, the probability of winning if you stick with door A is 1 divided by 3, but the probability of winning if you switch to door C is 2 divided by 3! You are twice as likely to win the car if you switch doors.
+
+Of course (with credit to xkcd), the real prize might not be the car…
 
 Quick check problems
 
-Using the chain rule, match the following six functions to their derivatives with respect to x. One of the derivatives given does not match a function; you should select which one in the final sentence below.
+In the following questions, enter your answers as decimal numbers rounded to 2 decimal places.
 
-where
+A hospital treats patients in two wards:
 
-negative 18 x squared the sine of open paren 3 x cubed close paren
+80% in the general ward, 20% in emergency
 
-18 x the cosine of open paren 2 x cubed close paren
+Recovery rates within 2 days are 70% (general) and 50% (emergency)
 
-negative 18 x the sine of open paren 3 x squared close paren
+What is the probability a randomly selected patient recovers in 2 days?
 
-27 x squared the cosine of open paren 3 x cubed close paren
+A student studies:
 
-negative 18 x squared the sine of open paren 3 x squared close paren
+60% in the library, 30% in a café, 10% at home
 
-18 x the cosine of open paren 3 x squared close paren
+Concentration rates are 90%, 60%, and 40%, respectively
 
-12 x squared the cosine of open paren 2 x cubed close paren
+What is the probability that the student concentrates well on a given day?
 
-So 
-(a)
-(b)
-(c)
-(d)
-(e)
-(f)
-(g)
- is the odd derivative out.
+After your investigation into commuters to Cantor’s Confectionery, you receive a new set of statistics:
+
+40% commute by bus, 60% by car
+
+Bus lateness: 10%, Car lateness: 20%
+
+A commuter is late. What is the probability they took the bus?
+
+As discussed above above, Cantor’s Confectionery has 3 machines with the following statistics:
+
+A: 50% of production, 2% defect rate
+
+B: 30%, 5% defect
+
+C: 20%, 10% defect
+
+If an item is defective, what is the probability it came from Machine A?
+
+True or false:
+
+The law of total probability can only be used when events are mutually exclusive and exhaustive.
+
+TRUE
+FALSE
+
+Bayes’ Theorem allows reversing conditional probabilities.
+
+TRUE
+FALSE
+
+The law of total probability requires double struck P of open paren B divides A sub i close paren for every outcome.
+
+TRUE
+FALSE
 
 Further reading
 
-For more questions on the subject, please go to Questions: The chain rule.
+For more questions on the subject, please go to Questions: Law of total probability and Bayes’ theorem.
 
-For more about techniques of differentiation, please see Guide: The product rule, and Guide: The quotient rule.
+Version history and licensing
 
-For more about why the rules and techniques of differentiation are true, please see Proof sheet: Rules of differentiation.
-
-Version history
-
-v1.0: initial version created 05/25 by tdhc.
+v1.0: initial version created 05/25 by Sophie Chowgule as part of a University of St Andrews VIP project.
 
 This work is licensed under CC BY-NC-SA 4.0.
 

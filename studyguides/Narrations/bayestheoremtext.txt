@@ -1,0 +1,405 @@
+Law of total probability and Bayes' theorem
+
+AUTHOR
+
+Sophie Chowgule
+
+SUMMARY
+The law of total probability and Bayes’ theorem build on the fundamentals of conditional probability. They are used to calculate probabilities across different scenarios and to update predictions when information is incomplete. This guide outlines both methods and explains how and when to apply them.
+
+Before reading this guide, it is highly recommended that you read Guide: Conditional probability.
+
+Introduction
+
+The law of total probability and Bayes’ theorem extend the basic ideas of conditional probability. They provide a way to calculate probabilities when outcomes depend on multiple possible scenarios or when information is incomplete or indirect. These results are widely used across statistics, particularly in problems involving uncertainty, prediction, and statistical inference. This guide introduces both the law of total probability and Bayes’ theorem, explains how they are derived, and shows how to apply them in practical contexts.
+
+Law of total probability
+
+In everyday life, an event can often happen in more ways than one. For example, the chance that a package arrives late might depend on whether it is delivered by courier A or courier B. If each courier is used for a different proportion of deliveries, and each one has a different chance of causing a delay, then the overall chance of delay depends on both which courier is used and how often each one is chosen.
+
+The law of total probability allows you to calculate the total probability of an event by combining its conditional probabilities across several possible scenarios. This approach is especially helpful when outcomes depend on mutually exclusive events (only one possible scenario can occur at a time), each with a known probability.
+
+Definition of the law of total probability
+
+Suppose an event B depends on several possible scenarios. These scenarios can be described by events A sub 1 comma A sub 2 comma dot dot dot comma A sub n, that are:
+
+Mutually exclusive: they cannot occur at the same time, and
+
+Exhaustive: one of them must always occur.
+
+Then, the law of total probability states that the probability of event B is:
+
+double struck P of B equals the sum from i equals 1 to n of double struck P of open paren A sub i close paren double struck P of open paren B given A sub i close paren Each term represents the probability of B in one particular scenario.
+
+Tip
+
+The symbol sum is called sigma notation. In this case, it is adding the probabilities for each possible scenario where B could happen. For more, see Guide: Sigma notation.
+
+Tip
+
+To apply the law of total probability:
+
+Calculate each scenario’s conditional probability, double struck P of open paren B given A sub i close paren.
+
+Multiply these conditional probabilities by their scenario likelihoods, double struck P of open paren A sub i close paren.
+
+Add these results to find the total probability of event B.
+
+This accounts for each possible scenario exactly once.
+
+For more about why the law of total probability is true, please go to Proof: The law of total probability and Bayes’ theorem.
+
+Tip
+
+The examples that follow all stick to a certain pattern, which can be summarized as follows:
+
+Information about probabilities
+
+Renaming of events and probabilities into mathematical terms
+
+Application of the formula
+
+This standard pattern is a useful framework for you to produce answers to these questions. It’s important to have clarity in what information you have and what information you are trying to work out.
+
+Example 1
+
+At a hospital:
+
+70 percent sign of patients are treated in the general ward,
+
+30 percent sign of patients are treated in the emergency unit,
+
+The probability a patient in the general ward recovers in 2 days is 0.8.
+
+The probability a patient in the emergency unit recovers in 2 days is 0.6.
+
+What is the probability that a randomly selected patient recovers in 2 days?
+
+Let B be the event the patient recovers in 2 days. Let A sub G be the event they are treated in the general ward, and A sub E in the emergency unit.
+
+You know:
+
+double struck P of open paren A sub G close paren equals 0.7,
+
+double struck P of open paren A sub E close paren equals 0.3,
+
+double struck P of open paren B given A sub G close paren equals 0.8,
+
+double struck P of open paren B given A sub E close paren equals 0.6.
+
+You want to find double struck P of B. Using the law of total probability:
+
+3 lines Line 1: double struck P of B equals double struck P of open paren A sub G close paren double struck P of open paren B given A sub G close paren plus double struck P of open paren A sub E close paren double struck P of open paren B given A sub E close paren Line 2: blank equals 0.7 times 0.8 plus 0.3 times 0.6 Line 3: blank equals 0.56 plus 0.18 equals 0.74
+
+So the probability that a randomly selected patient recovers in 2 days is 0.74, or 74 percent sign.
+
+You don’t have to write quite so much in your final explanation using the law of total probability; see the next example for more.
+
+Example 2
+
+A group of students can choose to study in three different locations; a local library, a cafe, or at home. The students were surveyed, and it was found that students work:
+
+50 percent sign of the time in the library,
+
+30 percent sign of the time in a café,
+
+20 percent sign of the time home.
+
+Research has indicated that students concentrate well:
+
+90 percent sign of the time in the library,
+
+60 percent sign of the time in the café,
+
+40 percent sign of the time at home.
+
+What is the probability that a random student concentrates well on any given day?
+
+Let B be the event the student concentrates well. Let A sub L, A sub C, and A sub H be the events that the student studies in the library, café, and home, respectively.
+
+You know from above that
+
+double struck P of open paren A sub L close paren equals 0.5 and double struck P of open paren B given A sub L close paren equals 0.9
+
+double struck P of open paren A sub C close paren equals 0.3 and double struck P of open paren B given A sub C close paren equals 0.6
+
+double struck P of open paren A sub H close paren equals 0.2 and double struck P of open paren B given A sub H close paren equals 0.4
+
+You want to find double struck P of B. Using the law of total probability:
+
+double struck P of B equals 0.5 times 0.9 plus 0.3 times 0.6 plus 0.2 times 0.4 equals 0.45 plus 0.18 plus 0.08 equals 0.71
+
+So, the probability that the student concentrates well on any given day is 0.71, or 71 percent sign.
+
+Example 3
+
+At Cantor’s Confectionery the customer service team receives emails from three types of senders:
+
+40 percent sign of the time from satisfied customers,
+
+35 percent sign from important suppliers,
+
+25 percent sign from dissatisfied customers (who detest mathematics and statistics).
+
+The chance of an email containing a typo is:
+
+5 percent sign for satisfied customer emails,
+
+2 percent sign for important supplier emails,
+
+8 percent sign for dissatisfied customer emails.
+
+What is the probability that a randomly selected email contains a typo?
+
+Let B be the event that the email contains a typo. Let A sub S, A sub I, and A sub D represent the sender: satisfied customer, important supplier, or dissatisfied customer.
+
+You know:
+
+double struck P of open paren A sub S close paren equals 0.4 and double struck P of open paren B given A sub S close paren equals 0.05
+
+double struck P of open paren A sub I close paren equals 0.35 and double struck P of open paren B given A sub I close paren equals 0.02
+
+double struck P of open paren A sub D close paren equals 0.25 and double struck P of open paren B given A sub D close paren equals 0.08
+
+You want to find double struck P of B. Using the law of total probability:
+
+double struck P of B equals 0.4 times 0.05 plus 0.35 times 0.02 plus 0.25 times 0.08 equals 0.02 plus 0.007 plus 0.02 equals 0.047
+
+So, the probability that an incoming email contains a typo is 0.047, or 4.7 percent sign.
+
+Bayes’ theorem
+
+Often, the probability of one event given another is known, but the reverse is needed.
+
+For instance, suppose that Cantor’s Confectionery has three candy machines A comma B comma C, and that you know the probability of a bad-tasting candy being made given you know which machine made it. Suppose you wanted to know there reverse conditional probability; given that you have a bad tasting candy, what is the probability that machine C is responsible? (See Example 6 below.)
+
+Bayes’ theorem lets you reverse conditional probabilities, calculating the probability of event A given event B, based on the probability of B given A.
+
+Bayes’ Theorem is especially useful for updating predictions as new information becomes available and when it is difficult to calculate probabilities directly. It is used in such diverse areas as medicine, manufacturing, and even game shows (see Example 7).
+
+Statement of Bayes’ theorem
+
+If A and B are events with double struck P of B is greater than 0, then Bayes’ theorem states:
+
+double struck P of open paren A given B close paren equals double struck P of open paren B given A close paren double struck P of A over double struck P of B period
+
+where:
+
+double struck P of open paren A given B close paren is the probability of A given B,
+
+double struck P of open paren B given A close paren is the probability of B given A,
+
+double struck P of A and double struck P of B are the individual probabilities of A and B, respectively.
+
+For more about why the Bayes’ theorem is true, please go to Proof: The law of total probability and Bayes’ theorem.
+
+Here are some examples about how to use Bayes’ theorem, including one which could win you a car! (Important notice: STARMAST will not give you a car.)
+
+Example 4
+
+A library survey found:
+
+15 percent sign of people regularly borrow mystery books.
+
+Of people who regularly borrow mystery books, 80 percent sign also borrow science fiction books.
+
+In general, 40 percent sign of people regularly borrow science fiction books.
+
+A person is randomly selected and found to regularly borrow science fiction books. What is the probability they also regularly borrow mystery books?
+
+To answer this question, you could use Bayes’ theorem. First of all, define the events using mathematical notations:
+
+M: A student regularly borrows mystery books.
+
+S: A student regularly borrows science fiction books.
+
+You know from the given information above that
+
+double struck P of M equals 0.15,
+
+double struck P of S equals 0.40,
+
+double struck P of open paren S given M close paren equals 0.80.
+
+You want to work out double struck P of open paren M given S close paren, which is the probability they they regularly borrow science fiction given that they regularly borrow mystery books. So applying Bayes’ theorem gives:
+
+2 lines Line 1: double struck P of open paren M given S close paren equals double struck P of open paren S given M close paren double struck P of M over double struck P of S Line 2: blank equals 0.80 times 0.15 over 0.40 equals 0.30
+
+So, given the person borrows science fiction books regularly, there is a 30 percent sign chance they also regularly borrow mystery books.
+
+Here’s an example that combines both Bayes’ theorem and the law of total probability.
+
+Example 5
+
+Commuters to work at Cantor’s Confectionery choose transport as follows:
+
+60 percent sign travel by bus
+
+40 percent sign travel by car.
+
+But there are some problems:
+
+Bus commuters are late 25 percent sign of the time.
+
+Car commuters are late 10 percent sign of the time.
+
+As a high-ranking manager in Cantor’s confectionery, you are a little annoyed at the constant lateness and want to do some research. You randomly select a commuter who arrived late today, and want to find out the probability that they commuted by bus.
+
+First, you could define the events as follows
+
+B: Commuter travels by bus.
+
+C: Commuter travels by car.
+
+L: Commuter arrives late.
+
+You know double struck P of B equals 0.6, and double struck P of C equals 0.4; you also know that double struck P of open paren L given B close paren equals 0.2 and double struck P of open paren L given C close paren equals 0.1. You want to work out double struck P of open paren B given L close paren using Bayes’ theorem. In order to use Bayes’ theorem, you will need to know double struck P of L, which you don’t know.
+
+Thankfully, this can be worked out using the law of total probability. Doing this gives
+
+double struck P of L equals double struck P of open paren L given B close paren double struck P of B plus double struck P of open paren L given C close paren double struck P of C equals 0.25 times 0.60 plus 0.10 times 0.40 equals 0.15 plus 0.04 equals 0.19
+
+Now you can use Bayes’ theorem to get
+
+double struck P of open paren B given L close paren equals double struck P of open paren L given B close paren double struck P of B over double struck P of L equals 0.25 times 0.60 over 0.19 almost equals 0.7895 So given the commuter arrived late, there’s about a 79 percent sign chance they commute by bus. Time to suggest earlier buses!
+
+Example 6
+
+Cantor’s Confectionery uses three machines to make some of its delicious sweets. There are creatively named Machines A, B, C. Here are their vital statistics.
+
+Machine A produces 50 percent sign of the items and has a 2 percent sign defect rate,
+
+Machine B produces 30 percent sign of the items and has a 5 percent sign defect rate,
+
+Machine C produces 20 percent sign of the items and has a 10 percent sign defect rate.
+
+You select an item at random and find that it is defective. What is the probability that it was made by Machine C?
+
+Once again, the first thing to do is to give the events names. Let:
+
+A, B, and C be the events that the item came from Machine A, B, or C,
+
+D be the event that the item is defective.
+
+You know from above that
+
+double struck P of A equals 0.5, double struck P of B equals 0.3, double struck P of C equals 0.2,
+
+double struck P of open paren D given A close paren equals 0.02, double struck P of open paren D given B close paren equals 0.05, double struck P of open paren D given C close paren equals 0.10.
+
+You want to find double struck P of open paren C given D close paren. To do this, you need double struck P of D which you don’t know, but you can work out using the law of total probability. Doing this gives
+
+double struck P of D equals 0.02 times 0.5 plus 0.05 times 0.3 plus 0.10 times 0.2 equals 0.01 plus 0.015 plus 0.02 equals 0.045
+
+Now you can apply Bayes’ theorem to get:
+
+double struck P of open paren C given D close paren equals double struck P of open paren D given C close paren double struck P of C over double struck P of D equals 0.10 times 0.20 over 0.045 almost equals 0.444
+
+So, given that the item is defective, there is about a 44% chance it came from Machine C. Time to get some maintenance!
+
+Finally, here’s an example of how to use Bayes’ theorem to solve a very famous real life problem from a very real TV game show.
+
+Example 7 (Monty Hall)
+
+In the climax of the game show, there are three doors A comma B comma C.
+
+Behind one of the doors is a fantastic new car; behind the other two are goats. The host knows what lies behind each door.
+
+You are encouraged to select a door to try and win the car, and you make an initial choice of door.
+
+Before your chosen door is opened, the host then opens another door, revealing a goat.
+
+The host then asks you if you want to switch your door.
+
+The question is: should you switch your door?
+
+Once again, this is an application of Bayes’ theorem, even if it doesn’t look like it to begin with.
+
+To begin with, write Car sub A comma Car sub B comma Car sub C for the events that the car is behind doors A comma B comma C respectively. At the start, double struck P of open paren Car sub A close paren equals double struck P of open paren Car sub B close paren equals double struck P of open paren Car sub C close paren equals one third period
+
+For the maths involved in what follows, your initial choice of door is not important; the maths will be the same if you relabelled all doors. (This is known as without loss of generality.) So assume you pick door A.
+
+This means that the host has a choice of two doors to open; either B or C. There will be a goat behind whichever door they pick. The events of the host opening door B and C can be written as Open sub B comma Open sub C. You can now work out some conditional probabilities.
+
+If the car is behind door A, then the host has an equal chance to pick either door B or door C. Therefore double struck P of open paren Open sub B given Car sub A close paren equals double struck P of open paren Open sub C given Car sub A close paren equals one half period
+
+If the car is behind door B, then the host cannot pick door B to open as that would reveal the car; they cannot pick door A as you chose it. So they must pick door C to open, which means that double struck P of open paren Open sub B given Car sub B close paren equals 0 and double struck P of open paren Open sub C given Car sub B close paren equals 1 period
+
+Similarly, if the car is behind door C, then the host cannot pick door C to open as that would reveal the car; they cannot pick door A as you chose it. So they must pick door B to open, which means that double struck P of open paren Open sub B given Car sub B close paren equals 1 and double struck P of open paren Open sub C given Car sub B close paren equals 0 period
+
+So, the question is should you switch to the new door or should you stick with the original choice? This means working out the probability of where the car is given that you know which door the host opens, which is a perfect use of Bayes’ theorem.
+
+As your original choice of door didn’t matter for the maths, the choice of which door to open by the host doesn’t matter either; let’s say that the host opens door B. However, you don’t yet know double struck P of open paren Open sub B close paren, which is needed for Bayes’ theorem. Using the law of total probability, you can write that
+
+3 lines Line 1: double struck P of open paren Open sub B close paren equals double struck P of open paren Open sub B given Car sub A close paren double struck P of open paren Car sub A close paren plus double struck P of open paren Open sub B given Car sub B close paren double struck P of open paren Car sub B close paren plus double struck P of open paren Open sub B given Car sub C close paren double struck P of open paren Car sub C close paren Line 2: blank equals one half times one third plus 0 times one third plus 1 times one third Line 3: blank equals one sixth plus one third equals one half
+
+You can now work out the conditional probabilities of the car being behind doors A comma B comma C given that the host opens door B:
+
+Here, you are working out double struck P of open paren Car sub A given Open sub B close paren, which by Bayes’ theorem is 2 lines Line 1: double struck P of open paren Car sub A given Open sub B close paren equals the fraction with numerator double struck P of open paren Open sub B given Car sub A close paren double struck P of open paren Open sub B close paren and denominator double struck P of open paren Car sub A close paren Line 2: blank equals the fraction with numerator open paren 1 divided by 2 close paren times open paren 1 divided by 3 close paren and denominator open paren 1 divided by 2 close paren equals one third
+
+Next, you are working out double struck P of open paren Car sub B given Open sub B close paren, which by Bayes’ theorem is 2 lines Line 1: double struck P of open paren Car sub B given Open sub B close paren equals the fraction with numerator double struck P of open paren Open sub B given Car sub B close paren double struck P of open paren Open sub B close paren and denominator double struck P of open paren Car sub B close paren Line 2: blank equals the fraction with numerator 0 times open paren 1 divided by 3 close paren and denominator open paren 1 divided by 2 close paren equals 0
+
+Finally, you are working out double struck P of open paren Car sub C given Open sub B close paren, which by Bayes’ theorem is 2 lines Line 1: double struck P of open paren Car sub C given Open sub B close paren equals the fraction with numerator double struck P of open paren Open sub B given Car sub C close paren double struck P of open paren Open sub B close paren and denominator double struck P of open paren Car sub C close paren Line 2: blank equals the fraction with numerator 1 times open paren 1 divided by 3 close paren and denominator open paren 1 divided by 2 close paren equals two thirds
+
+So, the probability of winning if you stick with door A is 1 divided by 3, but the probability of winning if you switch to door C is 2 divided by 3! You are twice as likely to win the car if you switch doors.
+
+Of course (with credit to xkcd), the real prize might not be the car…
+
+Quick check problems
+
+In the following questions, enter your answers as decimal numbers rounded to 2 decimal places.
+
+A hospital treats patients in two wards:
+
+80% in the general ward, 20% in emergency
+
+Recovery rates within 2 days are 70% (general) and 50% (emergency)
+
+What is the probability a randomly selected patient recovers in 2 days?
+
+A student studies:
+
+60% in the library, 30% in a café, 10% at home
+
+Concentration rates are 90%, 60%, and 40%, respectively
+
+What is the probability that the student concentrates well on a given day?
+
+After your investigation into commuters to Cantor’s Confectionery, you receive a new set of statistics:
+
+40% commute by bus, 60% by car
+
+Bus lateness: 10%, Car lateness: 20%
+
+A commuter is late. What is the probability they took the bus?
+
+As discussed above above, Cantor’s Confectionery has 3 machines with the following statistics:
+
+A: 50% of production, 2% defect rate
+
+B: 30%, 5% defect
+
+C: 20%, 10% defect
+
+If an item is defective, what is the probability it came from Machine A?
+
+True or false:
+
+The Law of Total Probability can only be used when events are mutually exclusive and exhaustive.
+
+TRUE
+FALSE
+
+Bayes’ Theorem allows reversing conditional probabilities.
+
+TRUE
+FALSE
+
+The Law of Total Probability requires double struck P of open paren B given A sub i close paren for every outcome.
+
+TRUE
+FALSE
+
+Further reading
+
+For more questions on the subject, please go to Questions: The law of total probability and Bayes’ theorem.
