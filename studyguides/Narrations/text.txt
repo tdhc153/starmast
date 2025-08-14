@@ -1,405 +1,195 @@
-Law of total probability and Bayes’ theorem
+Introduction to partial differentiation
+
+CALCULUS
 
 AUTHOR
 
-Sophie Chowgule
+Donald Campbell
 
 SUMMARY
-The law of total probability and Bayes’ theorem build on the fundamentals of conditional probability. They are used to calculate probabilities across different scenarios and to update predictions when information is incomplete. This guide outlines both methods and explains how and when to apply them.
+Partial differentiation is a key technique used in calculus for dealing with functions of multiple variables. It focuses on how a function changes with respect to one variable while keeping others constant. It is widely used in physics, economics, and engineering to analyse systems involving multiple changing factors, such as in heat flow or optimization.
 
-Before reading this guide, it is highly recommended that you read Guide: Conditional probability.
+Before reading this guide, it is recommended that you read Guide: Introduction to differentiation and the derivative, Guide: The chain rule, Guide: The product rule, and Guide: The quotient rule.
 
-Introduction
+What is partial differentiation?
 
-The law of total probability and Bayes’ theorem extend the basic ideas of conditional probability. They provide a way to calculate probabilities when outcomes depend on multiple possible scenarios or when information is incomplete or indirect. These results are widely used across statistics, particularly in problems involving uncertainty, prediction, and statistical inference. This guide introduces both the law of total probability and Bayes’ theorem, explains how they are derived, and shows how to apply them in practical contexts.
+As explained in Guide: Introduction to differentiation and the derivative, a derivative measures how a function changes as its input changes. For example, if you have a function f of x, the derivative f prime of x describes the rate at which f changes with respect to x. f prime of x equals lim over h right arrow 0 of open paren the fraction with numerator f of open paren x plus h close paren minus f of x and denominator h close paren
 
-Law of total probability
+However, in many real-world examples, functions depend on more than one variable. For example, weather prediction involves functions that depend on pressure, humidity and time. In economics, profit might depend on both price and production level. The process of partial differentiation is essential if you want to understand the influence of each variable separately.
 
-In everyday life, an event can often happen in more ways than one. For example, the chance that a package arrives late might depend on whether it is delivered by courier A or courier B. If each courier is used for a different proportion of deliveries, and each one has a different chance of causing a delay, then the overall chance of delay depends on both which courier is used and how often each one is chosen.
+For a function f of open paren x comma y close paren that depends on two variables x and y, partial differentiation allows you to study the change in f by considering the change in one variable at a time. If you choose to study the change in f by considering the change in x, you need to hold y fixed. In this case, y is treated as a constant as it doesn’t change during this process.
 
-The law of total probability allows you to calculate the total probability of an event by combining its conditional probabilities across several possible scenarios. This approach is especially helpful when outcomes depend on mutually exclusive events (only one possible scenario can occur at a time), each with a known probability.
+This guide explains the idea of partial differentiation and how it is different from standard single-variable differentiation. It will explain how to find partial derivatives, the concept of second-order partial derivatives, and how to partially differentiate a function with any finite number of variables.
 
-Definition of the law of total probability
+Definition of the partial derivative
 
-Suppose an event B depends on several possible scenarios. These scenarios can be described by events A sub 1 comma A sub 2 comma dot dot dot comma A sub n, that are:
+Consider a surface (some bumpy terrain) shown in the 3D graph below. A surface z equals f of open paren x comma y close paren can be defined as a function of x and y. This means that for any values of x and y, the function returns a value z representing the height of the surface at the point open paren x comma y close paren.
 
-Mutually exclusive: they cannot occur at the same time, and
+A partial derivative measures how the surface changes in a single direction while keeping the other variable constant. To understand how the surface changes with respect to x, fix a value of y, say y equals 1. The surface z equals f of open paren x comma y close paren is a function of x and y, but when y equals 1 the surface reduces to a curve z equals f of open paren x comma 1 close paren equals f of x in the x z-plane. This shows how the height z depends on x alone when y is fixed at 1.
 
-Exhaustive: one of them must always occur.
+The 3D graph illustrates the surface with a vertical plane sliding through it at a chosen value of y equals a. The points where the plane intersects the surface form a curve (shown in yellow). You can use the slider to change the value of a which will change the position of the vertical plane and the shape of the curve. The 2D graph displays this curve separately.
 
-Then, the law of total probability states that the probability of event B is:
+Imagine you are following a path across a bumpy terrain where you don’t change direction. As you go up and down the hills and valleys, you will trace out a curve that shows how the height changes along that path. The slope of this curve at any point tells you how steeply the surface is rising or falling in that direction. This is what the partial derivative measures.
 
-double struck P of B equals the sum from i equals 1 to n of double struck P of open paren A sub i close paren double struck P of open paren B given A sub i close paren Each term represents the probability of B in one particular scenario.
+As seen in Guide: Introduction to differentiation and the derivative, you can approximate the gradient of this function at a point by looking at how much the function’s value changes over a small step. By fixing y and observing how the function changes with respect to x, you’re treating the surface as a single-variable function. The slope of the curve at a point gives the partial derivative with respect to x, evaluated at that value of y.
 
-Tip
+Definition of the partial derivative
 
-The symbol sum is called sigma notation. In this case, it is adding the probabilities for each possible scenario where B could happen. For more, see Guide: Sigma notation.
+For a function f of open paren x comma y close paren, the partial derivative with respect to x is written as the fraction with numerator partial f and denominator partial x.
 
-Tip
+It is defined by the limit the fraction with numerator partial f and denominator partial x equals lim over h right arrow 0 of open paren the fraction with numerator f of open paren x plus h comma y close paren minus f of open paren x comma y close paren and denominator h close paren
 
-To apply the law of total probability:
+This definition is similar to that of single-variable differentiation, with the key difference that y is treated as a constant during the process.
 
-Calculate each scenario’s conditional probability, double struck P of open paren B given A sub i close paren.
+Similarly, the partial derivative with respect to y is defined by the limit the fraction with numerator partial f and denominator partial y equals lim over h right arrow 0 of open paren the fraction with numerator f of open paren x comma y plus h close paren minus f of open paren x comma y close paren and denominator h close paren
 
-Multiply these conditional probabilities by their scenario likelihoods, double struck P of open paren A sub i close paren.
+When differentiating with respect to some variable, all other variables are held fixed (they do not change) and they should be treated as you would normally treat constants.
 
-Add these results to find the total probability of event B.
+You may sometimes see the notation f sub x to mean the partial derivative of f with respect to x.
 
-This accounts for each possible scenario exactly once.
+Important
 
-For more about why the law of total probability is true, please go to Proof: Law of total probability and Bayes’ theorem.
+Partial derivatives are always written using a curly partial as opposed to a straight normal d as in single-variable differentiation.
 
-Tip
+An important distinction is that if a function depends only on x, then the fraction with numerator partial f and denominator partial x equals normal d f over normal d x as there is no other variable to hold fixed.
 
-The examples that follow all stick to a certain pattern, which can be summarized as follows:
+Finding partial derivatives
 
-Information about probabilities
+To finding a partial derivative, start by identifying the variable you want to differentiate with respect to. For example, if you want to find the partial derivative of f with respect to x, treat x as the variable to differentiate with respect to.
 
-Renaming of events and probabilities into mathematical terms
+The golden rule of partial differentiation is as follows:
 
-Application of the formula
+Golden rule of partial differentiation
 
-This standard pattern is a useful framework for you to produce answers to these questions. It’s important to have clarity in what information you have and what information you are trying to work out.
+When differentiating with respect to some variable, treat all other variables as constants.
+
+If required, apply any rules of differentiation such as the sum/difference rule chain rule, product rule or quotient rule. These rules from single-variable differentiation still apply to partial differentiation, but they must be applied with respect to the chosen variable only and (again) you must treat all other variables as constants. This can involve a lot of lengthy working, so take your time, especially when combining multiple rules.
+
+For a reminder on how to apply these techniques, please see Guide: Introduction to differentiation and the derivative, Guide: The chain rule, Guide: The product rule, and Guide: The quotient rule.
 
 Example 1
 
-At a hospital:
+Consider the function f of open paren x comma y close paren equals x squared plus y squared.
 
-70 percent sign of patients are treated in the general ward,
+To find the partial derivative with respect to x, first differentiate x squared with respect to x using the power rule to get 2 x. Importantly, the term y squared is a constant with respect to x so its partial derivative with respect to x is 0. So: 3 lines Line 1: the fraction with numerator partial f and denominator partial x equals the fraction with numerator partial and denominator partial x times open paren x squared plus y squared close paren Line 2: blank equals the fraction with numerator partial and denominator partial x times open paren x squared close paren plus the fraction with numerator partial and denominator partial x times open paren y squared close paren Line 3: blank equals 2 x plus 0 equals 2 x
 
-30 percent sign of patients are treated in the emergency unit,
-
-The probability a patient in the general ward recovers in 2 days is 0.8.
-
-The probability a patient in the emergency unit recovers in 2 days is 0.6.
-
-What is the probability that a randomly selected patient recovers in 2 days?
-
-Let B be the event the patient recovers in 2 days. Let A sub G be the event they are treated in the general ward, and A sub E in the emergency unit.
-
-You know:
-
-double struck P of open paren A sub G close paren equals 0.7,
-
-double struck P of open paren A sub E close paren equals 0.3,
-
-double struck P of open paren B given A sub G close paren equals 0.8,
-
-double struck P of open paren B given A sub E close paren equals 0.6.
-
-You want to find double struck P of B. Using the law of total probability:
-
-3 lines Line 1: double struck P of B equals double struck P of open paren A sub G close paren double struck P of open paren B given A sub G close paren plus double struck P of open paren A sub E close paren double struck P of open paren B given A sub E close paren Line 2: blank equals 0.7 times 0.8 plus 0.3 times 0.6 Line 3: blank equals 0.56 plus 0.18 equals 0.74
-
-So the probability that a randomly selected patient recovers in 2 days is 0.74, or 74 percent sign.
-
-You don’t have to write quite so much in your final explanation using the law of total probability; see the next example for more.
+To find the partial derivative with respect to y, first differentiate y squared with respect to y using the power rule to get 2 y. Importantly, the term x squared is a constant with respect to y so its partial derivative with respect to y is 0. 3 lines Line 1: the fraction with numerator partial f and denominator partial y equals the fraction with numerator partial and denominator partial y times open paren x squared plus y squared close paren Line 2: blank equals the fraction with numerator partial and denominator partial y times open paren x squared close paren plus the fraction with numerator partial and denominator partial y times open paren y squared close paren Line 3: blank equals 0 plus 2 y equals 2 y
 
 Example 2
 
-A group of students can choose to study in three different locations; a local library, a cafe, or at home. The students were surveyed, and it was found that students work:
+Consider the function f of open paren x comma y close paren equals 3 x squared y plus 4 x y cubed.
 
-50 percent sign of the time in the library,
+To find the partial derivative with respect to x, first differentiate 3 x squared y with respect to x to get 6 x y. Now differentiate 4 x y cubed with respect to x to get 4 y cubed. Once again, y is treated as a constant. 4 lines Line 1: the fraction with numerator partial f and denominator partial x equals the fraction with numerator partial and denominator partial x times open paren 3 x squared y plus 4 x y cubed close paren Line 2: blank equals the fraction with numerator partial and denominator partial x times open paren 3 x squared y close paren plus the fraction with numerator partial and denominator partial x times open paren 4 x y cubed close paren Line 3: blank equals 3 y the fraction with numerator partial and denominator partial x times open paren x squared close paren plus 4 y cubed the fraction with numerator partial and denominator partial x times x Line 4: blank equals 3 y times 2 x plus 4 y cubed times 1 equals 6 x y plus 4 y cubed
 
-30 percent sign of the time in a café,
-
-20 percent sign of the time home.
-
-Research has indicated that students concentrate well:
-
-90 percent sign of the time in the library,
-
-60 percent sign of the time in the café,
-
-40 percent sign of the time at home.
-
-What is the probability that a random student concentrates well on any given day?
-
-Let B be the event the student concentrates well. Let A sub L, A sub C, and A sub H be the events that the student studies in the library, café, and home, respectively.
-
-You know from above that
-
-double struck P of open paren A sub L close paren equals 0.5 and double struck P of open paren B given A sub L close paren equals 0.9
-
-double struck P of open paren A sub C close paren equals 0.3 and double struck P of open paren B given A sub C close paren equals 0.6
-
-double struck P of open paren A sub H close paren equals 0.2 and double struck P of open paren B given A sub H close paren equals 0.4
-
-You want to find double struck P of B. Using the law of total probability:
-
-double struck P of B equals 0.5 times 0.9 plus 0.3 times 0.6 plus 0.2 times 0.4 equals 0.45 plus 0.18 plus 0.08 equals 0.71
-
-So, the probability that the student concentrates well on any given day is 0.71, or 71 percent sign.
+To find the partial derivative with respect to y, first differentiate 3 x squared y with respect to y to get 3 x squared. Now differentiate 4 x y cubed with respect to y to get 12 x y squared. Notice that in this case, x is treated as a constant. 4 lines Line 1: the fraction with numerator partial f and denominator partial y equals the fraction with numerator partial and denominator partial y times open paren 3 x squared y plus 4 x y cubed close paren Line 2: blank equals the fraction with numerator partial and denominator partial y times open paren 3 x squared y close paren plus the fraction with numerator partial and denominator partial y times open paren 4 x y cubed close paren Line 3: blank equals 3 x squared the fraction with numerator partial and denominator partial y times y plus 4 x the fraction with numerator partial and denominator partial y times open paren y cubed close paren Line 4: blank equals 3 x squared times 1 plus 4 x times 3 y squared equals 3 x squared plus 12 x y squared
 
 Example 3
 
-At Cantor’s Confectionery the customer service team receives emails from three types of senders:
+Consider the function f of open paren x comma y close paren equals x squared times open paren 3 x plus y squared close paren cubed.
 
-40 percent sign of the time from satisfied customers,
+Start by finding the partial derivative with respect to x. Notice that f of open paren x comma y close paren is a product of the two functions x squared and open paren 3 x plus y squared close paren cubed. You need to use the product rule to differentiate the product x squared times open paren 3 x plus y squared close paren cubed with respect to x. Then, you need to differentiate open paren 3 x plus y squared close paren cubed with respect to x using the chain rule. Remember to treat y squared as a constant. 4 lines Line 1: the fraction with numerator partial f and denominator partial x equals the fraction with numerator partial and denominator partial x times open bracket x squared times open paren 3 x plus y squared close paren cubed close bracket Line 2: blank equals x squared the fraction with numerator partial and denominator partial x times open bracket open paren 3 x plus y squared close paren cubed close bracket plus open paren 3 x plus y squared close paren cubed times the fraction with numerator partial and denominator partial x times open bracket x squared close bracket Line 3: blank equals x squared times 9 times open paren 3 x plus y squared close paren squared plus open paren 3 x plus y squared close paren cubed times 2 x Line 4: blank equals 9 x squared times open paren 3 x plus y squared close paren squared plus 2 x times open paren 3 x plus y squared close paren cubed
 
-35 percent sign from important suppliers,
+Now find the partial derivative with respect to y. Notice that f of open paren x comma y close paren is a product of the two functions x squared and open paren 3 x plus y squared close paren cubed however only the second function is a function of y. Therefore, this doesn’t require the product rule to differentiate as x squared is treated as a constant. The second function still requires you to use the chain rule. 2 lines Line 1: the fraction with numerator partial f and denominator partial y equals the fraction with numerator partial and denominator partial y times open bracket x squared times open paren 3 x plus y squared close paren cubed close bracket equals x squared the fraction with numerator partial and denominator partial y times open bracket open paren 3 x plus y squared close paren cubed close bracket Line 2: blank equals x squared times 6 y times open paren 3 x plus y squared close paren squared equals 6 x squared y times open paren 3 x plus y squared close paren squared
 
-25 percent sign from dissatisfied customers (who detest mathematics and statistics).
+Higher-order partial derivatives
 
-The chance of an email containing a typo is:
+As with single-variable functions, you can take partial derivatives of partial derivatives to get second-order partial derivatives. For a function of two variables f of open paren x comma y close paren, there are four second-order partial derivatives, one for each combination of variables.
 
-5 percent sign for satisfied customer emails,
+Second-order partial derivatives
 
-2 percent sign for important supplier emails,
+Much like in differentiation in a single variable, second-order partial derivatives are the partial derivatives of first-order partial derivatives.
 
-8 percent sign for dissatisfied customer emails.
+For a function f of two variables x and y, the pure second-order partial derivatives are defined as: 2 lines Line 1: f sub x x equals the fraction with numerator partial squared f and denominator partial x squared equals the fraction with numerator partial and denominator partial x times open paren the fraction with numerator partial f and denominator partial x close paren Line 2: f sub y y equals the fraction with numerator partial squared f and denominator partial y squared equals the fraction with numerator partial and denominator partial y times open paren the fraction with numerator partial f and denominator partial y close paren
 
-What is the probability that a randomly selected email contains a typo?
+To compute a pure second-order partial derivative, you need to differentiate a first-order partial derivative with respect to the same variable again.
 
-Let B be the event that the email contains a typo. Let A sub S, A sub I, and A sub D represent the sender: satisfied customer, important supplier, or dissatisfied customer.
+For a function f of two variables x and y, the mixed second-order partial derivatives are defined as: 2 lines Line 1: f sub x y equals the fraction with numerator partial squared f and denominator partial y partial x equals the fraction with numerator partial and denominator partial y times open paren the fraction with numerator partial f and denominator partial x close paren Line 2: f sub y x equals the fraction with numerator partial squared f and denominator partial x partial y equals the fraction with numerator partial and denominator partial x times open paren the fraction with numerator partial f and denominator partial y close paren
 
-You know:
+To compute a mixed second-order partial derivative, you need to differentiate a first-order partial derivative with respect to a different variable.
 
-double struck P of open paren A sub S close paren equals 0.4 and double struck P of open paren B given A sub S close paren equals 0.05
+Warning
 
-double struck P of open paren A sub I close paren equals 0.35 and double struck P of open paren B given A sub I close paren equals 0.02
+The order in which the subscript variables are written above is not a typo! For the two notation systems, there are different conventions for denoting the order in which differentiation occurs.
 
-double struck P of open paren A sub D close paren equals 0.25 and double struck P of open paren B given A sub D close paren equals 0.08
+Under certain conditions, the mixed second-order partial derivatives are equal. This is called Schwarz’s Theorem.
 
-You want to find double struck P of B. Using the law of total probability:
+Schwarz’s theorem
 
-double struck P of B equals 0.4 times 0.05 plus 0.35 times 0.02 plus 0.25 times 0.08 equals 0.02 plus 0.007 plus 0.02 equals 0.047
+If the fraction with numerator partial f and denominator partial x and the fraction with numerator partial f and denominator partial y are continuous and differentiable, then the fraction with numerator partial squared f and denominator partial x partial y equals the fraction with numerator partial squared f and denominator partial y partial x
 
-So, the probability that an incoming email contains a typo is 0.047, or 4.7 percent sign.
-
-Bayes’ theorem
-
-Often, the probability of one event given another is known, but the reverse is needed.
-
-For instance, suppose that Cantor’s Confectionery has three candy machines A comma B comma C, and that you know the probability of a bad-tasting candy being made given you know which machine made it. Suppose you wanted to know there reverse conditional probability; given that you have a bad tasting candy, what is the probability that machine C is responsible? (See Example 6 below.)
-
-Bayes’ theorem lets you reverse conditional probabilities, calculating the probability of event A given event B, based on the probability of B given A.
-
-Bayes’ Theorem is especially useful for updating predictions as new information becomes available and when it is difficult to calculate probabilities directly. It is used in such diverse areas as medicine, manufacturing, and even game shows (see Example 7).
-
-Statement of Bayes’ theorem
-
-If A and B are events with double struck P of B is greater than 0, then Bayes’ theorem states:
-
-double struck P of open paren A given B close paren equals double struck P of open paren B given A close paren double struck P of A over double struck P of B period
-
-where:
-
-double struck P of open paren A given B close paren is the probability of A given B,
-
-double struck P of open paren B given A close paren is the probability of B given A,
-
-double struck P of A and double struck P of B are the individual probabilities of A and B, respectively.
-
-For more about why the Bayes’ theorem is true, please go to Proof: Law of total probability and Bayes’ theorem.
-
-Here are some examples about how to use Bayes’ theorem, including one which could win you a car! (Important notice: STARMAST will not give you a car.)
+Please see [Guide: Introduction to continuity] and [Guide: Introduction to differentiability] for more detailed analyses of what makes functions continuous and differentiable.
 
 Example 4
 
-A library survey found:
+Consider the function f of open paren x comma y close paren equals sine x y plus x to the fourth power y squared plus x cubed y cubed plus 3 x.
 
-15 percent sign of people regularly borrow mystery books.
+The first-order partial derivatives are given by 2 lines Line 1: the fraction with numerator partial f and denominator partial x equals y cosine x y plus 4 x cubed y squared plus 3 x squared y cubed plus 3 Line 2: the fraction with numerator partial f and denominator partial y equals x cosine x y plus 2 x to the fourth power y plus 3 x cubed y squared
 
-Of people who regularly borrow mystery books, 80 percent sign also borrow science fiction books.
+The second-order partial derivatives can be calculated from the first-order partial derivatives. 4 lines Line 1: the fraction with numerator partial squared f and denominator partial x squared equals the fraction with numerator partial and denominator partial x times open paren the fraction with numerator partial f and denominator partial x close paren equals negative y squared sine x y plus 12 x squared y squared plus 6 x y cubed Line 2: the fraction with numerator partial squared f and denominator partial y squared equals the fraction with numerator partial and denominator partial y times open paren the fraction with numerator partial f and denominator partial y close paren equals negative x squared sine x y plus 2 x to the fourth power plus 6 x cubed y Line 3: the fraction with numerator partial squared f and denominator partial x partial y equals the fraction with numerator partial and denominator partial x times open paren the fraction with numerator partial f and denominator partial y close paren equals cosine x y minus x y sine x y plus 8 x cubed y plus 9 x squared y squared Line 4: the fraction with numerator partial squared f and denominator partial y partial x equals the fraction with numerator partial and denominator partial y times open paren the fraction with numerator partial f and denominator partial x close paren equals cosine x y minus x y sine x y plus 8 x cubed y plus 9 x squared y squared
 
-In general, 40 percent sign of people regularly borrow science fiction books.
+Notice that Schwarz’s Theorem holds as the first-order partial derivatives are continuous and differentiable and the fraction with numerator partial squared f and denominator partial x partial y equals the fraction with numerator partial squared f and denominator partial y partial x period
 
-A person is randomly selected and found to regularly borrow science fiction books. What is the probability they also regularly borrow mystery books?
+Functions of more than two variables
 
-To answer this question, you could use Bayes’ theorem. First of all, define the events using mathematical notations:
+Partial differentiation is not limited to functions of two variables. Many real-world problems involve functions of many more variables. For example, the temperature in a room might depend on position open paren x comma y comma z close paren and time t.
 
-M: A student regularly borrows mystery books.
+In general, if f equals f of open paren x sub 1 comma x sub 2 comma dot dot dot comma x sub n close paren, you can compute the partial derivative of f with respect to any one variable by treating all other variables as constants.
 
-S: A student regularly borrows science fiction books.
+Definition of the partial derivative for functions of n variables
 
-You know from the given information above that
+For a function f of open paren x sub 1 comma x sub 2 comma dot dot dot comma x sub n close paren of n variables, the partial derivative with respect to x sub i is denoted by the fraction with numerator partial f and denominator partial x sub i sans serif or f sub x sub i
 
-double struck P of M equals 0.15,
+It is defined by the limit the fraction with numerator partial f and denominator partial x sub i equals lim over h right arrow 0 of open paren the fraction with numerator f of open paren x sub 1 comma dot dot dot comma x sub i plus h comma dot dot dot comma x sub n close paren minus f of open paren x sub 1 comma dot dot dot comma x sub i comma dot dot dot comma x sub n close paren and denominator h close paren
 
-double struck P of S equals 0.40,
-
-double struck P of open paren S given M close paren equals 0.80.
-
-You want to work out double struck P of open paren M given S close paren, which is the probability they they regularly borrow science fiction given that they regularly borrow mystery books. So applying Bayes’ theorem gives:
-
-2 lines Line 1: double struck P of open paren M given S close paren equals double struck P of open paren S given M close paren double struck P of M over double struck P of S Line 2: blank equals 0.80 times 0.15 over 0.40 equals 0.30
-
-So, given the person borrows science fiction books regularly, there is a 30 percent sign chance they also regularly borrow mystery books.
-
-Here’s an example that combines both Bayes’ theorem and the law of total probability.
+This is a natural extension of the two-variable case from before. When differentiating with respect to x sub i, all other variables are held fixed.
 
 Example 5
 
-Commuters to work at Cantor’s Confectionery choose transport as follows:
+Consider the function f of open paren x comma y comma z comma t close paren equals l n of open paren x squared plus y squared plus 1 close paren plus e raised to the x z t power plus y the sine of open paren z plus t close paren.
 
-60 percent sign travel by bus
+As an example, to find the first-order partial derivative with respect to x, you need to differentiate f with respect to x while holding y, z and t constant.
 
-40 percent sign travel by car.
+The first-order partial derivatives are given by 4 lines Line 1: the fraction with numerator partial f and denominator partial x equals the fraction with numerator 2 x and denominator x squared plus y squared plus 1 plus z t e raised to the x z t power Line 2: the fraction with numerator partial f and denominator partial y equals the fraction with numerator 2 y and denominator x squared plus y squared plus 1 plus the sine of open paren z plus t close paren Line 3: the fraction with numerator partial f and denominator partial z equals x t e raised to the x z t power plus y the cosine of open paren z plus t close paren Line 4: the fraction with numerator partial f and denominator partial t equals x z e raised to the x z t power plus y the cosine of open paren z plus t close paren
 
-But there are some problems:
-
-Bus commuters are late 25 percent sign of the time.
-
-Car commuters are late 10 percent sign of the time.
-
-As a high-ranking manager in Cantor’s confectionery, you are a little annoyed at the constant lateness and want to do some research. You randomly select a commuter who arrived late today, and want to find out the probability that they commuted by bus.
-
-First, you could define the events as follows
-
-B: Commuter travels by bus.
-
-C: Commuter travels by car.
-
-L: Commuter arrives late.
-
-You know double struck P of B equals 0.6, and double struck P of C equals 0.4; you also know that double struck P of open paren L given B close paren equals 0.2 and double struck P of open paren L given C close paren equals 0.1. You want to work out double struck P of open paren B given L close paren using Bayes’ theorem. In order to use Bayes’ theorem, you will need to know double struck P of L, which you don’t know.
-
-Thankfully, this can be worked out using the law of total probability. Doing this gives
-
-2 lines Line 1: double struck P of L equals double struck P of open paren L given B close paren double struck P of B plus double struck P of open paren L given C close paren double struck P of C Line 2: blank equals 0.25 times 0.60 plus 0.10 times 0.40 equals 0.15 plus 0.04 equals 0.19
-
-Now you can use Bayes’ theorem to get
-
-double struck P of open paren B given L close paren equals double struck P of open paren L given B close paren double struck P of B over double struck P of L equals 0.25 times 0.60 over 0.19 almost equals 0.7895 So given the commuter arrived late, there’s about a 79 percent sign chance they commute by bus. Time to suggest earlier buses!
-
-Example 6
-
-Cantor’s Confectionery uses three machines to make some of its delicious sweets. There are creatively named Machines A, B, C. Here are their vital statistics.
-
-Machine A produces 50 percent sign of the items and has a 2 percent sign defect rate,
-
-Machine B produces 30 percent sign of the items and has a 5 percent sign defect rate,
-
-Machine C produces 20 percent sign of the items and has a 10 percent sign defect rate.
-
-You select an item at random and find that it is defective. What is the probability that it was made by Machine C?
-
-Once again, the first thing to do is to give the events names. Let:
-
-A, B, and C be the events that the item came from Machine A, B, or C,
-
-D be the event that the item is defective.
-
-You know from above that
-
-double struck P of A equals 0.5, double struck P of B equals 0.3, double struck P of C equals 0.2,
-
-double struck P of open paren D given A close paren equals 0.02, double struck P of open paren D given B close paren equals 0.05, double struck P of open paren D given C close paren equals 0.10.
-
-You want to find double struck P of open paren C given D close paren. To do this, you need double struck P of D which you don’t know, but you can work out using the law of total probability. Doing this gives
-
-double struck P of D equals 0.02 times 0.5 plus 0.05 times 0.3 plus 0.10 times 0.2 equals 0.01 plus 0.015 plus 0.02 equals 0.045
-
-Now you can apply Bayes’ theorem to get:
-
-double struck P of open paren C given D close paren equals double struck P of open paren D given C close paren double struck P of C over double struck P of D equals 0.10 times 0.20 over 0.045 almost equals 0.444
-
-So, given that the item is defective, there is about a 44% chance it came from Machine C. Time to get some maintenance!
-
-Finally, here’s an example of how to use Bayes’ theorem to solve a very famous real life problem from a very real TV game show.
-
-Example 7 (Monty Hall)
-
-Here’s the situation:
-
-In the climax of a game show, there are three doors A comma B comma C.
-
-Behind one of the doors is a fantastic new car; behind the other two are goats. The host knows what lies behind each door.
-
-You are encouraged to select a door to try and win the car, and you make an initial choice of door.
-
-Before your chosen door is opened, the host then opens another door, revealing a goat.
-
-The host then asks you if you want to switch your door.
-
-The question is: should you switch your door?
-
-Once again, this is an application of Bayes’ theorem, even if it doesn’t look like it to begin with.
-
-To begin with, write Car sub A comma Car sub B comma Car sub C for the events that the car is behind doors A comma B comma C respectively. At the start, double struck P of open paren Car sub A close paren equals double struck P of open paren Car sub B close paren equals double struck P of open paren Car sub C close paren equals one third period
-
-For the maths involved in what follows, your initial choice of door is not important; the maths will be the same if you relabelled all doors. (This is known as without loss of generality.) So assume you pick door A.
-
-This means that the host has a choice of two doors to open; either B or C. There will be a goat behind whichever door they pick. The events of the host opening door B and C can be written as cap O sub B comma cap O sub C. You can now work out some conditional probabilities.
-
-If the car is behind door A, then the host has an equal chance to pick either door B or door C. Therefore double struck P of open paren cap O sub B given Car sub A close paren equals double struck P of open paren cap O sub C given Car sub A close paren equals one half period
-
-If the car is behind door B, then the host cannot pick door B to open as that would reveal the car; they cannot pick door A as you chose it. So they must pick door C to open, which means that double struck P of open paren cap O sub B given Car sub B close paren equals 0 and double struck P of open paren cap O sub C given Car sub B close paren equals 1 period
-
-Similarly, if the car is behind door C, then the host cannot pick door C to open as that would reveal the car; they cannot pick door A as you chose it. So they must pick door B to open, which means that double struck P of open paren cap O sub B given Car sub B close paren equals 1 and double struck P of open paren cap O sub C given Car sub B close paren equals 0 period
-
-So, the question is should you switch to the new door or should you stick with the original choice? This means working out the probability of where the car is given that you know which door the host opens, which is a perfect use of Bayes’ theorem.
-
-As your original choice of door didn’t matter for the maths, the choice of which door to open by the host doesn’t matter either; let’s say that the host opens door B. However, you don’t yet know double struck P of open paren cap O sub B close paren, which is needed for Bayes’ theorem. Using the law of total probability, you can write that
-
-3 lines Line 1: double struck P of open paren cap O sub B close paren equals double struck P of open paren cap O sub B given Car sub A close paren double struck P of open paren Car sub A close paren plus double struck P of open paren cap O sub B given Car sub B close paren double struck P of open paren Car sub B close paren plus double struck P of open paren cap O sub B given Car sub C close paren double struck P of open paren Car sub C close paren Line 2: blank equals one half times one third plus 0 times one third plus 1 times one third Line 3: blank equals one sixth plus one third equals one half
-
-You can now work out the conditional probabilities of the car being behind doors A comma C given that the host opens door B:
-
-Here, you are working out double struck P of open paren Car sub A given cap O sub B close paren, which by Bayes’ theorem is 2 lines Line 1: double struck P of open paren Car sub A given cap O sub B close paren equals the fraction with numerator double struck P of open paren cap O sub B given Car sub A close paren double struck P of open paren cap O sub B close paren and denominator double struck P of open paren Car sub A close paren Line 2: blank equals the fraction with numerator open paren 1 divided by 2 close paren times open paren 1 divided by 3 close paren and denominator open paren 1 divided by 2 close paren equals one third
-
-Finally, you are working out double struck P of open paren Car sub C given cap O sub B close paren, which by Bayes’ theorem is 2 lines Line 1: double struck P of open paren Car sub C given cap O sub B close paren equals the fraction with numerator double struck P of open paren cap O sub B given Car sub C close paren double struck P of open paren cap O sub B close paren and denominator double struck P of open paren Car sub C close paren Line 2: blank equals the fraction with numerator 1 times open paren 1 divided by 3 close paren and denominator open paren 1 divided by 2 close paren equals two thirds
-
-So, the probability of winning if you stick with door A is 1 divided by 3, but the probability of winning if you switch to door C is 2 divided by 3! You are twice as likely to win the car if you switch doors.
-
-Of course (with credit to xkcd), the real prize might not be the car…
+You can also calculate various higher order partial derivatives for each variable by taking partial derivatives of these first-order partial derivatives.
 
 Quick check problems
 
-In the following questions, enter your answers as decimal numbers rounded to 2 decimal places.
+Consider the function f of open paren x comma y close paren equals x cubed y squared plus y squared plus x. Determine whether the following statements are true or false.
 
-A hospital treats patients in two wards:
-
-80% in the general ward, 20% in emergency
-
-Recovery rates within 2 days are 70% (general) and 50% (emergency)
-
-What is the probability a randomly selected patient recovers in 2 days?
-
-A student studies:
-
-60% in the library, 30% in a café, 10% at home
-
-Concentration rates are 90%, 60%, and 40%, respectively
-
-What is the probability that the student concentrates well on a given day?
-
-After your investigation into commuters to Cantor’s Confectionery, you receive a new set of statistics:
-
-40% commute by bus, 60% by car
-
-Bus lateness: 10%, Car lateness: 20%
-
-A commuter is late. What is the probability they took the bus?
-
-As discussed above above, Cantor’s Confectionery has 3 machines with the following statistics:
-
-A: 50% of production, 2% defect rate
-
-B: 30%, 5% defect
-
-C: 20%, 10% defect
-
-If an item is defective, what is the probability it came from Machine A?
-
-True or false:
-
-The law of total probability can only be used when events are mutually exclusive and exhaustive.
-
+The partial derivative with respect to x is given by the fraction with numerator partial f and denominator partial x equals 3 x squared y squared plus y squared plus 1. 
 TRUE
 FALSE
 
-Bayes’ Theorem allows reversing conditional probabilities.
-
+The partial derivative with respect to y is given by the fraction with numerator partial f and denominator partial y equals 2 x cubed y squared plus 2 y. 
 TRUE
 FALSE
 
-The law of total probability requires double struck P of open paren B given A sub i close paren for every outcome.
+Let f of open paren x comma y close paren equals x to the fourth power y squared plus 3 l n of x. Which of the following best describes the fraction with numerator partial f and denominator partial y? 
+(a) Is constant
+(b) Contains no x terms
+(c) Contains x but not y
+(d) Contains both x and y
 
-TRUE
-FALSE
+Suppose f of open paren x comma y close paren equals 5 x squared y plus 7 y. The mixed partial derivative the fraction with numerator partial squared f and denominator partial y partial x is given by 
+5
+0
+10x
+7y
+ .
+
+Consider the function f of open paren x comma y close paren equals open paren x plus y cubed close paren to the fourth power times sine x. Which rule(s) do you need to compute the fraction with numerator partial f and denominator partial x? 
+(a) Power rule only
+(b) Chain rule only
+(c) Product rule only
+(d) Chain rule and product rule
+
+If f of open paren x comma y comma z comma t close paren equals y the sine of open paren z plus t close paren plus e raised to the 2 x power, then the fraction with numerator partial f and denominator partial t equals  .
 
 Further reading
 
-For more questions on the subject, please go to Questions: Law of total probability and Bayes’ theorem.
+For more questions on the subject, please go to Questions: Introduction to partial differentiation.
+
+For a way to differentiate functions of more than one variable, please see Guide: Multivariate chain rule.
+
+Version history

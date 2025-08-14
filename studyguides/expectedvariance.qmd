@@ -1,0 +1,648 @@
+---
+title: Expected value, variance, standard deviation
+author: Tom Coleman
+abstract-title: Summary
+abstract: This guide introduces expected values, variance, and standard deviation. These are key ideas in the concept of random variables, and they give information about the distribution of data conforming to a random variable.
+categories:
+  - Probability
+  - Statistics
+filters:
+  - shinylive
+image: FiguresPNG/expectedvariance-image.png
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, it is highly recommended that you read [Guide: PMFs, PDFs, and CDFs](pmfspdfscdfs.qmd) and [Guide: Introduction to data analysis].*
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/expectedvariance.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
+
+# Introduction {.unnumbered}
+
+In [Guide: PMFs, PDFs, and CDFs](pmfspdfscdfs.qmd), you saw how these concepts are key tools in the study of probability, used to model and analyze the behaviour of random variables. As you have seen, these functions describe how probabilities are distributed across the possible outcomes of random events. For instance, the shape and position of the normal distribution (see Example 5 of [Guide: PMFs, PDFs, and CDFs](pmfspdfscdfs.qmd), or [Calculator: The normal distribution](../apps/calculators/c-normaldist.qmd)) can be modified by specifying the **mean** $\mu$ and the **standard deviation** $\sigma$. But what are these quantities? What do they mean, and how can they be computed from a given PMF or PDF?
+
+This guide illustrates the related concepts of the **expected value**, **variance**, and **standard deviation** of a random variable $X$, and explains their usage and properties in probability theory. These concepts are not only found in statistics alone, but also in fields like classical and quantum mechanics, machine learning, and in decision theory.
+
+<!-- # Mean -->
+
+<!-- The idea of a mean is central to data analysis, allowing you to find the central point of a set of data. -->
+
+<!-- ::: {.callout-note icon="true"} -->
+<!-- ## Definition of the mean -->
+
+<!-- Suppose that you have a set of data $S = \{x_1,x_2,\ldots,x_n\}$. The **mean** of the data is given by $$\bar{x} = \dfrac{x_1 + x_2 + \ldots + x_n}{n} = \dfrac{\sum_{i = 1}^n x_i}{n}$$ that is, the sum of all of the elements of the set $S$ divided by the number of elements in $S$. -->
+<!-- ::: -->
+
+<!-- ::: callout-tip -->
+<!-- The symbol $\sum$ is called **sigma notation** and represents the sum of all values in a particular set. In this example, it is adding the probabilities from all possible outcomes of a random variable $X$. For more examples, see [Guide: Introduction to sigma notation.](sigmanotation.qmd) -->
+<!-- ::: -->
+
+<!-- This is the **average** of the given data set. Here's an example of the mean in action. -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Example 1 -->
+
+<!-- The mean of the data set $\{1,2,3,4,5,6\}$ is $$\bar{x} = \dfrac{1+2+3+4+5+6}{6} = \frac{21}{6} = 3.5.$$ This shows that the mean does not have to be a particular value in the data set (unlike the mode, for instance). -->
+<!-- ::: -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Example 2 -->
+
+<!-- You select five random Boole Bars from Cantor's confectionery and measure their lengths, which gives a data set of $\{4.53, 4.61, 4.33, 4.51, 4.52\}$ (all lengths measured in centimetres). The average length of a Boole bar from this data set is $$\bar{x} = \dfrac{4.53 + 4.61 + 4.33 + 4.51 + 4.52}{5} = \frac{22.5}{5} = 4.5.$$ -->
+<!-- ::: -->
+
+<!-- ## Sample mean versus population mean {.unnumbered} -->
+
+<!-- You might have noticed here that the mean in Examples 1 and 2 was written as $\bar{x}$, whereas the mean in the statement of the normal distribution is written as $\mu$ (the Greek letter mu). The difference here is the idea of a **sample mean** $\bar{x}$ versus the **population mean** $\mu$. The two might be very different depending on the sample! -->
+
+<!-- For instance, in Example 2, you worked out the sample mean length for a chocolate bar, but this doesn't necessarily mean that this is the mean of all of the chocolate bars ever made! This is an example of the difference between the sample mean and the population mean. -->
+
+<!-- Often, population means can be very difficult to find. Suppose you wanted to find the average height of every adult in your home country. You would then have to potentially ask millions of people to report their height, and then work out the average. This is extremely impractical, and so a sample mean must be taken instead. To measure if your sample mean is a statistically significant representative of the population mean, you could use a **hypothesis test**; see [Guide: Hypothesis testing](hypothesistesting.qmd) for more. -->
+
+<!-- Typically, what you would do is **model** the population to a certain probability distribution, and use the **expected value** of that probability distribution as an estimate of the population mean. This allows you to extrapolate statements about your sample to fit the entire population. -->
+
+# Expected value {.unnumbered}
+
+Often, the arithmetic mean of the outcomes is not the correct way to go when it comes to thinking about where the 'middle' of the set of data (conforming to a random variable). This is because some outcomes are more likely to occur than others. More formally, in a PMF or PDF describing a probability distribution, it is not guaranteed that every value is equally likely to occur.
+
+For instance, suppose you have two six-sided dice; one is fair, and one is biased to give a lower value more often than not.
+
+| $x$ | 1 | 2 | 3 | 4 | 5 | 6 |
+|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+| $\mathbb{P}(X = x)$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ |
+
+Table 1: PMF for rolling a fair six-sided die.
+
+| $y$ | 1 | 2 | 3 | 4 | 5 | 6 |
+|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+| $\mathbb{P}(Y = y)$ | $\dfrac{1}{4}$ | $\dfrac{1}{4}$ | $\dfrac{1}{4}$ | $\dfrac{1}{12}$ | $\dfrac{1}{12}$ | $\dfrac{1}{12}$ |
+
+Table 2: PMF for rolling a biased six-sided die.
+
+You could ask; if you rolled one of these dice, what is the value that you would expect to see? With the fair, it would be between $3$ and $4$ as every outcome is equally likely to occur. With the biased die, you are more likely to get a smaller number as the probability of getting a number less than or equal to three is higher. This is because the PMFs for these dice are different.
+
+So how can you measure the 'expected value' of a random variable given by some PMF or PDF? The answer is to 'weight' the outcomes by their probabilities; this is the definition of an **expected value**:
+
+::: {.callout-note icon="true"}
+## Definition of the expected value
+
+Suppose that you have a random variable $X$.
+
+-   If $X$ is a discrete random variable with probability mass function $p(x)$, then the **expected value** $\mathbb{E}(X)$ of $X$ is given by $$\mathbb{E}(X) = \sum_{x} xp(x) = \sum_{x} x\mathbb{P}(X=x)$$ that is, the sum of an outcome $x$ multiplied by its probability $p(x) = \mathbb{P}(X=x)$ over all possible outcomes $x$.
+
+-   If $X$ is a continuous random variable with probability density function $f(x)$, then the **expected value** $\mathbb{E}(X)$ of $X$ is given by $$\mathbb{E}(X) = \int_{-\infty}^\infty xf(x) \,\textrm{d}x$$ that is, the integral of $x$ multiplied by its probability $f(x)$ over all possible values of $x$ in the real numbers.
+:::
+
+::: callout-tip
+Geometrically, the expected value is the 'central point' of the distribution of the data. See below for more details on this.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+Let's look at the expected values of the two dice given above. The PMF for the fair die is given by
+
+| $x$ | 1 | 2 | 3 | 4 | 5 | 6 |
+|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+| $\mathbb{P}(X = x)$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ |
+
+so the expected value $\mathbb{E}(X)$ of this die is $$\begin{aligned}\mathbb{E}(X) &= 1\cdot \frac{1}{6} + 2\cdot \frac{1}{6} + 3\cdot \frac{1}{6} + 4\cdot \frac{1}{6} + 5\cdot \frac{1}{6} + 6\cdot \frac{1}{6}\\[1em] &= \dfrac{1 + 2 + 3 + 4 + 5 + 6}{6} = 3.5\end{aligned}$$ You can notice that this is the same as the mean of the outcomes; more on this later.
+
+What about for the second, biased die? This has PMF
+
+| $y$ | 1 | 2 | 3 | 4 | 5 | 6 |
+|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
+| $\mathbb{P}(Y = y)$ | $\dfrac{1}{4}$ | $\dfrac{1}{4}$ | $\dfrac{1}{4}$ | $\dfrac{1}{12}$ | $\dfrac{1}{12}$ | $\dfrac{1}{12}$ |
+
+so the expected value $\mathbb{E}(Y)$ of this die is $$\begin{aligned}\mathbb{E}(Y) &= 1\cdot \frac{1}{4} + 2\cdot \frac{1}{4} + 3\cdot \frac{1}{4} + 4\cdot \frac{1}{12} + 5\cdot \frac{1}{12} + 6\cdot \frac{1}{12}\\[1em] &= \dfrac{1 + 2 + 3}{4} + \dfrac{4 + 5 + 6}{12} = 2.75\end{aligned}$$ which is **not** the mean of the outcomes.
+
+Both of these 'expected values' are impossible to obtain in practice; try finding a die that shows $3.5$ spots on the top! This is because the expected value actually represents the 'central point' of the distribution, rather than a specific outcome.
+:::
+
+::: callout-tip
+For a discrete random variable $X$ with finitely many values, the expected value $\mathbb{E}(X)$ only equals the mean of the outcomes if and only if the probability of each outcome $\mathbb{P}(X=x)$ is the same for every $x$. If this happens, then $\mathbb{P}(X=x) = 1/n$, and so the definition of expected value becomes $$\mathbb{E}(X) = \sum_{x} x\mathbb{P}(X=x) = \sum_{x} x\cdot \frac{1}{n} = \dfrac{\sum_{x} x}{n}$$ which you can recognize as the mean.
+
+But in all cases, the expected value of a random variable really is the 'population mean' of the probability distribution, which is not the same as the mean value of the outcomes. So **in theoretical probability distributions, the concept of the population mean of a random variable and the expected value of a random variable are the same.**
+:::
+
+Here's an example of the expected value that introduces the idea of a **Bernoulli trial**.
+
+::: {.callout-note appearance="simple"}
+## Example 2
+
+Imagine that you are in charge of an experiment that either succeeds with probability $p$ or fails with probability $q = 1-p$. You can write the outcome of success as $1$ and the outcome of failure as $0$. Therefore, the sample space is $\{0,1\}$ with PMF $b(0) = q = 1-p$ and $b(1) = p$. This is known as a **Bernoulli trial**.
+
+Suppose that $X$ is a random variable represented by a Bernoulli trial. What is the expected value $\mathbb{E}(X)$? You can use the definition of expected value to work this out: $$\mathbb{E}(X) = 0\cdot (1-p) + 1\cdot p = p$$ and so the expected value of a Bernoulli trial is the probability of success $p$.
+
+Of course, much like the expected value of the dice above, this is impossible to obtain in practice!
+:::
+
+Much like many other concepts in mathematics and statistics, you can use properties of expected values to build upon knowledge to find expected values of other random variables.
+
+::: {.callout-note icon="true"}
+## Properties of expected values
+
+Let $X$ be a random variable (either discrete or continuous). Then the following properties are hold for expected values:
+
+1.  If $g$ is a function, then you can define a new random variable $Z = g(X)$ with the outcomes as $z = g(x)$.
+
+    -   If $X$ is discrete with PMF $f_X(x)$, then so is $Z$ and $$\mathbb{E}(Z) = \mathbb{E}(g(X)) = \sum_{x} g(x)f_X(x).$$
+
+    -   If $X$ is continuous with PDF $f_X(x)$, then so is $Z$ and $$\mathbb{E}(Z) = \mathbb{E}(g(X)) = \int_{-\infty}^\infty g(x)f_X(x)\,\textrm{d}x.$$
+
+From this and properties of summation and integration (see [Guide: Sigma notation](sigmanotation.qmd) and \[Guide: Properties of integration\]) it follows that
+
+2.  If $a,b$ are real number constants, then $$\mathbb{E}(aX + b) = a\mathbb{E}(X) + b.$$
+
+3.  If $Y$ is another random variable of the same type as $X$ (discrete or continuous), then $$\mathbb{E}(X + Y) = \mathbb{E}(X) + \mathbb{E}(Y).$$
+
+4.  If $Y$ is a random variable that is **independent** of $X$, then $$\mathbb{E}(XY) = \mathbb{E}(X)\mathbb{E}(Y).$$
+:::
+
+::: callout-tip
+Properties 3 and 4 can be extended to any number of random variables (all pairwise independent in the case of 4.) For instance, if $X_i$ are all random variables (of the same type) for $i = 1,\ldots,n$, then $$\mathbb{E}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \mathbb{E}(X_i).$$
+:::
+
+You can use the properties of the expected value to find the expected value of some more probability distributions.
+
+::: {.callout-note appearance="simple"}
+## Example 3
+
+As seen in [Guide: PMFs, PDFs, CDFs](pmfspdfscdfs.qmd), a common example of a PMF is that of the **binomial distribution**. This is a type of PMF used to count the number of successes in a series of trials with only two possible outcomes: a success with probability $p$, or a failure with probability $q = 1 - p$. Here, the random variable $X$ is 'number of successes'. Take $x$ to be the number of successes in a number $n$ of trials, $p$ is the probability of success in a single trial, and $q = 1 - p$ is the probability of failure. Then the PMF $f(x)$ for a binomial distribution is given by:
+
+$$
+f(x) = \binom{n}{x} p^x q^{(n-x)}
+$$
+
+How would you work out $\mathbb{E}(X)$ with this as the PMF? Instead, what you could do is use the fact that $X$ is a random variable that encapsulates the repetition of $n$ Bernoulli trials (see Example 2). So let $Y$ be the random variable describing a Bernoulli trial; it follows that $X = nY$. You can then use Property 2 of the expected value to say that $$\mathbb{E}(X) = \mathbb{E}(nY) = n\mathbb{E}(Y).$$ You know that $\mathbb{E}(Y) = p$ from Example 2, and so $$\mathbb{E}(X) = n\mathbb{E}(Y) = np.$$
+:::
+
+# Variance and standard deviation {.unnumbered}
+
+The expected value is the 'central point' of the probability distribution, which is only one of the key measures of the probability distribution. The other is how the probability is spread about this central point. This is known as the **variance** of the distribution. Related to the variance is the **standard deviation**.
+
+Generally, the larger the variance, the more the data is spread out about the central point. Let's take a look at the definition of the variance:
+
+::: {.callout-note icon="true"}
+## Definition of variance and standard deviation
+
+Suppose that you have a random variable $X$ with expected value/mean $\mu = \mathbb{E}(X)$. The **variance** $\mathbb{V}(X)$ of $X$ is given by $$\mathbb{V}(X) = \mathbb{E}\left((X-\mu)^2\right)$$ that is, the expected value (average) of the squared deviation of the random variable $X$ from the mean.
+
+Using the fact that $\mu = \mathbb{E}(X)$ and properties of expected value, you can rephrase the variance by the formula $$\mathbb{V}(X) = \mathbb{E}\left(X^2\right) - \mathbb{E}\left(X\right)^2$$
+
+The **standard deviation** $\sigma$ is the square root of the variance; that is $$\sigma = \sqrt{\mathbb{V}(X)}.$$ The standard deviation is so important that the variance is often written $\sigma^2$.
+:::
+
+::: callout-tip
+Much like sample means and population means, there is a concept of **sample variance** as well, to help line up distributions of samples compared to the overall distribution of the populations. See [Guide: Introduction to hypothesis testing](hypothesistesting.qmd) for more.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 4
+
+What is the variance and standard deviation of the PMF for rolling a fair die? You could use the second formula for variance to work this out. You know from Example 1 that $\mathbb{E}(X) = 7/2 = 3.5$.
+
+Now, you will need to work out $\mathbb{E}(X^2)$. You can use the PMF to write $x^2$ for every $x$, and then use this to work out $\mathbb{E}(X^2)$.
+
+| $x$   | 1   | 2   | 3   | 4   | 5   | 6   |
+|-------|-----|-----|-----|-----|-----|-----|
+| $x^2$ | 1   | 4   | 9   | 16  | 25  | 36  |
+
+so $\mathbb{E}(X^2)$ is $$\begin{aligned}\mathbb{E}(X^2) &= 1\cdot \frac{1}{6} + 4\cdot \frac{1}{6} + 9\cdot \frac{1}{6} + 16\cdot \frac{1}{6} + 25\cdot \frac{1}{6} + 36\cdot \frac{1}{6}\\[1em] &= \dfrac{1 + 4 + 9 + 16 + 25 + 36}{6} = \frac{91}{6}\end{aligned}$$ You can now use this to work out the variance of the random variable: $$\begin{aligned}\mathbb{V}(X) &= \mathbb{E}(X^2) - \mathbb{E}(X)^2\\[1em] &= \frac{91}{6} - \left(\frac{7}{2}\right)^2 = \frac{91}{6} - \frac{49}{4} = \frac{35}{12}\end{aligned}$$ Finally, the standard deviation is given by the square root of the variance, which means that $\sigma = \sqrt{35/12} \approx 1.708.$
+
+:::
+
+::: {.content-visible when-format="html"}
+
+::: {.callout-note appearance="simple"}
+## Example 5
+
+Consider a continuous random variable $X$ uniformly distributed between $a$ and $b$, which you have seen in [Guide: PMFs, PDFs, CDFs](pmfspdfscdfs.qmd). The PDF of $X$ was given by:
+
+$$f(x) =\begin{cases}\dfrac{1}{b-a} & \textsf{if } a \leq x \leq b \\[0.5em]0 & \textsf{otherwise} \end{cases}$$
+
+Let's find the expected value and variance of the uniform distribution.
+
+Here, you can use the formula for the expected value (together with properties of integration, the definition of the probability density function, and the difference of two squares) to get $$\begin{aligned} \mathbb{E}(X) &= \int_{-\infty}^\infty xf(x)\, \textrm{d}x\\[1em] &= \int_{-\infty}^a x\cdot 0\, \textrm{d}x + \int_{a}^b \frac{x}{b-a}\, \textrm{d}x + \int_{b}^\infty x\cdot 0\, \textrm{d}x\\[1em] &= 0 + \left[\frac{x^2}{2(b-a)}\right]_a^b + 0 = \frac{b^2 - a^2}{2(b-a)} = \frac{1}{2}(a+b)\end{aligned}$$ This is what you would expect; it is the exact midpoint of the interval $[a,b]$!
+
+To find the variance, you will need to find $\mathbb{E}(X^2)$. You can modify the above working to get $$\begin{aligned} \mathbb{E}(X^2) &= \int_{-\infty}^\infty x^2f(x)\, \textrm{d}x\\[1em] &= \int_{-\infty}^a x^2\cdot 0\, \textrm{d}x + \int_{a}^b \frac{x^2}{b-a}\, \textrm{d}x + \int_{b}^\infty x^2\cdot 0\, \textrm{d}x\\[1em] &= 0 + \left[\frac{x^3}{3(b-a)}\right]_a^b + 0 = \frac{b^3 - a^3}{2(b-a)} = \frac{1}{3}(b^2 + ab + a^2)\end{aligned}$$ Finally, you can say that $$\begin{aligned}\mathbb{V}(X) &= \mathbb{E}(X^2) - \mathbb{E}(X)^2\\ &= \frac{1}{3}(b^2+ab + a^2) - \left(\frac{1}{2}(b+a)\right)^2\\[0.5em] &= \frac{1}{3}(b^2+ab + a^2) - \frac{1}{4}(b^2 + 2ab + a^2)\\[0.5em] &= \frac{1}{12}(b^2 - 2ab + a^2) = \frac{1}{12}(b-a)^2\end{aligned}$$ and this is the variance.
+:::
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+::: {.callout-note appearance="simple"}
+## Example 5
+
+Consider a continuous random variable $X$ uniformly distributed between $a$ and $b$, which you have seen in [Guide: PMFs, PDFs, CDFs](pmfspdfscdfs.qmd). The PDF of $X$ was given by:
+
+$$f(x) =\begin{cases}\dfrac{1}{b-a} & \textsf{if } a \leq x \leq b \\[0.5em]0 & \textsf{otherwise} \end{cases}$$
+
+Let's find the expected value and variance of the uniform distribution.
+
+:::
+
+ 
+
+::: {.callout-note appearance="simple"}
+## Example 5 (continued)
+
+Here, you can use the formula for the expected value (together with properties of integration, the definition of the probability density function, and the difference of two squares) to get $$\begin{aligned} \mathbb{E}(X) &= \int_{-\infty}^\infty xf(x)\, \textrm{d}x\\[1em] &= \int_{-\infty}^a x\cdot 0\, \textrm{d}x + \int_{a}^b \frac{x}{b-a}\, \textrm{d}x + \int_{b}^\infty x\cdot 0\, \textrm{d}x\\[1em] &= 0 + \left[\frac{x^2}{2(b-a)}\right]_a^b + 0 = \frac{b^2 - a^2}{2(b-a)} = \frac{1}{2}(a+b)\end{aligned}$$ This is what you would expect; it is the exact midpoint of the interval $[a,b]$!
+
+To find the variance, you will need to find $\mathbb{E}(X^2)$. You can modify the above working to get $$\begin{aligned} \mathbb{E}(X^2) &= \int_{-\infty}^\infty x^2f(x)\, \textrm{d}x\\[1em] &= \int_{-\infty}^a x^2\cdot 0\, \textrm{d}x + \int_{a}^b \frac{x^2}{b-a}\, \textrm{d}x + \int_{b}^\infty x^2\cdot 0\, \textrm{d}x\\[1em] &= 0 + \left[\frac{x^3}{3(b-a)}\right]_a^b + 0 = \frac{b^3 - a^3}{2(b-a)} = \frac{1}{3}(b^2 + ab + a^2)\end{aligned}$$ Finally, you can say that $$\begin{aligned}\mathbb{V}(X) &= \mathbb{E}(X^2) - \mathbb{E}(X)^2\\ &= \frac{1}{3}(b^2+ab + a^2) - \left(\frac{1}{2}(b+a)\right)^2\\[0.5em] &= \frac{1}{3}(b^2+ab + a^2) - \frac{1}{4}(b^2 + 2ab + a^2)\\[0.5em] &= \frac{1}{12}(b^2 - 2ab + a^2) = \frac{1}{12}(b-a)^2\end{aligned}$$ and this is the variance.
+
+:::
+
+:::
+
+Finally, the variance has properties like the expected value does:
+
+::: {.callout-note icon="true"}
+## Properties of variance
+
+Let $X$ be a random variable (either discrete or continuous). Then the following properties hold for the variance of $X$:
+
+1.  $\mathbb{V}(X)\geq 0$.
+
+2.  If $a$ is a real number then $$\mathbb{V}(aX) = a^2\mathbb{V}(X).$$
+
+3.  $\mathbb{V}(X + b) = \mathbb{V}(X)$ for all real numbers $b$.
+
+4.  If $Y$ is another random variable of the same type as $X$ (discrete or continuous), and $Y$ is **independent** of $X$, then $$\mathbb{V}(X + Y) = \mathbb{V}(X) + \mathbb{V}(Y).$$
+:::
+
+::: callout-tip
+Property 4 can be extended to any number of pairwise independent random variables (all pairwise independent in the case of 4.) So if $X_i$ are all pairwise independent random variables (of the same type) for $i = 1,\ldots,n$, then $$\mathbb{V}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \mathbb{V}(X_i).$$
+:::
+
+# Geometric interpretations of the expected value and variance
+
+::: {.content-visible when-format="html"}
+You can use the interactive calculators below to explore the normal distribution, exponential distribution, and beta distribution (for more, see [Overview: Probability distributions](../overviews/o-distributions.qmd)) by changing the mean $\mu$ and the variance $\sigma^2$ by using the sliders. You can see that changing the mean changes the centre of the curve. Increasing the variance leads to the curve being more spread out. Decreasing the variance makes the curve far more narrow - as the data are more clustered toward the mean with a smaller variance.
+
+## Normal distribution
+
+The normal distribution has mean $\mu$ and variance $\sigma^2$, where the probability density function is given by $$f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left({-\frac{1}{2} \left( \frac{x - \mu}{\sigma} \right)^2}\right).$$
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 770
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Normal distribution visualizer",
+  
+  # Plot at the top
+  card(
+    card_header("Normal distribution plot"),
+    card_body(
+      plotOutput("distPlot", height = "500px")
+    )
+  ),
+  
+  # Parameters below
+  card(
+    card_header("Distribution parameters"),
+    card_body(
+      layout_columns(
+        col_widths = c(6, 6),
+        sliderInput("mean", "Mean/expected value (μ):", 
+                   min = -5, max = 5, value = 0, step = 0.1),
+        sliderInput("variance", "Variance (σ²):", 
+                   min = 0.25, max = 9, value = 1, step = 0.25)
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Generate the normal distribution plot
+  output$distPlot <- renderPlot({
+    # Fixed range for x-axis to show consistent scale
+    x_min <- -8
+    x_max <- 8
+    
+    # Convert variance to standard deviation
+    sd_val <- sqrt(input$variance)
+    
+    # Create data frame for plotting
+    x <- seq(x_min, x_max, length.out = 500)
+    y <- dnorm(x, mean = input$mean, sd = sd_val)
+    df <- data.frame(x = x, y = y)
+    
+    # Create plot with fixed axes
+    p <- ggplot(df, aes(x = x, y = y)) +
+      geom_line(color = "#3F6BB6", size = 1.2) +
+      labs(x = "X", y = "Density",
+           title = sprintf("Normal distribution: N(μ = %.1f, σ² = %.2f)", 
+                          input$mean, input$variance)) +
+      theme_minimal() +
+      theme(
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(hjust = 0.5, size = 16),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12)
+      ) +
+      # Fixed axis limits
+      xlim(x_min, x_max) +
+      ylim(0, 0.8) +
+      # Add reference line at x = 0
+      geom_vline(xintercept = 0, linetype = "dashed", color = "gray50", alpha = 0.7) +
+      # Add reference line at mean
+      geom_vline(xintercept = input$mean, linetype = "dashed", color = "#DB4315", alpha = 0.7) +
+      annotate("text", x = input$mean + 0.8, y = 0.7, label = "Mean", color = "#DB4315", size = 4)
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+## Exponential distribution
+
+The exponential distribution has probability density function $$f(x) = \lambda e^{-\lambda x},$$ where $\lambda$ is number of times an event occurs within a specific period of time. (For more on this, see [Overview: Probability distributions](../overviews/o-distributions.qmd) It can be shown that the mean/expected value of the exponential distribution is $\mu = 1/\lambda$ and variance $\sigma^2 = 1/\lambda^2$, and so both the expected value and variance depend on $\lambda$ - which explains the one slider.
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 770
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Exponential distribution visualizer",
+  
+  # Plot at the top
+  card(
+    card_header("Exponential distribution plot"),
+    card_body(
+      plotOutput("distPlot", height = "500px")
+    )
+  ),
+  
+  # Parameters below
+  card(
+    card_header("Distribution parameters"),
+    card_body(
+      sliderInput("rate", "Rate parameter (λ):", 
+                 min = 0.1, max = 3, value = 1, step = 0.1)
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Generate the exponential distribution plot
+  output$distPlot <- renderPlot({
+    # Fixed range for x-axis to show consistent scale
+    x_min <- 0
+    x_max <- 10
+    
+    # Create data frame for plotting
+    x <- seq(x_min, x_max, length.out = 500)
+    y <- dexp(x, rate = input$rate)
+    df <- data.frame(x = x, y = y)
+    
+    # Calculate mean and variance for display
+    mean_val <- 1 / input$rate
+    variance_val <- 1 / (input$rate^2)
+    
+    # Create plot with fixed axes
+    p <- ggplot(df, aes(x = x, y = y)) +
+      geom_line(color = "#3F6BB6", size = 1.2) +
+      labs(x = "X", y = "Density",
+           title = sprintf("Exponential distribution: Exp(λ = %.1f)\nMean = %.2f, Variance = %.2f", 
+                          input$rate, mean_val, variance_val)) +
+      theme_minimal() +
+      theme(
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(hjust = 0.5, size = 16),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12)
+      ) +
+      # Fixed axis limits
+      xlim(x_min, x_max) +
+      ylim(0, 3) +
+      # Add reference line at mean
+      geom_vline(xintercept = mean_val, linetype = "dashed", color = "#DB4315", alpha = 0.7) +
+      annotate("text", x = mean_val + 0.5, y = 2.5, label = "Mean", color = "#DB4315", size = 4)
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+## Beta distribution
+
+The beta distribution is used to model probabilities. It has probability density function $$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{\textrm{B}(\alpha,\beta)},$$ where $\textrm{B}$ is the beta function and $\alpha = k+1$ and $\beta = n - k + 1$ are parameters for measuring the number of trials ($k$) and the number of success of those trials ($n$). It can be shown that the mean/expected value of the beta distribution is $\mu = \dfrac{\alpha}{\alpha + \beta}$ and variance $\sigma^2 = \dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$.
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 770
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Beta distribution",
+  
+  # Plot at the top
+  card(
+    card_header("Beta distribution plot"),
+    card_body(
+      uiOutput("plot_title"),
+      plotOutput("distPlot", height = "400px")
+    )
+  ),
+  
+  # Parameters below
+  card(
+    card_header("Distribution parameters"),
+    card_body(
+      layout_columns(
+        col_widths = c(6, 6),
+        sliderInput("mean", "Mean:", min = 0.1, max = 0.9, value = 0.5, step = 0.01),
+        sliderInput("variance", "Variance:", min = 0.01, max = 0.2, value = 0.05, step = 0.01)
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Convert mean and variance to shape parameters
+  beta_params <- reactive({
+    mean_val <- input$mean
+    var_val <- input$variance
+    
+    # For a beta distribution: mean = α/(α+β), var = αβ/((α+β)²(α+β+1))
+    # Solving for α and β given mean and variance:
+    # α = mean * ((mean * (1 - mean)) / variance - 1)
+    # β = (1 - mean) * ((mean * (1 - mean)) / variance - 1)
+    
+    # Ensure variance doesn't exceed theoretical maximum
+    max_var <- mean_val * (1 - mean_val) / 1.01  # Small buffer
+    if (var_val >= max_var) {
+      var_val <- max_var
+    }
+    
+    common_term <- (mean_val * (1 - mean_val)) / var_val - 1
+    alpha <- mean_val * common_term
+    beta <- (1 - mean_val) * common_term
+    
+    # Ensure positive parameters
+    alpha <- max(alpha, 0.01)
+    beta <- max(beta, 0.01)
+    
+    return(list(alpha = alpha, beta = beta))
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    params <- beta_params()
+    title <- sprintf("Beta(α = %.2f, β = %.2f)", params$alpha, params$beta)
+    subtitle <- sprintf("Mean = %.2f, Variance = %.4f", input$mean, input$variance)
+    div(
+      tags$h4(title, style = "text-align: center; margin-bottom: 5px;"),
+      tags$p(subtitle, style = "text-align: center; color: gray; margin-bottom: 15px;")
+    )
+  })
+  
+  # Generate the beta distribution plot
+  output$distPlot <- renderPlot({
+    # Get shape parameters
+    params <- beta_params()
+    shape1 <- params$alpha
+    shape2 <- params$beta
+    
+    # Create data frame for plotting with fixed x range
+    x_values <- seq(0, 1, length.out = 500)
+    density_values <- dbeta(x_values, shape1 = shape1, shape2 = shape2)
+    plot_df <- data.frame(x = x_values, density = density_values)
+    
+    # Create plot with fixed axes
+    p <- ggplot(plot_df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "#3F6BB6") +
+      geom_area(aes(x = x, y = density), fill = "#3F6BB6", alpha = 0.3) +
+      labs(x = "X", y = "Probability Density") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      xlim(0, 1) +
+      ylim(0, 10) +  # Fixed y-axis range
+      # Add reference line at mean
+      geom_vline(xintercept = input$mean, linetype = "dashed", color = "#DB4315", alpha = 0.7) +
+      annotate("text", x = input$mean + 0.08, y = 8.5, label = "Mean", color = "#DB4315", size = 4)
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+:::
+
+::: {.content-hidden when-format="html"}
+The figures below explore the normal distribution (for more, see [Overview: Probability distributions](../overviews/o-distributions.qmd)) by changing the mean $\mu$ and the variance $\sigma^2$. 
+
+First of all, here is a figure of the normal distribution with mean $\mu = 0$ and variance $\sigma^2 = 1$:
+
+![The normal distribution with mean $\mu = 0$ and variance $\sigma^2 = 1$.](./FiguresPNG/expectedvariance-fig1.png){width="50%"}
+
+
+Next, here is a figure of the normal distribution with mean $\mu = -2$ and variance $\sigma^2 = 1$. You can see that changing the mean changes the centre of the curve. 
+
+![The normal distribution with mean $\mu = -2$ and variance $\sigma^2 = 1$.](./FiguresPNG/expectedvariance-fig2.png){width="50%"}
+
+Thirdly, here is a figure of the normal distribution with mean $\mu = -2$ and variance $\sigma^2 = 0.5$. You can see that decreasing the variance makes the curve far more narrow - as the data are more clustered toward the mean with a smaller variance.
+
+![The normal distribution with mean $\mu = -2$ and variance $\sigma^2 = 0.5$.](./FiguresPNG/expectedvariance-fig3.png){width="50%"}
+
+Finally, here is a figure of the normal distribution with mean $\mu = -2$ and variance $\sigma^2 = 4$. You can see that increasing the variance leads to the curve being more spread out around the mean. 
+
+![The normal distribution with mean $\mu = -2$ and variance $\sigma^2 = 4$.](./FiguresPNG/expectedvariance-fig4.png){width="50%"}
+
+You can see dynamic versions of these figures on the html version of this guide.
+
+:::
+
+# Quick check problems
+
+:::: {.content-visible when-format="html"}
+
+::: {.webex-check .webex-box data-topic="EVVSD1"}
+
+1.  Are the following statements true or false?
+
+<!-- -->
+
+<!-- (a) The sample mean ($\bar{x}$) is always equal to the population mean $\mu$: `r torf(FALSE)` -->
+
+(a) The variance is a measure of how data is dispersed around the expected value: `r torf(TRUE)`
+
+(b) The standard deviation is the square of the variance: `r torf(FALSE)`
+
+(c) The expected value is the 'central point' of the distribution: `r torf(TRUE)`
+
+<!-- -->
+
+2.  Find the expected value and variance for rolling a fair 4-sided die. You should give your answers as decimal numbers.
+
+The expected value is $\mathbb{E}(X) =$ `r fitb(2.5)` and the variance is $\mathbb{V}(X) =$ `r fitb(1.25)`.
+
+3.  Using the results from Examples 1 and 4 and the properties of expected values and variance, find the expected value and variance for rolling three fair 6-sided dice. You can assume that the events are independent of each other. You should give your answers as decimal numbers.
+
+The expected value is $\mu =$ `r fitb(10.5)` and the variance is $\sigma^2 =$ `r fitb(9.25)`.
+:::
+::::
+
+::: {.content-hidden when-format="html"}
+1.  Are the following statements true or false?
+
+<!-- -->
+
+(a) The variance is a measure of how data is dispersed around the expected value:.
+
+(b) The standard deviation is the square of the variance.
+
+(c) The expected value is the 'central point' of the distribution.
+
+<!-- -->
+
+2.  Find the expected value and variance for rolling a fair 4-sided die.
+
+3.  Using the results from Examples 1 and 4 and the properties of expected values and variance, find the expected value and variance for rolling three fair 6-sided dice. You can assume that the events are independent of each other.
+:::
+
+# Further reading {.unnumbered}
+
+[For more questions on the subject, please go to Questions: Expected value, variance, standard deviation.](../questions/qs-expectedvariance.qmd)
+
+[For more on why some PMFs and PDFs are valid, please go to Proof sheet: PMFs, PDFs, CDFs.](../proofsheets/ps-pmfspdfscdfs.qmd)
+
+For more on probability distributions see [Overview: Probability distributions.](../overviews/o-distributions.qmd)
+
+## Version history and licensing {.unnumbered}
+
+v1.0: initial version created 08/25 by tdhc.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

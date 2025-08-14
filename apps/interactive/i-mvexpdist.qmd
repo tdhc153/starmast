@@ -1,0 +1,95 @@
+---
+title: "Interactive: Mean and variance of exponential distribution"
+author: Tom Coleman
+abstract-title: Summary
+abstract: Interactive diagram for seeing how the mean and variance affect the shape of the exponential distribution.
+format: html
+filters:
+  - shinylive
+---
+
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 770
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Exponential distribution visualizer",
+  
+  # Plot at the top
+  card(
+    card_header("Exponential distribution plot"),
+    card_body(
+      plotOutput("distPlot", height = "500px")
+    )
+  ),
+  
+  # Parameters below
+  card(
+    card_header("Distribution parameters"),
+    card_body(
+      sliderInput("rate", "Rate parameter (λ):", 
+                 min = 0.1, max = 3, value = 1, step = 0.1)
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Generate the exponential distribution plot
+  output$distPlot <- renderPlot({
+    # Fixed range for x-axis to show consistent scale
+    x_min <- 0
+    x_max <- 10
+    
+    # Create data frame for plotting
+    x <- seq(x_min, x_max, length.out = 500)
+    y <- dexp(x, rate = input$rate)
+    df <- data.frame(x = x, y = y)
+    
+    # Calculate mean and variance for display
+    mean_val <- 1 / input$rate
+    variance_val <- 1 / (input$rate^2)
+    
+    # Create plot with fixed axes
+    p <- ggplot(df, aes(x = x, y = y)) +
+      geom_line(color = "#3F6BB6", size = 1.2) +
+      labs(x = "X", y = "Density",
+           title = sprintf("Exponential distribution: Exp(λ = %.1f)\nMean = %.2f, Variance = %.2f", 
+                          input$rate, mean_val, variance_val)) +
+      theme_minimal() +
+      theme(
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(hjust = 0.5, size = 16),
+        axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12)
+      ) +
+      # Fixed axis limits
+      xlim(x_min, x_max) +
+      ylim(0, 3) +
+      # Add reference line at mean
+      geom_vline(xintercept = mean_val, linetype = "dashed", color = "#DB4315", alpha = 0.7) +
+      annotate("text", x = mean_val + 0.5, y = 2.5, label = "Mean", color = "#DB4315", size = 4)
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+# Further reading {-}
+
+[This interactive element appears in Guide: Expected value, variance, standard deviation. Please click this link to go to the guide.](../../studyguides/expectedvariance.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 08/24 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+

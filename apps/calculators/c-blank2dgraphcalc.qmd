@@ -1,0 +1,31 @@
+---
+title: "Calculator: 2D graphical calculator"
+author: Tom Coleman
+format: html
+abstract-title: Summary
+abstract: A blank 2D graphical calculator for general use.
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+<div id="calculator2" style="width: 100%; height: 500px;"></div>
+
+<script>
+  var elt = document.getElementById('calculator2');
+  var calculator2 = Desmos.GraphingCalculator(elt);
+  calculator2.setMathBounds({ left: -20, right: 20, bottom: -20, top: 20});
+  calculator2.setExpression({ id: "n0", type: "text", text: 'This is a blank 2D graphical calculator for you to enter anything you want! Click the X to delete this message, and click on the expression below to edit.'});
+  calculator2.setExpression({id: 'surface', latex: 'y = x^2 + 1', color: '#3F68B6'});
+</script>
+
+## Version history {-}
+
+v1.0: initial version created 08/25 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

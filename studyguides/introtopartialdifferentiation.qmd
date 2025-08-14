@@ -2,26 +2,35 @@
 title: Introduction to partial differentiation
 author: Donald Campbell
 abstract-title: Summary
-abstract: Partial differentiation is a key technique used in calculus for dealing with functions of multiple variables. It focuses on how a function changes with respect to one variable while keeping others constant. It is widely used in physics, economics, and engineering to analyse systems involving multiple changing factors, such as in heat flow or optimisation.
+abstract: Partial differentiation is a key technique used in calculus for dealing with functions of multiple variables. It focuses on how a function changes with respect to one variable while keeping others constant. It is widely used in physics, economics, and engineering to analyse systems involving multiple changing factors, such as in heat flow or optimization.
 categories: 
   - Calculus
-image: FiguresPNG/introtodifferentiation-image.png
-draft: true
+image: FiguresPNG/introtopartialdifferentiation-image.png
 ---
 
 ```{r, setup, include = FALSE}
 library("webexercises")
 ```
 
-*Before reading this guide, it is recommended that you read [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd), \[Guide: The chain rule\], \[Guide: The product rule\], \[Guide: The quotient rule\] and \[Guide: Continuous and differentiable functions\].*
+*Before reading this guide, it is recommended that you read [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd), [Guide: The chain rule](chainrule.qmd), [Guide: The product rule](productrule.qmd), and [Guide: The quotient rule](quotientrule.qmd).*
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/introtopartialdifferentiation.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
 
 # What is partial differentiation? {.unnumbered}
 
 As explained in [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd), a derivative measures how a function changes as its input changes. For example, if you have a function $f(x)$, the derivative $f'(x)$ describes the rate at which $f$ changes with respect to $x$. $$f'(x)=\lim_{h \to 0} \left( \dfrac{f(x+h)-f(x)}{h} \right)$$
 
-However, in many real-world examples, functions depend on more than one variable. For example, weather prediction involves functions that depend on pressure, humidity and time. In economics, profit might depend on both price and production level. The process of partial differentiation is essential when you want to understand the influence of each variable separately.
+However, in many real-world examples, functions depend on more than one variable. For example, weather prediction involves functions that depend on pressure, humidity and time. In economics, profit might depend on both price and production level. The process of **partial differentiation** is essential if you want to understand the influence of each variable separately.
 
-Consider a function $f(x,y)$ that depends on two variables $x$ and $y$. Partial differentiation allows you to study the change in $f$ by considering the change in one variable at a time. If you choose to study the change in $f$ by considering the change in $x$, you need to hold $y$ fixed. In this case, $y$ is treated as a constant as it doesn't change during this process.
+For a function $f(x,y)$ that depends on two variables $x$ and $y$, partial differentiation allows you to study the change in $f$ by considering the change in one variable at a time. If you choose to study the change in $f$ by considering the change in $x$, you need to hold $y$ fixed. In this case, $y$ is treated as a constant as it doesn't change during this process.
+
+This guide explains the idea of partial differentiation and how it is different from standard single-variable differentiation. It will explain how to find partial derivatives, the concept of second-order partial derivatives, and how to partially differentiate a function with any finite number of variables. 
 
 # Definition of the partial derivative {.unnumbered}
 
@@ -71,7 +80,7 @@ The 3D graph illustrates the surface with a vertical plane sliding through it at
 </script>
 :::::
 
-::: {.content-visible when-format="pdf" when-format="docx"}
+::: {.content-hidden when-format="html"}
 The 3D graph illustrates the surface with a vertical plane slicing through it at a chosen value of $y=1$. The points where the plane intersects the surface form a curve which is shown in yellow on the 3D graph. This curve is also shown separately on the $xz$-plane in the 2D graph.
 
 ![Plot of the surface $z=f(x,y)$ (blue), the vertical $y=1$ plane, and the curve $z=f(x,1)=f(x)$ (yellow) at the intersection points of the surface and plane.](FiguresPNG/introtopartialdifferentiation-fig1-1.png){fig-align="center"}
@@ -98,42 +107,53 @@ As seen in [Guide: Introduction to differentiation and the derivative](introtodi
 ::: callout-note
 ## Definition of the partial derivative
 
-For a function $f(x,y)$, the **partial derivative with respect to** $x$ is denoted by $$\dfrac{\partial f}{\partial x} \quad \textsf{or} \quad f_x$$
+For a function $f(x,y)$, the **partial derivative with respect to** $x$ is written as $$\dfrac{\partial f}{\partial x}$$
 
 It is defined by the limit $$\dfrac{\partial f}{\partial x} = \lim_{h \to 0} \left( \dfrac{f(x+h,y)-f(x,y)}{h} \right)$$
 
-This definition is similar to that of single-variable differentiation, with the key difference that $y$ is treated as a constant during the process.
+This definition is similar to that of single-variable differentiation, with the key difference that **$y$ is treated as a constant during the process**.
 
 Similarly, the **partial derivative with respect to** $y$ is defined by the limit $$\dfrac{\partial f}{\partial y} = \lim_{h \to 0} \left( \dfrac{f(x,y+h)-f(x,y)}{h} \right)$$
 
-When differentiating with respect to one variable, all other variables are held fixed (they do not change).
+When differentiating with respect to some variable, **all other variables are held fixed (they do not change) and they should be treated as you would normally treat constants**.
+
+You may sometimes see the notation $f_{x}$ to mean the partial derivative of $f$ with respect to $x$.
 :::
 
 ::: callout-important
-Partial derivatives are written using a curly $\partial$ as opposed to a straight $\mathrm{d}$ as in single-variable differentiation.
+Partial derivatives are **always** written using a curly $\partial$ as opposed to a straight $\mathrm{d}$ as in single-variable differentiation.
 
 An important distinction is that if a function depends only on $x$, then $\dfrac{\partial f}{\partial x} = \dfrac{\mathrm{d}f}{\mathrm{d}x}$ as there is no other variable to hold fixed.
 :::
 
-# Computing partial derivatives {.unnumbered}
+# Finding partial derivatives {.unnumbered}
 
-To compute a partial derivative, start by identifying the variable you want to differentiate with respect to. For example, if you want to find the partial derivative of $f$ with respect to $x$, treat $x$ as the variable to differentiate with respect to and hold all other variables constant.
+To finding a partial derivative, start by identifying the variable you want to differentiate with respect to. For example, if you want to find the partial derivative of $f$ with respect to $x$, treat $x$ as the variable to differentiate with respect to.
 
-If required, apply any rules of differentiation such as the power rule, chain rule, product rule or quotient rule. These rules from single-variable differentiation still apply to partial differentiation, but they must be applied with respect to the chosen variable only and you must treat all other variables as constants. This can involve a lot of lengthy working, so take your time, especially when combining multiple rules.
+The golden rule of partial differentiation is as follows:
 
-For a reminder on how to apply these techniques, please see [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd), \[Guide: The chain rule\], \[Guide: The product rule\], and \[Guide: The quotient rule\].
+::: callout-important
+
+## Golden rule of partial differentiation
+
+When differentiating with respect to some variable, **treat all other variables as constants**.
+
+:::
+
+If required, apply any rules of differentiation such as the sum/difference rule chain rule, product rule or quotient rule. These rules from single-variable differentiation still apply to partial differentiation, but they must be applied with respect to the chosen variable only and (again) you must treat all other variables as constants. This can involve a lot of lengthy working, so take your time, especially when combining multiple rules.
+
+For a reminder on how to apply these techniques, please see [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd), [Guide: The chain rule](chainrule.qmd), [Guide: The product rule](productrule.qmd), and [Guide: The quotient rule](quotientrule.qmd).
 
 ::: {.callout-note appearance="simple"}
 ## Example 1
 
 Consider the function $f(x,y) = x^2 + y^2$.
 
-To find the partial derivative with respect to $x$, first differentiate $x^2$ with respect to $x$ using the power rule to get $2x$. Importantly, the term $y^2$ is a constant with respect to $x$ so its partial derivative with respect to $x$ is $0$. $$
+To find the partial derivative with respect to $x$, first differentiate $x^2$ with respect to $x$ using the power rule to get $2x$. Importantly, the term $y^2$ is a constant with respect to $x$ so its partial derivative with respect to $x$ is $0$. So: $$
 \begin{aligned}
 \dfrac{\partial f}{\partial x} &= \dfrac{\partial}{\partial x}(x^2+y^2) \\[0.5em]
 &= \dfrac{\partial}{\partial x}(x^2) + \dfrac{\partial}{\partial x}(y^2) \\[0.5em]
-&= 2x + 0 \\[0.5em]
-&= 2x
+&= 2x + 0 = 2x
 \end{aligned}
 $$
 
@@ -141,8 +161,7 @@ To find the partial derivative with respect to $y$, first differentiate $y^2$ wi
 \begin{aligned}
 \dfrac{\partial f}{\partial y} &= \dfrac{\partial}{\partial y}(x^2+y^2) \\[0.5em]
 &= \dfrac{\partial}{\partial y}(x^2) + \dfrac{\partial}{\partial y}(y^2) \\[0.5em]
-&= 0 + 2y \\[0.5em]
-&= 2y
+&= 0 + 2y = 2y
 \end{aligned}
 $$
 :::
@@ -157,8 +176,7 @@ To find the partial derivative with respect to $x$, first differentiate $3x^2y$ 
 \dfrac{\partial f}{\partial x} &= \dfrac{\partial}{\partial x}(3x^{2}y + 4xy^{3}) \\[0.5em]
 &= \dfrac{\partial}{\partial x}(3x^2y) + \dfrac{\partial}{\partial x}(4xy^3) \\[0.5em]
 &= 3y\dfrac{\partial}{\partial x}(x^2) + 4y^3\dfrac{\partial}{\partial x}(x) \\[0.5em]
-&= 3y \cdot 2x + 4y^3 \cdot1 \\[0.5em]
-&= 6xy + 4y^3
+&= 3y \cdot 2x + 4y^3 \cdot1 = 6xy + 4y^3
 \end{aligned}
 $$
 
@@ -167,8 +185,7 @@ To find the partial derivative with respect to $y$, first differentiate $3x^2y$ 
 \dfrac{\partial f}{\partial y} &= \dfrac{\partial}{\partial y}(3x^{2}y + 4xy^{3}) \\[0.5em]
 &= \dfrac{\partial}{\partial y}(3x^2y) + \dfrac{\partial}{\partial y}(4xy^3) \\[0.5em]
 &= 3x^2\dfrac{\partial}{\partial y}(y) + 4x\dfrac{\partial}{\partial y}(y^3) \\[0.5em]
-&= 3x^2 \cdot 1 + 4x \cdot 3y^2 \\[0.5em]
-&= 3x^2 + 12xy^2
+&= 3x^2 \cdot 1 + 4x \cdot 3y^2 = 3x^2 + 12xy^2
 \end{aligned}
 $$
 :::
@@ -189,24 +206,22 @@ $$
 
 Now find the partial derivative with respect to $y$. Notice that $f(x,y)$ is a product of the two functions $x^2$ and $(3x+y^2)^3$ however only the second function is a function of $y$. Therefore, this doesn't require the product rule to differentiate as $x^2$ is treated as a constant. The second function still requires you to use the chain rule. $$
 \begin{aligned}
-\dfrac{\partial f}{\partial y} &= \dfrac{\partial}{\partial y} [ x^2 (3x+y^2)^3 ] \\[0.5em]
-&= x^2 \dfrac{\partial}{\partial y} [ (3x+y^2)^3 ] \\[0.5em]
-&= x^2 \cdot 6y(3x+y^2)^2 \\[0.5em]
-&= 6x^2y(3x+y^2)^2
+\dfrac{\partial f}{\partial y} &= \dfrac{\partial}{\partial y} [ x^2 (3x+y^2)^3 ] = x^2 \dfrac{\partial}{\partial y} [ (3x+y^2)^3 ] \\[0.5em]
+&= x^2 \cdot 6y(3x+y^2)^2 = 6x^2y(3x+y^2)^2
 \end{aligned}
 $$
 :::
 
 # Higher-order partial derivatives {.unnumbered}
 
-As with single-variable functions, you can take partial derivatives of partial derivatives to get **second-order partial derivatives**. For a function of two variables, there are four second-order partial derivatives.
+As with single-variable functions, you can take partial derivatives of partial derivatives to get **second-order partial derivatives**. For a function of two variables $f(x,y)$, there are **four** second-order partial derivatives, one for each combination of variables.
 
 ::: callout-note
 ## Second-order partial derivatives
 
-Second-order partial derivatives are the partial derivatives of first-order partial derivatives.
+Much like in differentiation in a single variable, second-order partial derivatives are the partial derivatives of first-order partial derivatives.
 
-For a function $f$ of two variables $x$ and $y$, the pure second-order partial derivatives are defined as: $$
+For a function $f$ of two variables $x$ and $y$, the **pure second-order partial derivatives** are defined as: $$
 \begin{aligned}
 f_{xx} &= \dfrac{\partial^2 f}{\partial x^2} = \dfrac{\partial}{\partial x} \left( \dfrac{\partial f}{\partial x} \right) \\[0.5em]
 f_{yy} &= \dfrac{\partial^2 f}{\partial y^2} = \dfrac{\partial}{\partial y} \left( \dfrac{\partial f}{\partial y} \right)
@@ -215,7 +230,7 @@ $$
 
 To compute a pure second-order partial derivative, you need to differentiate a first-order partial derivative with respect to the same variable again.
 
-For a function $f$ of two variables $x$ and $y$, the mixed second-order partial derivatives are defined as: $$
+For a function $f$ of two variables $x$ and $y$, the **mixed second-order partial derivatives** are defined as: $$
 \begin{aligned}
 f_{xy} &= \dfrac{\partial^2 f}{\partial y \partial x} = \dfrac{\partial}{\partial y} \left( \dfrac{\partial f}{\partial x} \right) \\[0.5em]
 f_{yx} &= \dfrac{\partial^2 f}{\partial x \partial y} = \dfrac{\partial}{\partial x} \left( \dfrac{\partial f}{\partial y} \right)
@@ -232,12 +247,12 @@ The order in which the subscript variables are written above is not a typo! For 
 Under certain conditions, the mixed second-order partial derivatives are equal. This is called *Schwarz's Theorem*.
 
 ::: callout-note
-## Schwarz's Theorem
+## Schwarz's theorem
 
 If $\dfrac{\partial f}{\partial x}$ and $\dfrac{\partial f}{\partial y}$ are continuous and differentiable, then $$\dfrac{\partial^2 f}{\partial x \partial y} = \dfrac{\partial^2 f}{\partial y \partial x}$$
 :::
 
-Please see \[Guide: Continuous and differentiable functions\] for a detailed analysis of what makes a function continuous and differentiable.
+Please see [Guide: Introduction to continuity] and [Guide: Introduction to differentiability] for more detailed analyses of what makes functions continuous and differentiable.
 
 ::: {.callout-note appearance="simple"}
 ## Example 4
@@ -260,7 +275,7 @@ The second-order partial derivatives can be calculated from the first-order part
 \end{aligned}
 $$
 
-Notice that *Schwarz's Theorem* holds as the first-order partial derivatives are continuous and differentiable and $$\dfrac{\partial^2 f}{\partial x \partial y} = \dfrac{\partial^2 f}{\partial y \partial x}$$
+Notice that *Schwarz's Theorem* holds as the first-order partial derivatives are continuous and differentiable and $$\dfrac{\partial^2 f}{\partial x \partial y} = \dfrac{\partial^2 f}{\partial y \partial x}.$$
 :::
 
 # Functions of more than two variables {.unnumbered}
@@ -305,7 +320,7 @@ You can also calculate various higher order partial derivatives for each variabl
 
 # Quick check problems {.unnumbered}
 
-:::: {.content-visible when-format="html"}
+:::: {.content-visible when-format="html" data-topic="IPD1"}
 ::: {.webex-check .webex-box}
 1.  Consider the function $f(x,y) = x^3y^2 + y^2 + x$. Determine whether the following statements are true or false.
 
@@ -317,7 +332,7 @@ You can also calculate various higher order partial derivatives for each variabl
 
 <!-- -->
 
-2.  Let $f(x, y) = x^4y^2 + 3\ln(x)$. Which of the following best describes $\dfrac{\partial f}{\partial y}$? `r mcq(c("Is constant", "Contains no $x$ terms",  "Contains $x$ but not $y$", answer = "Contains both $x$ and $y$"))`
+2.  Let $f(x, y) = x^4y^2 + 3\ln(x)$. Which of the following best describes $\dfrac{\partial f}{\partial y}$? `r mcq(c("(a) Is constant", "(b) Contains no $x$ terms",  "(c) Contains $x$ but not $y$", answer = "(d) Contains both $x$ and $y$"))`
 
 <!-- -->
 
@@ -325,7 +340,7 @@ You can also calculate various higher order partial derivatives for each variabl
 
 <!-- -->
 
-4.  Consider the function $f(x,y) = (x+y^3)^4\sin(x)$. Which rule(s) do you need to compute $\dfrac{\partial f}{\partial x}$? `r mcq(c("Power rule only", "Chain rule only",  "Product rule only",  answer = "Chain rule and product rule"))`
+4.  Consider the function $f(x,y) = (x+y^3)^4\sin(x)$. Which rule(s) do you need to compute $\dfrac{\partial f}{\partial x}$? `r mcq(c("(a) Power rule only", "(b) Chain rule only",  "(c) Product rule only",  answer = "(d) Chain rule and product rule"))`
 
 <!-- -->
 
@@ -338,25 +353,25 @@ You can also calculate various higher order partial derivatives for each variabl
 
 <!-- -->
 
-(a) The partial derivative with respect to $x$ is given by $\frac{\partial f}{\partial x} = 3x^2y^2 + y^2 + 1$.
+(a) The partial derivative with respect to $x$ is given by $\dfrac{\partial f}{\partial x} = 3x^2y^2 + y^2 + 1$.
 
-(b) The partial derivative with respect to $y$ is given by $\frac{\partial f}{\partial y} = 2x^3y^2 + 2y$.
-
-<!-- -->
-
-2.  Let $f(x, y) = x^4y^2 + 3\ln(x)$. Which of the following best describes $\frac{\partial f}{\partial y}$? $$\textsf{Is constant} \quad \textsf{Contains no } x \textsf{ terms} \quad \textsf{Contains } x \textsf{ but not } y \quad \textsf{Contains both } x \textsf{ and } y$$
+(b) The partial derivative with respect to $y$ is given by $\dfrac{\partial f}{\partial y} = 2x^3y^2 + 2y$.
 
 <!-- -->
 
-3.  Suppose $f(x,y) = 5x^2y + 7y$. The mixed partial derivative $\frac{\partial^2 f}{\partial y \partial x}$ is given by: $$5 \qquad 0 \qquad 10x \qquad 7y$$
+2.  Let $f(x, y) = x^4y^2 + 3\ln(x)$. Which of the following best describes $\dfrac{\partial f}{\partial y}$? $$\textsf{(a) Is constant} \quad \textsf{(b) Contains no } x \textsf{ terms} \quad \textsf{(c) Contains } x \textsf{ but not } y \quad \textsf{(d) Contains both } x \textsf{ and } y$$
 
 <!-- -->
 
-4.  Consider the function $f(x,y) = (x + y^3)^4 \sin(x)$. Which rule(s) do you need to compute $\frac{\partial f}{\partial x}$? $$\textsf{Power rule only} \quad \textsf{Chain rule only} \quad \textsf{Product rule only} \quad \textsf{Chain rule and product rule}$$
+3.  Suppose $f(x,y) = 5x^2y + 7y$. Find the mixed partial derivative $\dfrac{\partial^2 f}{\partial y \partial x}$.
 
 <!-- -->
 
-5.  If $f(x, y, z, t) = y \sin(z + t) + e^{2x}$, find $\frac{\partial f}{\partial t}$.
+4.  Consider the function $f(x,y) = (x + y^3)^4 \sin(x)$. Which rule(s) do you need to compute $\dfrac{\partial f}{\partial x}$? $$\textsf{(a) Power rule only} \quad \textsf{(b) Chain rule only} \quad \textsf{(c) Product rule only} \quad \textsf{(d) Chain rule and product rule}$$
+
+<!-- -->
+
+5.  If $f(x, y, z, t) = y \sin(z + t) + e^{2x}$, find $\dfrac{\partial f}{\partial t}$.
 :::
 
 # Further reading {.unnumbered}

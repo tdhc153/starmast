@@ -1,9 +1,12 @@
 ---
-title: "Overview: Probability Distributions"
+title: "Overview: Probability distributions"
 author: Michelle Arnetta
 abstract-title: Summary
 abstract: An overview of different types of distributions for both continuous random variables and discrete random variables.
-draft: true
+filters: 
+  - shinylive
+embed-resources: false
+format: html
 ---
 
 ```{r, setup, include = FALSE}
@@ -12,331 +15,2223 @@ library("webexercises")
 
 # How to use
 
-This overview will contain the following content on each distribution:
+This overview of probability distributions, will (where available) contain the following content on each distribution:
 
 -   Where to use
 
 -   Notation
 
--   Parameter(s)
+-   Parameter(s) for use
 
--   Mean and Expected Value (mean = expected value, and the expected value of $X$ will be represented as $E(X)$)
+-   Mean/expected value. In all cases, the mean equals the expected value, and the expected value of $X$ will be represented as $\mathbb{E}(X)$. See [Guide: Expected values, variance, standard deviation](../studyguides/expectedvariance.qmd) for more.
 
--   Variance (the variance of $X$ will be represented as $\textrm{Var}(X)$)
+-   Variance, which is represented as $\mathbb{V}(X)$. See [Guide: Expected values, variance, standard deviation](../studyguides/expectedvariance.qmd) for more.
 
--   Probability Mass Function (PMF) for discrete random variables, or Probability Density Function (PDF) for continuous random variables
+-   Probability mass function (PMF) for discrete random variables, or the probability density function (PDF) for continuous random variables. See [Guide: PMFs, PDFs, CDFs](../studyguides/pmfspdfscdfs.qmd) for more.
 
--   Cumulative Distribution Function (CDF), where possible
+-   Cumulative distribution function (CDF), where possible. See [Guide: PMFs, PDFs, CDFs](../studyguides/pmfspdfscdfs.qmd) for more.
 
--   Interactive Figure, where possible
+-   Interactive figure, where possible.
 
--   Example(s)
+-   Example of usage.
 
-Although it is not an exhaustive list, this overview can be treated as an introduction to commonly used types of distributions.
+Although this overview is not an exhaustive list of all possible probability distributions, this overview can be treated as an introduction to commonly used types of distributions.
 
-# Discrete Random Variables
+# Discrete random variables
 
-## Uniform Distribution (Discrete) {.unnumbered}
+## Uniform distribution (discrete) {.unnumbered}
 
-**Where to use:** The discrete uniform distribution is used when all discrete values in the interval $a$ to $b$ are equally likely.
+**Where to use:** The discrete uniform distribution is used when all integer outcomes $x$ in the interval $a$ to $b$ are equally likely. $X$ is a random variable for integer outcomes $x$ where for $a \leq x \leq b$, and the probability of each outcome $1/n$, where $n = b - a + 1$.
 
 **Notation:** $X \sim \textrm{Uniform}(a,b)$ or $X \sim U(a,b)$
 
-**Parameters:**
+**Parameters:** The numbers $a,b$ are integers where
 
--   $a$ = minimum value
--   $b$ = maximum value where all values of $X$ for $a \leq x \leq b$ are equally likely
+-   $a$ is the minimum value of an outcome
+-   $b$ is the maximum value of an outcome
 
-**Mean and Expected Value:** $E(X) = \frac{a+b}{2}$
+There are $n$ outcomes in total, with $n = b - a + 1$.
 
-**Variance:** $\textrm{Var}(X) = \frac{(b-a+1)^2-1}{12}$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = \dfrac{a+b}{2}.$ |  |
+| **Variance** | $\mathbb{V}(X) = \dfrac{n^2-1}{12}.$ |  |
+| **PMF** | $\mathbb{P}(X=x)=\frac{1}{n}$ |  |
+| **CDF** | $\mathbb{P}(X\leq x)= \begin{cases} 0 & \textsf{if } x \leq a \\\dfrac{\lfloor x \rfloor - a + 1}{n} & \textsf{if } a< x<b \\1 & \textsf{if } x \geq b \end{cases}$ | $\lfloor x \rfloor$ is the **floor function** |
 
-**PMF:** $P(X=x)=\frac{1}{n}$ where $n=b-a+1$
+<!-- **Mean/expected value:** $\mathbb{E}(X) = \dfrac{a+b}{2}.$ -->
 
-**CDF:** $P(X\leq x)= \begin{cases} 0 & \textsf{if } x \leq a \\\frac{\lfloor x \rfloor - a + 1}{n} & \textsf{if } a< x<b \\1 & \textsf{if } x \geq b \end{cases}$
+<!-- **Variance:** $\mathbb{V}(X) = \dfrac{(b-a+1)^2-1}{12}.$ -->
 
-where $n=b-a+1$ and $\lfloor x \rfloor$ is $x$ rounded down to the nearest integer
+<!-- **PMF:** $\mathbb{P}(X=x)=\frac{1}{n}$ where $n=b-a+1$. -->
+
+<!-- **CDF:** $\mathbb{P}(X\leq x)= \begin{cases} 0 & \textsf{if } x \leq a \\\dfrac{\lfloor x \rfloor - a + 1}{n} & \textsf{if } a< x<b \\1 & \textsf{if } x \geq b \end{cases}$  -->
+
+<!-- where $n=b-a+1$ and $\lfloor x \rfloor$ is the **floor function** applied to $x$, equal to the largest integer $z$ such that $z\leq x$. -->
+
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 750
 
-**Example:** You roll a fair six-sided die, where all outcomes (1, 2, 3, 4, 5, and 6) are equally likely. This can be expressed as $X \sim U(1,6)$. It means 1 is the minimum value and 6 is the maximum value, where all discrete values of $X$ for $1 \leq x \leq 6$ are equally likely.
+library(shiny)
+library(bslib)
+library(ggplot2)
 
-## Bernoulli Distribution {.unnumbered}
+ui <- page_fluid(
+  title = "Discrete Uniform distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("a", "Minimum value (a):", value = 1, step = 1),
+        numericInput("b", "Maximum value (b):", value = 10, step = 1),
+        hr(),
+        radioButtons("prob_type", "Probability to Calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
+          sliderInput("x_value", "x value:", min = 1, max = 10, value = 5, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 1, max = 10, value = 3, step = 1),
+          sliderInput("x_upper", "Upper bound (y):", min = 1, max = 10, value = 7, step = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Discrete Uniform distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Ensure b is always greater than or equal to a
+  observe({
+    if (input$b < input$a) {
+      updateNumericInput(session, "b", value = input$a)
+    }
+  })
+  
+  # Update the range of the sliders when a or b changes
+  observe({
+    updateSliderInput(session, "x_value", min = input$a, max = input$b, value = min(max(input$a, 5), input$b))
+    updateSliderInput(session, "x_lower", min = input$a, max = input$b, value = min(max(input$a, 3), input$b))
+    updateSliderInput(session, "x_upper", min = input$a, max = input$b, value = min(max(input$a, 7), input$b))
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("DUnif(a = %d, b = %d)", input$a, input$b)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Discrete uniform probability mass function
+  ddunif <- function(x, min, max) {
+    ifelse(x >= min & x <= max & x == round(x), 1/(max - min + 1), 0)
+  }
+  
+  # Discrete uniform cumulative distribution function
+  pdunif <- function(q, min, max) {
+    ifelse(q < min, 0, 
+           ifelse(q >= max, 1, 
+                  (floor(q) - min + 1) / (max - min + 1)))
+  }
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pdunif(input$x_value, input$a, input$b)
+      explanation <- sprintf("P(X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
+      
+    } else if (input$prob_type == "greater") {
+      # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1)
+      if (input$x_value <= input$a) {
+        prob <- 1  # P(X ≥ a) is always 1 for discrete uniform
+      } else {
+        prob <- 1 - pdunif(input$x_value - 1, input$a, input$b)
+      }
+      explanation <- sprintf("P(X ≥ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # Exact probability for a single value
+        prob <- ddunif(input$x_lower, input$a, input$b)
+      } else {
+        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
+        upper_prob <- pdunif(input$x_upper, input$a, input$b)
+        if (input$x_lower <= input$a) {
+          lower_prob <- 0
+        } else {
+          lower_prob <- pdunif(input$x_lower - 1, input$a, input$b)
+        }
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the discrete uniform distribution plot
+  output$distPlot <- renderPlot({
+    # Create data frame for plotting
+    x_values <- input$a:input$b
+    prob_mass <- rep(1/(input$b - input$a + 1), length(x_values))
+    df <- data.frame(x = x_values, probability = prob_mass)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = probability)) +
+      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
+      labs(x = "X", y = "probability mass function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      scale_x_continuous(breaks = x_values) +
+      ylim(0, max(prob_mass) * 1.1)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      highlight_x <- input$a:res$x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "greater") {
+      highlight_x <- res$x:input$b
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "between") {
+      highlight_x <- res$lower:res$upper
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** You roll a fair six-sided die, where all outcomes ($1, 2, 3, 4, 5,$ and $6$) are equally likely. This can be expressed as $X \sim U(1,6)$. It means $1$ is the minimum value and $6$ is the maximum value, where all discrete values of $X$ for $1 \leq x \leq 6$ are equally likely.
+
+## Bernoulli distribution {.unnumbered}
 
 **Where to use:** The Bernoulli distribution is used for binary data, where one trial is conducted with only two possible outcomes. Examples include success/failure, yes/no, and heads/tails. $X$ indicates whether the trial is a success (when $X=1$) or failure (when $X=0$).
 
 **Notation:** $X \sim \textrm{Bernoulli}(p)$
 
-**Parameter:** $p$ = probability of success (where $0 \le p \le 1$)
+**Parameter:** The real number $p$ is the probability of success in a trial (where $0 \le p \le 1$).
 
-**Mean and Expected Value:** $E(X) = p$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = p$ |  |
+| **Variance** | $\mathbb{V}(X) = p(1-p)$ |  |
+| **PMF** | $\mathbb{P}(X=x)=\begin{cases} 1-p & \textsf{if }x=0 \\p & \textsf{if }x=1\end{cases}$ |  |
+| **CDF** | $\mathbb{P}(X\leq x)= \begin{cases} 0 & \textsf{if } x< 0 \\1-p & \textsf{if } 0\leq x<1 \\p & \textsf{if } x\geq1 \end{cases}$ |  |
 
-**Variance:** $\textrm{Var}(X)=p(1-p)$
+<!-- **Mean/expected value:** $\mathbb{E}(X) = p$ -->
 
-**PMF:** $P(X=x)=\begin{cases} 1-p & \textsf{if }x=0 \\p & \textsf{if }x=1\end{cases}$
+<!-- **Variance:** $\mathbb{V}(X)=p(1-p)$ -->
 
-**CDF:** $P(X\leq x)= \begin{cases} 0 & \textsf{if } x< 0 \\1-p & \textsf{if } 0\leq x<1 \\p & \textsf{if } x\geq1 \end{cases}$
+<!-- **PMF:** $\mathbb{P}(X=x)=\begin{cases} 1-p & \textsf{if }x=0 \\p & \textsf{if }x=1\end{cases}$ -->
 
-**Figure**
-
-PUT FIGURE HERE TOM
-
-**Example:** You flip a coin, and the probability of getting ‘heads’ is 0.5. Taking ‘heads’ as a success, this can be expressed as $X \sim \textrm{Bernoulli}(0.5)$, meaning the probability of success in each trial is 0.5.
-
-## Binomial Distribution {.unnumbered}
-
-**Where to use:** The binomial distribution is used when there are a fixed number of trials ($n$) and only two possible outcomes for each trial. $X$ represents the number of successes.
-
-**Notation:** $X \sim \textrm{Binomial}(n,p)$ or $X \sim B(n,p)$
-
-**Parameters:**
-
--   $n$ = number of trials
--   $p$ = probability of success (where $0 \le p \le 1$)
-
-**Mean and Expected Value:** $E(X) = np$
-
-**Variance:** $\textrm{Var}(X) = np(1-p)$
-
-**PMF:** $P(X=x)=\frac{n!}{(n-x)!x!}p^xq^{(n-x)}$
-
-**CDF:** $P(X\leq x)=I_{q}(n-\lfloor x \rfloor,1+\lfloor x \rfloor)$ where $I_{x}(a,b)$ is the regularized incomplete beta function for $a$ and $b$ with $x$ being the upper bound for integration
+<!-- **CDF:** $\mathbb{P}(X\leq x)= \begin{cases} 0 & \textsf{if } x< 0 \\1-p & \textsf{if } 0\leq x<1 \\p & \textsf{if } x\geq1 \end{cases}$ -->
 
 **Figure**
 
 PUT FIGURE HERE TOM
 
-**Example:** You flip a coin 10 times, and the probability of getting ‘heads’ is 0.5. Taking ‘heads’ as a success, this can be expressed as $X \sim B(10, 0.5)$, meaning 10 trials are conducted, where the probability of success in each trial is 0.5.
+**Example:** You flip a coin, and the probability of getting ‘heads’ is $0.5$. Taking ‘heads’ as a success, this can be expressed as $X \sim \textrm{Bernoulli}(0.5)$, meaning the probability of success in each trial is $0.5$.
 
-## Multinomial Distribution {.unnumbered}
+## Binomial distribution {.unnumbered}
+
+**Where to use:** The binomial distribution is used when there are a fixed number of trials ($n$) and only two possible outcomes for each trial, representing $n$ many Bernoulli trials. Here, the random variable $X$ represents the number of successes.
+
+**Notation:** $X \sim \textrm{Binomial}(n,p)$ or $X \sim B(n,p)$.
+
+**Parameters:** Two numbers $n,p$ where: - $n$ is an integer representing the number of trials, - $p$ is a real number representing the probability of success of a trial (where $0 \le p \le 1$).
+
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = np$ |  |
+| **Variance** | $\mathbb{V}(X) = np(1-p)$ |  |
+| **PMF** | $\mathbb{P}(X=x)=\dfrac{n!}{(n-x)!x!}p^xq^{(n-x)}$ |  |
+| **CDF** | $\mathbb{P}(X\leq x)=I_{q}(n-\lfloor x \rfloor,1+\lfloor x \rfloor)$ | $I_x(a,b)$ regularized incomplete beta function, $\lfloor x \rfloor$ the floor function |
+
+<!-- **Mean/expected value:** $\mathbb{E}(X) = np$ -->
+
+<!-- **Variance:** $\mathbb{V}(X) = np(1-p)$ -->
+
+<!-- **PMF:** $\mathbb{P}(X=x)=\dfrac{n!}{(n-x)!x!}p^xq^{(n-x)}$ -->
+
+<!-- **CDF:** $\mathbb{P}(X\leq x)=I_{q}(n-\lfloor x \rfloor,1+\lfloor x \rfloor)$ where $I_{x}(a,b)$ is the regularized incomplete beta function for $a$ and $b$ with $x$ being the upper bound for integration, and $\lfloor x \rfloor$ is the **floor function** applied to $x$, equal to the largest integer $z$ such that $z\leq x$. -->
+
+ 
+
+**Figure**
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 750
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Binomial distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("n", "Number of trials (n):", value = 10, min = 1, step = 1),
+        sliderInput("p", "Probability of success (p):", min = 0, max = 1, value = 0.5, step = 0.01),
+        hr(),
+        radioButtons("prob_type", "Probability to Calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
+          sliderInput("x_value", "x value:", min = 0, max = 10, value = 5, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 3, step = 1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 7, step = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Binomial distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Update the range of the sliders when n changes
+  observe({
+    updateSliderInput(session, "x_value", max = input$n)
+    updateSliderInput(session, "x_lower", max = input$n)
+    updateSliderInput(session, "x_upper", max = input$n)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Bin(n = %d, p = %.2f)", input$n, input$p)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pbinom(input$x_value, size = input$n, prob = input$p)
+      explanation <- sprintf("P(X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
+      
+    } else if (input$prob_type == "greater") {
+      # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1)
+      if (input$x_value == 0) {
+        prob <- 1  # P(X ≥ 0) is always 1
+      } else {
+        prob <- 1 - pbinom(input$x_value - 1, size = input$n, prob = input$p)
+      }
+      explanation <- sprintf("P(X ≥ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # Exact probability for a single value
+        prob <- dbinom(input$x_lower, size = input$n, prob = input$p)
+      } else {
+        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
+        upper_prob <- pbinom(input$x_upper, size = input$n, prob = input$p)
+        if (input$x_lower == 0) {
+          lower_prob <- 0
+        } else {
+          lower_prob <- pbinom(input$x_lower - 1, size = input$n, prob = input$p)
+        }
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the binomial distribution plot
+  output$distPlot <- renderPlot({
+    # Create data frame for plotting
+    x_values <- 0:input$n
+    prob_mass <- dbinom(x_values, size = input$n, prob = input$p)
+    df <- data.frame(x = x_values, probability = prob_mass)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = probability)) +
+      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
+      labs(x = "number of successes (X)", y = "probability mass function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      scale_x_continuous(breaks = x_values)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      highlight_x <- 0:res$x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "greater") {
+      highlight_x <- res$x:input$n
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "between") {
+      highlight_x <- res$lower:res$upper
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** You flip a coin $10$ times, and the probability of getting ‘heads’ is $0.5$. Taking ‘heads’ as a success, this can be expressed as $X \sim B(10, 0.5)$, meaning $10$ trials are conducted, where the probability of success in each trial is $0.5$.
+
+## Multinomial distribution {.unnumbered}
 
 **Where to use:** The multinomial distribution is used when there are a fixed number of trials ($n$) and more than two possible outcomes for each trial. $X_{i}$ represents the number of times a specific outcome occurs. Therefore, the mean, variance, and expected value of multinomial distributions are calculated for each $X_{i}$, not $X$.
 
-**Notation:** $X \sim \textrm{Multinomial}(n,p)$ or $X \sim M(n,p)$
+**Notation:** $X \sim \textrm{Multinomial}(n,\mathbf{p})$ or $X \sim M(n,\mathbf{p})$
 
-**Parameters:**
+**Parameters:** Three parameters $n,k,\mathbf{p}$, where
 
--   $n$ = number of trials
--   $p$ = vector with probabilities of each outcome (expressed as $p_{1},...,p_{k}$ where $k$ = number of possible mutually exclusive outcomes)
+-   $n$ is an integer representing the number of trials
+-   $k$ is an integer representing the number of mutually exclusive outcomes
+-   $\mathbf{p} = [p_{1},\ldots,p_{k}]$ is a vector with real numbered probabilities $0\leq p_i\leq 1$ for each outcome ($1\leq i \leq k$).
 
-**Mean and Expected Value:** $E(X_{i}) = np_{i}$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X_{i}) = np_{i}$ |  |
+| **Variance** | $\mathbb{V}(X_{i}) = np_{i}(1-p_{i})$ |  |
+| **PMF** | $\mathbb{P}(X_{1}=x_{1},\ldots,X_{k}=x_{k})=\dfrac{n!}{x_{1}!\ldots x_{k}!}p^{x_{1}}\ldots p^{x_{k}}$ |  |
 
-**Variance:** $\textrm{Var}(X_{i}) = np_{i}(1-p_{i})$
+<!-- **Mean/expected value:** $\mathbb{E}(X_{i}) = np_{i}$ -->
 
-**PMF:** $P(X_{1}=x_{i},...,X_{k}=x_{k})=\frac{n!}{x_{i}!...x_{k}!}p^{x_{1}}...p^{x_{k}}$
+<!-- **Variance:** $\mathbb{V}(X_{i}) = np_{i}(1-p_{i})$ -->
 
-**CDF:** COULDNT FIND
-
-**Figure**
-
-PUT FIGURE HERE TOM
+<!-- **PMF:** $\mathbb{P}(X_{1}=x_{i},...,X_{k}=x_{k})=\frac{n!}{x_{i}!...x_{k}!}p^{x_{1}}...p^{x_{k}}$ -->
 
 **Example:** There is a candy jar consisting of 5 red candies, 3 blue candies, and 7 yellow candies.
 
--   The probability of drawing a red candy is $\frac{1}{3}$.
+-   The probability of drawing a red candy is $\dfrac{1}{3}$.
 
--   The probability of drawing a blue candy is $\frac{1}{5}$.
+-   The probability of drawing a blue candy is $\dfrac{1}{5}$.
 
--   The probability of drawing a yellow candy is $\frac{7}{15}$
+-   The probability of drawing a yellow candy is $\dfrac{7}{15}$
 
-You draw 3 candies from the jar, replacing as you go along. This can be expressed as $X \sim M(3,\frac{1}{3},\frac{1}{5},\frac{7}{15})$. It means 3 trials are conducted, where $p_{1}=\frac{1}{3}$, $p_{2}=\frac{1}{5}$, and $p_{3}=\frac{7}{15}$ (and $k=3$).
+You draw 3 candies from the jar, replacing as you go along. This can be expressed as $X \sim M\left(3,\frac{1}{3},\frac{1}{5},\frac{7}{15}\right)$. It means 3 trials are conducted, where $p_{1}=\frac{1}{3}$, $p_{2}=\frac{1}{5}$, and $p_{3}=\frac{7}{15}$ (and $k=3$).
 
-## Poisson Distribution {.unnumbered}
+## Poisson distribution {.unnumbered}
 
 **Where to use:** The Poisson distribution is used when a specific event occurs at some rate $\lambda$, and you are counting $X$, the number of times this event occurs in some interval.
 
-**Notation:** $X \sim \textrm{Poisson}(\lambda)$ or $X \sim \textrm{Pois}(\lambda)$
+**Notation:** $X \sim \textrm{Poisson}(\lambda)$ or $X \sim \textrm{Pois}(\lambda)$.
 
-**Parameter:** $\lambda$ = number of times an event occurs within a specific period of time
+**Parameter:** $\lambda$ is the integer number of times an event occurs within a specific period of time.
 
-**Mean and Expected Value:** $E(X) = \lambda$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = \lambda$ |  |
+| **Variance** | $\mathbb{V}(X) = \lambda$ |  |
+| **PMF** | $\mathbb{P}(X=x)=\dfrac{\lambda^xe^{-\lambda}}{x!}$ |  |
+| **CDF** | $\displaystyle\mathbb{P}(X\leq x)=\sum^{\lfloor x \rfloor}_{i=1}\frac{\lambda^xe^{-\lambda}}{x!}$ | $\lfloor x \rfloor$ the floor function |
 
-**Variance:** $\textrm{Var}(X) = \lambda$
-
-**PMF:** $P(X=x)=\frac{\lambda^xe^{-\lambda}}{x!}$
-
-**CDF:** $P(X \leq x)=\sum^{\lfloor x \rfloor}_{i=1}\frac{\lambda^xe^{-\lambda}}{x!}$ where $\lfloor x \rfloor$ is $x$ rounded down to the nearest integer
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 670
 
-**Example:** Customers enter Cantor’s Confectionery at an average rate of 20 people per hour. This can be expressed as $X \sim \textrm{Pois}(20)$, meaning the event of customers entering the store occurs 20 times within an hour.
+library(shiny)
+library(bslib)
+library(ggplot2)
 
-## Negative Binomial Distribution {.unnumbered}
+ui <- page_fluid(
+  title = "Poisson distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("lambda", "Rate parameter (λ):", value = 5, min = 0.1, step = 0.1),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X = x)" = "exact", 
+                                  "P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "exact"),
+        conditionalPanel(
+          condition = "input.prob_type == 'exact'",
+          sliderInput("x_exact", "x value:", min = 0, max = 20, value = 5, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 20, value = 5, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 20, value = 5, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 3, step = 1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 7, step = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Poisson distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # When lambda changes, adjust the range of sliders
+  observe({
+    # Set a reasonable max value as 3*lambda or at least 10
+    max_x <- max(round(input$lambda * 3), 10)
+    
+    updateSliderInput(session, "x_exact", max = max_x)
+    updateSliderInput(session, "x_less", max = max_x)
+    updateSliderInput(session, "x_greater", max = max_x)
+    updateSliderInput(session, "x_lower", max = max_x)
+    updateSliderInput(session, "x_upper", max = max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Poisson(λ = %.1f)", input$lambda)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "exact") {
+      prob <- dpois(input$x_exact, lambda = input$lambda)
+      explanation <- sprintf("P(X = %d) = %.6f or %.4f%%", 
+                           input$x_exact, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "exact", x = input$x_exact))
+      
+    } else if (input$prob_type == "less") {
+      prob <- ppois(input$x_less, lambda = input$lambda)
+      explanation <- sprintf("P(X ≤ %d) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1)
+      if (input$x_greater == 0) {
+        prob <- 1  # P(X ≥ 0) is always 1
+      } else {
+        prob <- 1 - ppois(input$x_greater - 1, lambda = input$lambda)
+      }
+      explanation <- sprintf("P(X ≥ %d) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # Exact probability for a single value
+        prob <- dpois(input$x_lower, lambda = input$lambda)
+      } else {
+        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
+        upper_prob <- ppois(input$x_upper, lambda = input$lambda)
+        if (input$x_lower == 0) {
+          lower_prob <- 0
+        } else {
+          lower_prob <- ppois(input$x_lower - 1, lambda = input$lambda)
+        }
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%d ≤ X ≤ %d) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the Poisson distribution plot
+  output$distPlot <- renderPlot({
+    # Determine the range for the x-axis
+    lambda <- input$lambda
+    max_x <- max(round(lambda * 3), 10)
+    
+    # Create data frame for plotting
+    x_values <- 0:max_x
+    prob_mass <- dpois(x_values, lambda = lambda)
+    df <- data.frame(x = x_values, probability = prob_mass)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = probability)) +
+      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
+      labs(x = "number of events (X)", y = "probability mass function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      scale_x_continuous(breaks = seq(0, max_x, by = ifelse(max_x > 20, 2, 1)))
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "exact") {
+      highlight_x <- res$x
+      highlight_df <- df[df$x == highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "less") {
+      highlight_x <- 0:res$x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "greater") {
+      highlight_x <- res$x:max_x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "between") {
+      highlight_x <- res$lower:res$upper
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** Customers enter Cantor’s Confectionery at an average rate of 20 people per hour, and you want to see the likelihood that $X$ number of customers walks in. This can be expressed as $X \sim \textrm{Pois}(20)$.
+
+## Negative binomial distribution {.unnumbered}
 
 **Where to use:** The negative binomial distribution is often used to handle over-dispersed data, which means the variance exceeds the mean. It can serve as an alternative to the Poisson distribution, as the Poisson distribution assumes that the mean is equal to the variance. $X$ represents the number of trials required to reach the targeted number of successes $r$.
 
 **Notation:** $X \sim \textrm{NB}(r,p)$
 
-**Parameters:**
+**Parameters:** Two numbers $r,p$ where:
 
--   $r$ = targeted number of successes
--   $p$ = probability of success (where $0 \le p \le 1$)
+-   $r$ is an integer representing the targeted number of successes,
+-   $p$ is a real number representing the probability of success in a single trial (where $0 \le p \le 1$).
 
-**Mean and Expected Value:** $E(X) = \frac{r(1-p)}{p}$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = \dfrac{r(1-p)}{p}$ |  |
+| **Variance** | $\mathbb{V}(X) = \dfrac{r(1-p)}{p^2}$ |  |
+| **PMF** | $\mathbb{P}(X=x)=\dfrac{(x+r-1)!}{(r-1)!x!}(1-p)^xp^r$ |  |
+| **CDF** | $\displaystyle\mathbb{P}(X\leq x)=\sum^{x}_{i=1}\frac{(x+r-1)!}{(r-1)!x!}(1-p)^xp^r$ |  |
 
-**Variance:** $\textrm{Var}(X) = \frac{r(1-p)}{p^2}$
+<!-- **Mean/expected value:** $\mathbb{E}(X) = \dfrac{r(1-p)}{p}$. -->
 
-**PMF:** $P(X=x)=\frac{(x+r-1)!}{(r-1)!x!}(1-p)^xp^r$
+<!-- **Variance:** $\mathbb{V}(X) = \dfrac{r(1-p)}{p^2}$. -->
 
-**CDF:** $P(X \leq x)=\sum^{x}_{i=1}\frac{(x+r-1)!}{(r-1)!x!}(1-p)^xp^r$
+<!-- **PMF:** $\mathbb{P}(X=x)=\dfrac{(x+r-1)!}{(r-1)!x!}(1-p)^xp^r$ -->
+
+<!-- **CDF:** $\mathbb{P}(X \leq x)=\sum^{x}_{i=1}\frac{(x+r-1)!}{(r-1)!x!}(1-p)^xp^r$ -->
+
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 850
 
-**Example:** You flip a coin multiple times, and the probability of getting ‘heads’ is 0.5. You decide to stop flipping the coin once you get 3 ‘heads’; these do not have to be consecutive. Taking ‘heads’ as a success, this can be expressed as $X \sim \textrm{NB}(3,0.5)$. It means the probability of success is 0.5, and you will stop conducting trials after you reach 3 successes.
+library(shiny)
+library(bslib)
+library(ggplot2)
 
-## Geometric Distribution {.unnumbered}
+ui <- page_fluid(
+  title = "Negative binomial distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("r", "Number of successes (r):", value = 5, min = 1, step = 1),
+        sliderInput("p", "Probability of success (p):", min = 0.01, max = 0.99, value = 0.3, step = 0.01),
+        numericInput("max_x", "Maximum x to display:", value = 20, min = 10, step = 5),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
+          sliderInput("x_value", "x value:", min = 0, max = 20, value = 8, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 5, step = 1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 12, step = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Negative binomial distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
 
-**Where to use:** The geometric distribution is used to count $X$, the number of trials until a successful outcome is reached.
+server <- function(input, output, session) {
+  
+  # Update the range of the sliders when max_x changes
+  observe({
+    updateSliderInput(session, "x_value", max = input$max_x)
+    updateSliderInput(session, "x_lower", max = input$max_x)
+    updateSliderInput(session, "x_upper", max = input$max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("NegBin(r = %d, p = %.2f)", input$r, input$p)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pnbinom(input$x_value, size = input$r, prob = input$p)
+      explanation <- sprintf("P(X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
+      
+    } else if (input$prob_type == "greater") {
+      # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1)
+      if (input$x_value == 0) {
+        prob <- 1  # P(X ≥ 0) is always 1
+      } else {
+        prob <- 1 - pnbinom(input$x_value - 1, size = input$r, prob = input$p)
+      }
+      explanation <- sprintf("P(X ≥ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # Exact probability for a single value
+        prob <- dnbinom(input$x_lower, size = input$r, prob = input$p)
+      } else {
+        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
+        upper_prob <- pnbinom(input$x_upper, size = input$r, prob = input$p)
+        if (input$x_lower == 0) {
+          lower_prob <- 0
+        } else {
+          lower_prob <- pnbinom(input$x_lower - 1, size = input$r, prob = input$p)
+        }
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the negative binomial distribution plot
+  output$distPlot <- renderPlot({
+    # Create data frame for plotting
+    x_values <- 0:input$max_x
+    prob_mass <- dnbinom(x_values, size = input$r, prob = input$p)
+    df <- data.frame(x = x_values, probability = prob_mass)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = probability)) +
+      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
+      labs(x = "number of failures (X)", y = "probability mass function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      scale_x_continuous(breaks = pretty(x_values, n = 10))
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      highlight_x <- 0:min(res$x, input$max_x)
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "greater") {
+      highlight_x <- res$x:input$max_x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "between") {
+      highlight_x <- res$lower:min(res$upper, input$max_x)
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** You flip a coin multiple times, and the probability of getting ‘heads’ is $0.5$. You decide to stop flipping the coin once you get $3$ ‘heads’; these do not have to be consecutive. Taking ‘heads’ as a success, this can be expressed as $X \sim \textrm{NB}(3,0.5)$. It means the probability of success is $0.5$, and you will stop conducting trials after you reach $3$ successes.
+
+## Geometric distribution {.unnumbered}
+
+**Where to use:** The geometric distribution is used to count $X$, the number of Bernoulli trials until a successful outcome is reached.
 
 **Notation:** $X \sim \textrm{Geometric}(p)$
 
-**Parameter:** $p$ = probability of success (where $0 \le p \le 1$)
+**Parameter:** $p$ is the real number representing the probability of success in a single trial (where $0 \le p \le 1$).
 
-**Mean and Expected Value:** $E(X) = \frac{1}{p}$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = \dfrac{1}{p}$ |  |
+| **Variance** | $\mathbb{V}(X) = \dfrac{1-p}{p^2}$ |  |
+| **PMF** | $\mathbb{P}(X=x)=(1-p)^{k-1}p$ |  |
+| **CDF** | $\displaystyle\mathbb{P}(X\leq x)=\begin{cases} 1-(1-p)^x & \textsf{if } x\geq0 \\0 & \textsf{if } x<0\end{cases}$ |  |
 
-**Variance:** $\textrm{Var}(X) = \frac{1-p}{p^2}$
+<!-- **Mean and Expected Value:** $\mathbb{E}(X) = \dfrac{1}{p}$. -->
 
-**PMF:** $P(X=x)=(1-p)^{k-1}p$
+<!-- **Variance:** $\mathbb{V}(X) = \dfrac{1-p}{p^2}$ -->
 
-**CDF:** $P(X \leq x)=\begin{cases} 1-(1-p)^x & \textsf{if } x\geq0 \\0 & \textsf{if } x<1\end{cases}$
+<!-- **PMF:** $\mathbb{P}(X=x)=(1-p)^{k-1}p$ -->
 
-**Figure**
+<!-- **CDF:** $\mathbb{P}(X \leq x)=\begin{cases} 1-(1-p)^x & \textsf{if } x\geq0 \\0 & \textsf{if } x<0\end{cases}$ -->
 
-PUT FIGURE HERE TOM
-
-**Example:** You flip a coin multiple times, and the probability of getting ‘heads’ is 0.5. You decide to stop flipping the coin once you get a ‘heads’. Taking ‘heads’ as a success, this can be expressed as $X \sim \textrm{Geometric}(0.5)$. It means the probability of success is 0.5, and you will stop conducting trials after you reach a success.
-
-# Continuous Random Variables
-
-## Uniform Distribution (Continuous) {.unnumbered}
-
-**Where to use:** The continuous uniform distribution is used when all continuous values in the interval $a$ to $b$ are equally likely.
-
-**Notation:** $X \sim \textrm{Uniform}(a,b)$ or $X \sim U(a,b)$
-
-**Parameters:**
-
--   $a$ = minimum value
--   $b$ = maximum value where all values of $X$ for $a \leq x \leq b$ are equally likely
-
-**Mean and Expected Value:** $E(X) = \frac{a+b}{2}$
-
-**Variance:** $\textrm{Var}(X) = \frac{(b-a)^2}{12}$
-
-**PDF:** $P(X=x)=\begin{cases} \frac{1}{b-a} & \textsf{if } a \leq x \leq b \\0 & \textsf{otherwise}\end{cases}$
-
-**CDF:** $P(X\leq x)= \begin{cases} 0 & \textsf{if } x< a \\\frac{x-a}{b-a} & \textsf{if } a\leq x\leq b \\1 & \textsf{if } x>b \end{cases}$
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 680
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Geometric distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        sliderInput("p", "Probability of success (p):", min = 0.01, max = 1, value = 0.3, step = 0.01),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X = x)" = "exact", 
+                                  "P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "exact"),
+        conditionalPanel(
+          condition = "input.prob_type == 'exact'",
+          sliderInput("x_exact", "x value:", min = 0, max = 20, value = 3, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 20, value = 3, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 20, value = 3, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 2, step = 1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 5, step = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Geometric distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results (removed the hr and helpText)
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # When p changes, adjust the range of sliders
+  observe({
+    # For geometric distribution with parameter p, the mean is (1-p)/p
+    # Set a reasonable max value based on this
+    max_x <- max(round(3 * (1 - input$p) / input$p), 20)
+    
+    updateSliderInput(session, "x_exact", max = max_x)
+    updateSliderInput(session, "x_less", max = max_x)
+    updateSliderInput(session, "x_greater", max = max_x)
+    updateSliderInput(session, "x_lower", max = max_x)
+    updateSliderInput(session, "x_upper", max = max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Geometric(p = %.2f)", input$p)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "exact") {
+      prob <- dgeom(input$x_exact, prob = input$p)
+      explanation <- sprintf("P(X = %d) = %.6f or %.4f%%", 
+                           input$x_exact, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "exact", x = input$x_exact))
+      
+    } else if (input$prob_type == "less") {
+      prob <- pgeom(input$x_less, prob = input$p)
+      explanation <- sprintf("P(X ≤ %d) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1)
+      if (input$x_greater == 0) {
+        prob <- 1  # P(X ≥ 0) is always 1
+      } else {
+        prob <- 1 - pgeom(input$x_greater - 1, prob = input$p)
+      }
+      explanation <- sprintf("P(X ≥ %d) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # Exact probability for a single value
+        prob <- dgeom(input$x_lower, prob = input$p)
+      } else {
+        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
+        upper_prob <- pgeom(input$x_upper, prob = input$p)
+        if (input$x_lower == 0) {
+          lower_prob <- 0
+        } else {
+          lower_prob <- pgeom(input$x_lower - 1, prob = input$p)
+        }
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%d ≤ X ≤ %d) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the Geometric distribution plot
+  output$distPlot <- renderPlot({
+    # Determine the range for the x-axis
+    p <- input$p
+    max_x <- max(round(3 * (1 - p) / p), 20)
+    
+    # Create data frame for plotting
+    x_values <- 0:max_x
+    prob_mass <- dgeom(x_values, prob = p)
+    df <- data.frame(x = x_values, probability = prob_mass)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = probability)) +
+      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
+      labs(x = "number of failures before first success (X)", y = "probability mass function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      scale_x_continuous(breaks = seq(0, max_x, by = ifelse(max_x > 20, 2, 1)))
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "exact") {
+      highlight_x <- res$x
+      highlight_df <- df[df$x == highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "less") {
+      highlight_x <- 0:res$x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "greater") {
+      highlight_x <- res$x:max_x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "between") {
+      highlight_x <- res$lower:res$upper
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** You flip a coin multiple times, and the probability of getting ‘heads’ is $0.5$. You decide to stop flipping the coin once you get a ‘heads’. Taking ‘heads’ as a success, this can be expressed as $X \sim \textrm{Geometric}(0.5)$. It means the probability of success is $0.5$, and you will stop conducting trials after you reach a success.
+
+# Continuous random variables
+
+## Uniform distribution (continuous) {.unnumbered}
+
+**Where to use:** The continuous uniform distribution is used when all continuous values $x$ in the interval $a$ to $b$ are equally likely. The random variable $X$ represents the outcome.
+
+**Notation:** $X \sim \textrm{Uniform}(a,b)$ or $X \sim U(a,b)$.
+
+**Parameters:** Two real numbers $a,b$, where
+
+-   $a$ is the minimum value of an outcome,
+
+-   $b$ is the maximum value of an outcome.
+
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = \dfrac{a+b}{2}$ |  |
+| **Variance** | $\mathbb{V}(X) = \dfrac{(b-a)^2}{12}$ |  |
+| **PDF** | $\mathbb{P}(X=x)=\begin{cases} \dfrac{1}{b-a} & \textsf{if } a \leq x \leq b \\0 & \textsf{otherwise}\end{cases}$ |  |
+| **CDF** | $\displaystyle\mathbb{P}(X\leq x)=\begin{cases} 0 & \textsf{if } x< a \\\dfrac{x-a}{b-a} & \textsf{if } a\leq x\leq b \\1 & \textsf{if } x>b \end{cases}$ |  |
+
+<!-- **Mean and Expected Value:** $\mathbb{E}(X) = \dfrac{a+b}{2}$. -->
+
+<!-- **Variance:** $\mathbb{V}(X) = \dfrac{(b-a)^2}{12}.$ -->
+
+<!-- **PDF:** $\mathbb{P}(X=x)=\begin{cases} \dfrac{1}{b-a} & \textsf{if } a \leq x \leq b \\0 & \textsf{otherwise}\end{cases}$ -->
+
+<!-- **CDF:** $\mathbb{P}(X\leq x)= \begin{cases} 0 & \textsf{if } x< a \\\dfrac{x-a}{b-a} & \textsf{if } a\leq x\leq b \\1 & \textsf{if } x>b \end{cases}$ -->
+
+ 
+
+**Figure**
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 750
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Continuous uniform distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("a", "Minimum value (a):", value = 0, step = 0.1),
+        numericInput("b", "Maximum value (b):", value = 10, step = 0.1),
+        hr(),
+        radioButtons("prob_type", "Probability to Calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
+          sliderInput("x_value", "x value:", min = 0, max = 10, value = 5, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 3, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 7, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Continuous uniform distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Ensure b is always greater than a
+  observe({
+    if (input$b <= input$a) {
+      updateNumericInput(session, "b", value = input$a + 1)
+    }
+  })
+  
+  # Update the range of the sliders when a or b changes
+  observe({
+    updateSliderInput(session, "x_value", min = input$a, max = input$b, value = min(max(input$a, (input$a + input$b)/2), input$b))
+    updateSliderInput(session, "x_lower", min = input$a, max = input$b, value = min(max(input$a, input$a + (input$b - input$a)/3), input$b))
+    updateSliderInput(session, "x_upper", min = input$a, max = input$b, value = min(max(input$a, input$a + 2*(input$b - input$a)/3), input$b))
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Unif(a = %.1f, b = %.1f)", input$a, input$b)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- punif(input$x_value, min = input$a, max = input$b)
+      explanation <- sprintf("P(X ≤ %.2f) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - punif(input$x_value, min = input$a, max = input$b)
+      explanation <- sprintf("P(X ≥ %.2f) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
+      
+    } else if (input$prob_type == "between") {
+      upper_prob <- punif(input$x_upper, min = input$a, max = input$b)
+      lower_prob <- punif(input$x_lower, min = input$a, max = input$b)
+      prob <- upper_prob - lower_prob
+      
+      explanation <- sprintf("P(%.2f ≤ X ≤ %.2f) = %.4f or %.2f%%", 
+                            input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the continuous uniform distribution plot
+  output$distPlot <- renderPlot({
+    # Create data frame for plotting the PDF
+    x_range <- seq(input$a - 0.5 * (input$b - input$a), 
+                   input$b + 0.5 * (input$b - input$a), 
+                   length.out = 1000)
+    
+    pdf_values <- dunif(x_range, min = input$a, max = input$b)
+    df <- data.frame(x = x_range, density = pdf_values)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = density)) +
+      geom_line(color = "darkgray", size = 1.2) +
+      labs(x = "X", y = "probability density function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      ylim(0, max(pdf_values) * 1.1)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      shade_x <- seq(input$a, res$x, length.out = 100)
+      shade_y <- dunif(shade_x, min = input$a, max = input$b)
+      shade_df <- data.frame(x = c(input$a, shade_x, res$x), 
+                            y = c(0, shade_y, 0))
+      
+      p <- p + geom_polygon(data = shade_df, aes(x = x, y = y), 
+                           fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      shade_x <- seq(res$x, input$b, length.out = 100)
+      shade_y <- dunif(shade_x, min = input$a, max = input$b)
+      shade_df <- data.frame(x = c(res$x, shade_x, input$b), 
+                            y = c(0, shade_y, 0))
+      
+      p <- p + geom_polygon(data = shade_df, aes(x = x, y = y), 
+                           fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      shade_x <- seq(res$lower, res$upper, length.out = 100)
+      shade_y <- dunif(shade_x, min = input$a, max = input$b)
+      shade_df <- data.frame(x = c(res$lower, shade_x, res$upper), 
+                            y = c(0, shade_y, 0))
+      
+      p <- p + geom_polygon(data = shade_df, aes(x = x, y = y), 
+                           fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
 
 **Example:**
 
-A machine from Cantor's Confectionery is programmed to chop long candy bars into pieces, each with a length between 30 milimeters to 50 milimeters. Due to variations in the machine, each continuous value between this interval is equally likely. This can be expressed as $X \sim U(30,50)$. It means 30 is the minimum value and 50 is the maximum value, where all continuous values of $X$ for $30 \leq x \leq 50$ are equally likely.
+A machine from Cantor's Confectionery is programmed to chop long candy bars into pieces, each with a length between 30 millimetres to 50 millimetres. Due to variations in the machine, each continuous value between this interval is equally likely. This can be expressed as $X \sim U(30,50)$. It means 30 is the minimum value and 50 is the maximum value, where all continuous values of $X$ for $30 \leq x \leq 50$ are equally likely.
 
-## Normal Distribution {.unnumbered}
+## Normal distribution {.unnumbered}
 
 **Where to use:** The normal distribution is used to model continuous random variables, which can include any positive or negative real values. The use of this distribution is often justified by the Central Limit Theorem: as the sample size increases, the distribution of sample means will resemble a normal distribution more and more closely.
 
 **Notation:** $X \sim \textrm{Normal}(\mu,\sigma^2)$ or $X \sim N(\mu,\sigma^2)$
 
-**Parameters:**
+**Parameters:** Two real numbers $\mu$ and $\sigma^2$.
 
--   $\mu$ = mean (location parameter)
--   $\sigma^2$ = variance (squared scale parameter), where $\sigma$ = standard deviation (scale parameter)
+-   $\mu$ is the centre of the distribution (the mean/expected value).
+-   $\sigma^2$ is the measure of how the distribution is spread (the variance).
 
-**Mean and Expected Value:** $E(X) = \mu$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = \mu$ |  |
+| **Variance** | $\mathbb{V}(X) = \sigma^2$ |  |
+| **PDF** | $\mathbb{P}(X=x)=\dfrac{1}{\sqrt{2\pi\sigma^2}}\exp\left({-\dfrac{(x-\mu)^2}{2\sigma^2}}\right)$ | $\exp(y) = e^y$ |
+| **CDF** | $\displaystyle\mathbb{P}(X\leq x)=\dfrac{1}{2}\left[1+\textrm{erf}\left(\dfrac{x-\mu}{\sigma\sqrt{2}}\right)\right]$ | $\textrm{erf}(x)$ is the error function of $x$ |
 
-**Variance:** $\textrm{Var}(X) = \sigma^2$
+<!-- **Mean/expected value:** $\mathbb{E}(X) = \mu$. -->
 
-**PDF:** $P(X=x)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$
+<!-- **Variance:** $\mathbb{V}(X) = \sigma^2$. -->
 
-**CDF:** $P(X\leq x)=\frac{1}{2}[1+\textrm{erf}(\frac{x-\mu}{\sigma\sqrt{2}})]$ where $\textrm{erf}(x)$ is the error function of $x$
+<!-- **PDF:** $\mathbb{P}(X=x)=\dfrac{1}{\sqrt{2\pi\sigma^2}}\exp\left({-\dfrac{(x-\mu)^2}{2\sigma^2}}\right)$, where $\exp(y) = e^y$. -->
+
+<!-- **CDF:** $\mathbb{P}(X\leq x)=\frac{1}{2}\left[1+\textrm{erf}(\dfrac{x-\mu}{\sigma\sqrt{2}})\right]$ where $\textrm{erf}(x)$ is the error function of $x$. -->
+
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 700
 
-**Example:** The lengths of chocolate bars produced by Cantor’s Confectionery follow a normal distribution with a mean of 5.6 inches and a standard deviation of 1.2. This can be expressed as $X \sim N(5.6, 1.2^2)$, meaning the data is normally distributed, centered at 5.6 (location parameter) and stretched by 1.2 (scale parameter).
+library(shiny)
+library(bslib)
+library(ggplot2)
 
-## Lognormal Distribution {.unnumbered}
+ui <- page_fluid(
+  title = "Normal distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("mean", "Mean (μ):", value = 0),
+        numericInput("sd", "Standard deviation (σ):", value = 1, min = 0.01),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
+          numericInput("x_value", "x value:", value = 0)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          numericInput("x_lower", "Lower bound (x):", value = -1),
+          numericInput("x_upper", "Upper bound (y):", value = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Normal distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      # Removed the LaTeX formula display
+      textOutput("explanation")
+    )
+  )
+)
 
-**Where to use:** The lognormal distribution is used to model continuous random variables with values that are both real and non-negative, wherein the logarithms of these variables follow a normal distribution.
+server <- function(input, output, session) {
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("N(μ = %.2f, σ = %.2f)", input$mean, input$sd)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pnorm(input$x_value, mean = input$mean, sd = input$sd)
+      explanation <- sprintf("P(X ≤ %.2f) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pnorm(input$x_value, mean = input$mean, sd = input$sd)
+      explanation <- sprintf("P(X ≥ %.2f) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
+      
+    } else if (input$prob_type == "between") {
+      lower_prob <- pnorm(input$x_lower, mean = input$mean, sd = input$sd)
+      upper_prob <- pnorm(input$x_upper, mean = input$mean, sd = input$sd)
+      prob <- upper_prob - lower_prob
+      explanation <- sprintf("P(%.2f ≤ X ≤ %.2f) = %.4f or %.2f%%", 
+                            input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the normal distribution plot
+  output$distPlot <- renderPlot({
+    # Calculate range for x-axis (covering 99.7% of the distribution)
+    x_min <- input$mean - 3.5 * input$sd
+    x_max <- input$mean + 3.5 * input$sd
+    
+    # Create data frame for plotting
+    x <- seq(x_min, x_max, length.out = 500)
+    y <- dnorm(x, mean = input$mean, sd = input$sd)
+    df <- data.frame(x = x, y = y)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = y)) +
+      geom_line() +
+      labs(x = "X", y = "Density") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank())
+    
+    # Add bold line at X = 0
+    p <- p + geom_vline(xintercept = 0, linetype = "solid", color = "black", linewidth = 0.8)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      shade_x <- seq(x_min, res$x, length.out = 200)
+      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
+      shade_df <- data.frame(x = shade_x, y = shade_y)
+      
+      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
+        geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315")
+      
+    } else if (res$type == "greater") {
+      shade_x <- seq(res$x, x_max, length.out = 200)
+      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
+      shade_df <- data.frame(x = shade_x, y = shade_y)
+      
+      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
+        geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315")
+      
+    } else if (res$type == "between") {
+      shade_x <- seq(res$lower, res$upper, length.out = 200)
+      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
+      shade_df <- data.frame(x = shade_x, y = shade_y)
+      
+      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
+        geom_vline(xintercept = res$lower, linetype = "dashed", color = "#db4315") +
+        geom_vline(xintercept = res$upper, linetype = "dashed", color = "#db4315")
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** The lengths of chocolate bars produced by Cantor’s Confectionery follow a normal distribution with a mean of $5.6$ inches and a variance of $1.44$. This can be expressed as $X \sim N(5.6, 1.44)$, meaning the data is normally distributed, centered at $5.6$ with standard deviation $\sqrt{1.44} = 1.2$.
+
+## Lognormal distribution {.unnumbered}
+
+**Where to use:** The lognormal distribution is used to model continuous random variables with values that are both real and non-negative, wherein the logarithms of these variables follow a normal distribution. That is to say, if the random variable $X$ is lognormally distributed, then the random variable $Y = \ln(X)$ is normally distributed (where $\ln$ is the natural logarithm).
 
 **Notation:** $X \sim \textrm{Lognormal}(\mu,\sigma^2)$
 
-**Parameters:**
+**Parameters:** As with the normal distribution, two numbers $\mu$ and $\sigma^2$ where:
 
--   $\mu$ = logarithm of location parameter
--   $\sigma^2$ = logarithm of scale parameter
+-   $\mu$ is the expected value of the normally distributed random variable $Y = \ln(X)$,
+-   $\sigma^2$ is the variance of the normally distributed random variable $Y = \ln(X)$.
 
-**Mean and Expected Value:** $E(X) = \textrm{exp}(\mu+\frac{\sigma^2}{2})$ where $\textrm{exp}(x)=e^x$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = \exp(\mu+\frac{\sigma^2}{2})$ | $\exp(y) = e^y$ |
+| **Variance** | $\mathbb{V}(X) = [\exp(\sigma^2)-1]\exp(2\mu+\sigma^2)$ | $\exp(y) = e^y$ |
+| **PDF** | $\mathbb{P}(X=x)=\dfrac{1}{x\sigma\sqrt{2\pi}}\exp\left(-\dfrac{(\ln(x)-\mu)^2}{2\sigma^2}\right)$ | $\exp(y) = e^y$ |
+| **CDF** | $\displaystyle\mathbb{P}(X\leq x)=\dfrac{1}{2}\left[1+\textrm{erf}\left(\dfrac{\ln(x)-\mu}{\sigma\sqrt{2}}\right)\right]$ | $\textrm{erf}(x)$ is the error function of $x$ |
 
-**Variance:** $\textrm{Var}(X) = [\textrm{exp}(\sigma^2)-1]\textrm{exp}(2\mu+\sigma^2)$ where $\textrm{exp}(x)=e^x$
+<!-- **Mean and Expected Value:** $\mathbb{E}(X) = \exp(\mu+\frac{\sigma^2}{2})$ where $\exp(x)=e^x$ -->
 
-**PDF:** $P(X=x)=\frac{1}{x\sigma\sqrt{2\pi}}\textrm{exp}(-\frac{(\textrm{ln}x-\mu)^2}{2\sigma^2})$ where $\textrm{exp}(x)=e^x$ and $\textrm{ln}x$ is the natural logarithm of $x$
+<!-- **Variance:** $\mathbb{V}(X) = [\exp(\sigma^2)-1]\exp(2\mu+\sigma^2)$ where $\exp(x)=e^x$ -->
 
-**CDF:** $P(X \leq x)=\frac{1}{2}[1+\textrm{erf}(\frac{\textrm{ln}x-\mu}{\sigma\sqrt{2}})]$ where $\textrm{erf}(x)$ is the error function of $x$ and $\textrm{ln}x$ is the natural logarithm of $x$
+<!-- **PDF:** $\mathbb{P}(X=x)=\dfrac{1}{x\sigma\sqrt{2\pi}}\exp\left(-\dfrac{(\ln(x)-\mu)^2}{2\sigma^2}\right)$ where $\exp(x)=e^x$ and $\ln(x)$ is the natural logarithm of $x$. -->
+
+<!-- **CDF:** $\mathbb{P}(X \leq x)=\dfrac{1}{2}\left[1+\textrm{erf}\left(\dfrac{\ln(x)-\mu}{\sigma\sqrt{2}}\right)\right]$ where $\textrm{erf}(x)$ is the error function of $x$ and $\ln(x)$ is the natural logarithm of $x$. -->
+
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 740
 
-**Example:** The logarithms of Cantor’s Confectionery’s stock prices follow a normal distribution. The mean of the stock prices’ natural logarithms is 8.01, whereas the variance of the stock prices’ natural logarithms is 3. This can be expressed as $X \sim \textrm{Lognormal}(8.01, 3)$, meaning the logarithm of the location parameter is 8.01 and the logarithm of scale parameter is 3.
+library(shiny)
+library(bslib)
+library(ggplot2)
 
-## Exponential Distribution {.unnumbered}
+ui <- page_fluid(
+  title = "Lognormal distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("meanlog", "Log mean (μ):", value = 0, step = 0.1),
+        numericInput("sdlog", "Log standard deviation (σ):", value = 1, min = 0.01, step = 0.1),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 10, value = 1, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 10, value = 1, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 0.5, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 2, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Lognormal distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
 
-**Where to use:** The exponential distribution is used when $X$ is the waiting time before a certain event occurs. It is similar to the geometric distribution, but the exponential distribution uses continuous waiting time instead of the integer number of trials.
+server <- function(input, output, session) {
+  
+  # When parameters change, adjust the range of sliders
+  observe({
+    # For lognormal distribution, adjust slider based on parameters
+    meanlog <- input$meanlog
+    sdlog <- input$sdlog
+    
+    # Use a heuristic to determine a reasonable upper bound
+    # This captures most of the meaningful density
+    max_x <- min(qlnorm(0.995, meanlog, sdlog), 100)
+    
+    updateSliderInput(session, "x_less", max = max_x)
+    updateSliderInput(session, "x_greater", max = max_x)
+    updateSliderInput(session, "x_lower", max = max_x)
+    updateSliderInput(session, "x_upper", max = max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Lognormal(μ = %.2f, σ = %.2f)", input$meanlog, input$sdlog)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- plnorm(input$x_less, meanlog = input$meanlog, sdlog = input$sdlog)
+      explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - plnorm(input$x_greater, meanlog = input$meanlog, sdlog = input$sdlog)
+      explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # For continuous distributions, P(X = a) = 0
+        prob <- 0
+      } else {
+        upper_prob <- plnorm(input$x_upper, meanlog = input$meanlog, sdlog = input$sdlog)
+        lower_prob <- plnorm(input$x_lower, meanlog = input$meanlog, sdlog = input$sdlog)
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the lognormal distribution plot
+  output$distPlot <- renderPlot({
+    # Get parameters
+    meanlog <- input$meanlog
+    sdlog <- input$sdlog
+    
+    # Determine a reasonable max for x-axis based on parameters
+    max_x <- min(qlnorm(0.995, meanlog, sdlog), 100)
+    
+    # Create data frame for plotting
+    x_values <- seq(0.01, max_x, length.out = 500)  # Avoid x=0
+    density_values <- dlnorm(x_values, meanlog = meanlog, sdlog = sdlog)
+    plot_df <- data.frame(x = x_values, density = density_values)
+    
+    # Create base plot
+    p <- ggplot(plot_df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "darkgray") +
+      labs(x = "X", y = "probability density function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      xlim(0, max_x)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      # Create data for the filled area
+      fill_x <- seq(0.01, res$x, length.out = 200)
+      fill_y <- dlnorm(fill_x, meanlog = meanlog, sdlog = sdlog)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      # Create data for the filled area
+      fill_x <- seq(res$x, max_x, length.out = 200)
+      fill_y <- dlnorm(fill_x, meanlog = meanlog, sdlog = sdlog)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      # Create data for the filled area
+      fill_x <- seq(res$lower, res$upper, length.out = 200)
+      fill_y <- dlnorm(fill_x, meanlog = meanlog, sdlog = sdlog)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** The logarithms of Cantor’s Confectionery’s stock prices follow a normal distribution. The mean of the stock prices’ natural logarithms is $8.01$, whereas the variance of the stock prices’ natural logarithms is $3$. This can be expressed as $X \sim \textrm{Lognormal}(8.01, 3)$, meaning the logarithm of the location parameter is $8.01$ and the logarithm of scale parameter is $3$.
+
+## Exponential distribution {.unnumbered}
+
+**Where to use:** The exponential distribution is used when $X$ is the waiting time before a certain event occurs. It is similar to the geometric distribution, but the exponential distribution uses a continuous waiting time instead of the integer number of trials.
 
 **Notation:** $X \sim \textrm{Exponential}(\lambda)$ or $X \sim \textrm{Exp}(\lambda)$
 
-**Parameter:** $\lambda$ = number of times an event occurs within a specific period of time
+**Parameter:** An integer $\lambda$, representing number of times an event occurs within a specific period of time.
 
-**Mean and Expected Value:** $E(X) = \frac{1}{\lambda}$
+| Quantity     | Value                                    | Notes |
+|:-------------|:-----------------------------------------|:------|
+| **Mean**     | $\mathbb{E}(X) = \frac{1}{\lambda}$      |       |
+| **Variance** | $\mathbb{V}(X) = \frac{1}{\lambda^2}$    |       |
+| **PDF**      | $\mathbb{P}(X=x)=\lambda e^{-\lambda x}$ |       |
+| **CDF**      | $\mathbb{P}(X \leq x)=1-e^{-\lambda x}$  |       |
 
-**Variance:** $\textrm{Var}(X) = \frac{1}{\lambda^2}$
+<!-- **Mean/expected value:** $\mathbb{E}(X) = \frac{1}{\lambda}$. -->
 
-**PDF:** $P(X=x)=\lambda e^{-\lambda x}$
+<!-- **Variance:** $\mathbb{V}(X) = \frac{1}{\lambda^2}$. -->
 
-**CDF:** $P(X \leq x)=1-e^{-\lambda x}$
+<!-- **PDF:** $\mathbb{P}(X=x)=\lambda e^{-\lambda x}$. -->
+
+<!-- **CDF:** $\mathbb{P}(X \leq x)=1-e^{-\lambda x}$. -->
+
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 640
 
-**Example:** Customers enter Cantor’s Confectionery at an average rate of 20 people per hour, and the time distance between each visit can be modeled by an exponential distribution. This can be expressed as $X \sim \textrm{Exp}(20)$.
+library(shiny)
+library(bslib)
+library(ggplot2)
 
-## Gamma Distribution {.unnumbered}
+ui <- page_fluid(
+  title = "Exponential distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("rate", "Rate parameter (λ):", value = 0.5, min = 0.01, step = 0.01),
+        # Removed the helpText about mean and variance
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 10, value = 2, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 10, value = 2, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 1, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 3, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Exponential distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # When rate changes, adjust the range of sliders
+  observe({
+    # For exponential distribution with parameter rate, the mean is 1/rate
+    # Set a reasonable max value based on this
+    max_x <- max(round(5 / input$rate, 1), 10)
+    
+    updateSliderInput(session, "x_less", max = max_x)
+    updateSliderInput(session, "x_greater", max = max_x)
+    updateSliderInput(session, "x_lower", max = max_x)
+    updateSliderInput(session, "x_upper", max = max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Exponential(λ = %.2f)", input$rate)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pexp(input$x_less, rate = input$rate)
+      explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pexp(input$x_greater, rate = input$rate)
+      explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # For continuous distributions, P(X = a) = 0
+        prob <- 0
+      } else {
+        upper_prob <- pexp(input$x_upper, rate = input$rate)
+        lower_prob <- pexp(input$x_lower, rate = input$rate)
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the Exponential distribution plot
+  output$distPlot <- renderPlot({
+    # Determine the range for the x-axis
+    rate <- input$rate
+    max_x <- max(round(5 / rate, 1), 10)
+    
+    # Create data frame for plotting
+    x_values <- seq(0, max_x, length.out = 500)
+    density_values <- dexp(x_values, rate = rate)
+    df <- data.frame(x = x_values, density = density_values)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "darkgray") +
+      labs(x = "Time (X)", y = "probability density function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank())
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      # Create data for the filled area
+      fill_x <- seq(0, res$x, length.out = 200)
+      fill_y <- dexp(fill_x, rate = rate)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      # Create data for the filled area
+      fill_x <- seq(res$x, max_x, length.out = 200)
+      fill_y <- dexp(fill_x, rate = rate)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      # Create data for the filled area
+      fill_x <- seq(res$lower, res$upper, length.out = 200)
+      fill_y <- dexp(fill_x, rate = rate)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** Customers enter Cantor’s Confectionery at an average rate of 20 people per hour, and the time distance between each visit can be modelled by an exponential distribution. This can be expressed as $X \sim \textrm{Exp}(20)$.
+
+## Gamma distribution {.unnumbered}
 
 **Where to use:** The gamma distribution generalizes the exponential distribution, allowing for greater or lesser variance. It is used to model positive continuous random variables that have skewed distributions.
 
 **Notation:** $X \sim \textrm{Gamma}(\alpha,\theta)$ or $X \sim \textrm{Gam}(\alpha,\theta)$
 
-**Parameters:**
+**Parameters:** Two real numbers $\alpha$ and $\theta$, which are related to the mean $\mu$ and variance $\sigma^2$:
 
 -   $\alpha = \frac{\mu^2}{\sigma^2}$ (shape parameter)
--   $\theta=\frac{\sigma^2}{\mu}$ (scale parameter) where $\mu$ = mean and $\sigma^2$ = variance
+-   $\theta=\frac{\sigma^2}{\mu}$ (scale parameter)
 
-**Mean and Expected Value:** $E(X) = \alpha\theta$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = \alpha\theta$ |  |
+| **Variance** | $\mathbb{V}(X) = \alpha\theta^2$ |  |
+| **PDF** | $\mathbb{P}(X=x)=\dfrac{x^{\alpha-1}\exp\left(-\frac{x}{\theta}\right)}{\Gamma(\alpha)\theta^{\alpha}}$ | $\Gamma(x)$ the gamma function of $x$ |
+| **CDF** | $\mathbb{P}(X \leq x)=\dfrac{\textrm{Gam}\left(\alpha,\frac{x}{\theta}\right)}{\Gamma(\alpha)}$ | $\textrm{Gam}(\alpha,\theta)$ is the PDF of the gamma distribution |
 
-**Variance:** $\textrm{Var}(X) = \alpha\theta^2$
+<!-- **PDF:** $\mathbb{P}(X=x)=\dfrac{x^{\alpha-1}\exp\left(-\frac{x}{\theta}\right)}{\Gamma(\alpha)\theta^{\alpha}}$ where $\Gamma(x)$ is the gamma function of $x$. -->
 
-**PDF:** $P(X=x)=\frac{1}{\Gamma(\alpha)\theta^{\alpha}}x^{\alpha-1}e^{-\frac{x}{\theta}}$ where $\Gamma(x)$ is the gamma function of $x$
+<!-- **CDF:** $\mathbb{P}(X \leq x)=\dfrac{1}{\Gamma(\alpha)}\textrm{Gam}(\alpha,\frac{x}{\theta})$ where $\textrm{Gam}(\alpha,\theta)$ is the PDF of the gamma distribution for parameters $\alpha$ and $\theta$. -->
 
-**CDF:** $P(X \leq x)=\frac{1}{\Gamma(\alpha)}\textrm{Gam}(\alpha,\frac{x}{\theta})$ where $\textrm{Gam}(\alpha,\theta)$ is the PDF of the gamma distribution for parameters $\alpha$ and $\theta$
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 720
 
-**Example:** You collect historical data on the time to failure of a machine from Cantor’s Confectionery. The mean is 83 days and the variance is 50.3. You can then use this to estimate the shape and scale parameters of the Gamma Distribution:
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Gamma distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("shape", "Shape parameter (α):", value = 2, min = 0.01, step = 0.1),
+        numericInput("scale", "Scale parameter (θ):", value = 1, min = 0.01, step = 0.1),
+        hr(),
+        radioButtons("prob_type", "Probability to Calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 15, value = 2, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 15, value = 2, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 15, value = 1, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 15, value = 5, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Gamma distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # When parameters change, adjust the range of sliders
+  observe({
+    # For gamma distribution, adjust slider based on parameters
+    shape <- input$shape
+    scale <- input$scale
+    
+    # Use a heuristic to determine a reasonable upper bound
+    # This captures most of the meaningful density
+    max_x <- min(qgamma(0.995, shape = shape, scale = scale), 100)
+    
+    updateSliderInput(session, "x_less", max = max_x)
+    updateSliderInput(session, "x_greater", max = max_x)
+    updateSliderInput(session, "x_lower", max = max_x)
+    updateSliderInput(session, "x_upper", max = max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Gamma(α = %.2f, θ = %.2f)", input$shape, input$scale)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pgamma(input$x_less, shape = input$shape, scale = input$scale)
+      explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pgamma(input$x_greater, shape = input$shape, scale = input$scale)
+      explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # For continuous distributions, P(X = a) = 0
+        prob <- 0
+      } else {
+        upper_prob <- pgamma(input$x_upper, shape = input$shape, scale = input$scale)
+        lower_prob <- pgamma(input$x_lower, shape = input$shape, scale = input$scale)
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the gamma distribution plot
+  output$distPlot <- renderPlot({
+    # Get parameters
+    shape <- input$shape
+    scale <- input$scale
+    
+    # Determine a reasonable max for x-axis based on parameters
+    max_x <- min(qgamma(0.995, shape = shape, scale = scale), 100)
+    
+    # Create data frame for plotting
+    x_values <- seq(0.01, max_x, length.out = 500)  # Avoid x=0 for some shape values
+    density_values <- dgamma(x_values, shape = shape, scale = scale)
+    plot_df <- data.frame(x = x_values, density = density_values)
+    
+    # Create base plot
+    p <- ggplot(plot_df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "darkgray") +
+      labs(x = "X", y = "Probability Density Function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      xlim(0, max_x)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      # Create data for the filled area
+      fill_x <- seq(0.01, res$x, length.out = 200)
+      fill_y <- dgamma(fill_x, shape = shape, scale = scale)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      # Create data for the filled area
+      fill_x <- seq(res$x, max_x, length.out = 200)
+      fill_y <- dgamma(fill_x, shape = shape, scale = scale)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      # Create data for the filled area
+      fill_x <- seq(res$lower, res$upper, length.out = 200)
+      fill_y <- dgamma(fill_x, shape = shape, scale = scale)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** You collect historical data on the time to failure of a machine from Cantor’s Confectionery. The mean is 83 days and the variance is 50.3. You can then use this to estimate the shape and scale parameters of the gamma distribution:
 
 -   $\alpha = \frac{83^2}{50.3} = 136.958250497 \approx 137$
 
@@ -344,28 +2239,207 @@ PUT FIGURE HERE TOM
 
 The distribution can be expressed as $X \sim \textrm{Gam}(137,0.61)$, where the shape parameter is 137 and the scale parameter is 0.61.
 
-## Beta Distribution {.unnumbered}
+## Beta distribution {.unnumbered}
 
-**Where to use:** The beta distribution is used to model the distribution of probabilities or proportions. Hence, $0 \leq X \leq 1$.
+**Where to use:** The beta distribution is used to model the distribution of *probabilities* or proportions. Hence, the random variable $0 \leq X \leq 1$.
 
 **Notation:** $X \sim \textrm{Beta}(\alpha,\beta)$
 
-**Parameters:**
+**Parameters:** Two positive real numbers $\alpha,\beta$, which are shape parameters. These can be specified as follows in terms of $n$ and $k$ where $n$ is the number of Bernoulli trials and $k$ is the number of successes:
 
--   $\alpha = k + 1$ (shape parameter)
--   $\beta = n - k + 1$ (shape parameter) where $k$ = number of successes and $n$ = number of trials
+-   $\alpha = k + 1$
+-   $\beta = n - k + 1$
 
-**Mean and Expected Value:** $E(X) = \frac{\alpha}{\alpha+\beta}$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = \dfrac{\alpha}{\alpha+\beta}$ |  |
+| **Variance** | $\mathbb{V}(X) = \dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$ |  |
+| **PDF** | $\mathbb{P}(X=x)=\dfrac{x^{\alpha-1}(1-x)^{\beta-1}}{\textrm{B}(\alpha,\beta)}$ | $\textrm{B}(x,y)$ is the beta function |
+| **CDF** | $\mathbb{P}(X \leq x)=I_{x}(\alpha,\beta)$ | $I_{x}(a,b)$ is the regularized incomplete beta function |
 
-**Variance:** $\textrm{Var}(X) = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$
+ 
 
-**PDF:** $P(X=x)=\frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}$ where $\textrm{B}(x,y)$ is the beta function of $x$ and $y$
+<!-- **Mean/expected value:** $\mathbb{E}(X) = \frac{\alpha}{\alpha+\beta}$ -->
 
-**CDF:** $P(X \leq x)=I_{x}(\alpha,\beta)$ where $I_{x}(a,b)$ is the regularized incomplete beta function for $a$ and $b$ with $x$ being the upper bound for integration
+<!-- **Variance:** $\mathbb{V}(X) = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$ -->
+
+<!-- **PDF:** $\mathbb{P}(X=x)=\frac{x^{\alpha-1}(1-x)^{\beta-1}}{\textrm{B}(\alpha,\beta)}$ where $\textrm{B}(x,y)$ is the beta function of $x$ and $y$. -->
+
+<!-- **CDF:** $\mathbb{P}(X \leq x)=I_{x}(\alpha,\beta)$ where $I_{x}(a,b)$ is the regularized incomplete beta function for $a$ and $b$ with $x$ being the upper bound for integration. -->
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 730
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Beta distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("shape1", "Shape parameter α:", value = 2, min = 0.01, step = 0.1),
+        numericInput("shape2", "Shape parameter β:", value = 2, min = 0.01, step = 0.1),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 1, value = 0.5, step = 0.01)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 1, value = 0.5, step = 0.01)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 1, value = 0.25, step = 0.01),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 1, value = 0.75, step = 0.01)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Beta distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Beta(α = %.2f, β = %.2f)", input$shape1, input$shape2)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pbeta(input$x_less, shape1 = input$shape1, shape2 = input$shape2)
+      explanation <- sprintf("P(X ≤ %.2f) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pbeta(input$x_greater, shape1 = input$shape1, shape2 = input$shape2)
+      explanation <- sprintf("P(X ≥ %.2f) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # For continuous distributions, P(X = a) = 0
+        prob <- 0
+      } else {
+        upper_prob <- pbeta(input$x_upper, shape1 = input$shape1, shape2 = input$shape2)
+        lower_prob <- pbeta(input$x_lower, shape1 = input$shape1, shape2 = input$shape2)
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%.2f ≤ X ≤ %.2f) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the beta distribution plot
+  output$distPlot <- renderPlot({
+    # Get parameters
+    shape1 <- input$shape1
+    shape2 <- input$shape2
+    
+    # Create data frame for plotting
+    # Beta distribution is defined on the interval [0, 1]
+    x_values <- seq(0, 1, length.out = 500)
+    density_values <- dbeta(x_values, shape1 = shape1, shape2 = shape2)
+    plot_df <- data.frame(x = x_values, density = density_values)
+    
+    # Create base plot
+    p <- ggplot(plot_df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "darkgray") +
+      labs(x = "X", y = "probability density function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      xlim(0, 1) +
+      # Adjust y-limit based on maximum density to handle tall peaks
+      ylim(0, max(density_values) * 1.05)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      # Create data for the filled area
+      fill_x <- seq(0, res$x, length.out = 200)
+      fill_y <- dbeta(fill_x, shape1 = shape1, shape2 = shape2)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      # Create data for the filled area
+      fill_x <- seq(res$x, 1, length.out = 200)
+      fill_y <- dbeta(fill_x, shape1 = shape1, shape2 = shape2)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      # Create data for the filled area
+      fill_x <- seq(res$lower, res$upper, length.out = 200)
+      fill_y <- dbeta(fill_x, shape1 = shape1, shape2 = shape2)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
 
 **Example:** Cantor’s Confectionery is visited by 10 customers, and 6 of them purchase something from the store. Taking the buying customers as successes and the total visiting customers as number of trials, there would be 6 successes, allowing you to find the following parameters:
 
@@ -373,105 +2447,674 @@ PUT FIGURE HERE TOM
 
 -   $\beta = 10 - 6 + 1 = 5$
 
-Then the distribution of the probabilities of a customer purchasing from Cantor’s Confectionery can be expressed as $X \sim \textrm{Beta}(7,5)$,meaning the first shape parameter is 7 and the second shape parameter is 5.
+Then the distribution of the probabilities of a customer purchasing from Cantor’s Confectionery can be expressed as $X \sim \textrm{Beta}(7,5)$, meaning the first shape parameter is 7 and the second shape parameter is 5.
 
-## chi^2 Distribution {.unnumbered}
+## χ^2 distribution {.unnumbered}
 
-**Where to use:** The $\chi^2$ distribution is used for hypothesis testing, such as for goodness of fit tests and tests for independence. It is a special case of the gamma distribution, as $\chi^2(k)=\textrm{Gam}(\frac{k}{2},2)$.
+**Where to use:** The $\chi^2$ distribution is used for hypothesis testing, such as for goodness of fit tests and tests for independence. (See [Guide: Introduction to hypothesis testing](../studyguides/hypothesistesting.qmd) for more.) It is a special case of the gamma distribution, as $\chi^2(k)=\textrm{Gam}(\frac{k}{2},2)$.
 
 **Notation:** $X \sim \chi^2(k)$
 
-**Parameter:** $k$ = degrees of freedom in sample
+**Parameter:** The integer $k$ is the number of degrees of freedom in the sample.
 
-**Mean and Expected Value:** $E(X) = k$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = k$ |  |
+| **Variance** | $\mathbb{V}(X) = 2k$ |  |
+| **PDF** | $\mathbb{P}(X=x)=\dfrac{x^{\frac{k}{2}-1}\exp\left({-\frac{x}{2}}\right)}{2^\frac{k}{2}\Gamma\left(\frac{k}{2}\right)}$ | $\Gamma(x)$ is the gamma function |
+| **CDF** | $\mathbb{P}(X \leq x)=\dfrac{1}{\Gamma\left(\frac{k}{2}\right)}\textrm{Gam}\left(\frac{k}{2},\frac{x}{2}\right)$ | $\Gamma(x)$ is the gamma function, $\textrm{Gam}(\alpha,\theta)$ is the PDF of the gamma distribution |
 
-**Variance:** $\textrm{Var}(X) = 2k$
+<!-- **Mean/expected value:** $\mathbb{E}(X) = k$ -->
 
-**PDF:** $P(X=x)=\frac{1}{2^\frac{k}{2}\Gamma(\frac{k}{2})}x^{\frac{k}{2}-1}e^{-\frac{x}{2}}$ where $\Gamma(x)$ is the gamma function of $x$
+<!-- **Variance:** $\mathbb{V}(X) = 2k$ -->
 
-**CDF:** $P(X \leq x)=\frac{1}{\Gamma(\frac{k}{2})}\textrm{Gam}(\frac{k}{2},\frac{x}{2})$ where $\Gamma(x)$ is the gamma function of $x$ and $\textrm{Gam}(\alpha,\theta)$ is the PDF of the gamma distribution for parameters $\alpha$ and $\theta$
+<!-- **PDF:** $\mathbb{P}(X=x)=\dfrac{x^{\frac{k}{2}-1}\exp\left({-\frac{x}{2}}\right)}{2^\frac{k}{2}\Gamma\left(\frac{k}{2}\right)}$ where $\Gamma(x)$ is the gamma function of $x$. -->
+
+<!-- **CDF:** $\mathbb{P}(X \leq x)=\dfrac{1}{\Gamma\left(\frac{k}{2}\right)}\textrm{Gam}\left(\frac{k}{2},\frac{x}{2}\right)$ where $\Gamma(x)$ is the gamma function of $x$ and $\textrm{Gam}(\alpha,\theta)$ is the PDF of the gamma distribution for parameters $\alpha$ and $\theta$. -->
+
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 640
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Chi-squared distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("df", "Degrees of freedom (k):", value = 3, min = 1, step = 1),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 20, value = 5, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 20, value = 5, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 2, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 7, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Chi-squared distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # When degrees of freedom change, adjust the range of sliders
+  observe({
+    # For chi-squared distribution, a reasonable upper limit for the x-axis depends on df
+    # Higher df means larger values make more sense
+    df <- input$df
+    
+    # Use a heuristic to determine a reasonable upper bound
+    # This captures critical values at the 0.995 quantile
+    max_x <- min(qchisq(0.995, df = df), 50)
+    
+    updateSliderInput(session, "x_less", max = max_x)
+    updateSliderInput(session, "x_greater", max = max_x)
+    updateSliderInput(session, "x_lower", max = max_x)
+    updateSliderInput(session, "x_upper", max = max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Chi-Squared(k = %d)", input$df)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pchisq(input$x_less, df = input$df)
+      explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pchisq(input$x_greater, df = input$df)
+      explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # For continuous distributions, P(X = a) = 0
+        prob <- 0
+      } else {
+        upper_prob <- pchisq(input$x_upper, df = input$df)
+        lower_prob <- pchisq(input$x_lower, df = input$df)
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the chi-squared distribution plot
+  output$distPlot <- renderPlot({
+    # Get parameters
+    df_val <- input$df
+    
+    # Determine a reasonable max for x-axis based on df
+    max_x <- min(qchisq(0.995, df = df_val), 50)
+    
+    # Create data frame for plotting - avoid x=0 when df=1 as density is infinite there
+    x_min <- if(df_val == 1) 0.01 else 0
+    x_values <- seq(x_min, max_x, length.out = 500)
+    density_values <- dchisq(x_values, df = df_val)
+    plot_df <- data.frame(x = x_values, density = density_values)
+    
+    # Create base plot
+    p <- ggplot(plot_df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "darkgray") +
+      labs(x = "X", y = "probability density function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      xlim(0, max_x)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      # Create data for the filled area
+      fill_x <- seq(x_min, res$x, length.out = 200)
+      fill_y <- dchisq(fill_x, df = df_val)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      # Create data for the filled area
+      fill_x <- seq(res$x, max_x, length.out = 200)
+      fill_y <- dchisq(fill_x, df = df_val)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      # Create data for the filled area
+      fill_x <- seq(res$lower, res$upper, length.out = 200)
+      fill_y <- dchisq(fill_x, df = df_val)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
 
 **Examples:**
 
--   **Goodness of Fit Example:** You have a six-sided die with six possible outcomes: 1, 2, 3, 4, 5, and 6. You calculate the expected frequencies of each outcome. Then you roll the die many times and record the observed frequencies of each outcome. Since there are 6 categories, $$\textsf{degrees of freedom = number of categories} - 1 = 6 - 1 = 5$$ This can be expressed as $X \sim \chi^2(5)$, meaning the degrees of freedom is 5.
+-   **Goodness of fit example:** You have a six-sided die with six possible outcomes: $1, 2, 3, 4, 5,$ and $6$. You calculate the expected frequencies of each outcome. Then you roll the die many times and record the observed frequencies of each outcome. Since there are 6 categories, $$\textsf{degrees of freedom = number of categories} - 1 = 6 - 1 = 5$$ This can be expressed as $X \sim \chi^2(5)$, meaning the degrees of freedom is $5$.
 
--   **Test for Independence Example:** You are investigating whether there is a correlation between two variables: candy color and flavor. You have 5 categories of colors and 3 categories of flavors. Calculating the degrees of freedom can be done with: $$(\textsf{number of rows} - 1)(\textsf{number of columns} - 1) = (5-1)(3-1)=(4)(2)=8$$ Hence, $X \sim \chi^2(8)$, meaning the degrees of freedom is 8.
+-   **Test for independence example:** You are investigating whether there is a correlation between two variables: candy colour and flavour. You have $5$ categories of colours and 3 categories of flavours. Calculating the degrees of freedom can be done with the formula: $$(\textsf{categories of colours} - 1)(\textsf{categories of flavours} - 1) = (5-1)(3-1)=(4)(2)=8.$$ You can model $X \sim \chi^2(8)$, meaning that there are $8$ degrees of freedom.
 
-## $F$ Distribution {.unnumbered}
+## $F$-distribution {.unnumbered}
 
-**Where to use:** The $F$ distribution is used for the ratio of two independent random $\chi^2$ variables. It is commonly used as a reference distribution in hypothesis testing to compare two variances or more than two means, such as Analysis of Variance (ANOVA) tests.
+**Where to use:** The $F$-distribution is used for the ratio $(X/d_1)/(Y/d_2)$ of two independent random $\chi^2$ variables $X\sim \chi^2(d_1)$ and $Y\sim \chi^2(d_2)$. It is commonly used as a reference distribution in hypothesis testing to compare two variances or more than two means, such as Analysis of Variance (ANOVA) tests.
 
 **Notation:** $X \sim F(d_{1},d_{2})$
 
-**Parameters:**
+**Parameters:** Two integers $d_1$ and $d_2$, where - $d_{1}$ degrees of freedom for the random variable $X\sim \chi^2(d_{1})$. - $d_{2}$ degrees of freedom for the random variable $Y\sim \chi^2(d_{2})$.
 
--   $d_{1}$ = numerator degrees of freedom
--   $d_{2}$ = denominator degrees of freedom
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = \dfrac{d_{2}}{d_{2}-2}$ | $d_2>2$ |
+| **Variance** | $\mathbb{V}(X) = \dfrac{2d_{2}(d_{1}+d_{2}-2)}{d_{1}(d_{2}-2)^2(d_{2}-4)}$ |  |
+| **PDF** | $\mathbb{P}(X=x)=\dfrac{\sqrt{\frac{(d_{1}x)^{d_{1}}d_{2}^{d_{2}}}{(d_{1}x+d_{2})^{d_{1}+d_{2}}}}}{x\textrm{B}\left(\frac{d_{1}}{2},\frac{d_{2}}{2}\right)}$ | $\textrm{B}(x,y)$ is the beta function |
+| **CDF** | $\mathbb{P}(X \leq x)=I_{\frac{d_{1}x}{d_{1}x+d_{2}}}(\frac{d_{1}}{2},\frac{d_{2}}{2})$ | $I_{x}(a,b)$ is the regularized incomplete beta function |
 
-**Mean and Expected Value:** $E(X) = \frac{d_{2}}{d_{2}-2}$ for $d_{2}>2$
+<!-- **Mean/expected value:** $\mathbb{E}(X) = \dfrac{d_{2}}{d_{2}-2}$ for $d_{2}>2$. -->
 
-**Variance:** $\textrm{Var}(X) = \frac{2d_{2}(d_{1}+d_{2}-2)}{d_{1}(d_{2}-2)^2(d_{2}-4)}$
+<!-- **Variance:** $\mathbb{V}(X) = \dfrac{2d_{2}(d_{1}+d_{2}-2)}{d_{1}(d_{2}-2)^2(d_{2}-4)}$ -->
 
-**PDF:** $P(X=x)=\frac{\sqrt{\frac{(d_{1}x)^{d_{1}}d_{2}^{d_{2}}}{(d_{1}x+d_{2})^{d_{1}+d_{2}}}}}{x\textrm{B}(\frac{d_{1}}{2},\frac{d_{2}}{2})}$ where $\textrm{B}(x,y)$ is the beta function of $x$ and $y$
+<!-- **PDF:** $\mathbb{P}(X=x)=\dfrac{\sqrt{\frac{(d_{1}x)^{d_{1}}d_{2}^{d_{2}}}{(d_{1}x+d_{2})^{d_{1}+d_{2}}}}}{x\textrm{B}\left(\frac{d_{1}}{2},\frac{d_{2}}{2}\right)}$ where $\textrm{B}(x,y)$ is the beta function of $x$ and $y$. -->
 
-**CDF:** $P(X \leq x)=I_{\frac{d_{1}x}{d_{1}x+d_{2}}}(\frac{d_{1}}{2},\frac{d_{2}}{2})$ where $I_{x}(a,b)$ is the regularized incomplete beta function for $a$ and $b$ with $x$ being the upper bound for integration
+<!-- **CDF:** $\mathbb{P}(X \leq x)=I_{\frac{d_{1}x}{d_{1}x+d_{2}}}(\frac{d_{1}}{2},\frac{d_{2}}{2})$ where $I_{x}(a,b)$ is the regularized incomplete beta function for $a$ and $b$ with $x$ being the upper bound for integration. -->
+
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 760
 
-**Example:** You have three independent groups of data containing Cantor’s Confectionery chocolate bar lengths, and the total sample size is 90. From this, you would like to conduct an ANOVA test investigating if there is a statistically significant difference between each group’s means. You find the degrees of freedom using the following methods:
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "F-distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("df1", "Numerator degrees of freedom (d₁):", value = 5, min = 1, step = 1),
+        numericInput("df2", "Denominator degrees of freedom (d₂):", value = 10, min = 1, step = 1),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 10, value = 1, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 10, value = 1, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 0.5, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 2, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("F-distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # When degrees of freedom change, adjust the range of sliders
+  observe({
+    # For F distribution, a reasonable upper limit for the x-axis depends on degrees of freedom
+    # Higher df means smaller values make more sense
+    df1 <- input$df1
+    df2 <- input$df2
+    
+    # Use a heuristic to determine a reasonable upper bound
+    # This captures critical values at the 0.999 quantile
+    max_x <- min(qf(0.999, df1, df2), 10)
+    
+    updateSliderInput(session, "x_less", max = max_x)
+    updateSliderInput(session, "x_greater", max = max_x)
+    updateSliderInput(session, "x_lower", max = max_x)
+    updateSliderInput(session, "x_upper", max = max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("F-distribution(d₁ = %d, d₂ = %d)", input$df1, input$df2)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pf(input$x_less, df1 = input$df1, df2 = input$df2)
+      explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pf(input$x_greater, df1 = input$df1, df2 = input$df2)
+      explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # For continuous distributions, P(X = a) = 0
+        prob <- 0
+      } else {
+        upper_prob <- pf(input$x_upper, df1 = input$df1, df2 = input$df2)
+        lower_prob <- pf(input$x_lower, df1 = input$df1, df2 = input$df2)
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the F-distribution plot
+  output$distPlot <- renderPlot({
+    # Get parameters
+    df1 <- input$df1
+    df2 <- input$df2
+    
+    # Determine a reasonable max for x-axis based on df values
+    max_x <- min(qf(0.999, df1, df2), 10)
+    
+    # Create data frame for plotting
+    x_values <- seq(0.01, max_x, length.out = 500)  # Avoid x=0 since df(0) is undefined
+    density_values <- df(x_values, df1 = df1, df2 = df2)
+    plot_df <- data.frame(x = x_values, density = density_values)
+    
+    # Create base plot
+    p <- ggplot(plot_df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "darkgray") +
+      labs(x = "X", y = "probability density function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      xlim(0, max_x)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      # Create data for the filled area
+      fill_x <- seq(0.01, res$x, length.out = 200)
+      fill_y <- df(fill_x, df1 = df1, df2 = df2)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      # Create data for the filled area
+      fill_x <- seq(res$x, max_x, length.out = 200)
+      fill_y <- df(fill_x, df1 = df1, df2 = df2)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      # Create data for the filled area
+      fill_x <- seq(res$lower, res$upper, length.out = 200)
+      fill_y <- df(fill_x, df1 = df1, df2 = df2)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** You have three independent groups of data containing Cantor’s Confectionery chocolate bar lengths, and the total sample size is 90. From this, you would like to conduct an ANOVA test investigating if there is a statistically significant difference between the means of each group. You can find the degrees of freedom using the following methods:
 
 -   $\textsf{numerator degrees of freedom = number of groups} - 1 = 3 - 1 = 2$
 
 -   $\textsf{denominator degrees of freedom = sample size - number of groups} = 90 - 3 = 87$
 
-The $F$ distribution, which will be used as a reference distribution for the ANOVA test, can be expressed as $X \sim F(2,87)$, meaning the numerator degrees of freedom is 2 and the denominator degrees of freedom is 87.
+The $F$ distribution, which will be used as a reference distribution for the ANOVA test, can be expressed as $X \sim F(2,87)$, meaning the numerator degrees of freedom is $2$ and the denominator degrees of freedom is $87$.
 
-## $t$ Distribution {.unnumbered}
+## $t$-distribution {.unnumbered}
 
-**Where to use:** The $t$ distribution is a special case of the $F$ distribution, as $(t(v))^2 = F(1,v)$. This distribution is used for continuous random variables with heavier tails than the normal distribution, and it is often employed in hypothesis testing when the population standard deviation is unknown.
+**Where to use:** The $t$-distribution is a special case of the $F$-distribution, as $(t(\nu))^2 = F(1,\nu)$. This distribution is used for continuous random variables with heavier tails than the normal distribution, and it is often employed in hypothesis testing where the population standard deviation is unknown. (See [Guide: Introduction to hypothesis testing](../studyguides/hypothesistesting.qmd) for more.)
 
-**Notation:** $X \sim t(v)$
+**Notation:** $X \sim t(\nu)$
 
-**Parameter:** $v$ = degrees of freedom (equal to denominator degrees of freedom if related to $F$ distribution)
+**Parameter:** The integer $\nu$ representing the degrees of freedom.
 
-**Mean and Expected Value:** $E(X) = 0$
+| Quantity | Value | Notes |
+|:-----------------------|:-----------------------|:-----------------------|
+| **Mean** | $\mathbb{E}(X) = 0$ |  |
+| **Variance** | $\mathbb{V}(X) = \dfrac{\nu}{\nu -2}$ | $\nu > 2$ |
+| **PDF** | $\mathbb{P}(X=x)=\dfrac{\Gamma\left(\frac{\nu+1}{2}\right)}{\Gamma\left(\frac{\nu}{2}\right)\sqrt{\pi \nu}}\left(1+\frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}$ | $\Gamma(x)$ is the gamma function |
+| **CDF** | $\mathbb{P}(X \leq x)=\dfrac{1}{2}+x\Gamma\left(\frac{\nu+1}{2}\right)\left(\frac{_{2}F_{1}\left(\frac{1}{2},\frac{\nu+1}{2};\frac{3}{2};-\frac{x^2}{\nu}\right)}{\Gamma\left(\frac{\nu}{2}\right)\sqrt{\pi \nu}}\right)$ | $\Gamma(x)$ is the gamma function, $_{2}F_{1}(a,b;c;z)$ is the hypergeometric function |
 
-**Variance:** $\textrm{Var}(X) = \frac{v}{v-2}$ for $v>2$
+<!-- **Mean/expected value:** $\mathbb{E}(X) = 0$ -->
 
-**PDF:** $P(X=x)=\frac{\Gamma(\frac{v+1}{2})}{\sqrt{\pi v}\Gamma(\frac{v}{2})}(1+\frac{x^2}{v})^{-\frac{v+1}{2}}$ where $\Gamma(x)$ is the gamma function of $x$
+<!-- **Variance:** $\mathbb{V}(X) = \dfrac{\nu}{\nu -2}$ for $\nu>2$. -->
 
-**CDF:** $P(X \leq x)=\frac{1}{2}+x\Gamma(\frac{v+1}{2})(\frac{_{2}F_{1}(\frac{1}{2},\frac{v+1}{2};\frac{3}{2};-\frac{x^2}{v})}{\sqrt{\pi v}\Gamma(\frac{v}{2})})$ where $\Gamma(x)$ is the gamma function of $x$ and $_{2}F_{1}(a,b;c;z)$ is the hypergeometric function for $a, b, c,$ and $z$
+<!-- **PDF:** $\mathbb{P}(X=x)=\dfrac{\Gamma\left(\frac{\nu+1}{2}\right)}{\Gamma\left(\frac{\nu}{2}\right)\sqrt{\pi \nu}}\left(1+\frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}$ where $\Gamma(x)$ is the gamma function of $x$. -->
+
+<!-- **CDF:** $\mathbb{P}(X \leq x)=\dfrac{1}{2}+x\Gamma\left(\frac{\nu+1}{2}\right)\left(\frac{_{2}F_{1}\left(\frac{1}{2},\frac{\nu+1}{2};\frac{3}{2};-\frac{x^2}{\nu}\right)}{\Gamma\left(\frac{\nu}{2}\right)\sqrt{\pi \nu}}\right)$ where $\Gamma(x)$ is the gamma function of $x$ and $_{2}F_{1}(a,b;c;z)$ is the hypergeometric function for $a, b, c,$ and $z$. -->
+
+ 
 
 **Figure**
 
-PUT FIGURE HERE TOM
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 640
 
-**Example:** You have a sample of 40 measurements of Cantor’s Confectionery chocolate bar lengths. From this, you would like to conduct a one sample t-test comparing the sample to a hypothesized mean. You find the degrees of freedom:
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "t-distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("df", "Degrees of freedom (v):", value = 5, min = 1, step = 1),
+        hr(),
+        radioButtons("prob_type", "Probability to Calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = -6, max = 6, value = 0, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = -6, max = 6, value = 0, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = -6, max = 6, value = -2, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = -6, max = 6, value = 2, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("t-distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("t-distribution(df = %d, μ = 0)", input$df)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pt(input$x_less, df = input$df)
+      explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pt(input$x_greater, df = input$df)
+      explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # For continuous distributions, P(X = a) = 0
+        prob <- 0
+      } else {
+        upper_prob <- pt(input$x_upper, df = input$df)
+        lower_prob <- pt(input$x_lower, df = input$df)
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the t-distribution plot
+  output$distPlot <- renderPlot({
+    # Create data frame for plotting
+    df <- input$df
+    x_values <- seq(-6, 6, length.out = 500)
+    density_values <- dt(x_values, df = df)
+    plot_df <- data.frame(x = x_values, density = density_values)
+    
+    # Create base plot
+    p <- ggplot(plot_df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "darkgray") +
+      labs(x = "X", y = "probability density function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      geom_vline(xintercept = 0, linetype = "dashed", color = "gray", alpha = 0.7)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      # Create data for the filled area
+      fill_x <- seq(-6, res$x, length.out = 200)
+      fill_y <- dt(fill_x, df = df)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      # Create data for the filled area
+      fill_x <- seq(res$x, 6, length.out = 200)
+      fill_y <- dt(fill_x, df = df)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      # Create data for the filled area
+      fill_x <- seq(res$lower, res$upper, length.out = 200)
+      fill_y <- dt(fill_x, df = df)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    # Add normal distribution comparison if degrees of freedom is high enough
+    if (df >= 30) {
+      norm_x <- seq(-6, 6, length.out = 500)
+      norm_y <- dnorm(norm_x)
+      norm_df <- data.frame(x = norm_x, density = norm_y)
+      
+      p <- p + geom_line(data = norm_df, aes(x = x, y = density), 
+                        linetype = "dotted", color = "#db4315", size = 0.8, alpha = 0.7)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+**Example:** You have a sample of 40 measurements of Cantor’s Confectionery chocolate bar lengths. From this, you would like to conduct a one sample $t$-test comparing the sample to a hypothesized mean. You find the degrees of freedom:
 
 $$
 \textsf{degrees of freedom = sample size} - 1 = 40 - 1 = 39
 $$
 
-The $t$ distribution, which will be used as a reference distribution for the t-test, can be expressed as $X \sim t(39)$, meaning the degrees of freedom is 39.
+The $t$ distribution, which will be used as a reference distribution for the $t$-test, can be expressed as $X \sim t(39)$, meaning the degrees of freedom is 39. See [Guide: Introduction to hypothesis testing](../studyguides/hypothesistesting.qmd) for more.
 
 # Further reading {.unnumbered}
 
-\[For more information on hypothesis testing, please see Guide: Introduction to hypothesis testing.\]
+For more information on hypothesis testing, please see [Guide: Introduction to hypothesis testing](../studyguides/hypothesistesting.qmd).
 
-\[For more information on probability, please see Guide: Introduction to Probability.\]
+For more information on probability, please see [Guide: Introduction to probability](../studyguides/introtoprobability.qmd).
 
-\[For more information on mean, variance, and standard deviation, please see Guide: Mean, Variance, and Standard Deviation.\]
+For more information on mean, expected value, variance, and standard deviation, please see [Guide: Expected value, variance, standard deviation](../studyguides/expectedvariance.qmd).
 
-\[For more information on PMFs, PDFs, and CDFs, please see Guide: PMFs, PDFs, and CDFs.\]
+For more information on PMFs, PDFs, and CDFs, please see [Guide: PMFs, PDFs, and CDFs.](../studyguides/pmfspdfscdfs.qmd)
 
 ## Version history {.unnumbered}
 
-v1.0: initial version created 4/25 by Michelle Arnetta as part of a University of St Andrews VIP project.
+v1.0: initial version created 04/25 by Michelle Arnetta as part of a University of St Andrews VIP project.
 
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

@@ -2,11 +2,10 @@
 title: Introduction to integration
 author: Tom Coleman
 abstract-title: Summary
-abstract: The idea of integration...
+abstract: As the reverse process of differentiation, integration is a key area of mathematics. It has uses in almost all places that requires calculus, such as in the sciences, social sciences, and particularly in statistics. This guide introduces the idea of integral calculus through the definite and indefinite integrals, and illustrates the connection between the two using the Fundamental Theorem of Calculus. 
 categories:
   - Calculus
-image: FiguresPNG/introtodifferentiation-image.png
-draft: true
+image: FiguresPNG/introtointegration-image.png
 ---
 
 ```{r, setup, include = FALSE}
@@ -14,97 +13,263 @@ library("webexercises")
 ```
 
 
-*Before reading this guide, it is recommended that you read [Guide: Properties of functions], [Guide: Laws of indices](lawsofindices.qmd), [Guide: Logarithms](logarithms.qmd), and [Guide: Tangents].*
-
-# What is integration {-}
-
-This guide will look at the idea of differentiation; where it comes from, how it can be used, and how you can apply its techniques to functions that you may be familiar with. 
+*Before reading this guide, it is highly recommended that you read [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd).*
 
 ::: {.content-visible when-format="html"}
 
-The general shape of a quadratic equation is known as a **parabola**. The shape of a parabola is given in the following interactive figure: you can use the slider to show what happens to the shape of the parabola $y = ax^2$ as $a$ changes.
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/introtointegration.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
 
-<!-- ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1} -->
+:::
+
+# What is integration? {-}
+
+You have seen in [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd) that **differential calculus** is the study of the rate of change of quantities. In differential calculus, the **derivative** $f'(x)$ of a function $f(x)$ is a function that measures the rate of change of $f(x)$. The derivative of a function has an application in geometry: evaluating $f'(x)$ at a point $a$ allows you to find the gradient of the tangent to the curve of $f(x)$ at $a$. 
+
+Differential calculus is only half of the story though! The other half is **integral calculus**; the opposite process of differentiation. Integration is used in all sorts of mathematical processes; including in statistics, physics, economics, biology, chemistry, and in mathematics for its own sake. 
+
+This guide will introduce you to the idea of **integration** of functions. There are two types of integration on a function $f(x)$.
+
+- the **indefinite integral** of $f(x)$ with respect to $x$, written as $$\int f(x) \, \textrm{d}x$$
+
+- the **definite integral** of $f(x)$ between limits $a$ and $b$ with respect to $x$, written as $$\int_a^b f(x) \,\textrm{d}x$$
+
+The difference between the two types of integral is given by their uses. The indefinite integral is precisely the **reverse process** of differentiation. The definite integral represents (amongst other things) the signed area bounded by the curve $f(x)$ and the lines $x = a$ and $x = b$, and is related to the indefinite integral by the **Fundamental Theorem of Calculus**
+
+This guide first explains the role of the definite integral, then introduces the indefinite integral together with the antiderivative and the constant of integration. Finally, the Fundamental Theorem of Calculus is introduced and some initial antiderivatives are given.
+
+# Definite integrals {-}
+
+You have learned in previous education to work out areas of shapes using geometric formulas. For instance, the area of a circle is $\pi r^2$, where $r$ is the radius of the circle.
+
+But what about areas of more complicated shapes? Can you define the area using any function $f(x)$, and find areas related to those? This is where the idea of a **definite integral** comes in. In many areas of the sciences, the area under a curve can often represent a quantity that you are going to find. For instance, in statistics, the area under a *probability density function* represents the probability that a particular event occurs; see [Guide: PMFs, PDFs, CDFs](pmfspdfscdfs.qmd) for more.
+
+So what does a definite integral look like? These are **always** written like $$\int_a^b f(x)\, \textrm{d}x,$$ which is read out loud as 'the integral of $f(x)$ with respect to $x$ from $a$ to $b$' (or words similar to that effect). 
+
+Each of the pieces of notation plays a role:
+
+-  The $\int$ symbol is called the **integral sign**, and it tells you that you are integrating. This is adapted from a letter $S$ for sum, as the definite integral is more formally defined to be a limit of sums. (See [Guide: Definite integrals] for more.)
+
+- The value $a$ is called the **lower limit** and the value $b$ is known as the **upper limit**; together, these are the **limits** or **bounds** of the integral.
+
+- The function $f(x)$ is called the **integrand**, and this is the function you are integrating
+
+- The $\textrm{d}x$ denotes the variable you are integrating **with respect to**. Here, the variable $x$ doesn't have to be called $x$; for instance it can be called $t$ or $u$. 
+
+There are a few important things to remember about the definite integral
+
+::: {.callout-important}
+
+- The definite integral doesn't change its value if you change the name of the variable throughout. For instance 
+$$\int_a^b f(x)\, \textrm{d}x = \int_a^b f(t)\, \textrm{d}t = \int_a^b f(\theta)\, \textrm{d}\theta$$ and many more.
+
+- It is important to remember that in every integral, the integrand $f(x)$ and $\textrm{d}x$ are *multiplied together*.
+ 
+- In **every** definite integral you write, you should include **every** one of these pieces of notation.
+
+- The answer to a definite integral is always a **number**, and not an expression involving a variable. 
+
+- The numerical answer represents the *signed* area bounded by the curve $f(x)$, the $x$-axis, and the two lines $x = a$ and $x = b$. That means that portions of the area above the $x$-axis contribute positively to the answer, and portions of the area below the $x$-axis contribute negatively to the answer.
+
+    - This means that the definite integral is only equal to the area 'under' the curve when the outputs of the  function $f(x)$ are always positive (above the $x$-axis) between the limits $x = a$ and $x = b$. This is the case in Example 1. 
+
+:::
+
+::: {.content-visible when-format="html"}
+
+You can use the interactive figure below to explore how changing the bounds of an integral changes the value of the integral. Here, the value of the integral $A$ corresponds to the area shaded in blue, as the function is always above the $x$-axis.
 
 <div id="calculator" style="width: 100%; height: 450px;"></div>
 
 <script>
   var elt = document.getElementById('calculator');
   var calculator = Desmos.GraphingCalculator(elt);
-  calculator.setExpression({ id: 'line1', latex: 'y=x^2', color: '#DB4315' });
-  calculator.setExpression({ id: 'a', latex: 'a=0', sliderBounds: { min: '-2', max: '2'}});
-  calculator.setExpression({ id: 'b', latex: 'b=1', sliderBounds: { min: '0', max: '4'}});
-  calculator.setExpression({ id: "3", type: "expression", latex: "[(a,0), (a,a^2), (0,0)]", pointStyle: "POINT", hidden: false, secret: true, lines: true, fill: true, color: "#3F68B6", fillOpacity: 0.4});
-  calculator.setExpression({ id: 't', parametricBounds: { min: '0', max: '1'}});
-  calculator.setExpression({ id: "1", type: "expression", latex: "[(t,0), (1,t), (t,t^2)]", pointStyle: "POINT", hidden: false, secret: true, lines: true, fill: true, color: "#3F68B6", fillOpacity: 0.4});
-</script>
 
-:::
+  calculator.setExpression({ id: 'f', latex: 'f(x)=x^2/8+1', secret: true});
+  calculator.setExpression({id: 'sliderA',latex: 'a=0', sliderBounds: { min: -2, max: 2 }, slider: true});
+  calculator.setExpression({id: 'sliderB',latex: 'b=4', sliderBounds: { min: 2.5, max: 6.5 }, slider: true});
+  calculator.setExpression({ id: "3", type: "expression", latex: "(a,0), (a,f(a))", pointStyle: "POINT", hidden: false, secret: true, color: "#3F68B6", lines: true});
+  calculator.setExpression({ id: "4", type: "expression", latex: "(b,0), (b,f(b))", pointStyle: "POINT", hidden: false, secret: true, color: "#3F68B6", lines: true});
+  calculator.setExpression({ id: 'shade', latex: '0\\le y\\le f(x) \\left\\{a\\le x\\le b\\right\\}', color: "#3F68B6", fillOpacity: 0.3, secret: true});
+  calculator.setExpression({ id: 'integral', latex: 'A=\\int_{a}^{b}f(x)dx', label: "Area under curve", showLabel: true, color: Desmos.Colors.BLACK});
 
-::: {.content-visible when-format="html"}
-
-The general shape of a quadratic equation is known as a **parabola**. The shape of a parabola is given in the following interactive figure: you can use the slider to show what happens to the shape of the parabola $y = ax^2$ as $a$ changes.
-
-<!-- ![A pair of parabolas. (left) A graph of a quadratic $ax^2 + bx + c$ where $a > 0$. (right) A graph of a quadratic $ax^2 + bx + c$ where $a < 0$.](./FiguresPNG/introtoquadratics-fig1-1.png){width="150%" fig-alt="Two parabolas, side by side, on separate labelled axes. The parabola on the left looks like a u, and the parabola on the right looks like an n. These are graphs of quadratic expressions $ax^2 + bx + c$ with $a > 0$ and $a < 0$ respectively." #fig-1} -->
-
-<div id="calculator2" style="width: 100%; height: 600px;"></div>
-
-<script>
-  var elt2 = document.getElementById('calculator2');
-  var calculator2 = Desmos.GraphingCalculator(elt2);
-  calculator2.setMathBounds({ left: -3.5, right: 3.5, bottom: -0.1, top: 0.5});
-  calculator2.setExpression({ id: 'explanation', type: 'text', text: 'This interactive figure helps you calculate p-values from a one-tailed Z-test, provided that your data is normally distributed.'});
-  calculator2.setExpression({ id: 'mu', latex: '\\mu=0', secret: true});
-  calculator2.setExpression({ id: 'sigma', latex: '\\sigma=1', secret: true});
-  calculator2.setExpression({ id: 'explanation2', type: 'text', text: 'Click on Find Cumulative Probability. For a lower tailed test, enter your Z-score in the Max box; for an upper-tailed test, enter your Z-score in the Min box. The answer is the p-value for your test.'});
-  calculator2.setExpression({ id: 'line1', latex: 'y=\\normaldist(\\mu,\\sigma)', color: '#DB4315' });
-</script>
-
-:::
-
-# Flowchart test
-
-
-::: {.callout-note appearance="simple"}
-
-## Example 4
-
-Determine the behaviour of the function $f(x) = 2\ln(3x) - x$ when $x = 1$. 
-
-Here, you will first need to differentiate the function $f(x)$ to find $f'(x)$. Then, you will need to evaluate the derivative $f'(x)$ when $x = 1$ to see how the function behaves.
-
-Using your rules of differentiation as you found above, you can say that the derivative of $2\ln(3x)$ is $2/x$, and the derivative of $x$ is $1$. Therefore, the derivative of the function $f(x) = 2\ln(3x) - x$ is $$f'(x) = \frac{2}{x} - 1.$$ You can evaluate the derivative $f'(x)$ at $x = 1$ to get $$f'(1) = \frac{2}{1} - 1 = 2 - 1 = 1$$ and so the derivative is positive at $x = 1$. This implies that the function $f(x) = 2\ln(3x) - x$ is increasing at the point $x = 1$.
-
-It also means that the gradient of the tangent to the function $f(x)$ at the point $(1,2\ln(3) - 1)$ is $1$. You can see this in the figure below. 
-
-:::
-
-::: {.content-visible when-format="html"}
-
-<div id="calculator3" style="width: 100%; height: 450px;"></div>
-
-<script>
-  var elt = document.getElementById('calculator3');
-  var calculator3 = Desmos.GraphingCalculator(elt);
-  calculator3.setMathBounds({ left: -0.5, right: 3, bottom: -0.5, top: 4});
-  calculator3.setExpression({ id: 'line1', latex: 'y=2\\ln(3x)-x', color: '#3F68B6'});
-  calculator3.setExpression({ id: "2", type: "expression", latex: "(1,2\\ln(3) - 1)", pointStyle: "POINT", hidden: false, secret: true, color: "#DB4315", lines: true});
-  calculator3.setExpression({ id: 'line2', latex: 'y = x - 2 + 2\\ln(3)', color: '#DB4315', secret: true});
 </script>
 
 :::
 
 ::: {.content-hidden when-format="html"}
 
-![The graph of $f(x) = 2\ln(3x) - x$, with the tangent to the graph at $(1,2\ln(3) - 1)$ illustrated, demonstrating that the function is increasing at $x = 1$.](./FiguresPNG/introtodifferentiation-fig3-3.png){width="80%" #fig-3}
+The figure below shows a representation of a definite integral. Here, the value of the integral $A$ corresponds to the area shaded in blue, as the function is always above the $x$-axis.
+
+![A representation of a definite integral. The area of the shaded region is equal to the integral $\int_a^b f(x) \,\mathrm{d}x$.](./FiguresPNG/introtointegration-fig1.png){width="90%" fig-alt="A curve $f(x)$ plotted on a graph with axes labelled $x$ and $f(x)$. There is a line labelled $a$ joining the $x$-axis to the curve, and a line to the right of that labelled $b$ joining the $x$-axis to the curve. The area bounded by $f(x)$, these two lines, and the $x$-axis, is shaded in blue." #fig-1}
+
 
 :::
 
- 
+You can work out the value of definite integrals using geometry if the curve is sufficiently well-behaved - a straight line or a circular arc.
 
-## Summary
+::: {.callout-note appearance="simple"}
 
-Here's a table of derivatives that you should remember going into any further reading on differentiation. Here, $a,b,c,n$ are any real numbers. 
+## Example 1
+
+(a) Consider the area bounded by $f(x) = 2$, the $x$-axis, and the lines $x = 1$ and $x =3$.
+
+The distance between the two bounds is $2$, and the distance between the lines $y = 0$ and $y = f(x)$ is also $2$, so this area describes a square with side length $2$. The area of this region is $A = 2\cdot 2 = 4$. You can use the idea of the definite integral to say that $$\int_1^3 2 \,\mathrm{d}x  = 4.$$
+
+(b) You are given the area bounded by $f(x) = x$, the $x$-axis, and the lines $x = 0$ and $x = 3$.
+ 
+As the shaded region is a triangle with base and height both $3$, the area is $A = (3\cdot 3)/2 = 9/2$. You can use the idea of a definite integral to say that $$\int_{0}^{2}{x}\,\mathrm{d}x = 2.$$
+
+:::
+
+::: {.callout-important}
+
+Both examples here involve functions which take **positive outputs**, and so the definite integral is actually equal to the area. It is worth reminding yourself at this point that the answer is the **signed** area bounded by the curve, the limits, and the $y$-axis. Here's another figure which demonstrates this.
+
+:::
+
+::: {.content-visible when-format="html"}
+
+You can use the interactive figure below to explore how changing the bounds of an integral changes the value of the integral. Here, the value of the integral $A$ corresponds to the values of the area above the curve minus the values of the area below the curve. It's possible to have a negative answer, or an answer of $0$.
+
+<div id="calculator2" style="width: 100%; height: 450px;"></div>
+
+<script>
+  var elt = document.getElementById('calculator2');
+  var calculator2 = Desmos.GraphingCalculator(elt);
+  calculator2.setMathBounds({ left: -6.5, right: 6.5, bottom: -6.5, top: 6.5});
+  calculator2.setExpression({ id: 'f', latex: 'f(x) = x^3/16 - x', secret: true});
+  calculator2.setExpression({id: 'sliderA',latex: 'a=0', sliderBounds: { min: -6, max: 0 }, slider: true});
+  calculator2.setExpression({id: 'sliderB',latex: 'b=4', sliderBounds: { min: 0, max: 6 }, slider: true});
+  calculator2.setExpression({ id: "3", type: "expression", latex: "(a,0), (a,f(a))", pointStyle: "POINT", hidden: false, secret: true, color: "#3F68B6", lines: true});
+  calculator2.setExpression({ id: "4", type: "expression", latex: "(b,0), (b,f(b))", pointStyle: "POINT", hidden: false, secret: true, color: "#3F68B6", lines: true});
+  calculator2.setExpression({ id: 'shade', latex: '0\\le y\\le f(x) \\left\\{a\\le x\\le b\\right\\}', color: "#3F68B6", fillOpacity: 0.3, secret: true});
+  calculator2.setExpression({ id: 'shade2', latex: 'f(x)\\le y\\le 0 \\left\\{a\\le x\\le b\\right\\}', color: "#3F68B6", fillOpacity: 0.3, secret: true});
+  calculator2.setExpression({ id: 'integral', latex: 'A=\\int_{a}^{b}f(x)dx', label: "Area bounded by curve", showLabel: true, color: Desmos.Colors.BLACK});
+
+</script>
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+ The figure below shows a representation of a definite integral. Here, the value of the integral $A$ corresponds to the area shaded in blue, as the function is always above the $x$-axis.
+
+![A representation of a definite integral. The integral $\int_a^b f(x) \,\mathrm{d}x$ is equal to the bounded area above the curve minus the bounded area below the curve.](./FiguresPNG/introtointegration-fig2.png){width="90%" fig-alt="A curve $f(x)$ plotted on a graph with axes labelled $x$ and $f(x)$. There is a line labelled $a$ joining the $x$-axis to the curve, and a line to the right of that labelled $b$ joining the $x$-axis to the curve. The area bounded by $f(x)$, these two lines, and the $x$-axis, is shaded in blue. There is a point $c$ between $a$ and $b$; the area between $a$ and $c$ is above the $x$-axis; the area between $c$ and $b$ is below the $x$-axis." #fig-1}
+
+:::
+
+
+# Indefinite integrals and antiderivatives
+
+Evaluating areas gets more complicated if your curve is not a straight line. For instance, how would you work out the area bounded by $f(x) = x^2$, the limits $x = 0$ and $x = 1$ and the $x$-axis? In other words, what is the value of the definite integral of $f(x) = x^2$ between $0$ and $1$ with respect to $x$? You can work this out by finding the **antiderivative**.
+
+Finding the derivative $f'(x)$ of a function $f(x)$ is well defined; see [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd) for more. The question of finding the antiderivative is as follows: given a function $f(x)$, is there a function $F(x)$ such that $F'(x) = f(x)$? If this happens, then $F(x)$ is the **antiderivative of $f(x)$**.
+
+It turns out that antiderivatives are very closely related to integration. To find the antiderivative $F(x)$ of $f(x)$, you can find the **indefinite integral of $f(x)$ with respect to $x$**; in other words $$F(x) = \int f(x)\,\textrm{d}x.$$ This means that indefinite integration is the **reverse process** of differentiation: to undo differentiation, do an indefinite integral; to undo an indefinite integral, find the derivative.
+
+## The constant of integration
+
+You can ask yourself; is the antiderivative $F(x)$ of a function $f(x)$ unique? The answer here is **no**, it isn't. Here's an example to illustrate this process.
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+You know from [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd) that the derivative of $f(x) = \sin(x)$ is $f'(x) = \cos(x)$. Because antiderivatives reverse differentiation, it follows that the antiderivative $F(x)$ of $\cos(x)$ is equal to $F(x) = \sin(x)$. You can check your answer to see that $F'(x) = \cos(x)$. 
+
+However, $F(x) = \sin(x)$ is not the only function that differentiates to give $\cos(x)$. Because the derivative of every constant real number with respect to $x$ is equal to $0$, it follows (for instance) that $$\dfrac{\textrm{d}}{\textrm{d}x}(\sin(x) + 19) = \cos(x) + 0 = \cos(x).$$ So the antiderivative for $\cos(x)$ could be equal to $\sin(x) + 19$ as well. Because the choice of $19$ was random, **any** real number could take its place, and so $\cos(x)$ has **infinitely many antiderivatives**.
+
+How can you encapsulate these infinitely in a single answer? The answer is to write $F(x) = \sin(x) + C$, where the $C$ is any real number. This $C$ is called the **constant of integration**, and is used to represent the infinitely many possible antiderivatives. Therefore, you can write that $$\int\cos(x) \,\textrm{d}x = \sin(x) + C.$$
+
+:::
+
+Let's look at this more generally. If $F(x)$ is a function such that $F'(x) = f(x)$, then the indefinite integral (antiderivative) of $f(x)$ with respect to $x$ is given by $$\int f(x) \,\textrm{d}x = F(x) + C$$ where $C$, the **constant of integration**, is **any** real number.
+
+In summary:
+
+::: {.callout-important}
+
+When you work out a **indefinite integral** $\int f(x)\,\mathrm{d}x$, your final answer should be a **function** plus a **constant of integration $C$**. This expression represents all the possible antiderivatives of $f(x)$. You should **always** remember to add a $+C$ at the very end when finding an indefinite integral.
+
+:::
+
+::: {.callout-tip}
+
+You can work out the value of the constant of integration if you have some extra information about $x$ and $f(x)$. This extra information is known as a **boundary condition**. 
+
+:::
+
+# The Fundamental Theorem of Calculus
+
+Connecting the idea of the definite and indefinite integrals is the **Fundamental Theorem of Calculus**. 
+
+::: {.callout-note}
+ 
+## The Fundamental Theorem of Calculus
+
+Suppose that $F(x)$ is a function with derivative $F'(x) = f(x)$. Then the following are true:
+
+1. The antiderivative of $f(x)$ is given by $$\int f(x)\,\textrm{d}x = F(x) + C$$ where $C$ is the constant of integration. 
+
+2. The value of the definite integral of $f(x)$ between the limits $x = a$ and $x = b$ is equal to $$\int_a^b f(x)\,\textrm{d}x = F(b) - F(a)$$ that is, the difference between the values of $F(a)$ and $F(b)$.
+
+:::
+
+::: {.callout-tip}
+
+For why the Fundamental Theorem of Calculus works, please go to [Proof sheet: The Fundamental Theorem of Calculus]
+
+:::
+
+Part 1 of this theorem is covered in the section on indefinite integration above, and is a concrete statement that integration is the reverse process of differentiation. Part 2 connects the idea of definite and indefinite integration. So to find the value of a definite integral, you could follow these steps: 
+
+**Step 1:** Find an antiderivative $F(x)$ of $f(x)$. You do not need a $+C$.
+
+**Step 2:** The result $F(x)$ can be put into square brackets, with the upper limit at the top right and the lower limit at the bottom right. So you can write: $$\int_a^bf(x) \,\mathrm{d}x = [F(x)]^b_a$$
+
+**Step 3:** Work out $F(x)$ at $x = b$ and then work out $F(x)$ at $x = a$. You can then subtract $F(a)$ from $F(b)$ to get $$\int_a^b f(x) \,\mathrm{d}x = [F(x)]^b_a = F(b) - F(a)$$ The number at the end is the answer.
+
+In summary:
+
+::: {.callout-important}
+
+For an **indefinite integral** $\displaystyle\int f(x)\,\mathrm{d}x$, your final answer should be a **function** plus a **constant of integration $C$**.
+
+For a **definite integral** $\displaystyle\int_a^b f(x)\,\mathrm{d}x$, your final answer should be a **number**. There should be **no** variables in your answer, and you do **not** need a $+C$ at the end.
+
+:::
+
+Here's an example of the power of the Fundamental Theorem of Calculus. 
+
+::: {.callout-note appearance="simple"}
+
+## Example 3
+
+Find the definite integral $\displaystyle \int_0^{\pi/4}\cos(x)\,\textrm{d}x.$
+
+You could use the step-by-step process in finding the value of this definite integral. 
+
+**Step 1:** As seen in Example 2, a function $F(x)$ such that $F'(x) = \cos(x)$ is $F(x) = \sin(x)$.
+
+**Step 2:** Now, you can write : $$\int_0^{\pi/4}\cos(x) \,\mathrm{d}x = \big[\sin(x)\big]^{\pi/4}_0$$
+
+**Step 3:** Here, $\sin(0) = 0$ and $\sin(\pi/4) = \sqrt{2}/2$. Therefore $$\int_0^{\pi/4}\cos(x) \,\mathrm{d}x = \big[\sin(x)\big]^{\pi/4}_0 = \frac{\sqrt{2}}{2} - 0 = \frac{\sqrt{2}}{2}$$ The number at the end is the answer!
+
+:::
+
+::: {.callout-important}
+
+When working with trigonometric functions in calculus, you should **always use radians as your angular measure**. See [Guide: Radians](radians.qmd) and [Guide: Trigonometry (radians)](trigonometry-radians.qmd) for more. 
+
+:::
+
+# Finding antiderivatives
+
+From the fundamental theorem of calculus, the key skill in integration is finding antiderivatives of functions.
+
+Here's the summary table of derivatives from [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd)
 
 | Function $f(x)$ | Derivative $f'(x)$ | Notes |
 |:-----------|:-------------------|:--------|
@@ -116,12 +281,103 @@ Here's a table of derivatives that you should remember going into any further re
 | $f(x) = a\cos(bx)$ | $f'(x) = -ab\sin(bx)$ |  |
 | $f(x) = a\ln(bx)$ | $f'(x) = \dfrac{a}{x}$ |  |
 
+You can use this table to reverse engineer antiderivatives for common functions. 
+
+For instance, suppose you wanted to find the antiderivative of the function $f(x) = ax^n$, where $a$ is a constant and $n\neq -1$. You can use the fact that integration is the opposite of differentiation to say that the solution will be a function $F(x)$ such that $$\dfrac{\textrm{d}}{\textrm{d}x}(F(x)) = ax^n$$ Taking $F(x) = \frac{ax^{n+1}}{n+1}$, and using the power rule for differentiation gives: $$\dfrac{\textrm{d}}{\textrm{d}x}\left(\frac{ax^{n+1}}{n+1}\right) = \frac{a}{n+1}\cdot(n+1)x^n = ax^n$$ which is $f(x)$. Therefore
+
+::: {.callout-note appearance="simple"}
+
+The antiderivative of $ax^n$ for $n \neq -1$ is
+$$\int ax^n\,\textrm{d}x = \frac{ax^{n+1}}{n+1} + C\quad \mbox{ for }n\neq -1.$$
+
+This is sometimes known as the **power rule for integration**.
+
+:::
+
+A special case happens when $n = 0$; if this happens, then $f(x) = ax^0 = a$ is a constant. You can use the formula above with $n = 0$ to say s $\int a\,\textrm{d}x = \int ax^0\,\textrm{d}x = \frac{ax^1}{1} + C$ and so 
+
+::: {.callout-note appearance="simple"}
+
+The antiderivative of $a$ for $a$ a constant is is
+$$\int a\,\textrm{d}x = ax + C.$$
+
+:::
+
+You may have asked yourself already why doesn't this process work for $n = -1$? These are functions of the form $f(x) = \frac{a}{x}$. It is because if you do the process with $n = -1$, you end up dividing by $0$; which is not good. However, you know from the table of derivatives above that $$\dfrac{\textrm{d}}{\textrm{d}x}\left(a\ln (x)\right) = \frac{a}{x}$$ However, you need to make sure that $\ln(x)$ is defined; you know that the logarithm of a negative number is not defined (see [Guide: Logarithms](logarithms.qmd) for more). You can get around this by writing $\ln |x|$ (where $|x|$ is the absolute value of $x$) instead of $\ln(x)$; this ensures the value of the input is positive. This means you can write
+
+::: {.callout-note appearance="simple"}
+
+The antiderivative of $ax^{-1} = \dfrac{a}{x}$ is
+$$\int ax^{-1}\,\textrm{d}x = a\ln |x| + C.$$
+
+:::
+
+Now, what about $f(x) = ae^{kx}$? You are looking for a function $F(x)$ such that $\dfrac{\textrm{d}}{\textrm{d}x}(F(x)) = ae^{kx}$. Here, taking $F(x) = \frac{1}{k}ae^{kx} + C$, and differentiating with respect to $x$ gives $$\dfrac{\textrm{d}}{\textrm{d}x}\left(\frac{1}{k}ae^{kx} + C\right) = ae^{kx}$$ and so you can write 
+
+::: {.callout-note appearance="simple"}
+
+The antiderivative of $ae^{kx}$ is
+$$\int ae^{kx}\,\textrm{d}x = \frac{1}{k}ae^{kx} + C.$$
+
+:::
+
+Finally, you can consider antiderivatives of $a\sin(kx)$ and $a\cos(kx)$. Using rules of differentiation, you can say that $$\dfrac{\textrm{d}}{\textrm{d}x}\left(-\frac{1}{k}a\cos{kx}\right) = a\sin(kx)\quad\mbox{ and }\dfrac{\textrm{d}}{\textrm{d}x}\left(\frac{1}{k}a\sin{kx}\right) = a\cos(kx)$$ This means that you can write: 
+
+::: {.callout-note appearance="simple"}
+
+The antiderivative of $a\cos(kx)$ is
+$$\int a\cos(kx)\,\textrm{d}x = \frac{1}{k}a\sin{kx} + C$$ and the antiderivative of $a\sin(kx)$ is $$\int a\sin(kx)\,\textrm{d}x = -\frac{1}{k}a\cos{kx} + C.$$
+
+:::
+
+Here's another table to summarize the work on antiderivatives.
+
+| Function $f(x)$ | Antiderivative $\int{f(x)}{\,\textrm{d}x}$ | Notes |
+|:-----------|:-------------------|:--------------|
+| $a$ | $ax + C$ | $a$ real |
+| $ax^n$ | $\frac{ax^{(n+1)}}{n + 1} + C$ | $a$ real, $n \neq -1$ | 
+| $ax^{-1}$ | $a\ln |x| + C$ | $a$ real |
+| $ae^{kx}$ | $\frac{1}{k}ae^{kx} + C$ | $a,k$ real | 
+| $a\cos(kx)$ | $\frac{1}{k}a\sin(kx) + C$ | $a,k$ real | 
+| $a\sin(kx)$ | $-\frac{1}{k}a\cos(kx) + C$ | $a,k$ real |
+
+You can use the work done on antiderivatives to work out the elusive definite integral given at the start of the section on indefinite integration: 
+
+::: {.callout-note appearance="simple"}
+
+## Example 4
+
+Find the definite integral $\displaystyle \int_0^{1}x^2\,\textrm{d}x.$
+
+You could use the step-by-step process in finding the value of this definite integral. 
+
+**Step 1:** You can use the table of antiderivatives to find a function $F(x)$ such that $F'(x) = x^2$. Here, you have $a = 1$ and $n = 2$. Therefore, you can take $F(x) = \frac{x^3}{3}$.
+
+**Step 2:** Now, you can write : $$\int_0^{1}x^2 \,\mathrm{d}x = \left[\frac{x^3}{3}\right]^{1}_0$$
+
+**Step 3:** Here, $0^3/3 = 0$ and $1^3/3 = 1/3$. Therefore $$\int_0^{1}x^2 \,\mathrm{d}x = \left[\frac{x^3}{3}\right]^{1}_0 = \frac{1}{3} - \frac{0}{3} = \frac{1}{3}$$ and this is your answer!
+
+:::
+
+Finally, here's an example of finding an antiderivative that may look like it hasn't been covered, but you can use the **laws of indices** (see [Guide: Laws of indices](lawsofindices.qmd)) to write the integrand in a form which you can integrate.
+
+::: {.callout-note appearance="simple"}
+
+## Example 5
+
+Find the indefinite integral $\displaystyle \int 2\sqrt{x}\,\textrm{d}x.$
+
+You can use the laws of indices to write the integral in terms of a power of $x$. Since $\sqrt{x} = x^{1/2}$, you can write $$\int 2\sqrt{x}\,\textrm{d}x = \int 2x^{1/2}\,\textrm{d}x.$$ Next, you can use the power rule with $a = 2$ and $n = 1/2$ to write $$\int 2x^{1/2}\,\textrm{d}x = 2\frac{x^{\frac{1}{2} + 1}}{\frac{1}{2} + 1} + C = 2\frac{x^{3/2}}{3/2} + C = \frac{4}{3}x^{3/2} + C.$$
+
+Since this is an indefinite integral, **don't forget that constant of integration**!
+
+:::
 
 # Quick check problems {-}
 
 <!-- add facility for webexercises to work on html -->
 
-::: {.content-visible when-format="html"}
+::: {.content-visible when-format="html" data-topic="II1"}
 
 <!-- add facility to check answers at end rather than one at a time -->
 
@@ -129,25 +385,25 @@ Here's a table of derivatives that you should remember going into any further re
 
 1. Answer the following questions true or false:
 
-(a) The derivative of a function at $x = a$ is equal to the gradient of the tangent to $f(x)$ at $x = a$. Answer: `r torf(TRUE)`.
+(a) The indefinite integral can be used to find the area under a curve. Answer: `r torf(FALSE)`.
 
-(b) If $f'(a) < 0$, then the function is increasing at $x = a$. Answer: `r torf(FALSE)`.
+(b) The answer to a definite integral is always a number. Answer: `r torf(TRUE)`.
 
-(c) If $f(x) = c$, then the derivative $f'(x) = c-1$. Answer: `r torf(FALSE)`.
+(c) If $f(x) = a$, then the antiderivative of $f(x) = ax$. Answer: `r torf(FALSE)`.
 
-(d) The derivative of $f(x) = \cos(x)$ is $f'(x) = -\sin(x)$. Answer: `r torf(TRUE)`.
+(d) Indefinite integrals have limits. Answer: `r torf(FALSE)`.
 
-(e) The derivative of $f(x) = \dfrac{1}{x}$ is $f'(x) = \ln(x)$. Answer: `r torf(FALSE)`.
+(e) Differentiation is the reverse process of integration. Answer: `r torf(FALSE)`.
 
-(f) The power of $x$ in the derivative of $f(x) = \dfrac{1}{\sqrt{x}}$ is $-3/2$. Answer: `r torf(TRUE)`.
+(f) The power of $x$ in the antiderivative of $f(x) = \dfrac{1}{x^4}$ is $-3$. Answer: `r torf(TRUE)`.
 
-2. Fill in the gaps of the statements below. 
+2. Fill in the gaps of the statements below. Write any rational number as a fraction in its simplest form
 
-(a) If $f(x) = 3x^7 - 14x$, then $f'(x) =$ `r fitb("21")` $x^6 -$ `r fitb("14")`.
+(a) If $f(x) = 3x^7$, then the antiderivative of $f(x)$ is `r fitb("3/8")` $x^8 +$ `r fitb("C")`.
 
-(b) If $f(x) = -4\cos(3x)$, then $f'(x) =$ `r fitb("12")` $\sin\big($ `r fitb("3x")` $\big)$.
+(b) If $f(x) = 4\cos(3x)$, then the antiderivative of $f(x)$ is `r fitb("4/3")` $\sin\big($ `r fitb("3x")` $\big) + C$.
 
-(c) If $f(x) = -15\sin(x) + e^{8x}$, then $f'(x) =$ `r fitb("-15")` $\cos\big($ `r fitb("x")` $\big) +$ `r fitb("8")` $e^{8x}$.
+(c) If $f(x) = e^{-8x}$, then the antiderivative of $f(x)$ is `r fitb("-1/8")` $e^{8x} +$ `r fitb("C")`.
 
 :::
 
@@ -157,39 +413,41 @@ Here's a table of derivatives that you should remember going into any further re
 
 1. Answer the following questions true or false:
 
-(a) The derivative of a function at $x = a$ is equal to the gradient of the tangent to $f(x)$ at $x = a$.
+(a) The indefinite integral can be used to find the area under a curve.
 
-(b) If $f'(a) < 0$, then the function is increasing at $x = a$.
+(b) The answer to a definite integral is always a number.
 
-(c) If $f(x) = c$, then the derivative $f'(x) = c-1$.
+(c) If $f(x) = a$, then the antiderivative of $f(x) = ax$. 
 
-(d) The derivative of $f(x) = \cos(x)$ is $f'(x) = -\sin(x)$.
+(d) Indefinite integrals have limits.
 
-(e) The derivative of $f(x) = \dfrac{1}{x}$ is $f'(x) = \ln(x)$.
+(e) Differentiation is the reverse process of integration.
 
-(f) The power of $x$ in the derivative of $f(x) = \dfrac{1}{\sqrt{x}}$ is $-3/2$.
+(f) The power of $x$ in the antiderivative of $f(x) = \dfrac{1}{x^4}$ is $-3$.
 
-2. Differentiate the following functions with respect to $x$.
+2. Find the antiderivative of the following functions with respect to $x$.
 
-(a) $f(x) = 3x^7 - 14x$
+(a) $f(x) = 3x^7$
 
-(b) $f(x) = -4\cos(3x)$
+(b) $f(x) = 4\cos(3x)$
 
-(c) $f(x) = -15\sin(x) + e^{8x}$
+(c) $f(x) = e^{-8x}$
 
 :::
 
 # Further reading {-}
 
-[For more questions on the subject, please go to Questions: Introduction to differentiation and the derivative.](../questions/qs-introtodifferentiation.qmd)
+[For more questions on the subject, please go to Questions: Introduction to integration.](../questions/introtointegration.qmd)
 
-For more about techniques of differentiation, please see [Guide: The product rule], [Guide: The quotient rule], and [Guide: The chain rule].
+For more about properties of integration, please see [Guide: Properties of integration].
 
-For more about where the derivatives in the above table come from, please see [Proof sheet: Derivatives of functions from first principles](../proofsheets/ps-introtodifferentiation.qmd) and [Proof sheet: Derivatives of other common functions]. For more about why the rules of differentiation are true, please see [Proof sheet: Rules of differentiation].
+For more about the theory of definite integration, including a formal definition and how to find a definite integral from first principles, please see [Proof sheet: Definite integrals]. For more about why the Fundamental Theorem of Calculus works, please see [Proof sheet: Fundamental Theorem of Calculus].
+
+For more about techniques of integration, please see [Guide: Integration by substitution], [Guide: Integration by parts], and [Guide: Trigonometry and integration].
 
 ## Version history {-}
 
-v1.0: initial version created 03/25 by tdhc.
+v1.0: initial version created 08/25 by tdhc.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

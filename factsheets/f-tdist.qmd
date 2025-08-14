@@ -1,0 +1,236 @@
+---
+title: "Factsheet: $t$-distribution"
+author: Michelle Arnetta and Tom Coleman
+abstract-title: Summary
+abstract: A factsheet for the $t$-distribution.
+filters: 
+  - shinylive
+embed-resources: false
+categories: 
+  - Statistics
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+::: {.content-visible when-format="html"}
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 640
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "t-distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("df", "Degrees of freedom (v):", value = 5, min = 1, step = 1),
+        hr(),
+        radioButtons("prob_type", "Probability to Calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = -6, max = 6, value = 0, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = -6, max = 6, value = 0, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = -6, max = 6, value = -2, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = -6, max = 6, value = 2, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("t-distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("t-distribution(df = %d, μ = 0)", input$df)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pt(input$x_less, df = input$df)
+      explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pt(input$x_greater, df = input$df)
+      explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # For continuous distributions, P(X = a) = 0
+        prob <- 0
+      } else {
+        upper_prob <- pt(input$x_upper, df = input$df)
+        lower_prob <- pt(input$x_lower, df = input$df)
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the t-distribution plot
+  output$distPlot <- renderPlot({
+    # Create data frame for plotting
+    df <- input$df
+    x_values <- seq(-6, 6, length.out = 500)
+    density_values <- dt(x_values, df = df)
+    plot_df <- data.frame(x = x_values, density = density_values)
+    
+    # Create base plot
+    p <- ggplot(plot_df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "darkgray") +
+      labs(x = "X", y = "probability density function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      geom_vline(xintercept = 0, linetype = "dashed", color = "gray", alpha = 0.7)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      # Create data for the filled area
+      fill_x <- seq(-6, res$x, length.out = 200)
+      fill_y <- dt(fill_x, df = df)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      # Create data for the filled area
+      fill_x <- seq(res$x, 6, length.out = 200)
+      fill_y <- dt(fill_x, df = df)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      # Create data for the filled area
+      fill_x <- seq(res$lower, res$upper, length.out = 200)
+      fill_y <- dt(fill_x, df = df)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    # Add normal distribution comparison if degrees of freedom is high enough
+    if (df >= 30) {
+      norm_x <- seq(-6, 6, length.out = 500)
+      norm_y <- dnorm(norm_x)
+      norm_df <- data.frame(x = norm_x, density = norm_y)
+      
+      p <- p + geom_line(data = norm_df, aes(x = x, y = density), 
+                        linetype = "dotted", color = "#db4315", size = 0.8, alpha = 0.7)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![An example of the $t$-distribution with $\nu = \textsf{df} = 2$ and $\mu = 0$.](./FiguresPNG/f-tdist.png){width="80%"}
+
+:::
+
+**Where to use:** The $t$-distribution is a special case of the $F$-distribution, as $(t(\nu))^2 = F(1,\nu)$. This distribution is used for continuous random variables with heavier tails than the normal distribution, and it is often employed in hypothesis testing where the population standard deviation is unknown. (See [Guide: Introduction to hypothesis testing](../studyguides/hypothesistesting.qmd) for more.)
+
+**Notation:** $X \sim t(\nu)$
+
+**Parameter:** The integer $\nu$ representing the degrees of freedom.
+
+| Quantity | Value | Notes |
+|:--------|:----------------------------|:-------------------|
+| **Mean** | $\mathbb{E}(X) = 0$ |  |
+| **Variance** | $\mathbb{V}(X) = \dfrac{\nu}{\nu -2}$ | $\nu > 2$ |
+| **PDF** | $\mathbb{P}(X=x)=\dfrac{\Gamma\left(\frac{\nu+1}{2}\right)}{\Gamma\left(\frac{\nu}{2}\right)\sqrt{\pi \nu}}\left(1+\frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}$ | $\Gamma(x)$ is the gamma function |
+| **CDF** | $\mathbb{P}(X \leq x)=\dfrac{1}{2}+x\Gamma\left(\frac{\nu+1}{2}\right)\left(\frac{_{2}F_{1}\left(\frac{1}{2},\frac{\nu+1}{2};\frac{3}{2};-\frac{x^2}{\nu}\right)}{\Gamma\left(\frac{\nu}{2}\right)\sqrt{\pi \nu}}\right)$ | $\Gamma(x)$ is the gamma function, $_{2}F_{1}(a,b;c;z)$ is the hypergeometric function |
+
+**Example:** You have a sample of 40 measurements of Cantor’s Confectionery chocolate bar lengths. From this, you would like to conduct a one sample $t$-test comparing the sample to a hypothesized mean. You find the degrees of freedom:
+
+$$
+\textsf{degrees of freedom = sample size} - 1 = 40 - 1 = 39
+$$
+
+The $t$ distribution, which will be used as a reference distribution for the $t$-test, can be expressed as $X \sim t(39)$, meaning the degrees of freedom is 39. See [Guide: Introduction to hypothesis testing](../studyguides/hypothesistesting.qmd) for more.
+
+# Further reading {-}
+
+[This interactive element appears in Overview: Probability distributions. Please click this link to go to the guide.](../overviews/o-distributions.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 04/25 by tdhc and Michelle Arnetta as part of a University of St Andrews VIP project.
+
+  - v1.1: moved to factsheet form and populated with material from [Overview: Probability distributions](../overviews/o-distributions.qmd) by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

@@ -1,2 +1,1589 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Donald Campbell">
+
+<title>Introduction to partial differentiation – STARMAST</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, alongside enabling our non-identifiable QuickCheck problem tracking. These are the sole purposes of enabling cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<!-- Mailerlite snippet -->
+ <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '1477275');
+</script>
+
+<script src="https://esm.sh/shinylive-r"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html"> 
+<span class="menu-text">Full index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../studyguidelist.html"> 
+<span class="menu-text">Study guides</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../olist.html"> 
+<span class="menu-text">Other resources</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../applist.html"> 
+<span class="menu-text">Apps</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.instagram.com/starmast_"> 
+<span class="menu-text">Instagram</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="71018c9f48bc73d2580d5ffba10e48c9" class="alert alert-success hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> Three new guides, factsheets on probability distributions, and much more! (14/08/25)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-partial-differentiation" id="toc-what-is-partial-differentiation" class="nav-link active" data-scroll-target="#what-is-partial-differentiation">What is partial differentiation?</a></li>
+  <li><a href="#definition-of-the-partial-derivative" id="toc-definition-of-the-partial-derivative" class="nav-link" data-scroll-target="#definition-of-the-partial-derivative">Definition of the partial derivative</a></li>
+  <li><a href="#finding-partial-derivatives" id="toc-finding-partial-derivatives" class="nav-link" data-scroll-target="#finding-partial-derivatives">Finding partial derivatives</a></li>
+  <li><a href="#higher-order-partial-derivatives" id="toc-higher-order-partial-derivatives" class="nav-link" data-scroll-target="#higher-order-partial-derivatives">Higher-order partial derivatives</a></li>
+  <li><a href="#functions-of-more-than-two-variables" id="toc-functions-of-more-than-two-variables" class="nav-link" data-scroll-target="#functions-of-more-than-two-variables">Functions of more than two variables</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="introtopartialdifferentiation.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="introtopartialdifferentiation.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to partial differentiation</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Calculus</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Donald Campbell </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    Partial differentiation is a key technique used in calculus for dealing with functions of multiple variables. It focuses on how a function changes with respect to one variable while keeping others constant. It is widely used in physics, economics, and engineering to analyse systems involving multiple changing factors, such as in heat flow or optimization.
+  </div>
+</div>
+
+
+</header>
+
+
+<p><em>Before reading this guide, it is recommended that you read <a href="../studyguides/introtodifferentiation.html">Guide: Introduction to differentiation and the derivative</a>, <a href="../studyguides/chainrule.html">Guide: The chain rule</a>, <a href="../studyguides/productrule.html">Guide: The product rule</a>, and <a href="../studyguides/quotientrule.html">Guide: The quotient rule</a>.</em></p>
+<table><tbody><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls=""><source src="./Narrations/introtopartialdifferentiation.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></td></tr></tbody></table>
+<section id="what-is-partial-differentiation" class="level1 unnumbered">
+<h1 class="unnumbered">What is partial differentiation?</h1>
+<p>As explained in <a href="../studyguides/introtodifferentiation.html">Guide: Introduction to differentiation and the derivative</a>, a derivative measures how a function changes as its input changes. For example, if you have a function <span class="math inline">\(f(x)\)</span>, the derivative <span class="math inline">\(f'(x)\)</span> describes the rate at which <span class="math inline">\(f\)</span> changes with respect to <span class="math inline">\(x\)</span>. <span class="math display">\[f'(x)=\lim_{h \to 0} \left( \dfrac{f(x+h)-f(x)}{h} \right)\]</span></p>
+<p>However, in many real-world examples, functions depend on more than one variable. For example, weather prediction involves functions that depend on pressure, humidity and time. In economics, profit might depend on both price and production level. The process of <strong>partial differentiation</strong> is essential if you want to understand the influence of each variable separately.</p>
+<p>For a function <span class="math inline">\(f(x,y)\)</span> that depends on two variables <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, partial differentiation allows you to study the change in <span class="math inline">\(f\)</span> by considering the change in one variable at a time. If you choose to study the change in <span class="math inline">\(f\)</span> by considering the change in <span class="math inline">\(x\)</span>, you need to hold <span class="math inline">\(y\)</span> fixed. In this case, <span class="math inline">\(y\)</span> is treated as a constant as it doesn’t change during this process.</p>
+<p>This guide explains the idea of partial differentiation and how it is different from standard single-variable differentiation. It will explain how to find partial derivatives, the concept of second-order partial derivatives, and how to partially differentiate a function with any finite number of variables.</p>
+</section>
+<section id="definition-of-the-partial-derivative" class="level1 unnumbered">
+<h1 class="unnumbered">Definition of the partial derivative</h1>
+<p>Consider a surface (some bumpy terrain) shown in the 3D graph below. A surface <span class="math inline">\(z=f(x,y)\)</span> can be defined as a function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. This means that for any values of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, the function returns a value <span class="math inline">\(z\)</span> representing the height of the surface at the point <span class="math inline">\((x,y)\)</span>.</p>
+<p>A partial derivative measures how the surface changes in a single direction while keeping the other variable constant. To understand how the surface changes with respect to <span class="math inline">\(x\)</span>, fix a value of <span class="math inline">\(y\)</span>, say <span class="math inline">\(y=1\)</span>. The surface <span class="math inline">\(z=f(x,y)\)</span> is a function of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, but when <span class="math inline">\(y=1\)</span> the surface reduces to a curve <span class="math inline">\(z=f(x,1)=f(x)\)</span> in the <span class="math inline">\(xz\)</span>-plane. This shows how the height <span class="math inline">\(z\)</span> depends on <span class="math inline">\(x\)</span> alone when <span class="math inline">\(y\)</span> is fixed at <span class="math inline">\(1\)</span>.</p>
+<p>The 3D graph illustrates the surface with a vertical plane sliding through it at a chosen value of <span class="math inline">\(y=a\)</span>. The points where the plane intersects the surface form a curve (shown in yellow). You can use the slider to change the value of <span class="math inline">\(a\)</span> which will change the position of the vertical plane and the shape of the curve. The 2D graph displays this curve separately.</p>
+<div id="calculator3d" style="width: 100%; height: 410px;">
+
+</div>
+<div id="calculator2d" style="width: 100%; height: 200px; margin-bottom: 1rem;">
+
+</div>
+<script>
+  const elt3d = document.getElementById('calculator3d');
+  const calculator3d = Desmos.Calculator3D(elt3d);
+  calculator3d.setMathBounds({xMin: -5, xMax: 5, yMin: -5, yMax: 5, zMin: 5, zMax: 5});
+  calculator3d.setExpression({
+  id: 'info', type: 'text', text: 'Change the slider to move the horizontal plane \(y = a\).\nThe 2D graph shows the profile of the surface along this plane, represented by the yellow curve in the 3D graph.', secret: false});
+  calculator3d.setExpression({id: 'surface', latex: 'z=0.3\\sin(x)\\cos(y)+0.2\\sin(2x+y)+0.1\\cos(x-2y)+1', color: '#3F68B6', secret: true});
+  calculator3d.setExpression({id: 'trace', latex: 'z=0.3\\sin(x)\\cos(y)+0.2\\sin(2x+y)+0.1\\cos(x-2y)+1\\left\\{y=a\\right\\}', color: '#FFCB00', hidden: false, secret: true});
+  calculator3d.setExpression({id: 'plane', latex: 'y = a + 0x + 0z', color: '#DB4315', secret: true});
+  calculator3d.setExpression({id: 'a', latex: 'a=1', sliderBounds: {min: -5, max: 5, step: 0.01}, secret: false});
+
+  const elt2d = document.getElementById("calculator2d");
+  const calculator2d = Desmos.GraphingCalculator(elt2d, {expressions: true, settingsMenu: false, keypad: false, zoomButtons: false, lockViewport: true, expressionsTopbar: false});
+  calculator2d.setMathBounds({ left: -5, right: 5, bottom: -1, top: 3});
+  calculator2d.setExpression({id: 'a', latex: 'a=1', secret: true});
+  calculator2d.setExpression({id: 'trace', latex: 'z = 0.3\\sin(x)\\cos(a) + 0.2\\sin(2x + a) + 0.1\\cos(x - 2a) + 1', color: '#3F68B6', hidden: false, secret: true});
+
+  let lastAValue = "a=1";
+
+  function syncA(fromCalc, toCalc) {
+    const aExpr = fromCalc.getExpressions().find(e => e.id === 'a');
+    if (aExpr && aExpr.latex && aExpr.latex !== lastAValue) {
+      lastAValue = aExpr.latex;
+      toCalc.setExpression({ id: 'a', latex: aExpr.latex, secret: true });
+    }
+  }
+
+  setInterval(() => {
+    syncA(calculator3d, calculator2d);
+  }, 50);
+</script>
+<p>Imagine you are following a path across a bumpy terrain where you don’t change direction. As you go up and down the hills and valleys, you will trace out a curve that shows how the height changes along that path. The slope of this curve at any point tells you how steeply the surface is rising or falling in that direction. This is what the partial derivative measures.</p>
+<p>As seen in <a href="../studyguides/introtodifferentiation.html">Guide: Introduction to differentiation and the derivative</a>, you can approximate the gradient of this function at a point by looking at how much the function’s value changes over a small step. By fixing <span class="math inline">\(y\)</span> and observing how the function changes with respect to <span class="math inline">\(x\)</span>, you’re treating the surface as a single-variable function. The slope of the curve at a point gives the partial derivative with respect to <span class="math inline">\(x\)</span>, evaluated at that value of <span class="math inline">\(y\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of the partial derivative
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a function <span class="math inline">\(f(x,y)\)</span>, the <strong>partial derivative with respect to</strong> <span class="math inline">\(x\)</span> is written as <span class="math display">\[\dfrac{\partial f}{\partial x}\]</span></p>
+<p>It is defined by the limit <span class="math display">\[\dfrac{\partial f}{\partial x} = \lim_{h \to 0} \left( \dfrac{f(x+h,y)-f(x,y)}{h} \right)\]</span></p>
+<p>This definition is similar to that of single-variable differentiation, with the key difference that <strong><span class="math inline">\(y\)</span> is treated as a constant during the process</strong>.</p>
+<p>Similarly, the <strong>partial derivative with respect to</strong> <span class="math inline">\(y\)</span> is defined by the limit <span class="math display">\[\dfrac{\partial f}{\partial y} = \lim_{h \to 0} \left( \dfrac{f(x,y+h)-f(x,y)}{h} \right)\]</span></p>
+<p>When differentiating with respect to some variable, <strong>all other variables are held fixed (they do not change) and they should be treated as you would normally treat constants</strong>.</p>
+<p>You may sometimes see the notation <span class="math inline">\(f_{x}\)</span> to mean the partial derivative of <span class="math inline">\(f\)</span> with respect to <span class="math inline">\(x\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Partial derivatives are <strong>always</strong> written using a curly <span class="math inline">\(\partial\)</span> as opposed to a straight <span class="math inline">\(\mathrm{d}\)</span> as in single-variable differentiation.</p>
+<p>An important distinction is that if a function depends only on <span class="math inline">\(x\)</span>, then <span class="math inline">\(\dfrac{\partial f}{\partial x} = \dfrac{\mathrm{d}f}{\mathrm{d}x}\)</span> as there is no other variable to hold fixed.</p>
+</div>
+</div>
+</section>
+<section id="finding-partial-derivatives" class="level1 unnumbered">
+<h1 class="unnumbered">Finding partial derivatives</h1>
+<p>To finding a partial derivative, start by identifying the variable you want to differentiate with respect to. For example, if you want to find the partial derivative of <span class="math inline">\(f\)</span> with respect to <span class="math inline">\(x\)</span>, treat <span class="math inline">\(x\)</span> as the variable to differentiate with respect to.</p>
+<p>The golden rule of partial differentiation is as follows:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Golden rule of partial differentiation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When differentiating with respect to some variable, <strong>treat all other variables as constants</strong>.</p>
+</div>
+</div>
+<p>If required, apply any rules of differentiation such as the sum/difference rule chain rule, product rule or quotient rule. These rules from single-variable differentiation still apply to partial differentiation, but they must be applied with respect to the chosen variable only and (again) you must treat all other variables as constants. This can involve a lot of lengthy working, so take your time, especially when combining multiple rules.</p>
+<p>For a reminder on how to apply these techniques, please see <a href="../studyguides/introtodifferentiation.html">Guide: Introduction to differentiation and the derivative</a>, <a href="../studyguides/chainrule.html">Guide: The chain rule</a>, <a href="../studyguides/productrule.html">Guide: The product rule</a>, and <a href="../studyguides/quotientrule.html">Guide: The quotient rule</a>.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the function <span class="math inline">\(f(x,y) = x^2 + y^2\)</span>.</p>
+<p>To find the partial derivative with respect to <span class="math inline">\(x\)</span>, first differentiate <span class="math inline">\(x^2\)</span> with respect to <span class="math inline">\(x\)</span> using the power rule to get <span class="math inline">\(2x\)</span>. Importantly, the term <span class="math inline">\(y^2\)</span> is a constant with respect to <span class="math inline">\(x\)</span> so its partial derivative with respect to <span class="math inline">\(x\)</span> is <span class="math inline">\(0\)</span>. So: <span class="math display">\[
+\begin{aligned}
+\dfrac{\partial f}{\partial x} &amp;= \dfrac{\partial}{\partial x}(x^2+y^2) \\[0.5em]
+&amp;= \dfrac{\partial}{\partial x}(x^2) + \dfrac{\partial}{\partial x}(y^2) \\[0.5em]
+&amp;= 2x + 0 = 2x
+\end{aligned}
+\]</span></p>
+<p>To find the partial derivative with respect to <span class="math inline">\(y\)</span>, first differentiate <span class="math inline">\(y^2\)</span> with respect to <span class="math inline">\(y\)</span> using the power rule to get <span class="math inline">\(2y\)</span>. Importantly, the term <span class="math inline">\(x^2\)</span> is a constant with respect to <span class="math inline">\(y\)</span> so its partial derivative with respect to <span class="math inline">\(y\)</span> is <span class="math inline">\(0\)</span>. <span class="math display">\[
+\begin{aligned}
+\dfrac{\partial f}{\partial y} &amp;= \dfrac{\partial}{\partial y}(x^2+y^2) \\[0.5em]
+&amp;= \dfrac{\partial}{\partial y}(x^2) + \dfrac{\partial}{\partial y}(y^2) \\[0.5em]
+&amp;= 0 + 2y = 2y
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the function <span class="math inline">\(f(x,y) = 3x^{2}y + 4xy^{3}\)</span>.</p>
+<p>To find the partial derivative with respect to <span class="math inline">\(x\)</span>, first differentiate <span class="math inline">\(3x^2y\)</span> with respect to <span class="math inline">\(x\)</span> to get <span class="math inline">\(6xy\)</span>. Now differentiate <span class="math inline">\(4xy^3\)</span> with respect to <span class="math inline">\(x\)</span> to get <span class="math inline">\(4y^3\)</span>. Once again, <span class="math inline">\(y\)</span> is treated as a constant. <span class="math display">\[
+\begin{aligned}
+\dfrac{\partial f}{\partial x} &amp;= \dfrac{\partial}{\partial x}(3x^{2}y + 4xy^{3}) \\[0.5em]
+&amp;= \dfrac{\partial}{\partial x}(3x^2y) + \dfrac{\partial}{\partial x}(4xy^3) \\[0.5em]
+&amp;= 3y\dfrac{\partial}{\partial x}(x^2) + 4y^3\dfrac{\partial}{\partial x}(x) \\[0.5em]
+&amp;= 3y \cdot 2x + 4y^3 \cdot1 = 6xy + 4y^3
+\end{aligned}
+\]</span></p>
+<p>To find the partial derivative with respect to <span class="math inline">\(y\)</span>, first differentiate <span class="math inline">\(3x^2y\)</span> with respect to <span class="math inline">\(y\)</span> to get <span class="math inline">\(3x^2\)</span>. Now differentiate <span class="math inline">\(4xy^3\)</span> with respect to <span class="math inline">\(y\)</span> to get <span class="math inline">\(12xy^2\)</span>. Notice that in this case, <span class="math inline">\(x\)</span> is treated as a constant. <span class="math display">\[
+\begin{aligned}
+\dfrac{\partial f}{\partial y} &amp;= \dfrac{\partial}{\partial y}(3x^{2}y + 4xy^{3}) \\[0.5em]
+&amp;= \dfrac{\partial}{\partial y}(3x^2y) + \dfrac{\partial}{\partial y}(4xy^3) \\[0.5em]
+&amp;= 3x^2\dfrac{\partial}{\partial y}(y) + 4x\dfrac{\partial}{\partial y}(y^3) \\[0.5em]
+&amp;= 3x^2 \cdot 1 + 4x \cdot 3y^2 = 3x^2 + 12xy^2
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the function <span class="math inline">\(f(x,y) = x^2 (3x+y^2)^3\)</span>.</p>
+<p>Start by finding the partial derivative with respect to <span class="math inline">\(x\)</span>. Notice that <span class="math inline">\(f(x,y)\)</span> is a product of the two functions <span class="math inline">\(x^2\)</span> and <span class="math inline">\((3x+y^2)^3\)</span>. You need to use the product rule to differentiate the product <span class="math inline">\(x^2 (3x+y^2)^3\)</span> with respect to <span class="math inline">\(x\)</span>. Then, you need to differentiate <span class="math inline">\((3x+y^2)^3\)</span> with respect to <span class="math inline">\(x\)</span> using the chain rule. Remember to treat <span class="math inline">\(y^2\)</span> as a constant. <span class="math display">\[
+\begin{aligned}
+\dfrac{\partial f}{\partial x} &amp;= \dfrac{\partial}{\partial x} [ x^2 (3x+y^2)^3 ] \\[0.5em]
+&amp;= x^2 \dfrac{\partial}{\partial x} [ (3x+y^2)^3 ] + (3x+y^2)^3 \dfrac{\partial}{\partial x} [ x^2 ] \\[0.5em]
+&amp;= x^2 \cdot 9(3x+y^2)^2 + (3x+y^2)^3 \cdot 2x\\[0.5em]
+&amp;= 9x^2 (3x+y^2)^2 + 2x (3x+y^2)^3
+\end{aligned}
+\]</span></p>
+<p>Now find the partial derivative with respect to <span class="math inline">\(y\)</span>. Notice that <span class="math inline">\(f(x,y)\)</span> is a product of the two functions <span class="math inline">\(x^2\)</span> and <span class="math inline">\((3x+y^2)^3\)</span> however only the second function is a function of <span class="math inline">\(y\)</span>. Therefore, this doesn’t require the product rule to differentiate as <span class="math inline">\(x^2\)</span> is treated as a constant. The second function still requires you to use the chain rule. <span class="math display">\[
+\begin{aligned}
+\dfrac{\partial f}{\partial y} &amp;= \dfrac{\partial}{\partial y} [ x^2 (3x+y^2)^3 ] = x^2 \dfrac{\partial}{\partial y} [ (3x+y^2)^3 ] \\[0.5em]
+&amp;= x^2 \cdot 6y(3x+y^2)^2 = 6x^2y(3x+y^2)^2
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="higher-order-partial-derivatives" class="level1 unnumbered">
+<h1 class="unnumbered">Higher-order partial derivatives</h1>
+<p>As with single-variable functions, you can take partial derivatives of partial derivatives to get <strong>second-order partial derivatives</strong>. For a function of two variables <span class="math inline">\(f(x,y)\)</span>, there are <strong>four</strong> second-order partial derivatives, one for each combination of variables.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Second-order partial derivatives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Much like in differentiation in a single variable, second-order partial derivatives are the partial derivatives of first-order partial derivatives.</p>
+<p>For a function <span class="math inline">\(f\)</span> of two variables <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, the <strong>pure second-order partial derivatives</strong> are defined as: <span class="math display">\[
+\begin{aligned}
+f_{xx} &amp;= \dfrac{\partial^2 f}{\partial x^2} = \dfrac{\partial}{\partial x} \left( \dfrac{\partial f}{\partial x} \right) \\[0.5em]
+f_{yy} &amp;= \dfrac{\partial^2 f}{\partial y^2} = \dfrac{\partial}{\partial y} \left( \dfrac{\partial f}{\partial y} \right)
+\end{aligned}
+\]</span></p>
+<p>To compute a pure second-order partial derivative, you need to differentiate a first-order partial derivative with respect to the same variable again.</p>
+<p>For a function <span class="math inline">\(f\)</span> of two variables <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, the <strong>mixed second-order partial derivatives</strong> are defined as: <span class="math display">\[
+\begin{aligned}
+f_{xy} &amp;= \dfrac{\partial^2 f}{\partial y \partial x} = \dfrac{\partial}{\partial y} \left( \dfrac{\partial f}{\partial x} \right) \\[0.5em]
+f_{yx} &amp;= \dfrac{\partial^2 f}{\partial x \partial y} = \dfrac{\partial}{\partial x} \left( \dfrac{\partial f}{\partial y} \right)
+\end{aligned}
+\]</span></p>
+<p>To compute a mixed second-order partial derivative, you need to differentiate a first-order partial derivative with respect to a different variable.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The order in which the subscript variables are written above is not a typo! For the two notation systems, there are different conventions for denoting the order in which differentiation occurs.</p>
+</div>
+</div>
+<p>Under certain conditions, the mixed second-order partial derivatives are equal. This is called <em>Schwarz’s Theorem</em>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Schwarz’s theorem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If <span class="math inline">\(\dfrac{\partial f}{\partial x}\)</span> and <span class="math inline">\(\dfrac{\partial f}{\partial y}\)</span> are continuous and differentiable, then <span class="math display">\[\dfrac{\partial^2 f}{\partial x \partial y} = \dfrac{\partial^2 f}{\partial y \partial x}\]</span></p>
+</div>
+</div>
+<p>Please see [Guide: Introduction to continuity] and [Guide: Introduction to differentiability] for more detailed analyses of what makes functions continuous and differentiable.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the function <span class="math inline">\(f(x,y) = \sin(xy) + x^4y^2 + x^3y^3 + 3x\)</span>.</p>
+<p>The first-order partial derivatives are given by <span class="math display">\[
+\begin{aligned}
+\dfrac{\partial f}{\partial x} &amp;= y \cos(xy) + 4x^3 y^2 + 3x^2 y^3 + 3 \\[0.5em]
+\dfrac{\partial f}{\partial y} &amp;= x \cos(xy) + 2x^4 y + 3x^3 y^2
+\end{aligned}
+\]</span></p>
+<p>The second-order partial derivatives can be calculated from the first-order partial derivatives. <span class="math display">\[
+\begin{aligned}
+\dfrac{\partial^2 f}{\partial x^2} &amp;= \dfrac{\partial}{\partial x} \left( \dfrac{\partial f}{\partial x} \right) = -y^2 \sin(xy) + 12x^2 y^2 + 6xy^3 \\[0.5em]
+\dfrac{\partial^2 f}{\partial y^2} &amp;= \dfrac{\partial}{\partial y} \left( \dfrac{\partial f}{\partial y} \right) = -x^2 \sin(xy) + 2x^4 + 6x^3 y \\[0.5em]
+\dfrac{\partial^2 f}{\partial x \partial y} &amp;= \dfrac{\partial}{\partial x} \left( \dfrac{\partial f}{\partial y} \right) = \cos(xy) - xy \sin(xy) + 8x^3 y + 9x^2 y^2 \\[0.5em]
+\dfrac{\partial^2 f}{\partial y \partial x} &amp;= \dfrac{\partial}{\partial y} \left( \dfrac{\partial f}{\partial x} \right) = \cos(xy) - xy \sin(xy) + 8x^3 y + 9x^2 y^2
+\end{aligned}
+\]</span></p>
+<p>Notice that <em>Schwarz’s Theorem</em> holds as the first-order partial derivatives are continuous and differentiable and <span class="math display">\[\dfrac{\partial^2 f}{\partial x \partial y} = \dfrac{\partial^2 f}{\partial y \partial x}.\]</span></p>
+</div>
+</div>
+</section>
+<section id="functions-of-more-than-two-variables" class="level1 unnumbered">
+<h1 class="unnumbered">Functions of more than two variables</h1>
+<p>Partial differentiation is not limited to functions of two variables. Many real-world problems involve functions of many more variables. For example, the temperature in a room might depend on position <span class="math inline">\((x,y,z)\)</span> and time <span class="math inline">\(t\)</span>.</p>
+<p>In general, if <span class="math inline">\(f=f(x_1, x_2, \ldots, x_n)\)</span>, you can compute the partial derivative of <span class="math inline">\(f\)</span> with respect to any one variable by treating all other variables as constants.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Definition of the partial derivative for functions of <span class="math inline">\(n\)</span> variables
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a function <span class="math inline">\(f(x_1, x_2, \ldots, x_n)\)</span> of <span class="math inline">\(n\)</span> variables, the <strong>partial derivative with respect to</strong> <span class="math inline">\(x_i\)</span> is denoted by <span class="math display">\[
+\dfrac{\partial f}{\partial x_i} \quad \textsf{or} \quad f_{x_i}
+\]</span></p>
+<p>It is defined by the limit <span class="math display">\[
+\dfrac{\partial f}{\partial x_i} = \lim_{h \to 0} \left( \dfrac{f(x_1, \ldots, x_i + h, \ldots, x_n) - f(x_1, \ldots, x_i, \ldots, x_n)}{h} \right)
+\]</span></p>
+<p>This is a natural extension of the two-variable case from before. When differentiating with respect to <span class="math inline">\(x_i\)</span>, all other variables are held fixed.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the function <span class="math inline">\(f(x,y,z,t) = \ln(x^2+y^2+1) + e^{xzt} + y\sin(z+t)\)</span>.</p>
+<p>As an example, to find the first-order partial derivative with respect to <span class="math inline">\(x\)</span>, you need to differentiate <span class="math inline">\(f\)</span> with respect to <span class="math inline">\(x\)</span> while holding <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span> and <span class="math inline">\(t\)</span> constant.</p>
+<p>The first-order partial derivatives are given by <span class="math display">\[
+\begin{aligned}
+\dfrac{\partial f}{\partial x} &amp;= \dfrac{2x}{x^2+y^2+1} + zte^{xzt} \\[0.5em]
+\dfrac{\partial f}{\partial y} &amp;= \dfrac{2y}{x^2+y^2+1} + \sin(z+t) \\[0.5em]
+\dfrac{\partial f}{\partial z} &amp;= xte^{xzt} + y\cos(z+t) \\[0.5em]
+\dfrac{\partial f}{\partial t} &amp;= xze^{xzt} + y\cos(z+t)
+\end{aligned}
+\]</span></p>
+<p>You can also calculate various higher order partial derivatives for each variable by taking partial derivatives of these first-order partial derivatives.</p>
+</div>
+</div>
+</section>
+<section id="quick-check-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Quick check problems</h1>
+<div class="webex-check webex-box">
+<ol type="1">
+<li>Consider the function <span class="math inline">\(f(x,y) = x^3y^2 + y^2 + x\)</span>. Determine whether the following statements are true or false.</li>
+</ol>
+<!-- -->
+<ol type="a">
+<li><p>The partial derivative with respect to <span class="math inline">\(x\)</span> is given by <span class="math inline">\(\dfrac{\partial f}{\partial x} = 3x^2y^2 + y^2 + 1\)</span>. <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select></p></li>
+<li><p>The partial derivative with respect to <span class="math inline">\(y\)</span> is given by <span class="math inline">\(\dfrac{\partial f}{\partial y} = 2x^3y^2 + 2y\)</span>. <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select></p></li>
+</ol>
+<!-- -->
+<ol start="2" type="1">
+<li>Let <span class="math inline">\(f(x, y) = x^4y^2 + 3\ln(x)\)</span>. Which of the following best describes <span class="math inline">\(\dfrac{\partial f}{\partial y}\)</span>? <select class="webex-select"><option value="blank"></option><option value="">(a) Is constant</option><option value="">(b) Contains no \(x\) terms</option><option value="">(c) Contains \(x\) but not \(y\)</option><option value="answer">(d) Contains both \(x\) and \(y\)</option></select></li>
+</ol>
+<!-- -->
+<ol start="3" type="1">
+<li>Suppose <span class="math inline">\(f(x,y) = 5x^2y + 7y\)</span>. The mixed partial derivative <span class="math inline">\(\dfrac{\partial^2 f}{\partial y \partial x}\)</span> is given by <select class="webex-select"><option value="blank"></option><option value="">5</option><option value="">0</option><option value="answer">10x</option><option value="">7y</option></select>.</li>
+</ol>
+<!-- -->
+<ol start="4" type="1">
+<li>Consider the function <span class="math inline">\(f(x,y) = (x+y^3)^4\sin(x)\)</span>. Which rule(s) do you need to compute <span class="math inline">\(\dfrac{\partial f}{\partial x}\)</span>? <select class="webex-select"><option value="blank"></option><option value="">(a) Power rule only</option><option value="">(b) Chain rule only</option><option value="">(c) Product rule only</option><option value="answer">(d) Chain rule and product rule</option></select></li>
+</ol>
+<!-- -->
+<ol start="5" type="1">
+<li>If <span class="math inline">\(f(x, y, z, t) = y\sin(z + t) + e^{2x}\)</span>, then <span class="math inline">\(\dfrac{\partial f}{\partial t} =\)</span> <input class="webex-solveme nospaces" size="10" data-answer="[&quot;y cos(z+t)&quot;]">.</li>
+</ol>
+</div>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../questions/qs-introtopartialdifferentiation.html">For more questions on the subject, please go to Questions: Introduction to partial differentiation.</a></p>
+<p>For a way to differentiate functions of more than one variable, please see Guide: Multivariate chain rule.</p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 05/25 by Donald Campbell as part of a University of St Andrews VIP project.</p>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+  let allCorrect = false;
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) 
+  {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
+  }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if (this.dataset.tol > 0)
+  {
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* check each question to see whether it was answered correctly */
+  update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
+}
+
+</script>
+<!--------------------  Email Forms -----------------------------------
+        Compiled into each .html page by Quarto.
+        Website hosted and form handled by Netlify now
+        Mailing list provided by mailerlite
+        Input verified by reCaptcha2 
+        
+        Authors (recent to latest): 
+           Tristin Doherty (Trido)
+           Mohit Agarwal (Mohit-Agarwa1)
+--------------------------------------------------------------------->
+<script>
+  // Adds an extra layer of validation to aid user input,
+  // some of these are covered by basic html form validations as well, but netlify handles everything else
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[name='feedback']"); 
+    
+    form.addEventListener("submit", function(event) {
+        const nameInput = document.querySelector("input[name='name']")?.value.trim();
+        const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+        const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+
+        if (!nameInput)    { alert("Please enter a name."); return; }
+        if (!emailInput)   { alert("Please enter an email."); return; }
+        if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+        
+        event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+        const subjectInput = document.querySelector("input[name='subject']");
+                
+        // sanitise inputs
+        const sanitizedName = sanitizeInput(nameInput); 
+        const sanitizedEmail = sanitizeEmail(emailInput);
+        const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+        // validate email
+        if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+        subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+        form.submit();
+    });
+});
+
+// Removes leading and trailing whitespace for formatting, and replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+function sanitizeInput(input) {
+  input = input.trim();                                      
+  input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return input;
+}
+
+// remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+function sanitizeEmail(email) {
+  email = email.trim(); 
+  email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+  return email;
+}
+
+// This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+function validateEmail(email) {
+  const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+  return re.test(email);
+}
+
+</script>
+
+<h1>Mailing List</h1>
+<div class="ml-embedded" data-form="PEpZNW"></div>
+<br><br>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here, <br>
+but please be specific with any issues you encounter so we can help to resolve them <br>
+(for example, what page it occured on, what you tried, and so on). </p>
+
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+  <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+  <input type="hidden" name="subject" value="Feedback from unknown">
+
+  <label for="name">Name: </label>
+  <br>
+  <input type="text" name="name" required="">
+  <br><br>
+  
+  <label for="email">E-mail: </label>
+  <br>
+  <input type="email" name="email" required="">
+  <br><br>
+  
+  <label for="feedback">Feedback: </label>
+  <br>
+  <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+  <br><br>
+
+  <!-- Google reCAPTCHA Widget -->
+  <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+  <br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>STARMAST © 2025 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

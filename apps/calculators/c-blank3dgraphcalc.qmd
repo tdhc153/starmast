@@ -1,0 +1,31 @@
+---
+title: "Calculator: 3D graphical calculator"
+author: Tom Coleman
+format: html
+abstract-title: Summary
+abstract: A blank 3D graphical calculator for general use.
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+<div id="calculator3d" style="width: 100%; height: 500px;"></div>
+
+<script>
+  const elt3d = document.getElementById('calculator3d');
+  const calculator3d = Desmos.Calculator3D(elt3d);
+  calculator3d.setMathBounds({xMin: -10, xMax: 10, yMin: -10, yMax: 10, zMin: 10, zMax: 10});
+  calculator3d.setExpression({ id: "n0", type: "text", text: 'This is a blank 3D graphical calculator for you to enter anything you want! Click the X to delete this message, and click on the expression below to edit.'});
+  calculator3d.setExpression({id: 'surface', latex: 'z=x^2 + y^2', color: '#3F68B6'});
+</script>
+
+## Version history {-}
+
+v1.0: initial version created 08/25 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

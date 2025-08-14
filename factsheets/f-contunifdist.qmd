@@ -1,0 +1,232 @@
+---
+title: "Factsheet: Continuous uniform distribution"
+author: Michelle Arnetta and Tom Coleman
+abstract-title: Summary
+abstract: A factsheet for the continuous uniform distribution.
+filters: 
+  - shinylive
+embed-resources: false
+categories: 
+  - Statistics
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+::: {.content-visible when-format="html"}
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 750
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Continuous uniform distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("a", "Minimum value (a):", value = 0, step = 0.1),
+        numericInput("b", "Maximum value (b):", value = 10, step = 0.1),
+        hr(),
+        radioButtons("prob_type", "Probability to Calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
+          sliderInput("x_value", "x value:", min = 0, max = 10, value = 5, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 3, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 7, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Continuous uniform distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Ensure b is always greater than a
+  observe({
+    if (input$b <= input$a) {
+      updateNumericInput(session, "b", value = input$a + 1)
+    }
+  })
+  
+  # Update the range of the sliders when a or b changes
+  observe({
+    updateSliderInput(session, "x_value", min = input$a, max = input$b, value = min(max(input$a, (input$a + input$b)/2), input$b))
+    updateSliderInput(session, "x_lower", min = input$a, max = input$b, value = min(max(input$a, input$a + (input$b - input$a)/3), input$b))
+    updateSliderInput(session, "x_upper", min = input$a, max = input$b, value = min(max(input$a, input$a + 2*(input$b - input$a)/3), input$b))
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Unif(a = %.1f, b = %.1f)", input$a, input$b)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- punif(input$x_value, min = input$a, max = input$b)
+      explanation <- sprintf("P(X ≤ %.2f) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - punif(input$x_value, min = input$a, max = input$b)
+      explanation <- sprintf("P(X ≥ %.2f) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
+      
+    } else if (input$prob_type == "between") {
+      upper_prob <- punif(input$x_upper, min = input$a, max = input$b)
+      lower_prob <- punif(input$x_lower, min = input$a, max = input$b)
+      prob <- upper_prob - lower_prob
+      
+      explanation <- sprintf("P(%.2f ≤ X ≤ %.2f) = %.4f or %.2f%%", 
+                            input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the continuous uniform distribution plot
+  output$distPlot <- renderPlot({
+    # Create data frame for plotting the PDF
+    x_range <- seq(input$a - 0.5 * (input$b - input$a), 
+                   input$b + 0.5 * (input$b - input$a), 
+                   length.out = 1000)
+    
+    pdf_values <- dunif(x_range, min = input$a, max = input$b)
+    df <- data.frame(x = x_range, density = pdf_values)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = density)) +
+      geom_line(color = "darkgray", size = 1.2) +
+      labs(x = "X", y = "probability density function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      ylim(0, max(pdf_values) * 1.1)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      shade_x <- seq(input$a, res$x, length.out = 100)
+      shade_y <- dunif(shade_x, min = input$a, max = input$b)
+      shade_df <- data.frame(x = c(input$a, shade_x, res$x), 
+                            y = c(0, shade_y, 0))
+      
+      p <- p + geom_polygon(data = shade_df, aes(x = x, y = y), 
+                           fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      shade_x <- seq(res$x, input$b, length.out = 100)
+      shade_y <- dunif(shade_x, min = input$a, max = input$b)
+      shade_df <- data.frame(x = c(res$x, shade_x, input$b), 
+                            y = c(0, shade_y, 0))
+      
+      p <- p + geom_polygon(data = shade_df, aes(x = x, y = y), 
+                           fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      shade_x <- seq(res$lower, res$upper, length.out = 100)
+      shade_y <- dunif(shade_x, min = input$a, max = input$b)
+      shade_df <- data.frame(x = c(res$lower, shade_x, res$upper), 
+                            y = c(0, shade_y, 0))
+      
+      p <- p + geom_polygon(data = shade_df, aes(x = x, y = y), 
+                           fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![An example of the continuous uniform distribution with $a = -10$ and $b = 20$.](./FiguresPNG/f-contunifdist.png){width="80%"}
+
+:::
+
+**Where to use:** The continuous uniform distribution is used when all continuous values $x$ in the interval $a$ to $b$ are equally likely. The random variable $X$ represents the outcome.
+
+**Notation:** $X \sim \textrm{Uniform}(a,b)$ or $X \sim U(a,b)$.
+
+**Parameters:** Two real numbers $a,b$, where
+
+-   $a$ is the minimum value of an outcome,
+
+-   $b$ is the maximum value of an outcome.
+
+| Quantity | Value | Notes |
+|:--------|:----------------------------|:-------------------|
+| **Mean** | $\mathbb{E}(X) = \dfrac{a+b}{2}$ |  |
+| **Variance** | $\mathbb{V}(X) = \dfrac{(b-a)^2}{12}$ |  |
+| **PDF** | $\mathbb{P}(X=x)=\begin{cases} \dfrac{1}{b-a} & \textsf{if } a \leq x \leq b \\0 & \textsf{otherwise}\end{cases}$ |  |
+| **CDF** | $\displaystyle\mathbb{P}(X\leq x)=\begin{cases} 0 & \textsf{if } x< a \\\dfrac{x-a}{b-a} & \textsf{if } a\leq x\leq b \\1 & \textsf{if } x>b \end{cases}$ |  |
+
+**Example:** A machine from Cantor's Confectionery is programmed to chop long candy bars into pieces, each with a length between 30 millimetres to 50 millimetres. Due to variations in the machine, each continuous value between this interval is equally likely. This can be expressed as $X \sim U(30,50)$. It means 30 is the minimum value and 50 is the maximum value, where all continuous values of $X$ for $30 \leq x \leq 50$ are equally likely.
+
+# Further reading {-}
+
+This interactive element appears in [Overview: Probability distributions.](../overviews/o-distributions.qmd) 
+
+## Version history {-}
+
+v1.0: initial version created 08/25 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

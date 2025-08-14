@@ -1,0 +1,251 @@
+---
+title: "Factsheet: Discrete uniform distribution"
+author: Michelle Arnetta and Tom Coleman
+abstract-title: Summary
+abstract: A factsheet for the discrete uniform distribution.
+filters: 
+  - shinylive
+embed-resources: false
+categories: 
+  - Statistics
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+::: {.content-visible when-format="html"}
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 750
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Discrete Uniform distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("a", "Minimum value (a):", value = 1, step = 1),
+        numericInput("b", "Maximum value (b):", value = 10, step = 1),
+        hr(),
+        radioButtons("prob_type", "Probability to Calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
+          sliderInput("x_value", "x value:", min = 1, max = 10, value = 5, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 1, max = 10, value = 3, step = 1),
+          sliderInput("x_upper", "Upper bound (y):", min = 1, max = 10, value = 7, step = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Discrete Uniform distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Ensure b is always greater than or equal to a
+  observe({
+    if (input$b < input$a) {
+      updateNumericInput(session, "b", value = input$a)
+    }
+  })
+  
+  # Update the range of the sliders when a or b changes
+  observe({
+    updateSliderInput(session, "x_value", min = input$a, max = input$b, value = min(max(input$a, 5), input$b))
+    updateSliderInput(session, "x_lower", min = input$a, max = input$b, value = min(max(input$a, 3), input$b))
+    updateSliderInput(session, "x_upper", min = input$a, max = input$b, value = min(max(input$a, 7), input$b))
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("DUnif(a = %d, b = %d)", input$a, input$b)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Discrete uniform probability mass function
+  ddunif <- function(x, min, max) {
+    ifelse(x >= min & x <= max & x == round(x), 1/(max - min + 1), 0)
+  }
+  
+  # Discrete uniform cumulative distribution function
+  pdunif <- function(q, min, max) {
+    ifelse(q < min, 0, 
+           ifelse(q >= max, 1, 
+                  (floor(q) - min + 1) / (max - min + 1)))
+  }
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pdunif(input$x_value, input$a, input$b)
+      explanation <- sprintf("P(X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
+      
+    } else if (input$prob_type == "greater") {
+      # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1)
+      if (input$x_value <= input$a) {
+        prob <- 1  # P(X ≥ a) is always 1 for discrete uniform
+      } else {
+        prob <- 1 - pdunif(input$x_value - 1, input$a, input$b)
+      }
+      explanation <- sprintf("P(X ≥ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # Exact probability for a single value
+        prob <- ddunif(input$x_lower, input$a, input$b)
+      } else {
+        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
+        upper_prob <- pdunif(input$x_upper, input$a, input$b)
+        if (input$x_lower <= input$a) {
+          lower_prob <- 0
+        } else {
+          lower_prob <- pdunif(input$x_lower - 1, input$a, input$b)
+        }
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the discrete uniform distribution plot
+  output$distPlot <- renderPlot({
+    # Create data frame for plotting
+    x_values <- input$a:input$b
+    prob_mass <- rep(1/(input$b - input$a + 1), length(x_values))
+    df <- data.frame(x = x_values, probability = prob_mass)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = probability)) +
+      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
+      labs(x = "X", y = "probability mass function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      scale_x_continuous(breaks = x_values) +
+      ylim(0, max(prob_mass) * 1.1)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      highlight_x <- input$a:res$x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "greater") {
+      highlight_x <- res$x:input$b
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "between") {
+      highlight_x <- res$lower:res$upper
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![An example of the discrete uniform distribution with $a= 1$ and $b = 6$.](./FiguresPNG/f-dunifdist.png){width="80%"}
+
+:::
+
+**Where to use:** The discrete uniform distribution is used when all integer outcomes $x$ in the interval $a$ to $b$ are equally likely. $X$ is a random variable for integer outcomes $x$ where for $a \leq x \leq b$, and the probability of each outcome $1/n$, where $n = b - a + 1$.
+
+**Notation:** $X \sim \textrm{Uniform}(a,b)$ or $X \sim U(a,b)$
+
+**Parameters:** The numbers $a,b$ are integers where
+
+-   $a$ is the minimum value of an outcome
+-   $b$ is the maximum value of an outcome
+
+There are $n$ outcomes in total, with $n = b - a + 1$.
+
+| Quantity | Value | Notes |
+|:--------|:----------------------------|:-------------------|
+| **Mean** | $\mathbb{E}(X) = \dfrac{a+b}{2}.$ |  |
+| **Variance** | $\mathbb{V}(X) = \dfrac{n^2-1}{12}.$ |  |
+| **PMF** | $\mathbb{P}(X=x)=\frac{1}{n}$ |  |
+| **CDF** | $\mathbb{P}(X\leq x)= \begin{cases} 0 & \textsf{if } x \leq a \\\dfrac{\lfloor x \rfloor - a + 1}{n} & \textsf{if } a< x<b \\1 & \textsf{if } x \geq b \end{cases}$ | $\lfloor x \rfloor$ is the **floor function** |
+
+**Example:** You roll a fair six-sided die, where all outcomes ($1, 2, 3, 4, 5,$ and $6$) are equally likely. This can be expressed as $X \sim U(1,6)$. It means $1$ is the minimum value and $6$ is the maximum value, where all discrete values of $X$ for $1 \leq x \leq 6$ are equally likely.
+
+
+# Further reading {-}
+
+This interactive element appears in [Overview: Probability distributions.](../overviews/o-distributions.qmd) 
+
+## Version history {-}
+
+v1.0: initial version created 08/25 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

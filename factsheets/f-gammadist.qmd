@@ -1,0 +1,253 @@
+---
+title: "Factsheet: Gamma distribution"
+author: Michelle Arnetta and Tom Coleman
+abstract-title: Summary
+abstract: A factsheet for the gamma distribution.
+filters: 
+  - shinylive
+embed-resources: false
+categories: 
+  - Statistics
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+::: {.content-visible when-format="html"}
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 720
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Gamma distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("shape", "Shape parameter (α):", value = 2, min = 0.01, step = 0.1),
+        numericInput("scale", "Scale parameter (θ):", value = 1, min = 0.01, step = 0.1),
+        hr(),
+        radioButtons("prob_type", "Probability to Calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less'",
+          sliderInput("x_less", "x value:", min = 0, max = 15, value = 2, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'greater'",
+          sliderInput("x_greater", "x value:", min = 0, max = 15, value = 2, step = 0.1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 15, value = 1, step = 0.1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 15, value = 5, step = 0.1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Gamma distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # When parameters change, adjust the range of sliders
+  observe({
+    # For gamma distribution, adjust slider based on parameters
+    shape <- input$shape
+    scale <- input$scale
+    
+    # Use a heuristic to determine a reasonable upper bound
+    # This captures most of the meaningful density
+    max_x <- min(qgamma(0.995, shape = shape, scale = scale), 100)
+    
+    updateSliderInput(session, "x_less", max = max_x)
+    updateSliderInput(session, "x_greater", max = max_x)
+    updateSliderInput(session, "x_lower", max = max_x)
+    updateSliderInput(session, "x_upper", max = max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Gamma(α = %.2f, θ = %.2f)", input$shape, input$scale)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pgamma(input$x_less, shape = input$shape, scale = input$scale)
+      explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_less, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pgamma(input$x_greater, shape = input$shape, scale = input$scale)
+      explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%", 
+                           input$x_greater, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # For continuous distributions, P(X = a) = 0
+        prob <- 0
+      } else {
+        upper_prob <- pgamma(input$x_upper, shape = input$shape, scale = input$scale)
+        lower_prob <- pgamma(input$x_lower, shape = input$shape, scale = input$scale)
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%", 
+                           input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the gamma distribution plot
+  output$distPlot <- renderPlot({
+    # Get parameters
+    shape <- input$shape
+    scale <- input$scale
+    
+    # Determine a reasonable max for x-axis based on parameters
+    max_x <- min(qgamma(0.995, shape = shape, scale = scale), 100)
+    
+    # Create data frame for plotting
+    x_values <- seq(0.01, max_x, length.out = 500)  # Avoid x=0 for some shape values
+    density_values <- dgamma(x_values, shape = shape, scale = scale)
+    plot_df <- data.frame(x = x_values, density = density_values)
+    
+    # Create base plot
+    p <- ggplot(plot_df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "darkgray") +
+      labs(x = "X", y = "Probability Density Function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      xlim(0, max_x)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      # Create data for the filled area
+      fill_x <- seq(0.01, res$x, length.out = 200)
+      fill_y <- dgamma(fill_x, shape = shape, scale = scale)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "greater") {
+      # Create data for the filled area
+      fill_x <- seq(res$x, max_x, length.out = 200)
+      fill_y <- dgamma(fill_x, shape = shape, scale = scale)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+      
+    } else if (res$type == "between") {
+      # Create data for the filled area
+      fill_x <- seq(res$lower, res$upper, length.out = 200)
+      fill_y <- dgamma(fill_x, shape = shape, scale = scale)
+      fill_df <- data.frame(x = fill_x, density = fill_y)
+      
+      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
+                        fill = "#3F6BB6", alpha = 0.6)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![An example of the gamma distribution with $\alpha = 2$ and $\theta = 1$.](./FiguresPNG/f-gammadist.png){width="80%"}
+
+:::
+
+**Where to use:** The gamma distribution generalizes the exponential distribution, allowing for greater or lesser variance. It is used to model positive continuous random variables that have skewed distributions.
+
+**Notation:** $X \sim \textrm{Gamma}(\alpha,\theta)$ or $X \sim \textrm{Gam}(\alpha,\theta)$
+
+**Parameters:** Two real numbers $\alpha$ and $\theta$, which are related to the mean $\mu$ and variance $\sigma^2$:
+
+-   $\alpha = \frac{\mu^2}{\sigma^2}$ (shape parameter)
+-   $\theta=\frac{\sigma^2}{\mu}$ (scale parameter)
+
+| Quantity | Value | Notes |
+|:--------|:----------------------------|:-------------------|
+| **Mean** | $\mathbb{E}(X) = \alpha\theta$ |  |
+| **Variance** | $\mathbb{V}(X) = \alpha\theta^2$ |  |
+| **PDF** | $\mathbb{P}(X=x)=\dfrac{x^{\alpha-1}\exp\left(-\frac{x}{\theta}\right)}{\Gamma(\alpha)\theta^{\alpha}}$ | $\Gamma(x)$ the gamma function of $x$ |
+| **CDF** | $\mathbb{P}(X \leq x)=\dfrac{\textrm{Gam}\left(\alpha,\frac{x}{\theta}\right)}{\Gamma(\alpha)}$ | $\textrm{Gam}(\alpha,\theta)$ is the PDF of the gamma distribution |
+
+**Example:** You collect historical data on the time to failure of a machine from Cantor’s Confectionery. The mean is 83 days and the variance is 50.3. You can then use this to estimate the shape and scale parameters of the gamma distribution:
+
+-   $\alpha = \frac{83^2}{50.3} = 136.958250497 \approx 137$
+
+-   $\theta = \frac{50.3}{83} = 0.60602409638 \approx 0.61$
+
+The distribution can be expressed as $X \sim \textrm{Gam}(137,0.61)$, where the shape parameter is 137 and the scale parameter is 0.61.
+
+
+# Further reading {-}
+
+[This interactive element appears in Overview: Probability distributions. Please click this link to go to the guide.](../overviews/o-distributions.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 04/25 by tdhc and Michelle Arnetta as part of a University of St Andrews VIP project.
+
+  - v1.1: moved to factsheet form and populated with material from [Overview: Probability distributions](../overviews/o-distributions.qmd) by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

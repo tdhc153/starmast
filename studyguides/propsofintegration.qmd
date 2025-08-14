@@ -1,0 +1,326 @@
+---
+title: Properties of integration
+author: Tom Coleman
+abstract-title: Summary
+abstract: As the reverse process of differentiation, integration is a key area of mathematics. It has uses in almost all places that requires calculus, such as in the sciences, social sciences, and particularly in statistics. This guide introduces properties of both definite and indefinite integration.
+categories:
+  - Calculus
+image: FiguresPNG/introtodifferentiation-image.png
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+*Before reading this guide, it is highly recommended that you read [Guide: Introduction to integration](introtointegration.qmd).*
+
+# What is integration? {-}
+
+You have seen in [Guide: Introduction to integration](introtointegration.qmd) that **integral calculus** performs two roles: one, it is the reverse process of differentiation that provides the **antiderivative** of a function (via **indefinite integration**), and can be used to determine areas under curves (amongst other helpful applications, via **definite integration**). These two branches of integral calculus are connected by the Fundamental Theorem of Calculus, which says that finding definite integrals can be done using antiderivatives. Finding antiderivatives is therefore the key skill in integration
+
+Much like the way that differentiation has properties and rules, so does integration - both definite and indefinite. This guide will introduce you to a selection of properties for both definite and indefinite integration, and how these can be used to enhance your skills in finding antiderivatives. 
+
+For reference and use throughout the guide, the table of antiderivatives from [Guide: Introduction to integration](introtointegration.qmd) is reproduced below:
+
+| Function $f(x)$ | Antiderivative $\int{f(x)}{\,\textrm{d}x}$ | Notes |
+|:-----------|:-------------------|:--------------|
+| $a$ | $ax + C$ | $a$ real |
+| $ax^n$ | $\frac{ax^{(n+1)}}{n + 1} + C$ | $a$ real, $n \neq -1$ | 
+| $ax^{-1}$ | $a\ln |x| + C$ | $a$ real |
+| $ae^{kx}$ | $\frac{1}{k}ae^{kx} + C$ | $a,k$ real | 
+| $a\cos(kx)$ | $\frac{1}{k}a\sin(kx) + C$ | $a,k$ real | 
+| $a\sin(kx)$ | $-\frac{1}{k}a\cos(kx) + C$ | $a,k$ real |
+
+# Properties of indefinite integrals {-}
+
+::: {.callout-note}
+
+## Properties of indefinite integrals 
+
+Let $\int_a^b f(x) \,\mathrm{d}x$ be a definite integral. Then the following properties hold:
+
+(1) (**constant rule for integration**) If $k$ is some constant, then: $$\int kf(x)\,\mathrm{d}x = k\int_a^bf(x) \,\mathrm{d}x$$ More specifically, if $k=-1$, then $$\int -f(x)\,\mathrm{d}x = -\int_a^bf(x) \,\mathrm{d}x.$$
+
+(2) (**sum rule for integration**) For a function $g(x)$, then: $$\int f(x)+ g(x) \,\mathrm{d}x = \int f(x) \,\mathrm{d}x +  \int g(x) \,\mathrm{d}x$$ that is, the antiderivative of a sum of functions is the sum of the antiderivatives.
+
+(3) (**difference rule for integration**) For a function $g(x)$, then: $$\int f(x) - g(x) \,\mathrm{d}x = \int f(x) \,\mathrm{d}x - \int g(x) \,\mathrm{d}x$$ that is, the antiderivative of the difference of two functions is the sum of the antiderivatives.
+
+:::
+
+Here's an example of these properties in action.
+
+::: {.callout-note appearance="simple"}
+
+## Example 1
+
+
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+
+
+:::
+
+::: {.callout-tip}
+
+Much like differentiating with respect to $x$, the sum rule and scaling rule says that indefinite integration is a **linear operator**.
+
+:::
+
+::: {.callout-important}
+
+Importantly, there are **no** general properties for finding the antiderivatives of the multiplication, division, or composition of two functions. That means that **in general** $$\int f(x)g(x)\,\textrm{d}x \neq \int f(x)\,\textrm{d}x\cdot \int g(x)\,\textrm{d}x$$ and $$\int \frac{f(x)}{g(x)}\,\textrm{d}x \neq \frac{\int f(x)\,\textrm{d}x}{\int g(x)\,\textrm{d}x}$$
+
+This is because integration is the reverse process of differentiation, and you know that **differentiation does not work this way**! In fact, you are able to reverse some of the rules of differentiation:
+
+- The reverse process for the **chain rule for differentiation** (see [Guide: The chain rule](chainrule.qmd) is known as **integration by substitution**; see [Guide: Integration by substitution] for more.
+
+- A process to reverse the **product rule for differentiation** (see [Guide: The product rule](productrule.qmd) is known as **integration by parts**; see [Guide: Integration by parts] for more.
+
+:::
+
+
+# Properties of definite integrals {-}
+
+::: {.callout-note}
+
+## Properties of definite integrals 
+
+Let $\int_a^b f(x) \,\mathrm{d}x$ be a definite integral. Then the following properties hold:
+
+(1) (**constant rule for integration**) If $k$ is some constant, then: $$\int_a^b kf(x)\,\mathrm{d}x = k\int_a^bf(x) \,\mathrm{d}x$$
+
+(2) (**sum rule for integration**) For a function $g(x)$: $$\int_a^bf(x)+ g(x) \,\mathrm{d}x = \int_a^bf(x) \,\mathrm{d}x +  \int_a^bg(x) \,\mathrm{d}x$$
+
+(3) (**difference rule for integration**) For a function $g(x)$ where the definite integral exists on the interval $[a,b]$: $$\int_a^bf(x)- g(x) \,\mathrm{d}x = \int_a^bf(x) \,\mathrm{d}x -  \int_a^bg(x) \,\mathrm{d}x$$
+
+The final four properties examine what happens when you modify the limits of integration.
+
+(4) For $c$ such that $a < c <b$, then: $$\int_a^bf(x)\,\mathrm{d}x = \int_a^c {f(x)}\,\mathrm{d}x + \int_c^b {f(x)}\,\mathrm{d}x$$
+
+(5) If $f(x) \leq g(x)$ for all $x$ between $a$ and $b$, then: $$\int_a^bf(x) \,\mathrm{d}x \leq \int_a^b g(x) \,\mathrm{d}x$$
+
+(6) If $a$ is some real number, then: $$\int_a^a {f(x)} \,\mathrm{d}x = 0$$
+
+(7) Finally if $a < b$, then: $$\int_a^b f(x)\,\mathrm{d}x = - \int_b^a {f(x)}\,\mathrm{d}x$$
+
+:::
+
+## Even and odd functions {-}
+
+Let $f(x)$ be a function, and suppose that $a$ is a positive real number.
+
+(a) If $f(x)$ is an odd function, then $$\int_{-a}^{a}  {f(x)}\,\mathrm{d}x = 0.$$
+
+(b) If $f(x)$ is an even function, then $$\int_{-a}^{a}  {f(x)}\,\mathrm{d}x = 2\int_0^a {f(x)}\,\mathrm{d}x.$$
+
+:::
+
+
+## Definite integrals of piecewise functions {-}
+
+## Definite integrals with infinite limits {-}
+
+
+::: {.callout-important}
+
+- The definite integral doesn't change its value if you change the name of the variable throughout. For instance 
+$$\int_a^b f(x)\, \textrm{d}x = \int_a^b f(t)\, \textrm{d}t = \int_a^b f(\theta)\, \textrm{d}\theta$$ and many more.
+
+- It is important to remember that in every integral, the integrand $f(x)$ and $\textrm{d}x$ are *multiplied together*.
+ 
+- In **every** definite integral you write, you should include **every** one of these pieces of notation.
+
+- The answer to a definite integral is always a **number**, and not an expression involving a variable. 
+
+- The numerical answer represents the *signed* area bounded by the curve $f(x)$, the $x$-axis, and the two lines $x = a$ and $x = b$. That means that portions of the area above the $x$-axis contribute positively to the answer, and portions of the area below the $x$-axis contribute negatively to the answer.
+
+    - This means that the definite integral is only equal to the area 'under' the curve when the outputs of the  function $f(x)$ are always positive (above the $x$-axis) between the limits $x = a$ and $x = b$. This is the case in Example 1. 
+
+:::
+
+::: {.content-visible when-format="html"}
+
+You can use the interactive figure below to explore how changing the bounds of an integral changes the value of the integral. Here, the value of the integral $A$ corresponds to the area shaded in blue, as the function is always above the $x$-axis.
+
+<div id="calculator" style="width: 100%; height: 450px;"></div>
+
+<script>
+  var elt = document.getElementById('calculator');
+  var calculator = Desmos.GraphingCalculator(elt);
+  calculator.setMathBounds({ left: -15, right: 15, bottom: -10, top: 20});
+  calculator.setExpression({ id: 'a', latex: 'a=-2', sliderBounds: { min: -10, max: 10 } },);
+  calculator.setExpression({ id: 'b', latex: 'b=4', sliderBounds: { min: -10, max: 10 } });
+  calculator.setExpression({ id: 'f', latex: 'f(x)=x^2-4x', color: "#3F68B6"});
+  calculator.setExpression({ id: 'g', latex: 'g(x)=16-x^2', color: "#3F68B6"});
+  calculator.setExpression({ id: 'shade', latex: 'f(x)\\le y\\le g(x)\\{ a\\le x\\le b \\}', color: "#DB4315", fillOpacity: 0.4});
+  calculator.setExpression({ id: 'shade2', latex: 'g(x)\\le y\\le f(x)\\{ a\\le x\\le b \\}', color: "#DB4315", fillOpacity: 0.4});
+  calculator.setExpression({ id: "3", type: "expression", latex: "(a,f(a)), (a,g(a))", pointStyle: "POINT", hidden: false, secret: true, color: "#DB4315", lines: true});
+  calculator.setExpression({ id: "4", type: "expression", latex: "(b,f(b)), (b,g(b))", pointStyle: "POINT", hidden: false, secret: true, color: "#DB4315", lines: true});
+
+</script>
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+ The figure below shows a representation of a definite integral. Here, the value of the integral $A$ corresponds to the area shaded in blue, as the function is always above the $x$-axis.
+
+![A representation of a definite integral. The area of the shaded region is equal to the integral $\int_a^b f(x) \,\mathrm{d}x$.](./FiguresPNG/introtointegration-fig1.png){width="100%" fig-alt="A curve $f(x)$ plotted on a graph with axes labelled $x$ and $f(x)$. There is a line labelled $a$ joining the $x$-axis to the curve, and a line to the right of that labelled $b$ joining the $x$-axis to the curve. The area bounded by $f(x)$, these two lines, and the $x$-axis, is shaded in blue." #fig-1}
+
+
+:::
+
+You can work out the value of definite integrals using geometry if the curve is sufficiently well-behaved - a straight line or a circular arc.
+
+::: {.callout-note appearance="simple"}
+
+## Example 1
+
+(a) Consider the area bounded by $f(x) = 2$, the $x$-axis, and the lines $x = 1$ and $x =3$.
+
+The distance between the two bounds is $2$, and the distance between the lines $y = 0$ and $y = f(x)$ is also $2$, so this area describes a square with side length $2$. The area of this region is $A = 2\cdot 2 = 4$. You can use the idea of the definite integral to say that $$\int_1^3 2 \,\mathrm{d}x  = 4.$$
+
+(b) You are given the area bounded by $f(x) = x$, the $x$-axis, and the lines $x = 0$ and $x = 3$.
+ 
+As the shaded region is a triangle with base and height both $3$, the area is $A = (3\cdot 3)/2 = 9/2$. You can use the idea of a definite integral to say that $$\int_{0}^{2}{x}\,\mathrm{d}x = 2.$$
+
+:::
+
+::: {.callout-important}
+
+Both examples here involve functions which take **positive outputs**, and so the definite integral is actually equal to the area. It is worth reminding yourself at this point that the answer is the **signed** area bounded by the curve, the limits, and the $y$-axis. Here's another figure which demonstrates this.
+
+:::
+
+::: {.content-visible when-format="html"}
+
+You can use the interactive figure below to explore how changing the bounds of an integral changes the value of the integral. Here, the value of the integral $A$ corresponds to the values of the area above the curve minus the values of the area below the curve. It's possible to have a negative answer, or an answer of $0$.
+
+<div id="calculator2" style="width: 100%; height: 450px;"></div>
+
+<script>
+  var elt = document.getElementById('calculator2');
+  var calculator2 = Desmos.GraphingCalculator(elt);
+  calculator2.setMathBounds({ left: -6.5, right: 6.5, bottom: -6.5, top: 6.5});
+  calculator2.setExpression({ id: 'f', latex: 'f(x) = x^3/16 - x', secret: true});
+  calculator2.setExpression({id: 'sliderA',latex: 'a=0', sliderBounds: { min: -6, max: 0 }, slider: true});
+  calculator2.setExpression({id: 'sliderB',latex: 'b=4', sliderBounds: { min: 0, max: 6 }, slider: true});
+  calculator2.setExpression({ id: "3", type: "expression", latex: "(a,0), (a,f(a))", pointStyle: "POINT", hidden: false, secret: true, color: "#3F68B6", lines: true});
+  calculator2.setExpression({ id: "4", type: "expression", latex: "(b,0), (b,f(b))", pointStyle: "POINT", hidden: false, secret: true, color: "#3F68B6", lines: true});
+  calculator2.setExpression({ id: 'shade', latex: '0\\le y\\le f(x) \\left\\{a\\le x\\le b\\right\\}', color: "#3F68B6", fillOpacity: 0.3, secret: true});
+  calculator2.setExpression({ id: 'shade2', latex: 'f(x)\\le y\\le 0 \\left\\{a\\le x\\le b\\right\\}', color: "#3F68B6", fillOpacity: 0.3, secret: true});
+  calculator2.setExpression({ id: 'integral', latex: 'A=\\int_{a}^{b}f(x)dx', label: "Area bounded by curve", showLabel: true, color: Desmos.Colors.BLACK});
+
+</script>
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+ The figure below shows a representation of a definite integral. Here, the value of the integral $A$ corresponds to the area shaded in blue, as the function is always above the $x$-axis.
+
+![A representation of a definite integral. The integral $\int_a^b f(x) \,\mathrm{d}x$ is equal to the bounded area above the curve minus the bounded area below the curve.](./FiguresPNG/introtointegration-fig2.png){width="150%" fig-alt="A curve $f(x)$ plotted on a graph with axes labelled $x$ and $f(x)$. There is a line labelled $a$ joining the $x$-axis to the curve, and a line to the right of that labelled $b$ joining the $x$-axis to the curve. The area bounded by $f(x)$, these two lines, and the $x$-axis, is shaded in blue. There is a point $c$ between $a$ and $b$; the area between $a$ and $c$ is above the $x$-axis; the area between $c$ and $b$ is below the $x$-axis." #fig-1}
+
+
+:::
+
+
+# Indefinite integrals and antiderivatives
+
+Evaluating areas gets more complicated if your curve is not a straight line. For instance, how would you work out the area bounded by $f(x) = x^2$, the limits $x = 0$ and $x = 1$ and the $x$-axis? In other words, what is the value of the definite integral of $f(x) = x^2$ between $0$ and $1$ with respect to $x$? You can work this out by finding the **antiderivative**.
+
+Finding the derivative $f'(x)$ of a function $f(x)$ is well defined; see [Guide: Introduction to differentiation and the derivative](introtodifferentiation.qmd) for more. The question of finding the antiderivative is as follows: given a function $f(x)$, is there a function $F(x)$ such that $F'(x) = f(x)$? If this happens, then $F(x)$ is the **antiderivative of $f(x)$**.
+
+It turns out that antiderivatives are very closely related to integration. To find the antiderivative $F(x)$ of $f(x)$, you can find the **indefinite integral of $f(x)$ with respect to $x$**; in other words $$F(x) = \int f(x)\,\textrm{d}x.$$ This means that indefinite integration is the **reverse process** of differentiation: to undo differentiation, do an indefinite integral; to undo an indefinite integral, find the derivative.
+
+## The constant of integration
+
+You can ask yourself; is the antiderivative $F(x)$ of a function $f(x)$ unique? The answer here is **no**, it isn't. Here's an example to illustrate this process.
+
+
+# Quick check problems {-}
+
+<!-- add facility for webexercises to work on html -->
+
+::: {.content-visible when-format="html"}
+
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box}
+
+1. Answer the following questions true or false:
+
+(a) The indefinite integral can be used to find the area under a curve. Answer: `r torf(FALSE)`.
+
+(b) The answer to a definite integral is always a number. Answer: `r torf(TRUE)`.
+
+(c) If $f(x) = a$, then the antiderivative of $f(x) = ax$. Answer: `r torf(FALSE)`.
+
+(d) Indefinite integrals have limits. Answer: `r torf(FALSE)`.
+
+(e) Differentiation is the reverse process of integration. Answer: `r torf(FALSE)`.
+
+(f) The power of $x$ in the antiderivative of $f(x) = \dfrac{1}{x^4}$ is $-3$. Answer: `r torf(TRUE)`.
+
+2. Fill in the gaps of the statements below. Write any rational number as a fraction in its simplest form
+
+(a) If $f(x) = 3x^7$, then the antiderivative of $f(x)$ is `r fitb("3/8")` $x^8 +$ `r fitb("C")`.
+
+(b) If $f(x) = 4\cos(3x)$, then the antiderivative of $f(x)$ is `r fitb("4/3")` $\sin\big($ `r fitb("3x")` $\big) + C$.
+
+(c) If $f(x) = e^{-8x}$, then the antiderivative of $f(x)$ is `r fitb("-1/8")` $e^{8x} +$ `r fitb("C")`.
+
+:::
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+1. Answer the following questions true or false:
+
+(a) The indefinite integral can be used to find the area under a curve.
+
+(b) The answer to a definite integral is always a number.
+
+(c) If $f(x) = a$, then the antiderivative of $f(x) = ax$. 
+
+(d) Indefinite integrals have limits.
+
+(e) Differentiation is the reverse process of integration.
+
+(f) The power of $x$ in the antiderivative of $f(x) = \dfrac{1}{x^4}$ is $-3$.
+
+2. Find the antiderivative of the following functions with respect to $x$.
+
+(a) $f(x) = 3x^7$
+
+(b) $f(x) = 4\cos(3x)$
+
+(c) $f(x) = e^{-8x}$
+
+:::
+
+# Further reading {-}
+
+For more practice on integration, see [Worked examples: Integration]. [For more questions on the subject, please go to Questions: Introduction to integration.]
+
+For more about properties of integration, please see [Guide: Properties of integration].
+
+For more about the theory of definite integration, including a formal definition and how to find a definite integral from first principles, please see [Guide: Definite integrals]. For more about why the Fundamental Theorem of Calculus works, please see [Proof sheet: Fundamental Theorem of Calculus]
+
+For more about techniques of integration, please see [Guide: Integration by substitution], [Guide: Integration by parts], and [Guide: Trigonometry and integration].
+
+## Version history {-}
+
+v1.0: initial version created 08/25 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+

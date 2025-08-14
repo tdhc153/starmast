@@ -14,7 +14,7 @@ filters:
 library("webexercises")
 ```
 
-*Before reading this guide, it is highly recommended that you read [Guide: Introduction to probability], [Guide: Discrete random variables versus continuous random variables], and [Guide: Introduction to integration].*
+*Before reading this guide, it is highly recommended that you read [Guide: Introduction to probability](introtoprobability.qmd), [Guide: Discrete random variables versus continuous random variables], and [Guide: Introduction to integration].*
 
 ::: {.content-visible when-format="html"}
 
@@ -35,22 +35,22 @@ As you have seen in [Fact sheet: Discrete random variables versus continuous ran
 ::: {.callout-note icon="true"}
 ## Definition of a PMF
 
-A **probability mass function** or **PMF** is a function $p(x)$ that, when applied to a discrete random variable $X$, returns the probability $P(X=x)$ that $X$ is equal to a specific value $x$. The PMF can be expressed as:
+A **probability mass function** or **PMF** is a function $p(x)$ that, when applied to a discrete random variable $X$, returns the probability $\mathbb{P}(X=x)$ that $X$ is equal to a specific value $x$. The PMF can be expressed as:
 
 $$
-p(x) = P(X = x)
+p(x) = \mathbb{P}(X = x)
 $$
 
-where $P(X = x)$ is the probability that $X$ equals $x$.
+where $\mathbb{P}(X = x)$ is the probability that $X$ equals $x$.
 :::
 
 For a PMF to be considered a valid probability distribution for a random variable, it must satisfy two conditions:
 
 -  **Non-negativity**: The probability assigned to each possible outcome must be greater than or equal to zero, that is:
 
-$$p(x) = P(X = x) \geq 0\textsf{ for all values of }x.$$
+$$p(x) = \mathbb{P}(X = x) \geq 0\textsf{ for all values of }x.$$
 
--  **Honesty condition**: The sum of probabilities of all possible outcomes $x$ of a discrete random variable $X$ must be equal to one: $$\sum_{x} p(x) = \sum_{x} P(X = x) = 1.$$
+-  **Honesty condition**: The sum of probabilities of all possible outcomes $x$ of a discrete random variable $X$ must be equal to one: $$\sum_{x} p(x) = \sum_{x} \mathbb{P}(X = x) = 1.$$
 
 ::: {.callout-tip}
 
@@ -71,15 +71,15 @@ You are given a fair six-sided die. Let the discrete random variable $X$ represe
 
 | $x$ | 1 | 2 | 3 | 4 | 5 | 6 |
 |--------|----|----|----|----|----|----|
-| $P(X = x)$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ |
+| $\mathbb{P}(X = x)$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ | $\dfrac{1}{6}$ |
 
 Table 1: PMF of rolling a fair six-sided die as in Example 1.
 
 You can check that this is a valid PMF:
 
-**Non-negativity**: All $P(X = x) = 1/6 \geq 0$, so each probability is positive, satisfying the non-negativity requirement.
+**Non-negativity**: All $\mathbb{P}(X = x) = 1/6 \geq 0$, so each probability is positive, satisfying the non-negativity requirement.
 
-**Honesty**: You can take the sum across all outcomes: $$\sum_{x} P(X = x) = \dfrac{1}{6} + \dfrac{1}{6} + \dfrac{1}{6} + \dfrac{1}{6} + \dfrac{1}{6} + \dfrac{1}{6} = 1$$ confirming that the total probability of the PMF equals $1$, meeting the honesty condition.
+**Honesty**: You can take the sum across all outcomes: $$\sum_{x} \mathbb{P}(X = x) = \dfrac{1}{6} + \dfrac{1}{6} + \dfrac{1}{6} + \dfrac{1}{6} + \dfrac{1}{6} + \dfrac{1}{6} = 1$$ confirming that the total probability of the PMF equals $1$, meeting the honesty condition.
 
 Since the PMF satisfies both the non-negativity and honesty conditions, it is a valid PMF which represents the scenario of rolling a fair six-sided die.
 
@@ -93,23 +93,23 @@ Imagine you flip a fair coin twice. Let the discrete random variable $X$ represe
 
 Since the coin is fair, with equal probabilities for both heads ($H$) and tails  ($T$), the probabilities of the number of heads are determined by counting the outcomes with the correct number of heads. The set (**sample space**, see [Guide: Introduction to probability]) of all possible outcomes of flipping a fair coin twice are $\{HH, TH, HT, TT\}$.
 
-- The probability of no heads corresponds to one of the four possible outcomes $TT$, so $P(X=0) = 1/4$.
-- The probability of one head corresponds to two of the four possible outcomes $HT,TH$, so $P(X=1) = 2/4 = 1/2$.
-- The probability of two heads corresponds to one of the four possible outcomes $HH$, so $P(X=2) = 1/4$.
+- The probability of no heads corresponds to one of the four possible outcomes $TT$, so $\mathbb{P}(X=0) = 1/4$.
+- The probability of one head corresponds to two of the four possible outcomes $HT,TH$, so $\mathbb{P}(X=1) = 2/4 = 1/2$.
+- The probability of two heads corresponds to one of the four possible outcomes $HH$, so $\mathbb{P}(X=2) = 1/4$.
 
 So the PMF $p(x)$ for this scenario is:
 
 | $x$        | 0    | 1   | 2    |
 |--------|----|----|----|
-| $P(X = x)$ | 0.25 | 0.5 | 0.25 |
+| $\mathbb{P}(X = x)$ | 0.25 | 0.5 | 0.25 |
 
 Table 2: PMF for counting the number of heads in two coin flips as in Example 2.
 
 You can see that this PMF also satisfies both key conditions:
 
-**Non-negativity**: All probabilities are positive, as $P(X = x) \geq 0$ for all values of $x$.
+**Non-negativity**: All probabilities are positive, as $\mathbb{P}(X = x) \geq 0$ for all values of $x$.
 
-**Honesty**: The sum of probabilities equals $1$: $$\sum_{x} P(X = x) = 0.25 + 0.5 + 0.25 = 1$$
+**Honesty**: The sum of probabilities equals $1$: $$\sum_{x} \mathbb{P}(X = x) = 0.25 + 0.5 + 0.25 = 1$$
 
 So, this is a valid PMF representing the number of heads when you flip a fair coin twice.
 
@@ -124,13 +124,13 @@ Building on Example 2, common example of a PMF is that of the **binomial distrib
 Take $x$ to be the number of successes in a number $n$ of trials, $p$ is the probability of success in a single trial, and $q = 1 - p$ is the probability of failure. Then the PMF $p(x)$ for a binomial distribution is given by:
 
 $$
-p(x) = P(X=x) = \binom{n}{x} p^x q^{(n-x)} = \frac{n!}{(n-x)! x!} p^x q^{(n-x)}
+f(x) = \mathbb{P}(X=x) = \binom{n}{x} p^x q^{(n-x)} = \frac{n!}{(n-x)! x!} p^x q^{(n-x)}
 $$ 
 Binomial distributions are often used to model real life scenarios, such as the probability of heads occurring in multiple fair coin flips (as in Example 2!). In this example, heads are considered a success and tails a failure. This time imagine flipping a coin $10$ times, where the probability of success (heads) is $0.5 = 1/2$ and the probability of failure (tails) is $1 - 0.5 = 0.5 = 1/2$.
 
 The power of the binomial PMF above comes from the number of trials. With two coin flips (as in Example 2), there are $4 = 2^2$ outcomes to consider, which you can count. With ten coin flips, there are $2^{10} = 1024$ different outcomes, which is harder to count. The binomial distribution formula takes care of the probability for you. For instance, the probability of flipping a coin ten times (so $n=10$) and getting four heads (so $x = 4$) is:
 
-$$P(X=4) = \binom{10}{4} \left(\frac{1}{2}\right)^4 \left(\frac{1}{2}\right)^{10-4} = 210\cdot \left(\frac{1}{2}\right)^{10} = \frac{210}{1024} \approx 0.205$$
+$$\mathbb{P}(X=4) = \binom{10}{4} \left(\frac{1}{2}\right)^4 \left(\frac{1}{2}\right)^{10-4} = 210\cdot \left(\frac{1}{2}\right)^{10} = \frac{210}{1024} \approx 0.205$$
 
 :::
 
@@ -147,7 +147,7 @@ You can find that all binomial distributions are valid PMFs: see [Proof sheet: P
 x <- seq(0, 10)                       
 y <- dbinom(x, 10, 0.5)                
 plot(x, y, type = "h", lwd = 8, col = "#3F68B6", 
-     main = "p(x)", xlab = "x", ylab = "P(X=x)", xaxt = "n")
+     main = "f(x)", xlab = "x", ylab = "P(X=x)", xaxt = "n")
 axis(1, at = x)  
 ```
 
@@ -346,7 +346,7 @@ Unlike PMFs, PDFs assign probabilities to intervals rather than to specific valu
 
 When applied over all possible values of a continuous random variable $X$, the PDF $f(x)$ can be represented as a curve that shows the total probability distribution across all possible outcomes. 
 
-The probability $P(a\leq X\leq b)$ that the random variable $X$ lies within an interval $[a,b]$ is equal to the area under the curve of PDF $f(x)$ between $a$ and $b$ as shown in @fig-pmfspdfscdfs2:
+The probability $\mathbb{P}(a\leq X\leq b)$ that the random variable $X$ lies within an interval $[a,b]$ is equal to the area under the curve of PDF $f(x)$ between $a$ and $b$ as shown in @fig-pmfspdfscdfs2:
 
 ::: {#fig-pmfspdfscdfs2}
 
@@ -377,7 +377,7 @@ A PDF for the continuous random variable $X$, where the shaded area represents t
 
 ## Definition of a PDF
 
-A **probability density function** or **PDF** is a function $f(x)$ that represents the distribution of probabilities across a continuous random variable $X$. The probability that $X$ lies within an interval $[a,b]$ is found by integrating the PDF over that interval: $$P(a\leq X\leq b)= \int_{a}^{b} f(x) \, \textrm{d}x $$ where $P(a\leq X\leq b)$ is the probability that $X$ lies between $a$ and $b$.
+A **probability density function** or **PDF** is a function $f(x)$ that represents the distribution of probabilities across a continuous random variable $X$. The probability that $X$ lies within an interval $[a,b]$ is found by integrating the PDF over that interval: $$\mathbb{P}(a\leq X\leq b)= \int_{a}^{b} f(x) \, \textrm{d}x $$ where $\mathbb{P}(a\leq X\leq b)$ is the probability that $X$ lies between $a$ and $b$.
 
 :::
 
@@ -391,7 +391,7 @@ Just like PMFs, PDFs must satisfy two main conditions to be considered valid:
 
 You may be wondering why probabilities for continuous random variables are calculated over intervals, not at individual values. This is because PDFs cannot return probabilities at specific values.
 
-This is because of any continuous random variable with any PDF $f(x)$, working out the probablity $P(X=a)$ gives: $$P(X=a) = P(a\leq X\leq a) = \int_{a}^{a} f(x) \, \textrm{d}x = 0$$ by properties of integration. (See [Guide: Properties of integration] for more.)
+This is because of any continuous random variable with any PDF $f(x)$, working out the probablity $\mathbb{P}(X=a)$ gives: $$\mathbb{P}(X=a) = \mathbb{P}(a\leq X\leq a) = \int_{a}^{a} f(x) \, \textrm{d}x = 0$$ by properties of integration. (See [Guide: Properties of integration] for more.)
 
 :::
 
@@ -438,7 +438,7 @@ The general PDF of the normal distribution is given by:
 $$
 f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left({-\frac{1}{2} \left( \frac{x - \mu}{\sigma} \right)^2}\right)
 $$
-where $\mu$ is the mean and $\sigma$ is the standard deviation. (See [Guide: Mean, variance, and standard deviation] for more.) 
+where $\mu$ is the mean and $\sigma$ is the standard deviation. (See [Guide: Expected value, variance, standard deviation](expectedvariance.qmd) for more.) 
 
 All normal distributions are considered valid PDFs; see [Proof sheet: PMFs, PDFs, CDFs](../proofsheets/ps-pmfspdfscdfs.qmd) for more.
 
@@ -467,7 +467,7 @@ PDF of a normal distribution with mean $\mu=0$ and standard deviation $\sigma=1$
 
 ::: {.content-visible when-format="html"}
 
-You can use the interactive calculator below to explore the normal distribution by changing the mean $\mu$ and the standard deviation $\sigma$. This calculator not only gives you the PDF between $a$ and $b$, which is $P(a\leq X\leq b)$, but it also allows you to calculate the CDF for the normal distribution (see later in the guide for a definition of this.)
+You can use the interactive calculator below to explore the normal distribution by changing the mean $\mu$ and the standard deviation $\sigma$. This calculator not only gives you the PDF between $a$ and $b$, which is $\mathbb{P}(a\leq X\leq b)$, but it also allows you to calculate the CDF for the normal distribution (see later in the guide for a definition of this.)
 
 ```{shinylive-r}
 #| standalone: true
@@ -644,11 +644,11 @@ Another key concept in the area of probability distributions is the **cumulative
 
 ## Definition of a CDF
 
-A **cumulative distribution function** or **CDF** is a function $F(x)$ that returns the probability that the random $X$ is less than or equal to a variable $x$. This probability is written by $P(X\leq x)$.
+A **cumulative distribution function** or **CDF** is a function $F(x)$ that returns the probability that the random $X$ is less than or equal to a variable $x$. This probability is written by $\mathbb{P}(X\leq x)$.
 
-- For a discrete random variable with a PMF $p(x)$, the CDF is given by: $$F(x) = P(X \leq x) = \sum_{y \leq x} p(y)$$ where $y$ is an outcome 'less than or equal to' $x$, given the appropriate order on the set of all possible outcomes. 
+- For a discrete random variable with a PMF $p(x)$, the CDF is given by: $$F(x) = \mathbb{P}(X \leq x) = \sum_{y \leq x} p(y)$$ where $y$ is an outcome 'less than or equal to' $x$, given the appropriate order on the set of all possible outcomes. 
 - For a continuous random variable with a PDF $f(x)$, the CDF is given by: 
-$$F(x) = P(X \leq x) = \int_{-\infty}^{x} f(y) \, \textrm{d}y$$ where $y$ is a 'dummy variable' allowing for the computation of this integral.
+$$F(x) = \mathbb{P}(X \leq x) = \int_{-\infty}^{x} f(y) \, \textrm{d}y$$ where $y$ is a 'dummy variable' allowing for the computation of this integral.
 :::
 
 ::: {.callout-warning}
@@ -663,7 +663,7 @@ CDFs are always **non-decreasing**. This is because they deal with cumulative pr
 Suppose you roll a fair six-sided die, as in Example 1. Since this scenario involves a PMF, the cumulative distribution function (CDF) can be derived using the following method. 
 
 To find the probability of rolling a three or lower, add the probabilities of rolling each number less than or equal to three: 
-$$F(3) = P(X \leq 3) = \sum_{x \leq 3} p(x) = \underbrace{\frac{1}{6}}_{P(X=1)} + \underbrace{\frac{1}{6}}_{P(X=2)} + \underbrace{\frac{1}{6}}_{P(X=3)} = \frac{3}{6} = \frac{1}{2}$$
+$$F(3) = \mathbb{P}(X \leq 3) = \sum_{x \leq 3} p(x) = \underbrace{\frac{1}{6}}_{\mathbb{P}(X=1)} + \underbrace{\frac{1}{6}}_{\mathbb{P}(X=2)} + \underbrace{\frac{1}{6}}_{\mathbb{P}(X=3)} = \frac{3}{6} = \frac{1}{2}$$
 
 Therefore, the probability of rolling a three or lower is $50\%$.
 
@@ -671,7 +671,7 @@ You can extend this working to show that the entire CDF is given by:
 
 | $x$ | 1 | 2 | 3 | 4 | 5 | 6 |
 |--------|----|----|----|----|----|----|
-| $P(X \leq x)$ | $\dfrac{1}{6}$ | $\dfrac{1}{3}$ | $\dfrac{1}{2}$ | $\dfrac{2}{3}$ | $\dfrac{5}{6}$ | 1 |
+| $\mathbb{P}(X \leq x)$ | $\dfrac{1}{6}$ | $\dfrac{1}{3}$ | $\dfrac{1}{2}$ | $\dfrac{2}{3}$ | $\dfrac{5}{6}$ | 1 |
 
 Table 4: CDF for rolling a fair six-sided die, as in Example 6.
 
@@ -684,14 +684,14 @@ Imagine you flip a coin twice, like in Example 2, and let $X$ be the random vari
 
 | $x$           | 0    | 1    | 2   |
 |--------|----|----|----|
-| $P(X \leq x)$ | 0.25 | 0.75 | 1   |
+| $\mathbb{P}(X \leq x)$ | 0.25 | 0.75 | 1   |
 
 Table 5: CDF for flipping a fair coin twice, as in Example 7.
 
 
 To find the probability that $X$ is strictly greater than $x$, you can subtract the correlating value in the CDF from the total probability.
 
-For example, to find the probability that $X$ is greater than $1$: $$P(X > 1) = 1 - F(1) = 1 - P(X \leq 1) = 1 - 0.75 = 0.25$$
+For example, to find the probability that $X$ is greater than $1$: $$\mathbb{P}(X > 1) = 1 - F(1) = 1 - \mathbb{P}(X \leq 1) = 1 - 0.75 = 0.25$$
 
 Therefore, the probability that $X$ is greater than $1$ is $0.25$.
 :::
@@ -705,7 +705,7 @@ $$f(x) =\begin{cases}1 & \textsf{if } 0 \leq x \leq 1 \\0 & \textsf{otherwise} \
 
 To find the probability that $X$ is less than or equal to $0.5$, you use the formula from the definition of the CDF:
 
-$$F(0.5) = P(X \leq 0.5) = \int_{-\infty}^{0.5} f(y) \, \textrm{d}y$$
+$$F(0.5) = \mathbb{P}(X \leq 0.5) = \int_{-\infty}^{0.5} f(y) \, \textrm{d}y$$
 You can then use properties of integration by splitting the limits of integration to match the definition of the PDF. This allows you to work out the value of the integral:
 
 $$\int_{-\infty}^{0.5} f(y) \, dy = \int_{-\infty}^{0} f(y) \, dy + \int_{0}^{0.5} f(y) \, dy = \int_{-\infty}^{0} 0 \, dy + \int_{0}^{0.5} 1 \, dy = 0 + [x]_0^{0.5} = 0.5$$
@@ -713,7 +713,7 @@ $$\int_{-\infty}^{0.5} f(y) \, dy = \int_{-\infty}^{0} f(y) \, dy + \int_{0}^{0.
 So the probability of $X$ being less than or equal to $0.5$ is $50\%$.
 
 On the other hand, to find the probability that $X$ is greater than $0.5$, you can subtract the CDF value at $0.5$ (which is $F(0.5)$ from the total probability $1$: 
-$$P(X>0.5) = 1 − F(0.5) = 1 − 0.5 = 0.5$$
+$$\mathbb{P}(X>0.5) = 1 − F(0.5) = 1 − 0.5 = 0.5$$
 So the probability that $X$ is greater than $0.5$ is also $50\%$.
 :::
 
@@ -749,9 +749,9 @@ In the following questions, please enter your answers as decimal numbers.
 
 (b) What is the value of $f(x)$ over the interval $[0, 4]$? `r fitb(0.25)`
 
-(c) What is $P(1 \leq X \leq 3)$? `r fitb(0.5)`
+(c) What is $\mathbb{P}(1 \leq X \leq 3)$? `r fitb(0.5)`
 
-(d) What is the probability $P(X \leq 2)$? `r fitb(0.5)` 
+(d) What is the probability $\mathbb{P}(X \leq 2)$? `r fitb(0.5)` 
 
 :::
 
@@ -783,9 +783,9 @@ In the following questions, please enter your answers as decimal numbers.
 
 (b) What is the value of $f(x)$ over the interval $[0, 4]$? 
 
-(c) What is $P(1 \leq X \leq 3)$? 
+(c) What is $\mathbb{P}(1 \leq X \leq 3)$? 
 
-(d) What is the probability $P(X \leq 2)$?
+(d) What is the probability $\mathbb{P}(X \leq 2)$?
 
 :::
 
@@ -795,7 +795,7 @@ In the following questions, please enter your answers as decimal numbers.
 
 [For more on why some PMFs and PDFs are valid, please go to Proof sheet: PMFs, PDFs, CDFs.](../proofsheets/ps-pmfspdfscdfs.qmd)
 
-For more on probability distributions see [Overview: Probability distributions]
+For more on probability distributions see [Overview: Probability distributions.]
 
 ## Version history and licensing {-}
 

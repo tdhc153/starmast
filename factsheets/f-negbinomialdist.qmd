@@ -1,0 +1,229 @@
+---
+title: "Factsheet: Negative binomial distribution"
+author: Michelle Arnetta and Tom Coleman
+abstract-title: Summary
+abstract: A factsheet for the negative binomial distribution.
+filters: 
+  - shinylive
+embed-resources: false
+categories: 
+  - Statistics
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+::: {.content-visible when-format="html"}
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 850
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Negative binomial distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("r", "Number of successes (r):", value = 5, min = 1, step = 1),
+        sliderInput("p", "Probability of success (p):", min = 0.01, max = 0.99, value = 0.3, step = 0.01),
+        numericInput("max_x", "Maximum x to display:", value = 20, min = 10, step = 5),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
+          sliderInput("x_value", "x value:", min = 0, max = 20, value = 8, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 5, step = 1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 12, step = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Negative binomial distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Update the range of the sliders when max_x changes
+  observe({
+    updateSliderInput(session, "x_value", max = input$max_x)
+    updateSliderInput(session, "x_lower", max = input$max_x)
+    updateSliderInput(session, "x_upper", max = input$max_x)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("NegBin(r = %d, p = %.2f)", input$r, input$p)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pnbinom(input$x_value, size = input$r, prob = input$p)
+      explanation <- sprintf("P(X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
+      
+    } else if (input$prob_type == "greater") {
+      # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1)
+      if (input$x_value == 0) {
+        prob <- 1  # P(X ≥ 0) is always 1
+      } else {
+        prob <- 1 - pnbinom(input$x_value - 1, size = input$r, prob = input$p)
+      }
+      explanation <- sprintf("P(X ≥ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # Exact probability for a single value
+        prob <- dnbinom(input$x_lower, size = input$r, prob = input$p)
+      } else {
+        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
+        upper_prob <- pnbinom(input$x_upper, size = input$r, prob = input$p)
+        if (input$x_lower == 0) {
+          lower_prob <- 0
+        } else {
+          lower_prob <- pnbinom(input$x_lower - 1, size = input$r, prob = input$p)
+        }
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the negative binomial distribution plot
+  output$distPlot <- renderPlot({
+    # Create data frame for plotting
+    x_values <- 0:input$max_x
+    prob_mass <- dnbinom(x_values, size = input$r, prob = input$p)
+    df <- data.frame(x = x_values, probability = prob_mass)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = probability)) +
+      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
+      labs(x = "number of failures (X)", y = "probability mass function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      scale_x_continuous(breaks = pretty(x_values, n = 10))
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      highlight_x <- 0:min(res$x, input$max_x)
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "greater") {
+      highlight_x <- res$x:input$max_x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "between") {
+      highlight_x <- res$lower:min(res$upper, input$max_x)
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![An example of the negative distribution with $r = 4$ and $p = 0.3$.](./FiguresPNG/f-negbinomialdist.png){width="80%"}
+
+:::
+
+**Where to use:** The negative binomial distribution is often used to handle over-dispersed data, which means the variance exceeds the mean. It can serve as an alternative to the Poisson distribution, as the Poisson distribution assumes that the mean is equal to the variance. $X$ represents the number of trials required to reach the targeted number of successes $r$.
+
+**Notation:** $X \sim \textrm{NB}(r,p)$
+
+**Parameters:** Two numbers $r,p$ where:
+
+-   $r$ is an integer representing the targeted number of successes,
+-   $p$ is a real number representing the probability of success in a single trial (where $0 \le p \le 1$).
+
+| Quantity | Value | Notes |
+|:--------|:----------------------------|:-------------------|
+| **Mean** | $\mathbb{E}(X) = \dfrac{r(1-p)}{p}$ |  |
+| **Variance** | $\mathbb{V}(X) = \dfrac{r(1-p)}{p^2}$ |  |
+| **PMF** | $\mathbb{P}(X=x)=\dfrac{(x+r-1)!}{(r-1)!x!}(1-p)^xp^r$ |  |
+| **CDF** | $\displaystyle\mathbb{P}(X\leq x)=\sum^{x}_{i=1}\frac{(x+r-1)!}{(r-1)!x!}(1-p)^xp^r$ |  |
+
+**Example:** You flip a coin multiple times, and the probability of getting ‘heads’ is $0.5$. You decide to stop flipping the coin once you get $3$ ‘heads’; these do not have to be consecutive. Taking ‘heads’ as a success, this can be expressed as $X \sim \textrm{NB}(3,0.5)$. It means the probability of success is $0.5$, and you will stop conducting trials after you reach $3$ successes.
+
+# Further reading {-}
+
+This interactive element appears in [Overview: Probability distributions.](../overviews/o-distributions.qmd).
+
+## Version history {-}
+
+v1.0: initial version created 08/25 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

@@ -1,0 +1,230 @@
+---
+title: "Factsheet: Binomial distribution"
+author: Michelle Arnetta and Tom Coleman
+abstract-title: Summary
+abstract: A factsheet on the binomial distribution.
+filters: 
+  - shinylive
+embed-resources: false
+categories: 
+  - Statistics
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+::: {.content-visible when-format="html"}
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 750
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Binomial distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("n", "Number of trials (n):", value = 10, min = 1, step = 1),
+        sliderInput("p", "Probability of success (p):", min = 0, max = 1, value = 0.5, step = 0.01),
+        hr(),
+        radioButtons("prob_type", "Probability to Calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
+          sliderInput("x_value", "x value:", min = 0, max = 10, value = 5, step = 1)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 3, step = 1),
+          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 7, step = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Binomial distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Update the range of the sliders when n changes
+  observe({
+    updateSliderInput(session, "x_value", max = input$n)
+    updateSliderInput(session, "x_lower", max = input$n)
+    updateSliderInput(session, "x_upper", max = input$n)
+  })
+  
+  # Ensure that x_upper is always greater than or equal to x_lower
+  observe({
+    if (input$x_upper < input$x_lower) {
+      updateSliderInput(session, "x_upper", value = input$x_lower)
+    }
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("Bin(n = %d, p = %.2f)", input$n, input$p)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pbinom(input$x_value, size = input$n, prob = input$p)
+      explanation <- sprintf("P(X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
+      
+    } else if (input$prob_type == "greater") {
+      # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1)
+      if (input$x_value == 0) {
+        prob <- 1  # P(X ≥ 0) is always 1
+      } else {
+        prob <- 1 - pbinom(input$x_value - 1, size = input$n, prob = input$p)
+      }
+      explanation <- sprintf("P(X ≥ %d) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
+      
+    } else if (input$prob_type == "between") {
+      if (input$x_lower == input$x_upper) {
+        # Exact probability for a single value
+        prob <- dbinom(input$x_lower, size = input$n, prob = input$p)
+      } else {
+        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
+        upper_prob <- pbinom(input$x_upper, size = input$n, prob = input$p)
+        if (input$x_lower == 0) {
+          lower_prob <- 0
+        } else {
+          lower_prob <- pbinom(input$x_lower - 1, size = input$n, prob = input$p)
+        }
+        prob <- upper_prob - lower_prob
+      }
+      explanation <- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%", 
+                            input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the binomial distribution plot
+  output$distPlot <- renderPlot({
+    # Create data frame for plotting
+    x_values <- 0:input$n
+    prob_mass <- dbinom(x_values, size = input$n, prob = input$p)
+    df <- data.frame(x = x_values, probability = prob_mass)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = probability)) +
+      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
+      labs(x = "number of successes (X)", y = "probability mass function") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      scale_x_continuous(breaks = x_values)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      highlight_x <- 0:res$x
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "greater") {
+      highlight_x <- res$x:input$n
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+      
+    } else if (res$type == "between") {
+      highlight_x <- res$lower:res$upper
+      highlight_df <- df[df$x %in% highlight_x, ]
+      
+      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
+                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![An example of the binomial distribution with $n = 20$ and $p = 0.4$.](./FiguresPNG/f-binomialdist.png){width="80%"}
+
+:::
+
+
+
+**Where to use:** The binomial distribution is used when there are a fixed number of trials ($n$) and only two possible outcomes for each trial, representing $n$ many Bernoulli trials. Here, the random variable $X$ represents the number of successes.
+
+**Notation:** $X \sim \textrm{Binomial}(n,p)$ or $X \sim B(n,p)$.
+
+**Parameters:** Two numbers $n,p$ where: - $n$ is an integer representing the number of trials, - $p$ is a real number representing the probability of success of a trial (where $0 \le p \le 1$).
+
+| Quantity | Value | Notes |
+|:--------|:----------------------------|:-------------------|
+| **Mean** | $\mathbb{E}(X) = np$ |  |
+| **Variance** | $\mathbb{V}(X) = np(1-p)$ |  |
+| **PMF** | $\mathbb{P}(X=x)=\dfrac{n!}{(n-x)!x!}p^xq^{(n-x)}$ |  |
+| **CDF** | $\mathbb{P}(X\leq x)=I_{q}(n-\lfloor x \rfloor,1+\lfloor x \rfloor)$ | $I_x(a,b)$ regularized incomplete beta function, $\lfloor x \rfloor$ the floor function |
+
+**Example:** You flip a coin $10$ times, and the probability of getting ‘heads’ is $0.5$. Taking ‘heads’ as a success, this can be expressed as $X \sim B(10, 0.5)$, meaning $10$ trials are conducted, where the probability of success in each trial is $0.5$.
+
+
+# Further reading {-}
+
+This interactive element appears in [Guide: PMFs, PDFs, CDFs](../studyguides/pmfspdfscdfs.qmd) and [Overview: Probability distributions.](../overviews/o-distributions.qmd) Please click the relevant links to go to the guides.
+
+## Version history {-}
+
+v1.0: initial version created 04/25 by tdhc and Michelle Arnetta as part of a University of St Andrews VIP project.
+
+  - v1.1: moved to factsheet form and populated with material from [Overview: Probability distributions](../overviews/o-distributions.qmd) by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

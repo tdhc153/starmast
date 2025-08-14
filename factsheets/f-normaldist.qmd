@@ -1,0 +1,213 @@
+---
+title: "Factsheet: Normal distribution"
+author: Michelle Arnetta and Tom Coleman
+abstract-title: Summary
+abstract: A factsheet for the normal distribution $N(\mu,\sigma^2)$.
+filters: 
+  - shinylive
+embed-resources: false
+categories: 
+  - Statistics
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+::: {.content-visible when-format="html"}
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 700
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Normal distribution calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Inputs
+    card(
+      card_header("Parameters"),
+      card_body(
+        numericInput("mean", "Mean (μ):", value = 0),
+        numericInput("sd", "Standard deviation (σ):", value = 1, min = 0.01),
+        hr(),
+        radioButtons("prob_type", "Probability to calculate:",
+                    choices = list("P(X ≤ x)" = "less", 
+                                  "P(X ≥ x)" = "greater", 
+                                  "P(x ≤ X ≤ y)" = "between"),
+                    selected = "less"),
+        conditionalPanel(
+          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
+          numericInput("x_value", "x value:", value = 0)
+        ),
+        conditionalPanel(
+          condition = "input.prob_type == 'between'",
+          numericInput("x_lower", "Lower bound (x):", value = -1),
+          numericInput("x_upper", "Upper bound (y):", value = 1)
+        )
+      )
+    ),
+    
+    # Right column - Plot
+    card(
+      card_header("Normal distribution plot"),
+      card_body(
+        uiOutput("plot_title"),
+        plotOutput("distPlot", height = "300px")
+      )
+    )
+  ),
+  
+  # Bottom row - Results
+  card(
+    card_header("Results"),
+    card_body(
+      # Removed the LaTeX formula display
+      textOutput("explanation")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    title <- sprintf("N(μ = %.2f, σ = %.2f)", input$mean, input$sd)
+    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
+  })
+  
+  # Calculate the probability based on user selection
+  probability <- reactive({
+    if (input$prob_type == "less") {
+      prob <- pnorm(input$x_value, mean = input$mean, sd = input$sd)
+      explanation <- sprintf("P(X ≤ %.2f) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
+      
+    } else if (input$prob_type == "greater") {
+      prob <- 1 - pnorm(input$x_value, mean = input$mean, sd = input$sd)
+      explanation <- sprintf("P(X ≥ %.2f) = %.4f or %.2f%%", 
+                            input$x_value, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
+      
+    } else if (input$prob_type == "between") {
+      lower_prob <- pnorm(input$x_lower, mean = input$mean, sd = input$sd)
+      upper_prob <- pnorm(input$x_upper, mean = input$mean, sd = input$sd)
+      prob <- upper_prob - lower_prob
+      explanation <- sprintf("P(%.2f ≤ X ≤ %.2f) = %.4f or %.2f%%", 
+                            input$x_lower, input$x_upper, prob, prob * 100)
+      return(list(prob = prob, explanation = explanation, type = "between", 
+                 lower = input$x_lower, upper = input$x_upper))
+    }
+  })
+  
+  # Display an explanation of the calculation
+  output$explanation <- renderText({
+    res <- probability()
+    return(res$explanation)
+  })
+  
+  # Generate the normal distribution plot
+  output$distPlot <- renderPlot({
+    # Calculate range for x-axis (covering 99.7% of the distribution)
+    x_min <- input$mean - 3.5 * input$sd
+    x_max <- input$mean + 3.5 * input$sd
+    
+    # Create data frame for plotting
+    x <- seq(x_min, x_max, length.out = 500)
+    y <- dnorm(x, mean = input$mean, sd = input$sd)
+    df <- data.frame(x = x, y = y)
+    
+    # Create base plot
+    p <- ggplot(df, aes(x = x, y = y)) +
+      geom_line() +
+      labs(x = "X", y = "Density") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank())
+    
+    # Add bold line at X = 0
+    p <- p + geom_vline(xintercept = 0, linetype = "solid", color = "black", linewidth = 0.8)
+    
+    # Add shaded area based on selected probability type
+    res <- probability()
+    
+    if (res$type == "less") {
+      shade_x <- seq(x_min, res$x, length.out = 200)
+      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
+      shade_df <- data.frame(x = shade_x, y = shade_y)
+      
+      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
+        geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315")
+      
+    } else if (res$type == "greater") {
+      shade_x <- seq(res$x, x_max, length.out = 200)
+      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
+      shade_df <- data.frame(x = shade_x, y = shade_y)
+      
+      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
+        geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315")
+      
+    } else if (res$type == "between") {
+      shade_x <- seq(res$lower, res$upper, length.out = 200)
+      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
+      shade_df <- data.frame(x = shade_x, y = shade_y)
+      
+      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
+        geom_vline(xintercept = res$lower, linetype = "dashed", color = "#db4315") +
+        geom_vline(xintercept = res$upper, linetype = "dashed", color = "#db4315")
+    }
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+![An example of the normal distribution with $\mu = 0$ and $\sigma = 1$.](./FiguresPNG/f-betadist.png){width="80%"}
+
+:::
+
+**Where to use:** The normal distribution is used to model continuous random variables, which can include any positive or negative real values. The use of this distribution is often justified by the Central Limit Theorem: as the sample size increases, the distribution of sample means will resemble a normal distribution more and more closely.
+
+**Notation:** $X \sim \textrm{Normal}(\mu,\sigma^2)$ or $X \sim N(\mu,\sigma^2)$
+
+**Parameters:** Two real numbers $\mu$ and $\sigma^2$.
+
+-   $\mu$ is the centre of the distribution (the mean/expected value).
+-   $\sigma^2$ is the measure of how the distribution is spread (the variance).
+
+| Quantity | Value | Notes |
+|:--------|:----------------------------|:-------------------|
+| **Mean** | $\mathbb{E}(X) = \mu$ |  |
+| **Variance** | $\mathbb{V}(X) = \sigma^2$ |  |
+| **PDF** | $\mathbb{P}(X=x)=\dfrac{1}{\sqrt{2\pi\sigma^2}}\exp\left({-\dfrac{(x-\mu)^2}{2\sigma^2}}\right)$ | $\exp(y) = e^y$ |
+| **CDF** | $\displaystyle\mathbb{P}(X\leq x)=\dfrac{1}{2}\left[1+\textrm{erf}\left(\dfrac{x-\mu}{\sigma\sqrt{2}}\right)\right]$ | $\textrm{erf}(x)$ is the error function of $x$ |
+
+**Example:** The lengths of chocolate bars produced by Cantor’s Confectionery follow a normal distribution with a mean of $5.6$ inches and a variance of $1.44$. This can be expressed as $X \sim N(5.6, 1.44)$, meaning the data is normally distributed, centered at $5.6$ with standard deviation $\sqrt{1.44} = 1.2$.
+
+
+# Further reading {-}
+
+This interactive element appears in [Guide: PMFs, PDFs, CDFs](../studyguides/pmfspdfscdfs.qmd) and [Overview: Probability distributions.](../overviews/o-distributions.qmd) Please click the relevant links to go to the guides.
+
+## Version history {-}
+
+v1.0: initial version created 04/25 by tdhc and Michelle Arnetta as part of a University of St Andrews VIP project.
+
+  - v1.1: moved to factsheet form and populated with material from [Overview: Probability distributions](../overviews/o-distributions.qmd) by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

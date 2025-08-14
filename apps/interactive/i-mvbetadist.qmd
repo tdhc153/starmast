@@ -1,0 +1,128 @@
+---
+title: "Interactive: Mean and variance of beta distribution"
+author: Tom Coleman
+abstract-title: Summary
+abstract: Interactive diagram for seeing how the mean and variance affect the shape of the beta distribution.
+format: html
+filters:
+  - shinylive
+---
+
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 770
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "Beta distribution",
+  
+  # Plot at the top
+  card(
+    card_header("Beta distribution plot"),
+    card_body(
+      uiOutput("plot_title"),
+      plotOutput("distPlot", height = "400px")
+    )
+  ),
+  
+  # Parameters below
+  card(
+    card_header("Distribution parameters"),
+    card_body(
+      layout_columns(
+        col_widths = c(6, 6),
+        sliderInput("mean", "Mean:", min = 0.1, max = 0.9, value = 0.5, step = 0.01),
+        sliderInput("variance", "Variance:", min = 0.01, max = 0.2, value = 0.05, step = 0.01)
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Convert mean and variance to shape parameters
+  beta_params <- reactive({
+    mean_val <- input$mean
+    var_val <- input$variance
+    
+    # For a beta distribution: mean = α/(α+β), var = αβ/((α+β)²(α+β+1))
+    # Solving for α and β given mean and variance:
+    # α = mean * ((mean * (1 - mean)) / variance - 1)
+    # β = (1 - mean) * ((mean * (1 - mean)) / variance - 1)
+    
+    # Ensure variance doesn't exceed theoretical maximum
+    max_var <- mean_val * (1 - mean_val) / 1.01  # Small buffer
+    if (var_val >= max_var) {
+      var_val <- max_var
+    }
+    
+    common_term <- (mean_val * (1 - mean_val)) / var_val - 1
+    alpha <- mean_val * common_term
+    beta <- (1 - mean_val) * common_term
+    
+    # Ensure positive parameters
+    alpha <- max(alpha, 0.01)
+    beta <- max(beta, 0.01)
+    
+    return(list(alpha = alpha, beta = beta))
+  })
+  
+  # Display the plot title with distribution parameters
+  output$plot_title <- renderUI({
+    params <- beta_params()
+    title <- sprintf("Beta(α = %.2f, β = %.2f)", params$alpha, params$beta)
+    subtitle <- sprintf("Mean = %.2f, Variance = %.4f", input$mean, input$variance)
+    div(
+      tags$h4(title, style = "text-align: center; margin-bottom: 5px;"),
+      tags$p(subtitle, style = "text-align: center; color: gray; margin-bottom: 15px;")
+    )
+  })
+  
+  # Generate the beta distribution plot
+  output$distPlot <- renderPlot({
+    # Get shape parameters
+    params <- beta_params()
+    shape1 <- params$alpha
+    shape2 <- params$beta
+    
+    # Create data frame for plotting with fixed x range
+    x_values <- seq(0, 1, length.out = 500)
+    density_values <- dbeta(x_values, shape1 = shape1, shape2 = shape2)
+    plot_df <- data.frame(x = x_values, density = density_values)
+    
+    # Create plot with fixed axes
+    p <- ggplot(plot_df, aes(x = x, y = density)) +
+      geom_line(size = 1, color = "#3F6BB6") +
+      geom_area(aes(x = x, y = density), fill = "#3F6BB6", alpha = 0.3) +
+      labs(x = "X", y = "Probability Density") +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      xlim(0, 1) +
+      ylim(0, 10) +  # Fixed y-axis range
+      # Add reference line at mean
+      geom_vline(xintercept = input$mean, linetype = "dashed", color = "#DB4315", alpha = 0.7) +
+      annotate("text", x = input$mean + 0.08, y = 8.5, label = "Mean", color = "#DB4315", size = 4)
+    
+    return(p)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+# Further reading {-}
+
+[This interactive element appears in Guide: Expected value, variance, standard deviation. Please click this link to go to the guide.](../../studyguides/expectedvariance.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 08/24 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
