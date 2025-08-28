@@ -3,164 +3,122 @@ library(bslib)
 library(ggplot2)
 
 ui <- page_fluid(
-  title = "Binomial distribution calculator",
+  title = "T-test calculator",
   
   layout_columns(
     col_widths = c(4, 8),
     
-    # Left column - Inputs
+    # Left column - Input parameters
     card(
-      card_header("Parameters"),
+      card_header("Input parameters"),
       card_body(
-        numericInput("n", "Number of trials (n):", value = 10, min = 1, step = 1),
-        sliderInput("p", "Probability of success (p):", min = 0, max = 1, value = 0.5, step = 0.01),
+        numericInput("tscore", "T-statistic", value = 2.0, step = 0.01),
+        numericInput("df", "Degrees of freedom", value = 20, min = 1, step = 1),
+        radioButtons("test_type", "Test type",
+                    choices = list("Two-tailed" = "two",
+                                  "One-tailed (upper)" = "upper",
+                                  "One-tailed (lower)" = "lower"),
+                    selected = "two"),
         hr(),
-        radioButtons("prob_type", "Probability to Calculate:",
-                    choices = list("P(X ≤ x)" = "less", 
-                                  "P(X ≥ x)" = "greater", 
-                                  "P(x ≤ X ≤ y)" = "between"),
-                    selected = "less"),
-        conditionalPanel(
-          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
-          sliderInput("x_value", "x value:", min = 0, max = 10, value = 5, step = 1)
-        ),
-        conditionalPanel(
-          condition = "input.prob_type == 'between'",
-          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 3, step = 1),
-          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 7, step = 1)
-        )
+        helpText("This app calculates p-values for t-tests based on the t-distribution with specified degrees of freedom.")
       )
     ),
     
-    # Right column - Plot
+    # Right column - Graphical representation
     card(
-      card_header("Binomial distribution plot"),
+      card_header("Graphical representation"),
       card_body(
-        uiOutput("plot_title"),
-        plotOutput("distPlot", height = "300px")
+        plotOutput("density_plot", height = "300px")
       )
     )
   ),
   
-  # Bottom row - Results
+  # Results at the bottom
   card(
-    card_header("Results"),
+    card_header("T-test results"),
     card_body(
-      textOutput("explanation")
+      verbatimTextOutput("pvalue_result")
     )
   )
 )
 
 server <- function(input, output, session) {
   
-  # Update the range of the sliders when n changes
-  observe({
-    updateSliderInput(session, "x_value", max = input$n)
-    updateSliderInput(session, "x_lower", max = input$n)
-    updateSliderInput(session, "x_upper", max = input$n)
-  })
-  
-  # Ensure that x_upper is always greater than or equal to x_lower
-  observe({
-    if (input$x_upper < input$x_lower) {
-      updateSliderInput(session, "x_upper", value = input$x_lower)
-    }
-  })
-  
-  # Display the plot title with distribution parameters
-  output$plot_title <- renderUI({
-    title <- sprintf("Bin(n = %d, p = %.2f)", input$n, input$p)
-    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
-  })
-  
-  # Calculate the probability based on user selection
-  probability <- reactive({
-    if (input$prob_type == "less") {
-      prob <- pbinom(input$x_value, size = input$n, prob = input$p)
-      explanation <- sprintf("P(X ≤ %d) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
-      
-    } else if (input$prob_type == "greater") {
-      # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1)
-      if (input$x_value == 0) {
-        prob <- 1  # P(X ≥ 0) is always 1
-      } else {
-        prob <- 1 - pbinom(input$x_value - 1, size = input$n, prob = input$p)
-      }
-      explanation <- sprintf("P(X ≥ %d) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
-      
-    } else if (input$prob_type == "between") {
-      if (input$x_lower == input$x_upper) {
-        # Exact probability for a single value
-        prob <- dbinom(input$x_lower, size = input$n, prob = input$p)
-      } else {
-        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
-        upper_prob <- pbinom(input$x_upper, size = input$n, prob = input$p)
-        if (input$x_lower == 0) {
-          lower_prob <- 0
-        } else {
-          lower_prob <- pbinom(input$x_lower - 1, size = input$n, prob = input$p)
-        }
-        prob <- upper_prob - lower_prob
-      }
-      explanation <- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%", 
-                            input$x_lower, input$x_upper, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "between", 
-                 lower = input$x_lower, upper = input$x_upper))
-    }
-  })
-  
-  # Display an explanation of the calculation
-  output$explanation <- renderText({
-    res <- probability()
-    return(res$explanation)
-  })
-  
-  # Generate the binomial distribution plot
-  output$distPlot <- renderPlot({
-    # Create data frame for plotting
-    x_values <- 0:input$n
-    prob_mass <- dbinom(x_values, size = input$n, prob = input$p)
-    df <- data.frame(x = x_values, probability = prob_mass)
+  # Calculate p-value based on test type
+  p_value <- reactive({
+    t <- input$tscore
+    df <- input$df
+    test <- input$test_type
     
-    # Create base plot
-    p <- ggplot(df, aes(x = x, y = probability)) +
-      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
-      labs(x = "number of successes (X)", y = "probability mass function") +
+    if (test == "two") {
+      p <- 2 * pt(-abs(t), df = df)
+      result <- paste0("Two-tailed p-value: ", round(p, 4))
+    } else if (test == "upper") {
+      p <- pt(t, df = df, lower.tail = FALSE)
+      result <- paste0("Upper-tailed p-value: ", round(p, 4))
+    } else if (test == "lower") {
+      p <- pt(t, df = df, lower.tail = TRUE)
+      result <- paste0("Lower-tailed p-value: ", round(p, 4))
+    }
+    
+    return(list(p = p, result = result, test = test))
+  })
+  
+  # Display p-value
+  output$pvalue_result <- renderText({
+    p_value()$result
+  })
+  
+  # Create density plot
+  output$density_plot <- renderPlot({
+    t <- input$tscore
+    df <- input$df
+    test <- p_value()$test
+    
+    # Generate x values for t-distribution
+    x <- seq(-4, 4, length.out = 1000)
+    y <- dt(x, df = df)
+    df_data <- data.frame(x = x, y = y)
+    
+    # Base plot
+    p <- ggplot(df_data, aes(x = x, y = y)) +
+      geom_line() +
+      labs(x = "T-statistic", y = "Density", 
+           title = paste("T-distribution (df =", df, ")")) +
       theme_minimal() +
       theme(panel.grid.minor = element_blank()) +
-      scale_x_continuous(breaks = x_values)
+      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5)
     
-    # Add shaded area based on selected probability type
-    res <- probability()
-    
-    if (res$type == "less") {
-      highlight_x <- 0:res$x
-      highlight_df <- df[df$x %in% highlight_x, ]
-      
-      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-      
-    } else if (res$type == "greater") {
-      highlight_x <- res$x:input$n
-      highlight_df <- df[df$x %in% highlight_x, ]
-      
-      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-      
-    } else if (res$type == "between") {
-      highlight_x <- res$lower:res$upper
-      highlight_df <- df[df$x %in% highlight_x, ]
-      
-      p <- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
+    # Add shaded area based on test type, using #3F6BB6 as the color
+    if (test == "two") {
+      # Two-tailed test: shade both tails
+      if (t > 0) {
+        p <- p + 
+          geom_area(data = subset(df_data, x >= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_area(data = subset(df_data, x <= -t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_vline(xintercept = t, color = "#3F6BB6") +
+          geom_vline(xintercept = -t, color = "#3F6BB6")
+      } else {
+        p <- p + 
+          geom_area(data = subset(df_data, x <= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_area(data = subset(df_data, x >= -t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_vline(xintercept = t, color = "#3F6BB6") +
+          geom_vline(xintercept = -t, color = "#3F6BB6")
+      }
+    } else if (test == "upper") {
+      # Upper-tailed test: shade area above t
+      p <- p + 
+        geom_area(data = subset(df_data, x >= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+        geom_vline(xintercept = t, color = "#3F6BB6")
+    } else if (test == "lower") {
+      # Lower-tailed test: shade area below t
+      p <- p + 
+        geom_area(data = subset(df_data, x <= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+        geom_vline(xintercept = t, color = "#3F6BB6")
     }
     
     return(p)
   })
 }
 
-shinyApp(ui = ui, server = server)
+shinyApp(ui, server)
