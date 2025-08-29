@@ -3,7 +3,7 @@ title: "Calculator: $t$-testing"
 author: Tom Coleman
 format: html
 abstract-title: Summary
-abstract: Calculators to provide facilities for all types of $t$-testing.
+abstract: Calculators to provide facilit for all types of $t$-testing.
 filters: 
   - shinylive
 ---
@@ -24,7 +24,7 @@ library(bslib)
 ui <- page_fluid(
   title = "t-statistic Calculator",
   
-  # Navigation buttons at the top
+  # Navigation buttons
   layout_columns(
     col_widths = 12,
     card(
@@ -32,9 +32,9 @@ ui <- page_fluid(
         div(
           style = "text-align: center; margin-bottom: 20px;",
           actionButton("show_one_sample", "One sample t-test", 
-                      class = "btn-primary", style = "margin-right: 10px;"),
+                       class = "btn-primary", style = "margin-right: 10px;"),
           actionButton("show_two_sample", "Two-sample t-test", 
-                      class = "btn-outline-primary")
+                       class = "btn-outline-primary")
         )
       )
     )
@@ -43,12 +43,8 @@ ui <- page_fluid(
   # One-sample t-test panel
   conditionalPanel(
     condition = "input.current_tab == 'one_sample'",
-    
-    # Input parameters and results side by side for one-sample t-test
     layout_columns(
       col_widths = c(6, 6),
-      
-      # Input parameters for one-sample t-test
       card(
         card_header("Sample Data"),
         card_body(
@@ -60,8 +56,6 @@ ui <- page_fluid(
           helpText("Calculate t-statistic for testing whether sample mean differs from population mean.")
         )
       ),
-      
-      # Results for one-sample t-test
       card(
         card_header("Results"),
         card_body(
@@ -74,12 +68,8 @@ ui <- page_fluid(
   # Two-sample t-test panel
   conditionalPanel(
     condition = "input.current_tab == 'two_sample'",
-    
-    # Input cards
     layout_columns(
       col_widths = c(4, 4, 4),
-      
-      # Sample 1 inputs
       card(
         card_header("Sample 1"),
         card_body(
@@ -88,8 +78,6 @@ ui <- page_fluid(
           numericInput("s1_two", "Sample Standard Deviation (s₁)", value = 8, min = 0.001, step = 0.01)
         )
       ),
-      
-      # Sample 2 inputs
       card(
         card_header("Sample 2"),
         card_body(
@@ -98,22 +86,19 @@ ui <- page_fluid(
           numericInput("s2_two", "Sample Standard Deviation (s₂)", value = 10, min = 0.001, step = 0.01)
         )
       ),
-      
-      # Test type settings
       card(
         card_header("Test Settings"),
         card_body(
           radioButtons("test_type", "Test type:",
-                      choices = list("Independent Samples" = "independent",
-                                    "Paired Samples" = "paired"),
-                      selected = "independent"),
+                       choices = list("Independent Samples (Equal variances)" = "independent",
+                                      "Independent Samples (Welch's t-test)" = "welch",
+                                      "Paired Samples" = "paired"),
+                       selected = "independent"),
           hr(),
-          helpText("Choose between independent samples (pooled t-test) or paired samples t-test.")
+          helpText("Choose between pooled t-test, Welch's t-test, or paired samples t-test.")
         )
       )
     ),
-    
-    # Results card at the bottom
     layout_columns(
       col_widths = 12,
       card(
@@ -128,14 +113,12 @@ ui <- page_fluid(
   # Hidden input to track current tab
   textInput("current_tab", "", value = "one_sample", width = "0px"),
   tags$style("#current_tab { display: none; }"),
-  
-  # Dynamic CSS for button styling
   uiOutput("button_css")
 )
 
 server <- function(input, output, session) {
   
-  # Handle button clicks to switch between tabs
+  # Switch tab logic
   observeEvent(input$show_one_sample, {
     updateTextInput(session, "current_tab", value = "one_sample")
   })
@@ -144,7 +127,7 @@ server <- function(input, output, session) {
     updateTextInput(session, "current_tab", value = "two_sample")
   })
   
-  # Dynamic CSS for button styling
+  # Dynamic CSS
   output$button_css <- renderUI({
     if (input$current_tab == "one_sample") {
       tags$style("
@@ -175,38 +158,27 @@ server <- function(input, output, session) {
     }
   })
   
-  # One-sample t-test calculations
+  # One-sample t-test logic
   output$one_sample_results <- renderText({
     n <- input$n1
     xbar <- input$xbar1
     s <- input$s1
     mu0 <- input$mu0
     
-    # Calculate t-statistic
     t_stat <- (xbar - mu0) / (s / sqrt(n))
-    
-    # Degrees of freedom
     df <- n - 1
-    
-    # Standard error
     se <- s / sqrt(n)
     
-    result <- paste0(
+    paste0(
       "T-statistic: ", round(t_stat, 6), "\n",
       "Degrees of freedom: ", df, "\n",
       "Standard error: ", round(se, 6), "\n\n",
-      "Formula used: t = (x̄ - μ₀) / (s / √n)\n",
-      "Where:\n",
-      "  x̄ = ", xbar, " (sample mean)\n",
-      "  μ₀ = ", mu0, " (population mean)\n",
-      "  s = ", s, " (sample standard deviation)\n",
-      "  n = ", n, " (sample size)"
+      "Formula: t = (x̄ - μ₀) / (s / √n)\n",
+      "x̄ = ", xbar, ", μ₀ = ", mu0, ", s = ", s, ", n = ", n
     )
-    
-    return(result)
   })
   
-  # Two-sample t-test calculations
+  # Two-sample t-test logic
   output$two_sample_results <- renderText({
     n1 <- input$n1_two
     xbar1 <- input$xbar1_two
@@ -217,62 +189,53 @@ server <- function(input, output, session) {
     test_type <- input$test_type
     
     if (test_type == "independent") {
-      # Independent samples t-test (pooled)
-      # Calculate pooled standard deviation
+      # Pooled t-test
       sp <- sqrt(((n1 - 1) * s1^2 + (n2 - 1) * s2^2) / (n1 + n2 - 2))
-      
-      # Calculate standard error
       se <- sp * sqrt(1/n1 + 1/n2)
-      
-      # Calculate t-statistic
       t_stat <- (xbar1 - xbar2) / se
-      
-      # Degrees of freedom
       df <- n1 + n2 - 2
       
       result <- paste0(
-        "Independent samples t-test\n",
+        "Independent samples t-test (Equal variances assumed)\n",
         "T-statistic: ", round(t_stat, 6), "\n",
         "Degrees of freedom: ", df, "\n",
         "Pooled standard deviation: ", round(sp, 6), "\n",
         "Standard error: ", round(se, 6), "\n\n",
-        "Formula used: t = (x̄₁ - x̄₂) / (sp × √(1/n₁ + 1/n₂))\n",
-        "Where:\n",
-        "  x̄₁ = ", xbar1, ", x̄₂ = ", xbar2, "\n",
-        "  sp = √[((n₁-1)s₁² + (n₂-1)s₂²) / (n₁+n₂-2)] = ", round(sp, 6), "\n",
-        "  n₁ = ", n1, ", n₂ = ", n2
+        "Formula: t = (x̄₁ - x̄₂) / (sp × √(1/n₁ + 1/n₂))"
+      )
+      
+    } else if (test_type == "welch") {
+      # Welch's t-test
+      se <- sqrt((s1^2 / n1) + (s2^2 / n2))
+      t_stat <- (xbar1 - xbar2) / se
+      df_num <- (s1^2 / n1 + s2^2 / n2)^2
+      df_den <- ((s1^2 / n1)^2 / (n1 - 1)) + ((s2^2 / n2)^2 / (n2 - 1))
+      df <- df_num / df_den
+      
+      result <- paste0(
+        "Welch's t-test (Unequal variances)\n",
+        "T-statistic: ", round(t_stat, 6), "\n",
+        "Degrees of freedom (Welch): ", round(df, 2), "\n",
+        "Standard error: ", round(se, 6), "\n\n",
+        "Formula: t = (x̄₁ - x̄₂) / √(s₁²/n₁ + s₂²/n₂)\n",
+        "df = [(s₁²/n₁ + s₂²/n₂)²] / [ (s₁²/n₁)²/(n₁−1) + (s₂²/n₂)²/(n₂−1) ]"
       )
       
     } else {
-      # Paired samples t-test
-      # For paired t-test, we assume the same sample size
-      n <- min(n1, n2)  # Use the smaller sample size
-      
-      # Calculate difference standard deviation (approximated from individual SDs)
-      # This is a simplified approach - in practice you'd have the actual differences
-      s_diff <- sqrt(s1^2 + s2^2)  # Approximate combined variance
-      
-      # Calculate standard error of differences
+      # Paired t-test approximation
+      n <- min(n1, n2)
+      s_diff <- sqrt(s1^2 + s2^2)
       se <- s_diff / sqrt(n)
-      
-      # Calculate t-statistic
       t_stat <- (xbar1 - xbar2) / se
-      
-      # Degrees of freedom for paired t-test
       df <- n - 1
       
       result <- paste0(
-        "Paired samples t-test\n",
+        "Paired samples t-test (approximation)\n",
         "T-statistic: ", round(t_stat, 6), "\n",
         "Degrees of freedom: ", df, "\n",
-        "Standard error of differences: ", round(se, 6), "\n",
-        "Effective sample size: ", n, "\n\n",
-        "Formula used: t = (x̄₁ - x̄₂) / (s_diff / √n)\n",
-        "Where:\n",
-        "  x̄₁ = ", xbar1, ", x̄₂ = ", xbar2, "\n",
-        "  s_diff ≈ √(s₁² + s₂²) = ", round(s_diff, 6), " (approximated)\n",
-        "  n = ", n, " (pairs)\n\n",
-        "Note: This approximates paired t-test. Ideally, use actual difference data."
+        "Standard error of differences: ", round(se, 6), "\n\n",
+        "Formula: t = (x̄₁ - x̄₂) / (s_diff / √n)\n",
+        "s_diff ≈ √(s₁² + s₂²) = ", round(s_diff, 6)
       )
     }
     
