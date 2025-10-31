@@ -1,0 +1,213 @@
+Multivariate chain rule
+
+CALCULUS
+
+AUTHOR
+
+Donald Campbell
+
+SUMMARY
+The multivariate chain rule is used in calculus to differentiate a function when its variables depend on other variables. It shows how the change in one variable affects the whole function by considering how the intermediate variables change. It is useful in modelling systems where one quantity depends on several factors.
+
+Before reading this guide, it is recommended that you read Guide: Introduction to partial differentiation and Guide: The chain rule.
+
+What is the multivariate chain rule?
+
+As seen in Guide: The chain rule, the chain rule tells you how to differentiate a function y equals y of x with respect to another variable t when x depends on t. normal d y over normal d t equals normal d y over normal d x normal d x over normal d t
+
+This rule can be extended to functions of multiple variables through the multivariate chain rule. The extended rule tells you how to compute derivatives of composite functions (functions of functions) involving multiple variables. It allows you to track how changes in independent variables influence a final quantity through intermediate variables called dependent variables.
+
+The multivariate chain rule is used in problems involving parametric multivariate functions, such as those describing motion along curved surfaces, transformations in computer graphics, and population models where growth depends on multiple time-varying factors. Another important example is a climate model: these use variables like temperature, humidity and ocean currents to predict weather patterns.
+
+Before beginning, it is important to understand the difference between dependent and independent variables. From there, the multivariate chain rule accounts for any combination of dependent and independent variables; this guide looks at two dependent variables with one/two independent variables, and then discusses the general case at the very end.
+
+Dependent and independent variables
+
+When a function depends on a specific variable, this means that the function is written with the variable in its rule. For example, the function f of open paren x comma y close paren equals x squared plus y squared depends on x and y as the function is written in terms of x and y.
+
+A multivariate (or multivariable) function is a function that depends on more than one variable.
+
+Consider a multivariate function w equals w of open paren x comma y comma z close paren equals 2 x squared plus x y plus 3 x z where 3 lines Line 1: x of open paren s comma t close paren equals s squared minus t Line 2: y of open paren s comma t close paren equals s squared plus t Line 3: z of open paren s comma t close paren equals 2 s plus t squared
+
+The variables x, y and z are referred to as dependent variables as they are functions that depend on (can be written in terms of) the variables s and t. Even though x, y and z are referred to as ‘variables’, they are actually functions of the variables s and t. In this case, the dependent variables can be written in functional form as x equals x of open paren s comma t close paren, y equals y of open paren s comma t close paren and z equals z of open paren s comma t close paren to emphasize dependency.
+
+The variables s and t are referred to as independent variables as they do not depend on any other variables.
+
+Occasionally, the dependent variables in this guide may be referred to as intermediate variables since they connect the independent variables s and t to the final quantity w.
+
+Functions of two dependent variables with one independent variable
+
+Suppose you have a function z equals z of open paren x comma y close paren. Here, z depends on two dependent variables x and y, however both x and y are functions of a single independent variable t. x equals x of t sans serif and y equals y of t
+
+This means that, even though z initially looks like a function of two dependent variables x and y, it really depends on a single independent variable t. You can write z entirely in terms of t: z equals z of open paren x of t comma y of t close paren
+
+The goal is to find normal d z over normal d t.
+
+You may not be able to differentiate z equals z of open paren x comma y close paren directly with respect to t because z depends intermediately on both x and y. Instead, you could use the multivariate chain rule.
+
+Note
+Multivariate chain rule for functions of one independent variable
+
+Let z equals z of open paren x comma y close paren where f is a differentiable function of x and y. Also let x equals x of t and y equals y of t be differentiable functions of t.
+
+The function z can then be differentiated with respect to t according to normal d z over normal d t equals the fraction with numerator partial z and denominator partial x normal d x over normal d t plus the fraction with numerator partial z and denominator partial y normal d y over normal d t
+
+Important
+
+The left-most derivative normal d z over normal d t is written with a straight normal d as z equals z of open paren x comma y close paren equals z of open paren x of t comma y of t close paren is ultimately a function of t alone. Here, z is written using the expressions for x and y in terms of t.
+
+Derivatives such as the fraction with numerator partial z and denominator partial x and the fraction with numerator partial z and denominator partial y are written with a  partial as z is a function that depends on two variables x and y.
+
+Derivatives such as normal d x over normal d t and normal d y over normal d t are written with a straight normal d as x is a function that depends only on a single variable t.
+
+As t changes, both dependent variables x and y change as they are both functions of the independent variable t. This causes z to change as it is a function of the variables x and y which are also changing.
+
+Note
+Example 1
+
+Let z equals z of open paren x comma y close paren equals x cubed plus y cubed where x equals 3 t squared and y equals cosine t. Use the multivariate chain rule to find normal d z over normal d t.
+
+First, calculate the derivatives required for the multivariate chain rule. 2 lines Line 1: the fraction with numerator partial z and denominator partial x equals 3 x squared the fraction with numerator partial z and denominator partial y equals 3 y squared Line 2: normal d x over normal d t equals 6 t normal d y over normal d t equals negative sine t
+
+You then need to substitute the derivatives into the multivariate chain rule, then substitute for x equals 3 t squared and y equals cosine t. 4 lines Line 1: normal d z over normal d t equals the fraction with numerator partial z and denominator partial x normal d x over normal d t plus the fraction with numerator partial z and denominator partial y normal d y over normal d t Line 2: blank equals open paren 3 x squared close paren times 6 t plus open paren 3 y squared close paren times open paren negative sine t close paren Line 3: blank equals 3 times open paren 3 t squared close paren squared times 6 t plus 3 times open paren cosine t close paren squared times open paren negative sine t close paren Line 4: blank equals 162 t to the fifth power minus 3 sine t cosine squared t and this is your final answer.
+
+Important
+
+Make sure that your final answer is always expressed only in terms of the independent variables. Your final answer should not include any intermediate variables (like x and y in this example).
+
+Tip
+
+You could notice that in this case, you could substitute x equals x of t and y equals y of t into the equation and directly differentiate with respect to t. However, this might not be possible in all cases, and usually using the multivariate chain rule will result in cleaner working. For instance, if z equals z of open paren x comma y close paren equals x e raised to the x y power with dependent variables x of t equals t to the fifth power minus t to the fourth power plus t cubed plus 1 and y of t equals the cosine of open paren t squared close paren, then you can directly substitute and differentiate; but it would be very difficult to do!
+
+Functions of two dependent variables with two independent variables
+
+Suppose you have a function z equals z of open paren x comma y close paren, where both x and y are now functions of two independent variables. Here, z depends on two dependent variables x and y, however now both x and y are functions of two independent variables s and t. x equals x of open paren s comma t close paren sans serif and y equals y of open paren s comma t close paren
+
+This means that, even though z initially looks like a function of two dependent variables x and y, it really depends on two independent variables s and t. In fact, you can write z entirely in terms of s and t. z equals z of open paren x of open paren s comma t close paren comma y of open paren s comma t close paren close paren
+
+Since there are now two independent variables, the goal is to find both the fraction with numerator partial z and denominator partial s and the fraction with numerator partial z and denominator partial t.
+
+You cannot differentiate z equals z of open paren x comma y close paren directly with respect to s or t because z depends intermediately on both x and y. Instead, you need to use the multivariate chain rule.
+
+Note
+Multivariate chain rule for functions of two independent variables
+
+Let z equals z of open paren x comma y close paren where f is a differentiable function of x and y. Also, let x equals x of open paren s comma t close paren and y equals y of open paren s comma t close paren be differentiable functions of s and t.
+
+The function z can then be differentiated with respect to s and t with 2 lines Line 1: the fraction with numerator partial z and denominator partial s equals the fraction with numerator partial z and denominator partial x the fraction with numerator partial x and denominator partial s plus the fraction with numerator partial z and denominator partial y the fraction with numerator partial y and denominator partial s Line 2: the fraction with numerator partial z and denominator partial t equals the fraction with numerator partial z and denominator partial x the fraction with numerator partial x and denominator partial t plus the fraction with numerator partial z and denominator partial y the fraction with numerator partial y and denominator partial t
+
+Important
+
+The left-most derivatives the fraction with numerator partial z and denominator partial s and the fraction with numerator partial z and denominator partial t are written with a  partial as z equals z of open paren s comma t close paren is considered a function of both s and t at this stage. Here, z is written using the expressions for x and y in terms of s and t.
+
+Notice that the the fraction with numerator partial x and denominator partial s, the fraction with numerator partial x and denominator partial t, the fraction with numerator partial y and denominator partial s and the fraction with numerator partial y and denominator partial t derivatives are now written with a  partial instead of a straight normal d as x and y are functions that now depend on two independent variables s and t. This means the derivatives are now partial derivatives instead of ordinary derivatives.
+
+As s and t change, both dependent variables x and y change as they are both functions of the independent variables s and t. This causes z to change as it is a function of variables x and y which are also changing.
+
+Note
+Example 2
+
+Let z equals z of open paren x comma y close paren equals x squared plus 3 x y where x equals s plus t squared and y equals s squared minus t. Use the multivariate chain rule to find the fraction with numerator partial z and denominator partial s and the fraction with numerator partial z and denominator partial t.
+
+First, calculate the derivatives required for the multivariate chain rule. 3 lines Line 1: the fraction with numerator partial z and denominator partial x equals 2 x plus 3 y the fraction with numerator partial z and denominator partial y equals 3 x Line 2: the fraction with numerator partial x and denominator partial s equals 1 the fraction with numerator partial y and denominator partial s equals 2 s Line 3: the fraction with numerator partial x and denominator partial t equals 2 t the fraction with numerator partial y and denominator partial t equals negative 1
+
+You need to substitute the partial derivatives into the multivariate chain rule, then substitute for x equals s plus t squared and y equals s squared minus t.
+
+Firstly, calculate the partial derivative of z with respect to s: 4 lines Line 1: the fraction with numerator partial z and denominator partial s equals the fraction with numerator partial z and denominator partial x the fraction with numerator partial x and denominator partial s plus the fraction with numerator partial z and denominator partial y the fraction with numerator partial y and denominator partial s Line 2: blank equals open paren 2 x plus 3 y close paren times 1 plus 3 x times 2 s Line 3: blank equals open paren 2 times open paren s plus t squared close paren plus 3 times open paren s squared minus t close paren close paren times 1 plus open paren 3 times open paren s plus t squared close paren close paren times 2 s Line 4: blank equals 9 s squared plus 2 t squared plus 6 s t squared plus 2 s minus 3 t
+
+Now, calculate the partial derivative of z with respect to t: 4 lines Line 1: the fraction with numerator partial z and denominator partial t equals the fraction with numerator partial z and denominator partial x the fraction with numerator partial x and denominator partial t plus the fraction with numerator partial z and denominator partial y the fraction with numerator partial y and denominator partial t Line 2: blank equals open paren 2 x plus 3 y close paren times 2 t plus 3 x times negative 1 Line 3: blank equals open paren 2 times open paren s plus t squared close paren plus 3 times open paren s squared minus t close paren close paren times 2 t plus open paren 3 times open paren s plus t squared close paren close paren times negative 1 Line 4: blank equals 4 t cubed minus 9 t squared plus 6 s squared t minus 3 s plus 4 s t
+
+Generalized multivariate chain rule
+
+Suppose you have a function w equals w of open paren x sub 1 comma x sub 2 comma dot dot dot comma x sub n close paren. Here, w depends on n dependent variables x sub 1 comma x sub 2 comma dot dot dot comma x sub n where each of these variables is a function of m independent variables t sub 1 comma t sub 2 comma dot dot dot comma t sub m. 4 lines Line 1: x sub 1 equals x sub 1 of open paren t sub 1 comma t sub 2 comma dot dot dot comma t sub m close paren Line 2: x sub 2 equals x sub 2 of open paren t sub 1 comma t sub 2 comma dot dot dot comma t sub m close paren Line 3: vertical ellipsis equals vertical ellipsis Line 4: x sub n equals x sub n of open paren t sub 1 comma t sub 2 comma dot dot dot comma t sub m close paren
+
+The previous cases investigated were 3 lines Line 1: sans serif Case 1 colon blank n equals 1 comma blank m equals 1 comma blank y equals y of x comma blank x equals x of t period blank blank Line 2: sans serif Case 2 colon blank n equals 2 comma blank m equals 1 comma blank z equals z of open paren x comma y close paren comma blank x equals x of t comma blank y equals y of t period Line 3: sans serif Case 3 colon blank n equals 2 comma blank m equals 2 comma blank z equals z of open paren x comma y close paren comma blank x equals x of open paren s comma t close paren comma blank y equals y of open paren s comma t close paren period
+
+where:
+
+Case 1 corresponds to the chain rule for one dependent variable and one independent variable - see Guide: The chain rule.
+
+Case 2 corresponds to the chain rule for two dependent variables and one independent variable.
+
+Case 3 corresponds to the chain rule for two dependent variables and two independent variables.
+
+The multivariate chain rule can be generalized as follows.
+
+Note
+Generalized multivariate chain rule
+
+Let w equals w of open paren x sub 1 comma x sub 2 comma dot dot dot comma x sub n close paren be a differentiable function of x sub 1 comma x sub 2 comma dot dot dot comma x sub n. Also let the following dependent variables be differentiable functions of t sub 1 comma t sub 2 comma dot dot dot comma t sub m. 4 lines Line 1: x sub 1 equals x sub 1 of open paren t sub 1 comma t sub 2 comma dot dot dot comma t sub m close paren Line 2: x sub 2 equals x sub 2 of open paren t sub 1 comma t sub 2 comma dot dot dot comma t sub m close paren Line 3: vertical ellipsis equals vertical ellipsis Line 4: x sub n equals x sub n of open paren t sub 1 comma t sub 2 comma dot dot dot comma t sub m close paren
+
+The function w can then be differentiated with respect to t sub 1 comma t sub 2 comma dot dot dot comma t sub m with 4 lines Line 1: the fraction with numerator partial w and denominator partial t sub 1 equals the sum from i equals 1 to n of the fraction with numerator partial w and denominator partial x sub i the fraction with numerator partial x sub i and denominator partial t sub 1 equals the fraction with numerator partial w and denominator partial x sub 1 the fraction with numerator partial x sub 1 and denominator partial t sub 1 plus the fraction with numerator partial w and denominator partial x sub 2 the fraction with numerator partial x sub 2 and denominator partial t sub 1 plus dot dot dot plus the fraction with numerator partial w and denominator partial x sub n the fraction with numerator partial x sub n and denominator partial t sub 1 Line 2: the fraction with numerator partial w and denominator partial t sub 2 equals the sum from i equals 1 to n of the fraction with numerator partial w and denominator partial x sub i the fraction with numerator partial x sub i and denominator partial t sub 2 equals the fraction with numerator partial w and denominator partial x sub 1 the fraction with numerator partial x sub 1 and denominator partial t sub 2 plus the fraction with numerator partial w and denominator partial x sub 2 the fraction with numerator partial x sub 2 and denominator partial t sub 2 plus dot dot dot plus the fraction with numerator partial w and denominator partial x sub n the fraction with numerator partial x sub n and denominator partial t sub 2 Line 3: vertical ellipsis equals vertical ellipsis Line 4: the fraction with numerator partial w and denominator partial t sub m equals the sum from i equals 1 to n of the fraction with numerator partial w and denominator partial x sub i the fraction with numerator partial x sub i and denominator partial t sub m equals the fraction with numerator partial w and denominator partial x sub 1 the fraction with numerator partial x sub 1 and denominator partial t sub m plus the fraction with numerator partial w and denominator partial x sub 2 the fraction with numerator partial x sub 2 and denominator partial t sub m plus dot dot dot plus the fraction with numerator partial w and denominator partial x sub n the fraction with numerator partial x sub n and denominator partial t sub m
+
+(where sum represents sigma notation; see Guide: Sigma notation for more.)
+
+Important
+
+A particular case exists where the variables x sub i each depend on only one independent variable x sub 1 equals x sub 1 of t comma x sub 2 equals x sub 2 of t comma dot dot dot comma x sub n equals x sub n of t. In this case, a straight normal d should be used instead of a  partial. 1 lines Line 1: normal d w over normal d t equals the sum from i equals 1 to n of the fraction with numerator partial w and denominator partial x sub i normal d x sub i over normal d t equals the fraction with numerator partial w and denominator partial x sub 1 normal d x sub 1 over normal d t plus the fraction with numerator partial w and denominator partial x sub 2 normal d x sub 2 over normal d t plus dot dot dot plus the fraction with numerator partial w and denominator partial x sub n normal d x sub n over normal d t
+
+Similarly, if there is only one dependent variable x, then a straight normal d should be used instead of a  partial for the derivatives of w with respect to x.
+
+Here’s an example of a case with n equals 3 dependent variables and m equals 2 independent variables.
+
+Note
+Example 3
+
+Let w equals w of open paren x comma y comma z close paren equals x squared minus 3 x z plus 2 x y where 3 lines Line 1: x of open paren s comma t close paren equals s squared minus t Line 2: y of open paren s comma t close paren equals s cosine t Line 3: z of open paren s comma t close paren equals t squared minus s
+
+Use the multivariate chain rule to find the fraction with numerator partial w and denominator partial s and the fraction with numerator partial w and denominator partial t.
+
+Firstly, calculate the derivatives required for the multivariate chain rule. 3 lines Line 1: the fraction with numerator partial w and denominator partial x equals 2 x minus 3 z plus 2 y the fraction with numerator partial w and denominator partial y equals 2 x the fraction with numerator partial w and denominator partial z equals negative 3 x Line 2: the fraction with numerator partial x and denominator partial s equals 2 s the fraction with numerator partial y and denominator partial s equals cosine t the fraction with numerator partial z and denominator partial s equals negative 1 Line 3: the fraction with numerator partial x and denominator partial t equals negative 1 the fraction with numerator partial y and denominator partial t equals negative s sine t the fraction with numerator partial z and denominator partial t equals 2 t
+
+You need to substitute the partial derivatives into the multivariate chain rule, then substitute for x equals s squared minus t, y equals s cosine t and z equals t squared minus s.
+
+You can calculate the partial derivative of w with respect to s as: 5 lines Line 1: the fraction with numerator partial w and denominator partial s equals the fraction with numerator partial w and denominator partial x the fraction with numerator partial x and denominator partial s plus the fraction with numerator partial w and denominator partial y the fraction with numerator partial y and denominator partial s plus the fraction with numerator partial w and denominator partial z the fraction with numerator partial z and denominator partial s Line 2: blank equals open paren 2 x minus 3 z plus 2 y close paren times 2 s plus 2 x times cosine t plus negative 3 x times negative 1 Line 3: blank equals open paren 2 times open paren s squared minus t close paren minus 3 times open paren t squared minus s close paren plus 2 s cosine t close paren times 2 s plus open paren 2 times open paren s squared minus t close paren close paren times cosine t Line 4: blank positive open paren negative 3 times open paren s squared minus t close paren close paren times negative 1 Line 5: blank equals 4 s cubed plus 9 s squared plus 6 s squared cosine t minus 4 s t minus 6 s t squared minus 2 t cosine t minus 3 t
+
+You can calculate the partial derivative of w with respect to t as: 6 lines Line 1: the fraction with numerator partial w and denominator partial t equals the fraction with numerator partial w and denominator partial x the fraction with numerator partial x and denominator partial t plus the fraction with numerator partial w and denominator partial y the fraction with numerator partial y and denominator partial t plus the fraction with numerator partial w and denominator partial z the fraction with numerator partial z and denominator partial t Line 2: blank equals open paren 2 x minus 3 z plus 2 y close paren times negative 1 plus 2 x times open paren negative s sine t close paren plus negative 3 x times 2 t Line 3: blank equals open paren 2 times open paren s squared minus t close paren minus 3 times open paren t squared minus s close paren plus 2 s cosine t close paren times negative 1 Line 4: blank positive open paren 2 times open paren s squared minus t close paren close paren times open paren negative s sine t close paren plus open paren negative 3 times open paren s squared minus t close paren close paren times 2 t Line 5: blank equals negative 2 s squared plus 9 t squared plus 2 t minus 3 s minus 2 s cosine t minus 2 s cubed sine t Line 6: blank positive 2 s t sine t minus 6 t s squared
+
+Tree representation of the multivariate chain rule
+
+There is a useful way for determining the required form of the multivariate chain rule without needing to remember the generalized rule above. The following diagram is a tree representation of the dependencies between variables in a multivariate function.
+
+At the top of the tree is the function w equals w of open paren x comma y comma z close paren, which depends on three intermediate variables x, y and z. Each of these three intermediate variables depend on independent variables s and t. The tree shows all possible paths from w to the independent variables s and t.
+
+Each path represents a chain of partial differentiation (a product of partial derivatives) when applying the chain rule. All paths are combined by summing these chains at the end to find the complete partial derivative of w with respect to the relevant independent variable.
+
+To find the fraction with numerator partial w and denominator partial s, follow all paths leading from z to s. 4 lines Line 1: Path via x colon blank the fraction with numerator partial w and denominator partial x the fraction with numerator partial x and denominator partial s Line 2: Path via y colon blank the fraction with numerator partial w and denominator partial y the fraction with numerator partial y and denominator partial s Line 3: Path via z colon blank the fraction with numerator partial w and denominator partial z the fraction with numerator partial z and denominator partial s Line 4: sans serif Combine all terms colon blank the fraction with numerator partial w and denominator partial x the fraction with numerator partial x and denominator partial s plus the fraction with numerator partial w and denominator partial y the fraction with numerator partial y and denominator partial s plus the fraction with numerator partial w and denominator partial z the fraction with numerator partial z and denominator partial s equals the fraction with numerator partial w and denominator partial s
+
+You can perform a similar method to find the fraction with numerator partial w and denominator partial t.
+
+Important
+
+Remember that if a variable has only a single dependency on another variable (no separate branch), a straight normal d should be used in the derivative instead of a  partial.
+
+Quick check problems
+
+Which of the following correctly describes a dependent variable? 
+A variable that is not influenced by other variables
+A variable that is defined in terms of other variables
+A constant value in a function
+
+Consider the function z equals z of open paren x comma y close paren equals x squared plus y squared where x equals 2 t and y equals 3 t.
+
+There is/are  dependent variable(s) and  independent variable(s).
+
+The required form of the multivariate chain rule is normal d z over normal d t equals the fraction with numerator partial z and denominator partial x normal d x over normal d t plus the fraction with numerator partial z and denominator partial y normal d y over normal d t 
+TRUE
+FALSE
+
+The partial derivative of z with respect to x is the fraction with numerator partial z and denominator partial x equals  .
+
+The full derivative of x with respect to t is normal d x over normal d t equals  .
+
+The partial derivative of z with respect to y is the fraction with numerator partial z and denominator partial y equals  .
+
+The full derivative of y with respect to t is normal d y over normal d t equals  .
+
+Use the multivariate chain rule to find the full derivative of z with respect to t, expressing your answer in terms of t only. normal d z over normal d t equals
+
+Further reading
+
+For more questions on the subject, please go to Questions: Multivariate chain rule.
+
+For a way to differentiate implicit functions of more than one variable, please see Guide: Multivariate implicit differentiation.

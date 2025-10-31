@@ -3,146 +3,118 @@ library(bslib)
 library(ggplot2)
 
 ui <- page_fluid(
-  title = "Normal distribution calculator",
+  title = "Example of lower, upper, two-tailed tests",
   
   layout_columns(
     col_widths = c(4, 8),
     
-    # Left column - Inputs
+    # Left column - Input parameters
     card(
-      card_header("Parameters"),
+      card_header("Input parameters"),
       card_body(
-        numericInput("mean", "Mean (μ):", value = 0),
-        numericInput("sd", "Standard deviation (σ):", value = 1, min = 0.01),
+        numericInput("zscore", "Z-score", value = 1.96, step = 0.01),
+        radioButtons("test_type", "Test Type",
+                    choices = list("Two-tailed" = "two",
+                                  "One-tailed (upper)" = "upper",
+                                  "One-tailed (lower)" = "lower"),
+                    selected = "two"),
         hr(),
-        radioButtons("prob_type", "Probability to calculate:",
-                    choices = list("P(X ≤ x)" = "less", 
-                                  "P(X ≥ x)" = "greater", 
-                                  "P(x ≤ X ≤ y)" = "between"),
-                    selected = "less"),
-        conditionalPanel(
-          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
-          numericInput("x_value", "x value:", value = 0)
-        ),
-        conditionalPanel(
-          condition = "input.prob_type == 'between'",
-          numericInput("x_lower", "Lower bound (x):", value = -1),
-          numericInput("x_upper", "Upper bound (y):", value = 1)
-        )
+        helpText("This app demonstrates p-values in the normal distribution, for use in Z-testing (see Example 4).")
       )
     ),
     
-    # Right column - Plot
+    # Right column - Graphical representation
     card(
-      card_header("Normal distribution plot"),
+      card_header("Graphical representation"),
       card_body(
-        uiOutput("plot_title"),
-        plotOutput("distPlot", height = "300px")
+        plotOutput("density_plot", height = "300px")
       )
     )
   ),
   
-  # Bottom row - Results
+  # Results at the bottom
   card(
-    card_header("Results"),
+    card_header("Result"),
     card_body(
-      # Removed the LaTeX formula display
-      textOutput("explanation")
+      verbatimTextOutput("pvalue_result")
     )
   )
 )
 
 server <- function(input, output, session) {
   
-  # Display the plot title with distribution parameters
-  output$plot_title <- renderUI({
-    title <- sprintf("N(μ = %.2f, σ = %.2f)", input$mean, input$sd)
-    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
-  })
-  
-  # Calculate the probability based on user selection
-  probability <- reactive({
-    if (input$prob_type == "less") {
-      prob <- pnorm(input$x_value, mean = input$mean, sd = input$sd)
-      explanation <- sprintf("P(X ≤ %.2f) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
-      
-    } else if (input$prob_type == "greater") {
-      prob <- 1 - pnorm(input$x_value, mean = input$mean, sd = input$sd)
-      explanation <- sprintf("P(X ≥ %.2f) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
-      
-    } else if (input$prob_type == "between") {
-      lower_prob <- pnorm(input$x_lower, mean = input$mean, sd = input$sd)
-      upper_prob <- pnorm(input$x_upper, mean = input$mean, sd = input$sd)
-      prob <- upper_prob - lower_prob
-      explanation <- sprintf("P(%.2f ≤ X ≤ %.2f) = %.4f or %.2f%%", 
-                            input$x_lower, input$x_upper, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "between", 
-                 lower = input$x_lower, upper = input$x_upper))
-    }
-  })
-  
-  # Display an explanation of the calculation
-  output$explanation <- renderText({
-    res <- probability()
-    return(res$explanation)
-  })
-  
-  # Generate the normal distribution plot
-  output$distPlot <- renderPlot({
-    # Calculate range for x-axis (covering 99.7% of the distribution)
-    x_min <- input$mean - 3.5 * input$sd
-    x_max <- input$mean + 3.5 * input$sd
+  # Calculate p-value based on test type
+  p_value <- reactive({
+    z <- input$zscore
+    test <- input$test_type
     
-    # Create data frame for plotting
-    x <- seq(x_min, x_max, length.out = 500)
-    y <- dnorm(x, mean = input$mean, sd = input$sd)
+    if (test == "two") {
+      p <- 2 * pnorm(-abs(z))
+      result <- paste0("Two-tailed p-value: ", round(p, 6))
+    } else if (test == "upper") {
+      p <- pnorm(z, lower.tail = FALSE)
+      result <- paste0("Upper-tailed p-value: ", round(p, 6))
+    } else if (test == "lower") {
+      p <- pnorm(z, lower.tail = TRUE)
+      result <- paste0("Lower-tailed p-value: ", round(p, 6))
+    }
+    
+    return(list(p = p, result = result, test = test))
+  })
+  
+  # Display p-value
+  output$pvalue_result <- renderText({
+    p_value()$result
+  })
+  
+  # Create density plot
+  output$density_plot <- renderPlot({
+    z <- input$zscore
+    test <- p_value()$test
+    
+    # Generate x values for normal distribution
+    x <- seq(-4, 4, length.out = 1000)
+    y <- dnorm(x)
     df <- data.frame(x = x, y = y)
     
-    # Create base plot
+    # Base plot
     p <- ggplot(df, aes(x = x, y = y)) +
       geom_line() +
-      labs(x = "X", y = "Density") +
+      labs(x = "Z-score", y = "Density") +
       theme_minimal() +
-      theme(panel.grid.minor = element_blank())
+      theme(panel.grid.minor = element_blank()) +
+      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5)
     
-    # Add bold line at X = 0
-    p <- p + geom_vline(xintercept = 0, linetype = "solid", color = "black", linewidth = 0.8)
-    
-    # Add shaded area based on selected probability type
-    res <- probability()
-    
-    if (res$type == "less") {
-      shade_x <- seq(x_min, res$x, length.out = 200)
-      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
-      shade_df <- data.frame(x = shade_x, y = shade_y)
-      
-      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
-        geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315")
-      
-    } else if (res$type == "greater") {
-      shade_x <- seq(res$x, x_max, length.out = 200)
-      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
-      shade_df <- data.frame(x = shade_x, y = shade_y)
-      
-      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
-        geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315")
-      
-    } else if (res$type == "between") {
-      shade_x <- seq(res$lower, res$upper, length.out = 200)
-      shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd)
-      shade_df <- data.frame(x = shade_x, y = shade_y)
-      
-      p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
-        geom_vline(xintercept = res$lower, linetype = "dashed", color = "#db4315") +
-        geom_vline(xintercept = res$upper, linetype = "dashed", color = "#db4315")
+    # Add shaded area based on test type, using #3F6BB6 as the color
+    if (test == "two") {
+      # Two-tailed test: shade both tails
+      if (z > 0) {
+        p <- p + 
+          geom_area(data = subset(df, x >= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_area(data = subset(df, x <= -z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_vline(xintercept = z, color = "#3F6BB6") +
+          geom_vline(xintercept = -z, color = "#3F6BB6")
+      } else {
+        p <- p + 
+          geom_area(data = subset(df, x <= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_area(data = subset(df, x >= -z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_vline(xintercept = z, color = "#3F6BB6") +
+          geom_vline(xintercept = -z, color = "#3F6BB6")
+      }
+    } else if (test == "upper") {
+      # Upper-tailed test: shade area above z
+      p <- p + 
+        geom_area(data = subset(df, x >= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+        geom_vline(xintercept = z, color = "#3F6BB6")
+    } else if (test == "lower") {
+      # Lower-tailed test: shade area below z
+      p <- p + 
+        geom_area(data = subset(df, x <= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+        geom_vline(xintercept = z, color = "#3F6BB6")
     }
     
     return(p)
   })
 }
 
-shinyApp(ui = ui, server = server)
+shinyApp(ui, server)

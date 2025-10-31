@@ -1,0 +1,141 @@
+---
+title: "Calculator: $Z$-scores"
+author: Tom Coleman and Millie Harris
+format: html
+abstract-title: Summary
+abstract: A calculator to provide $Z$-scores for a given significance level $\alpha$. 
+filters: 
+  - shinylive
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 340
+
+library(shiny)
+library(bslib)
+
+ui <- page_fluid(
+  title = "Z-table calculator",
+  
+  # Use fluidRow with columns for vertical alignment
+  fluidRow(
+    column(
+      width = 6,
+      card(
+        card_header("Input parameters"),
+        card_body(
+          style = "padding: 15px; min-height: 200px;",
+          # Input for significance level
+          numericInput(
+            "alpha",
+            "Significance Level (α):",
+            value = 0.05,
+            min = 0.001,
+            max = 0.999,
+            step = 0.001
+          ),
+          
+          # Radio buttons for test type with custom styling
+          tags$div(
+            style = "margin-top: 15px;",
+            tags$label("Test type:", style = "font-weight: bold; margin-bottom: 10px; display: block;"),
+            radioButtons(
+              "test_type",
+              "",
+              choices = list(
+                "One-tailed" = "one",
+                "Two-tailed" = "two"
+              ),
+              selected = "two"
+            )
+          )
+        )
+      )
+    ),
+    
+    column(
+      width = 6,
+      card(
+        card_header("Z-score results"),
+        card_body(
+          style = "padding: 15px; min-height: 200px;",
+          div(
+            style = "text-align: center;",
+            h4("Critical Z-score:", style = "color: #3F68B6; margin-bottom: 5px;"),
+            div(
+              style = "font-size: 32px; font-weight: bold; color: #3F68B6; margin: 5px 0;",
+              textOutput("z_score", inline = TRUE)
+            ),
+            div(
+              style = "margin-top: 8px; font-size: 14px;",
+              textOutput("interpretation")
+            )
+          )
+        )
+      )
+    )
+  ),
+  
+  # Custom CSS for styling the radio buttons
+  tags$style(HTML("
+    .radio label {
+      color: black !important;
+      font-weight: 500;
+    }
+    .radio input[type='radio'] {
+      accent-color: black;
+    }
+  "))
+)
+
+server <- function(input, output, session) {
+  
+  # Calculate Z-score based on significance level and test type
+  z_value <- reactive({
+    alpha <- input$alpha
+    
+    if (input$test_type == "one") {
+      # One-tailed test: find Z such that P(Z > z) = alpha
+      z_score <- qnorm(1 - alpha)
+    } else {
+      # Two-tailed test: find Z such that P(|Z| > z) = alpha
+      # This means P(Z > z) = alpha/2
+      z_score <- qnorm(1 - alpha/2)
+    }
+    
+    return(round(z_score, 4))
+  })
+  
+  # Output the Z-score
+  output$z_score <- renderText({
+    z_value()
+  })
+  
+  # Provide interpretation
+  output$interpretation <- renderText({
+    test_type <- ifelse(input$test_type == "one", "one-tailed", "two-tailed")
+    paste0("For a ", test_type, " test with α = ", input$alpha)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+# Further reading {-}
+
+[This interactive element appears in Guide: Introduction to confidence intervals. Please click this link to go to the guide.](../../studyguides/confidenceinterval.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 10/25 by tdhc and Millie Harris as part of a University of St Andrews VIP project.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

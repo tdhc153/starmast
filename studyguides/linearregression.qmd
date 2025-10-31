@@ -1,0 +1,763 @@
+---
+title: Introduction to linear regression
+author: Flora Green
+abstract-title: Summary
+abstract: Linear regression is a statistical model which uses one or more variables to predict the behaviour of another. It is widely used in fields such as business, economics and social sciences.
+categories:
+  - Statistics
+# image: FiguresPNG/linearregression-image.png
+filters:
+  - shinylive
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, it is recommended that you read [Guide: Expected value, variance, standard deviation](expectedvariance.qmd) and [Factsheet: Overview of statistical notation](../overviews/o-notation.qmd).*
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/hypothesistesting.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
+
+# What is linear regression? {-}
+
+One of the key purposes of statistics is the interpretation of data, which often involves considering the relationships between variables. Typically, this information is split into two categories: 'the thing which is observed' and 'the thing(s) which affect this observation', and a statistician collects information in both categories to build a full picture of the scenario. Then, the statistician tries and explain how and why a certain outcome is reached - which is incredibly useful for predicting which outcome may be reached in the future!
+
+For instance, if the seaside branch of Cantor's Confectionery had 150 ice cream sales in one day, and only 30 in another, they may wish to understand what it was that motivated this change, so that they can have the appropriate number of ice creams in stock. It could be that one of these days was a warm, sunny, summer's Saturday, whilst the other was a cold, rainy winter's Monday. 
+
+By collecting information about all of these factors, it is possible to build a model which predicts how many ice cream sales there will be on a particular day, based on any combination of factors. This relationship between the factors which affect an outcome, and the outcome itself, is known as regression, and in this guide, you will see how one type of regression - namely linear regression - works.
+
+<!-- Even more importantly, we can construct multiple linear regression models, each containing different combinations of factors to determine which of these factors actually affect the final outcome. Returning to the previous example, by building and analysing several linear regression models, Cantor's Confectionery could discover that the day of the week does not hugely impact their ice cream sales. -->
+
+<!-- Linear regression is an important tool in analysing which  -->
+
+<!-- When investigating which events led to a given outcome, linear regression is an invaluable tool.  -->
+
+<!-- Typically, when  -->
+
+<!-- # Setting up a linear regression model -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Explanatory and response variables -->
+
+<!-- An **explanatory variable** (also known as an independent variable) is something which you observe and measure. -->
+
+<!-- A **response variable** (also known as a dependent variable) changes because of changes within the explanatory variable(s). -->
+
+<!-- ::: -->
+
+<!-- Generally, when setting up a linear regression model, $x$ denotes the explanatory variable and $Y$ denotes the response variable. -->
+
+<!-- For a reminder about explanatory and response variables, please see [Overview: Statistical Notation](../overviews/o-notaion.qmd) -->
+
+# Simple linear regression
+
+::: {.callout-note appearance="simple"}
+
+## Definition of simple linear regression
+
+**Simple linear regression** is a form of linear regression. The function
+
+$$\mathbb{E}(Y) = \alpha + \beta x$$
+
+relates the explanatory variable, $x$, to the response variable, $Y$. $\alpha$ and $\beta$ are known as **regression parameters**.
+
+<!-- $y = \alpha + \beta x$ forms a **population regression line**.  -->
+
+For more on expected values, please see [Guide: Expected value, variance, standard deviation](expectedvariance.qmd). For a reminder about explanatory and response variables, please see [Overview: Statistical Notation](../overviews/o-notation.qmd).
+
+:::
+
+:::{.callout-tip}
+
+When the population regression line is plotted on a set of axes, it forms a straight line. This is where the name **linear** regression comes from. $\alpha$ represents the y-intercept and $\beta$ represents the gradient.
+
+Each individual point is described as $(x_{i},y_{i})$, where $i \in [1,n]$.
+
+:::
+
+<!-- i think i want this later -->
+<!-- ::: {.content-visible when-format="html"} -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Example 1 -->
+
+<!-- Use this tool to explore the effects of changing the values of the **regression parameters** on the relationship between the variables in more detail. You can hover over the line to see precise coordinates. -->
+
+<!-- ::: -->
+
+<!-- ```{shinylive-r} -->
+<!-- #| standalone: true -->
+<!-- #| viewerHeight: 600 -->
+
+<!-- library(shiny) -->
+<!-- library(bslib) -->
+<!-- library(ggplot2) -->
+<!-- library(plotly) -->
+
+<!-- ui <- page_sidebar( -->
+<!--   title = "Simple Linear Regression", -->
+<!--   sidebar = sidebar( -->
+<!--     numericInput("alpha", "Intercept (α)", value = 0, step = 0.5), -->
+<!--     numericInput("beta", "Slope (β)", value = 1, step = 0.5), -->
+<!--     helpText("Adjust α and β to change the regression parameters."), -->
+<!--     hr(), -->
+<!--     helpText("The equation shown is the population regression line: y = α + βx") -->
+<!--   ), -->
+<!--   card( -->
+<!--     card_header("Population Regression Line"), -->
+<!--     plotlyOutput("regression_plot", height = "400px"), -->
+<!--     card_body( -->
+<!--       p("Hover over the line to see precise coordinates. The intercept (α) represents where the line crosses the y-axis, and the slope (β) represents the rate of change.") -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+
+<!-- server <- function(input, output, session) { -->
+<!--   output$regression_plot <- renderPlotly({ -->
+<!--     x_vals <- seq(-10, 10, length.out = 200) -->
+<!--     y_vals <- input$alpha + input$beta * x_vals -->
+
+<!--     # Create data frame for ggplot -->
+<!--     df <- data.frame(x = x_vals, y = y_vals) -->
+
+<!--     # Create ggplot -->
+<!--     p <- ggplot(df, aes(x = x, y = y)) + -->
+<!--       geom_line(color = "#007ACC", linewidth = 1.2) + -->
+<!--       labs( -->
+<!--         title = paste("y = E(Y) =", input$alpha, "+", input$beta,"x"), -->
+<!--         x = "x (explanatory variable)", -->
+<!--         y = "y (response variable)" -->
+<!--       ) + -->
+<!--       xlim(-10, 10) + -->
+<!--       ylim(-30, 30) + -->
+<!--       theme_minimal() + -->
+<!--       theme( -->
+<!--         plot.title = element_text(size = 14, hjust = 0.5), -->
+<!--         axis.title = element_text(size = 12) -->
+<!--       ) + -->
+<!--       geom_hline(yintercept = 0, alpha = 0.3) + -->
+<!--       geom_vline(xintercept = 0, alpha = 0.3) -->
+
+<!--     # Convert to plotly for interactivity (hover functionality) -->
+<!--     ggplotly(p, tooltip = c("x", "y")) %>% -->
+<!--       config(displayModeBar = FALSE) -->
+<!--   }) -->
+<!-- } -->
+
+<!-- shinyApp(ui, server) -->
+<!-- ``` -->
+
+<!-- ::: -->
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+The seaside branch of Cantor's Confectionery wishes to see the relationship between temperature ($x$) and ice cream sales ($y$). To do this, they track the number of ice cream sales in a 10 day period alongside the average temperature that day.
+
+| Day number | Average temperature (°C) | Number of sales |
+|:-----------|:-------------------------|:----------------|
+| 1          | 22                       | 150             |
+| 2          | 20                       | 100             |
+| 3          | 19                       | 110             |
+| 4          | 21                       | 210             |
+| 5          | 24                       | 260             |
+| 6          | 25                       | 280             |
+| 7          | 27                       | 310             |
+| 8          | 26                       | 350             |
+| 9          | 28                       | 360             |
+| 10         | 25                       | 270             |
+
+You can plot the graph fit the simple linear regression model
+
+$$\mathbb{E}(Y) = \alpha + \beta x$$
+:::
+
+
+::: {.content-visible when-format="html"}
+
+Use the tool below to observe how changing the values of the **regression parameters** affects how closely the **simple linear regression model** fits the observed data.
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 600
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+library(plotly)
+
+# Ice cream sales data
+ice_cream_data <- data.frame(
+  day = 1:10,
+  temperature = c(22, 20, 19, 21, 24, 25, 27, 26, 28, 25),
+  sales = c(150, 100, 110, 210, 260, 280, 310, 350, 360, 270)
+)
+
+ui <- page_sidebar(
+  title = "Ice Cream Sales Linear Model",
+  sidebar = sidebar(
+    numericInput("alpha", "Intercept (α)", value = -500, step = 10),
+    numericInput("beta", "Slope (β)", value = 25, step = 1),
+    hr()
+  ),
+  card(
+    card_header("Ice Cream Sales vs Temperature"),
+    plotlyOutput("regression_plot", height = "500px"),
+    card_body(
+      p("The scatter plot shows the relationship between temperature and ice cream sales. 
+        The blue line represents your fitted linear model: E(Y) = α + βx.
+        Adjust the model parameters (α and β) to find the line that best fits the data points.
+        You can hover over the graph to see precise coordinates.")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  output$regression_plot <- renderPlotly({
+    # Create regression line values
+    temp_range <- seq(18, 30, length.out = 100)
+    predicted_sales <- input$alpha + input$beta * temp_range
+    
+    # Create the plot
+    p <- ggplot() +
+      # Add the observed data points
+      geom_point(data = ice_cream_data, 
+                aes(x = temperature, y = sales),
+                size = 3, color = "#E31A1C", alpha = 0.8) +
+      # Add the regression line
+      geom_line(aes(x = temp_range, y = predicted_sales),
+               color = "#007ACC", linewidth = 1.5) +
+      labs(
+        title = paste("E(Y) =", input$alpha, "+", input$beta, "× temperature"),
+        x = "Average Temperature (°C)",
+        y = "Number of Ice Cream Sales"
+      ) +
+      xlim(18, 30) +
+      ylim(0, 400) +
+      theme_minimal() +
+      theme(
+        plot.title = element_text(size = 14, hjust = 0.5),
+        axis.title = element_text(size = 12)
+      ) +
+      # Add grid lines
+      geom_hline(yintercept = seq(0, 400, 50), alpha = 0.2) +
+      geom_vline(xintercept = seq(18, 30, 2), alpha = 0.2)
+    
+    # Convert to plotly for interactivity
+    ggplotly(p, tooltip = c("x", "y")) %>%
+      config(displayModeBar = FALSE)
+  })
+}
+
+shinyApp(ui, server)
+```
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+Use the figures below to observe how changing the values of the **regression parameters** affects how closely the **simple linear regression model** fits the observed data.
+
+:::
+
+<!-- ending here -->
+
+# Setting up the linear model
+
+It is usually impractical to work with the entire population of data, so statisticians typically take samples of data to work with. For more on sampling data, please see [Factsheet: Sampling data].
+
+<!-- To be able to estimate $\alpha$ and $\beta$, you need to use your observed data. This is because your sample is representative of the entire population, whilst typically being much smaller and therefore more practical to work with. For more on sampling data, please see [Factsheet: Sampling data]. -->
+
+<!-- from your sample, as this is a practical approximation of the entire population.  -->
+
+With each $x_{i}$ in your sample of observed data, you can associate the random variable $Y_{i}$. Then, the linear regression line becomes:
+
+$$\mathbb{E}(Y_{i}) = \alpha + \beta x_{i}$$
+
+
+::: {.callout-note appearance="simple"}
+## Definition of the error term
+
+The **error term** describes the difference between your **estimated** value of $Y_{i}$ and the **actual** value of $Y_{i}$.
+
+Each **error term** is denoted $\epsilon_{i}$, where $i \in [1,n]$. These error terms have sample mean = $0$ and variance = $\sigma^{2}$.
+
+<!-- Because you are now **estimating** the random variable $Y_{i}$, you should consider the difference between the **observed value** and your **estimation**. This difference is expressed via the **error term** $\epsilon_{i}$, where $i \in [1,n]$. These error terms have mean = $0$ and variance = $\sigma^{2}$. -->
+:::
+
+The random variable $Y_{i}$ can therefore be expressed as:
+
+$$Y_{i} = \alpha + \beta x_{i} + \epsilon_{i}$$
+This is called a **linear model**. 
+
+To fit your **linear model** to your data, you will need to estimate the **regression parameters**.
+
+Since you have a collection of random variables, you can assume that each $Y_{1}, ..., Y_{n}$ follow a distribution - which will allow you to estimate the **regression parameters**.
+
+::: {.callout-warning}
+
+Before you can assume that your data follows a distribution, you need to check that your data follows the assumptions which underpin the distribution.
+
+:::
+
+You want your linear model to match your observed data as closely as possible, so you want the difference between the **observed** data and that **estimated** by the model to be as small as possible.
+
+
+::: {.callout-note appearance="simple"}
+## Definition of residuals
+
+A **residual** is the vertical difference between the observed value and the estimated value.
+
+By rearranging the equation for the linear model, you can see that for $i \in [1,n]$, the residual is:
+$$\epsilon_{i} = y_{i} - (\alpha + \beta x_{i})$$
+:::
+
+
+::: {.callout-note appearance="simple"}
+## Least squares estimation
+
+Least squares estimation is used to minimize the **sum of the squares of the residuals**.
+
+Considering the sum of each $\epsilon_{i}^{2}$, you will find:
+$$S(\alpha,\beta) = \sum_{i=1}^{n} \epsilon_{i}^{2} = \sum_{i=1}^{n}(y_{i} - (\alpha + \beta x_{i}))^{2}$$
+The **method of least squares** minimizes this function to find estimates for the **regression parameters**, which are denoted by $\hat{\alpha}$ and $\hat{\beta}$.
+
+$$\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}$$
+$$\hat{\beta} = \frac {SS_{XY}} {SS_{XX}} = \sum_{i=1}^{n} \frac{ (x_{i} - \bar{x})(y_{i} - \bar{y})} {(x_{i} - \bar{x})^{2}}$$
+As seen in [Factsheet: Overview of statistical notation](../overviews/o-notation.qmd), $\bar{y}$ denotes the **sample mean** of $y$.
+
+:::
+
+::: {.content-visible when-format="html"}
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+Use the tool below to explore the effects of changing the values of the **regression parameters** on **least squares estimation** in more detail.
+
+:::
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+
+library(shiny)
+library(ggplot2)
+library(bslib)
+
+ui <- page_sidebar(
+  title = "Least Squares Estimation Explorer",
+  sidebar = sidebar(
+    sliderInput("slope", "Slope (β)", 
+                min = -2, max = 4, value = 1.5, step = 0.1),
+    sliderInput("intercept", "Intercept (α)", 
+                min = -5, max = 10, value = 2, step = 0.1),
+    checkboxInput("show_residuals", "Show residuals", value = TRUE),
+    actionButton("reset_to_ls", "Show Least Squares Solution", 
+                class = "btn-success", width = "100%"),
+    hr(),
+    h5("Least Squares Estimates"),
+    verbatimTextOutput("dataInfo")
+  ),
+  layout_columns(
+    card(
+      card_header("Linear Model Plot"),
+      plotOutput("regPlot", height = "500px")
+    ),
+    card(
+      card_header("Key"),
+      tags$ul(
+        tags$li(tags$span("●", style = "color: black;"), " Data Points"),
+        tags$li(tags$span("- - -", style = "color: blue;"), " Your Guess"),
+        tags$li(tags$span("——", style = "color: red;"), " Least Squares Solution"),
+        conditionalPanel(
+          condition = "input.show_residuals == true",
+          tags$li(tags$span("⋯⋯⋯", style = "color: blue;"), " Residuals")
+        )
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Generate simulated data
+  values <- reactiveValues()
+  
+  # Initialize data
+  observe({
+    if (is.null(values$data)) {
+      set.seed(123)
+      x <- runif(30, 0, 10)
+      y <- 1.5 * x + 2 + rnorm(30, 0, 2)
+      values$data <- data.frame(x = x, y = y)
+      values$lm_model <- lm(y ~ x, data = values$data)
+    }
+  })
+  
+  # Reset to least squares solution
+  observeEvent(input$reset_to_ls, {
+    req(values$lm_model)
+    updateSliderInput(session, "intercept", value = round(coef(values$lm_model)[1], 2))
+    updateSliderInput(session, "slope", value = round(coef(values$lm_model)[2], 2))
+  })
+  
+  # Data information
+  output$dataInfo <- renderText({
+    req(values$lm_model)
+    ls_coef <- coef(values$lm_model)
+    
+    paste("α̂ =", round(ls_coef[1], 3), "\n",
+          "β̂ =", round(ls_coef[2], 3))
+  })
+  
+  # Plot
+  output$regPlot <- renderPlot({
+    req(values$data, values$lm_model)
+    d <- values$data
+    
+    # Calculate predictions
+    ls_pred <- predict(values$lm_model)
+    guess_pred <- input$slope * d$x + input$intercept
+    
+    # Create base plot
+    p <- ggplot(d, aes(x, y)) +
+      geom_point(size = 3, color = "black", alpha = 0.7) +
+      geom_abline(slope = input$slope, intercept = input$intercept,
+                  color = "blue", linetype = "dashed", linewidth = 1.5) +
+      geom_line(aes(y = ls_pred), color = "red", linewidth = 1.5) +
+      labs(
+        title = paste("Your Model: E(Y) =", round(input$intercept, 2), "+", 
+                     paste0(round(input$slope, 2), "x")),
+        x = "x",
+        y = "y"
+      ) +
+      theme_minimal(base_size = 12) +
+      xlim(0, 10) +
+      ylim(min(d$y) - 2, max(d$y) + 2)
+    
+    # Add residuals if requested
+    if (input$show_residuals) {
+      p <- p + geom_segment(aes(xend = x, yend = guess_pred),
+                            color = "blue", linetype = "dotted", alpha = 0.7)
+    }
+    
+    p
+  })
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+<!-- ```{shinylive-r} -->
+<!-- #| standalone: true -->
+<!-- #| viewerHeight: 800 -->
+
+<!-- library(shiny) -->
+<!-- library(ggplot2) -->
+
+<!-- ui <- fluidPage( -->
+<!--   titlePanel("Least Squares Estimation - Simple Linear Regression"), -->
+<!--   sidebarLayout( -->
+<!--     sidebarPanel( -->
+<!--       sliderInput("slope", "Guess: Slope (m)", min = -5, max = 5, value = 1, step = 0.1), -->
+<!--       sliderInput("intercept", "Guess: Intercept (b)", min = -10, max = 10, value = 0, step = 0.5), -->
+<!--       checkboxInput("show_residuals", "Show residuals", value = TRUE), -->
+<!--       actionButton("resample", "Resample Data"), -->
+<!--       br(), br(), -->
+<!--       h4("Sum of Squared Errors"), -->
+<!--       verbatimTextOutput("sseText") -->
+<!--     ), -->
+<!--     mainPanel( -->
+<!--       plotOutput("regPlot", height = "500px") -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+
+<!-- server <- function(input, output, session) { -->
+
+<!--   # Generate simulated data -->
+<!--   values <- reactiveValues() -->
+
+<!--   # Initialize data -->
+<!--   observe({ -->
+<!--     if (is.null(values$data)) { -->
+<!--       set.seed(123) -->
+<!--       x <- runif(20, 0, 10) -->
+<!--       y <- 3 * x + 2 + rnorm(20, 0, 3) -->
+<!--       values$data <- data.frame(x = x, y = y) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   observeEvent(input$resample, { -->
+<!--     x <- runif(20, 0, 10) -->
+<!--     y <- 3 * x + 2 + rnorm(20, 0, 3) -->
+<!--     values$data <- data.frame(x = x, y = y) -->
+<!--   }) -->
+
+<!--   # SSE for guessed model -->
+<!--   output$sseText <- renderPrint({ -->
+<!--     req(values$data) -->
+<!--     d <- values$data -->
+<!--     pred <- input$slope * d$x + input$intercept -->
+<!--     sse <- sum((d$y - pred)^2) -->
+<!--     cat("Your Guess:", round(sse, 2)) -->
+<!--   }) -->
+
+<!--   # Plot -->
+<!--   output$regPlot <- renderPlot({ -->
+<!--     req(values$data) -->
+<!--     d <- values$data -->
+
+<!--     # Calculate least squares line -->
+<!--     lm_model <- lm(y ~ x, data = d) -->
+<!--     true_pred <- predict(lm_model) -->
+
+<!--     guess_pred <- input$slope * d$x + input$intercept -->
+
+<!--     p <- ggplot(d, aes(x, y)) + -->
+<!--       geom_point(size = 3, color = "black") + -->
+<!--       geom_abline(slope = input$slope, intercept = input$intercept, -->
+<!--                   color = "blue", linetype = "dashed", linewidth = 1.5) + -->
+<!--       geom_line(aes(y = true_pred), color = "red", linewidth = 1.5) + -->
+<!--       labs( -->
+<!--         title = "Guess vs. Least Squares Regression Line", -->
+<!--         subtitle = "Blue Dashed: Your Guess | Red: Least Squares Line", -->
+<!--         x = "x", -->
+<!--         y = "y" -->
+<!--       ) + -->
+<!--       theme_minimal(base_size = 12) + -->
+<!--       xlim(0, 10) + -->
+<!--       ylim(min(d$y) - 5, max(d$y) + 5) -->
+
+<!--     if (input$show_residuals) { -->
+<!--       p <- p + geom_segment(aes(xend = x, yend = guess_pred), -->
+<!--                             color = "blue", linetype = "dotted", alpha = 0.7) -->
+<!--     } -->
+
+<!--     p -->
+<!--   }) -->
+<!-- } -->
+
+<!-- shinyApp(ui = ui, server = server) -->
+
+<!-- ``` -->
+
+:::
+
+
+::: {.content-hidden when-format="html"}
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+The figures below explore the effects of changing the values of the **regression parameters** on **least squares estimation** in more detail.
+
+:::
+
+:::
+
+
+::: {.callout-note appearance="simple"}
+## Example 3
+Find estimates for regression parameters mathematically.
+:::
+
+# Normal linear regression
+
+One of the distributions which your data could follow is the **normal distribution**. For a reminder about the normal distribution, please see [Factsheet: The normal distribution.](../factsheets/f-normaldist.qmd)
+
+Suppose that the variables $Y_{1}, ..., Y_{n}$ are normally distributed with mean $\alpha + \beta x_{i}$ and variance $\sigma^{2}$. In other words:
+
+$$Y _{i} \sim N (\alpha + \beta x_{i} , \sigma^{2})$$
+
+
+::: {.callout-note appearance="simple"}
+
+## Assumptions for normality
+
+You must check that your data can be modelled using the normal distribution before you can use this model.
+
+a) **Independence** - $Y_{1}, ..., Y_{n}$ are independent random variables.
+
+b) **Normality** - $Y_{1}, ..., Y_{n}$ are normally distributed.
+
+c) **Linearity** - the mean of $Y_{i}$ is a linear function of $x_{i}$, or equivalently, $\mathbb{E}(Y) = \alpha + \beta x_{i}$
+
+d) **Constant variance** - $Y_{1}, ..., Y_{n}$ have the same variance.
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 4
+
+Cantor's Confectionery wants to predict the number of ice cream sales each day $y_{i}$ based on the daily temperature $x_{i}$ using a normal linear regression model. Based on the data below, does the assumption of normality seem acceptable?
+
+a) Since each data point comes from a different day, the assumption of independence is reasonable.
+b) 
+c) By plotting this on a graph, you can see that the line of best fit is roughly linear.
+d) 
+
+:::
+
+## Fitting the normal linear regression model
+
+::: {.callout-note appearance="simple"}
+
+## Likelihood function
+
+To estimate the values of $\alpha$ and $\beta$, you can use the log-likelihood function:
+$$l(\alpha, \beta, \sigma^2; (x_1, y_1), \ldots, (x_n, y_n)) = -\frac{n}{2} \log(2\pi\sigma^2) 
+\ - \ \frac{1}{2\sigma^2} \sum_{i=1}^{n} \left( y_i - (\alpha + \beta x_i) \right)^2$$
+
+If you maximize this with respect to the regression parameters $\alpha$ and $\beta$, this is equivalent to minimizing $S(\alpha,\beta)$.
+
+For more on likelihood functions, please go to [Study guide: Likelihood functions]. 
+
+For a derivation of this equation, please go to [Proof sheet: Linear regression - log-likelihood](../proofsheets/ps-lrloglikelihood.qmd).
+
+:::
+
+# Confidence intervals
+
+It can be useful to find $1-\alpha\%$ confidence intervals for the regression parameters $\alpha$ and $\beta$.
+
+::: {.callout-note appearance="simple"}
+## Confidence intervals of regression parameters
+
+The confidence interval for $\alpha$ is given by:
+$$\hat{\alpha} \pm t_{n-2; 1 - \frac{\alpha}{2}} \sqrt{S^2 \left( \frac{1}{n} + \frac{\bar{x}^2}{SS_{XX}} \right)}$$
+The confidence interval for $\beta$ is given by:
+$$\hat{\beta} \pm t_{n-2; 1 - \frac{\alpha}{2}} \sqrt{\frac{S^2}{SS_{XX}}}$$
+For more on confidence intervals, please read [Proof sheet: Confidence intervals](../proofsheets/confidenceintervals.qmd)
+:::
+
+<!-- Suppose now that these random variables Y_{1}, ..., Y_{n} form some kind of distribution. -->
+
+<!-- Now that you have seen how to estimate \alpha and \beta for some set of variables Y_{1}, ..., Y_{n}  -->
+
+<!-- Typically, linear regression is used to make predictions  -->
+
+<!-- Now that we have established a way of predicting values Y_{1}, ..., Y{n},  -->
+
+<!-- To be able to use this model of normal linear regression,  -->
+
+
+::: {.callout-note appearance="simple"}
+
+## Example 5
+
+find a confidence intervals
+
+:::
+
+<!-- # Multiple linear regression -->
+
+<!-- So far, there has only been one explanatory variable affecting the response variable. Unfortunately, events in the real world are usually affected by multiple factors! Thankfully, the simple linear regression model which has been discussed so far can be extended to include multiple explanatory variables. -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## The multiple linear regression model -->
+
+<!-- The **multiple linear regression model** is a generalization of the simple linear regression model. The response variable $Y$ is related to the explanatory variables $x_{1}, x_{2}, ... x_{n}$ by: -->
+
+<!-- $$\mathbb{E}(Y_{i}) = \alpha + \sum_{k=1}^{n} \beta_{k} x_{ki} = \alpha + \beta_{1} x_{1i} + ... + \beta_{k} x_{ki}$$ -->
+
+<!-- It is assumed that each random variable $Y_{i}$ follows the same distribution. -->
+
+<!-- The least-squares estimates $\hat{\alpha}, \hat{\beta_1}, \dots, \hat{\beta_k}$ of $\alpha, \beta_1, \dots, \beta_k$ are defined as the values which minimize the function -->
+
+<!-- $$S(\alpha, \beta_1, \dots, \beta_k) = \sum_{i=1}^{n} \left( y_i - \left( \alpha + \beta_1 x_{i1} + \dots + \beta_k x_{ik} \right) \right)^2$$ -->
+
+<!-- where $y_i$ is the response at the value $(x_{i1}, \dots, x_{ik})$ of the explanatory variables $(x_1, \dots, x_k)$. -->
+
+<!-- So, when considering the normal distribution, the linear regression model becomes: -->
+
+<!-- $$Y_{i} \sim N (\alpha + \sum_{m=1}^{k} \beta_{m} x_{mi}, \sigma^{2})$$ -->
+<!-- where $Y_{1},...Y_{n}$ are independent. -->
+<!-- ::: -->
+
+# Quick check problems
+
+<!-- add facility for webexercises to work on html -->
+
+:::: {.content-visible when-format="html" data-topic="LR1"}
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box}
+1.  Which of these statements must be true for you to use use a linear regression model on your data?
+
+(a) $\mathbb{E}(Y) = \alpha + \beta x_{i}$
+
+(b) All $x_{i}$ in the data set are independent.
+
+(c) $\sigma^{2}$ is small.
+
+Answer: `r mcq(c(answer="a", "b", "c"))`.
+
+2.  Name the type of linear regression with one explanatory variable.
+
+Answer:`r mcq(c("Independent", answer = "Simple", "Single"))`.
+
+3.  Which type of distribution is used when finding confidence intervals?
+
+Answer: `r mcq(c("normal", answer = "t", "standard normal"))` probability.
+
+4.  Are the following statements true or false?
+
+(a) $\epsilon$ is used to describe an error term. Answer: `r torf(TRUE)`.
+
+(b) To use linear regression, your data must be normally distributed. Answer: `r torf(FALSE)`.
+
+(c) The regression parameter $\alpha$ must not be zero. Answer: `r torf(FALSE)`.
+:::
+::::
+
+::: {.content-hidden when-format="html"}
+1.  Which of these statements must be true for you to use use a linear regression model on your data?
+
+<!-- -->
+(a) $\mathbb{E}(Y) = \alpha + \beta x_{i}$
+
+(b) All $x_{i}$ in the data set are independent.
+
+(c) $\sigma^{2}$ is small.
+
+2.  Name the type of linear regression with one explanatory variable.
+
+3.  Which type of distribution is used when finding confidence intervals?
+
+4.  Are the following statements true or false?
+
+<!-- -->
+(a) $\epsilon$ is used to describe an error term.
+
+(b) To use linear regression, your data must be normally distributed.
+
+(c) The regression parameter $\alpha$ must not be zero.
+:::
+
+
+
+# Further reading {-}
+
+<!-- [For more questions on the subject, please go to Questions: Linear regression.](../questions/qs-linearregression.qmd) -->
+
+
+## Version history {-}
+
+v1.0: initial version created 12/25 by Flora Green as part of a University of St Andrews VIP project.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+

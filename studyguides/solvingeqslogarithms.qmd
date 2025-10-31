@@ -1,17 +1,27 @@
 ---
 title: "Solving equations involving logarithms"
-author: "Ellie Gurini, Krish Chaudhary, Mark Toner"
+author: "Krish Chaudhary, Tom Coleman, Ellie Gurini, Mark Toner"
 abstract-title: Summary
-abstract: This guide serves to introduce rearranging equations involving logarithms. This can be a useful skill, especially when considering the uses trigonometry has in describing motion.
-draft: true
-
+abstract: This guide discusses the idea of rearranging and solving equations involving logarithms, which is a key skill in both mathematics and many areas of science.
+categories:
+  - Solving equations
+  - Algebra
+image: FiguresPNG/solvingeqslogarithms-image.png
 ---
 
 ```{r, setup, include = FALSE}
 library("webexercises")
 ```
 
-*Before reading this, it is strongly recommended that you read [Guide: Laws of indices](lawsofindices.qmd) [Guide: Introduction to logarithms](logarithms.qmd).* 
+*Before reading this, it is strongly recommended that you read [Guide: Introduction to logarithms](logarithms.qmd). Examples 7 and 8 require solving quadratic equations: see [Guide: Factorization](factorization.qmd) or [Guide: Using the quadratic formula](quadraticformula.qmd) for more on this.* 
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/solvingeqslogarithms.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
 
 In [Guide: Introduction to logarithms](logarithms.qmd), you learned about the different ways that you can manipulate expressions involving logarithms, such as $\log_2(15)$ and $\ln(x^3)$. In a more general setting however, this knowledge may not be enough; you will need to apply the ideas of logarithms to help you solve equations. 
 
@@ -21,9 +31,9 @@ Before you dive in to solving logarithms, it is worth restating the recommendati
 
 ::: {.callout-important}
 
-**This guide assumes an excellent knowledge of logarithms and the laws of logarithms. Please make sure that you have read [Guide: Introduction to logarithms](logarithms.qmd) before continuing.** 
+**This guide assumes a prior knowledge of logarithms and the laws of logarithms. Please make sure that you have read [Guide: Introduction to logarithms](logarithms.qmd) before continuing.** 
 
-The numbering of the laws will follow the numbering in this guide and on [Factsheet: Laws of logarithms](../factsheets/f-lawsoflogs.qmd).
+The numbering of the laws will follow the numbering in this guide and on [Factsheet: Laws of logarithms](../factsheets/f-lawsoflogarithms.qmd).
 
 :::
 
@@ -41,20 +51,20 @@ This is because Laws 1 and 2 of the laws of logarithms can only be applied when 
 
 :::
 
-It may be that you have logarithms in different bases in your equation; so how can you make them to be in the same base? The answer is the **change of base** rule (Law 6), which you can use in this scenario.
+It may be that you have logarithms in different bases in your equation; so how can you make them to be in the same base? The answer is the **change of base** rule (Law 6) which you can use in this scenario.
 
 You have seen in [Guide: Introduction to logarithms](logarithms.qmd) that **logarithms undo exponentiation and exponentiation undoes logarithms**. More formally, you have that for all $a > 0$ with $a \neq 1$ and all real numbers $y$ (where the expression is defined): 
 
 $$\quad a^{\log_a(y)} = y\qquad \textsf{ and }\qquad \log_a (a^y) = y$$
-However, this only works if there is one term on each side of the equation. For instance, you can notice that $$\log_a(x) + \log_a(y) = \log_a(z)$$ does **not** automatically imply that $x + y = z$. This is because Law 1 of the laws of logarithms, it actually follows that $$\log_a(x) + \log_a(y) = \log_a(xy) = \log_a(z)$$ and so it actually implies that $xy = z$. 
+However, this only works if there is one term on each side of the equation. For instance, you can notice that $$\log_a(x) + \log_a(y) = \log_a(z)$$ does **not** automatically imply that $x + y = z$. This is because looking at Law 1 of the laws of logarithms, it follows that $$\log_a(x) + \log_a(y) = \log_a(xy) = \log_a(z)$$ and so it actually implies that $xy = z$. 
 
-So the second golden rule of solving equations involving logarithms is the following:
+So once the first golden rule has been applied and all logarithms are in the same base, then the second golden rule of solving equations involving logarithms is the following:
 
 ::: {.callout-tip}
 
 ## Second golden rule
 
-**To undo a logarithm, you need exactly one term on each side of the equation. If both terms are logarithms, they should be in the same base.**
+**There should not be a coefficient in front of any logarithms, and you need exactly one term on each side of the equation. Then, and only then, can you undo the logarithm by exponentiation.**
 
 :::
 
@@ -77,9 +87,9 @@ So if you are solving an equation involving logarithms, you need to check if the
 
 <!-- This guide should help to get a grasp of rearranging trigonometric and logarithmic equations. This can be a very useful skill, especially when considering modelling things. For example, trigonometric equations are often used to describe signal waves and motion, whereas logarithms (or exponentials) tend to be used when describing growth and decay. -->
 
-## Examples {-}
+# Initial examples 
 
-The first two examples examine exactly where the golden
+The first four examples examine exactly where the golden rules are used.
 
 ::: {.callout-note appearance="simple"}
 
@@ -87,148 +97,340 @@ The first two examples examine exactly where the golden
 
 Solve $\log_{10}(5x+7)=1$ for $x$.
 
-Here, there is only one logarithm and so all logarithms are in the same base, satisfying the first golden rule from above. 
+Here, there is only one logarithm and so all logarithms are in the same base, which agrees with the first golden rule from above. 
 
-$10^1=5x+7$. From there, you can subtract 7 from both sides, giving $3=5x$ and then divide both sides by 5, giving $x=\frac{3}{5}$.
+Next, you can notice there is exactly one term on both sides of the equation, which agrees with the second golden rule from above.
+
+Now, you can undo the logarithm by exponentiating both sides to base $10$. This gives
+
+$$
+\begin{aligned}
+\log_{10}(5x+7)&=1\\[0.2em]
+10^{\log_{10}(5x+7)} &= 10^1\\[0.2em]
+5x+7 &= 10
+\end{aligned}
+$$
+This is a linear equation in $x$ that you can solve by rearranging for $x$. From there, you can subtract $7$ from both sides, giving $3=5x$ and then divide both sides by 5, giving $x=\dfrac{3}{5}$ as a final answer.
 
 :::
 
-You may also come across equations which are similar to the one above, but cleverly hidden through logarithm rules. Lets go through one of those.
+You may also come across equations which are similar to the one above, but hidden through laws of logarithms. Here are two examples which require this kind of manipulation.
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+Solve $$\log_{2}(4t)-\log_{2}(3)= 2$$ for $t$.
+
+Here, all logarithms are in the same base ($2$), which agrees with the first golden rule from above. 
+
+There are two terms on the left hand side, which doesn't agree with the second golden rule. You will need to use the laws of logarithms to combine the two logarithms into one term. Using Law 2 (see [Factsheet: Laws of logarithms](../factsheets/f-lawsoflogarithms.qmd)) on the left hand side of the equation gives $$\log_{2}(4t)-\log_{2}(3) = \log_2\left(\frac{4t}{3}\right)$$ The equation then becomes $$\log_2\left(\frac{4t}{3}\right)=2$$ which agrees with the second golden rule as there is one term on both sides of the equation. 
+
+This means you can now undo the logarithm. Exponentiating both sides with base $2$ gives 
+$$
+\begin{aligned}
+\log_{2}\left(\frac{4t}{3}\right)&=2\\[0.2em]
+2^{\left(4t/3\right)} &= 2^2\\[0.2em]
+\frac{4t}{3} &= 4
+\end{aligned}
+$$
+
+
+To finish solving, you can divide both sides by $4$ and multiply both sides by $3$. This gives $t = 3$.
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 3
+
+Rearrange $$z = 4\log_3(x)+\log_{3}(y)$$ for $x$.
+
+Here, all logarithms are in the same base ($3$), which agrees with the first golden rule from above. 
+
+There are two terms on the right hand side, which doesn't agree with the second golden rule. You will need to use the laws of logarithms to combine the two logarithms into one term. Since there is a $+$, Law 1 seems appropriate. However, the statement of Law 1 doesn't have coefficients in the logs; you need to deal with that $4$ before you can do this. 
+
+Using Law 3, you can write that $4\log_3(x) = \log_3(x^4)$ and so the equation becomes $$z = 4\log_3(x)+\log_{3}(y) = \log_3(x^4) + \log_3(y)$$ It's now you can use Law 1 to combine the logarithms to get $$z = \log_3(x^4) + \log_3(y) = \log_3(x^4y)$$ The equation is now $z = \log_3(x^4y)$ which agrees with the second golden rule as there is one term on both sides of the equation. 
+
+This means you can now undo the logarithm. Exponentiating both sides with base $3$ gives 
+$$
+\begin{aligned}
+z &= \log_3(x^4y)\\[0.2em]
+3^z &= 3^{\log_3(x^4y)}\\[0.2em]
+3^z &= x^4y
+\end{aligned}
+$$
+
+
+To finish solving, you can divide both sides by $y$ to get $x^4 = 3^z/y$. You can now take fourth roots of both sides to get the final answer $$x = \sqrt[4]{\frac{3^z}{y}}.$$
+
+:::
+
+
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Example 8 -->
+
+<!-- Here's a little example/proof which should help to understand the next example more completely.  -->
+
+<!-- Lets have a look at an equation where a number is raised to the power of a logarithm in its own base.  -->
+
+<!-- $$e^{\log_e(x)}=y$$ Find y in terms of x. -->
+
+<!-- Firstly, label up the equation according to the note at the start of this. This gives a=e, b=y, c=$\log_e(x)$. From there, rewrite the equation as a logarithm, $\log_e(y)=\log_e(x)$. This means that $y=x$. We can say this for a log function but not for, lets say, a trigonometric function, as log functions don't have repeating values.  -->
+
+<!-- On a wider scale, this proves that $$a^{\log_a(b)}=b$$. Whilst e was the base used in this example, it doesn't affect the outcome. You can repeat this exercise with a base of 2 if you would like to confirm.  -->
+
+<!-- ::: -->
+
+
+<!-- Another use of logarithms is in solving simultaneous equations. This takes advantage of the relationship between logarithms and exponentials. -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Example 9 -->
+
+<!-- Solve this set of simultaneous equations -->
+<!-- $$e^y=2x+1$$ -->
+<!-- $$\ln(3x)=y$$ -->
+<!-- The first step for this problem would to be to substitute $y=\ln(3x)$ into the first equation. This gives $e^{\ln(3x)}=2x+1$. Now, lets label: a=e, b=2x+1 and c=$\ln(3x)$.  -->
+
+<!-- Thus, refer to our example 8 to see that $ e^{ln(3x)}=3x$, and so $3x=2x+1$. Subtracting 2x from either side gives that $x=1$. Substituting this back into our equation gives that $y=\ln(3)$ or approximately 1.099. -->
+
+<!-- ::: -->
+
+<!-- Here's another example of the relationship between logarithms and exponentials. -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Example 10 -->
+
+<!-- Solve $$5e^{-x}+3e^x=9$$ -->
+
+<!-- To start with this problem, you should multiply everything by $e^x$, giving $5+3e^{2x}=9e^x$.  -->
+
+<!-- Lets rename $e^x=y$, which should hopefully give a more familiar equation: $5+3y^2=9y$. You can rearrange and solve this quadratic using the quadratic equation. This gives y=$\frac{9+\sqrt{21}}{16}$ or $\frac{9-\sqrt{21}}{16}$.  -->
+
+<!-- $e^x=y$ implies that $\ln(y)=x$, so you substitute y into this equation to give your final answer. This leaves you with x=$\ln{(\frac{9+\sqrt{21}}{16})}$ or $\ln{(\frac{9-\sqrt{21}}{16})}$, which are (to 3sf) -0.164 and -1.29 respectively.  -->
+
+<!-- ::: -->
+
+This example will make use of the change of base formula stated above (which is Law 6 of the laws of logarithms). Here's a reminder of the change of base formula from [Factsheet: Laws of logarithms](../factsheets/f-lawsoflogarithms.qmd).
+
+::: {.callout-note}
+## Change of base formula
+
+$$\log_a(x) = \frac{\log_k(x)}{\log_k(a)}$$ or alternatively $$\log_k(a)\log_a(x) = \log_k(x)$$
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 4
+
+Rearrange $\log_9(x+y) = \log_{3}(x)$ for $y$.
+
+Here, not all logarithms are in the same base, so you will need to use the change of base formula. You can either change everything into base $3$ or everything into base $9$. Since the inside of the right hand side logarithm is simpler than the left hand side, let's change that into base $9$.
+
+Using the change of base rule with $a = 3$ and $k = 9$ gives $$\log_3(x)=\frac{\log_9(x)}{\log_9(3)}.$$ Now, you can see that as $9^{1/2} = 3$, then $\log_9(3)=1/2$. This means that $\log_3(x)=\frac{1}{1/2}\log_9(x) = 2\log_9(x)$. Putting this into the equation gives $$\log_9(x+y) = 2\log_{9}(x).$$ Now all of the logarithms are in the same base, satisfying the first golden rule.
+
+However, the logarithm on the right hand side still has a coefficient, which you can incorporate into the logarithm using Law 3. Doing this, you can write that $2\log_9(x) = \log_9(x^2)$ and so the equation becomes $$\log_9(x+y) = \log_9(x^2)$$ The equation now which agrees with the second golden rule as there is one term on both sides of the equation, and there are no coefficients on the logarithms.
+
+This means you can now undo the logarithm. Exponentiating both sides with base $9$ gives 
+$$
+\begin{aligned}
+\log_9(x+y) &= \log_9(x^2)\\[0.2em]
+9^{\log_9(x+y)} &= 9^{\log_9(x^2)}\\[0.2em]
+x+y &= x^2
+\end{aligned}
+$$
+
+To finish solving, you can take $x$ from both sides to get $y = x^2 - x$ and this is your final answer.
+
+:::
+
+Here's an example that combines many laws of logarithms:
+
+::: {.callout-note appearance="simple"}
+
+## Example 5
+
+If $$\log_{8}(x)+\log_2(y)=\log_2(4y+1),$$ represent $y$ in terms of $x$. 
+
+Here, not all logarithms are in the same base, so you will need to use the change of base formula. You can either change everything into base $2$ or everything into base $8$. Since there is only one logarithm in base $8$ and two in base $2$, it's less work to change everything into base $2$.
+
+Using the change of base rule with $a = 8$ and $k = 2$ gives $$\log_8(x)=\frac{\log_2(x)}{\log_2(8)}.$$ Now, you can see that $\log_2(8)=3$, as $2^3=8$. This means that $\log_8(x)=\frac{1}{3}\log_2(x)$. Putting this into the equation gives $$\frac{1}{3}\log_{2}(x)+\log_2(y)=\log_2(4y+1).$$ Now all of the logarithms are in the same base, satisfying the first golden rule. There are two terms on the left hand side, which doesn't agree with the second golden rule. 
+
+You will need to use the laws of logarithms to combine the two logarithms into one term. Since there is a $+$, Law 1 seems appropriate. However, like as in Example 3, the statement of Law 1 doesn't have coefficients in the logs; you need to deal with that $4$ before you can do this. 
+
+Using Law 3, you can write that $\frac{1}{3}\log_2(x) = \log_2(x^{1/3})$ and so the equation becomes $$\log_{2}(x^{1/3})+\log_2(y)=\log_2(4y+1)$$ It's now you can use Law 1 to combine the logarithms to get $$\log_{2}(x^{1/3})+\log_2(y) = \log_2(x^{1/3}y)$$ The equation is now $\log_2(x^{1/3}y) = \log_2(4y+1)$ which agrees with the second golden rule as there is one term on both sides of the equation. 
+
+This means you can now undo the logarithm. Exponentiating both sides with base $2$ gives 
+$$
+\begin{aligned}
+\log_2(x^{1/3}y) &= \log_2(4y+1)\\[0.2em]
+2^{\log_2(x^{1/3}y)} &= 2^{\log_2(4y+1)}\\[0.2em]
+x^{1/3}y &= 4y + 1
+\end{aligned}
+$$
+You can rearrange the equation for $y$ (using techniques from [Guide: Rearranging equations](introtorearrange.qmd)) to get $$y= -\frac{1}{4-x^{\frac{1}{3}}}$$ as your final answer.
+
+:::
+
+# Solving logarithmic equations
+
+The following extra examples on solving logarithmic equations will explain the process in a more natural and less structured manner. These are designed
+
+::: {.callout-note appearance="simple"}
+
+## Example 6
+
+If $\log_3 (2x - 3) = \log_9(x^2)$, what is $x$?
+
+In this case, you need to follow the first golden rule and make sure that both of your logarithms are to the same base. Since $9 = 3^2$, it makes sense to change the base of the right hand side, which is $\log_9(x^2)$. Using the change of base rule gives $$\log_9(x^2) = \frac{\log_3(x^2)}{\log_3(9)}$$ Since $9 = 3^2$, it follows that $\log_3(9) = 2$ and so $$\frac{\log_3(x^2)}{\log_3(9)} = \frac{1}{2}\log_3(x^2)$$ By the laws of logs and the laws of indices: $$\frac{1}{2}\log_3(x^2) = \log_3((x^2)^{1/2}) = \log_3(x)$$ So the equation is now $\log_3 (2x - 3) = \log_3(x)$ which is easier to deal with. Exponentiating both sides with base $3$ gives
+$$
+\begin{aligned}
+\log_3 (2x - 3) &= \log_3(x)\\
+3^{\log_3 (2x - 3)} &= 3^{\log_3(x)}\\
+2x - 3 &= x
+\end{aligned}
+$$
+Rearranging this equation gives $x = 3$. 
+
+Since the equation started with logarithms, you need to check if this gives valid solutions. When $x = 3$, then both $2x - 3$ and $x^2$ are positive; so in this case the equation is defined and $x = 3$ is a valid solution.
+
+:::
 
 ::: {.callout-note appearance="simple"}
 
 ## Example 7
 
-$$\log_{10}(4x)-\log_{10}(3)=2$$
+Solve $2\ln (x - 4) = \ln(10/3 - x) + \ln(3)$.
 
-Find x. 
+Here, you'll need to combine the logs on the right hand side. It also can't hurt to get rid of that $2$ as well. So, by the laws of logs, you can rewrite the equation as
+$$
+\begin{aligned}
+2\ln (x - 4) &= \ln(10/3 - x) + \ln(3)\\
+\ln (x - 4)^2 &= \ln \left(3(10/3 - x)\right)\\
+\ln (x-4)^2 &= \ln(10-3x)
+\end{aligned}
+$$
+Exponentiating both sides with base $e$ gives:
+$$
+\begin{aligned}
+\ln (x-4)^2 &= \ln (10 - 3x)\\
+e^{\ln (x-4)^2} &= e^{\ln(10 - 3x)}\\
+(x-4)^2 &= (10 - 3x)
+\end{aligned}
+$$
+Expanding the brackets on both sides and simplifying gives
+$$
+\begin{aligned}
+(x-4)^2 &= (10 - 3x)\\
+x^2 -8x + 16 &= 10 - 3x\\
+x^2 - 5x + 6 &= 0
+\end{aligned}
+$$
+You can factorize this quadratic equation (see [Guide: Factorization](factorization.qmd) for more) or use the quadratic formula (see [Guide: Using the quadratic formula](quadraticformula.qmd)) to get $(x-2)(x-3) = 0$, so $x = 2$ or $x = 3$.
 
-You start by rewriting the left hand side of the equation into one logarithm. The guide on logarithms should have a section on this. This will give you $\log_{10}(\frac{4x}{3})=2$. 
-
-Now, you should rewrite this as an exponential to get $10^2= \frac{4x}{3}$. To finish solving, you will divide both sides by $\frac{4}{3}$. This gives that $x=75$.
+However, **neither of these are valid solutions to the equation**! The original equation is $$2\ln (x - 4) = \ln(10/3 - x) + \ln(3)$$ and so any potential solution has to be greater than $4$; this is because you can't have the logarithm of a negative number. Since $x - 4$ is negative for both $x = 2$ and $x = 3$, you can say that there are **no real solutions** to this equation.
 
 :::
 
-
+Here's another example which has. 
 
 ::: {.callout-note appearance="simple"}
 
 ## Example 8
 
-Here's a little example/proof which should help to understand the next example more completely. 
+Solve $\log_{10}(4) = \log_{10}(x+1) + \log_{10}(x-4)$.
 
-Lets have a look at an equation where a number is raised to the power of a logarithm in its own base. 
+Using the laws of logs on the right hand side gives
+$$\log_{10}(x+1) + \log_{10}(x-4) = \log_{10}(x+1)(x-4)$$
+and so, exponentiating both sides to base $10$:
+$$
+\begin{aligned}
+\log_{10} 4 &= \log_{10}(x+1)(x-4) \\
+10^{\log_{10} 4} &= 10^{\log_{10}(x+1)(x-4)}\\
+4 &= (x+1)(x-4)
+\end{aligned}
+$$
+Expanding the brackets and rearranging gives
+$$
+\begin{aligned}
+4 &= (x+1)(x-4)\\
+4 &= x^2 - 3x - 4\\
+0 &= x^2 - 3x - 8
+\end{aligned}
+$$
+You can use the quadratic formula to solve this quadratic equation (see [Guide: Using the quadratic formula](quadraticformula.qmd)) with $a = 1$, $b = -3$ and $c= -8$ to get $$x = \frac{-(-3)\pm \sqrt{(-3)^2 - 4(1)(-8)}}{2(1)} =  \frac{3 \pm \sqrt{41}}{2}.$$ 
 
-$$e^{\log_e(x)}=y$$ Find y in terms of x.
+However, you need to check if these answers are valid! You can check to see that $\sqrt{41} \approx 6.40312$, so $\sqrt{41} > 6$.
 
-Firstly, label up the equation according to the note at the start of this. This gives a=e, b=y, c=$\log_e(x)$. From there, rewrite the equation as a logarithm, $\log_e(y)=\log_e(x)$. This means that $y=x$. We can say this for a log function but not for, lets say, a trigonometric function, as log functions don't have repeating values. 
+- You can say that $3 + \sqrt{41} > 9$, and so $(3+\sqrt{41})/2 > 9/2 > 4$. As both $\log_{10}(x+1)$ and $\log_{10}(x-4)$ are defined when $x > 4$, it follows $x = (3 + \sqrt{41})/2$ is a valid solution.
+- Next, you can say that $3 - \sqrt{41} < -3 < 0$. Since $\log_{10}(x-4)$ is undefined for any $x \leq 4$, it follows that $x = (3 - \sqrt{41})/2$ is not a valid solution.
 
-On a wider scale, this proves that $$a^{\log_a(b)}=b$$. Whilst e was the base used in this example, it doesn't affect the outcome. You can repeat this exercise with a base of 2 if you would like to confirm. 
-
-:::
-
-
-Another use of logarithms is in solving simultaneous equations. This takes advantage of the relationship between logarithms and exponentials.
-
-::: {.callout-note appearance="simple"}
-
-## Example 9
-
-Solve this set of simultaneous equations
-$$e^y=2x+1$$
-$$\ln(3x)=y$$
-The first step for this problem would to be to substitute $y=\ln(3x)$ into the first equation. This gives $e^{\ln(3x)}=2x+1$. Now, lets label: a=e, b=2x+1 and c=$\ln(3x)$. 
-
-Thus, refer to our example 8 to see that $ e^{ln(3x)}=3x$, and so $3x=2x+1$. Subtracting 2x from either side gives that $x=1$. Substituting this back into our equation gives that $y=\ln(3)$ or approximately 1.099.
-
-:::
-
-Here's another example of the relationship between logarithms and exponentials.
-
-::: {.callout-note appearance="simple"}
-
-## Example 10
-
-Solve $$5e^{-x}+3e^x=9$$
-
-To start with this problem, you should multiply everything by $e^x$, giving $5+3e^{2x}=9e^x$. 
-
-Lets rename $e^x=y$, which should hopefully give a more familiar equation: $5+3y^2=9y$. You can rearrange and solve this quadratic using the quadratic equation. This gives y=$\frac{9+\sqrt{21}}{16}$ or $\frac{9-\sqrt{21}}{16}$. 
-
-$e^x=y$ implies that $\ln(y)=x$, so you substitute y into this equation to give your final answer. This leaves you with x=$\ln{(\frac{9+\sqrt{21}}{16})}$ or $\ln{(\frac{9-\sqrt{21}}{16})}$, which are (to 3sf) -0.164 and -1.29 respectively. 
-
-:::
-
-A final thing you may want to consider is how to solve an equationn if you have logarithms in different bases. This will make use of the change of base formula.
-
-::: {.callout-note}
-## Change of base formula
-
-$$\log_a(b)=\frac{\log_c(b)}{\log_c(a)}$$
-:::
-
-::: {.callout-note appearance="simple"}
-
-## Example 11
-
-$$\log_{8}(x)+\log_2(y)=\log_2(4y+1)$$
-Represent y in terms of x.
-
-Begin by rewriting $\log_{8}(x)$ in base 2, using the formula. This gives $\log_8(x)=\frac{\log_2(x)}{\log_2(8)}$. Now, you can see that $\log_2(8)=3$, as $2^3=8$ (you can use the method in Example 6 to check this). This means that $\log_8(x)=\frac{1}{3}\log_2(x)$. 
-
-Applying how powers work with logarithms, and inserting back into the equation you want to solve gives $\log_2(x^{\frac{1}{3}})+\log_2(y)=\log_2(4y+1)$. To get the right hand side into one log, you can say that $\log_2(x^{\frac{1}{3}}y)$ due to the rules for adding logs. 
-
-As the left and right hand side are in the same base, you can then say that $x^{\frac{1}{3}}y=4y+1$. Rearranging this gives $y= \frac{-1}{4-x^{\frac{1}{3}}}$.
+So the only solution to this equation is $x = (3 + \sqrt{41})/2$.
 
 :::
 
 
-## Quick check problems {-}
+# Quick check problems {-}
+
+::: {.content-visible when-format="html"}
 
 <!-- add facility to check answers at end rather than one at a time -->
 
 ::: {.webex-check .webex-box}
 
-1. You are given 3 questions and there supposed solutions. Determine if the solutions are True or False:
+1. Solve the following logarithmic equations:
 
-a) For $sin(4x)= 1$ a solution is $x =\frac{\pi}{8}$ `r torf("TRUE")`
+(a) $\log_{3}{5x+4}=2$
 
-b) For $$tan(x+15)=\sqrt{3}$$ 
+Answer: $x =$ `r fitb(1)`
 
-a solution is $x=\frac{\pi-15}{4}$ `r torf(FALSE)`.
-
-c) For $$cos(2x+25)= 0$$ 
-
-a solution is $x=\frac{\pi+25}{4}$ `r torf(FALSE)`.
-
-
-
-2. Using trigonometric identities solve the following. (The expected identities are given in Guide: Trigonometric Identities). Please give angles in degrees.
-
-a) $$x = 2sin^2(\theta) + 2cos^2(\theta)$$  
-
-Answer: $x =$ `r fitb(2)`
-
-b) $$4sin^2(\theta) + 6cos^2(\theta) - 4 =0$$  Answer: $\theta =$ `r fitb(90)`
-
-c)  $2cot^2(\theta) = csc^2(\theta)$  Answer: $\theta =$ `r fitb(45)`
-
-
-3. Solve the following equations for x.
-
-a) $\log_{3}{5x+4}=2$
-
-Answer: $x =$ `r fitb(1)`.
-
-b) $\log_{10}{5x} - \log_{10}{9} =3$  
+(b) $\log_{10}{5x} - \log_{10}{9} = 3$  
 
 Answer: $x =$ `r fitb(1800)`
 
+(c) $2\log_4(3) + \log_2(x+5) = 2$
+
+Answer: $t=$ `r fitb(-4)`
+
+2. You are asked to solve the following expression: $\log_{10}(p+6) = 2\log_{10}(p-6)$. 
+
+Select the correct answer from the drop down box. 
+
+Answer: `r mcq(c("p = 3, p = 10, and both solutions are valid.", "p = 3, p = 10, but only p = 3 is valid.", answer = "p = 3, p = 10, but only p = 10 is valid.", "p = 3, p = 10, but neither solution is valid."))`
 
 :::
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box data-topic="SEL1"}
+
+1. Solve the following logarithmic equations.
+
+(a) $\log_{3}{5x+4}=2$
+
+(b) $\log_{10}{5x} - \log_{10}{9} = 3$  
+
+(c) $2\log_4(3) + \log_2(t+5) = 2$
+
+2. Solve the expression $\log_{10}(p+6) = 2\log_{10}(p-6)$, making sure to comment on the validity of the solutions.
+
+:::
+
+:::
+
 # Further reading {-}
 
-For more questions on the subject, please go to [Questions: Solving equations involving logarithms](../questions/qs-solvingeqsindices.qmd).
+For more questions on the subject, please go to [Questions: Solving equations involving logarithms](../questions/qs-solvingeqslogarithms.qmd).
 
 ## Version history and licensing {-}
 

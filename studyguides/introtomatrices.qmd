@@ -9,6 +9,10 @@ categories:
 draft: true
 ---
 
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
 # What is a matrix? {.unnumbered}
 
 A matrix is a rectangular array or table, with entries in rows and columns. Understanding matrices can make solving equations more efficient and can open the door to learning much more mathematics.
@@ -56,9 +60,8 @@ $$A =\begin{bmatrix}
 $$
 
 Matrix $A$ here has dimension $3 \times 2$. The entry in the 2nd row and 1st column is called $a_{21}$, and here that is equal to $\pi$. The entry in the 1st row and 2nd column is called $a_{12}$, and here that is equal to $-2$. You can notice here that $a_{21}$ is not equal to $a_{12}$.
-\
+
 Matrix $B$ here has dimension $1 \times 4$. The entry in the 1st row and 2nd column is called $b_{12}$, and here that is equal to $2/5$.The entry in the 1st row and 4th column is called $b_{14}$, and here that is equal to $\sqrt{3}$.
-\
 
 $$C =\begin{bmatrix}
 \sqrt{2} \\
@@ -75,9 +78,9 @@ $$C =\begin{bmatrix}
 $$
 
 Matrix $C$ here has dimension $3 \times 1$. 
-\
+
 Matrix $D$ here has dimension $5 \times 3$. 
-\
+
 :::
 
 You can notice that $B$ only has one row; you can call such a matrix a **row matrix**. Similarly, you would call a matrix like $C$, with only one column, a **column matrix**. These are commonly known as **vectors**. You can read more about vectors in [Guide: Introduction to vectors].
@@ -154,6 +157,7 @@ $$A - B = \begin{bmatrix} 1-5 & 2-6 \\ 3-7 & 4-8 \end{bmatrix}= \begin{bmatrix} 
 :::
 
 ::: {.callout-note appearance="simple"}
+
 ## Example 5
 
 Now let $A$ and $B$ be two $3 \times 4$ matrices.
@@ -389,6 +393,347 @@ Matrix multiplication is **non-commutative**. This means that it is not always t
 :::
 
 To take a better look at this unusual property, you can now see some examples of this in action.
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+
+<!-- MathJax for pretty math explanations -->
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+
+<style>
+  .matrix-figure {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: black;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .matrix-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+  }
+
+  .matrix-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .matrix-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .matrix {
+    position: relative;
+    display: inline-block;
+    background-color: white;
+  }
+
+  .matrix table {
+    border-collapse: collapse;
+  }
+
+  .matrix td {
+    border-bottom: 1px solid white;
+    padding: 0;
+    min-width: 30px;
+    text-align: center;
+  }
+
+  .matrix input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    background: white;
+    font-family: monospace;
+    font-size: 14px;
+    color: black;
+    padding: 4px;
+  }
+
+  /* AB matrix larger size (20% bigger) */
+  #matrixAB td {
+    min-width: 35px;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .matrix::before,
+  .matrix::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+  }
+
+  .matrix::before {
+    left: -10px;
+    border-left: 2px solid black;
+  }
+
+  .matrix::after {
+    right: -10px;
+    border-right: 2px solid black;
+  }
+
+  .equals-sign {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .result-cell {
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .highlight-row input {
+    background-color: #c0d6ff !important;
+  }
+
+  .highlight-col input {
+    background-color: #c0d6ff !important;
+  }
+
+  .explanation {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+</style>
+
+<div class="matrix-figure">
+  <div class="explanation" id="explanation-text">
+    You can click on the entries of matrices A, B, C, and D to change them to any integers.<br>
+    Hover over the entries of the matrices AB and DC to see how they are calculated.
+  </div>
+
+  <!-- AB -->
+  <div class="matrix-row">
+    <div class="matrix-wrapper">
+      <div class="matrix-label">Matrix A (2×3)</div>
+      <div class="matrix">
+        <table id="matrixA">
+          <tr><td><input value="1"></td><td><input value="2"></td><td><input value="3"></td></tr>
+          <tr><td><input value="4"></td><td><input value="5"></td><td><input value="6"></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="matrix-wrapper">
+      <div class="matrix-label">Matrix B (3×2)</div>
+      <div class="matrix">
+        <table id="matrixB">
+          <tr><td><input value="7"></td><td><input value="8"></td></tr>
+          <tr><td><input value="9"></td><td><input value="10"></td></tr>
+          <tr><td><input value="11"></td><td><input value="12"></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="equals-sign">=</div>
+
+    <div class="matrix-wrapper">
+      <div class="matrix-label">AB (2×2)</div>
+      <div class="matrix">
+        <table id="matrixAB">
+          <tr>
+            <td class="result-cell" data-row="0" data-col="0">58</td>
+            <td class="result-cell" data-row="0" data-col="1">64</td>
+          </tr>
+          <tr>
+            <td class="result-cell" data-row="1" data-col="0">139</td>
+            <td class="result-cell" data-row="1" data-col="1">154</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- DC -->
+  <div class="matrix-row">
+    <div class="matrix-wrapper">
+      <div class="matrix-label">Matrix D (3×2)</div>
+      <div class="matrix">
+        <table id="matrixD">
+          <tr><td><input value="7"></td><td><input value="8"></td></tr>
+          <tr><td><input value="9"></td><td><input value="10"></td></tr>
+          <tr><td><input value="11"></td><td><input value="12"></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="matrix-wrapper">
+      <div class="matrix-label">Matrix C (2×3)</div>
+      <div class="matrix">
+        <table id="matrixC">
+          <tr><td><input value="1"></td><td><input value="2"></td><td><input value="3"></td></tr>
+          <tr><td><input value="4"></td><td><input value="5"></td><td><input value="6"></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="equals-sign">=</div>
+
+    <div class="matrix-wrapper">
+      <div class="matrix-label">DC (3×3)</div>
+      <div class="matrix">
+        <table id="matrixDC">
+          <tr>
+            <td class="result-cell" data-row="0" data-col="0">39</td>
+            <td class="result-cell" data-row="0" data-col="1">54</td>
+            <td class="result-cell" data-row="0" data-col="2">69</td>
+          </tr>
+          <tr>
+            <td class="result-cell" data-row="1" data-col="0">49</td>
+            <td class="result-cell" data-row="1" data-col="1">68</td>
+            <td class="result-cell" data-row="1" data-col="2">87</td>
+          </tr>
+          <tr>
+            <td class="result-cell" data-row="2" data-col="0">59</td>
+            <td class="result-cell" data-row="2" data-col="1">82</td>
+            <td class="result-cell" data-row="2" data-col="2">105</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function parseMatrix(table) {
+    return Array.from(table.rows).map(row =>
+      Array.from(row.cells).map(cell =>
+        parseFloat(cell.querySelector("input")?.value || 0)
+      )
+    );
+  }
+
+  function updateProduct(A, B, outId) {
+    const resultTable = document.getElementById(outId);
+    for (let i = 0; i < A.length; i++) {
+      for (let j = 0; j < B[0].length; j++) {
+        let sum = 0;
+        for (let k = 0; k < B.length; k++) {
+          sum += A[i][k] * B[k][j];
+        }
+        resultTable.rows[i].cells[j].textContent = sum;
+      }
+    }
+  }
+
+  function highlight(row, col, leftId, rightId) {
+    const left = document.getElementById(leftId).rows;
+    const right = document.getElementById(rightId).rows;
+    for (let i = 0; i < left[row].cells.length; i++) {
+      left[row].cells[i].classList.add("highlight-row");
+    }
+    for (let i = 0; i < right.length; i++) {
+      right[i].cells[col].classList.add("highlight-col");
+    }
+  }
+
+  function clearHighlights() {
+    document.querySelectorAll("td").forEach(td => {
+      td.classList.remove("highlight-row", "highlight-col");
+    });
+  }
+
+  function explain(matrixName, A, B, row, col) {
+    const rowVals = A[row];
+    const colVals = B.map(r => r[col]);
+    const terms = rowVals.map((a, i) => `(${a})(${colVals[i]})`);
+    const result = rowVals.reduce((acc, a, i) => acc + a * colVals[i], 0);
+    // Use MathJax display math:
+    const explanationHTML = `\\[${matrixName}_{${row + 1},${col + 1}} = ${terms.join(" + ")} = ${result}\\]`;
+    document.getElementById("explanation").innerHTML = explanationHTML;
+    MathJax.typesetPromise();
+  }
+
+  function getMatrices() {
+    return {
+      A: parseMatrix(document.getElementById("matrixA")),
+      B: parseMatrix(document.getElementById("matrixB")),
+      C: parseMatrix(document.getElementById("matrixC")),
+      D: parseMatrix(document.getElementById("matrixD")),
+    };
+  }
+
+  function init() {
+    const explanationDiv = document.createElement("div");
+    explanationDiv.id = "explanation";
+    explanationDiv.style.marginTop = "10px";
+    explanationDiv.style.minHeight = "2.2em";
+    document.querySelector(".matrix-figure").appendChild(explanationDiv);
+
+    const updateAll = () => {
+      const { A, B, C, D } = getMatrices();
+      updateProduct(A, B, "matrixAB");
+      updateProduct(D, C, "matrixDC");
+    };
+
+    document.querySelectorAll("input").forEach(input => {
+      input.addEventListener("input", () => {
+        clearHighlights();
+        document.getElementById("explanation").innerHTML = "";
+        updateAll();
+      });
+    });
+
+    document.querySelectorAll("#matrixAB .result-cell").forEach(cell => {
+      cell.addEventListener("mouseover", () => {
+        const { A, B } = getMatrices();
+        const row = +cell.dataset.row;
+        const col = +cell.dataset.col;
+        clearHighlights();
+        highlight(row, col, "matrixA", "matrixB");
+        explain("AB", A, B, row, col);
+      });
+    });
+
+    document.querySelectorAll("#matrixDC .result-cell").forEach(cell => {
+      cell.addEventListener("mouseover", () => {
+        const { C, D } = getMatrices();
+        const row = +cell.dataset.row;
+        const col = +cell.dataset.col;
+        clearHighlights();
+        highlight(row, col, "matrixD", "matrixC");
+        explain("DC", D, C, row, col);
+      });
+    });
+
+    document.body.addEventListener("mouseout", e => {
+      if (e.target.classList.contains("result-cell")) {
+        clearHighlights();
+        document.getElementById("explanation").innerHTML = "";
+      }
+    });
+
+    updateAll();
+  }
+
+  init();
+</script>
+
+
+```
+
+:::
 
 ::: {.callout-note appearance="simple"}
 ## Example 10

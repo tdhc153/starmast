@@ -1,124 +1,108 @@
 library(shiny)
 library(bslib)
-library(ggplot2)
 
 ui <- page_fluid(
-  title = "T-test calculator",
+  title = "Z-table calculator",
   
-  layout_columns(
-    col_widths = c(4, 8),
-    
-    # Left column - Input parameters
-    card(
-      card_header("Input parameters"),
-      card_body(
-        numericInput("tscore", "T-statistic", value = 2.0, step = 0.01),
-        numericInput("df", "Degrees of freedom", value = 20, min = 1, step = 1),
-        radioButtons("test_type", "Test type",
-                    choices = list("Two-tailed" = "two",
-                                  "One-tailed (upper)" = "upper",
-                                  "One-tailed (lower)" = "lower"),
-                    selected = "two"),
-        hr(),
-        helpText("This app calculates p-values for t-tests based on the t-distribution with specified degrees of freedom.")
+  # Use fluidRow with columns for vertical alignment
+  fluidRow(
+    column(
+      width = 6,
+      card(
+        card_header("Input parameters"),
+        card_body(
+          style = "padding: 15px; min-height: 200px;",
+          # Input for significance level
+          numericInput(
+            "alpha",
+            "Significance Level (α):",
+            value = 0.05,
+            min = 0.001,
+            max = 0.999,
+            step = 0.001
+          ),
+          
+          # Radio buttons for test type with custom styling
+          tags$div(
+            style = "margin-top: 15px;",
+            tags$label("Test type:", style = "font-weight: bold; margin-bottom: 10px; display: block;"),
+            radioButtons(
+              "test_type",
+              "",
+              choices = list(
+                "One-tailed" = "one",
+                "Two-tailed" = "two"
+              ),
+              selected = "two"
+            )
+          )
+        )
       )
     ),
     
-    # Right column - Graphical representation
-    card(
-      card_header("Graphical representation"),
-      card_body(
-        plotOutput("density_plot", height = "300px")
+    column(
+      width = 6,
+      card(
+        card_header("Z-score results"),
+        card_body(
+          style = "padding: 15px; min-height: 200px;",
+          div(
+            style = "text-align: center;",
+            h4("Critical Z-score:", style = "color: #3F68B6; margin-bottom: 5px;"),
+            div(
+              style = "font-size: 32px; font-weight: bold; color: #3F68B6; margin: 5px 0;",
+              textOutput("z_score", inline = TRUE)
+            ),
+            div(
+              style = "margin-top: 8px; font-size: 14px;",
+              textOutput("interpretation")
+            )
+          )
+        )
       )
     )
   ),
   
-  # Results at the bottom
-  card(
-    card_header("T-test results"),
-    card_body(
-      verbatimTextOutput("pvalue_result")
-    )
-  )
+  # Custom CSS for styling the radio buttons
+  tags$style(HTML("
+    .radio label {
+      color: black !important;
+      font-weight: 500;
+    }
+    .radio input[type='radio'] {
+      accent-color: black;
+    }
+  "))
 )
 
 server <- function(input, output, session) {
   
-  # Calculate p-value based on test type
-  p_value <- reactive({
-    t <- input$tscore
-    df <- input$df
-    test <- input$test_type
+  # Calculate Z-score based on significance level and test type
+  z_value <- reactive({
+    alpha <- input$alpha
     
-    if (test == "two") {
-      p <- 2 * pt(-abs(t), df = df)
-      result <- paste0("Two-tailed p-value: ", round(p, 4))
-    } else if (test == "upper") {
-      p <- pt(t, df = df, lower.tail = FALSE)
-      result <- paste0("Upper-tailed p-value: ", round(p, 4))
-    } else if (test == "lower") {
-      p <- pt(t, df = df, lower.tail = TRUE)
-      result <- paste0("Lower-tailed p-value: ", round(p, 4))
+    if (input$test_type == "one") {
+      # One-tailed test: find Z such that P(Z > z) = alpha
+      z_score <- qnorm(1 - alpha)
+    } else {
+      # Two-tailed test: find Z such that P(|Z| > z) = alpha
+      # This means P(Z > z) = alpha/2
+      z_score <- qnorm(1 - alpha/2)
     }
     
-    return(list(p = p, result = result, test = test))
+    return(round(z_score, 4))
   })
   
-  # Display p-value
-  output$pvalue_result <- renderText({
-    p_value()$result
+  # Output the Z-score
+  output$z_score <- renderText({
+    z_value()
   })
   
-  # Create density plot
-  output$density_plot <- renderPlot({
-    t <- input$tscore
-    df <- input$df
-    test <- p_value()$test
-    
-    # Generate x values for t-distribution
-    x <- seq(-4, 4, length.out = 1000)
-    y <- dt(x, df = df)
-    df_data <- data.frame(x = x, y = y)
-    
-    # Base plot
-    p <- ggplot(df_data, aes(x = x, y = y)) +
-      geom_line() +
-      labs(x = "T-statistic", y = "Density", 
-           title = paste("T-distribution (df =", df, ")")) +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank()) +
-      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5)
-    
-    # Add shaded area based on test type, using #3F6BB6 as the color
-    if (test == "two") {
-      # Two-tailed test: shade both tails
-      if (t > 0) {
-        p <- p + 
-          geom_area(data = subset(df_data, x >= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_area(data = subset(df_data, x <= -t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_vline(xintercept = t, color = "#3F6BB6") +
-          geom_vline(xintercept = -t, color = "#3F6BB6")
-      } else {
-        p <- p + 
-          geom_area(data = subset(df_data, x <= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_area(data = subset(df_data, x >= -t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_vline(xintercept = t, color = "#3F6BB6") +
-          geom_vline(xintercept = -t, color = "#3F6BB6")
-      }
-    } else if (test == "upper") {
-      # Upper-tailed test: shade area above t
-      p <- p + 
-        geom_area(data = subset(df_data, x >= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-        geom_vline(xintercept = t, color = "#3F6BB6")
-    } else if (test == "lower") {
-      # Lower-tailed test: shade area below t
-      p <- p + 
-        geom_area(data = subset(df_data, x <= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-        geom_vline(xintercept = t, color = "#3F6BB6")
-    }
-    
-    return(p)
+  # Provide interpretation
+  output$interpretation <- renderText({
+    test_type <- ifelse(input$test_type == "one", "one-tailed", "two-tailed")
+    paste0("For a ", test_type, " test with α = ", input$alpha)
   })
 }
 
-shinyApp(ui, server)
+shinyApp(ui = ui, server = server)

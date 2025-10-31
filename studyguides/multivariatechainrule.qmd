@@ -2,29 +2,37 @@
 title: Multivariate chain rule
 author: Donald Campbell
 abstract-title: Summary
-abstract: The multivariate chain rule is used in calculus to differentiate a function when its variables depend on other variables. It shows how the change in one variable affects the whole function by considering how the intermediate variables change. It is useful in modelling systems where one quantity depends on several factors. For example, climate models use variables like temperature, humidity and ocean currents to predict weather patterns.
+abstract: The multivariate chain rule is used in calculus to differentiate a function when its variables depend on other variables. It shows how the change in one variable affects the whole function by considering how the intermediate variables change. It is useful in modelling systems where one quantity depends on several factors.
 categories:
   - Calculus
-image: FiguresPNG/introtodifferentiation-image.png
-draft: true
+image: FiguresPNG/multivariatechainrule-image.png
 ---
 
 ```{r, setup, include = FALSE}
 library("webexercises")
 ```
 
-*Before reading this guide, it is recommended that you read [Guide: Introduction to partial differentiation](introtopartialdifferentiation.qmd) and \[Guide: The chain rule\].*
+*Before reading this guide, it is recommended that you read [Guide: Introduction to partial differentiation](introtopartialdifferentiation.qmd) and [Guide: The chain rule](chainrule.qmd).*
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/multivariatechainrule.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
+
 
 # What is the multivariate chain rule?
 
-As seen in \[Guide: The chain rule\], the chain rule tells you how to differentiate a function $y=f(x)$ with respect to another variable $t$ when $x$ depends on $t$.
+As seen in [Guide: The chain rule](chainrule.qmd), the chain rule tells you how to differentiate a function $y=y(x)$ with respect to another variable $t$ when $x$ depends on $t$.
 $$\dfrac{\mathrm{d}y}{\mathrm{d}t} = \dfrac{\mathrm{d}y}{\mathrm{d}x}\dfrac{\mathrm{d}x}{\mathrm{d}t}$$
 
 This rule can be extended to functions of multiple variables through the **multivariate chain rule**. The extended rule tells you how to compute derivatives of composite functions (functions of functions) involving multiple variables. It allows you to track how changes in **independent variables** influence a final quantity through intermediate variables called **dependent variables**.
 
-The multivariate chain rule is used in problems involving parametric multivariate functions, such as those describing motion along curved surfaces, transformations in computer graphics, and population models where growth depends on multiple time-varying factors.
+The multivariate chain rule is used in problems involving parametric multivariate functions, such as those describing motion along curved surfaces, transformations in computer graphics, and population models where growth depends on multiple time-varying factors. Another important example is a climate model: these use variables like temperature, humidity and ocean currents to predict weather patterns.
 
-Before moving on, it is important to define what the difference is between dependent and independent variables.
+Before beginning, it is important to understand the difference between dependent and independent variables. From there, the multivariate chain rule accounts for any combination of dependent and independent variables; this guide looks at two dependent variables with one/two independent variables, and then discusses the general case at the very end.
 
 # Dependent and independent variables
 
@@ -32,14 +40,14 @@ When a function **depends** on a specific variable, this means that the function
 
 A **multivariate (or multivariable) function** is a function that depends on more than one variable.
 
-Consider a multivariate function $w = f(x,y,z) = 2x^2 + xy + 3xz$ where
+Consider a multivariate function $w = w(x,y,z) = 2x^2 + xy + 3xz$ where
 $$\begin{aligned}
 x(s,t) &= s^2 - t \\[0.2em]
 y(s,t) &= s^2 + t \\[0.2em]
 z(s,t) &= 2s + t^2
 \end{aligned}$$
 
-The variables $x$, $y$ and $z$ are referred to as **dependent variables** as they are functions that depend on (can be written in terms of) the variables $s$ and $t$. Even though $x$, $y$ and $z$ are referred to as dependent variables, they are actually functions of the variables $s$ and $t$. In this case, the dependent variables can be written in functional form as $x = x(s,t)$, $y = y(s,t)$ and $z = z(s,t)$ to emphasize dependency.
+The variables $x$, $y$ and $z$ are referred to as **dependent variables** as they are functions that depend on (can be written in terms of) the variables $s$ and $t$. Even though $x$, $y$ and $z$ are referred to as 'variables', they are actually functions of the variables $s$ and $t$. In this case, the dependent variables can be written in functional form as $x = x(s,t)$, $y = y(s,t)$ and $z = z(s,t)$ to emphasize dependency.
 
 The variables $s$ and $t$ are referred to as **independent variables** as they do not depend on any other variables.
 
@@ -47,18 +55,18 @@ Occasionally, the dependent variables in this guide may be referred to as **inte
 
 # Functions of two dependent variables with one independent variable
 
-Suppose you have a function $z = f(x,y)$. Here, $z$ depends on two dependent variables $x$ and $y$, however both $x$ and $y$ are functions of a single independent variable $t$. $$x=x(t) \quad \textsf{and} \quad y=y(t)$$
+Suppose you have a function $z = z(x,y)$. Here, $z$ depends on two dependent variables $x$ and $y$, however both $x$ and $y$ are functions of a single independent variable $t$. $$x=x(t) \quad \textsf{and} \quad y=y(t)$$
 
-This means that, even though $z$ initially looks like a function of two dependent variables $x$ and $y$, it really depends on a single independent variable $t$. You can write $z$ entirely in terms of $t$. $$z = f(x(t),y(t))$$
+This means that, even though $z$ initially looks like a function of two dependent variables $x$ and $y$, it really depends on a single independent variable $t$. You can write $z$ entirely in terms of $t$: $$z = z(x(t),y(t))$$
 
 The goal is to find $\dfrac{\mathrm{d}z}{\mathrm{d}t}$.
 
-You cannot differentiate $z = f(x,y)$ directly with respect to $t$ because $z$ depends intermediately on both $x$ and $y$. Instead, you need to use the multivariate chain rule.
+You may not be able to differentiate $z = z(x,y)$ directly with respect to $t$ because $z$ depends intermediately on both $x$ and $y$. Instead, you could use the **multivariate chain rule**.
 
 ::: callout-note
 ## Multivariate chain rule for functions of one independent variable
 
-Let $z=f(x,y)$ where $f$ is a differentiable function of $x$ and $y$. Also let $x=x(t)$ and $y=y(t)$ be differentiable functions of $t$.
+Let $z=z(x,y)$ where $f$ is a differentiable function of $x$ and $y$. Also let $x=x(t)$ and $y=y(t)$ be differentiable functions of $t$.
 
 The function $z$ can then be differentiated with respect to $t$ according to
 $$\dfrac{\mathrm{d}z}{\mathrm{d}t} = \dfrac{\partial z}{\partial x}\dfrac{\mathrm{d}x}{\mathrm{d}t} + \dfrac{\partial z}{\partial y}\dfrac{\mathrm{d}y}{\mathrm{d}t}$$
@@ -66,7 +74,7 @@ $$\dfrac{\mathrm{d}z}{\mathrm{d}t} = \dfrac{\partial z}{\partial x}\dfrac{\mathr
 :::
 
 ::: callout-important
-The left-most derivative $\dfrac{\mathrm{d}z}{\mathrm{d}t}$ is written with a straight $\mathrm{d}$ as $z=z(t)$ is considered a function of $t$ only, at this stage. Here, $z$ is written using the expressions for $x$ and $y$ in terms of $t$.
+The left-most derivative $\dfrac{\mathrm{d}z}{\mathrm{d}t}$ is written with a straight $\mathrm{d}$ as $z= z(x,y) = z(x(t),y(t))$ is ultimately a function of $t$ alone. Here, $z$ is written using the expressions for $x$ and $y$ in terms of $t$.
 
 Derivatives such as $\dfrac{\partial z}{\partial x}$ and $\dfrac{\partial z}{\partial y}$ are written with a curly $\partial$ as $z$ is a function that depends on two variables $x$ and $y$.
 
@@ -78,7 +86,7 @@ As $t$ changes, both dependent variables $x$ and $y$ change as they are both fun
 ::: {.callout-note appearance="simple"}
 ## Example 1
 
-Let $z = f(x,y) = x^3 + y^3$ where $x=3t^2$ and $y=\cos(t)$. Use the multivariate chain rule to find $\dfrac{\mathrm{d}z}{\mathrm{d}t}$.
+Let $z = z(x,y) = x^3 + y^3$ where $x=3t^2$ and $y=\cos(t)$. Use the multivariate chain rule to find $\dfrac{\mathrm{d}z}{\mathrm{d}t}$.
 
 First, calculate the derivatives required for the multivariate chain rule.
 $$\begin{array}{lcl}
@@ -88,34 +96,40 @@ $$\begin{array}{lcl}
 \dfrac{\mathrm{d}y}{\mathrm{d}t} = -\sin(t)
 \end{array}$$
 
-You need to substitute the derivatives into the multivariate chain rule, then substitute for $x=3t^2$ and $y=\cos(t)$.
+You then need to substitute the derivatives into the multivariate chain rule, then substitute for $x=3t^2$ and $y=\cos(t)$.
 $$\begin{aligned}
 \dfrac{\mathrm{d}z}{\mathrm{d}t} &= \dfrac{\partial z}{\partial x}\dfrac{\mathrm{d}x}{\mathrm{d}t} + \dfrac{\partial z}{\partial y}\dfrac{\mathrm{d}y}{\mathrm{d}t} \\[0.5em]
 &= (3x^2)(6t) + (3y^2)(-\sin(t)) \\[0.5em]
 &= 3(3t^2)^2(6t) + 3(\cos(t))^2(-\sin(t)) \\[0.5em]
 &= 162t^5 - 3\sin(t)\cos^2(t)
 \end{aligned}$$
+and this is your final answer.
 
 :::
 
 ::: callout-important
-Make sure that your final answer is always expressed only in terms of independent variables. Your final answer should not include any intermediate variables such as $x$ and $y$ in this example.
+Make sure that your final answer is always expressed only in terms of the **independent variables**. Your final answer should not include any intermediate variables (like $x$ and $y$ in this example).
 :::
 
-# Functions of two dependent variables with two independent variables {.unnumbered}
+::: callout-tip
+You could notice that in this case, you could substitute $x = x(t)$ and $y = y(t)$ into the equation and directly differentiate with respect to $t$. However, this might not be possible in all cases, and usually using the multivariate chain rule will result in cleaner working. For instance, if $z=z(x,y) = xe^{xy}$ with dependent variables $x(t) = t^5 - t^4 + t^3 + 1$ and $y(t) = \cos(t^2)$, then you can directly substitute and differentiate; but it would be very difficult to do!
+:::
 
-Suppose you have a function $z=f(x,y)$. Here, $z$ depends on two dependent variables $x$ and $y$, however now both $x$ and $y$ are functions of two independent variables $s$ and $t$. $$x=x(s,t) \quad \textsf{and} \quad y=y(s,t)$$
 
-This means that, even though $z$ initially looks like a function of two dependent variables $x$ and $y$, it really depends on two independent variables $s$ and $t$. You can write $z$ entirely in terms of $s$ and $t$. $$z = f ( x(s,t), y(s,t) )$$
+# Functions of two dependent variables with two independent variables {-}
+
+Suppose you have a function $z=z(x,y)$, where both $x$ and $y$ are now functions of **two** independent variables. Here, $z$ depends on two dependent variables $x$ and $y$, however now both $x$ and $y$ are functions of two independent variables $s$ and $t$. $$x=x(s,t) \quad \textsf{and} \quad y=y(s,t)$$
+
+This means that, even though $z$ initially looks like a function of two dependent variables $x$ and $y$, it really depends on two independent variables $s$ and $t$. In fact, you can write $z$ entirely in terms of $s$ and $t$. $$z = z ( x(s,t), y(s,t) )$$
 
 Since there are now two independent variables, the goal is to find both $\dfrac{\partial z}{\partial s}$ and $\dfrac{\partial z}{\partial t}$.
 
-You cannot differentiate $z = f(x,y)$ directly with respect to $s$ or $t$ because $z$ depends intermediately on both $x$ and $y$. Instead, you need to use the multivariate chain rule.
+You cannot differentiate $z = z(x,y)$ directly with respect to $s$ or $t$ because $z$ depends intermediately on both $x$ and $y$. Instead, you need to use the multivariate chain rule.
 
 ::: callout-note
 ## Multivariate chain rule for functions of two independent variables
 
-Let $z=f(x,y)$ where $f$ is a differentiable function of $x$ and $y$. Also let $x=x(s,t)$ and $y=y(s,t)$ be differentiable functions of $s$ and $t$.
+Let $z=z(x,y)$ where $f$ is a differentiable function of $x$ and $y$. Also, let $x=x(s,t)$ and $y=y(s,t)$ be differentiable functions of $s$ and $t$.
 
 The function $z$ can then be differentiated with respect to $s$ and $t$ with
 $$\begin{aligned}
@@ -136,7 +150,7 @@ As $s$ and $t$ change, both dependent variables $x$ and $y$ change as they are b
 ::: {.callout-note appearance="simple"}
 ## Example 2
 
-Let $z = f(x,y) = x^2 + 3xy$ where $x=s+t^2$ and $y=s^2-t$. Use the multivariate chain rule to find $\dfrac{\partial z}{\partial s}$ and $\dfrac{\partial z}{\partial t}$.
+Let $z = z(x,y) = x^2 + 3xy$ where $x=s+t^2$ and $y=s^2-t$. Use the multivariate chain rule to find $\dfrac{\partial z}{\partial s}$ and $\dfrac{\partial z}{\partial t}$.
 
 First, calculate the derivatives required for the multivariate chain rule.
 $$\begin{array}{lcl}
@@ -167,7 +181,7 @@ $$\begin{aligned}
 
 # Generalized multivariate chain rule
 
-Suppose you have a function $w = f(x_1, x_2, \ldots , x_n)$. Here, $w$ depends on $n$ dependent variables $x_1, x_2, \ldots, x_n$ where each of these variables is a function of $m$ independent variables $t_1, t_2, \ldots, t_m$.
+Suppose you have a function $w = w(x_1, x_2, \ldots , x_n)$. Here, $w$ depends on $n$ dependent variables $x_1, x_2, \ldots, x_n$ where each of these variables is a function of $m$ independent variables $t_1, t_2, \ldots, t_m$.
 $$\begin{aligned}
 x_1 &= x_1(t_1, t_2, \ldots, t_m) \\[0.2em]
 x_2 &= x_2(t_1, t_2, \ldots, t_m) \\[0.2em]
@@ -177,14 +191,14 @@ x_n &= x_n(t_1, t_2, \ldots, t_m)
 
 The previous cases investigated were
 $$\begin{array}{lclclclclcl}
-\textsf{Case 1:} & \; & n = 1, & \; & m = 1, & \; & y = f(x), & \; & x = x(t). & \; & \\[0.5em]
-\textsf{Case 2:} & \; & n = 2, & \; & m = 1, & \; & z = f(x, y), & \; & x = x(t), & \; & y = y(t). \\[0.5em]
-\textsf{Case 3:} & \; & n = 2, & \; & m = 2, & \; & z = f(x, y), & \; & x = x(s, t), & \; & y = y(s, t).
+\textsf{Case 1:} & \; & n = 1, & \; & m = 1, & \; & y = y(x), & \; & x = x(t). & \; & \\[0.5em]
+\textsf{Case 2:} & \; & n = 2, & \; & m = 1, & \; & z = z(x, y), & \; & x = x(t), & \; & y = y(t). \\[0.5em]
+\textsf{Case 3:} & \; & n = 2, & \; & m = 2, & \; & z = z(x, y), & \; & x = x(s, t), & \; & y = y(s, t).
 \end{array}$$
 
 where:
 
--   Case 1 corresponds to the chain rule for one dependent variable and one independent variable - see \[Guide: The chain rule\].
+-   Case 1 corresponds to the chain rule for one dependent variable and one independent variable - see [Guide: The chain rule](chainrule.qmd).
 
 -   Case 2 corresponds to the chain rule for two dependent variables and one independent variable.
 
@@ -195,7 +209,7 @@ The multivariate chain rule can be generalized as follows.
 ::: callout-note
 ## Generalized multivariate chain rule
 
-Let $w = f(x_1, x_2, \ldots , x_n)$ where $f$ is a differentiable function of $x_1, x_2, \ldots, x_n$. Also let the following dependent variables be differentiable functions of $t_1, t_2, \ldots, t_m$.
+Let $w = w(x_1, x_2, \ldots , x_n)$ be a differentiable function of $x_1, x_2, \ldots, x_n$. Also let the following dependent variables be differentiable functions of $t_1, t_2, \ldots, t_m$.
 $$\begin{aligned}
 x_1 &= x_1(t_1, t_2, \ldots, t_m) \\[0.2em]
 x_2 &= x_2(t_1, t_2, \ldots, t_m) \\[0.2em]
@@ -205,26 +219,35 @@ x_n &= x_n(t_1, t_2, \ldots, t_m)
 
 The function $w$ can then be differentiated with respect to $t_1, t_2, \ldots, t_m$ with
 $$\begin{aligned}
-\dfrac{\partial w}{\partial t_1} &= \dfrac{\partial w}{\partial x_1} \dfrac{\partial x_1}{\partial t_1} + \dfrac{\partial w}{\partial x_2} \dfrac{\partial x_2}{\partial t_1} + \ldots + \dfrac{\partial w}{\partial x_n} \dfrac{\partial x_n}{\partial t_1} \\[0.5em]
-\dfrac{\partial w}{\partial t_2} &= \dfrac{\partial w}{\partial x_1} \dfrac{\partial x_1}{\partial t_2} + \dfrac{\partial w}{\partial x_2} \dfrac{\partial x_2}{\partial t_2} + \ldots + \dfrac{\partial w}{\partial x_n} \dfrac{\partial x_n}{\partial t_2} \\[0.5em]
+\dfrac{\partial w}{\partial t_1} &= \sum_{i=1}^n \dfrac{\partial w}{\partial x_i} \dfrac{\partial{x_i}}{\partial {t_1}} = \dfrac{\partial w}{\partial x_1} \dfrac{\partial x_1}{\partial t_1} + \dfrac{\partial w}{\partial x_2} \dfrac{\partial x_2}{\partial t_1} + \ldots + \dfrac{\partial w}{\partial x_n} \dfrac{\partial x_n}{\partial t_1} \\[0.5em]
+\dfrac{\partial w}{\partial t_2} &= \sum_{i=1}^n \dfrac{\partial w}{\partial x_i} \dfrac{\partial{x_i}}{\partial {t_2}} = \dfrac{\partial w}{\partial x_1} \dfrac{\partial x_1}{\partial t_2} + \dfrac{\partial w}{\partial x_2} \dfrac{\partial x_2}{\partial t_2} + \ldots + \dfrac{\partial w}{\partial x_n} \dfrac{\partial x_n}{\partial t_2} \\[0.5em]
 \vdots \quad\! &= \quad\! \vdots \\[0.5em]
-\dfrac{\partial w}{\partial t_m} &= \dfrac{\partial w}{\partial x_1} \dfrac{\partial x_1}{\partial t_m} + \dfrac{\partial w}{\partial x_2} \dfrac{\partial x_2}{\partial t_m} + \ldots + \dfrac{\partial w}{\partial x_n} \dfrac{\partial x_n}{\partial t_m}
+\dfrac{\partial w}{\partial t_m} &= \sum_{i=1}^n \dfrac{\partial w}{\partial x_i} \dfrac{\partial{x_i}}{\partial {t_m}} = \dfrac{\partial w}{\partial x_1} \dfrac{\partial x_1}{\partial t_m} + \dfrac{\partial w}{\partial x_2} \dfrac{\partial x_2}{\partial t_m} + \ldots + \dfrac{\partial w}{\partial x_n} \dfrac{\partial x_n}{\partial t_m}
 \end{aligned}$$
+
+(where $\sum$ represents **sigma notation**; see [Guide: Sigma notation](sigmanotation.qmd) for more.)
 
 :::
 
 ::: callout-important
-A particular case exists where the variables $x_i$ each depend on only one independent variable $x_1 = x_1(t), x_2 = x_2(t), \ldots, x_n = x_n(t)$. In this case, a straight $\mathrm{d}$ should be used instead of a curly $\partial$. $$\dfrac{\mathrm{d}{w}}{\mathrm{d}{t}} = \dfrac{\partial w}{\partial x_1} \dfrac{\mathrm{d}{x_1}}{\mathrm{d}{t}} + \dfrac{\partial w}{\partial x_2} \dfrac{\mathrm{d}{x_2}}{\mathrm{d}{t}} + \ldots + \dfrac{\partial w}{\partial x_n} \dfrac{\mathrm{d}{x_n}}{\mathrm{d}{t}}$$
+A particular case exists where the variables $x_i$ each depend on only one independent variable $x_1 = x_1(t), x_2 = x_2(t), \ldots, x_n = x_n(t)$. In this case, a straight $\mathrm{d}$ should be used instead of a curly $\partial$. 
+$$
+\begin{aligned}
+\dfrac{\mathrm{d}{w}}{\mathrm{d}{t}} &=\sum_{i=1}^n \dfrac{\partial w}{\partial x_i} \dfrac{\mathrm{d}{x_i}}{\mathrm{d}{t}} = \dfrac{\partial w}{\partial x_1} \dfrac{\mathrm{d}{x_1}}{\mathrm{d}{t}} + \dfrac{\partial w}{\partial x_2} \dfrac{\mathrm{d}{x_2}}{\mathrm{d}{t}} + \ldots + \dfrac{\partial w}{\partial x_n} \dfrac{\mathrm{d}{x_n}}{\mathrm{d}{t}}\\[0.5em] 
+\end{aligned}
+$$
 
 Similarly, if there is only one dependent variable $x$, then a straight $\mathrm{d}$ should be used instead of a curly $\partial$ for the derivatives of $w$ with respect to $x$.
 :::
 
+Here's an example of a case with $n=3$ dependent variables and $m=2$ independent variables.
+
+:::: {.content-hidden when-format="pdf"}
+
 ::: {.callout-note appearance="simple"}
 ## Example 3
 
-Consider the case with $n=3$ dependent variables and $m=2$ independent variables.
-
-Let $w = f(x,y,z) = x^2 -3xz + 2xy$ where
+Let $w = w(x,y,z) = x^2 -3xz + 2xy$ where
 $$\begin{aligned}
 x(s,t) &= s^2-t \\
 y(s,t) &= s\cos(t) \\
@@ -245,31 +268,86 @@ You need to substitute the partial derivatives into the multivariate chain rule,
 You can calculate the partial derivative of $w$ with respect to $s$ as:
 $$\begin{aligned}
 \dfrac{\partial w}{\partial s} &= \dfrac{\partial w}{\partial x}\dfrac{\partial x}{\partial s} + \dfrac{\partial w}{\partial y}\dfrac{\partial y}{\partial s} + \dfrac{\partial w}{\partial z}\dfrac{\partial z}{\partial s} \\[0.5em]
-&= (2x-3z+2y)(2s) + (2x)(\cos(t)) + (-3x)(-1) \\[0.2em]
+&= (2x-3z+2y)(2s) + (2x)(\cos(t)) + (-3x)(-1) \\[1em]
 &= ( 2(s^2-t)-3(t^2-s)+2s\cos(t) ) ( 2s ) + ( 2(s^2-t) ) ( \cos(t) ) \\
-&\phantom{= } \quad + ( -3(s^2-t) ) ( -1 ) \\[0.2em]
+&\phantom{= } \quad + ( -3(s^2-t) ) ( -1 ) \\[1em]
 &= 4s^3 + 9s^2 + 6s^2\cos(t) - 4st - 6st^2 - 2t\cos(t) - 3t
 \end{aligned}$$
 
 You can calculate the partial derivative of $w$ with respect to $t$ as:
 $$\begin{aligned}
 \dfrac{\partial w}{\partial t} &= \dfrac{\partial w}{\partial x}\dfrac{\partial x}{\partial t} + \dfrac{\partial w}{\partial y}\dfrac{\partial y}{\partial t} + \dfrac{\partial w}{\partial z}\dfrac{\partial z}{\partial t} \\[0.5em]
-&= (2x-3z+2y)(-1) + (2x)(-s\sin(t)) + (-3x)(2t) \\[0.2em]
+&= (2x-3z+2y)(-1) + (2x)(-s\sin(t)) + (-3x)(2t) \\[1em]
 &= ( 2(s^2-t)-3(t^2-s)+2s\cos(t) ) ( -1 ) \\
-&\phantom{= } \quad + ( 2(s^2-t) ) ( -s\sin(t) ) + ( -3(s^2-t) ) ( 2t ) \\[0.2em]
+&\phantom{= } \quad + ( 2(s^2-t) ) ( -s\sin(t) ) + ( -3(s^2-t) ) ( 2t ) \\[1em]
 &= -2s^2 + 9t^2 + 2t - 3s - 2s\cos(t) - 2s^3\sin(t) \\
 &\phantom{= } \quad + 2st\sin(t) - 6ts^2
 \end{aligned}$$
 
 :::
 
+::::
+
+:::: {.content-visible when-format="pdf"}
+
+::: {.callout-note appearance="simple"}
+## Example 3
+
+Let $w = w(x,y,z) = x^2 -3xz + 2xy$ where
+$$\begin{aligned}
+x(s,t) &= s^2-t \\
+y(s,t) &= s\cos(t) \\
+z(s,t) &= t^2-s
+\end{aligned}$$
+
+Use the multivariate chain rule to find $\dfrac{\partial w}{\partial s}$ and $\dfrac{\partial w}{\partial t}$.
+
+Firstly, calculate the derivatives required for the multivariate chain rule.
+$$\begin{array}{lclcl}
+\dfrac{\partial w}{\partial x} = 2x - 3z + 2y & \quad & \dfrac{\partial w}{\partial y} = 2x & \quad & \dfrac{\partial w}{\partial z} = -3x \\[0.5em]
+\dfrac{\partial x}{\partial s} = 2s & \quad & \dfrac{\partial y}{\partial s} = \cos(t) & \quad & \dfrac{\partial z}{\partial s} = -1 \\[0.5em]
+\dfrac{\partial x}{\partial t} = -1 & \quad & \dfrac{\partial y}{\partial t} = -s\sin(t) & \quad & \dfrac{\partial z}{\partial t} = 2t
+\end{array}$$
+
+You need to substitute the partial derivatives into the multivariate chain rule, then substitute for $x=s^2-t$, $y = s\cos(t)$ and $z=t^2-s$.
+
+You can calculate the partial derivative of $w$ with respect to $s$ as:
+$$\begin{aligned}
+\dfrac{\partial w}{\partial s} &= \dfrac{\partial w}{\partial x}\dfrac{\partial x}{\partial s} + \dfrac{\partial w}{\partial y}\dfrac{\partial y}{\partial s} + \dfrac{\partial w}{\partial z}\dfrac{\partial z}{\partial s} \\[0.5em]
+&= (2x-3z+2y)(2s) + (2x)(\cos(t)) + (-3x)(-1) \\[1em]
+&= ( 2(s^2-t)-3(t^2-s)+2s\cos(t) ) ( 2s ) + ( 2(s^2-t) ) ( \cos(t) ) \\
+&\phantom{= } \quad + ( -3(s^2-t) ) ( -1 ) \\[1em]
+&= 4s^3 + 9s^2 + 6s^2\cos(t) - 4st - 6st^2 - 2t\cos(t) - 3t
+\end{aligned}$$
+
+:::
+
+ 
+
+::: {.callout-note appearance="simple"}
+## Example 3 continued
+
+You can calculate the partial derivative of $w$ with respect to $t$ as:
+$$\begin{aligned}
+\dfrac{\partial w}{\partial t} &= \dfrac{\partial w}{\partial x}\dfrac{\partial x}{\partial t} + \dfrac{\partial w}{\partial y}\dfrac{\partial y}{\partial t} + \dfrac{\partial w}{\partial z}\dfrac{\partial z}{\partial t} \\[0.5em]
+&= (2x-3z+2y)(-1) + (2x)(-s\sin(t)) + (-3x)(2t) \\[1em]
+&= ( 2(s^2-t)-3(t^2-s)+2s\cos(t) ) ( -1 ) \\
+&\phantom{= } \quad + ( 2(s^2-t) ) ( -s\sin(t) ) + ( -3(s^2-t) ) ( 2t ) \\[1em]
+&= -2s^2 + 9t^2 + 2t - 3s - 2s\cos(t) - 2s^3\sin(t) \\
+&\phantom{= } \quad + 2st\sin(t) - 6ts^2
+\end{aligned}$$
+
+:::
+
+::::
+
 # Tree representation of the multivariate chain rule
 
 There is a useful way for determining the required form of the multivariate chain rule without needing to remember the generalized rule above. The following diagram is a **tree representation** of the dependencies between variables in a multivariate function.
 
-![Tree diagram for determining the form of the multivariate chain rule in Example 3.](FiguresPNG/multivariatechainrule-fig1-1.png){fig-align="center" width="60%"}
+![Tree diagram for determining the form of the multivariate chain rule in Example 3.](FiguresPNG/multivariatechainrule-fig1-1-2.png){fig-align="center" width="100%"}
 
-At the top of the tree is the function $w = f(x,y,z)$, which depends on three intermediate variables $x$, $y$ and $z$. Each of these three intermediate variables depend on independent variables $s$ and $t$. The tree shows all possible paths from $w$ to the independent variables $s$ and $t$.
+At the top of the tree is the function $w = w(x,y,z)$, which depends on three intermediate variables $x$, $y$ and $z$. Each of these three intermediate variables depend on independent variables $s$ and $t$. The tree shows all possible paths from $w$ to the independent variables $s$ and $t$.
 
 Each path represents a **chain of partial differentiation** (a product of partial derivatives) when applying the chain rule. All paths are combined by summing these chains at the end to find the complete partial derivative of $w$ with respect to the relevant independent variable.
 
@@ -290,12 +368,13 @@ Remember that if a variable has only a single dependency on another variable (no
 # Quick check problems {.unnumbered}
 
 :::: {.content-visible when-format="html"}
-::: {.webex-check .webex-box}
+
+::: {.webex-check .webex-box data-topic="MCR1"}
 1. Which of the following correctly describes a dependent variable? `r mcq(c("A variable that is not influenced by other variables", answer = "A variable that is defined in terms of other variables", "A constant value in a function"))`
 
 <!-- -->
 
-2. Consider the function $z = f(x,y) = x^2 + y^2$ where $x = 2t$ and $y = 3t$.
+2. Consider the function $z = z(x,y) = x^2 + y^2$ where $x = 2t$ and $y = 3t$.
 
 <!-- -->
 
@@ -319,15 +398,14 @@ $$\dfrac{\mathrm{d}z}{\mathrm{d}t} = \dfrac{\partial z}{\partial x} \dfrac{\math
 
 ::: {.content-hidden when-format="html"}
 1. Which of the following correctly describes a dependent variable?
-$$\begin{aligned}
-&\textsf{A variable that is not influenced by other variables} \\[0.5em]
-&\textsf{A variable that is defined in terms of other variables} \\[0.5em]
-&\textsf{A constant value in a function}
-\end{aligned}$$
+
+- A variable that is not influenced by other variables
+- A variable that is defined in terms of other variables
+- A constant value in a function
 
 <!-- -->
 
-2. Consider the function $z = f(x,y) = x^2 + y^2$ where $x = 2t$ and $y = 3t$.
+2. Consider the function $z = z(x,y) = x^2 + y^2$ where $x = 2t$ and $y = 3t$.
 
 <!-- -->
 

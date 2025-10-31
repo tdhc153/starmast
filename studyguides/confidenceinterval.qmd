@@ -1,0 +1,325 @@
+---
+title: "An Introduction to Confidence Intervals"
+author: "Millie Harris"
+abstract: "In statistics, to estimate an unknown parameter you can construct a Confidence Interval. This is the range of values you expect the true estimate to fall between if you were to repeat the study several times, with a certain level of confidence. They are a vital tool used in economics, medicine, and they measure uncertainties in everyday life. For example, weather forecasting or outcomes in sports. This study guide introduces Confidence Intervals, Confidence Levels, and Z Values using the Normal Distribution."
+draft: true
+format: html
+---
+
+Before reading this guide, it is recommended that you read [insert URL NORMAL](./factsheets/n and \[insert link Z Testing\]as this guide will use knowledge on the Normal Distribution.
+
+Narration of the study guide: \[insert URL\]
+
+# What is a Confidence Interval?
+
+A Confidence Interval (CI) is a **range of values** which contains the true estimate with certain confidence, in repeated sampling.
+
+Formally, it is written as \[$\bar{x}$ $\pm$ $Z_{\frac{\alpha}{2}} \frac{\sigma}{n}$\], where:
+
+-   $\bar{x}$ = Sample Mean
+
+-   $Z_{\frac{\alpha}{2}}$ = $Z$-value
+
+-   $\sigma$ = Standard Deviation or $\sqrt{Variance}$
+
+-   $n =$ sample size
+
+So your CI would appear \[$\bar{x}$ $-$ $Z_{\frac{\alpha}{2}} \frac{\sigma}{n}$, $\bar{x}$ $+$ $Z_{\frac{\alpha}{2}} \frac{\sigma}{n}$\].
+
+::: callout-tip
+## Tip: Check your work!
+
+The average of your confidence interval should equal your sample mean. For example, for $\bar{x}$ = 50. If your CI is \[48, 52\], take 48 + 52 = 100. Then 100/2 = 50 = $\bar{x}$.
+:::
+
+Each CI has a specific confidence level which is stated at the **beginning of the study**. For example, you could have a 90% CI or a 95% CI.
+
+## What is a Confidence Level?
+
+A Confidence Level (CL) suggests that if you were to repeat the study many times, you would expect the true estimate to fall within CL% of the results.
+
+A CL can be written as a percentage OR a decimal. For example, a 95% CL can be represented as 0.95.
+
+::: callout-caution
+## Caution
+
+This does not mean there is a 95% chance the range of values contains the true estimate. Instead, if you were to **repeat the study** many times, with a CL of 95% - you would **expect 95% of the CIs to contain the true estimate.**
+:::
+
+## What is a Z Value?
+
+Under the Normal Distribution, a Z Value (sometimes called Z score or Standard Score) is a **known test statistic.** It shows how many $\sigma's$ above or below the mean an observed data point is.
+
+It is written $Z_{\frac{\alpha}{2}}$, where your CL = (1 - $\alpha$).
+
+$\frac{\alpha}{2}$ is used to explain the two tails of the study. This is because your curve has two ends and you are looking at values **between** two points (some will be too high and some will be too low).
+
+This graph shows the standard Normal Distribution, where:
+
+-   $P( x \le -z \text{ or } x  \ge z)$ = $\alpha$ = 1 - CL (if your $\alpha$ = 0.05, your CL = 0.95 = 95%)
+
+-   z = Z Value
+
+:::: cell
+::: cell
+<iframe src="https://www.desmos.com/calculator/rrhgy5fv4b" width="900" height="700" style="border: 1px solid #ccc" frameborder="0">
+
+</iframe>
+:::
+::::
+
+::: callout-note
+## Try!
+
+Slide the z = Z Value and notice these commonly used CLs:
+
+-   For CL = 0.90 = 90%, Z Value = **1.65** (2 dp)
+
+-   For CL = 0.95 = 95%, Z Value = **1.96** (2 dp)
+
+-   For CL = 0.99 = 99%, Z Value = **2.58** (2 dp)
+:::
+
+For standard Normal distributions, Z Values are taken **directly** from a Z Table.
+
+## How use a Z Table
+
+\[Insert image\]
+
+Below is a summary table of Z Values for commonly used CLs.
+
+| Confidence Level (CL) | $\frac{\alpha}{2}$ | $Z_{\frac{\alpha}{2}}$ |
+|-----------------------|--------------------|------------------------|
+| 0.80 = 80%            | 0.10               | 1.282                  |
+| 0.85 = 85%            | 0.075              | 1.440                  |
+| 0.90 = 90%            | 0.05               | 1.645                  |
+| 0.95 = 95%            | 0.025              | 1.960                  |
+| 0.99 = 99%            | 0.005              | 2.576                  |
+
+::: callout-note
+## Example 1
+
+On a random weekday, Cantor's Confectionery sells 50 bags of sweets. On average, the bags weigh 300g with a standard deviation of 10g. Construct a 95% confidence interval for the true estimate of the weight of a bag of sweets sold by Cantor's Confectionery.
+
+**Step 1: Identify what you need from the text.**
+
+-   $\bar{x}$ = 300
+
+-   Confidence Level = 95% = 0.95
+
+-   $\sigma$ = 10
+
+-   n = 50
+
+**Step 2: Use Z Table to find Z Value \[Insert Table\]**
+
+Your CL = 0.95 so $\frac{\alpha}{2}$ = 0.025, from Z Table your $Z_{\frac{\alpha}{2}}$ = 1.960
+
+**Step 3: Construct CI**
+
+95% CI = \[$\bar{x}$ $\pm$ $Z_{0.025} \frac{\sigma}{n}$\]
+
+= \[300 $\pm$ (1.960 $\times$ $\frac{10}{50}$)\]
+
+= \[299.608, 300.392\]
+
+**Step 4: Check**
+
+299.608 + 300.392 = 600
+
+600/2 = 300
+:::
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 340
+
+library(shiny)
+library(bslib)
+
+ui <- page_fluid(
+  title = "Z-Table Calculator",
+  
+  # Use fluidRow with columns for vertical alignment
+  fluidRow(
+    column(
+      width = 6,
+      card(
+        card_header("Input Parameters"),
+        card_body(
+          style = "padding: 15px; min-height: 200px;",
+          # Input for significance level
+          numericInput(
+            "alpha",
+            "Significance Level (α):",
+            value = 0.05,
+            min = 0.001,
+            max = 0.999,
+            step = 0.001
+          ),
+          
+          # Radio buttons for test type with custom styling
+          tags$div(
+            style = "margin-top: 15px;",
+            tags$label("Test Type:", style = "font-weight: bold; margin-bottom: 10px; display: block;"),
+            radioButtons(
+              "test_type",
+              "",
+              choices = list(
+                "One-tailed" = "one",
+                "Two-tailed" = "two"
+              ),
+              selected = "two"
+            )
+          )
+        )
+      )
+    ),
+    
+    column(
+      width = 6,
+      card(
+        card_header("Z-Score Results"),
+        card_body(
+          style = "padding: 15px; min-height: 200px;",
+          div(
+            style = "text-align: center;",
+            h4("Critical Z-Score:", style = "color: #3F68B6; margin-bottom: 5px;"),
+            div(
+              style = "font-size: 32px; font-weight: bold; color: #3F68B6; margin: 5px 0;",
+              textOutput("z_score", inline = TRUE)
+            ),
+            div(
+              style = "margin-top: 8px; font-size: 14px;",
+              textOutput("interpretation")
+            )
+          )
+        )
+      )
+    )
+  ),
+  
+  # Custom CSS for styling the radio buttons
+  tags$style(HTML("
+    .radio label {
+      color: black !important;
+      font-weight: 500;
+    }
+    .radio input[type='radio'] {
+      accent-color: black;
+    }
+  "))
+)
+
+server <- function(input, output, session) {
+  
+  # Calculate Z-score based on significance level and test type
+  z_value <- reactive({
+    alpha <- input$alpha
+    
+    if (input$test_type == "one") {
+      # One-tailed test: find Z such that P(Z > z) = alpha
+      z_score <- qnorm(1 - alpha)
+    } else {
+      # Two-tailed test: find Z such that P(|Z| > z) = alpha
+      # This means P(Z > z) = alpha/2
+      z_score <- qnorm(1 - alpha/2)
+    }
+    
+    return(round(z_score, 4))
+  })
+  
+  # Output the Z-score
+  output$z_score <- renderText({
+    z_value()
+  })
+  
+  # Provide interpretation
+  output$interpretation <- renderText({
+    test_type <- ifelse(input$test_type == "one", "one-tailed", "two-tailed")
+    paste0("For a ", test_type, " test with α = ", input$alpha)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+
+::: callout-note
+## Example 2
+
+The number of eggs laid a year by a farmhouse chicken is Normally distributed with mean $\mu$ and standard deviation $\sigma$ = 45. A random sample of 65 birds gives a mean of 178. Build a 90% confidence interval for $\mu$.
+
+**Step 1: Identify what you need from the text.**
+
+-   $\bar{x}$ = 178
+
+-   Confidence Level = 90% = 0.90
+
+-   $\sigma$ = 45
+
+-   n = 65
+
+**Step 2: Use Z Table to find Z Value \[Insert Table\]**
+
+Your CL = 0.90 so $\frac{\alpha}{2}$ = 0.05, from Z Table your $Z_{\frac{\alpha}{2}}$ = 1.645
+
+**Step 3: Construct CI**
+
+90% CI = \[$\bar{x}$ $\pm$ $Z_{0.05} \frac{\sigma}{n}$\]
+
+= \[178 $\pm$ (1.645$\times$ $\frac{45}{65}$)\]
+
+= \[176.861, 179.136\]
+:::
+
+::: callout-note
+## Example 3: Summary Table
+
+A study on 210 sunflowers in one field follows the Normal Distribution and produced the following table of results:
+
+|                        |             |
+|------------------------|-------------|
+| **Average Height**     | **1.68ft**  |
+| **Average Weight**     | **0.9kg**   |
+| **Variance in Height** | **0.37ft**  |
+| **Variance in Weight** | **0.045kg** |
+
+Construct a 90% CI for both the height (ft) and the weight (kg) of all of the farmers sunflowers.
+
+Height:
+
+-   $\bar{x}$ = 1.68
+
+-   $\sigma$ = $\sqrt{Variance}$ = $\sqrt{0.37}$ = 0.608
+
+-   n = 210
+
+-   CL = 90% = 0.90, $Z_{\frac{\alpha}{2}}$ = 1.645.
+
+-   So a 90% CI for height = \[$\bar{x}$ $\pm$ $Z_{0.05} \frac{\sigma}{n}$\]
+
+= \[1.68 $\pm$ (1.645 $\times$ $\frac{0.608}{210}$)\]
+
+= \[1.675, 1.684\]
+
+Weight:
+
+-   $\bar{x}$ = 0.9
+
+-   $\sigma$ = $\sqrt{Variance}$ = $\sqrt{0.045}$ = 0.212
+
+-   n = 210
+
+-   CL = 90% = 0.90, $Z_{\frac{\alpha}{2}}$ = 1.645.
+
+-   So a 90% CI for height = \[$\bar{x}$ $\pm$ $Z_{0.05} \frac{\sigma}{n}$\]
+
+= \[0.9 $\pm$ (1.645 $\times$ $\frac{0.212}{210}$)\]
+
+= \[0.898, 0.902\]
+:::
+
+# Further reading
+
+It is recommended that you visit the STARMAST guide on hypothesis testing \[Insert link\].

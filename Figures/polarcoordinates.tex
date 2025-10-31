@@ -1,0 +1,34 @@
+\documentclass[preview,border=5pt]{standalone}
+\usepackage{teaching}
+\begin{document}
+
+\centering
+\begin{tikzpicture}[scale=1.2, thick]
+    % Left figure: Cartesian coordinates
+    % Axes
+    \draw[->] (-0.2,0) -- (3,0) node[right] {$x$};
+    \draw[->] (0,-0.2) -- (0,2.5) node[above] {$y$};
+   
+    % Point P(x, y)
+    \fill (1.5,1) circle (2pt);
+    \node[right] at (1.7,1) {$P(x, y)$};
+
+    % Right figure: Polar coordinates
+    \begin{scope}[xshift=6cm]
+        % Axes
+        \draw[->] (-0.2,0) -- (3,0) node[right] {$x$};
+        \draw[->] (0,-0.2) -- (0,2.5) node[above] {$y$};
+        \node[below left] at (0,0) {$O$};
+       
+        % Radius vector
+        \draw[thick] (0,0) -- (2.2,1.3) node[pos=0.55, above left] {$r$};
+        \fill (2.2,1.3) circle (2pt);
+        \node[right] at (2.3,1.3) {$P(r, \varphi)$};
+
+        % Angle Phi
+        \draw (0.7,0) arc[start angle=0, end angle=30, radius=0.7];
+        \node at (0.9,0.25) {$\varphi$};
+    \end{scope}
+\end{tikzpicture}
+
+\end{document}
