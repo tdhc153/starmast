@@ -13,17 +13,27 @@ draft: true
 library("webexercises")
 ```
 
+
+
 # What is a matrix? {.unnumbered}
 
 A matrix is a rectangular array or table, with entries in rows and columns. Understanding matrices can make solving equations more efficient and can open the door to learning much more mathematics.
 
+If you have read [Guide: Introduction to solving simultaneous equations] then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations.
+
+Matrices are a fundamental tool within linear algebra, and they have a wide range of real-life applications. They are used in computer graphics, data analysis, search engine optimization, cryptography, economics, robotics, genetics, quantum mechanics, and many more areas of study. Matrices are used anywhere where information needs to be analyzed and calculated efficiently. 
+
+In this guide, you will see how you can: read, write, and understand matrices; learn how to do addition, subtraction and scalar multiplication with matrices; and be able to identify some special matrices. 
+
+# Working with matrices
+
 ::: callout-note
 ## Definition of a matrix
 
-A $m \times n$ **matrix** is a rectangular array of $mn$ entries set out in $m$ **rows** and $n$ **columns**. You can write it like so:
+A $m \times n$ **matrix** $A$ is a rectangular array of $mn$ many numbers (called **entries**) set out in $m$ **rows** and $n$ **columns**. You can write it like so:
 
 $$
-\begin{bmatrix}
+A = \begin{bmatrix}
 a_{11} & a_{12} & \cdots & a_{1n} \\
 a_{21} & a_{22} & \cdots & a_{2n} \\
 \vdots & \vdots & \ddots & \vdots \\
@@ -32,24 +42,28 @@ a_{m1} & a_{m2} & \cdots & a_{mn}
 $$
 
 This matrix has **dimension** $m \times n$.
+
+The notation $a_{ij}$ refers to the $ij^{th}$ entry of your matrix, that is the number in the **$i^{th}$ row and the $j^{th}$ column**. An alternative way of writing the above matrix is $A = [a_{ij}]$. 
+
+You can specify the $ij^{th}$ entry of a particular matrix $A$ by writing $[A]_{ij} = a_{ij}$.
+
 :::
 
-The entries in a matrix are usually numbers, but they can be other mathematical objects. Any type of number may be an entry in your matrix, positive or negative, rational or irrational, real or complex. If complex numbers are unfamiliar to you, you can read more about them at [Guide: Introduction to complex numbers]. Note here that while entries can be other mathematical objects, for this study guide you will use entries within the real numbers.
+::: {.callout-tip}
 
-If you have read [Guide: Introduction to solving simultaneous equations] then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations.
+The entries in a matrix are usually numbers, but they can be other mathematical objects. Any type of number could be an entry in a matrix, positive or negative, rational or irrational, real or complex. (If complex numbers are unfamiliar to you, you can read more about them at [Guide: Introduction to complex numbers](introtocomplexnumbers.qmd). 
 
-Matrices are a fundamental tool within linear algebra, and they have a wide range of real-life applications. They are used in computer graphics, data analysis, search engine optimization, cryptography, economics, robotics, genetics, quantum mechanics, and many more areas of study. Matrices are used anywhere where information needs to be analyzed and calculated efficiently. 
+Note that while entries can be other mathematical objects, for this study guide you will exclusively use entries within the real numbers.
 
-In this guide, you will see how you can read, write, and understand matrices, and you will learn how to do arithmetic with matrices. 
-
-# Working with matrices
+:::
 
 ::: {.callout-note appearance="simple"}
 ## Example 1
 
 Here are some matrices:
 
-$$A =\begin{bmatrix}
+$$
+A =\begin{bmatrix}
 0 & -2  \\
 \pi & 5  \\
 1/3 & 0 
@@ -59,11 +73,12 @@ $$A =\begin{bmatrix}
 \end{bmatrix}
 $$
 
-Matrix $A$ here has dimension $3 \times 2$. The entry in the 2nd row and 1st column is called $a_{21}$, and here that is equal to $\pi$. The entry in the 1st row and 2nd column is called $a_{12}$, and here that is equal to $-2$. You can notice here that $a_{21}$ is not equal to $a_{12}$.
+As $A$ has three rows and two columns, it has dimension $3 \times 2$. The entry in the 2nd row and 1st column is called $a_{21} = [A]_{21}$, and here that is equal to $\pi$. The entry in the 1st row and 2nd column is called $a_{12} = [A]_{21}$, and here that is equal to $-2$. You can notice here that $a_{21}$ is **not equal** to $a_{12}$.
 
-Matrix $B$ here has dimension $1 \times 4$. The entry in the 1st row and 2nd column is called $b_{12}$, and here that is equal to $2/5$.The entry in the 1st row and 4th column is called $b_{14}$, and here that is equal to $\sqrt{3}$.
+Matrix $B$ here has dimension $1 \times 4$, as it has one row and four columns. The entry in the 1st row and 2nd column is called $b_{12} = [B]_{12}$, and here that is equal to $2/5$. The entry in the 1st row and 4th column is called $b_{14} = [B]_{12}$, and here that is equal to $\sqrt{3}$.
 
-$$C =\begin{bmatrix}
+$$
+C =\begin{bmatrix}
 \sqrt{2} \\
 11 \\
 -3/8
@@ -77,17 +92,13 @@ $$C =\begin{bmatrix}
 \end{bmatrix}
 $$
 
-Matrix $C$ here has dimension $3 \times 1$. 
+Matrix $C$ has dimension $3 \times 1$, as it has three rows and one column.
 
-Matrix $D$ here has dimension $5 \times 3$. 
+As $D$ has five rows and three columns, the matrix $D$ has dimension $5 \times 3$. 
 
 :::
 
 You can notice that $B$ only has one row; you can call such a matrix a **row matrix**. Similarly, you would call a matrix like $C$, with only one column, a **column matrix**. These are commonly known as **vectors**. You can read more about vectors in [Guide: Introduction to vectors].
-
-::: callout-tip
-The entry $a_{ij}$ refers to the $ij^{th}$ entry of your matrix, that is the $i^{th}$ row and the $j^{th}$ column. You can write your matrix as $[a_{ij}]_{mn}.$
-:::
 
 ::: {.callout-note appearance="simple"}
 ## Example 2
