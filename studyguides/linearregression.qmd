@@ -5,7 +5,7 @@ abstract-title: Summary
 abstract: Linear regression is a statistical model which uses one or more variables to predict the behaviour of another. It is widely used in fields such as business, economics and social sciences.
 categories:
   - Statistics
-# image: FiguresPNG/linearregression-image.png
+image: FiguresPNG/linearregression-image.png
 filters:
   - shinylive
 draft: true
@@ -15,7 +15,7 @@ draft: true
 library("webexercises")
 ```
 
-*Before reading this guide, it is recommended that you read [Guide: Expected value, variance, standard deviation](expectedvariance.qmd) and [Factsheet: Overview of statistical notation](../overviews/o-notation.qmd).*
+*Before reading this guide, it is strongly recommended that you read [Guide: Introduction to straight lines] and [Guide: Expected value, variance, standard deviation](expectedvariance.qmd).*
 
 ::: {.content-visible when-format="html"}
 
@@ -27,35 +27,13 @@ library("webexercises")
 
 # What is linear regression? {-}
 
-One of the key purposes of statistics is the interpretation of data, which often involves considering the relationships between variables. Typically, this information is split into two categories: 'the thing which is observed' and 'the thing(s) which affect this observation', and a statistician collects information in both categories to build a full picture of the scenario. Then, the statistician tries and explain how and why a certain outcome is reached - which is incredibly useful for predicting which outcome may be reached in the future!
+One of the key purposes of statistics is the interpretation of data, which often involves considering the relationships between variables. Typically, this information is split into two categories: 'the thing which is observed' and 'the thing(s) which affect this observation', and a statistician collects information in both categories to build a full picture of the scenario. Then, the statistician tries to explain how and why a certain outcome is reached - which is incredibly useful for predicting which outcome may be reached in the future!
 
-For instance, if the seaside branch of Cantor's Confectionery had 150 ice cream sales in one day, and only 30 in another, they may wish to understand what it was that motivated this change, so that they can have the appropriate number of ice creams in stock. It could be that one of these days was a warm, sunny, summer's Saturday, whilst the other was a cold, rainy winter's Monday. 
+For instance, if the seaside branch of Cantor's Confectionery had 150 ice cream sales in one day, and only 30 in another, they may wish to understand what it was that motivated this change, so that they can have the appropriate number of ice creams in stock. It could be that one of these days was a warm, sunny, summer's Saturday, whilst the other was a cold, rainy winter's Monday. If you take a sample of the weather, season and day of the week and the corresponding number of ice cream sales across multiple days, you can build a model which allows you to predict the number of ice cream sales on a particular day.
 
-By collecting information about all of these factors, it is possible to build a model which predicts how many ice cream sales there will be on a particular day, based on any combination of factors. This relationship between the factors which affect an outcome, and the outcome itself, is known as regression, and in this guide, you will see how one type of regression - namely linear regression - works.
+One of the models which describes the relationship between variables is known as **linear regression**. Linear regression finds a line of best fit for your data, known as a **regression line**, which can be used to predict outcomes - like the number of ice cream sales.
 
-<!-- Even more importantly, we can construct multiple linear regression models, each containing different combinations of factors to determine which of these factors actually affect the final outcome. Returning to the previous example, by building and analysing several linear regression models, Cantor's Confectionery could discover that the day of the week does not hugely impact their ice cream sales. -->
-
-<!-- Linear regression is an important tool in analysing which  -->
-
-<!-- When investigating which events led to a given outcome, linear regression is an invaluable tool.  -->
-
-<!-- Typically, when  -->
-
-<!-- # Setting up a linear regression model -->
-
-<!-- ::: {.callout-note appearance="simple"} -->
-
-<!-- ## Explanatory and response variables -->
-
-<!-- An **explanatory variable** (also known as an independent variable) is something which you observe and measure. -->
-
-<!-- A **response variable** (also known as a dependent variable) changes because of changes within the explanatory variable(s). -->
-
-<!-- ::: -->
-
-<!-- Generally, when setting up a linear regression model, $x$ denotes the explanatory variable and $Y$ denotes the response variable. -->
-
-<!-- For a reminder about explanatory and response variables, please see [Overview: Statistical Notation](../overviews/o-notaion.qmd) -->
+This guide will introduce you to linear regression. It will explain how to apply a simple linear regression model to a sample of data by finding the regression line. It will also explore the practical applications of linear regression, including in the construction of confidence intervals which encapsulate the uncertainty about how closely your sample matches the real-world scenario, and in testing hypotheses about whether some factors impact the overall outcome.
 
 # Simple linear regression
 
@@ -63,107 +41,35 @@ By collecting information about all of these factors, it is possible to build a 
 
 ## Definition of simple linear regression
 
-**Simple linear regression** is a form of linear regression. The function
+**Simple linear regression** is a linear regression model used when there is only one explanatory variable, $x$. The **regression line** predicts the value of the response variable, which is expressed as $\mathbb{E}(Y)$. 
 
-$$\mathbb{E}(Y) = \alpha + \beta x$$
-
-relates the explanatory variable, $x$, to the response variable, $Y$. $\alpha$ and $\beta$ are known as **regression parameters**.
-
-<!-- $y = \alpha + \beta x$ forms a **population regression line**.  -->
-
-For more on expected values, please see [Guide: Expected value, variance, standard deviation](expectedvariance.qmd). For a reminder about explanatory and response variables, please see [Overview: Statistical Notation](../overviews/o-notation.qmd).
+For more on expected values, please see [Guide: Expected value, variance, standard deviation](expectedvariance.qmd). For more about explanatory and response variables, please see [Overview: Statistical Notation](../overviews/o-notation.qmd).
 
 :::
+
+To find the equation of the regression line for a population of data, you will need to find the y-intercept of the line, which will be denoted by $\alpha$, and its gradient, which will be described as $\beta$. 
+
+For more about the equation of a straight line, please read [Guide: Introduction to straight lines].
+
+Therefore the equation of the regression line is given by:
+$$\mathbb{E}(Y) = \alpha + \beta x$$
+
+In practice, it is impractical to work with an entire population of data - instead, statisticians analyze samples. This means that you will need to obtain **estimates** for the values of $\alpha$ and $\beta$ from your sample of data, and these will be denoted by $\hat{\alpha}$ and $\hat{\beta}$.
 
 :::{.callout-tip}
 
-When the population regression line is plotted on a set of axes, it forms a straight line. This is where the name **linear** regression comes from. $\alpha$ represents the y-intercept and $\beta$ represents the gradient.
+$\hat{\alpha}$ and  $\hat{\beta}$ are **unbiased** estimators of the population **regression parameters** $\alpha$ and $\beta$, which means that their long-term averages are the same.
 
-Each individual point is described as $(x_{i},y_{i})$, where $i \in [1,n]$.
+For more about biased estimators, please read [Guide: Biased and unbiased estimators].
 
 :::
-
-<!-- i think i want this later -->
-<!-- ::: {.content-visible when-format="html"} -->
-
-<!-- ::: {.callout-note appearance="simple"} -->
-
-<!-- ## Example 1 -->
-
-<!-- Use this tool to explore the effects of changing the values of the **regression parameters** on the relationship between the variables in more detail. You can hover over the line to see precise coordinates. -->
-
-<!-- ::: -->
-
-<!-- ```{shinylive-r} -->
-<!-- #| standalone: true -->
-<!-- #| viewerHeight: 600 -->
-
-<!-- library(shiny) -->
-<!-- library(bslib) -->
-<!-- library(ggplot2) -->
-<!-- library(plotly) -->
-
-<!-- ui <- page_sidebar( -->
-<!--   title = "Simple Linear Regression", -->
-<!--   sidebar = sidebar( -->
-<!--     numericInput("alpha", "Intercept (α)", value = 0, step = 0.5), -->
-<!--     numericInput("beta", "Slope (β)", value = 1, step = 0.5), -->
-<!--     helpText("Adjust α and β to change the regression parameters."), -->
-<!--     hr(), -->
-<!--     helpText("The equation shown is the population regression line: y = α + βx") -->
-<!--   ), -->
-<!--   card( -->
-<!--     card_header("Population Regression Line"), -->
-<!--     plotlyOutput("regression_plot", height = "400px"), -->
-<!--     card_body( -->
-<!--       p("Hover over the line to see precise coordinates. The intercept (α) represents where the line crosses the y-axis, and the slope (β) represents the rate of change.") -->
-<!--     ) -->
-<!--   ) -->
-<!-- ) -->
-
-<!-- server <- function(input, output, session) { -->
-<!--   output$regression_plot <- renderPlotly({ -->
-<!--     x_vals <- seq(-10, 10, length.out = 200) -->
-<!--     y_vals <- input$alpha + input$beta * x_vals -->
-
-<!--     # Create data frame for ggplot -->
-<!--     df <- data.frame(x = x_vals, y = y_vals) -->
-
-<!--     # Create ggplot -->
-<!--     p <- ggplot(df, aes(x = x, y = y)) + -->
-<!--       geom_line(color = "#007ACC", linewidth = 1.2) + -->
-<!--       labs( -->
-<!--         title = paste("y = E(Y) =", input$alpha, "+", input$beta,"x"), -->
-<!--         x = "x (explanatory variable)", -->
-<!--         y = "y (response variable)" -->
-<!--       ) + -->
-<!--       xlim(-10, 10) + -->
-<!--       ylim(-30, 30) + -->
-<!--       theme_minimal() + -->
-<!--       theme( -->
-<!--         plot.title = element_text(size = 14, hjust = 0.5), -->
-<!--         axis.title = element_text(size = 12) -->
-<!--       ) + -->
-<!--       geom_hline(yintercept = 0, alpha = 0.3) + -->
-<!--       geom_vline(xintercept = 0, alpha = 0.3) -->
-
-<!--     # Convert to plotly for interactivity (hover functionality) -->
-<!--     ggplotly(p, tooltip = c("x", "y")) %>% -->
-<!--       config(displayModeBar = FALSE) -->
-<!--   }) -->
-<!-- } -->
-
-<!-- shinyApp(ui, server) -->
-<!-- ``` -->
-
-<!-- ::: -->
 
 ::: {.callout-note appearance="simple"}
 ## Example 1
 
-The seaside branch of Cantor's Confectionery wishes to see the relationship between temperature ($x$) and ice cream sales ($y$). To do this, they track the number of ice cream sales in a 10 day period alongside the average temperature that day.
+The seaside branch of Cantor's Confectionery wishes to see the relationship between temperature ($x$) and ice cream sales ($y$). To do this, they track the number of ice cream sales in a 10 day period alongside the peak temperature that day.
 
-| Day number | Average temperature (°C) | Number of sales |
+| Day number | Peak temperature (°C)    | Number of sales |
 |:-----------|:-------------------------|:----------------|
 | 1          | 22                       | 150             |
 | 2          | 20                       | 100             |
@@ -176,15 +82,15 @@ The seaside branch of Cantor's Confectionery wishes to see the relationship betw
 | 9          | 28                       | 360             |
 | 10         | 25                       | 270             |
 
-You can plot the graph fit the simple linear regression model
+You can define $Y$ to be the random variable associated with observations $x$. Then, you can plot the graph of the simple linear regression model:
 
 $$\mathbb{E}(Y) = \alpha + \beta x$$
 :::
 
-
 ::: {.content-visible when-format="html"}
 
-Use the tool below to observe how changing the values of the **regression parameters** affects how closely the **simple linear regression model** fits the observed data.
+Use the tool below to observe how changing the values of **regression parameters** affects how closely the **simple linear regression model** fits the observed data.
+
 
 ```{shinylive-r}
 #| standalone: true
@@ -265,76 +171,90 @@ shinyApp(ui, server)
 
 ::: {.content-hidden when-format="html"}
 
-Use the figures below to observe how changing the values of the **regression parameters** affects how closely the **simple linear regression model** fits the observed data.
+The graphs below illustrate how changing the values of the **regression parameters** affects how closely the **simple linear regression model** fits the observed data.
+
+![A simple linear regression model for ice cream sales vs. temperature, with parameters $\alpha = -500$ and $\beta=25$ ](./FiguresPNG/linearregression-fig4.png)
+
+![A simple linear regression model for ice cream sales vs. temperature, with parameters $\alpha = -480$ and $\beta=30$ ](./FiguresPNG/linearregression-fig5.png)
+
+You can see that the line in Figure 2 is much closer to the data points than the line in Figure 1, meaning the equation in Figure 2 is a better fitted linear model.
 
 :::
 
-<!-- ending here -->
+<!-- You have now seen that there is a connection between the values of the regression parameters and how well the regression line fits the data.  -->
 
-# Setting up the linear model
+:::{.callout-tip}
+There are $n \in \mathbb{N}$ observations in any sample of data.
 
-It is usually impractical to work with the entire population of data, so statisticians typically take samples of data to work with. For more on sampling data, please see [Factsheet: Sampling data].
-
-<!-- To be able to estimate $\alpha$ and $\beta$, you need to use your observed data. This is because your sample is representative of the entire population, whilst typically being much smaller and therefore more practical to work with. For more on sampling data, please see [Factsheet: Sampling data]. -->
-
-<!-- from your sample, as this is a practical approximation of the entire population.  -->
-
-With each $x_{i}$ in your sample of observed data, you can associate the random variable $Y_{i}$. Then, the linear regression line becomes:
-
+If you consider $i \in \mathbb{Z}$ such that $1 \leq i \leq n$, the $i^{th}$ data point on the graph of your data is given by $(x_{i},y_{i})$ and its corresponding estimated value is given by:
 $$\mathbb{E}(Y_{i}) = \alpha + \beta x_{i}$$
-
-
-::: {.callout-note appearance="simple"}
-## Definition of the error term
-
-The **error term** describes the difference between your **estimated** value of $Y_{i}$ and the **actual** value of $Y_{i}$.
-
-Each **error term** is denoted $\epsilon_{i}$, where $i \in [1,n]$. These error terms have sample mean = $0$ and variance = $\sigma^{2}$.
-
-<!-- Because you are now **estimating** the random variable $Y_{i}$, you should consider the difference between the **observed value** and your **estimation**. This difference is expressed via the **error term** $\epsilon_{i}$, where $i \in [1,n]$. These error terms have mean = $0$ and variance = $\sigma^{2}$. -->
 :::
 
-The random variable $Y_{i}$ can therefore be expressed as:
+In practice, it is not always possible to plot the data points on a set of axes and manually tweak the values of the regression parameters until they appear to match the data - especially when you are working with a large sample of data. A quantitative method is a far more practical, so you will now learn how to use **residuals** in the **method of least squares estimation** to find the optimal regression line for your data.
 
-$$Y_{i} = \alpha + \beta x_{i} + \epsilon_{i}$$
-This is called a **linear model**. 
-
-To fit your **linear model** to your data, you will need to estimate the **regression parameters**.
-
-Since you have a collection of random variables, you can assume that each $Y_{1}, ..., Y_{n}$ follow a distribution - which will allow you to estimate the **regression parameters**.
-
-::: {.callout-warning}
-
-Before you can assume that your data follows a distribution, you need to check that your data follows the assumptions which underpin the distribution.
-
-:::
-
-You want your linear model to match your observed data as closely as possible, so you want the difference between the **observed** data and that **estimated** by the model to be as small as possible.
-
+## Least squares estimation
 
 ::: {.callout-note appearance="simple"}
 ## Definition of residuals
 
-A **residual** is the vertical difference between the observed value and the estimated value.
+The **residual** describes the difference between the **observed** value $y_i$ and the **estimated** value $\mathbb{E}(Y_{i})$. 
 
-By rearranging the equation for the linear model, you can see that for $i \in [1,n]$, the residual is:
-$$\epsilon_{i} = y_{i} - (\alpha + \beta x_{i})$$
+Each **residual** is denoted $e_{i}$, where $i \in \mathbb{Z}$ such that $1 \leq i \leq n$. 
+
+So, using the equation for $\mathbb{E}(Y_{i})$, you can define the residuals by:
+
+$$e_i = y_i - E(Y_i) = y_i -  (\alpha + \beta x_{i})$$
 :::
 
+:::{.callout-tip}
+When plotted on a graph, the residual can be interpreted as the vertical difference between the line of best fit and the plotted data point.
+:::
+
+You want $\mathbb{E}(Y_{i})$ to be as close to your observed data as closely as possible, so you want the difference between your **observed** data and the data **estimated** by the model to be as small as possible. To find the values of the regression parameters which achieve this, you can use the method of least squares estimation.
 
 ::: {.callout-note appearance="simple"}
 ## Least squares estimation
 
-Least squares estimation is used to minimize the **sum of the squares of the residuals**.
+**Least squares estimation** is used to minimize the **sum of the squares of the residuals**, which is defined as $S(\alpha,\beta)$. 
 
-Considering the sum of each $\epsilon_{i}^{2}$, you will find:
-$$S(\alpha,\beta) = \sum_{i=1}^{n} \epsilon_{i}^{2} = \sum_{i=1}^{n}(y_{i} - (\alpha + \beta x_{i}))^{2}$$
-The **method of least squares** minimizes this function to find estimates for the **regression parameters**, which are denoted by $\hat{\alpha}$ and $\hat{\beta}$.
+You consider the squares of the residuals ($e_{i}^{2}$) to ensure that the summed values are always positive.
+
+So, considering the sum of each $e_{i}^{2}$, you will find:
+$$S(\alpha,\beta) = \sum_{i=1}^{n} e_{i}^{2} = \sum_{i=1}^{n}(y_{i} - (\alpha + \beta x_{i}))^{2}$$
+The **method of least squares** minimizes this function to find **estimates** (sometimes known as **point estimates**) for the **regression parameters**. These are denoted by $\hat{\alpha}$ and $\hat{\beta}$, and these estimates generate a line of best fit where the average difference between the **observed** data and that **estimated** by the model is as small as possible.
+
+:::
+
+:::{.callout-important}
+To find estimates for the regression parameters, you need to understand the following terminology:
+
+$\bar{x}$ and $\bar{y}$ denote the **sample means** of $x$ and $y$.
+
+The sum of the squared differences between each observation $x_{i}$ and the sample mean $\bar{x}$ is given by:
+$$SS_{XX} = \sum_{i=1}^{n} (x_{i} - \bar{x})^2$$ 
+The sum of the differences between each observation $x_{i}$ and the sample mean $\bar{x}$, multiplied by the differences between each observation $y_{i}$ and the sample mean $\bar{y}$ is described by:
+
+$$SS_{XY} = \sum_{i=1}^{n} (x_{i} - \bar{x})(y_{i} - \bar{y})$$
+
+For more detail about these terms, please read [Overview: Statistical notation](../overviews/o-notation.qmd).
+:::
+
+## Finding estimates of the regression parameters
+
+You can differentiate $S(\alpha,\beta)$ with respect to the parameters $\alpha$ and $\beta$ and set these equal to $0$ to find the point at which there is no change in the value of the parameters. These are the estimates for the parameters. For more about derivatives, please read [Guide: Introduction to differentiation](introtodifferentiation.qmd).
+
+The **least squares estimate** for the regression parameter $\beta$ is defined as:
+
+$$\hat{\beta} = \frac {SS_{XY}} {SS_{XX}} = \frac{ \sum_{i=1}^{n} (x_{i} - \bar{x})(y_{i} - \bar{y})} { \sum_{i=1}^{n} (x_{i} - \bar{x})^{2}}$$
+
+The **least squares estimate** for the regression parameter $\alpha$ is defined as:
 
 $$\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}$$
-$$\hat{\beta} = \frac {SS_{XY}} {SS_{XX}} = \sum_{i=1}^{n} \frac{ (x_{i} - \bar{x})(y_{i} - \bar{y})} {(x_{i} - \bar{x})^{2}}$$
-As seen in [Factsheet: Overview of statistical notation](../overviews/o-notation.qmd), $\bar{y}$ denotes the **sample mean** of $y$.
 
+For proofs of these results, please read [Proof sheet: Deriving estimates for regression parameters].
+
+:::{.callout-tip}
+When working with sums, you use programming languages such as R to save time manually typing each value into a calculator!
 :::
 
 ::: {.content-visible when-format="html"}
@@ -343,9 +263,10 @@ As seen in [Factsheet: Overview of statistical notation](../overviews/o-notation
 
 ## Example 2
 
-Use the tool below to explore the effects of changing the values of the **regression parameters** on **least squares estimation** in more detail.
+Use the tool below to explore how changing the values of the **regression parameters** affects how close the estimated values $\mathbb{E}(Y_i)$ are to the observed values $y_i$. You can see that the residuals are the vertical differences between the observed and expected values. 
 
 :::
+
 ```{shinylive-r}
 #| standalone: true
 #| viewerHeight: 800
@@ -353,35 +274,46 @@ Use the tool below to explore the effects of changing the values of the **regres
 library(shiny)
 library(ggplot2)
 library(bslib)
+library(plotly)
 
 ui <- page_sidebar(
   title = "Least Squares Estimation Explorer",
   sidebar = sidebar(
-    sliderInput("slope", "Slope (β)", 
-                min = -2, max = 4, value = 1.5, step = 0.1),
     sliderInput("intercept", "Intercept (α)", 
                 min = -5, max = 10, value = 2, step = 0.1),
+    sliderInput("slope", "Slope (β)", 
+                min = -2, max = 4, value = 1.5, step = 0.1),
     checkboxInput("show_residuals", "Show residuals", value = TRUE),
-    actionButton("reset_to_ls", "Show Least Squares Solution", 
-                class = "btn-success", width = "100%"),
     hr(),
-    h5("Least Squares Estimates"),
-    verbatimTextOutput("dataInfo")
+    card(
+      card_header(
+        h5("Least Squares Estimates", style = "margin: 0;")
+      ),
+      card_body(
+        div(
+          style = "font-family: 'Courier New', monospace; font-size: 16px; font-weight: bold; text-align: center; padding: 10px;",
+          uiOutput("dataInfo")
+        )
+      )
+    )
   ),
+  # Stack cards vertically using layout_columns with col_widths = 12
   layout_columns(
+    col_widths = 12,
     card(
       card_header("Linear Model Plot"),
-      plotOutput("regPlot", height = "500px")
+      plotlyOutput("regPlot", height = "500px")
     ),
     card(
       card_header("Key"),
-      tags$ul(
-        tags$li(tags$span("●", style = "color: black;"), " Data Points"),
-        tags$li(tags$span("- - -", style = "color: blue;"), " Your Guess"),
-        tags$li(tags$span("——", style = "color: red;"), " Least Squares Solution"),
+      div(
+        style = "font-size: 0.9em; line-height: 1.4;",
+        tags$div(tags$span("●", style = "color: black; font-size: 1.2em;"), " Data Points"),
+        tags$div(tags$span("- - -", style = "color: blue; font-weight: bold;"), " Your Guess"),
+        tags$div(tags$span("——", style = "color: red; font-weight: bold;"), " Least Squares Solution"),
         conditionalPanel(
           condition = "input.show_residuals == true",
-          tags$li(tags$span("⋯⋯⋯", style = "color: blue;"), " Residuals")
+          tags$div(tags$span("⋯⋯⋯", style = "color: blue;"), " Residuals")
         )
       )
     )
@@ -404,24 +336,24 @@ server <- function(input, output, session) {
     }
   })
   
-  # Reset to least squares solution
-  observeEvent(input$reset_to_ls, {
-    req(values$lm_model)
-    updateSliderInput(session, "intercept", value = round(coef(values$lm_model)[1], 2))
-    updateSliderInput(session, "slope", value = round(coef(values$lm_model)[2], 2))
-  })
-  
-  # Data information
-  output$dataInfo <- renderText({
+  # Data information with better formatting using HTML
+  output$dataInfo <- renderUI({
     req(values$lm_model)
     ls_coef <- coef(values$lm_model)
     
-    paste("α̂ =", round(ls_coef[1], 3), "\n",
-          "β̂ =", round(ls_coef[2], 3))
+    div(
+      div(
+        HTML(paste0("α̂ = ", span(round(ls_coef[1], 3), style = "color: #0066cc;"))),
+        style = "margin-bottom: 8px;"
+      ),
+      div(
+        HTML(paste0("β̂ = ", span(round(ls_coef[2], 3), style = "color: #0066cc;")))
+      )
+    )
   })
   
-  # Plot
-  output$regPlot <- renderPlot({
+  # Interactive plot with hover functionality
+  output$regPlot <- renderPlotly({
     req(values$data, values$lm_model)
     d <- values$data
     
@@ -431,7 +363,8 @@ server <- function(input, output, session) {
     
     # Create base plot
     p <- ggplot(d, aes(x, y)) +
-      geom_point(size = 3, color = "black", alpha = 0.7) +
+      geom_point(size = 3, color = "black", alpha = 0.7,
+                 aes(text = paste("x:", round(x, 2), "<br>y:", round(y, 2)))) +
       geom_abline(slope = input$slope, intercept = input$intercept,
                   color = "blue", linetype = "dashed", linewidth = 1.5) +
       geom_line(aes(y = ls_pred), color = "red", linewidth = 1.5) +
@@ -451,107 +384,16 @@ server <- function(input, output, session) {
                             color = "blue", linetype = "dotted", alpha = 0.7)
     }
     
-    p
+    # Convert to plotly with hover tooltips
+    ggplotly(p, tooltip = "text") %>%
+      config(displayModeBar = FALSE)
   })
 }
 
 shinyApp(ui = ui, server = server)
 
+
 ```
-
-<!-- ```{shinylive-r} -->
-<!-- #| standalone: true -->
-<!-- #| viewerHeight: 800 -->
-
-<!-- library(shiny) -->
-<!-- library(ggplot2) -->
-
-<!-- ui <- fluidPage( -->
-<!--   titlePanel("Least Squares Estimation - Simple Linear Regression"), -->
-<!--   sidebarLayout( -->
-<!--     sidebarPanel( -->
-<!--       sliderInput("slope", "Guess: Slope (m)", min = -5, max = 5, value = 1, step = 0.1), -->
-<!--       sliderInput("intercept", "Guess: Intercept (b)", min = -10, max = 10, value = 0, step = 0.5), -->
-<!--       checkboxInput("show_residuals", "Show residuals", value = TRUE), -->
-<!--       actionButton("resample", "Resample Data"), -->
-<!--       br(), br(), -->
-<!--       h4("Sum of Squared Errors"), -->
-<!--       verbatimTextOutput("sseText") -->
-<!--     ), -->
-<!--     mainPanel( -->
-<!--       plotOutput("regPlot", height = "500px") -->
-<!--     ) -->
-<!--   ) -->
-<!-- ) -->
-
-<!-- server <- function(input, output, session) { -->
-
-<!--   # Generate simulated data -->
-<!--   values <- reactiveValues() -->
-
-<!--   # Initialize data -->
-<!--   observe({ -->
-<!--     if (is.null(values$data)) { -->
-<!--       set.seed(123) -->
-<!--       x <- runif(20, 0, 10) -->
-<!--       y <- 3 * x + 2 + rnorm(20, 0, 3) -->
-<!--       values$data <- data.frame(x = x, y = y) -->
-<!--     } -->
-<!--   }) -->
-
-<!--   observeEvent(input$resample, { -->
-<!--     x <- runif(20, 0, 10) -->
-<!--     y <- 3 * x + 2 + rnorm(20, 0, 3) -->
-<!--     values$data <- data.frame(x = x, y = y) -->
-<!--   }) -->
-
-<!--   # SSE for guessed model -->
-<!--   output$sseText <- renderPrint({ -->
-<!--     req(values$data) -->
-<!--     d <- values$data -->
-<!--     pred <- input$slope * d$x + input$intercept -->
-<!--     sse <- sum((d$y - pred)^2) -->
-<!--     cat("Your Guess:", round(sse, 2)) -->
-<!--   }) -->
-
-<!--   # Plot -->
-<!--   output$regPlot <- renderPlot({ -->
-<!--     req(values$data) -->
-<!--     d <- values$data -->
-
-<!--     # Calculate least squares line -->
-<!--     lm_model <- lm(y ~ x, data = d) -->
-<!--     true_pred <- predict(lm_model) -->
-
-<!--     guess_pred <- input$slope * d$x + input$intercept -->
-
-<!--     p <- ggplot(d, aes(x, y)) + -->
-<!--       geom_point(size = 3, color = "black") + -->
-<!--       geom_abline(slope = input$slope, intercept = input$intercept, -->
-<!--                   color = "blue", linetype = "dashed", linewidth = 1.5) + -->
-<!--       geom_line(aes(y = true_pred), color = "red", linewidth = 1.5) + -->
-<!--       labs( -->
-<!--         title = "Guess vs. Least Squares Regression Line", -->
-<!--         subtitle = "Blue Dashed: Your Guess | Red: Least Squares Line", -->
-<!--         x = "x", -->
-<!--         y = "y" -->
-<!--       ) + -->
-<!--       theme_minimal(base_size = 12) + -->
-<!--       xlim(0, 10) + -->
-<!--       ylim(min(d$y) - 5, max(d$y) + 5) -->
-
-<!--     if (input$show_residuals) { -->
-<!--       p <- p + geom_segment(aes(xend = x, yend = guess_pred), -->
-<!--                             color = "blue", linetype = "dotted", alpha = 0.7) -->
-<!--     } -->
-
-<!--     p -->
-<!--   }) -->
-<!-- } -->
-
-<!-- shinyApp(ui = ui, server = server) -->
-
-<!-- ``` -->
 
 :::
 
@@ -562,106 +404,302 @@ shinyApp(ui = ui, server = server)
 
 ## Example 2
 
-The figures below explore the effects of changing the values of the **regression parameters** on **least squares estimation** in more detail.
+The graphs below demonstrate how changing the values of the **regression parameters** affects how close the estimated values $\mathbb{E}(Y_i)$ are to the observed values $y_i$. You can see that the residuals are the vertical differences between the observed and expected values. 
 
 :::
 
+
+![A regression line with parameters $\alpha = 2$ and $\beta=1.5$ plotted alongside the regression line with parameters $\hat{\alpha}$ and $\hat{\beta}$.](./FiguresPNG/linearregression-fig6.png)
+
 :::
 
+You can see that the regression line which uses the least squares estimates fits the data the closest.
+
+:::{.callout-tip}
+When working with sums, you use programming languages such as R to save time manually typing each value into a calculator.
+:::
 
 ::: {.callout-note appearance="simple"}
 ## Example 3
-Find estimates for regression parameters mathematically.
-:::
 
-# Normal linear regression
+In Example 1, you saw the following data from Cantor's Confectionery.
 
-One of the distributions which your data could follow is the **normal distribution**. For a reminder about the normal distribution, please see [Factsheet: The normal distribution.](../factsheets/f-normaldist.qmd)
+| Day number | Peak temperature (°C)    | Number of sales |
+|:-----------|:-------------------------|:----------------|
+| 1          | 22                       | 150             |
+| 2          | 20                       | 100             |
+| 3          | 19                       | 110             |
+| 4          | 21                       | 210             |
+| 5          | 24                       | 260             |
+| 6          | 25                       | 280             |
+| 7          | 27                       | 310             |
+| 8          | 26                       | 350             |
+| 9          | 28                       | 360             |
+| 10         | 25                       | 270             |
 
-Suppose that the variables $Y_{1}, ..., Y_{n}$ are normally distributed with mean $\alpha + \beta x_{i}$ and variance $\sigma^{2}$. In other words:
+You defined temperature as $x$ and the number of ice cream sales as $y$.
 
-$$Y _{i} \sim N (\alpha + \beta x_{i} , \sigma^{2})$$
+You saw how changing the values of the **regression parameters** $\alpha$ and $\beta$ affected how closely the **simple linear regression model** $\mathbb{E}(Y) = \alpha + \beta x$  fitted the observed data.
 
+Now, you will use **least squares estimation** to estimate the values $\hat{\alpha}$ and $\hat{\beta}$ which best fit the data.
 
-::: {.callout-note appearance="simple"}
+You can see that there are $n = 10$ entries in the table. You can use the definition of sample means - as seen in [Overview: Statistical notation](../overviews/o-notation.qmd) - to obtain values of $\bar{x}$ and $\bar{y}$.
 
-## Assumptions for normality
+$$\bar{x} = \frac{1}{n} {\sum_{i=1}^{n} x_{i}} = \frac{1}{10} {\sum_{i=1}^{n} x_{i}} = 23.7$$
 
-You must check that your data can be modelled using the normal distribution before you can use this model.
+$$\bar{y} = \frac{1}{n} {\sum_{i=1}^{n} y_{i}} = \frac{1}{10} {\sum_{i=1}^{n} y_{i}} = 240$$
+Use these sample means to calculate $SS_{XX}$ and $SS_{XY}$:
 
-a) **Independence** - $Y_{1}, ..., Y_{n}$ are independent random variables.
+$$SS_{XY} = \sum_{i=1}^{n} (x_{i} - \bar{x})(y_{i} - \bar{y}) = 2460$$
 
-b) **Normality** - $Y_{1}, ..., Y_{n}$ are normally distributed.
+$$SS_{XX} = \sum_{i=1}^{n} (x_{i} - \bar{x})^{2} = 84.1$$
+Using these results, you can find estimates for the regression parameters.
 
-c) **Linearity** - the mean of $Y_{i}$ is a linear function of $x_{i}$, or equivalently, $\mathbb{E}(Y) = \alpha + \beta x_{i}$
+$$\hat{\beta} = \frac {SS_{XY}} {SS_{XX}} = \frac {2460} {84.1} = 29.25089$$
 
-d) **Constant variance** - $Y_{1}, ..., Y_{n}$ have the same variance.
-
-:::
-
-::: {.callout-note appearance="simple"}
-
-## Example 4
-
-Cantor's Confectionery wants to predict the number of ice cream sales each day $y_{i}$ based on the daily temperature $x_{i}$ using a normal linear regression model. Based on the data below, does the assumption of normality seem acceptable?
-
-a) Since each data point comes from a different day, the assumption of independence is reasonable.
-b) 
-c) By plotting this on a graph, you can see that the line of best fit is roughly linear.
-d) 
-
-:::
-
-## Fitting the normal linear regression model
-
-::: {.callout-note appearance="simple"}
-
-## Likelihood function
-
-To estimate the values of $\alpha$ and $\beta$, you can use the log-likelihood function:
-$$l(\alpha, \beta, \sigma^2; (x_1, y_1), \ldots, (x_n, y_n)) = -\frac{n}{2} \log(2\pi\sigma^2) 
-\ - \ \frac{1}{2\sigma^2} \sum_{i=1}^{n} \left( y_i - (\alpha + \beta x_i) \right)^2$$
-
-If you maximize this with respect to the regression parameters $\alpha$ and $\beta$, this is equivalent to minimizing $S(\alpha,\beta)$.
-
-For more on likelihood functions, please go to [Study guide: Likelihood functions]. 
-
-For a derivation of this equation, please go to [Proof sheet: Linear regression - log-likelihood](../proofsheets/ps-lrloglikelihood.qmd).
+$$\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x} = 240 - 29.25 \cdot 23.7 = -453.2461$$
 
 :::
 
-# Confidence intervals
+As you saw earlier, the observations $Y_{1}, ..., Y_{n}$ are random variables and can therefore be assumed to follow a distribution. Since the observations are functions of the **regression parameters**, the least squares estimates for the regression parameters are also random variables.
 
-It can be useful to find $1-\alpha\%$ confidence intervals for the regression parameters $\alpha$ and $\beta$.
+For more information about this, please read [Guide: Maximum likelihood estimation].
 
-::: {.callout-note appearance="simple"}
-## Confidence intervals of regression parameters
+Therefore, you can assume that the estimates follow a distribution. 
 
-The confidence interval for $\alpha$ is given by:
-$$\hat{\alpha} \pm t_{n-2; 1 - \frac{\alpha}{2}} \sqrt{S^2 \left( \frac{1}{n} + \frac{\bar{x}^2}{SS_{XX}} \right)}$$
-The confidence interval for $\beta$ is given by:
-$$\hat{\beta} \pm t_{n-2; 1 - \frac{\alpha}{2}} \sqrt{\frac{S^2}{SS_{XX}}}$$
-For more on confidence intervals, please read [Proof sheet: Confidence intervals](../proofsheets/confidenceintervals.qmd)
-:::
+For more information about the types of probability distributions which your data could follow, please read [Overview: Probability distributions](../overviews/o-distributions.qmd).
 
-<!-- Suppose now that these random variables Y_{1}, ..., Y_{n} form some kind of distribution. -->
+:::{.callout-important}
 
-<!-- Now that you have seen how to estimate \alpha and \beta for some set of variables Y_{1}, ..., Y_{n}  -->
-
-<!-- Typically, linear regression is used to make predictions  -->
-
-<!-- Now that we have established a way of predicting values Y_{1}, ..., Y{n},  -->
-
-<!-- To be able to use this model of normal linear regression,  -->
-
-
-::: {.callout-note appearance="simple"}
-
-## Example 5
-
-find a confidence intervals
+Before you can assume that your data follows a particular distribution, you must check whether your data aligns with the assumptions which underpin this distribution.
 
 :::
+
+It is useful for your regression parameters to follow probability distributions because it allows you to construct confidence intervals and test hypotheses about them.
+
+Constructing confidence intervals for the regression parameters enables you to construct a plausible range of values, within which it is likely that your estimation lies. This recognizes the uncertainty as to how closely your sample matches the real-life scenario. 
+
+For more information about confidence intervals, please read [Guide: Confidence intervals](confidenceintervals.qmd).
+
+To learn how to apply these ideas to data which follows a **normal distribution**, please read [Guide: Normal linear regression.]
+
+Testing hypotheses is particularly useful when there are multiple explanatory variables, because you can test whether some of them are equal to zero - and if so, they can be discounted. This reduces the complexity of the linear regression model, meaning it is more transferable to new data. 
+
+For more on this, please read [Guide: Introduction to Multiple Linear Regression].
+
+
+
+<!-- # Normal linear regression -->
+
+<!-- Suppose that you have a set of n observations. -->
+
+<!-- You previously saw that for $i \in \mathbb{Z}$ such that $1 \leq i \leq n$,  -->
+<!-- $$\mathbb{E}(Y_i) = \alpha + \beta x_{i}$$ -->
+
+<!-- As seen in [Overview: Statistical notation](../overviews/o-notation.qmd), this is equal to the sample mean. -->
+
+<!-- Now suppose that the variables $Y_{1}, ..., Y_{n}$ have variance $\sigma^{2}$. -->
+
+<!-- Then, the distribution of the $i^{th}$ random variable $Y_{i}$ can be expressed as: -->
+<!-- $$Y _{i} \sim N (\alpha + \beta x_{i} , \sigma^{2})$$ -->
+
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Assumptions for the normal linear regression model -->
+
+<!-- You must check that your data can be modelled using the normal distribution before you can use this model. This means that you must check that your data satisfies the following conditions: -->
+
+<!-- a) **Independence** - $Y_{1}, ..., Y_{n}$ are independent random variables. -->
+
+<!-- b) **Normality** - $Y_{1}, ..., Y_{n}$ are normally distributed.  -->
+
+<!-- c) **Linearity** - the mean of $Y_{i}$ is a linear function of $x_{i}$, or equivalently, $\mathbb{E}(Y) = \alpha + \beta x_{i}$. -->
+
+<!-- d) **Constant variance** - $Y_{1}, ..., Y_{n}$ have the same variance. -->
+
+<!-- ::: -->
+
+<!-- :::{.callout-tip} -->
+
+<!-- You can use the programming language **R** to produce plots which allow you to check whether your data aligns with assumptions (b)-(d). Although details of how to do this in R are omitted from this guide, the subsequent example will demonstrate the way to interpret such graphs. -->
+
+<!-- You assess the general trend of the plotted data points on the graphs, rather than examining specific values. -->
+
+<!-- ::: -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Example 3 -->
+
+<!-- Cantor's Confectionery now wants to predict the number of ice cream sales each day $y_{i}$ based on the peak daily temperature $x_{i}$ using a **normal** linear regression model. Based on the graphs below, does the assumption of normality seem acceptable? -->
+
+<!-- ::: -->
+
+<!-- You must check that all four conditions (independence, normality, linearity and constant variance) are true for your data. -->
+
+<!-- a) **Independence** -->
+
+<!-- Since each data point comes from a different day, the assumption of independence is reasonable. -->
+
+<!-- b) **Normality** -->
+
+<!-- If the data was distributed normally, the points would lie along the dotted line of the Q-Q plot. -->
+
+<!-- ![The Q-Q plot for the the given data.](./FiguresPNG/linearregression-fig1.png) -->
+
+<!-- Here, you can see that the points stray from the dashed line, especially at the ends, which suggests that the ice cream sales may not be normally distributed. -->
+
+<!-- c) **Linearity** -->
+
+<!-- If the data was linear, the red line of the residuals vs. fitted plot for the given data would be mostly horizontal. -->
+
+<!-- ![The residuals vs. fitted plot for the the given data.](./FiguresPNG/linearregression-fig2.png) -->
+
+<!-- Here, you can see that the red line is mostly horizontal, which indicates that the data is linear. -->
+
+<!-- d) **Constant variance** -->
+
+<!-- The assumption holds if there is not much change in the vertical spread of data on a **residuals vs. fitted plot** and if the red line is mostly horizontal on a **scale-location plot**. -->
+
+<!-- ![The residuals vs. fitted plot for the the given data.](./FiguresPNG/linearregression-fig2.png) -->
+
+<!-- You can see that the vertical spread of the points seems to vary, but because there aren't many points, you should look at the scale-location plot for further insight. -->
+
+<!-- ![The scale-location plot for the the given data.](./FiguresPNG/linearregression-fig3.png) -->
+
+<!-- You can see that the red line is quite curved, which indicates that the variance is not constant. -->
+
+<!-- Since each random variable does not appear to be normally distributed and the data, nor do they appear to have the same variance, the normal linear regression model does not seem to be suitable for this set of data. However, more samples are needed to form a more substantiated conclusion. -->
+
+<!-- However, if the assumptions do not hold, you could apply a transformation to your data - for more details, please read [Guide: Transforming data in linear regression]. -->
+
+<!-- ## Fitting the normal linear regression model -->
+
+<!-- As you saw earlier, to fit the **linear model** to your data, you need to estimate the values of the **regression parameters**.  -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Distributions of the regression parameters -->
+
+<!-- When your data is normally distributed, the regression parameters are also normally distributed, so you use the **likelihood function** on random variable $Y_i$ to obtain values for the variances of $(\hat{\alpha}$ and $\hat{\beta} x_{i})$.  -->
+
+<!-- For more on likelihood functions, please read [Guide: Likelihood functions]. -->
+
+<!-- These are given by: -->
+<!-- $$\operatorname{Var}(\hat{\alpha}) = \sigma^{2}\!\left(\frac{1}{n} + \frac{\bar{x}^{2}}{SS_{XX}}\right)$$ -->
+<!-- and  -->
+<!-- $$\operatorname{Var}(\hat{\beta}) = \frac{\sigma^{2}}{SS_{XX}}$$ -->
+<!-- For proofs of these results, please go to [Proof: variances of regression parameters in normal linear regression]. -->
+
+<!-- As seen earlier, $(\hat{\alpha}$ and $\hat{\beta}$ are unbiased estimators of $\alpha$ and $\beta$, so the mean of each is the true value of the parameter. -->
+
+<!-- For more information about this, please read [Guide: Expected value, variance and standard deviation](expectedvariance.qmd). -->
+
+<!-- So, -->
+
+<!-- $$\hat{\alpha} \sim N\left( \alpha, \sigma^{2}\left( \frac{1}{n} + \frac{\bar{x}^{2}}{SS_{XX}} \right) \right)$$ -->
+
+<!-- $$\hat{\beta} \sim N\left( \beta,\; \frac{\sigma^{2}}{SS_{XX}} \right)$$ -->
+<!-- ::: -->
+
+<!-- Because you know the distributions of the regression parameters, you can construct confidence intervals for the values of the regression parameters.  -->
+
+
+<!-- ## Finding confidence intervals of regression parameters -->
+
+<!-- :::{.callout-warning} -->
+<!-- In statistics, $\alpha$ is often used when defining confidence intervals. This is **different** to the regression parameter $\alpha$. -->
+<!-- ::: -->
+
+<!-- Typically, statisticians attempt to find $1-\alpha\%$ confidence intervals for the regression parameters $\alpha$ and $\beta$. -->
+
+<!-- :::{.callout-important} -->
+<!-- To find estimates for the regression parameters, you need to understand the following terminology: -->
+
+<!-- The estimator for $y_{i}$ is given by: -->
+<!-- $$\hat{y}_i = \hat{\alpha} + \hat{\beta} x_{i}$$ -->
+
+<!-- Recalling that each $Y_i$ is a random variable, the sample variance is given by: -->
+<!-- $$S^{2} = \frac{1}{n - 2} \sum_{i=1}^{n} (Y_{i} - \hat{y}_{i})^{2}$$ -->
+
+<!-- For more about sample variance, please read [Overview: Statistical notation](../overviews/o-notation.qmd). -->
+
+
+<!-- $t_{n-2; 1 - \frac{\alpha}{2}}$ describes the value $w$ of the $t$-distribution with $n-2$ degrees of freedom where the probability $P(T \leq w) = 1 - \frac{\alpha}{2}$. -->
+
+<!-- This is illustrated in the following graph: -->
+
+<!-- ![The graph of the t-distribution with $n=8$ degrees of freedom, showing the value of w which is needed to find the correct confidence interval.](./FiguresPNG/linearregression-fig7.png) -->
+
+<!-- For more on the $t$-distribution, including a calculator to find $t$-values, please go to [Fact sheet: $t$-distribution](../factsheets/f-tdist.qmd). -->
+<!-- ::: -->
+
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Formulae for finding confidence intervals of normally distributed regression parameters -->
+<!-- The $1-\alpha$% confidence interval for $\alpha$ is given by: -->
+<!-- $$\hat{\alpha} \pm t_{n-2; 1 - \frac{\alpha}{2}} \sqrt{S^2 \left (\frac{1}{n} + \frac{\bar{x}^2}{SS_{XX}} \right)}$$ -->
+
+<!-- The $1-\alpha$% confidence interval for $\beta$ is given by: -->
+<!-- $$\hat{\beta} \pm t_{n-2; 1 - \frac{\alpha}{2}} \sqrt{\frac{S^2}{SS_{XX}}}$$ -->
+
+<!-- For proofs of these results, please read [Proof sheet: Estimating regression parameters in normal linear regression]. -->
+
+<!-- ::: -->
+
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Example 4 -->
+
+<!-- Despite the statistician's conclusion about whether the normal linear regression is appropriate (as seen in example 3), Cantor's Confectionery would like you to assume that the normal regression model is appropriate, and to use it to find $95$% confidence intervals for the regression parameters $\alpha$ and $\beta$.  -->
+
+<!-- In Example 2, you saw that $n = 10$, $\bar{x} = 23.7$, $\hat{\alpha} = -453.2461$, $\hat{\beta} = 29.25089$, $SS_{XY} = 2460$ and $SS_{XX} = 84.1$ -->
+
+<!-- So the sample variance is given by: -->
+
+<!-- $$S^2 = \frac{1}{10 - 2} \sum_{i=1}^{n} (Y_{i} - \hat{y}_{i})^{2} = 1241.24$$ -->
+
+<!-- <!-- By rearranging the equation $0.95 = 1 - \frac{\alpha}{2}$, you can see that $\alpha = 0.025$. --> 
+<!-- By using a $t$-distribution calculator, you can find the $t$-value: -->
+
+<!-- $$t_{10-2; 1 - \frac{\alpha}{2}} = t_{8;0.975} = 2.306$$ -->
+
+<!-- Therefore, the $1-\alpha$% confidence interval for $\alpha$ is given by: -->
+
+<!-- $$\begin{aligned}\hat{\alpha} \pm t_{10-2; 1 - \frac{\alpha}{2}} \sqrt{S^2 \left (\frac{1}{n} + \frac{\bar{x}^2}{SS_{XX}} \right)} &= -453.2461 \pm 2.306 \sqrt{1241.24 \left (\frac{1}{10} + \frac{23.7^2}{84.1} \right)}\\ &= (-664.8, -241.7) \end{aligned}$$ -->
+
+<!-- And the $1-\alpha$% confidence interval for $\beta$ is given by: -->
+<!-- $$\begin{aligned} \hat{\beta} \pm t_{10-2;\, 1 - \frac{\alpha}{2}} \sqrt{\frac{S^{2}}{SS_{XX}}} &= 29.25089 \pm 2.306 \sqrt{\frac{1241.24}{84.1}} \\ &= (20.39, 38.11)\end{aligned}$$ -->
+
+<!-- ::: -->
+
+
+<!-- ::: {.callout-note appearance="simple"} -->
+
+<!-- ## Likelihood function -->
+
+<!-- Given the independently and identically distributed variables $Y_{1}, ..., Y_{n}$, where $Y_{i} \sim N(\alpha + \beta x_{i}, \sigma^{2})$ for $i \in [1,n]$, you can write down the likelihood function of $\alpha$ and $\beta$. -->
+
+<!-- To estimate the values of $\alpha$ and $\beta$, you can use the log-likelihood function: -->
+<!-- $$l(\alpha, \beta, \sigma^2; (x_1, y_1), \ldots, (x_n, y_n)) = -\frac{n}{2} \log(2\pi\sigma^2)  -->
+<!-- \ - \ \frac{1}{2\sigma^2} \sum_{i=1}^{n} \left( y_i - (\alpha + \beta x_i) \right)^2$$ -->
+
+<!-- For more on likelihood functions, please go to [Guide: Likelihood functions].  -->
+
+<!-- For a derivation of this equation, please go to [Proof sheet: Estimating Regression Parameters in Normal Linear Regression]. -->
+
+<!-- ::: -->
+
+<!-- :::{.callout-tip} -->
+
+<!-- The log-likelihood can be maximized with respect to $\alpha$ and $\beta$ when $\sigma^{2}$ is unknown.  -->
+
+<!-- If you maximize the log-likelihood function with respect to the regression parameters $\alpha$ and $\beta$, this is equivalent to minimizing $S(\alpha,\beta)$. -->
+
+<!-- ::: -->
+
+<!-- Another extension to linear regression is when there are multiple explanatory variables affecting the response variable. This is called **multiple linear regression** and for more detail on this, please read [Guide: Multiple linear regression.] -->
 
 <!-- # Multiple linear regression -->
 
@@ -696,64 +734,61 @@ find a confidence intervals
 <!-- add facility to check answers at end rather than one at a time -->
 
 ::: {.webex-check .webex-box}
-1.  Which of these statements must be true for you to use use a linear regression model on your data?
+1.  Which of these is the equation of a linear regression model?
 
 (a) $\mathbb{E}(Y) = \alpha + \beta x_{i}$
 
-(b) All $x_{i}$ in the data set are independent.
+(b) $\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}$
 
-(c) $\sigma^{2}$ is small.
+(c) $\hat{\beta} = \frac {SS_{XY}} {SS_{XX}}$
 
 Answer: `r mcq(c(answer="a", "b", "c"))`.
 
-2.  Name the type of linear regression with one explanatory variable.
+2. What is the name of the type of linear regression with one explanatory variable?
 
 Answer:`r mcq(c("Independent", answer = "Simple", "Single"))`.
 
-3.  Which type of distribution is used when finding confidence intervals?
+3.  Are the following statements true or false?
 
-Answer: `r mcq(c("normal", answer = "t", "standard normal"))` probability.
-
-4.  Are the following statements true or false?
-
-(a) $\epsilon$ is used to describe an error term. Answer: `r torf(TRUE)`.
+(a) $e_i$ is used to describe a residual. Answer: `r torf(TRUE)`.
 
 (b) To use linear regression, your data must be normally distributed. Answer: `r torf(FALSE)`.
 
-(c) The regression parameter $\alpha$ must not be zero. Answer: `r torf(FALSE)`.
+(c) The regression parameter $\alpha$ can be equal to zero. Answer: `r torf(TRUE)`.
 :::
 ::::
 
 ::: {.content-hidden when-format="html"}
-1.  Which of these statements must be true for you to use use a linear regression model on your data?
+1.  Which of these is the equation of a linear regression model?
 
 <!-- -->
 (a) $\mathbb{E}(Y) = \alpha + \beta x_{i}$
 
-(b) All $x_{i}$ in the data set are independent.
+(b) $\hat{\alpha} = \bar{y} - \hat{\beta}\bar{x}$
 
-(c) $\sigma^{2}$ is small.
+(c) $\hat{\beta} = \frac {SS_{XY}} {SS_{XX}}$
 
-2.  Name the type of linear regression with one explanatory variable.
+2.  What is the name of the linear regression model which has one explanatory variable?
 
-3.  Which type of distribution is used when finding confidence intervals?
-
-4.  Are the following statements true or false?
+3.  Are the following statements true or false?
 
 <!-- -->
-(a) $\epsilon$ is used to describe an error term.
+(a) $e_i$ is used to describe a residual.
 
 (b) To use linear regression, your data must be normally distributed.
 
-(c) The regression parameter $\alpha$ must not be zero.
+(c) The regression parameter $\alpha$ can be equal to zero.
 :::
 
 
 
 # Further reading {-}
 
-<!-- [For more questions on the subject, please go to Questions: Linear regression.](../questions/qs-linearregression.qmd) -->
+For more questions on the subject, please go to [Questions: Introduction to linear regression](../questions/qs-linearregression.qmd).
 
+To learn about normal linear regression, please read [Guide: Normal linear regression].
+
+To extend linear regression to encompass multiple explanatory variables, please read [Guide: Multiple linear regression].
 
 ## Version history {-}
 

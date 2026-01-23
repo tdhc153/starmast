@@ -1,0 +1,798 @@
+---
+title: Introduction to confidence intervals
+author: Millie Harris
+abstract-title: Summary
+abstract: In statistics, to estimate an unknown parameter you can construct a confidence interval. This is the range of values you expect the true estimate to fall between if you were to repeat the study several times, with a certain level of confidence. This study guide introduces confidence intervals, confidence levels, and Z values using the normal distribution.
+filters:
+  - shinylive
+categories:
+  - Statistics
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, it is recommended that you read* [*Guide: Introduction to hypothesis testing*](hypothesistesting.qmd)*, [Guide: Introduction to probability](introtoprobability.qmd), and [Guide: Expected value, variance, standard deviation](expectedvariance.qmd)*
+
+# What is a confidence interval?
+
+If you were conducting a study and took several different samples of data, the mean for that data could be slightly different each time. So, when estimating population means, instead of providing one value, you can specify a **range of values** which is likely to contain the true mean. This is called a **confidence interval** (CI).
+
+CIs are a vital tool used to measure uncertainties in everyday life. For example:
+
+-   In politics, confidence intervals can be used to show the uncertainty in polling estimates.
+
+-   In economics, confidence intervals can be used to show uncertainties in market trends and inflation.
+
+-   In medicine and biology, confidence intervals can be used to show uncertainties around effects like mean weight loss, drug effectiveness, or survival rates.
+
+-   In sports, confidence intervals can be used by coaches to measure the true performance levels of athletes.
+
+This guide will focus on how to construct and interpret a confidence intervals using the **normal distribution**, $Z$ Values, two-tailed alpha values, and confidence levels. For information on confidence intervals using other distributions see \[Guide: More on confidence intervals\].
+
+## The normal distribution
+
+The **normal distribution,** or sometimes called the "bell-curve", is a symmetrical graph which represents data that clusters around the mean. It depends on two parameters: the mean $(\mu)$ and the standard deviation $(\sigma)$. In situations where $\mu = 0$ and $\sigma = 1$, you have a **standard** normal distribution. For more on $\mu$ and $\sigma$ see [Guide: Expected value, variance, standard deviation](expectedvariance.qmd)
+
+It is commonly used in statistics for data sets such as average height, average IQ, or average age of people. You would expect these samples to have a lot of values near the mean and less values on each extreme.
+
+For more information on the normal distribution see [Factsheet: Normal Distribution](f-normaldist.qmd)
+
+::: callout-note
+## Definition of the normal distribution
+
+For samples where $\mu$ is the mean and $\sigma$ is the standard deviation, a random variable $X$ which is normally distributed is represented as
+
+$$ X \sim N(\mu, \sigma) $$
+
+which you read as $X$ is normally distributed with parameters mu and sigma.
+:::
+
+## The tails of the normal distribution
+
+Because of the **bell shape** of the normal distribution, there are less values at each end. The extremes of the normal distribution are called the **tails**.
+
+-   The tails themselves are the **areas at each end of the curve.** The total area of both tails is called alpha $(\alpha)$. So, the area of each tail is $\frac{\alpha}{2}$.
+
+To construct a confidence interval you need both tails, because you are looking at values on both extremes, and so you will construct what is called a **two-tailed test.**
+
+:::: {.content-visible when-format="html"}
+
+::: callout-tip
+## Try!
+
+Try different values of $\alpha$ and see how the size of the tails change.
+
+:::
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 340
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_sidebar(
+  title = "Normal Distribution Tails Explained",
+  sidebar = sidebar(
+    numericInput("mu", 
+                 "Mean (μ):", 
+                 value = 0, 
+                 step = 0.1),
+    numericInput("sigma", 
+                 "Standard Deviation (σ):", 
+                 value = 1, 
+                 min = 0.1, 
+                 step = 0.1),
+    hr(),
+    sliderInput("tail_threshold",
+                "Tails:",
+                min = 1,
+                max = 3,
+                value = 2,
+                step = 0.1),
+    hr(),
+    p("The distribution curve is shown in blue."),
+    p("Red areas represent the tails beyond the threshold."),
+    p("Use the threshold slider to see how tail areas change.")
+  ),
+  card(
+    card_header("Normal Distribution with Highlighted Tails"),
+    plotOutput("tail_plot", height = "500px")
+  )
+)
+
+server <- function(input, output, session) {
+  output$tail_plot <- renderPlot({
+    x_range <- c(input$mu - 4 * input$sigma, input$mu + 4 * input$sigma)
+    x <- seq(x_range[1], x_range[2], length.out = 1000)
+    
+    y <- dnorm(x, mean = input$mu, sd = input$sigma)
+    
+    left_tail <- input$mu - input$tail_threshold * input$sigma
+    right_tail <- input$mu + input$tail_threshold * input$sigma
+    
+    df <- data.frame(x = x, y = y)
+    
+    p <- ggplot(df, aes(x = x, y = y)) +
+      geom_line(color = "blue", size = 1.2) +
+      geom_area(data = df[df$x >= left_tail & df$x <= right_tail, ], 
+                alpha = 0.2, fill = "lightblue") +
+      geom_area(data = df[df$x <= left_tail, ], 
+                alpha = 0.6, fill = "red") +
+      geom_area(data = df[df$x >= right_tail, ], 
+                alpha = 0.6, fill = "red") +
+      geom_vline(xintercept = left_tail, color = "red", size = 1, linetype = "dashed") +
+      geom_vline(xintercept = right_tail, color = "red", size = 1, linetype = "dashed") +
+      geom_vline(xintercept = input$mu, color = "blue", size = 1, linetype = "dotted") +
+      labs(
+        title = "The normal distribution",
+        subtitle = paste("μ =", input$mu, ", σ =", input$sigma)
+      ) +
+      theme_minimal() +
+      theme(
+        plot.title = element_text(size = 16, hjust = 0.5),
+        plot.subtitle = element_text(size = 12, hjust = 0.5),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10)
+      )
+    
+    max_y <- max(y)
+    p + annotate("text", 
+                 x = input$mu, 
+                 y = max_y * 0.9, 
+                 label = "μ", 
+                 color = "blue", 
+                 size = 5) +
+        annotate("text", 
+                 x = left_tail, 
+                 y = max_y * 0.5, 
+                 label = paste("-", input$tail_threshold, "σ"), 
+                 color = "red", 
+                 size = 4, 
+                 hjust = 1.1) +
+        annotate("text", 
+                 x = right_tail, 
+                 y = max_y * 0.5, 
+                 label = paste("+", input$tail_threshold, "σ"), 
+                 color = "red", 
+                 size = 4, 
+                 hjust = -0.1)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+::::
+
+::: callout-important
+## $\alpha$ is $1$ minus the CL
+
+-   $1 - \alpha$ is the confidence level. So you only need **one** in order to generate a confidence interval.
+:::
+
+## What is a confidence level?
+
+::: callout-note
+## Definition of a confidence level
+
+A **confidence level** (CL) suggests that if you were to repeat the study many times, you would expect the true estimate to fall within CL$\%$ of the results.
+
+A CL is typically represented using a percentage or decimal. For example, a $95\%$ CL can be represented as $0.95$.
+:::
+
+The value of $\alpha$ (and/ or the CL) is decided before constructing the confidence interval. Every value of $\alpha$ gives scores on the $x$ axis which leaves that much $\frac{\alpha}{2}$ in each tail. Because of the **symmetry** of the normal distribution, these scores are plus and minus each other. This is called the $Z$ value.
+
+## What is a $Z$ value ($Z$ score)?
+
+Using the normal distribution, a $Z$ **value** **(sometimes called** $Z$ **score or standard score)** is a known test statistic. It shows how many standard deviations above or below the mean an observed data point is.
+
+::: callout-note
+
+## Definition of the $Z$ value using the normal distribution
+
+A $Z$ value is written
+
+$$
+Z_\frac{\alpha}{2} 
+$$
+
+To know $Z_\frac{\alpha}{2}$, you need to specify the $\alpha$ (and/ or CL) value. You can then use the calculator to find out $Z_\frac{\alpha}{2}$.
+
+:::
+
+::::{.callout-note appearance="simple"}
+## Example 1
+
+Use the $Z$ value calculator below to find the $Z$ values for these alphas. They have been chosen as these are the most commonly used alpha values in statistics.
+
+Try:
+
+-   $\alpha = 0.05$
+
+-   $\alpha = 0.1$
+
+-   $\alpha = 0.01$
+
+::: {.content-visible when-format="html"}
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 630
+
+library(shiny)
+library(bslib)
+
+ui <- page_sidebar(
+  title = "Z-Value Calculator",
+  
+  sidebar = sidebar(
+    # Input for alpha level
+    numericInput("alpha", 
+                 "Alpha Level (α):", 
+                 value = 0.05, 
+                 min = 0.001, 
+                 max = 0.999, 
+                 step = 0.001),
+    
+    # Some common alpha values as buttons for convenience
+    h5("Common Alpha Values:"),
+    actionButton("alpha_01", "α = 0.01", class = "btn-sm"),
+    actionButton("alpha_05", "α = 0.05", class = "btn-sm"),
+    actionButton("alpha_10", "α = 0.10", class = "btn-sm"),
+    
+    hr(),
+    
+    helpText("α is the significance level"),
+    helpText("Two-tailed normal distribution critical z-value")
+  ),
+  
+  # Main panel with just the z-value result
+  card(
+    card_header("Z α/2"),
+    card_body(
+      div(
+        h1(textOutput("z_value"), style = "text-align: center; color: #0066cc; font-size: 3rem;"),
+        style = "padding: 50px;"
+      )
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Update alpha when buttons are clicked
+  observeEvent(input$alpha_01, {
+    updateNumericInput(session, "alpha", value = 0.01)
+  })
+  
+  observeEvent(input$alpha_05, {
+    updateNumericInput(session, "alpha", value = 0.05)
+  })
+  
+  observeEvent(input$alpha_10, {
+    updateNumericInput(session, "alpha", value = 0.10)
+  })
+  
+  # Calculate and display z-value
+  output$z_value <- renderText({
+    z_critical <- qnorm(1 - input$alpha/2)
+    round(z_critical, 4)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+:::
+
+::::
+
+Using the normal distribution, alpha value (and/ or the confidence level), and the corresponding $Z$ value, you can construct a confidence interval.
+
+## So, how do you construct a confidence interval?
+
+::: callout-note
+## Definition of confidence interval using the normal distribution
+
+A **confidence interval** (CI) is made up of the **sample mean** $(\bar{x})$ and the **standard error** $SE$. It is constructed by
+
+$$
+\bar{x}\pm SE
+$$
+
+Which you read as $x$ bar plus or minus the standard error.
+
+The **standard error** is made up of the $Z$ value $(Z_\frac{\alpha}{2})$, the sample **standard deviation** $(\sigma)$, and the **sample size** $(n)$. It is written as
+
+$$
+Z_\frac{\alpha}{2}\frac{\sigma}{\sqrt{n}} 
+$$
+
+So your confidence interval is written as
+
+$$
+[\bar{x} - SE,\bar{x} + SE]
+$$
+
+where $\bar{x} - SE$ is called your **lower bound** and $\bar{x} + SE$ is called your **upper bound**.
+:::
+
+::: callout-tip
+
+## General steps for constructing a confidence interval using the normal distribution
+
+Step 1: What do you need?
+
+-   the sample mean $(\bar{x})$
+
+-   the alpha value $(\alpha)$ or the confidence level (CL) and corresponding $Z$ value
+
+-   the sample standard deviation $(\sigma)$
+
+-   the sample size $(n)$
+
+Step 2: Use your $\alpha$ (or CL) and the $Z$ value calculator to find
+
+$$
+Z_\frac{\alpha}{2}
+$$
+
+Step 3: Construct the confidence interval
+
+$$
+[\bar{x} - SE,\bar{x} + SE]
+$$
+
+$$
+= [\bar{x} - Z_\frac{\alpha}{2} \frac{\sigma}{\sqrt{n}}, \bar{x} + Z_\frac{\alpha}{2} \frac{\sigma}{\sqrt{n}}]  
+$$
+
+Step 4: Check your work!
+
+The average of your confidence interval should equal your sample mean.
+
+For example,
+
+$$
+\bar{x} = 50, \\[0.5em]
+[49.2, 50.8]
+$$
+
+sum the upper and lower bound of the confidence interval, so
+
+$$
+49.2 + 50.8 = 100
+$$
+
+and when you divide by $2$
+
+$$
+\frac{100}{2} = 50 = \bar{x}
+$$
+
+:::
+
+::::{.callout-note appearance="simple"}
+
+## Example 2
+
+Cantor's Confectionery have purchased a new computer to help monitor the quality of their products. They test the average weight of their best selling products. The computer outputs a graph. What can be understood from this?
+
+::: {.content-visible when-format="html"}
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 630
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+library(plotly)
+
+ui <- page_sidebar(
+  title = "Confidence Interval for Mean Weight - Cantor's Confectionery",
+  
+  sidebar = sidebar(
+    sliderInput("alpha",
+                "Significance Level (α):",
+                min = 0.01,
+                max = 0.20,
+                value = 0.05,
+                step = 0.01),
+    
+    hr(),
+    
+    numericInput("x_bar",
+                 "Sample Mean (x̄) in grams:",
+                 value = 75,
+                 min = 50,
+                 max = 100,
+                 step = 0.1),
+    
+    numericInput("sigma",
+                 "Standard Deviation (σ) in grams:",
+                 value = 10,
+                 min = 1,
+                 max = 20,
+                 step = 0.1),
+    
+    numericInput("n",
+                 "Sample Size (n):",
+                 value = 100,
+                 min = 10,
+                 max = 500,
+                 step = 1)
+  ),
+  
+  card(
+    card_header("Normal Distribution and Confidence Interval"),
+    plotlyOutput("normal_plot", height = "600px")
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Reactive calculations
+  confidence_level <- reactive({
+    (1 - input$alpha) * 100
+  })
+  
+  alpha_half <- reactive({
+    input$alpha / 2
+  })
+  
+  z_critical <- reactive({
+    qnorm(1 - alpha_half())
+  })
+  
+  standard_error <- reactive({
+    input$sigma / sqrt(input$n)
+  })
+  
+  margin_of_error <- reactive({
+    z_critical() * standard_error()
+  })
+  
+  ci_lower <- reactive({
+    input$x_bar - margin_of_error()
+  })
+  
+  ci_upper <- reactive({
+    input$x_bar + margin_of_error()
+  })
+  
+  # Main plot
+  output$normal_plot <- renderPlotly({
+    
+    # Create data for the normal distribution
+    x_seq <- seq(-4, 4, length.out = 1000)
+    y_seq <- dnorm(x_seq)
+    
+    # Create the base plot
+    p <- ggplot(data.frame(x = x_seq, y = y_seq), aes(x = x, y = y)) +
+      geom_line(size = 1.2, color = "blue") +
+      
+      # Shade the rejection regions
+      geom_area(data = data.frame(x = x_seq[x_seq <= -z_critical()], 
+                                  y = y_seq[x_seq <= -z_critical()]),
+                aes(x = x, y = y), fill = "red", alpha = 0.3) +
+      geom_area(data = data.frame(x = x_seq[x_seq >= z_critical()], 
+                                  y = y_seq[x_seq >= z_critical()]),
+                aes(x = x, y = y), fill = "red", alpha = 0.3) +
+      
+      # Shade the confidence region
+      geom_area(data = data.frame(x = x_seq[x_seq >= -z_critical() & x_seq <= z_critical()], 
+                                  y = y_seq[x_seq >= -z_critical() & x_seq <= z_critical()]),
+                aes(x = x, y = y), fill = "blue", alpha = 0.2) +
+      
+      # Add vertical lines for critical values
+      geom_vline(xintercept = c(-z_critical(), z_critical()), 
+                 linetype = "dashed", color = "red", size = 1) +
+      geom_vline(xintercept = 0, linetype = "solid", color = "black", size = 1) +
+      
+      # Add labels
+      annotate("text", x = -z_critical(), y = 0.1, 
+               label = paste("-Z =", round(-z_critical(), 3)), 
+               hjust = 1.1, color = "red", size = 4) +
+      annotate("text", x = z_critical(), y = 0.1, 
+               label = paste("Z =", round(z_critical(), 3)), 
+               hjust = -0.1, color = "red", size = 4) +
+      annotate("text", x = 0, y = 0.45, 
+               label = paste(confidence_level(), "% Confidence"), 
+               hjust = 0.5, color = "darkblue", size = 5, fontface = "bold") +
+      annotate("text", x = -3, y = 0.05, 
+               label = paste("α/2 =", round(alpha_half(), 4)), 
+               hjust = 0.5, color = "red", size = 4) +
+      annotate("text", x = 3, y = 0.05, 
+               label = paste("α/2 =", round(alpha_half(), 4)), 
+               hjust = 0.5, color = "red", size = 4) +
+      
+      labs(
+        title = "Standard Normal Distribution for Confidence Interval",
+        x = "Z-score",
+        y = "Probability Density",
+        subtitle = paste("Confidence Interval for μ: [", round(ci_lower(), 2), "g,", round(ci_upper(), 2), "g]")
+      ) +
+      theme_minimal() +
+      theme(
+        plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5, size = 12),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10)
+      ) +
+      xlim(-4, 4) +
+      ylim(0, 0.5)
+    
+    ggplotly(p) %>%
+      config(displayModeBar = FALSE)
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+:::
+
+-   This is a normal distribution for the mean weight of one of Cantor's Confectioneries best selling products.
+
+-   This is a sample and so the mean is the sample mean $(\bar{x})$ with known standard deviation $(\sigma)$.
+
+-   When you select different values for alpha $(\alpha)$, the tails of the normal distribution change. This means that when constructing a confidence interval the $Z$ values will be different.
+
+::::
+
+:::{.callout-note appearance="simple"}
+
+## Example 3
+
+Cantor's Confectionery use the normal distribution from example 1 to construct a $95\%$ confidence interval for the mean weight of their bags of sweets. They take a sample of $100$ bags which have an average weight of $75$ grams, the calculated standard deviation is $10$ grams.
+
+Step 1: What do you need?
+
+-   the sample size is $100$ bags of sweets so $n = 100$
+
+-   the average weight of the sample is $75$ grams so $\bar{x} = 75$
+
+-   the standard deviation of the sample is $10$ grams so $\sigma = 10$
+
+-   the confidence level is $95\%$ so $\alpha = 0.05$ and $\frac{\alpha}{2} = 0.025$
+
+Step 2: Use the Z value calculator to identify
+
+$$
+Z_\frac{0.05}{2} = Z_{0.025} = 1.960 
+$$
+
+Step 3: Construct the confidence interval
+
+$$
+[\bar{x} - Z_{0.025} \frac{\sigma}{\sqrt{n}}, \bar{x} + Z_{0.025} \frac{\sigma}{\sqrt{n}}]  
+$$
+
+add in all values from Step 1
+
+$$
+= [75 - 1.960(\frac{10}{\sqrt{100}}), 75 + 1.960(\frac{10}{\sqrt{100}})]
+$$
+
+$$
+= [73.04, 76.96]
+$$
+
+Step 4: Check your work
+
+$$
+73.04 + 76.96 = 150
+$$
+
+$$
+\frac{150}{2} = 75
+$$
+
+where $75 =$ the sample mean, so your confidence interval is correct.
+
+:::
+
+:::{.callout-note appearance="simple"}
+
+## Example 4
+
+Using the test from example 3, Cantor's Confectionery ask the computer to work out a $90\%$ confidence interval and $99\%$ confidence interval. It outputs the following results:
+
+$$
+\textsf{A }90\%\textsf{ CI }= [73.36, 76.64] \\ \textsf{A }99\%\textsf{ CI }=[72.424, 77.576]
+$$
+
+What does this suggest about the confidence levels?
+
+For all three examples, the sample mean falls within the confidence interval. But, as the confidence level **increases** so does the **width** of the confidence interval.
+
+If you were to think about the tails of these normal graphs, as the CL increases the amount of area underneath each extreme decreases. This means you have more values in the middle of the graph, which is why you have more values in the confidence interval.
+
+:::
+
+:::{.callout-note appearance="simple"}
+
+## Example 5
+
+There is a new shop in town! Lovelace's Lollies are claiming their products are better than Cantor's Confectionery. They take a sample of $77$ of their best selling boxes of lollies. The average weight of these boxes is $84$ grams with a standard deviation of $9.5$ grams. They construct a $95\%$ confidence interval.
+
+-   $\bar{x} = 84$
+
+-   $Z_\frac{0.05}{2} = Z_{0.025} = 1.960$
+
+-   $\sigma = 9.5$
+
+-   $n = 77$
+
+So to construct the confidence interval 
+$$
+[\bar{x} - Z_\frac{\alpha}{2}\frac{\sigma}{\sqrt{n}}, \bar{x} - Z_\frac{\alpha}{2}\frac{\sigma}{\sqrt{n}}]
+$$
+
+$$
+= [84 - 1.960(\frac{9.5}{\sqrt{77}}), 84 + 1.960(\frac{9.5}{\sqrt{77}})]
+$$
+
+$$
+= [81.88, 86.12]
+$$
+
+:::
+
+## Example 3 and 5 in context
+
+Cantor's Confectionery and Lovelace's Lollies have both constructed a $95\%$ confidence interval from a sample of their best selling products. What does this tell you?
+
+-   If Cantor's Confectionery were to repeat the study several times, they would expect the average weight of a bag of sweets to **lie between** $73.04$ grams and $76.96$ grams, **with** $95\%$ **confidence.**
+
+-   If Lovelace's Lollies were to repeat the study several times, they would expect the average weight of a box of lollies to **lie between** $81.88$ and $86.12$ grams, **with** $95\%$ **confidence.**
+
+:::{.callout-note appearance="simple"}
+
+## Example 6
+
+The rivalry between Cantor's Confectionery and Lovelace's Lollies has reached the News with the following headline
+
+"Here to compete with Cantor's Confectionery: Lovelace's Lollies **guarantee** that $95\%$ of all boxes of lollies will weigh $86.12$ grams".
+
+There are issues with this statement.
+
+From the definition of a confidence level, you know that a confidence level suggests that if you were to repeat the study many times, you would expect the true estimate to fall within CL$\%$ of the results.
+
+This is not the same as saying CL$\%$ of the products weigh a certain amount.
+
+Instead, the News headline should read
+
+"Here to compete with Cantor's Confectionery: A study on a sample of Lovelace's Lollies suggest that if more boxes were to be sampled, they expect $95\%$ of boxes would weigh between $81.88$ and $86.12$ grams".
+
+:::
+
+:::{.callout-note appearance="simple"}
+
+## Example 7
+
+Cantor's Confectionery release a new "family-sized" bag of sweets to compete with Lovelace's Lollies. They weigh $81$ bags, in grams, from the new batch and generate the computer generates the following $99\%$ confidence interval
+
+$$
+[100.00, 104.00]
+$$
+
+with a sample mean of $102$ grams.
+
+Cantor's Confectionery want to know the standard deviation of this sample to compare with their standard deviation of $10$ grams from example 3 and Lovelace's Lollies standard deviation of $9.5$ grams from example 5
+
+The sample mean is given as
+
+$$
+\bar{x} = 102
+$$
+
+The confidence level is $99\%$ so under the normal distribution
+
+$$
+Z_\frac{\alpha}{2} = Z_{0.005} = 2.576
+$$
+
+The sample size is
+
+$$
+n = 81
+$$
+
+So, to work out the sample standard deviation $(\sigma)$, you must work back from the confidence interval
+
+You can then use **either bound**. So, using the lower bound you know that
+
+$$
+100 = 102- 2.576(\frac{\sigma}{\sqrt{81}})
+$$
+
+by rearranging the equation
+
+$$
+-2 = -\frac{2.576(\sigma)}{\sqrt{81}}
+$$
+
+and so,
+
+$$
+\sigma = 7
+$$
+
+Which is a lower standard deviation than both their previous test and Lovelace's Lollies test.
+
+:::
+
+# Quick check problems {.unnumbered}
+
+<!-- add facility for webexercises to work on html -->
+
+:::: {.content-visible when-format="html"}
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box data-topic="ITHT1"}
+1.  What would your CL be for $\alpha = 0.05$?
+
+<!-- -->
+
+(a) $85\%$
+
+(b) $90\%$
+
+(c) $95\%$
+
+Answer: `r mcq(c("a", "b", answer = "c"))`.
+
+2.  What is the $Z$ value for $\alpha =$ 0.05, to 2 decimal places?
+
+Answer: `r fitb("1.96")`.
+
+3.  $X$ is normally distributed with which parameters?
+
+Answer:`r mcq(c("n and Z", "mu and n", answer = "mu and sigma"))`.
+
+4.  What are the extremes of the normal distribution called?
+
+Answer:`r mcq(c("ends", "sides", answer = "tails"))`.
+
+:::
+
+::::
+
+::: {.content-hidden when-format="html"}
+
+1.  What would your CL be for $\alpha = 0.05$?
+
+<!-- -->
+
+(a) $85\%$
+
+(b) $90\%$
+
+(c) $95\%$
+
+<!-- -->
+
+2.  What is the $Z$ value for $\alpha =$ 0.05, to 2 decimal places?
+
+3.  $X$ is normally distributed with which parameters?
+
+4.  What are the extremes of the normal distribution called?
+
+:::
+
+# Further reading
+
+[For more questions on the subject, please go to Questions: Confidence Intervals.](../questions/qs-confidenceintervals.qmd)
+
+# Version history
+
+v1.0: initial version created 12/06 by Millie Harris as part of a University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

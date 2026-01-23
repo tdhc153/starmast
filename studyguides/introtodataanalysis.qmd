@@ -12,17 +12,17 @@ library("webexercises")
 
 # What is data analysis? {.unnumbered}
 
-While it is often claimed that "data is the new gold," the value of data primarily lies in how you can make sense of it. This prompts the need to learn **data** **analysis**, which is the process of inspecting and transforming data in order to extract useful insights.
+From sports to shopping, data is now underpinning everything people do. This prompts the need to learn **data** **analysis**, which is the process of inspecting and transforming data in order to extract useful insights.
 
-This guide introduces you to data analysis. First, a distinction will be made between descriptive statistics and inferential statistics. Then on the descriptive statistics side, you will learn about measures of central tendency and dispersion, alongside data visualization. On the other hand, the inferential statistics section will include hypothesis testing, statistical relationships, and confidence intervals.
+This guide introduces you to data analysis. First, a distinction will be made between descriptive statistics and inferential statistics. Then on the descriptive statistics side, you will learn about measures of central tendency and dispersion, alongside data visualization. On the other hand, the inferential statistics section will include hypothesis testing, statistical relationships, and confidence intervals. It will also cover PMFs, PDFs, and CDFs.
 
-# Distinguishing between descriptive statistics and inferential statistics {.unnumbered}
+# What do you want to do? {.unnumbered}
 
-**Descriptive statistics** is concerned with summarizing and describing a set of data. For example, what is the "middle value" of the data, and how spread out is the data?
+If you want to summarize or describe a set of data, then you need techniques from **descriptive statistics**. For example, what is the "middle value" of the data, how spread out is the data, and what does the data look like in visual form? There are several techniques you can use to answer such questions, which will be explored further in this guide.
 
 Before explaining **inferential statistics**, it is useful to establish what a **sample** and **population** is. A **population** is the totality of a group you want to study. Unfortunately, a population often contains too many individuals, so it is often inconvenient or sometimes even impossible to study every individual. Because of this, a **sample,** or a smaller subset of a population, is commonly taken for a statistical study.
 
-**Inferential statistics** uses data samples to make inferences and predictions about the population that the sample was drawn from. This can be done by testing whether the values of two data samples are significantly different, examining whether two variables have a statistically significant relationship, and more that is beyond the scope of this study guide.
+Do you want to use these samples to make inferences and predictions about the population? If so, techniques from **inferential statistics** can help you. This can be done by testing whether the values of two data samples are significantly different, examining whether two variables have a statistically significant relationship, and more that is beyond the scope of this study guide.
 
 # Descriptive statistics {.unnumbered}
 
@@ -35,7 +35,7 @@ Before explaining **inferential statistics**, it is useful to establish what a *
 ::: callout-note
 ## Definition of mean
 
-The **mean** is the sum of all values divided by the number of values.
+The **mean** is the sum of all values in the data set divided by the number of values in the data set.
 :::
 
 The mean can be denoted by two symbols, depending on whether the data used is a sample or the whole population:
@@ -65,7 +65,7 @@ To find the **median**, the data set must first be arranged in numerical order.
 
 -   If the data set has an odd number of values, the **median** would be the value in the exact middle of the data set.
 
--   If the data set has an even number of values, the **median** would be the two values in the middle of the data set, divided by two.
+-   If the data set has an even number of values, the **median** would be the sum of the two values in the middle of the data set, divided by two.
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -75,7 +75,7 @@ Cantor's Confectionery recorded a sample of the number of candies it had sold fo
 
 You can first order the list: $\{32,32,32,44,50,56,76\}$.
 
-Notice that the list contains 7 elements, which is an odd number. So to find the middle element, you can divide the number of elements by 2 and round it up. In this case, $\frac{7}{2} = 3.5 \approx 4$.
+Notice that the list contains 7 elements, which is an odd number. So to find the middle element, you can divide the number of elements by 2 and round it up. In this case, $\frac{7}{2} = 3.5$, which rounds up to $4$.
 
 The fourth element in the set, which is also the **median**, is 44.
 :::
@@ -121,9 +121,9 @@ Since 32 is the value that occurs in the data set for the highest number of time
 
 Calculating the central tendency can be important when you want to have a value that **summarizes the whole data set**, especially when you are making quick comparisons between two data sets. However, restricting yourself to finding only one measure of central tendency can lead to a misrepresentation of the data set.
 
-For example, the **mean itself can be unreliable** because it risks being influenced by **outliers**, which are extreme values in the data set. If there exist extremely large values in the data set, the mean might be "pulled" higher than the actual center of the data. Similarly, if there exist extremely small values in the data set, the mean might be "pulled" lower than the actual center of the data. This is where comparing the mean to the mode and median would come in handy; if the mean differs greatly from the other measures of central tendency, this might indicate the presence of an outlier!
+For example, the **mean itself can be unreliable** because it risks being influenced by **outliers**, which are extreme values in the data set. If there exist extremely large values in the data set, the mean might be "pulled" higher than the actual centre of the data. Similarly, if there exist extremely small values in the data set, the mean might be "pulled" lower than the actual centre of the data. This is where comparing the mean to the mode and median would come in handy; if the mean differs greatly from the other measures of central tendency, this might indicate the presence of an outlier!
 
-There are also cases where **finding the median and mode alone might be unhelpful**. In some data sets, there might not be any repeating values, so there is no point in attempting to find a mode. Other data sets may have unevenly weighted sampling. For instance, in a data set like $\{1,1,1,50,100\}$, the median of this data set would be 1, but it would be unintuitive to say that it accurately captures the center of the data.
+There are also cases where **finding the median and mode alone might be unhelpful**. In some data sets, there might not be any repeating values, so there is no point in attempting to find a mode. Other data sets may have unevenly weighted sampling. For instance, in a data set like $\{1,1,1,50,100\}$, the median of this data set would be 1, but it would be unintuitive to say that it accurately captures the centre of the data.
 
 ## Dispersion {.unnumbered}
 
@@ -190,7 +190,7 @@ To find the difference between these two values, you can **subtract the upper qu
 **Variance** is the average squared distance from the mean, while the **standard deviation** is the square root of the variance. Different notations and formulas are used for standard deviations and variances of a sample versus a population.
 
 |   | Standard deviation | Variance | Notes |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | **Population** | $\sigma = \sqrt{\frac{\sum(x_i - \mu)^2}{N}}$ | $\sigma^2 = \frac{\sum(x_i - \mu)^2}{N}$ | $\mu$ is the population mean, and $N$ is the size of the population |
 | **Sample** | $s= \sqrt{\frac{\sum(x_i - \overline{x})^2}{n-1}}$ | $s= \frac{\sum(x_i - \overline{x})^2}{n-1}$ | $\overline{x}$ is the population mean, and $n$ is the size of the sample |
 
@@ -230,7 +230,7 @@ Similarly to the mean, **the variance and standard deviation are influenced by o
 
 ## Data visualization {.unnumbered}
 
-**Data visualization** involves representing data in a visual way, often highlighting patterns and outliers that would not have been visible in the raw data set. This study guide will cover four common data visualization types: bar charts, line graphs, histograms, pie charts, and scatter plots.
+**Data visualization** involves representing data in a visual way, often highlighting patterns and outliers that would not have been visible in the raw data set. This study guide will cover five common data visualization types: bar charts, line graphs, histograms, pie charts, and scatter plots.
 
 ### Bar charts {.unnumbered}
 
@@ -249,8 +249,14 @@ Cantor's Confectionery recorded a sample of the number of candies it had sold ac
 
 -   16 orange candies
 
-An employee wanted to quickly compare candy sales across different categories, so they decided to plot this data in the form of a bar chart: PICTURE HERE LATER
+An employee wanted to quickly compare candy sales across different categories, so they decided to plot this data in the form of a bar chart: ![](./FiguresPNG/candysalesbarchart.png)
 
+cat \<- c("Blueberry","Grape","Chocolate","Orange")
+
+barplot(num, names.arg = cat, xlab ="Category", ylab ="Number of Sales", main ="Cantor's Confectionery Candy Sales", density=c(5,10,20,30) , angle=c(0,45,90,11) )
+:::
+
+::: callout-tip
 Note that bar charts do not have to be vertical. Bar charts are usually made to be vertical by default, but sometimes a horizontal format might be useful so that long label names do not overlap with each other.
 :::
 
@@ -263,7 +269,9 @@ Note that bar charts do not have to be vertical. Bar charts are usually made to 
 
 Cantor's Confectionery recorded a sample of the number of candies it had sold for the past 7 days. This can be summarized by the following list: $\{40,32,56,76,32,32,50\}$.
 
-An employee wanted to see how the sales fluctuated over time, so they decided to plot this data in the form of a line graph: PICTURE HERE LATER
+An employee wanted to see how the sales fluctuated over time, so they decided to plot this data in the form of a line graph: ![](./FiguresPNG/saleslinegraph.png)
+
+sales \<- c(40,32,56,76,32,32,50) plot(sales, type = "o", xlab = "Day", ylab = "Sales", main = "Cantor's Confectionery Sales Over the Past 7 Days")
 
 The number of sales do not appear to consistently increase or decrease, but the sales appear to peak on day 4, which may be worthy of further investigation.
 :::
@@ -285,7 +293,11 @@ Cantor's Confectionery recorded the weights of their candies in the form of a fr
 | $50 < x \le 60$          | 4         |
 | $60 < x \le 70$          | 1         |
 
-An employee wanted to see how the weights data was distributed (in other words, the "shape" of the data), so they decided to plot this data in the form of a histogram: PICTURE HERE LATER
+An employee wanted to see how the weights data was distributed (in other words, the "shape" of the data), so they decided to plot this data in the form of a histogram: ![](./FiguresPNG/candyweightshistogram.png)
+
+num \<- c(21,21,31,31,31,41,41,41,41,41,51,51,51,51,61)
+
+hist(num,col='#3F68B7',xlab="Weights (in grams)", main="Cantor's Confectionery Candy Weights")
 
 While it is difficult to tell with such a small sample size, the weights data appears to be approximately normally distributed. This is because the data is symmetrical and forms a "bell shape" when plotted.
 :::
@@ -307,9 +319,16 @@ Cantor's Confectionery recorded a sample of the number of candies it had sold ac
 
 -   16 orange candies
 
-An employee wanted to visualize how each category compares to the whole and decided to plot this data in the form of a pie chart: PICTURE HERE LATER
+An employee wanted to visualize how each category compares to the whole and decided to plot this data in the form of a pie chart: ![](./FiguresPNG/candysalespiechart.png)
+
+library(ggplot2)
+
+df \<- data.frame ( num = c(23,49,57,16), cat = c("Blueberry","Grape","Chocolate","Orange") )
+
+ggplot(data=df, aes(x="", y=num,fill=cat))+ labs(y="Number of Sales",fill="Categories",title="Cantor's Confectionery Candy Sales")+ geom_bar(stat="identity") + coord_polar("y") + theme_void() + scale_fill_manual(values=c("skyblue2", "tan4", "mediumpurple", "orange"))
 
 As you can see, chocolate takes up most of the pie chart, followed by grape, blueberry, and orange.
+
 :::
 
 ### Scatter plots
@@ -324,16 +343,24 @@ Cantor's Confectionery recorded the data of candy prices, alongside each candy's
 The data is shown in the table below:
 
 |                                 |     |     |     |     |     |     |     |     |     |     |
-|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
+|---------------------------------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
 | **Candy Prices (in STARMASTs)** | 1.3 | 1.4 | 1.5 | 2.1 | 2.3 | 2.5 | 3.7 | 4.5 | 5.1 | 5.6 |
 | **Number of Sales**             | 340 | 450 | 380 | 300 | 201 | 199 | 89  | 93  | 76  | 60  |
 
-An employee wanted to see, at a glance, whether there was any correlation between candy prices and number of sales. They decided to plot this data in the form of a scatter plot: PICTURE HERE LATER
+An employee wanted to see, at a glance, whether there was any correlation between candy prices and number of sales. They decided to plot this data in the form of a scatter plot: ![](./FiguresPNG/cantorscatterplot.png)
+
+price \<- c(1.3,1.4,1.5,2.1,2.3,2.5,3.7,4.5,5.1,5.6) sales \<- c(340,450,380,300,201,199,89,93,76,60)
+
+plot(price,sales,xlab="Candy Prices (in STARMASTs)",ylab="Number of Sales",main="Cantor’s Confectionery Candy Prices vs Number of Sales")
 
 From this scatter plot, there appears to be an inverse trend: when the candy price increases, the number of sales decreases.
 :::
 
 # Inferential statistics {.unnumbered}
+
+The bridge between descriptive and inferential statistics is **distributions**. This refers to the "shape" of the data, or how the data points are spread out. Some common distributions include the normal distribution (as mentioned in the histogram section), binomial distribution, and Poisson distribution. For more information on common distributions, please read [Overview: Probability distributions.](./overviews/o-distributions)
+
+If you know which distribution best **describes** your data, you would know what kind of **inferential statistics** techniques to use. For example, the PMFs, PDFs, or CDFs differ depending on the distribution you are working with, and the confidence interval formula that you will see below only works for normally distributed data.
 
 ## Hypothesis testing {.unnumbered}
 
@@ -342,8 +369,6 @@ From this scatter plot, there appears to be an inverse trend: when the candy pri
 -   Null hypothesis ($H_0$): This hypothesis represents the ‘status quo’ or no effect. It is always a statement of equality.
 
 -   Alternative hypothesis ($H_1$): This is the hypothesis that you are trying to test. It is always a statement of inequality.
-
-(COPIED DIRECTLY FROM HYPOTHESIS TESTING GUIDE)
 
 This hypothesis test will provide a **p-value**: the probability of obtaining a test result as extreme as the observed outcome if the null hypothesis is true. So the lower the p-value is, the more statistical evidence there is against the null hypothesis.
 
@@ -377,6 +402,12 @@ To test this, they conducted a two-tailed two-sample t-test, with a significance
 This indicates that there is sufficient evidence to suggest a statistically significant difference between the number of sales before and after the campaign, specifically with the number of sales increasing after the campaign was implemented.
 :::
 
+::: callout-tip
+Many hypothesis tests rely on certain assumptions. For instance, the t-test assumes that the sample being used comes from a normally distributed population.
+
+When your data set fails to meet the assumptions of a particular hypothesis test, there may exist other methods that you can use instead, like non-parametric tests. However, this material goes beyond the scope of this study guide.
+:::
+
 For more information on hypothesis testing, please read [Guide: Introduction to hypothesis testing.](../studyguides/hypothesistesting.qmd)
 
 ## Correlation tests and regression analysis {.unnumbered}
@@ -406,14 +437,18 @@ While there are some gray areas, the value of the Pearson correlation coefficien
 
 On the other hand, **regression analysis** uses a function to model the relationship between two or more variables. This would involve a **dependent variable** and one or more **independent variables**. To provide some reasoning for the naming, the dependent variable is the output of the regression function, so it is dependent on the values of any independent variables that are input into the function. So a **regression model** would allow you to predict the value of the dependent variable based on the value of the independent variable(s).
 
-Regression analysis sometimes, but not always, deals with the linear relationship between two variables (one dependent variable and one independent variable). This would be known as **simple linear regression**, where the relationship is modeled as a linear function in the form of $y = mx+b$. The **coefficient of determination** ($R^2$ or $r^2$) indicates how well the model's independent variable explains the dependent variable, and the value of this ranges from 0 to 1. In simple linear regression specifically, the coefficient of determination is the squared value of the Pearson correlation coefficient.
+Regression analysis sometimes, but not always, deals with the linear relationship between two variables (one dependent variable and one independent variable). This would be known as **simple linear regression**, where the relationship is modeled as a linear function in the form of $y = \alpha x+\beta$. The **coefficient of determination** ($R^2$ or $r^2$) indicates how well the model's independent variable explains the dependent variable, and the value of this ranges from 0 to 1. In simple linear regression specifically, the coefficient of determination is the squared value of the Pearson correlation coefficient.
 
 ::: {.callout-note appearance="simple"}
 ## Example 16
 
 An employee from Cantor's Confectionery wishes to test if there is a statistically significant linear relationship between candy prices (independent variable) and number of sales (dependent variable), using the same data as Example 13. They decide to use simple linear regression for this purpose. This can be visualized below as a line of best fit overlaid on the scatter plot:
 
-PICTURE HERE LATER
+![](./FiguresPNG/cantorscatterplotwithline.png)
+
+price \<- c(1.3,1.4,1.5,2.1,2.3,2.5,3.7,4.5,5.1,5.6) sales \<- c(340,450,380,300,201,199,89,93,76,60)
+
+plot(price,sales,xlab="Candy Prices (in STARMASTs)",ylab="Number of Sales",main="Cantor’s Confectionery Candy Prices vs Number of Sales") abline(lm(sales \~ price))
 
 This can be modeled as the linear function $\textrm{sales}=-80.35(\textrm{price}) + 459.84$. The model's coefficient of determination is 0.8319, indicating that the price explains the number of sales well.
 
@@ -432,46 +467,12 @@ It is important to note that 10 data points makes up quite a small sample size, 
 
 For more information on regression, please read \[Guide: Introduction to regression.\]
 
-## Confidence interval {.unnumbered}
-
-::: callout-note
-## Definition of confidence interval
-
-**Confidence interval** consists of an upper bound and lower bound used to estimate a population parameter (such as the population mean) within a certain probability. For example, a 95% confidence interval implies that if the sampling process were repeated 100 times, then 95 of the intervals calculated from those samples would contain the true population parameter.
-:::
-
-Here is the formula for confidence interval: $$\textrm{CI}=\overline{x}\pm z\frac{s}{\sqrt{n}}$$
-
--   $\overline{x}$ = sample mean
-
--   $z$ = z-score or confidence level value
-
--   $s$ = sample standard deviation
-
--   $n$ = sample size
-
-::: {.callout-note appearance="simple"}
-## Example 17
-
-Cantor's Confectionery recorded a sample of the number of candies it had sold for the past 7 days. This can be summarized by the following list: $\{40,32,56,76,32,32,50\}$.
-
-You want to calculate a 95% confidence interval for the population mean (the mean of all Cantor's Confectionery sales per day). To do this, you would need to find the sample mean $\overline{x}$, z-score, sample standard deviation $s$, and sample size $n$.
-
-In Example 1, you have already calculated that $\overline{x} \approx 38.4$. In Example 8, you have also calculated that $n=7$ and $s\approx18.2$. Now you must find the z-score. By using a z-table, you would be able to find that the z-score for a confidence level of 95% is 1.96.
-
-So, the 95% confidence interval for the population mean is:
-
-$$\textrm{CI}=38.4\pm 1.96\frac{18.2}{\sqrt{7}}$$ The upper bound is $38.4+ 1.96\frac{18.2}{\sqrt{7}}\approx51.9$, and the lower bound is $38.4- 1.96\frac{18.2}{\sqrt{7}}\approx24.9$.
-
-(IM CONCERNED THIS MAY BE WAY ABOVE THE DIFFICULTY LEVEL, NOT SURE WHAT TO DO WITH THIS EXAMPLE)
-:::
-
 ## PMFs, PDFs, and CDFs
 
 A **probability mass function (PMF)** is used for **discrete random variables**. It returns the probability that a discrete random variable $X$ will take on a specific countable value $x$. So it can be expressed as $\mathbb{P}(X=x)$.
 
 ::: {.callout-note appearance="simple"}
-## Example 18
+## Example 17
 
 Cantor's Confectionery knows that the rate of customers entering the shop per hour can be modeled as $X \sim \textrm{Pois}(20)$.
 
@@ -481,7 +482,7 @@ An employee wants to find the probability of exactly 15 customers entering the s
 A **probability mass function (PDF)** is used for **continuous random variables**. It returns the probability that a continuous random variable $X$ will take on a value that lies between a certain interval. So it can be expressed as $\mathbb{P}(a \leq X \leq b)$, where $a$ is the lower bound of the interval and $b$ is the upper bound of the interval.
 
 ::: {.callout-note appearance="simple"}
-## Example 19
+## Example 18
 
 Cantor's Confectionery knows that the lengths of their chocolate bars are normally distributed and can be modeled as $X \sim N(5.6,1.44)$.
 
@@ -491,7 +492,7 @@ An employee wants to find the probability that a chocolate bar has a length betw
 A **cumulative distribution function (CDF)** is used for **both discrete and continuous random variables**. It returns the probability that a random variable $X$ will take on a value that is less than or equal to a particular value $x$. So it can be expressed as $\mathbb{P}(X \leq x)$.
 
 ::: {.callout-note appearance="simple"}
-## Example 20
+## Example 19
 
 Cantor's Confectionery knows that the rate of customers entering the shop per hour can be modeled as $X \sim \textrm{Pois}(20)$.
 
@@ -499,7 +500,7 @@ An employee wants to find the probability of less than or equal to 15 customers 
 :::
 
 ::: {.callout-note appearance="simple"}
-## Example 21
+## Example 20
 
 Cantor's Confectionery knows that the lengths of their chocolate bars are normally distributed and can be modeled as $X \sim N(5.6,1.44)$.
 
@@ -528,7 +529,39 @@ $$
 
 For more information on PMFs, PDFs, and CDFs, please read [Guide: PMFs, PDFs, and CDFs.](../studyguides/pmfspdfscdfs.qmd)
 
-(MIGHT BE NICE TO INTEGRATE INTERACTIVE FIGURES IN THIS SECTION)
+## Confidence intervals {.unnumbered}
+
+::: callout-note
+## Definition of confidence interval
+
+A **confidence interval** consists of an upper bound and lower bound used to estimate a population parameter (such as the population mean) within a certain probability. For example, a 95% confidence interval implies that if the sampling process were repeated 100 times, then 95 of the intervals calculated from those samples would contain the true population parameter.
+:::
+
+While the confidence interval formula differs depending on the distribution, here is the commonly used confidence interval formula for normally distributed data: $$\textrm{CI}=\overline{x}\pm z\frac{s}{\sqrt{n}}$$
+
+-   $\overline{x}$ = sample mean
+
+-   $z$ = z-score or confidence level value
+
+-   $s$ = sample standard deviation
+
+-   $n$ = sample size
+
+::: {.callout-note appearance="simple"}
+## Example 21
+
+Cantor's Confectionery recorded a sample of the number of candies it had sold for the past 7 days. This can be summarized by the following list: $\{40,32,56,76,32,32,50\}$.
+
+You want to calculate a 95% confidence interval for the population mean (the mean of all Cantor's Confectionery sales per day). To do this, you would need to find the sample mean $\overline{x}$, z-score, sample standard deviation $s$, and sample size $n$.
+
+In Example 1, you have already calculated that $\overline{x} \approx 38.4$. In Example 8, you have also calculated that $n=7$ and $s\approx18.2$. Now you must find the z-score. By using a z-table, you would be able to find that the z-score for a confidence level of 95% is 1.96.
+
+So, the 95% confidence interval for the population mean is:
+
+$$\textrm{CI}=38.4\pm 1.96\frac{18.2}{\sqrt{7}}$$ The upper bound is $38.4+ 1.96\frac{18.2}{\sqrt{7}}\approx51.9$, and the lower bound is $38.4- 1.96\frac{18.2}{\sqrt{7}}\approx24.9$.
+:::
+
+For more information on regression, please read \[Guide: Introduction to confidence intervals.\]
 
 # Quick check problems
 

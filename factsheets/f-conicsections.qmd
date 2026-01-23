@@ -1,0 +1,517 @@
+---
+title: "2D Conic Sections Fact Sheet"
+author: "Abigail Carpenter"
+abstract-title: Summary
+abstract: This fact sheet provides an overview of 2D conic sections, including general equations, discriminants, types of conics, standard forms, key features, and labeled graphs.
+categories:
+  - Geometry
+draft: true
+---
+
+# General Quadratic Equation for Conics
+
+A conic section can be represented algebraically by the **general quadratic equation**:
+
+$$
+Ax^2 + Bxy + Cy^2 + Dx + Ey + F = 0
+$$
+
+### Discriminant and Conic Type
+
+The discriminant is:
+
+$$
+\Delta = B^2 - 4AC
+$$
+
+Use this to classify the conic:
+
+| Discriminant | Conic Type | Notes |
+|--------------|------------|-------|
+| $\Delta < 0$ | Ellipse | Circle if $A=C$ and $B=0$ |
+| $\Delta = 0$ | Parabola |  |
+| $\Delta > 0$ | Hyperbola |  |
+
+---
+
+# Conic Sections
+
+## Circle
+
+**Standard form:**
+
+$$
+(x-h)^2 + (y-k)^2 = r^2
+$$
+
+**Key features:**
+
+- Centre: $(h,k)$
+- Radius: $r$
+
+::: {.content-visible when-format="html"}
+
+**Graph:**  
+
+<div id="circle-graph" style="width: 100%; height: 400px;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const elt = document.getElementById('circle-graph');
+  const calc = Desmos.GraphingCalculator(elt, {
+    expressions: true,
+    settingsMenu: false,
+    zoomButtons: true
+  });
+
+  // Sliders for center and radius
+  calc.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-10, max:10, step:0.1}});
+  calc.setExpression({id:'k', latex:'k=-0', sliderBounds:{min:-10, max:10, step:0.1}});
+  calc.setExpression({id:'r', latex:'r=3', sliderBounds:{min:0.1, max:10, step:0.1}, color:'#FFFFFF00'});
+  calc.setExpression({id:'t', latex:'t', sliderBounds:{min:0,max:1,step:0.01}, secret:true});
+
+  // Circle
+  calc.setExpression({
+    id:'circle',
+    latex:'(x-h)^2 + (y-k)^2 = r^2',
+    color:'#DB4315',
+    secret: true
+  });
+
+  // Center point label
+  calc.setExpression({
+    id:'center',
+    latex:'(h,k)',
+    label:'Centre (h,k)',
+    showLabel:true,
+    color:'#3F68B6',
+    secret: true
+  });
+  
+  // Radius Label
+   calc.setExpression({
+    id:'outside_point',
+    latex:'(h+r,k)',
+    color:'#FFCB00',
+    secret: true
+  });
+  
+    calc.setExpression({
+  id: 'radius_label_point',
+  latex: '(h + r/2, k)',
+  label: 'Radius',
+  showLabel: true,
+  dragMode: Desmos.DragModes.NONE,    // ensures it behaves like a static point
+  color:'#FFCB00',
+  secret: true
+});
+
+  // Radius 
+  calc.setExpression({
+    id:'circle_radius',
+    latex:'(h + rt, k)',
+    color:'#FFCB00',
+    lineStyle: Desmos.Styles.DASHED,
+    label: 'Radius',
+    showLabel: true,
+    secret: true
+  });
+
+  // Force 1:1 aspect ratio
+  calc.setMathBounds({left:-10,right:10,bottom:-10,top:10});
+});
+</script>
+
+:::
+
+---
+
+## Ellipse
+
+**Standard form:**
+
+$$
+\frac{(x-h)^2}{a^2} + \frac{(y-k)^2}{b^2} = 1 \quad (a > b)
+$$
+
+**Key features:**
+
+- Centre: $(h,k)$
+- Semi-major axis: $a$
+- Semi-minor axis: $b$
+- Foci: $(h \pm c, k)$ for horizontal ellipse, $(h, k \pm c)$ for vertical, where $c = \sqrt{a^2 - b^2}$
+
+::: {.content-visible when-format="html"}
+
+**Graph:**  
+
+<div id="ellipse-graph" style="width: 100%; height: 400px;"></div>
+
+<script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<script>
+const elt = document.getElementById('ellipse-graph');
+const calc = Desmos.GraphingCalculator(elt, {expressions: true});
+
+// Sliders
+calc.setExpression({id:'a', latex:'a=4', sliderBounds:{min:4,max:8,step:0.1}});
+calc.setExpression({id:'b', latex:'b=2', sliderBounds:{min:1,max:4,step:0.1}});
+calc.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calc.setExpression({id:'k', latex:'k=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calc.setExpression({id:'c', latex:'c=\\sqrt{a^2-b^2}', secret:true});
+calc.setExpression({id:'t', latex:'t', sliderBounds:{min:0,max:1,step:0.01}, secret:true});
+
+// Ellipse
+calc.setExpression({
+  id:'ellipse',
+  latex:'\\frac{(x-h)^2}{a^2} + \\frac{(y-k)^2}{b^2} = 1',
+  color:'#DB4315',
+  secret: true
+});
+
+// Centre and foci
+calc.setExpression({id:'centre', latex:'(h,k)', label:'Centre', showLabel:true, color:'#3F68B6', secret: true});
+calc.setExpression({id:'focus1', latex:'(h+c,k)', label:'Focus', showLabel:true, color:'#FFCB00', secret: true});
+calc.setExpression({id:'focus2', latex:'(h-c,k)', label:'Focus', showLabel:true, color:'#FFCB00', secret: true});
+
+calc.setExpression({
+  id:'maj_axis',
+  latex:'(h + at, k)',
+  parametricDomain:{min:-1, max:1},
+  color:'#3F68B6',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+
+calc.setExpression({
+  id:'maj_axis_label',
+  latex:'L_{maj} = (h + 0.5a, k)',
+  label:'Semi-Major Axis',
+  showLabel:true,
+  color:'#3F68B6',
+  dragMode: Desmos.DragModes.NONE,
+  secret:true
+});
+
+calc.setExpression({
+  id:'min_axis',
+  latex:'(h, k + bt)',
+  parametricDomain:{min:-1, max:1},
+  color:'#FFCB00',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+
+calc.setExpression({
+  id:'min_axis_label',
+  latex:'L_{min} = (h, k + 0.5b)',
+  label:'Semi-Minor Axis',
+  showLabel:true,
+  color:'#FFCB00',
+  dragMode: Desmos.DragModes.NONE,
+  secret:true
+});
+
+// Force 1:1 aspect ratio
+  calc.setMathBounds({left:-10,right:10,bottom:-10,top:10});
+
+</script>
+
+:::
+
+---
+
+## Parabola
+
+**Standard forms:**
+
+- Vertical: $(x - h)^2 = 4p(y - k)$
+- Horizontal: $(y - k)^2 = 4p(x - h)$
+
+**Key features:**
+
+- Vertex: $(h,k)$
+- Focus: $(h, k+p)$ or $(h+p, k)$
+- Directrix: $y = k-p$ or $x = h-p$
+- Axis of symmetry: passes through vertex and focus
+
+::: {.content-visible when-format="html"}
+
+**Graph:**  
+
+### Vertical Parabola
+
+<div id="parabola-vertical" style="width: 100%; height: 500px;"></div>
+
+<script>
+const eltP3 = document.getElementById('parabola-vertical');
+const calcP3 = Desmos.GraphingCalculator(eltP3, {expressions:true});
+
+// sliders
+calcP3.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcP3.setExpression({id:'k', latex:'k=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcP3.setExpression({id:'p', latex:'p=2', sliderBounds:{min:-5,max:5,step:0.1}});
+
+// parabola (vertical orientation)
+calcP3.setExpression({
+  id:'parabolaV',
+  latex:'(x-h)^2 = 4p(y-k)',
+  color:'#DB4315',
+  secret:true
+});
+
+// focus
+calcP3.setExpression({
+  id:'focusV',
+  latex:'(h, k + p)',
+  label:'Focus',
+  showLabel:true,
+  color:'#FFCB00',
+  secret:true
+});
+
+// directrix
+calcP3.setExpression({
+  id:'directrixV',
+  latex:'y = k - p',
+  label:'Directrix',
+  showLabel:true,
+  color:'#3F68B6',
+  secret:true,
+  lineStyle: Desmos.Styles.DASHED
+});
+
+calcP3.setExpression({
+  id:'directrixV_label',
+  latex:'(h, k - p)',
+  label:'Directrix',
+  showLabel:true,
+  pointStyle: Desmos.Styles.OPEN,
+  dragMode: Desmos.DragModes.NONE,
+  color:'#3F68B6',
+  secret:true
+});
+
+// vertex
+calcP3.setExpression({
+  id:'vertexV',
+  latex:'(h,k)',
+  label:'Vertex',
+  showLabel:true,
+  color:'#3F68B6',
+  secret:true
+});
+</script>
+
+### Horizontal Parabola
+
+<div id="parabola-horizontal" style="width: 100%; height: 500px;"></div>
+
+<script>
+const eltP2 = document.getElementById('parabola-horizontal');
+const calcP2 = Desmos.GraphingCalculator(eltP2, {expressions:true});
+
+// sliders
+calcP2.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcP2.setExpression({id:'k', latex:'k=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcP2.setExpression({id:'p', latex:'p=2', sliderBounds:{min:-5,max:5,step:0.1}});
+
+// parabola
+calcP2.setExpression({
+  id:'parabolaH',
+  latex:'(y-k)^2 = 4p(x-h)',
+  color:'#DB4315', secret: true
+});
+
+// focus
+calcP2.setExpression({
+  id:'focusH',
+  latex:'(h+p,k)',
+  label:'Focus',
+  showLabel:true,
+  color:'#FFCB00', secret: true
+});
+
+// directrix
+calcP2.setExpression({
+  id:'directrixH',
+  latex:'x=h-p',
+  label:'Directrix',
+  showLabel:true,
+  color:'#3F68B6', 
+  secret: true,
+  lineStyle: Desmos.Styles.DASHED
+});
+
+calcP2.setExpression({
+  id:'directrixH_label',
+  latex:'(h - p, k)',
+  label:'Directrix',
+  showLabel:true,
+  pointStyle: Desmos.Styles.OPEN,
+  dragMode: Desmos.DragModes.NONE,
+  color:'#3F68B6',
+  secret:true
+});
+
+// vertex
+calcP2.setExpression({
+  id:'vertexH',
+  latex:'(h,k)',
+  label:'Vertex',
+  showLabel:true,
+  color:'#3F68B6', secret: true
+});
+</script>
+
+:::
+---
+
+## Hyperbola
+
+**Standard forms:**
+
+- Horizontal: $\frac{(x-h)^2}{a^2} - \frac{(y-k)^2}{b^2} = 1$
+- Vertical: $\frac{(y-k)^2}{a^2} - \frac{(x-h)^2}{b^2} = 1$
+
+**Key features:**
+
+- Centre: $(h,k)$
+- Vertices: $(h \pm a, k)$ or $(h, k \pm a)$
+- Foci: $(h \pm c, k)$ or $(h, k \pm c)$, $c = \sqrt{a^2 + b^2}$
+- Asymptotes: $y-k = \pm \frac{b}{a}(x-h)$ (horizontal), $y-k = \pm \frac{a}{b}(x-h)$ (vertical)
+
+::: {.content-visible when-format="html"}
+
+**Graph:**  
+
+### Horizontal Hyperbola
+
+<div id="hyperbola-horizontal" style="width: 100%; height: 500px;"></div>
+
+<script>
+const eltH1 = document.getElementById('hyperbola-horizontal');
+const calcH1 = Desmos.GraphingCalculator(eltH1, {expressions:true});
+
+// sliders
+calcH1.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcH1.setExpression({id:'k', latex:'k=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcH1.setExpression({id:'a', latex:'a=3', sliderBounds:{min:1,max:6,step:0.1}});
+calcH1.setExpression({id:'b', latex:'b=2', sliderBounds:{min:1,max:6,step:0.1}});
+calcH1.setExpression({id:'c', latex:'c=\\sqrt{a^2+b^2}', secret:true});
+
+// hyperbola equation (hidden)
+calcH1.setExpression({
+  id:'hyperbolaEq',
+  latex:'\\frac{(x-h)^2}{a^2} - \\frac{(y-k)^2}{b^2} = 1',
+  color:'#DB4315',
+  secret:true
+});
+
+// asymptotes (adjustable & dashed)
+calcH1.setExpression({
+  id:'asym1',
+  latex:'y-k=(b/a)*(x-h)',
+  color:'#3F68B6',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+calcH1.setExpression({
+  id:'asym2',
+  latex:'y-k=-(b/a)*(x-h)',
+  color:'#3F68B6',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+
+// foci
+calcH1.setExpression({id:'f1', latex:'(h+c,k)', label:'Focus', showLabel:true, color:'#FFCB00'});
+calcH1.setExpression({id:'f2', latex:'(h-c,k)', label:'Focus', showLabel:true, color:'#FFCB00', secret:true});
+
+// centre
+calcH1.setExpression({id:'centreH1', latex:'(h,k)', label:'Centre', showLabel:true, color:'#3F68B6', secret:true});
+
+// vertices
+calcH1.setExpression({id:'v1', latex:'(h+a,k)', label:'Vertex', showLabel:true, color:'#DB4315'});
+calcH1.setExpression({id:'v2', latex:'(h-a,k)', label:'Vertex', showLabel:true, color:'#DB4315'});
+</script>
+
+</script>
+
+### Vertical Hyperbola
+
+<div id="hyperbola-vertical" style="width: 100%; height: 500px;"></div>
+
+<script>
+const eltH2 = document.getElementById('hyperbola-vertical');
+const calcH2 = Desmos.GraphingCalculator(eltH2, {expressions:true});
+
+// sliders
+calcH2.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcH2.setExpression({id:'k', latex:'k=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcH2.setExpression({id:'a', latex:'a=3', sliderBounds:{min:1,max:6,step:0.1}});
+calcH2.setExpression({id:'b', latex:'b=2', sliderBounds:{min:1,max:6,step:0.1}});
+calcH2.setExpression({id:'c', latex:'c=\\sqrt{a^2+b^2}', secret:true});
+
+// hyperbola equation (hidden)
+calcH2.setExpression({
+  id:'hyperbolaEq2',
+  latex:'\\frac{(y-k)^2}{a^2} - \\frac{(x-h)^2}{b^2} = 1',
+  color:'#DB4315',
+  secret:true
+});
+
+// asymptotes (adjustable & dashed)
+calcH2.setExpression({
+  id:'asym3',
+  latex:'y-k=(a/b)*(x-h)',
+  color:'#3F68B6',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+calcH2.setExpression({
+  id:'asym4',
+  latex:'y-k=-(a/b)*(x-h)',
+  color:'#3F68B6',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+
+// foci
+calcH2.setExpression({id:'f3', latex:'(h,k+c)', label:'Focus', showLabel:true, color:'#FFCB00', secret:true});
+calcH2.setExpression({id:'f4', latex:'(h,k-c)', label:'Focus', showLabel:true, color:'#FFCB00', secret:true});
+
+// centre
+calcH2.setExpression({id:'centreH2', latex:'(h,k)', label:'Centre', showLabel:true, color:'#3F68B6', secret:true});
+
+// vertices
+calcH2.setExpression({id:'v3', latex:'(h,k+a)', label:'Vertex', showLabel:true, color:'#DB4315'});
+calcH2.setExpression({id:'v4', latex:'(h,k-a)', label:'Vertex', showLabel:true, color:'#DB4315'});
+
+</script>
+
+:::
+
+---
+
+
+# Quick Reference Table
+
+| Conic | Standard Form | Key Features |
+|-------|---------------|--------------|
+| Circle | $(x-h)^2 + (y-k)^2 = r^2$ | Centre $(h,k)$, radius $r$ |
+| Ellipse | $\frac{(x-h)^2}{a^2} + \frac{(y-k)^2}{b^2} = 1$ | Centre, axes, foci |
+| Parabola | $(x-h)^2 = 4p(y-k)$ | Vertex, focus, directrix |
+| Hyperbola | $\frac{(x-h)^2}{a^2} - \frac{(y-k)^2}{b^2} = 1$ | Centre, vertices, foci, asymptotes |
+
+---
+
+# References
+
+- Interactive Desmos graphs for visualization
+- Geometry textbooks on conic sections
+
+## Version history {-}
+
+v1.0: initial version created 11/25 by Abigail Carpenter as part of a University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

@@ -1,0 +1,1025 @@
+---
+title: "Introduction to 3D Polar Coordinate Systems: Spherical & Cylindrical Coordinates"
+author: Anja Colombi
+abstract-title: Summary
+abstract: In three-dimensional space, points can be described using various coordinate systems. While Cartesian coordinates $(x, y, z)$ are common, polar-based systems like spherical and cylindrical coordinates provide alternative ways to represent positions – particularly when dealing with problems involving symmetry.
+categories:
+  - Graphing
+image: FiguresPNG/introtoquadratics-image.png
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+*Before reading this guide, it is recommended that you read [Guide: Introduction to polar coordinates](introtopolarcoords.qmd).*
+
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/introto3dcoords.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
+
+---
+
+# What are cylindrical coordinates?
+Cylindrical coordinates can be seen as an **extension** of 2D polar coordinates by adding rotation around the z-axis. They are particularly useful for problems with rotation symmetry about an axis – for example cylinders, pipes, or beams.
+Each point in 3D space is described by:
+
+• $r$ - the radial distance from the z-axis
+
+• $θ$ - the angle from the x-axis (in the xy-plane)
+
+• $z$ - the height along the z-axis
+
+The following diagram shows an example of how to visualise this.
+<div style="width: 100%; max-width: 700px; margin: 20px auto;">
+  <canvas id="cylindricalCanvas" width="700" height="600"></canvas>
+</div>
+
+<script>
+const canvas = document.getElementById('cylindricalCanvas');
+const ctx = canvas.getContext('2d');
+const width = canvas.width;
+const height = canvas.height;
+
+// Set origin
+const originX = width / 2;
+const originY = height * 0.55;
+
+// Clear canvas
+ctx.clearRect(0, 0, width, height);
+
+// Parameters
+const cylinderRadius = 140;
+const cylinderHeight = 220;
+const r = 90;
+const theta = Math.PI / 5; // angle
+const z = 120;
+
+// Calculate 3D to 2D projection (isometric-style)
+function project3D(x, y, z) {
+  const px = originX + x - 0.4 * y;
+  const py = originY - z + 0.25 * y;
+  return [px, py];
+}
+
+// Draw cylinder
+function drawCylinder() {
+  // Bottom ellipse
+  ctx.beginPath();
+  ctx.ellipse(originX, originY, cylinderRadius, 35, 0, 0, 2 * Math.PI);
+  ctx.fillStyle = 'rgba(220, 220, 220, 0.6)';
+  ctx.fill();
+  ctx.strokeStyle = '#444';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  
+  // Left side
+  ctx.beginPath();
+  ctx.moveTo(originX - cylinderRadius, originY);
+  ctx.lineTo(originX - cylinderRadius, originY - cylinderHeight);
+  ctx.strokeStyle = '#444';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  
+  // Right side
+  ctx.beginPath();
+  ctx.moveTo(originX + cylinderRadius, originY);
+  ctx.lineTo(originX + cylinderRadius, originY - cylinderHeight);
+  ctx.stroke();
+  
+  // Top ellipse
+  ctx.beginPath();
+  ctx.ellipse(originX, originY - cylinderHeight, cylinderRadius, 35, 0, 0, 2 * Math.PI);
+  ctx.fillStyle = 'rgba(230, 230, 230, 0.7)';
+  ctx.fill();
+  ctx.strokeStyle = '#444';
+  ctx.stroke();
+  
+  // Grid on bottom
+  ctx.strokeStyle = 'rgba(150, 150, 150, 0.3)';
+  ctx.lineWidth = 1;
+  for (let angle = 0; angle < 360; angle += 30) {
+    const rad = angle * Math.PI / 180;
+    ctx.beginPath();
+    ctx.moveTo(originX, originY);
+    ctx.lineTo(originX + cylinderRadius * Math.cos(rad), 
+               originY + 35 * Math.sin(rad));
+    ctx.stroke();
+  }
+}
+
+// Draw axes
+function drawAxes() {
+  // Z-axis (vertical, blue)
+  ctx.beginPath();
+  ctx.moveTo(originX, originY + 40);
+  ctx.lineTo(originX, originY - cylinderHeight - 80);
+  ctx.strokeStyle = '#0066ff';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  
+  // Z-axis arrow
+  ctx.beginPath();
+  ctx.moveTo(originX, originY - cylinderHeight - 80);
+  ctx.lineTo(originX - 6, originY - cylinderHeight - 68);
+  ctx.lineTo(originX + 6, originY - cylinderHeight - 68);
+  ctx.closePath();
+  ctx.fillStyle = '#0066ff';
+  ctx.fill();
+  
+  ctx.font = 'bold 20px Arial';
+  ctx.fillText('z', originX + 12, originY - cylinderHeight - 75);
+  
+  // Y-axis (red) - horizontal
+  ctx.beginPath();
+  ctx.moveTo(originX - 60, originY);
+  ctx.lineTo(originX + 280, originY);
+  ctx.strokeStyle = '#ff0000';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  
+  // Y-axis arrow
+  ctx.beginPath();
+  ctx.moveTo(originX + 280, originY);
+  ctx.lineTo(originX + 268, originY - 6);
+  ctx.lineTo(originX + 268, originY + 6);
+  ctx.closePath();
+  ctx.fillStyle = '#ff0000';
+  ctx.fill();
+  
+  ctx.fillStyle = '#ff0000';
+  ctx.fillText('y', originX + 290, originY + 8);
+  
+  // X-axis (green, going back-left)
+  const [xEndX, xEndY] = project3D(0, 250, 0);
+  ctx.beginPath();
+  ctx.moveTo(originX, originY);
+  ctx.lineTo(xEndX, xEndY);
+  ctx.strokeStyle = '#00aa00';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  
+  // X-axis arrow
+  ctx.beginPath();
+  ctx.moveTo(xEndX, xEndY);
+  ctx.lineTo(xEndX + 8, xEndY - 8);
+  ctx.lineTo(xEndX + 12, xEndY - 2);
+  ctx.closePath();
+  ctx.fillStyle = '#00aa00';
+  ctx.fill();
+  
+  ctx.fillStyle = '#00aa00';
+  ctx.fillText('x', xEndX - 5, xEndY + 20);
+}
+
+// Draw point and cylindrical coordinates
+function drawPoint() {
+  const x = r * Math.cos(theta);
+  const y = r * Math.sin(theta);
+  
+  // Point at (x, y, 0) - base projection
+  const [baseX, baseY] = project3D(x, y, 0);
+  
+  // Point at (x, y, z) - actual point
+  const [pointX, pointY] = project3D(x, y, z);
+  
+  // Draw r vector (thick black line, from origin to base)
+  ctx.beginPath();
+  ctx.moveTo(originX, originY);
+  ctx.lineTo(baseX, baseY);
+  ctx.strokeStyle = '#000000';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+  
+  ctx.fillStyle = '#000000';
+  ctx.font = 'bold 16px Arial';
+  ctx.fillText('r', originX + (baseX - originX) / 2 - 10, originY + (baseY - originY) / 2 + 20);
+  
+  // Calculate angles
+  // X-axis direction in canvas coordinates (going back-left)
+  const [xEndX, xEndY] = project3D(0, 250, 0);
+  const xAxisAngle = Math.atan2(xEndY - originY, xEndX - originX);
+  
+  // R vector angle
+  const rAngle = Math.atan2(baseY - originY, baseX - originX);
+  
+  // === θ angle marker (clean, not "circley") ===
+  const start = xAxisAngle;     // x-axis direction
+  const end = rAngle;           // r direction (to the base point)
+  const arcRadius = 38;         // smaller radius so it looks like an angle marker
+  const tickInner = 16;         // start of the short rays
+  const tickOuter = 64;         // end of the short rays
+  
+  function polarAt(angle, radius) {
+    return [originX + radius * Math.cos(angle), originY + radius * Math.sin(angle)];
+  }
+  
+  // 1) Short side "rays" along x and r to show the two sides of the angle
+  ctx.save();
+  ctx.strokeStyle = '#00cc00';
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  
+  // x-side ray
+  ctx.beginPath();
+  let [ix, iy] = polarAt(start, tickInner);
+  let [ox, oy] = polarAt(start, tickOuter);
+  ctx.moveTo(ix, iy);
+  ctx.lineTo(ox, oy);
+  ctx.stroke();
+  
+  // r-side ray
+  ctx.beginPath();
+  [ix, iy] = polarAt(end, tickInner);
+  [ox, oy] = polarAt(end, tickOuter);
+  ctx.moveTo(ix, iy);
+  ctx.lineTo(ox, oy);
+  ctx.stroke();
+  
+  // 2) Arc between them (anticlockwise)
+  ctx.beginPath();
+  ctx.arc(originX, originY, arcRadius, start, end, true); // true = anticlockwise
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+  
+  // 3) Tiny arrowhead on the arc to indicate direction
+  let diff = start - end;
+  if (diff < 0) diff += 2 * Math.PI;
+  const mid = start - 0.6 * diff;
+  const [ax, ay] = polarAt(mid, arcRadius);
+  const tdx = -Math.sin(mid);
+  const tdy =  Math.cos(mid);
+  
+  ctx.translate(ax, ay);
+  ctx.rotate(Math.atan2(tdy, tdx));
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.lineTo(-8, -5);
+  ctx.lineTo(-8, 5);
+  ctx.closePath();
+  ctx.fillStyle = '#00cc00';
+  ctx.fill();
+  ctx.restore();
+  
+  // 4) θ label slightly outside the arc
+  const labelRadius = arcRadius + 18;
+  const midForLabel = start - diff / 2;
+  const [tx, ty] = polarAt(midForLabel, labelRadius);
+  ctx.fillStyle = '#00cc00';
+  ctx.font = 'bold 16px Arial';
+  ctx.fillText('θ', tx, ty);
+
+  
+  // Draw vertical dashed line from base to point
+  ctx.beginPath();
+  ctx.moveTo(baseX, baseY);
+  ctx.lineTo(pointX, pointY);
+  ctx.strokeStyle = '#666';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([5, 5]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  
+  // Draw the actual point
+  ctx.beginPath();
+  ctx.arc(pointX, pointY, 6, 0, 2 * Math.PI);
+  ctx.fillStyle = '#cc0000';
+  ctx.fill();
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  
+  // Label the point
+  ctx.fillStyle = '#cc0000';
+  ctx.font = 'bold 16px Arial';
+  ctx.fillText('(r, θ, z)', pointX + 12, pointY - 10);
+  
+  // Draw base projection point (green dot)
+  ctx.beginPath();
+  ctx.arc(baseX, baseY, 5, 0, 2 * Math.PI);
+  ctx.fillStyle = '#00cc00';
+  ctx.fill();
+}
+
+// Draw everything in order
+drawCylinder();
+drawAxes();
+drawPoint();
+</script>
+
+<p style="text-align: center; margin-top: 10px; font-style: italic;">
+<strong>Figure 1:</strong> Cylindrical coordinates showing a point (x, y, z) located by radial distance <em>r</em> from the <em>z</em>-axis, angle <em>θ</em> in the <em>xy</em>-plane, and height <em>z</em>.
+</p>
+
+
+The conversion between cylindrical and Cartesian coordinates follows:
+
+::: {.callout-note}
+## Definition of cylindrical coordinates:
+
+• $x = r \cos(\theta)$,
+
+• $y = r \sin(\theta)$,
+
+• $z = z$.
+
+
+
+Such that:
+
+• $r = \sqrt{(x^2 + y^2)}$,
+
+• $θ = \tan^{-1}(\frac{y}{x})$,
+
+• $z = z$.
+:::
+
+Geometrically, cylindrical coordinates can be imagined as stacking circles (each defined by $r$ and $\theta$) along the z-axis. A useful analogy is a can of soup: each horizontal slice is a circle, and stacking these circular slices vertically forms the cylinder.
+
+## Interactive Exploration (Desmos):
+
+Use the following Desmos tool to explore how the cylindrical variables and determine a point’s location.
+
+::: {#cylindrical3d style="width: 100%; height: 500px;"}
+:::
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const elt = document.getElementById("cylindrical3d");
+  const calc = Desmos.Calculator3D(elt);
+
+  // 3D view window
+  calc.setMathBounds({
+    xMin: -5, xMax: 5,
+    yMin: -5, yMax: 5,
+    zMin: -5, zMax: 5
+  });
+
+  // Text box
+  calc.setExpression({
+    id: "info",
+    type: "text",
+    text:
+      "This 3D interactive guide sets:\n" +
+      "R = R, t = θ, z_0 = z\n\n" +
+      "Adjust these as you wish to understand the relationship." +
+      "To see the vector pointing towards the point, please add a space to the end of the equation."
+  });
+
+  // Slider: R
+  calc.setExpression({
+    id: "R",
+    latex: "R=4",
+    sliderBounds: {min: -5, max: 5, step: 0.01}
+  });
+
+  // Slider: z_0
+  calc.setExpression({
+    id: "z0",
+    latex: "z_0=1",
+    sliderBounds: {min: -5, max: 5, step: 0.01}
+  });
+
+  // Slider: t (0 → 2π)
+  calc.setExpression({
+    id: "t",
+    latex: "t=0",
+    sliderBounds: {min: 0, max: 2*Math.PI, step: 0.001}
+  });
+
+  // Point A = (R cos t, R sin t, z_0)
+  calc.setExpression({
+    id: "A",
+    latex: "A=(R\\cos(t), R\\sin(t), z_0)",
+    color: "#FF0000"
+  });
+
+  // Vector from origin to A
+  calc.setExpression({
+    id: "V",
+    latex: "V=vector((0,0,0),\\ A)",
+    color: "#1E90FF"
+  });
+});
+</script>
+
+::: {.callout-tip}
+
+Try keeping two variable's contant at a time to trace single-variable curves or surfaces. What can you see when doing this? (hint: to visualise cylinders, spirals, and vertical planes.)
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+Consider the following point in cylindrical coordinates:
+
+$$
+\begin{aligned}
+(r,\theta, z) &= \left(4, \frac{\pi}{3}, 2\right)
+\end{aligned}
+$$
+
+This means:
+
+• The point is $4$ units from the origin.
+
+• It is rotated $45°$ around the z-axis
+
+• It is $2$ units above the xy-plane
+
+
+Using the cylindrical-Cartesian conversion of:
+
+$x = r cos(\theta)$, $y = r sin(\theta)$, $z = z$
+
+You can calculate x, y, and z to be: 
+
+$$
+\begin{aligned}
+x &= 4 \cos\left(\frac{\pi}{3}\right) = 4 \cdot \left(\frac{1}{2}\right) = 2 \\[0.5em]
+y&=4\sin\left(\frac{\pi}{3}\right)=4 \cdot \left(\frac{\sqrt{3}}{2}\right)=2 \sqrt{3} \\[0.5em]
+z&= 2
+\end{aligned}
+$$
+
+
+So, in cartesian coodinates, the point is:
+
+$$
+\begin{aligned}
+(x, y, z) &= (2, 2\sqrt{3}, 2)
+\end{aligned}
+$$
+
+
+The geometric interpretation of this is as follows:
+
+• Fixing $r=4$ gives a vertical cylinder
+
+• Fixing $\theta = \left(\frac{\pi}{3}\right)$ gives a horizontal plane
+
+• Fixing $z=2$ gives a horizontal plane
+
+The point lies where these three surfaces interact.
+
+:::
+
+# What are spherical coordinates?
+Contrastingly, spherical coordinates describe points relative to a central point – ideal for systems with radial symmetry – like stars, atoms, or fields. If you imagine a sphere, you can think of it as being composed of many 2D circles or cross-sections. Depending on how we slice the sphere - along the x, y, or z axes - we can visualize different orientations of these circular cross-sections.
+
+In spherical coordinates, each point in 3D space is defined by three quantities:
+
+• $r$  = the radial distance from the origin to the point
+
+• $\theta$ = the azimuthal angle (measured in the xy-plane from the x-axis)
+
+• $\phi$ = the polar angle (measured from the positive z-axis)
+
+<br>
+These coordinates relate to Cartesian coordinates as follows:
+
+• $x = r\sin(\phi)\cos(\theta)$,
+
+• $y = r \sin(\phi)\sin(\theta)$,
+
+• $z = r \cos(\phi)$.
+
+
+where, $r^2 = x^2 +y^2 + z^2$.
+
+<br>
+
+The range of these variables is:
+
+• $\theta \in [0, 2\pi)$. This is the full rotation around the z-axis.
+
+• $\phi \in [0, \pi]$ This is from the north pole to the south pole of the sphere.
+
+::: {.callout-note}
+## Definition of spherical coordinates:
+
+• $x = r \sin(\phi) \cos(\theta)$
+
+• $y = r \sin(\phi) \sin(\theta)$
+
+• $z = r \cos(\phi)$
+
+where, $r^2 = x^2 + y^2 + z^2$.
+
+
+The range of these variables is:
+
+• $\theta ∈ [0, 2\pi)$. This is the full rotation around the z-axis
+
+• $\phi ∈ [0, \pi]$ . This is from the north pole to the south pole of the sphere
+
+:::
+
+You can think of spherical coordinates as an extension of polar coordinates into 3D - adding a second angle to capture depth or height (aka vertical tilt) relative to the z-axis. For instance, visualizing Earth as a perfect sphere, a point in earth can be described by its distance from the centre ($r$), the latitude-like polar angle ($\phi$), and the longitude-like azimuthal angle ($\theta$).
+
+
+<!-- Spherical coordinate figure -->
+<div style="width:100%; max-width:800px; margin:20px auto;">
+  <canvas id="sphericalCanvas" width="800" height="620"></canvas>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", drawSphericalFigure);
+
+function drawSphericalFigure() {
+
+  const c = document.getElementById("sphericalCanvas");
+  const ctx = c.getContext("2d");
+  const W = c.width, H = c.height;
+
+  const OX = W * 0.52,
+        OY = H * 0.60;
+
+  const R     = 150;                 // sphere radius
+  const rho   = 180;                 // point radius
+  const theta = 50 * Math.PI/180;    // polar
+  const phi   = 30 * Math.PI/180;    // azimuth
+
+  //=== projection ===
+  function proj(x,y,z){ 
+    return [OX + x - 0.4*y, OY - z + 0.25*y];
+  }
+
+  function line3D(a,b,col="#777",lw=1,dash=[]){
+    ctx.beginPath();
+    ctx.setLineDash(dash);
+    const [x1,y1]=proj(...a);
+    const [x2,y2]=proj(...b);
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.strokeStyle=col;
+    ctx.lineWidth=lw;
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+
+  function drawSphereOutline(){
+    const steps=200;
+    ctx.beginPath();
+    for(let i=0;i<=steps;i++){
+      const a = 2*Math.PI*(i/steps);
+      // silhouette = equator plane
+      const x = R*Math.cos(a);
+      const z = R*Math.sin(a);
+      const [px,py] = proj(x,0,z);
+      if(i===0) ctx.moveTo(px,py);
+      else ctx.lineTo(px,py);
+    }
+    ctx.strokeStyle="#777";
+    ctx.lineWidth=2;
+    ctx.stroke();
+  }
+
+  function drawLatitudeEllipse(frac){  
+    // frac from -1 (bottom) to +1 (top)
+    const y3 = frac * R;
+    const r  = Math.sqrt(R*R - y3*y3);  
+
+    const steps = 200;
+    ctx.beginPath();
+    for(let i=0;i<=steps;i++){
+      const a = 2*Math.PI * (i/steps);
+      const x = r * Math.cos(a);
+      const z = r * Math.sin(a);
+      const [px,py] = proj(x,0,z);
+      if(i===0) ctx.moveTo(px,py);
+      else      ctx.lineTo(px,py);
+    }
+    ctx.strokeStyle="#777";
+    ctx.lineWidth=1;
+    ctx.stroke();
+  }
+
+  // LONGITUDES: keep projected 3-D for correct look
+  function drawLongitude(phiDeg){
+    const ph = phiDeg * Math.PI/180;
+    const steps=80;
+    let prev=null;
+    for(let i=0;i<=steps;i++){
+      const t = Math.PI*(i/steps);
+      const x = R*Math.sin(t)*Math.cos(ph);
+      const y = R*Math.sin(t)*Math.sin(ph);
+      const z = R*Math.cos(t);
+      const [px,py] = proj(x,y,z);
+      if(i===0){
+        ctx.beginPath();
+        ctx.moveTo(px,py);
+      } else {
+        ctx.lineTo(px,py);
+      }
+    }
+    ctx.strokeStyle="#777";
+    ctx.lineWidth=1;
+    ctx.stroke();
+  }
+
+  ctx.clearRect(0,0,W,H);
+
+  //=====================
+  //  Draw sphere grid
+  //=====================
+  drawSphereOutline();    
+
+  for(let f=-0.8; f<=0.8; f+=0.2){
+    drawLatitudeEllipse(f);   
+  }
+
+  for(let p=0; p<360; p+=30){
+    drawLongitude(p);
+  }
+
+  //---------------------------------
+  // AXES
+  //---------------------------------
+  line3D([0,0,0],[0,0,R*1.2], "#000",2);
+  line3D([0,0,0],[R*1.3,0,0], "#000",2);
+  line3D([0,0,0],[0,R*1.4,0], "#000",2);
+
+  let [tx,ty]=proj(R*1.3,0,0); ctx.fillText("x",tx+4,ty);
+  [tx,ty]=proj(0,R*1.4,0);     ctx.fillText("y",tx+4,ty);
+  [tx,ty]=proj(0,0,R*1.2);     ctx.fillText("z",tx+4,ty-6);
+
+  //---------------------------------
+  // φ wedge (azimuth)
+  //---------------------------------
+  const steps=40;
+  ctx.beginPath();
+  let [px,py]=proj(R*0.4,0,0);
+  ctx.moveTo(px,py);
+  for(let i=0;i<=steps;i++){
+    const a = (i/steps)*phi;
+    [px,py]=proj(R*0.4*Math.cos(a),R*0.4*Math.sin(a),0);
+    ctx.lineTo(px,py);
+  }
+  [px,py]=proj(0,0,0);
+  ctx.lineTo(px,py);
+  ctx.closePath();
+  ctx.fillStyle="rgba(0,200,200,0.25)";
+  ctx.fill();
+  ctx.strokeStyle="#009999";
+  ctx.lineWidth=2;
+  ctx.stroke();
+
+  [px,py]=proj(
+    R*0.45*Math.cos(phi/2),
+    R*0.45*Math.sin(phi/2),
+    0
+  );
+  ctx.fillStyle="#009999";
+  ctx.font="16px Arial";
+  ctx.fillText("φ",px+4,py+4);
+
+  //---------------------------------
+  // θ arc (polar)
+  //---------------------------------
+  const aR = R*0.55;
+  ctx.beginPath();
+  [px,py]=proj(0,0,aR); 
+  ctx.moveTo(px,py);
+  for(let i=0;i<=steps;i++){
+    const t = (i/steps)*theta;
+    const X=aR*Math.sin(t)*Math.cos(phi);
+    const Y=aR*Math.sin(t)*Math.sin(phi);
+    const Z=aR*Math.cos(t);
+    [px,py]=proj(X,Y,Z);
+    ctx.lineTo(px,py);
+  }
+  ctx.strokeStyle="#cc00cc";
+  ctx.lineWidth=2;
+  ctx.stroke();
+
+  [px,py]=proj(
+    aR*0.85*Math.sin(theta/2)*Math.cos(phi),
+    aR*0.85*Math.sin(theta/2)*Math.sin(phi),
+    aR*0.85*Math.cos(theta/2)
+  );
+  ctx.fillStyle="#cc00cc";
+  ctx.fillText("θ",px+4,py);
+
+  //---------------------------------
+  // ρ & P
+  //---------------------------------
+  const Px=rho*Math.sin(theta)*Math.cos(phi);
+  const Py=rho*Math.sin(theta)*Math.sin(phi);
+  const Pz=rho*Math.cos(theta);
+
+  line3D([0,0,0],[Px,Py,Pz],"#c00",3);
+  line3D([Px,Py,Pz],[Px,Py,0],"#666",1.5,[5,5]);
+
+  let [qx,qy]=proj(Px,Py,Pz);
+  ctx.beginPath();
+  ctx.arc(qx,qy,6,0,2*Math.PI);
+  ctx.fillStyle="#fff";
+  ctx.strokeStyle="#c00";
+  ctx.lineWidth=3;
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle="#c00";
+  ctx.fillText("P",qx+10,qy-8);
+
+  [qx,qy]=proj(Px*0.55,Py*0.55,Pz*0.55);
+  ctx.fillStyle="#000";
+  ctx.fillText("ρ",qx-8,qy-4);
+}
+</script>
+
+<p style="text-align: center; margin-top: 10px; font-style: italic;">
+<strong>Figure 2:</strong> Spherical coordinates showing a point <em>(x, y, z)</em> located by radial distance <em>r</em> from the origin, azimuthal angle <em>θ</em> in the <em>xy</em>-plane from the <em>x</em>-axis, and polar angle <em>φ</em> measured down from the positive <em>z</em>-axis.
+</p>
+
+
+## Interactive Exploration (Desmos):
+Use the linked Desmos tool to investigate how spherical coordinates position a point in space.
+Change  to move closer to or farther from the origin
+
+::: {#spherical3d style="width: 100%; height: 500px;"}
+:::
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const elt = document.getElementById("spherical3d");
+  const calc = Desmos.Calculator3D(elt);
+
+  // 3D view window
+  calc.setMathBounds({
+    xMin: -5, xMax: 5,
+    yMin: -5, yMax: 5,
+    zMin: -5, zMax: 5
+  });
+
+  // Text box
+  calc.setExpression({
+    id: "info",
+    type: "text",
+    text:
+      "This 3D interactive guide sets:\n" +
+      "R = R, t = θ, p = φ" +
+      "Adjust these as you wish to understand the relationship." +
+      "To see the vector pointing towards the point, please add a space to the end of the equation."
+  });
+
+  // Slider: R
+  calc.setExpression({
+    id: "R",
+    latex: "R=5",
+    sliderBounds: {min: -5, max: 5, step: 0.01}
+  });
+
+  // Slider: t  (0 → 2π)
+  calc.setExpression({
+    id: "t",
+    latex: "t=0",
+    sliderBounds: {min: 0, max: 2 * Math.PI, step: 0.001}
+  });
+
+  // Slider: p  (0 → π)
+  calc.setExpression({
+    id: "p",
+    latex: "p=1",
+    sliderBounds: {min: 0, max: Math.PI, step: 0.001}
+  });
+
+  // Point A = (R cos t sin p, R sin t sin p, R cos p)
+  calc.setExpression({
+    id: "A",
+    latex: "A=(R\\cos(t)\\sin(p), R\\sin(t)\\sin(p), R\\cos(p))",
+    color: "#FF0000"
+  });
+
+  // Vector from origin to A
+  calc.setExpression({
+    id: "V",
+    latex: "V = vector((0,0,0),\\ A)",
+    color: "#1E90FF"
+  });
+});
+</script>
+
+::: {.callout-tip}
+Fix one variable at a time. What can you see by doing this? (hint: cones, circular paths, or spherical shells?)
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 2
+Consider the following point in spherical coordinates:
+
+$$
+\begin{aligned}
+(r,\theta, \phi) &= \left(6, \frac{\pi}{6}, \frac{\pi}{4}\right)
+\end{aligned}
+$$
+
+This means:
+
+• The point is 6 units from the origin.
+
+• It is rotated $30°$ around the z-axis.
+
+• It is tilted $45°$ down from the positive z-axis.
+
+
+Using the spherical-Cartesian conversion of:
+$$
+\begin{aligned}
+x &= r \sin(\phi) \cos(\theta),\ y = r \sin(\phi)\sin(\theta), \ z = r \cos(\phi)
+\end{aligned}
+$$
+
+You can calculate x, y, and z to be: 
+
+$$
+\begin{aligned}
+x &= 6\sin\left(\frac{\pi}{4}\right)\cos\left(\frac{\pi}{6}\right) = 6 \cdot \frac{\sqrt{2}}{2} \cdot \frac{\sqrt{3}}{2} = \frac{3 \sqrt{6}}{2} \\
+y &= 6\sin\left(\frac{\pi}{4}\right)\sin\left(\frac{\pi}{6}\right)= 6 \cdot \frac{\sqrt{2}}{2} \cdot \frac{1}{2}=\frac{3 \sqrt{2}}{2} \\
+z &= 6 \cos\left(\frac{\pi}{4}\right)=6 \cdot \frac{\sqrt{2}}{2} = 3\sqrt{2} 
+\end{aligned}
+$$
+
+So, in cartesian coodinates, the point is:
+$$
+\begin{aligned}
+(x, y, z) &= \left(\frac{3 \sqrt{6}}{2}, \frac{3 \sqrt{2}}{2}, 3\sqrt{2}\right)
+\end{aligned}
+$$
+
+The geometric interpretation of this is as follows:
+
+• Fixing $r=6$ gives a vertical cylinder,
+
+• Fixing $\theta = \frac{\pi}{6}$ gives a vertical half-plane,
+
+• Fixing $\phi = \frac{\pi}{4}$ gives a cone.
+
+The point lies where these three surfaces interact.
+:::
+
+# Quick check problems:
+:::: {.content-visible when-format="html" data-topic="IPD1"}
+::: {.webex-check .webex-box}
+1) In spherical coordinates, which angle sweeps around the z-axis, and which tilts down from the z-axis?
+
+`r mcq(c(
+  "θ tilts down from the z-axis; φ sweeps around the z-axis",
+  answer = "θ sweeps around the z-axis; φ tilts down from the z-axis",
+  "Both θ and φ sweep around the z-axis",
+  "Both θ and φ tilt down from the z-axis"
+))`
+
+
+
+2) For a problem with a long straight pipe, which system is likely the better option to solve: spherical or cylindrical? Why?
+
+`r mcq(c(
+  "Spherical coordinates",
+  answer = "Cylindrical coordinates",
+  "Cartesian coordinates",
+  "Any system can represent the point"
+))`
+
+
+3) What symmetry suggests using spherical coordinates? What symmetry suggests using cylindrical?
+
+`r mcq(c(
+  "Rotational symmetry about an axis",
+  answer = "Radial symmetry about a point",
+  "Translational symmetry along a line",
+  "No symmetry at all"
+))`
+
+
+
+4) In cylindrical coordinates, what does r measure?
+
+`r mcq(c(
+  "The distance from the origin",
+  "The height above the xy-plane",
+  answer = "The perpendicular distance from the z-axis",
+  "The angle from the x-axis"
+))`
+
+
+
+5) If $\phi = \theta$ in spherical coordinates, where is the point located relative to the axes?
+
+`r mcq(c(
+  "On the +x axis",
+  "On the −z axis",
+  answer = "On the +z axis",
+  "In the xy-plane"
+))`
+
+### Short Calculations:
+
+6) Convert $(r, \theta, z) = \left(3, \frac{\pi}{6}, 2\right)$ to Cartesian.
+
+
+- \($x =$\) `r fitb("3*sqrt(3)/2")`  
+- \($y =$\) `r fitb("3/2")`  
+- \($z =$\) `r fitb("2")`
+
+
+
+7) Convert $(x, y, z) = (2, 2\sqrt{3}, 1)$ to cylindrical (give $r$ and $\theta$ in exact form).
+
+
+- \($r =$\) `r fitb("4")`  
+- \($\theta =$\) `r fitb("pi/3")`  
+- \($z =$\) `r fitb("1")`
+
+
+8) Convert spherical $(r, \theta, \phi) = \left(5, \frac{\pi}{3}, \frac{\pi}{6} \right)$ to Cartesian.
+
+- \($x =$\) `r fitb("5/4")`  
+- \($y =$\) `r fitb("5*sqrt(3)/4")`  
+- \($z =$\) `r fitb("5*sqrt(3)/2")`
+
+9) Given Cartesian $(x, y, z) = (0, 0, 4)$, give spherical coordinates (use standard ranges).
+
+- \($r =$\) `r fitb("4")`  
+- \($\theta =$\) `r fitb("0")`  
+- \($\phi =$\) `r fitb("0")`
+
+10) For cylindrical $(r, \theta, z) = \left(4, \frac{3\pi}{2}, −1\right)$, identify the point’s quadrant/axis in the xy-plane and give Cartesian.
+
+
+- \($x =$\) `r fitb("0")`  
+- \($y =$\) `r fitb("-4")`  
+- \($z =$\) `r fitb("-1")`
+
+:::
+::::
+
+::: {.content-hidden when-format="html"}
+1.  In spherical coordinates, which angle sweeps around the $z$-axis, and which tilts down from the $z$-axis?
+
+<!-- -->
+
+2.  For a problem with a long straight pipe, which system is likely the better option to solve: spherical or cylindrical? Explain why.
+
+<!-- -->
+
+3.  What symmetry suggests using spherical coordinates? What symmetry suggests using cylindrical coordinates?
+
+<!-- -->
+
+4.  In cylindrical coordinates, what does $r$ measure?
+
+<!-- -->
+
+5.  If $\phi = 0$ in spherical coordinates, where is the point located relative to the axes?
+
+<!-- -->
+
+6.  Convert the cylindrical coordinates  
+$$
+(r, \theta, z) = \left(3,\ \frac{\pi}{6},\ 2\right)
+$$  
+to Cartesian coordinates.
+
+<!-- -->
+
+7.  Convert the Cartesian coordinates  
+$$
+(x, y, z) = \left(2,\ 2\sqrt{3},\ 1\right)
+$$  
+to cylindrical coordinates. Give $r$ and $\theta$ in exact exact form.
+
+<!-- -->
+
+8.  Convert the spherical coordinates  
+$$
+(r, \theta, \phi) = \left(5,\ \frac{\pi}{3},\ \frac{\pi}{6}\right)
+$$  
+to Cartesian coordinates.
+
+<!-- -->
+
+9.  Given the Cartesian coordinates  
+$$
+(x, y, z) = (0,\ 0,\ 4),
+$$  
+find the corresponding spherical coordinates using the standard variable ranges.
+
+<!-- -->
+
+10.  For the cylindrical coordinates  
+$$
+(r, \theta, z) = \left(4,\ \frac{3\pi}{2},\ -1\right),
+$$  
+identify the point’s location in the $xy$-plane (quadrant or axis) and give the corresponding Cartesian coordinates.
+
+
+:::

@@ -1,0 +1,1151 @@
+---
+title: "Introduction to 2D Conic Sections"
+author: "Abigail Carpenter"
+abstract-title: Summary
+abstract: This guide introduces you to 2D conic sections (circles, ellipses, parabolas, and hyperbolas). You will learn how to identify each conic from its general quadratic equation, understand its key features, and write it in standard form. Step-by-step examples, interactive graphs, and practice problems help you visualize and explore these curves, showing how algebra and geometry connect in real-world applications.
+categories:
+  - Key skills
+  - Geometry
+draft: true
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, you must have a good initial knowledge of manipulating algebraic equations and graphing. Therefore, it is highly recommended that you read [Guide: Completing the square](completingthesquare.qmd) and Guide: Introduction to Graphing. You should be able to understand how to rearrange equations and graph points before continuing.*
+
+# What is a conic section? 
+
+Conic sections are the curves formed when a plane intersects a **double cone**. Depending on how the plane slices through the cone, the intersection creates one of four distinct shapes: an **ellipse, circle, parabola,** or **hyperbola**. These curves are called the **conic sections** and they appear in mathematics, physics, and engineering wherever curved motion, reflection, or optimization occurs.
+
+The study of conic sections dates back to ancient Greece, when the mathematician Apollonius of Perga (around 200 BCE) explored their geometric properties and gave them the names we still use today. Centuries later, these curves helped Kepler describe the orbits of planets, guided the design of mirrors and lenses, and became essential tools in modern physics and architecture.
+
+::: {.content-visible when-format="html"}
+
+::: {#calculator3d style="width: 100%; height: 410px;"}
+:::
+
+::: {#calculator2d style="width: 100%; aspect-ratio: 1 / 1; margin-bottom: 1rem;"}
+:::
+
+<script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  // --- 3D GRAPH ---
+  const elt3d = document.getElementById('calculator3d');
+  const calc3d = Desmos.Calculator3D(elt3d, {
+  settingsMenu: false,
+    keypad: false,
+    zoomButtons: false
+});
+    calc3d.setMathBounds({ xMin: -5, xMax: 5, yMin: -5, yMax: 5, zMin: -5, zMax: 5 });
+
+  // Double cone: z^2 = x^2 + y^2
+  calc3d.setExpression({ id: 'cone1', latex: 'z = \\sqrt{x^2 + y^2}', color: '#3F68B6', secret: true});
+  calc3d.setExpression({ id: 'cone2', latex: 'z = -\\sqrt{x^2 + y^2}', color: '#3F68B6', secret: true});
+
+  // Movable plane: z = m*y + k
+  calc3d.setExpression({ id: 'm', latex: 'm = 0.5', sliderBounds: {min: -2, max: 2, step: 0.01} });
+  calc3d.setExpression({ id: 'k', latex: 'k = 0', sliderBounds: {min: -3, max: 3, step: 0.01} });
+  calc3d.setExpression({ id: 'plane', latex: 'z = m*y + k', color: '#DB4315', secret: true });
+  
+  // Intersection curve on 3D graph
+  calc3d.setExpression({
+    id: 'intersection3d',
+    latex: '(m*y + k)^2 = x^2 + y^2 \\left\\{z = m*y + k\\right\\}',
+    color: '#FFCB00',
+    secret: true
+  });
+
+ // --- 2D GRAPH ---
+  const elt2d = document.getElementById('calculator2d');
+  const calc2d = Desmos.GraphingCalculator(elt2d, {
+    expressions: false,
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false,
+    lockViewport: true
+  });
+  calc2d.setMathBounds({ left: -5, right: 5, bottom: -5, top: 5});
+
+  // Sync parameters
+  calc2d.setExpression({ id: 'm', latex: 'm=0.5', secret: true });
+  calc2d.setExpression({ id: 'k', latex: 'k=0', secret: true });
+
+  // Info label
+  calc2d.setExpression({
+    id: 'info',
+    type: 'text',
+    text: 'Cross-section in plane  z = m·y + k  (shown as y = vertical axis)'
+  });
+
+   // Intersection curve (fixed: using y for vertical axis)
+  calc2d.setExpression({
+    id: 'intersection2d',
+    latex: '(m*y + k)^2 = x^2 + y^2',
+    color: '#FFCB00'
+  });
+
+  // --- Synchronization ---
+  let lastM = "m=0.5";
+  let lastK = "k=0";
+  function syncParams(fromCalc, toCalc) {
+    const mExpr = fromCalc.getExpressions().find(e => e.id === 'm');
+    const kExpr = fromCalc.getExpressions().find(e => e.id === 'k');
+    if (mExpr && mExpr.latex && mExpr.latex !== lastM) {
+      lastM = mExpr.latex;
+      toCalc.setExpression({ id: 'm', latex: mExpr.latex, secret: true });
+    }
+    if (kExpr && kExpr.latex && kExpr.latex !== lastK) {
+      lastK = kExpr.latex;
+      toCalc.setExpression({ id: 'k', latex: kExpr.latex, secret: true });
+    }
+  }
+
+  setInterval(() => { syncParams(calc3d, calc2d); }, 100);
+
+});
+</script>
+
+:::
+
+
+# Identifying Conics
+
+Conic sections can appear in many different algebraic forms, but one of the most general ways to represent them is with a **second-degree equation** in two variables. By looking at the coefficients of this equation, you can often determine the type of conic algebraically before graphing.
+
+::: {.callout-note}
+
+## General Quadratic Equation
+
+$$
+Ax^2 + Bxy + Cy^2 + Dx + Ey + F = 0
+$$
+
+In order to identify, you will use the **discriminant**, $B^2 - 4AC < 0$ 
+
+This expression tells you the shape of the graph: 
+
+-   $B^2 - 4AC < 0$ : **Ellipse** (includes circles when $A = C$ and $B = 0$)
+-   $B^2 - 4AC = 0$: **Parabola**
+-   $B^2 - 4AC > 0$: **Hyperbola**
+
+In this form, the coefficients $A$, $B$, and $C$ describe how the $x^2$, $xy$, and $y^2$ terms affect the shape of the curve. The $D$, $E$, and $F$ terms shift the graph around or move its center, but they don’t change the overall type of conic.
+
+:::
+
+Let’s practice with an example.
+
+::: {.callout-note appearance="simple"}
+
+## Example 1
+
+$$
+5x^2 + 3xy + 9y^2 + 7x + 3y + 9 = 0
+$$
+
+**Step 1: Identify $A$, $B$ , and $C$.**
+
+From the equation you can see: 
+
+$$
+A = 5, \quad B = 3, \quad C = 9
+$$
+
+**Step 2: Compute the discriminant.**
+
+$$
+B^2 - 4AC = 3^2 - 4(5)(9) = 9 - 180 = -171
+$$
+
+**Step 3: Interpret the result.**
+
+Because $B^2 - 4AC = -171 < 0$, this equation represents an **ellipse**.
+
+:::
+
+
+
+# Ellipses
+
+Ellipses are oval-shaped curves that appear in everything from planetary orbits to architectural arches. In algebraic form, ellipses are represented by equations that include both $x^2$ and $y^2$ terms with **the same sign** either both positive or both negative. When you see that, it's often the first clue that the curve will be an ellipse. 
+
+
+## Standard Form
+
+Take a look at the equation for an ellipse written in its standard form.
+
+$$
+\frac{(x - h)^2}{a^2} + \frac{(y - k)^2}{b^2} = 1 \quad (a > b)
+$$
+From this equation you can derive the **centre**, **semi-major axis**, **semi-minor axis**, and **foci**.
+
+- $(h,k)$ is the **centre** of the ellipse
+- $a$ is the **semi-major axis** or the distance from the center to the furthest edge or vertex.
+- $b$ is the **semi-minor axis** or the distance from the center to the nearest edge or vertex.
+- The **foci** lie on the major axis, at a distance $c= \sqrt{a^2 - b^2}$ from the centre. 
+
+When $a > b$, the ellipse is **horizontal**, stretching side to side.
+When $b > a$, it's **vertical**, stretching up and down.
+
+::: {.callout-note}
+
+## Understanding the Foci
+
+The two **foci** are points inside the ellipse that define its shape. For any point on the ellipse, the **sum of the distances to both foci is constant** which is what makes an ellipse unique. When $a$ and $b$ are nearly equal, $c$ becomes small, and the ellipse looks almost like a **circle**. When $a$ is much larger than $b$, $c$ increases, and the ellipse stretches further making the foci move apart.
+
+:::
+
+::: {.content-visible when-format="html"}
+
+## Interactive Ellipse
+
+<div id="ellipse-graph" style="width: 100%; height: 400px;"></div>
+
+<script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+<script>
+const elt = document.getElementById('ellipse-graph');
+const calc = Desmos.GraphingCalculator(elt, {expressions: true});
+
+// Sliders
+calc.setExpression({id:'a', latex:'a=4', sliderBounds:{min:4,max:8,step:0.1}});
+calc.setExpression({id:'b', latex:'b=2', sliderBounds:{min:1,max:4,step:0.1}});
+calc.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calc.setExpression({id:'k', latex:'k=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calc.setExpression({id:'c', latex:'c=\\sqrt{a^2-b^2}', secret:true});
+calc.setExpression({id:'t', latex:'t', sliderBounds:{min:0,max:1,step:0.01}, secret:true});
+
+// Ellipse
+calc.setExpression({
+  id:'ellipse',
+  latex:'\\frac{(x-h)^2}{a^2} + \\frac{(y-k)^2}{b^2} = 1',
+  color:'#DB4315',
+  secret: true
+});
+
+// Centre and foci
+calc.setExpression({id:'centre', latex:'(h,k)', label:'Centre', showLabel:true, color:'#3F68B6', secret: true});
+calc.setExpression({id:'focus1', latex:'(h+c,k)', label:'Focus', showLabel:true, color:'#FFCB00', secret: true});
+calc.setExpression({id:'focus2', latex:'(h-c,k)', label:'Focus', showLabel:true, color:'#FFCB00', secret: true});
+
+calc.setExpression({
+  id:'maj_axis',
+  latex:'(h + at, k)',
+  parametricDomain:{min:-1, max:1},
+  color:'#3F68B6',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+
+calc.setExpression({
+  id:'maj_axis_label',
+  latex:'L_{maj} = (h + 0.5a, k)',
+  label:'Semi-Major Axis',
+  showLabel:true,
+  color:'#3F68B6',
+  dragMode: Desmos.DragModes.NONE,
+  secret:true
+});
+
+calc.setExpression({
+  id:'min_axis',
+  latex:'(h, k + bt)',
+  parametricDomain:{min:-1, max:1},
+  color:'#FFCB00',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+
+calc.setExpression({
+  id:'min_axis_label',
+  latex:'L_{min} = (h, k + 0.5b)',
+  label:'Semi-Minor Axis',
+  showLabel:true,
+  color:'#FFCB00',
+  dragMode: Desmos.DragModes.NONE,
+  secret:true
+});
+
+// Force 1:1 aspect ratio
+  calc.setMathBounds({left:-10,right:10,bottom:-10,top:10});
+
+</script>
+
+:::
+
+# Circles
+
+A **circle** is the set of all points that are **exactly the same distance** from a fixed point called the **centre**. In fact, a circle is a specific type of ellipse where the **foci** merge to the **centre** Circles are everywhere in the world around us from wheels to ripples in water. 
+
+## Standard Form
+
+The circle's equation in standard form is: 
+
+$$
+(x-h)^2 + (y-k)^2 =r^2
+$$
+
+In a similar way to the ellipse, you can derive the following from the equation above
+
+- $(h,k)$ is the **centre** of the circle
+- $r$ is the **radius**, the fixed distance from the centre to any point on the circle
+
+::: {.callout-note}
+
+## Understanding the Centre and Radius
+
+The **centre** defines the circle’s position on the coordinate plane, while the **radius** determines its size.  
+Every point on the circle is equally distant from the centre, so unlike an ellipse, a circle has **no foci**. Adjusting $h$ or $k$ moves the circle, and changing $r$ makes it grow or shrink uniformly in all directions.
+
+:::
+
+## Interactive Circle
+
+::: {.content-visible when-format="html"}
+
+<div id="circle-graph" style="width: 100%; height: 400px;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const elt = document.getElementById('circle-graph');
+  const calc = Desmos.GraphingCalculator(elt, {
+    expressions: true,
+    settingsMenu: false,
+    zoomButtons: true
+  });
+
+  // Sliders for center and radius
+  calc.setExpression({id:'h', latex:'h=2', sliderBounds:{min:-10, max:10, step:0.1}});
+  calc.setExpression({id:'k', latex:'k=-3', sliderBounds:{min:-10, max:10, step:0.1}});
+  calc.setExpression({id:'r', latex:'r=5', sliderBounds:{min:0.1, max:10, step:0.1}, color:'#FFFFFF00'});
+  calc.setExpression({id:'t', latex:'t', sliderBounds:{min:0,max:1,step:0.01}, secret:true});
+
+  // Circle
+  calc.setExpression({
+    id:'circle',
+    latex:'(x-h)^2 + (y-k)^2 = r^2',
+    color:'#DB4315',
+    secret: true
+  });
+
+  // Center point label
+  calc.setExpression({
+    id:'center',
+    latex:'(h,k)',
+    label:'Centre (h,k)',
+    showLabel:true,
+    color:'#3F68B6',
+    secret: true
+  });
+  
+  // Radius Label
+   calc.setExpression({
+    id:'outside_point',
+    latex:'(h+r,k)',
+    color:'#FFCB00',
+    secret: true
+  });
+  
+    calc.setExpression({
+  id: 'radius_label_point',
+  latex: '(h + r/2, k)',
+  label: 'Radius',
+  showLabel: true,
+  dragMode: Desmos.DragModes.NONE,    // ensures it behaves like a static point
+  color:'#FFCB00',
+  secret: true
+});
+
+  // Radius 
+  calc.setExpression({
+    id:'circle_radius',
+    latex:'(h + rt, k)',
+    color:'#FFCB00',
+    lineStyle: Desmos.Styles.DASHED,
+    label: 'Radius',
+    showLabel: true,
+    secret: true
+  });
+
+  // Force 1:1 aspect ratio
+  calc.setMathBounds({left:-10,right:10,bottom:-10,top:10});
+});
+</script>
+
+:::
+
+::: {.content-visible when-format="html"}
+
+# Circle vs Ellipse
+
+::: {.callout-warning}
+
+Circles are a special type of ellipse where the **semi-major axis** and **semi-minor axis** are equal.  
+This means the two foci merge at the centre, and every point on the curve is the same distance from the centre.  
+
+Use the sliders below to explore both shapes and see how changing the axes affects their appearance.
+
+:::
+
+::: {.callout-tip}
+
+Try changing the **ellipse axes** and the **circle radius**:  
+
+- Notice how the ellipse stretches horizontally or vertically depending on \(a\) and \(b\).  
+- Observe how the circle stays perfectly round regardless of the radius.  
+- When \(a = b\) for the ellipse, it **becomes a circle**, showing that a circle is a “perfect ellipse.”
+
+:::
+
+<div id="circle-ellipse-graph" style="width:100%; height:500px;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const elt = document.getElementById('circle-ellipse-graph');
+  const calc = Desmos.GraphingCalculator(elt, {
+    expressions: true,
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: true
+  });
+
+  // Math bounds (enforce 1:1 scale)
+  calc.setMathBounds({ left: -10, right: 10, bottom: -10, top: 10 });
+
+  // Shared center sliders (hidden)
+  calc.setExpression({ id: 'h', latex: 'h=0', secret:true });
+  calc.setExpression({ id: 'k', latex: 'k=0', secret:true });
+
+  // Ellipse sliders
+  calc.setExpression({ id: 'a', latex: 'a=5' });
+  calc.setExpression({ id: 'b', latex: 'b=3' });
+  calc.setExpression({ id: 'c', latex: 'c=sqrt(a^2-b^2)', secret:true });
+
+  // Circle
+  calc.setExpression({
+    id: 'circle',
+    latex: '(x-h)^2 + (y-k)^2 = a^2',
+    color:'#FFCB00',
+    secret:true
+  });
+
+  // Ellipse
+  calc.setExpression({
+    id: 'ellipse',
+    latex: '((x-h)^2)/a^2 + ((y-k)^2)/b^2 = 1',
+    color:'#DB4315',
+    secret: true
+  });
+
+  // Circle label
+  calc.setExpression({
+    id: 'circle_label',
+    latex: '(h + a, k)',
+    label: 'Circle',
+    showLabel: true,
+    pointStyle: Desmos.Styles.OPEN,
+    color: '#FFCB00',
+    secret: true
+  });
+
+  // Ellipse label
+  calc.setExpression({
+    id: 'ellipse_label',
+    latex: '(h + a/\\sqrt{2}, k + b/\\sqrt{2})',
+    label: 'Ellipse',
+    showLabel: true,
+    pointStyle: Desmos.Styles.OPEN,
+    color: '#DB4315',
+    secret:true
+  });
+
+});
+</script>
+
+
+:::
+
+# Parabolas
+
+A **parabola** is the set of all points in a plane that are **equidistant** from a fixed point called the **focus** and a fixed line called the **directrix**. They open either **up, down, left,** or **right**, depending on their equation. Parabolas often appear in physics, engineering, and architecture specifically in projectiles, satellite dishes, and car headlights.
+
+Parabolas are unique among conic sections because they have only **one** focus and **one** directrix — unlike ellipses or hyperbolas, which have two foci.
+
+## Standard Form
+
+The equation of a parabola depends on its orientation.
+
+- **Vertical parabola**:  
+  $$(x - h)^2 = 4p(y - k)$$  
+- **Horizontal parabola**:  
+  $$(y - k)^2 = 4p(x - h)$$  
+
+Where:
+- $(h, k)$ is the **vertex**
+- $p$ is the distance from the vertex to the **focus** (and to the directrix, on the opposite side)
+
+If $p > 0$, the parabola opens **upward** or **right**.  
+If $p < 0$, it opens **downward** or **left**.
+
+::: {.callout-note}
+
+## Understanding the Focus and Directrix
+
+Every point on a parabola is the same distance from its **focus** as it is from its **directrix**.  
+The **axis of symmetry** passes through the vertex and the focus, cutting the parabola into two mirror-image halves.
+
+When $|p|$ increases, the parabola becomes **wider**, and when $|p|$ decreases, it becomes **narrower**.  
+This parameter controls how “steep” or “flat” the parabola looks.
+
+:::
+
+Use the sliders to explore how $p$, $h$, and $k$ affect the shape and position of the parabola.
+
+::: {.callout-tip}
+
+Try:
+- Increasing $p$ to see the parabola open wider  
+- Decreasing $p$ to make it narrower  
+- Changing $h$ and $k$ to move it around the coordinate plane  
+- Switching between vertical and horizontal forms to see how the focus and directrix move
+
+:::
+
+::: {.content-visible when-format="html"}
+
+## Vertical Parabola
+
+<div id="parabola-vertical" style="width: 100%; height: 500px;"></div>
+
+<script>
+const eltP3 = document.getElementById('parabola-vertical');
+const calcP3 = Desmos.GraphingCalculator(eltP3, {expressions:true});
+
+// sliders
+calcP3.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcP3.setExpression({id:'k', latex:'k=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcP3.setExpression({id:'p', latex:'p=2', sliderBounds:{min:-5,max:5,step:0.1}});
+
+// parabola (vertical orientation)
+calcP3.setExpression({
+  id:'parabolaV',
+  latex:'(x-h)^2 = 4p(y-k)',
+  color:'#DB4315',
+  secret:true
+});
+
+// focus
+calcP3.setExpression({
+  id:'focusV',
+  latex:'(h, k + p)',
+  label:'Focus',
+  showLabel:true,
+  color:'#FFCB00',
+  secret:true
+});
+
+// directrix
+calcP3.setExpression({
+  id:'directrixV',
+  latex:'y = k - p',
+  label:'Directrix',
+  showLabel:true,
+  color:'#3F68B6',
+  secret:true,
+  lineStyle: Desmos.Styles.DASHED
+});
+
+calcP3.setExpression({
+  id:'directrixV_label',
+  latex:'(h, k - p)',
+  label:'Directrix',
+  showLabel:true,
+  pointStyle: Desmos.Styles.OPEN,
+  dragMode: Desmos.DragModes.NONE,
+  color:'#3F68B6',
+  secret:true
+});
+
+// vertex
+calcP3.setExpression({
+  id:'vertexV',
+  latex:'(h,k)',
+  label:'Vertex',
+  showLabel:true,
+  color:'#3F68B6',
+  secret:true
+});
+</script>
+
+:::
+
+::: {.content-visible when-format="html"}
+
+## Horizontal Parabola
+
+<div id="parabola-horizontal" style="width: 100%; height: 500px;"></div>
+
+<script>
+const eltP2 = document.getElementById('parabola-horizontal');
+const calcP2 = Desmos.GraphingCalculator(eltP2, {expressions:true});
+
+// sliders
+calcP2.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcP2.setExpression({id:'k', latex:'k=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcP2.setExpression({id:'p', latex:'p=2', sliderBounds:{min:-5,max:5,step:0.1}});
+
+// parabola
+calcP2.setExpression({
+  id:'parabolaH',
+  latex:'(y-k)^2 = 4p(x-h)',
+  color:'#DB4315', secret: true
+});
+
+// focus
+calcP2.setExpression({
+  id:'focusH',
+  latex:'(h+p,k)',
+  label:'Focus',
+  showLabel:true,
+  color:'#FFCB00', secret: true
+});
+
+// directrix
+calcP2.setExpression({
+  id:'directrixH',
+  latex:'x=h-p',
+  label:'Directrix',
+  showLabel:true,
+  color:'#3F68B6', 
+  secret: true,
+  lineStyle: Desmos.Styles.DASHED
+});
+
+calcP2.setExpression({
+  id:'directrixH_label',
+  latex:'(h - p, k)',
+  label:'Directrix',
+  showLabel:true,
+  pointStyle: Desmos.Styles.OPEN,
+  dragMode: Desmos.DragModes.NONE,
+  color:'#3F68B6',
+  secret:true
+});
+
+// vertex
+calcP2.setExpression({
+  id:'vertexH',
+  latex:'(h,k)',
+  label:'Vertex',
+  showLabel:true,
+  color:'#3F68B6', secret: true
+});
+</script>
+
+:::
+
+# Hyperbolas
+
+A **hyperbola** is the set of all points where the **difference of the distances** to two fixed points (called **foci**) is constant. It looks like two opposing curves that open away from each other, often used to model radio signals, navigation systems, and certain types of mirror reflections.
+
+Hyperbolas have two axes of symmetry — a **transverse axis** that passes through both foci, and a **conjugate axis** that is perpendicular to it.
+
+## Standard Form
+
+Just like ellipses, hyperbolas have two forms depending on their orientation:
+
+- **Horizontal hyperbola**:  
+  $$
+  \frac{(x - h)^2}{a^2} - \frac{(y - k)^2}{b^2} = 1
+  $$
+
+- **Vertical hyperbola**:  
+  $$
+  \frac{(y - k)^2}{a^2} - \frac{(x - h)^2}{b^2} = 1
+  $$
+
+Where:  
+- $(h, k)$ is the **centre**  
+- $a$ is the distance from the centre to each **vertex**  
+  - **Horizontal hyperbola:** vertices at $(h + a, k)$ and $(h - a, k)$  
+  - **Vertical hyperbola:** vertices at $(h, k + a)$ and $(h, k - a)$  
+- $b$ defines the slope of the **asymptotes**  
+- The **foci** lie along the transverse axis, at a distance $c = \sqrt{a^2 + b^2}$ from the centre
+
+::: {.callout-note}
+
+## Understanding the Foci and Asymptotes
+
+The **foci** determine how “open” or “narrow” the hyperbola appears.  
+As $a$ or $b$ change, the branches stretch or shrink, but the asymptotes always guide the curve’s direction.
+
+The **asymptotes** pass through the centre and give the shape of the hyperbola its characteristic “X” frame.
+
+For a horizontal hyperbola:  
+$$y - k = \pm \frac{b}{a}(x - h)$$  
+
+For a vertical hyperbola:  
+$$y - k = \pm \frac{a}{b}(x - h)$$  
+
+:::
+
+:::: {.content-visible when-format="html"}
+
+Use the sliders below to adjust the values of $a$, $b$, $h$, and $k$.  
+
+::: {.callout-tip}
+
+Try:
+- Changing $a$ and $b$ to see how the shape widens or narrows  
+- Adjusting $h$ and $k$ to move the hyperbola around  
+- Observing how the **asymptotes** guide the branches of the curve
+
+:::
+
+## Horizontal Hyperbola
+
+<div id="hyperbola-horizontal" style="width: 100%; height: 500px;"></div>
+
+<script>
+const eltH1 = document.getElementById('hyperbola-horizontal');
+const calcH1 = Desmos.GraphingCalculator(eltH1, {expressions:true});
+
+// sliders
+calcH1.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcH1.setExpression({id:'k', latex:'k=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcH1.setExpression({id:'a', latex:'a=3', sliderBounds:{min:1,max:6,step:0.1}});
+calcH1.setExpression({id:'b', latex:'b=2', sliderBounds:{min:1,max:6,step:0.1}});
+calcH1.setExpression({id:'c', latex:'c=\\sqrt{a^2+b^2}', secret:true});
+
+// hyperbola equation (hidden)
+calcH1.setExpression({
+  id:'hyperbolaEq',
+  latex:'\\frac{(x-h)^2}{a^2} - \\frac{(y-k)^2}{b^2} = 1',
+  color:'#DB4315',
+  secret:true
+});
+
+// asymptotes (adjustable & dashed)
+calcH1.setExpression({
+  id:'asym1',
+  latex:'y-k=(b/a)*(x-h)',
+  color:'#3F68B6',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+calcH1.setExpression({
+  id:'asym2',
+  latex:'y-k=-(b/a)*(x-h)',
+  color:'#3F68B6',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+
+// foci
+calcH1.setExpression({id:'f1', latex:'(h+c,k)', label:'Focus', showLabel:true, color:'#FFCB00'});
+calcH1.setExpression({id:'f2', latex:'(h-c,k)', label:'Focus', showLabel:true, color:'#FFCB00', secret:true});
+
+// centre
+calcH1.setExpression({id:'centreH1', latex:'(h,k)', label:'Centre', showLabel:true, color:'#3F68B6', secret:true});
+
+// vertices
+calcH1.setExpression({id:'v1', latex:'(h+a,k)', label:'Vertex', showLabel:true, color:'#DB4315'});
+calcH1.setExpression({id:'v2', latex:'(h-a,k)', label:'Vertex', showLabel:true, color:'#DB4315'});
+
+</script>
+
+## Vertical Hyperbola
+
+<div id="hyperbola-vertical" style="width: 100%; height: 500px;"></div>
+
+<script>
+const eltH2 = document.getElementById('hyperbola-vertical');
+const calcH2 = Desmos.GraphingCalculator(eltH2, {expressions:true});
+
+// sliders
+calcH2.setExpression({id:'h', latex:'h=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcH2.setExpression({id:'k', latex:'k=0', sliderBounds:{min:-6,max:6,step:0.1}});
+calcH2.setExpression({id:'a', latex:'a=3', sliderBounds:{min:1,max:6,step:0.1}});
+calcH2.setExpression({id:'b', latex:'b=2', sliderBounds:{min:1,max:6,step:0.1}});
+calcH2.setExpression({id:'c', latex:'c=\\sqrt{a^2+b^2}', secret:true});
+
+// hyperbola equation (hidden)
+calcH2.setExpression({
+  id:'hyperbolaEq2',
+  latex:'\\frac{(y-k)^2}{a^2} - \\frac{(x-h)^2}{b^2} = 1',
+  color:'#DB4315',
+  secret:true
+});
+
+// asymptotes (adjustable & dashed)
+calcH2.setExpression({
+  id:'asym3',
+  latex:'y-k=(a/b)*(x-h)',
+  color:'#3F68B6',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+calcH2.setExpression({
+  id:'asym4',
+  latex:'y-k=-(a/b)*(x-h)',
+  color:'#3F68B6',
+  lineStyle: Desmos.Styles.DASHED,
+  secret:true
+});
+
+// foci
+calcH2.setExpression({id:'f3', latex:'(h,k+c)', label:'Focus', showLabel:true, color:'#FFCB00', secret:true});
+calcH2.setExpression({id:'f4', latex:'(h,k-c)', label:'Focus', showLabel:true, color:'#FFCB00', secret:true});
+
+// centre
+calcH2.setExpression({id:'centreH2', latex:'(h,k)', label:'Centre', showLabel:true, color:'#3F68B6', secret:true});
+
+// vertices
+calcH2.setExpression({id:'v3', latex:'(h,k+a)', label:'Vertex', showLabel:true, color:'#DB4315'});
+calcH2.setExpression({id:'v4', latex:'(h,k-a)', label:'Vertex', showLabel:true, color:'#DB4315'});
+
+</script>
+
+::::
+
+# Working Through Examples
+
+Now that you understand how to identify each conic section and write their standard forms, let’s put everything together.  
+By starting with a general quadratic equation, you can determine what type of conic it represents, transform it into its standard form, and locate its key features — such as its centre, vertices, foci, and axes.  
+
+These examples will walk through that full process step by step, showing how to interpret the equation, simplify it algebraically, and then explore it visually using an interactive graph.  
+You’ll begin with a **circle**, then move on to a **hyperbola**, to see how the same reasoning applies to both curved and open conic shapes.
+
+::: {.callout-note appearance="simple"}
+
+## Example 1
+
+$$
+x^2 + y^2 - 4x + 6y - 12 = 0
+$$
+
+**Step 1: Identify \(A\), \(B\), and \(C\).**
+
+From the general quadratic equation:  
+
+$$
+Ax^2 + Bxy + Cy^2 + Dx + Ey + F = 0
+$$  
+
+we have:  
+
+$$
+A = 1, \quad B = 0, \quad C = 1
+$$
+
+---
+
+**Step 2: Compute the discriminant.**
+
+$$
+B^2 - 4AC = 0^2 - 4(1)(1) = -4 < 0
+$$
+
+Negative discriminant **and** \(A = C\) → **circle**.
+
+---
+
+**Step 3: Complete the square.**
+
+Group \(x\)-terms and \(y\)-terms:
+
+$$
+(x^2 - 4x) + (y^2 + 6y) = 12
+$$
+
+Complete the square:
+
+$$
+x^2 - 4x + 4 = (x-2)^2, \quad y^2 + 6y + 9 = (y+3)^2
+$$
+
+Add 4 and 9 to the right side:
+
+$$
+(x-2)^2 + (y+3)^2 = 25
+$$
+
+**Step 4: Key features**
+
+$$
+\text{Centre: } (2,-3), \quad \text{Radius: } r = 5
+$$
+
+---
+
+**Step 5: Graph**
+
+::: {.content-visible when-format="html"}
+
+<div id="circle-example" style="width: 100%; height: 400px;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const elt = document.getElementById('circle-example');
+  const calc = Desmos.GraphingCalculator(elt, {
+    expressions: false,
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: true
+  });
+
+  calc.setMathBounds({ left: -5, right: 10, bottom: -10, top: 5 });
+
+  // Circle equation (hidden)
+  calc.setExpression({ id:'circleEq', latex:'(x-2)^2 + (y+3)^2 = 25', secret:true });
+
+  // Center
+  calc.setExpression({ id:'center', latex:'C=(2,-3)', label:'Centre', showLabel:true, color:'#FFCB00', dragMode: Desmos.DragModes.NONE });
+
+  // Circle visible
+  calc.setExpression({ id:'circleGraph', latex:'(x-2)^2 + (y+3)^2 = 25', color:'#DB4315' });
+
+  // Radius endpoint
+  calc.setExpression({
+    id:'radius_example',
+    latex: 'R=(2,2)',
+    color:'#3F68B6',
+    dragMode: Desmos.DragModes.NONE
+  });
+
+  // Radius dashed line
+  calc.setExpression({
+    id:'example_dashedline',
+    latex: '(2,-3)+t*((2)-(2),(2)-(-3))',  // parametric form of line from center to R
+    color:'#3F68B6',
+    lineStyle: Desmos.Styles.DASHED
+  });
+
+  // Radius label point
+  calc.setExpression({
+    id:'label_radius',
+    latex: '(2,-3+2.5)',   // mid-point between center and radius point
+    color:'#3F68B6',
+    label:'Radius',
+    showLabel: true
+  });
+});
+</script>
+
+:::
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+$$
+9x^2 - 16y^2 - 36x + 64y - 100 = 0
+$$
+
+**Step 1: Identify \(A\), \(B\), \(C\).**
+
+$$
+A = 9, \quad B = 0, \quad C = -16
+$$
+
+**Step 2: Discriminant**
+
+$$
+B^2 - 4AC = 0 - 4(9)(-16) = 576 > 0
+$$
+
+Positive discriminant → **hyperbola**.
+
+---
+
+**Step 3: Group and complete the square**
+
+$$
+9(x^2 - 4x) - 16(y^2 - 4y) = 100
+$$
+
+Complete the square:
+
+$$
+x^2 - 4x + 4 = (x-2)^2, \quad y^2 - 4y + 4 = (y-2)^2
+$$
+
+Adjust constants:
+
+$$
+9((x-2)^2 - 4) -16((y-2)^2 - 4) = 100
+$$
+
+Simplify:
+
+$$
+9(x-2)^2 - 16(y-2)^2 = 72
+$$
+
+Divide by 72:
+
+$$
+\frac{(x-2)^2}{8} - \frac{(y-2)^2}{9/2} = 1
+$$
+
+---
+
+**Step 4: Key features**
+
+- Centre: $(2,2)$
+- Vertices: $(2 \pm \sqrt{2}, 2)$
+- Foci: $(2 \pm \frac {5}{\sqrt{2}}, 2)$ 
+- Asymptotes:
+
+$$
+y-2 = \pm \frac{\sqrt{9/2}}{\sqrt{8}} (x-2) = \pm \frac{3}{4} (x-2)
+$$
+
+---
+
+**Step 5: Graph**
+
+::: {.content-visible when-format="html"}
+
+<div id="hyperbola-example" style="width: 100%; height: 400px;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const elt = document.getElementById('hyperbola-example');
+  const calc = Desmos.GraphingCalculator(elt, {
+    expressions: false,
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: true
+  });
+
+  calc.setMathBounds({ left: -6, right: 10, bottom: -6, top: 10 });
+
+  // Hyperbola equation (hidden)
+  calc.setExpression({ id:'hyperEq', latex:'(x-2)^2/8 - (y-2)^2/(9/2) = 1', secret:true });
+
+  // Center
+  calc.setExpression({ id:'center', latex:'(2,2)', label:'Centre', showLabel:true, color:'#FFCB00' });
+
+calc.setExpression({
+  id:'vertex1',
+  latex:'V_1=(2+2\\sqrt{2},2)',
+  label:'Vertex',
+  showLabel:true,
+  color:'#3F68B6'
+});
+
+calc.setExpression({
+  id:'vertex2',
+  latex:'V_2=(2-2\\sqrt{2},2)',
+  label:'Vertex',
+  showLabel:true,
+  color:'#3F68B6'
+});
+
+calc.setExpression({
+  id:'focus1',
+  latex:'F_1=(2+5/\\sqrt{2},2)',
+  label:'Focus',
+  showLabel:true,
+  color:'#FFCB00',
+  dragMode: Desmos.DragModes.NONE
+});
+
+calc.setExpression({
+  id:'focus2',
+  latex:'F_2=(2-5/\\sqrt{2},2)',
+  label:'Focus',
+  showLabel:true,
+  color:'#FFCB00',
+  dragMode: Desmos.DragModes.NONE
+});
+  // Asymptotes
+  calc.setExpression({ id:'asym1', latex:'y-2=(3/4)*(x-2)', color:'#3F68B6', lineStyle: Desmos.Styles.DASHED, });
+  calc.setExpression({ id:'asym2', latex:'y-2=-(3/4)*(x-2)', color:'#3F68B6', lineStyle: Desmos.Styles.DASHED });
+
+  // Hyperbola visible
+  calc.setExpression({ id:'hyperGraph', latex:'(x-2)^2/8 - (y-2)^2/(9/2) = 1', color:'#DB4315' });
+});
+</script>
+
+:::
+
+:::
+
+# Quick Check Problems {.unnumbered}
+
+:::: {.content-visible when-format="html" data-topic="conics"}
+
+::: {.webex-check .webex-box}
+
+1. The circle $(x-2)^2 + (y+3)^2 = 25$ has discriminant $B^2 - 4AC < 0$. `r torf(TRUE)`
+
+2. The hyperbola $9(x-2)^2 - 16(y+1)^2 = 144$ is vertical. `r torf(FALSE)`
+
+3. The ellipse $\frac{(x-3)^2}{16} + \frac{(y+2)^2}{9} = 1$ has its minor axis along the y-axis. `r torf(TRUE)`
+
+4. Identify the conic: $(x-1)^2 + (y+2)^2 = 9$. `r mcq(c(answer="Circle", "Ellipse", "Parabola", "Hyperbola"))`
+
+5. Identify the conic: $\frac{(x-3)^2}{16} + \frac{(y+2)^2}{9} = 1$. `r mcq(c("Circle", answer="Ellipse", "Parabola", "Hyperbola"))`
+
+6. Identify the conic: $9(x-2)^2 - 16(y+1)^2 = 144$. `r mcq(c("Circle", "Ellipse", "Parabola", answer="Hyperbola"))`
+
+7. Identify the conic: $y^2 - 4x = 0$. `r mcq(c("Circle", "Ellipse", answer="Parabola", "Hyperbola"))`
+
+8. Find the radius of the circle $(x+1)^2 + (y-5)^2 = 16$. `r fitb("4")`
+
+9. Find the centre of the circle $(x-2)^2 + (y+3)^2 = 25$. `r fitb("(2,-3)")`
+
+10. Find the lengths of the major axes for the ellipse $\frac{(x-3)^2}{16} + \frac{(y+2)^2}{9} = 1$. `r fitb("8")`
+
+:::
+
+::::
+
+::: {.content-hidden when-format="html"}
+
+1. The circle $(x-2)^2 + (y+3)^2 = 25$ has discriminant $B^2 - 4AC < 0$.
+
+2. The hyperbola $9(x-2)^2 - 16(y+1)^2 = 144$ has its transverse axis vertical.
+
+3. The ellipse $\frac{(x-3)^2}{16} + \frac{(y+2)^2}{9} = 1$ has its minor axis along the y-axis.
+
+4. Identify the conic: $(x-1)^2 + (y+2)^2 = 9$. Options: Circle, Ellipse, Parabola, Hyperbola
+
+5. Identify the conic: $\frac{(x-3)^2}{16} + \frac{(y+2)^2}{9} = 1$. Options: Circle, Ellipse, Parabola, Hyperbola
+
+6. Identify the conic: $9(x-2)^2 - 16(y+1)^2 = 144$. Options: Circle, Ellipse, Parabola, Hyperbola
+
+7. Identify the conic: $y^2 - 4x = 0$. Options: Circle, Ellipse, Parabola, Hyperbola
+
+8. Find the radius of the circle $(x+1)^2 + (y-5)^2 = 16$.
+
+9. Find the center of the circle $(x-2)^2 + (y+3)^2 = 25$.
+
+10. Find the lengths of the major and minor axes for the ellipse $\frac{(x-3)^2}{16} + \frac{(y+2)^2}{9} = 1$.
+
+:::
+
+# Further reading
+
+For more questions on this topic, please go to [Questions: Introduction to 2D Conic Sections].
+
+For more on this topic, please go to [Guide: 3D Conic].
+
+## Version history 
+
+v1.0: initial version created 10/25 by Abigail Carpenter as part of a
+University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA
+4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+

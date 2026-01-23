@@ -1,0 +1,656 @@
+---
+title: Polar Coordinates 2D (degrees)
+author: Ali Kikivarakis
+abstract-title: Summary
+abstract: Polar coordinates are a different way of representing points and curves on a graph. They are used as an alternative to Cartesian coordinates and are more suited to characterising some types of curves. Therefore it is important to understand how to convert between Cartesian and polar coordinates, and to sketch curves in polar form.
+categories:
+  - Algebra
+  - Geometry
+  - Coordinates
+image: FiguresPNG/completingthesquare-image.png
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, it is recommended that you read [Guide: Introduction to trigonometry](trigonometry-degrees.qmd) and [Guide: Trigonometric identities](trigonometricidentities-degrees.qmd). Optionally, you may also find it useful to read [Guide: Laws of indices](lawsofindices.qmd), [Guide: Introduction to rearranging equations](introtorearrange.qmd), and [Guide: Completing the square](completingthesquare.qmd) for algebraic manipulation.*
+
+**Degrees are used throughout this guide. If you would like to see this guide using radians, please see [Guide: Polar Coordinates 2D (radians)](polarcoordinates2D-radians.qmd).**
+
+# Motivation for using polar coordinates {-}
+
+Imagine you are trying to find your friend in a room. One way you can describe where they are is by saying "walk 5 steps to the right and 12 steps forward." This is similar to using Cartesian coordinates. Moving right is the same as moving a length in the $x$ direction, and moving forward is the same as moving a length in the $y$ direction.
+
+Another way you can describe your friend's location is by pointing at your friend and saying "walk 13 steps in that direction." This is similar to using polar coordinates. You say which way to walk and how far to walk. This is probably a more convenient way of finding your friend and is likely how you would describe their location.
+
+When you want to tell someone where a point is on a 2D surface with Cartesian coordinates, you give them two pieces of information: an $x$-coordinate and a $y$-coordinate. With polar coordinates, to tell someone where a point is, you will give them two different pieces of information: a distance and a direction.
+
+Polar coordinates have applications in astronomy, robotics, GPS (global positioning system), and computer graphics.
+
+::: {.callout-note}
+## Definition of a pole
+
+The distance is measured from a **pole** to the point, where the pole is usually the origin. This is denoted by the letter $r$ and is always positive.
+:::
+
+::: {.callout-note}
+## Definition of the initial line
+
+The direction is measured as the anticlockwise angle from the **initial line**, where the initial line is usually the positive x-axis. This is denoted by the Greek letter phi, **$\varphi$**. It usually takes a value between $0° \leq \varphi < 360°$.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+@fig-cartesianagainstpolar shows the same point represented using Cartesian and polar coordinates.
+
+![A point in both Cartesian and polar coordinates](./FiguresPNG/polarcoordinates2D-fig1.png){width="100%" fig-alt="A point in both Cartesian and polar coordinates" #fig-cartesianagainstpolar}
+
+:::
+
+# Converting between Cartesian and polar coordinates
+
+Since both polar and Cartesian coordinates are two ways of describing a point, it is important to know how to convert between them.
+
+Suppose that you have a point with polar coordinates $(r,\varphi)$.
+
+![A right-angle triangle from a polar coordinate](./FiguresPNG/polarcoordinates2D-fig2.png){width="100%" fig-alt="A point in both Cartesian and polar coordinates" #fig-rightanglepolar}
+
+From the figure above, you can see that a right-angled triangle can be formed. The $x$-coordinate is the adjacent side, and the $y$-coordinate is the opposite side. Using trigonometry, it can be seen that:
+
+$$x = r\cos(\varphi)$$
+and
+$$y = r\sin(\varphi)$$
+
+Here's an example.
+
+::: {.callout-note appearance="simple"}
+
+## Example 2
+
+Convert the polar coordinates $(4, 60°)$ to Cartesian coordinates.
+
+Using the formulas above:
+$$x = 4\cos(60°) = 4 \cdot \frac{1}{2} = 2$$
+and
+$$y = 4\sin(60°) = 4 \cdot \frac{\sqrt{3}}{2} = 2\sqrt{3}$$
+Therefore, the Cartesian coordinates are $(2, 2\sqrt{3})$.
+
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 3
+
+Convert the polar coordinates $(5, 135°)$ to Cartesian coordinates.
+
+Using the conversion formulas:
+$$
+\begin{aligned}
+x &= 5\cos(135°) = 5 \cdot \left(-\frac{\sqrt{2}}{2}\right) = -\frac{5\sqrt{2}}{2}\\[1em]
+y &= 5\sin(135°) = 5 \cdot \frac{\sqrt{2}}{2} = \frac{5\sqrt{2}}{2}
+\end{aligned}
+$$
+
+Therefore, the Cartesian coordinates are $\left(-\frac{5\sqrt{2}}{2}, \frac{5\sqrt{2}}{2}\right)$.
+
+::: 
+
+## Converting from Cartesian to polar coordinates
+
+Now suppose you have Cartesian coordinates $(x, y)$ and want to find the polar coordinates $(r, \varphi)$.
+
+The distance $r$ from the origin can be found using Pythagoras' theorem:
+$$r = \sqrt{x^2 + y^2}$$
+
+The angle $\varphi$ can be found using:
+$$\tan(\varphi) = \frac{y}{x}$$
+
+::: {.callout-warning}
+Be careful with the angle! Remember, with polar coordinates the angle is the anticlockwise angle from the positive x-axis. When using $\tan(\varphi) = \frac{y}{x}$, you need to consider which quadrant the point is in. The inverse tangent function, $\tan^{-1}$, only gives values between $-90°$ and $90°$, so you might need to add or subtract to get the correct angle.
+:::
+
+A good strategy to find $\varphi$ is:
+
+- Step 1: Calculate $\tan^{-1}\left(\frac{y}{x}\right)$
+- Step 2: Check which quadrant the point $(x, y)$ is in through a sketch
+- Step 3: Adjust the angle accordingly. See [Guide: Trigonometry](trigonometry-degrees.qmd) on how to do this
+
+![A graphical depiction of signs of trigonometric functions in each quadrant.](./FiguresPNG/intrototrig-fig5-5.png){width="100%" fig-alt="A graphical depiction of signs of trigonometric functions in each quadrant." #fig-5}
+
+::: {.callout-note appearance="simple"}
+## Example 4
+
+Convert the Cartesian coordinates $(3, 3)$ to polar coordinates.
+
+First, find $r$:
+$$r = \sqrt{3^2 + 3^2} = \sqrt{9 + 9} = \sqrt{18} = 3\sqrt{2}$$
+
+Now find $\varphi$. Since both coordinates are positive, the point is in Quadrant I.
+$$\tan(\varphi) = \frac{3}{3} = 1$$
+
+$$\varphi = \tan^{-1}(1) = 45°$$
+
+Therefore, the polar coordinates are $\left(3\sqrt{2}, 45°\right)$.
+
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 5
+
+Convert the Cartesian coordinates $(-2, 2\sqrt{3})$ to polar coordinates.
+
+First, find $r$:
+$$r = \sqrt{(-2)^2 + (2\sqrt{3})^2} = \sqrt{4 + 12} = \sqrt{16} = 4$$
+
+Now find $\varphi$. The point is in Quadrant II (negative x, positive y).
+$$\tan(\varphi) = \frac{2\sqrt{3}}{-2} = -\sqrt{3}$$
+
+$$\tan^{-1}(-\sqrt{3}) = -60°$$
+
+Since the point is in Quadrant II, you need to add $180°$:
+$$\varphi = 180° - 60° = 120°$$
+
+Therefore, the polar coordinates are $\left(4, 120°\right)$.
+:::
+
+# Converting between Cartesian and polar equations
+
+You may need to convert entire equations from one coordinate system to another. This is different from converting a single point. Usually we want to write $r$ as a function of $\varphi$: $r = r(\varphi)$.
+
+To do this, you can use the substitutions found through trigonometry as seen below:
+
+$$
+\begin{aligned}
+x = r\cos(\varphi) \\[1em]
+y = r\sin(\varphi) \\[1em]
+r = \sqrt{x^2 + y^2} \\[1em]
+\tan(\varphi) = \frac{y}{x}
+\end{aligned}
+$$
+
+::: {.callout-note appearance="simple"}
+## Example 6
+
+Consider a circle with radius $3$ and a centre at point $(0, 0)$.
+
+In Cartesian coordinates, the equation of the circle is $x^2 + y^2 = 9$.
+
+Using our substitutions:
+
+$$
+\begin{aligned}
+(r\cos(\varphi))^2 + (r\sin(\varphi))^2 = 9 \\[1em]
+r^2\cos^2(\varphi) + r^2\sin^2(\varphi) = 9 \\[1em]
+r^2(\cos^2(\varphi) + \sin^2(\varphi)) = 9 
+\end{aligned}
+$$
+
+From the trigonometric identity:
+
+$$
+\begin{aligned}
+r^2(1) = 9 \\[1em]
+r^2 = 9 \\[1em]
+r = 3
+\end{aligned}
+$$
+So the polar equation is $r = 3$.
+
+$r$ is interpreted as the distance of a point from the origin. So we can say that the equation $r = 3$ maps to all the points at a distance of 3 units from the origin, creating a circle of radius 3.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 7
+Consider a parabola with equation $y = 2x^2$.
+
+Using our substitutions:
+
+$$
+\begin{aligned}
+r\sin(\varphi) = 2(r\cos(\varphi))^2 \\[1em]
+r\sin(\varphi) = 2r^2\cos^2(\varphi) \\[1em]
+\sin(\varphi) = 2r\cos^2(\varphi) \\[1em]
+\sin(\varphi) = 2r \cdot \cos(\varphi) \cdot \cos(\varphi)
+\end{aligned}
+$$
+By dividing both sides by $\sin(\varphi)$ and using trigonometric identities:
+
+$$
+\begin{aligned}
+\frac{\sin(\varphi)}{\sin(\varphi)} = \frac{2r \cdot \cos(\varphi) \cdot \cos(\varphi)}{\sin(\varphi)} \\[1em]
+1 = 2r \cdot \cos(\varphi) \cdot \frac{\cos(\varphi)}{\sin(\varphi)} \\[1em]
+1 = 2r \cdot \cos(\varphi) \cdot \cot(\varphi)
+\end{aligned}
+$$
+Dividing by $\cos(\varphi)\cot(\varphi)$ and using more trigonometric identities:
+
+$$
+\begin{aligned}
+\frac{1}{\cos(\varphi)\cot(\varphi)} = 2r \\[1em]
+\frac{1}{\cos(\varphi)} \cdot \frac{1}{\cot(\varphi)} = 2r \\[1em]
+\sec(\varphi) \cdot \tan(\varphi) = 2r \\[1em]
+\frac{1}{2}\sec(\varphi)\tan(\varphi) = r \\[1em]
+r = \frac{1}{2}\sec(\varphi)\tan(\varphi)
+\end{aligned}
+$$
+
+So the polar equation is $r = \frac{1}{2}\sec(\varphi)\tan(\varphi)$.
+
+In this case, it may be more useful to represent a parabola in Cartesian form rather than polar form. Two trigonometric functions take longer to write than the Cartesian equation for the quadratic!
+:::
+
+Now let us try to convert from a polar equation to a Cartesian equation.
+
+::: {.callout-note appearance="simple"}
+## Example 8
+
+Convert the polar equation $r = 8\sin(\varphi)$ to Cartesian form.
+
+Notice that the equation has the $\sin(\varphi)$ function. This means that we need to find a way to substitute $\sin(\varphi)$ with something in terms of $x$ or $y$.  
+
+By rearranging the equation $y = r\sin(\varphi)$, we get $\sin(\varphi) = \frac{y}{r}$.
+
+Using our substitutions:
+
+$$
+\begin{aligned}
+r = 8 \cdot \frac{y}{r} \\[1em]
+r^2 = 8y
+\end{aligned}
+$$
+
+Now using the substitution $r = \sqrt{x^2 + y^2}$:
+
+$$
+\begin{aligned}
+(\sqrt{x^2 + y^2})^2 = 8y \\[1em]
+x^2 + y^2 = 8y
+\end{aligned}
+$$
+
+This is the Cartesian equation of a circle. By rearranging some more and by completing the square, we can learn more about this curve.
+
+$$
+\begin{aligned}
+x^2 + y^2 - 8y = 0 \\[1em]
+x^2 + (y - 4)^2 - 16 = 0 \\[1em]
+x^2 + (y - 4)^2 = 16 \\[1em]
+x^2 + (y - 4)^2 = 4^2
+\end{aligned}
+$$
+So the Cartesian equation is $x^2 + (y - 4)^2 = 16$.
+
+The curve is a circle with centre $(0, 4)$ and radius $4$.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 9
+Convert the polar equation $r^2 = 2 + \tan^2(\varphi)$ to Cartesian form.
+
+Using our substitutions:
+
+$$
+\begin{aligned}
+(\sqrt{x^2 + y^2})^2 = 2 +\left(\frac{y}{x}\right)^2 \\[1em]
+x^2 + y^2 = 2 + \frac{y^2}{x^2}  \\[1em]
+x^4 + x^2y^2 = 2x^2 + y^2
+\end{aligned}
+$$
+
+So the Cartesian equation is $x^4 + x^2y^2 = 2x^2 + y^2$.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 10
+
+Convert the polar equation $r = 1 - \cos(2\varphi)$ to Cartesian form.
+
+Notice that the equation has the $\cos(2\varphi)$ function. The equations that you have been using have the $\cos(\varphi)$ and the $\sin(\varphi)$ functions. This means that you will need to use a trigonometric identity to turn $\cos(2\varphi)$ into functions for which we have expressions.
+
+Remember $\cos(2\varphi) \equiv \cos^2(\varphi) - \sin^2(\varphi)$.
+
+Using the identity:
+
+$$
+\begin{aligned}
+r = 1 - (\cos^2(\varphi) - \sin^2(\varphi)) \\[1em]
+r = 1 - \cos^2(\varphi) + \sin^2(\varphi) \\[1em]
+r = (1 - \cos^2(\varphi)) + \sin^2(\varphi) \\[1em]
+r = \sin^2(\varphi) + \sin^2(\varphi) \\[1em]
+r = 2\sin^2(\varphi)
+\end{aligned}
+$$
+
+Now, using our substitutions:
+
+$$
+\begin{aligned}
+r = 2 \cdot \left(\frac{y}{r}\right)^2 \\[1em]
+r = 2 \cdot \frac{y^2}{r^2} \\[1em]
+r^3 = 2y^2 \\[1em]
+(\sqrt{x^2 +y^2})^3 = 2y^2 \\[1em]
+(x^2 + y^2)^{\frac{3}{2}} = 2y^2
+\end{aligned}
+$$
+
+So the Cartesian equation is $(x^2 + y^2)^{\frac{3}{2}} = 2y^2$.
+
+:::
+
+# Common polar curves
+
+Many curves look neater when written in polar form than Cartesian form. All Desmos graphs below use $\theta$ instead of $\varphi$ as the angle.
+
+## Circles
+
+A circle of radius $a$ centred at the origin has the polar equation $r = a$. This is seen in Example 6.
+
+::: {.content-visible when-format="html"}
+
+<div id="calculator1" style="width: 100%; height: 450px;"></div>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js"></script>
+<script>
+  const elt = document.getElementById('calculator1');
+  const calculator1 = Desmos.GraphingCalculator(elt, {
+    polarMode: true,
+    expressions: true,
+    keypad: false
+  });
+  const maxR = 10;
+  calculator1.setMathBounds({
+    left: -maxR,
+    right: maxR,
+    bottom: -maxR,
+    top: maxR
+  });
+  calculator1.setExpression({
+    id: 'a_slider',
+    latex: 'a=3',
+    sliderBounds: { min: 0, max: 10, step: 0.1 }
+  });
+  calculator1.setExpression({
+    id: 'circle',
+    latex: 'r=a',
+    color: Desmos.Colors.BLUE
+  });
+</script>
+
+:::
+
+## Archimedean Spirals
+
+::: {.content-visible when-format="html"}
+
+An Archimedean spiral is a spiral named after the Greek mathematician Archimedes. 
+
+They have the equation $r = k\varphi$, where $k$ is a real constant. 
+
+As the angle increases, the distance from the origin increases proportionally.
+
+<div id="calculator2" style="width: 100%; height: 450px;"></div>
+<script>
+  const elt2 = document.getElementById('calculator2');
+  const calculator2 = Desmos.GraphingCalculator(elt2, {
+    polarMode: true,
+    expressions: true,
+    keypad: false
+  });
+  const maxR2 = 15;
+  calculator2.setMathBounds({
+    left: -maxR2,
+    right: maxR2,
+    bottom: -maxR2,
+    top: maxR2
+  });
+  calculator2.setExpression({
+    id: 'k_slider',
+    latex: 'k=1',
+    sliderBounds: { min: 0, max: 2, step: 0.1 }
+  });
+  calculator2.setExpression({
+    id: 'spiral',
+    latex: 'r=k\\theta',
+    color: Desmos.Colors.BLUE
+  });
+</script>
+
+:::
+
+## Limaçons
+
+A limaçon is a polar equation in the form $r = a(p + q\cos(\varphi))$. They are also known as Pascal's Snail, having been studied by Étienne Pascal in the 1600s. Depending on the values of $p$ and $q$, the curve may take different shapes.
+
+- If $p = q$, it makes a cardioid (or a 'heart' shape)
+- If $p \geq 2q$, it makes an 'egg' shape
+- If $q \leq p < 2q$, it makes a 'dimple' shape
+
+::: {.content-visible when-format="html"}
+
+<div id="calculator3" style="width: 100%; height: 450px;"></div>
+<script>
+  const elt4 = document.getElementById('calculator3');
+  const calculator3 = Desmos.GraphingCalculator(elt4, {
+    polarMode: true,
+    expressions: true,
+    keypad: false
+  });
+  const maxR4 = 15;
+  calculator3.setMathBounds({
+    left: -maxR4,
+    right: maxR4,
+    bottom: -maxR4,
+    top: maxR4
+  });
+  calculator3.setExpression({
+    id: 'p_slider',
+    latex: 'p=5',
+    sliderBounds: { min: 0, max: 10, step: 0.1 }
+  });
+  calculator3.setExpression({
+    id: 'q_slider',
+    latex: 'q=5',
+    sliderBounds: { min: 0, max: 10, step: 0.1 }
+  });
+  calculator3.setExpression({
+    id: 'a_slider',
+    latex: 'a=1',
+    sliderBounds: { min: 0, max: 10, step: 0.1 }
+  });
+  calculator3.setExpression({
+    id: 'cardioid',
+    latex: 'r=a(p+q\\cos(\\theta))',
+    color: Desmos.Colors.BLUE
+  });
+</script>
+
+:::
+
+## Butterfly curve
+
+This isn't a standard curve but is interesting nonetheless. The curve was discovered in 1989 and curiously does not satisfy a polynomial equation!
+
+<div id="calculator5" style="width: 100%; height: 450px;"></div>
+<script>
+  const elt5 = document.getElementById('calculator5');
+  const calculator5 = Desmos.GraphingCalculator(elt5, {
+    polarMode: true,
+    expressions: true,
+    keypad: false
+  });
+  const maxR5 = 5;
+  calculator5.setMathBounds({
+    left: -maxR5,
+    right: maxR5,
+    bottom: -maxR5,
+    top: maxR5
+  });
+  calculator5.setExpression({
+    id: 'a_slider',
+    latex: 'a=1',
+    sliderBounds: { min: 0.5, max: 2, step: 0.1 }
+  });
+  calculator5.setExpression({
+    id: 'b_slider',
+    latex: 'b=2',
+    sliderBounds: { min: 0, max: 4, step: 0.1 }
+  });
+  calculator5.setExpression({
+    id: 'c_slider',
+    latex: 'c=12',
+    sliderBounds: { min: 6, max: 24, step: 1 }
+  });
+  calculator5.setExpression({
+    id: 'butterfly',
+    latex: 'r=e^{a\\sin(\\theta)}-b\\cos(4\\theta)+\\sin^2\\left(\\frac{\\theta}{c}\\right)',
+    color: Desmos.Colors.PURPLE
+  });
+</script>
+
+:::
+
+# Representing ellipses using polar curves
+
+An ellipse is a two-dimensional surface which is represented by the Cartesian equation $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$. By modifying our polar coordinate substitutions, we can represent an ellipse quite neatly. 
+
+See [Guide: Hyperbolics] for more information on ellipses.
+
+::: {.callout-note appearance="simple"}
+## Example 11
+
+We are going to change our substitutions to force our polar equation to resemble the equation for a circle.
+
+$$
+\begin{aligned}
+\frac{x}{a} = r\cos(\theta)
+\end{aligned}
+$$
+and
+
+$$
+\begin{aligned}
+\frac{y}{b} = r\sin(\theta)
+\end{aligned}
+$$
+
+The angle is changed to $\theta$ from $\varphi$. This is because $\varphi$ is defined as the angle from the initial line, which changes with different substitutions.
+
+Now we can use the new substitution to find the modified polar equation for an ellipse.
+
+$$
+\begin{aligned}
+\left(\frac{x}{a}\right)^2 + \left(\frac{y}{b}\right)^2 = 1 \\[1em]
+(r\cos(\theta))^2 + (r\sin(\theta))^2 = 1 \\[1em]
+r^2\cos^2(\theta) + r^2\sin^2(\theta) = 1 \\[1em]
+r^2(\cos^2(\theta) + \sin^2(\theta)) = 1 \\[1em]
+r^2(1) = 1 \\[1em]
+r = 1
+\end{aligned}
+$$
+
+By changing our substitution, we obtain an expression for an ellipse which is nicer to work with.
+
+:::
+
+::: {.webex-check .webex-box data-topic="ITCN1"}
+
+1. Convert the following polar coordinates to Cartesian coordinates. Give your answers to two decimal places where appropriate.
+
+(a) $(4, 90°)$
+
+Answer: $($`r fitb(0)`,`r fitb(4)`$)$
+
+(b) $(6, 135°)$
+
+Answer: $($`r fitb(-4.24)`,`r fitb(4.24)`$)$
+
+2. Convert the following Cartesian coordinates to polar coordinates. Give your answers to two decimal places where appropriate.
+
+(a) $(2, 2)$
+
+Answer: $($`r fitb(2.83)`,`r fitb(45)`$)$
+
+(b) $(1, -\sqrt{2})$
+
+Answer: $($`r fitb(1.73)`,`r fitb(305.26)`$)$
+
+3. Match the Cartesian equation to the polar equation. One of the polar equations does not match a Cartesian equation. Select the odd one out in the final sentence below.
+
+| | Polar | Cartesian |
+|:---|:-------------------|:-----------|
+1. | $r = 5$ | `r mcq(c("(a)", "(b)", "(c)", "(d)", answer = "(e)", "(f)", "(g)"))`
+2. | $r = 4\cos^2(\varphi)$ | `r mcq(c(answer = "(a)", "(b)", "(c)", "(d)", "(e)", "(f)",  "(g)"))`
+3. | $r = \csc(\varphi)$  | `r mcq(c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)", answer = "(g)"))`
+4. | $r^2 = \sin(2\varphi)$ | `r mcq(c("(a)", answer = "(b)", "(c)",  "(d)", "(e)", "(f)", "(g)"))`
+5. | $r = 2 + 2\cos(\varphi)$  | `r mcq(c("(a)", "(b)", answer = "(c)", "(d)", "(e)",  "(f)", "(g)"))`
+6. | $r = 10\tan(\varphi)$ | `r mcq(c("(a)","(b)", "(c)", "(d)", "(e)", answer = "(f)", "(g)"))`
+
+where
+
+(a)   $(x^2 + y^2)^{\frac{3}{2}} = 4x^2$
+(b)   $(x^2 + y^2)^2 = 2xy$
+(c)   $(x^2 + y^2 - 2x)^2 = 4(x^2 + y^2)$
+(d)   $xy^2 = 3$
+(e)   $x^2 + y^2 = 25$ 
+(f)   $x^2(x^2+y^2) = 100y^2$
+(g)   $y = 2$
+
+So `r mcq(c("(a)", "(b)", "(c)", answer = "(d)", "(e)", "(f)", "(g)"))` is the odd one out.
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+1. Convert the following polar coordinates to Cartesian coordinates. Give your answers to two decimal places where appropriate.
+
+(a) $(4, 90°)$
+
+Answer: $($`r fitb(0)`,`r fitb(4)`$)$
+
+(b) $(6, 135°)$
+
+Answer: $($`r fitb(-4.24)`,`r fitb(4.24)`$)$
+
+(c) $(10, 105°)$
+
+Answer: $($`r fitb(-2.59)`,`r fitb(9.66)`$)$
+
+2. Convert the following Cartesian coordinates to polar coordinates. Give your answers to two decimal places where appropriate.
+
+(a) $(2, 2)$
+
+Answer: $($`r fitb(2.83)`,`r fitb(45)`$)$
+
+(b) $(1, -\sqrt{2})$
+
+Answer: $($`r fitb(1.73)`,`r fitb(305.26)`$)$
+
+(c) $(-12, -5)$
+
+Answer: $($`r fitb(13)`,`r fitb(202.62)`$)$
+
+3. Match the Cartesian equation to the polar equation. One of the polar equations does not match a Cartesian equation. Select the odd one out in the final sentence below.
+
+| | Polar | Cartesian |
+|:---|:-------------------|:-----------|
+1. | $r = 5$ | `r mcq(c("(a)", "(b)", "(c)", "(d)", answer = "(e)", "(f)", "(g)"))`
+2. | $r = 4\cos^2(\varphi)$ | `r mcq(c(answer = "(a)", "(b)", "(c)", "(d)", "(e)", "(f)",  "(g)"))`
+3. | $r = \frac{2}{\sin(\varphi)}$  | `r mcq(c("(a)", "(b)", "(c)", "(d)", "(e)", "(f)", answer = "(g)"))`
+4. | $r^2 = \sin(2\varphi)$ | `r mcq(c("(a)", answer = "(b)", "(c)",  "(d)", "(e)", "(f)", "(g)"))`
+5. | $r = 2 + 2\cos(\varphi)$  | `r mcq(c("(a)", "(b)", answer = "(c)", "(d)", "(e)",  "(f)", "(g)"))`
+6. | $r = 10\tan(\varphi)$ | `r mcq(c("(a)","(b)", "(c)", answer = "(d)", "(e)", "(f)", "(g)"))` is the odd one out.
+
+:::
+
+
+# Further reading {-}
+
+## Version history {-}
+
+v1.0: initial version created 09/24 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+

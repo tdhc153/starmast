@@ -1,0 +1,1326 @@
+---
+title: Arithmetic on numerical fractions
+author: Donald Campbell
+abstract-title: Summary
+abstract: Arithmetic with fractions involves combining, comparing, and scaling parts of a whole through addition, subtraction, multiplication, and division. Mastering these operations is essential for working with quantities that are not whole. These operations are widely used in everyday situations such as cooking, construction, finance, and science, where quantities must be measured, divided, or compared accurately.
+categories: 
+  - Topics in arithmetic
+image: FiguresPNG/arithmeticonnumericalfractions-image.png
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, it is recommended that you read [Guide: Introduction to numerical fractions](introtonumericalfractions.qmd).*
+
+In [Guide: Introduction to numerical fractions](introtonumericalfractions.qmd), you learned that a fraction represents part of a whole, and that it consists of a numerator and a denominator. This guide explains how to add, subtract, multiply and divide fractions. It explores the reasoning and methods behind applying these four main arithmetic operations, showing how the core concepts of fractions extend to calculations.
+
+# Adding and subtracting fractions
+
+Imagine you have two chocolate bars. Suppose one bar is split into four equal parts and one piece is eaten. This means that $\frac{1}{4}$ of the bar has been eaten. Suppose the other bar is split into six equal parts and one piece is eaten. This means that $\frac{1}{6}$ of the bar has been eaten.
+
+Therefore, the total amount that has been eaten is $$\frac{1}{4} + \frac{1}{6}$$
+
+At first glance, it might seem natural to add the numerators and the denominators separately, but this would give $\frac{2}{10}$, which is incorrect. The reason for this is that the parts being added are not the same size. Quarters and sixths are different-sized pieces of a whole. To add or subtract fractions fairly, the parts being combined must be the same size.
+
+If both bars are divided into twelve equal parts, equivalent fractions can be found for the amounts eaten from both bars. For a recap on finding equivalent fractions, please see [Guide: Introduction to numerical fractions](introtonumericalfractions.qmd).
+$$
+\begin{aligned}
+&\frac{1}{4} \overset{\times 3}{=} \frac{3}{12} \\[0.5em]
+&\frac{1}{6} \overset{\times 2}{=} \frac{2}{12}
+\end{aligned}
+$$
+
+Both fractions now share the same denominator, meaning the pieces from each bar are the same size. You can now add both pieces of chocolate together. $$\frac{1}{4} + \frac{1}{6} = \frac{3}{12} + \frac{2}{12} = \frac{5}{12}$$ 
+
+::: callout-note
+## Adding and subtracting fractions
+
+To add or subtract fractions, the denominators of both fractions must be the same.
+
+* If the fractions already have the same denominator, add or subtract the numerators and keep the same denominator.
+* If the fractions have different denominators, rewrite them as equivalent fractions so that the two new fractions have the same denominator. Then, add or subtract the numerators and keep the same denominator.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+Calculate $\dfrac{2}{7} + \dfrac{3}{7}$.
+
+The fractions have the same denominator so they can be added directly.
+
+Add the numerators and keep the same denominator. $$\frac{2}{7} + \frac{3}{7} = \frac{2+3}{7} = \frac{5}{7}$$
+
+You should always look to see if the fraction can be simplified further. In this case, there are no common factors other than $1$ so the fraction is already in its simplest form.
+:::
+
+To add or subtract fractions with different denominators, you must first find a **common denominator**. A common denominator is a number that can be evenly divided by both of the original denominators. A common denominator can always be found by multiplying the two denominators together.
+
+For example, for $\frac{1}{4}$ and $\frac{1}{6}$, you could use $4 \cdot 6 = 24$ as a common denominator.
+
+While this is an acceptable method for finding a common denominator, it can often result in working with very large numbers, especially when it comes to simplifying the resulting fraction. A more reliable method is to find the **least common multiple** of the denominators. The least common multiple is not the same thing as the highest common factor from [Guide: Introduction to numerical fractions](introtonumericalfractions.qmd).
+
+::: callout-note
+## Multiples, common multiples, and the least common multiple
+
+A **multiple** of a number is the result of multiplying that number by any whole number.
+
+When comparing the multiples of two (or more) numbers, you can find their **common multiples**. The numbers that appear in both lists of multiples are the common multiples.
+
+The **least common multiple** is the smallest positive number in the list of common multiples.
+
+To find the least common multiple:
+
+1. List the first few multiples of the first number.
+2. List the first few multiples of the second number.
+3. Identify the common multiples (the numbers that appear in both lists).
+4. The smallest of these common multiples is the least common multiple.
+
+If you do not find any common multiples in your initial lists, then extend them by listing more multiples until you find a match.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 2
+
+Find the least common multiple of $4$ and $6$.
+
+Start by identifying the first few multiples of $4$. These are the numbers that are the result of multiplying $4$ by any whole number. $$\textsf{Multiples of } 4 \textsf{:} \quad 4 \quad 8 \quad 12 \quad 16 \quad 20 \quad 24 \quad \cdots$$
+
+Now identify the first few multiples of $6$. These are the numbers that are the result of multiplying $6$ by any whole number. $$\textsf{Multiples of } 6 \textsf{:} \quad 6 \quad 12 \quad 18 \quad 24 \quad 30 \quad 36 \quad \cdots$$
+
+The numbers that appear in both lists are the common multiples. $$\textsf{Common multiples:} \quad 12 \quad 24 \quad \cdots$$
+
+The smallest number appearing in this list of common multiples is the least common multiple. $$\textsf{Least common multiple:} \quad 12$$
+:::
+
+Using the least common multiple provides the smallest denominator, which keeps the numbers manageable for the final simplification step.
+
+This smallest value is also called the **least common denominator**. For the example of the chocolate bars, the least common denominator is $12$. The numerators of the original fractions must also be scaled to ensure the fractions remain equivalent.
+
+::: {.callout-note appearance="simple"}
+## Example 3
+
+Calculate $\dfrac{1}{2} - \dfrac{5}{6}$.
+
+The fractions have different denominators so they cannot be subtracted directly.
+
+Start by identifying the multiples of the denominators $2$ and $6$.
+$$
+\begin{aligned}
+\textsf{Multiples of } 2 \textsf{:} &\quad 2 \quad 4 \quad 6 \quad 8 \quad 10 \quad 12 \quad \cdots \\
+\textsf{Multiples of } 6 \textsf{:} &\quad 6 \quad 12 \quad 18 \quad \cdots \\
+\textsf{Common multiples:} &\quad 6 \quad 12 \quad \cdots \\
+\textsf{Least common multiple:} &\quad 6
+\end{aligned}
+$$
+
+The least common multiple is $6$, so rewrite both fractions so that they both have a denominator of $6$.
+$$
+\begin{aligned}
+&\frac{1}{2} \overset{\times 3}{=} \frac{3}{6} \\[0.5em]
+&\frac{5}{6} \overset{\times 1}{=} \frac{5}{6}
+\end{aligned}
+$$
+
+Now that both fractions have the same denominator, subtract the numerators. $$\frac{3}{6} - \frac{5}{6} = \frac{3-5}{6} = \frac{-2}{6}$$
+
+The fraction can be simplified: $$\frac{-2}{6} = \frac{-1}{3} = -\frac{1}{3}$$
+:::
+
+::: {.content-visible when-format="html"}
+In the interactive figure below, use the sliders to set the numerator and the denominator for the first two fractions (blue and red). The figure visually displays these two original fractions on the left. It then shows them converted into equivalent fractions with the least common denominator. Finally, the bars on the right show their sum, stacking the two amounts. The complete calculation steps, including any simplification or conversion to a mixed number, are shown in the box at the bottom.
+
+```{=html}
+<div id="rvw-vrect-add-final" class="rvw-vrect-widget" style="--barW: 80px; --barH: 400px; --ctrlW: 220px; --gap: 0px;
+      width: 100%;
+      display:flex; flex-direction: column; align-items: center;
+      max-width:100%; font-family:Arial, Helvetica, sans-serif; color:#000; margin: 1rem auto; background-color: #ffffff; border-radius: 12px; padding: 1.5rem; box-sizing: border-box;">
+
+<style>
+  #rvw-vrect-add-final .rvw-controls-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: calc(var(--ctrlW) * 2 + 1rem);
+    margin-bottom: 1.5rem;
+  }
+  #rvw-vrect-add-final .rvw-group-a, #rvw-vrect-add-final .rvw-group-b {
+    flex: 1 1 var(--ctrlW);
+    min-width: var(--ctrlW);
+    display:flex;
+    flex-direction:column;
+    gap: .35rem;
+  }
+
+  #rvw-vrect-add-final .rvw-bars-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    gap: var(--gap);
+    padding: 1rem;
+    min-height: calc(var(--barH) + 3em);
+  }
+
+  #rvw-vrect-add-final .rvw-bar-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .1rem;
+    flex-shrink: 0;
+  }
+
+  #rvw-vrect-add-final .rvw-bar-label{
+    text-align:center;
+    font-size: 0.9rem;
+    min-height: 1.2em;
+    width: var(--barW);
+  }
+
+  #rvw-vrect-add-final .rvw-canvas{
+    width: var(--barW);
+    height: var(--barH);
+    border-radius:10px;
+    display: block;
+    box-sizing: border-box;
+  }
+
+  #rvw-vrect-add-final .rvw-result-group {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: var(--gap);
+    flex-shrink: 0;
+  }
+
+  #rvw-vrect-add-final .rvw-readout{
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    margin-top: 1rem;
+    background-color: #f0f4f8;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+
+  #rvw-vrect-add-final .rvw-group{ display:flex; flex-direction:column; gap:.25rem; }
+  #rvw-vrect-add-final .rvw-labelrow{ display:grid; grid-template-columns: 1fr auto; align-items:center; font-size:.95rem; }
+  #rvw-vrect-add-final .rvw-badge{ font-variant-numeric: tabular-nums; }
+
+  #rvw-vrect-add-final input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:999px; background:#C0D6FF; outline:none;
+      touch-action: none;
+  }
+  #rvw-vrect-add-final input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:16px; height:16px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer;
+  }
+  #rvw-vrect-add-final input[type="range"]::-moz-range-thumb{
+    width:16px; height:16px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer;
+  }
+
+</style>
+
+<div class="rvw-controls-row">
+  <div class="rvw-group-a">
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Numerator A (blue):</span>
+        <span id="rvw-A-numOut" class="rvw-badge">2</span>
+      </div>
+      <input id="rvw-A-num" type="range" min="0" max="5" value="4" step="1">
+    </div>
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Denominator A (blue):</span>
+        <span id="rvw-A-denOut" class="rvw-badge">6</span>
+      </div>
+      <input id="rvw-A-den" type="range" min="1" max="8" value="5" step="1"> </div>
+  </div>
+
+  <div class="rvw-group-b">
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Numerator B (red):</span>
+        <span id="rvw-B-numOut" class="rvw-badge">3</span>
+      </div>
+      <input id="rvw-B-num" type="range" min="0" max="8" value="3" step="1">
+    </div>
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Denominator B (red):</span>
+        <span id="rvw-B-denOut" class="rvw-badge">8</span>
+      </div>
+      <input id="rvw-B-den" type="range" min="1" max="8" value="8" step="1"> </div>
+  </div>
+</div>
+
+<div class="rvw-bars-row">
+
+  <div class="rvw-bar-item">
+    <canvas id="rvw-A-canvas" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-A-label" class="rvw-bar-label"></div>
+  </div>
+
+  <div class="rvw-bar-item">
+    <canvas id="rvw-B-canvas" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-B-label" class="rvw-bar-label"></div>
+  </div>
+
+  <div class="rvw-bar-item" style="margin-left: 20px;">
+    <canvas id="rvw-A_eq-canvas" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-A_eq-label" class="rvw-bar-label"></div>
+  </div>
+
+  <div class="rvw-bar-item">
+    <canvas id="rvw-B_eq-canvas" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-B_eq-label" class="rvw-bar-label"></div>
+  </div>
+
+  <div class="rvw-result-group" style="margin-left: 20px;">
+    <div class="rvw-bar-item" id="rvw-R1-item">
+      <canvas id="rvw-R1" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-R1-label" class="rvw-bar-label"></div>
+    </div>
+    <div class="rvw-bar-item" id="rvw-R2-item" style="display:none;">
+      <canvas id="rvw-R2" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-R2-label" class="rvw-bar-label"></div>
+    </div>
+    <div class="rvw-bar-item" id="rvw-R3-item" style="display:none;">
+      <canvas id="rvw-R3" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-R3-label" class="rvw-bar-label"></div>
+    </div>
+  </div>
+
+</div>
+
+<div id="rvw-readout" class="mj rvw-readout"></div>
+
+<script>
+(function(){
+  function ensureMathJax(cb){
+    if (window.MathJax && MathJax.typesetPromise){ cb(); return; }
+    if (!document.getElementById('mj-loader')){
+      window.MathJax = window.MathJax || { tex:{inlineMath:[['\\(','\\)'],['$','$']], displayMath:[['$$','$$']]}, svg:{fontCache:'global'} };
+      const s=document.createElement('script'); s.id='mj-loader'; s.defer=true;
+      s.src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+      s.onload=cb; document.head.appendChild(s);
+    } else {
+      const t=setInterval(()=>{ if(window.MathJax && MathJax.typesetPromise){ clearInterval(t); cb(); } }, 50);
+    }
+  }
+
+  function setEquation(el, p){
+    const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1;};
+    const gFinal = gcd(p.nSum, p.L);
+    const ns = p.nSum / gFinal;
+    const ls = p.L / gFinal;
+    let tex = `\\dfrac{${p.nA}}{${p.dA}} + \\dfrac{${p.nB}}{${p.dB}} = `
+          + `\\dfrac{${p.nAeq}}{${p.L}} + \\dfrac{${p.nBeq}}{${p.L}} = `
+          + `\\dfrac{${p.nSum}}{${p.L}}`;
+          
+    if (ns === 0 && ls !== 0) {
+        tex += ` = 0`;
+    } else {
+        if (gFinal > 1){ tex += ` = \\dfrac{${ns}}{${ls}}`; }
+        if (ns >= ls){
+          const q = Math.floor(ns / ls);
+          const r = ns % ls;
+          if (tex.endsWith(`\\dfrac{${ns}}{${ls}}`) || tex.endsWith(`\\dfrac{${p.nSum}}{${p.L}}`)) {
+             tex += ` = ` + (r ? `${q}\\dfrac{${r}}{${ls}}` : `${q}`);
+          }
+        }
+    }
+    el.innerHTML = `\\(${tex}\\)`;
+  }
+
+  function setBarLabel(el, n, d) {
+    if (d > 0) {
+      el.innerHTML = `$$\\dfrac{${n}}{${d}}$$`;
+    } else {
+      el.innerHTML = '';
+    }
+  }
+
+  const root  = document.getElementById('rvw-vrect-add-final');
+
+  const canvA = root.querySelector('#rvw-A-canvas'), ctxA = canvA.getContext('2d');
+  const canvB = root.querySelector('#rvw-B-canvas'), ctxB = canvB.getContext('2d');
+  const canvA_eq = root.querySelector('#rvw-A_eq-canvas'), ctxA_eq = canvA_eq.getContext('2d');
+  const canvB_eq = root.querySelector('#rvw-B_eq-canvas'), ctxB_eq = canvB_eq.getContext('2d');
+  const canvR1= root.querySelector('#rvw-R1'),        ctxR1= canvR1.getContext('2d');
+  const canvR2= root.querySelector('#rvw-R2'),        ctxR2= canvR2.getContext('2d');
+  const canvR3= root.querySelector('#rvw-R3'),        ctxR3= canvR3.getContext('2d');
+
+  const labelA = root.querySelector('#rvw-A-label');
+  const labelB = root.querySelector('#rvw-B-label');
+  const labelA_eq = root.querySelector('#rvw-A_eq-label');
+  const labelB_eq = root.querySelector('#rvw-B_eq-label');
+  const labelR1 = root.querySelector('#rvw-R1-label');
+  const labelR2 = root.querySelector('#rvw-R2-label');
+  const labelR3 = root.querySelector('#rvw-R3-label');
+
+  const itemR2 = root.querySelector('#rvw-R2-item');
+  const itemR3 = root.querySelector('#rvw-R3-item');
+
+  const numA  = root.querySelector('#rvw-A-num'),  numAOut  = root.querySelector('#rvw-A-numOut');
+  const denA  = root.querySelector('#rvw-A-den'),  denAOut  = root.querySelector('#rvw-A-denOut');
+  const numB  = root.querySelector('#rvw-B-num'),  numBOut  = root.querySelector('#rvw-B-numOut');
+  const denB  = root.querySelector('#rvw-B-den'),  denBOut  = root.querySelector('#rvw-B-denOut');
+
+  const readout = root.querySelector('#rvw-readout');
+
+  const colorA = '#C0D6FF';
+  const colorB = '#FF9677';
+
+  const gridLine  = '#000';
+  const gridWidth = 1;
+  const padX = 10, padY = 12;
+  const cornerR = 8;
+  const borderW = 1.5;
+
+  const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1;}
+  const lcm=(a,b)=>a*b/gcd(a,b);
+  const crisp = x => Math.round(x) + 0.5;
+
+  function paintRange(el){
+    const min=+el.min,max=+el.max,val=+el.value, pct=(max > min ? (val-min)/(max-min) : 0)*100;
+    el.style.background = `linear-gradient(to right,#3F68B6 0%,#3F68B6 ${pct}%,#C0D6FF ${pct}%,#C0D6FF 100%)`;
+  }
+
+  function roundRect(ctx, x, y, w, h, r){
+    const rr = Math.min(r, w/2, h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+rr,y); ctx.arcTo(x+w,y, x+w,y+h, rr); ctx.arcTo(x+w,y+h, x,y+h, rr);
+    ctx.arcTo(x,y+h, x,y, rr); ctx.arcTo(x,y, x+w,y, rr); ctx.closePath();
+  }
+
+  function drawRectStrips(ctx, canvas, rows, shaded, fillColor){
+    rows = Math.max(1, rows);
+    shaded = Math.max(0, Math.min(shaded, rows));
+    const dpr = window.devicePixelRatio||1;
+    const cssW=canvas.clientWidth||canvas.width, cssH=canvas.clientHeight||canvas.height;
+    canvas.width=Math.round(cssW*dpr); canvas.height=Math.round(cssH*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    ctx.clearRect(0,0,cssW,cssH);
+    roundRect(ctx, 0, 0, cssW, cssH, 10);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+
+    const gx = padX, gy = padY, gw = cssW - 2*padX, gh = cssH - 2*padY;
+    const ch = gh/rows;
+
+    ctx.save();
+    roundRect(ctx, gx, gy, gw, gh, cornerR);
+    ctx.clip();
+
+    if (shaded > 0) {
+      const shadedHeight = shaded * ch;
+      const shadedY = gy + gh - shadedHeight;
+      ctx.beginPath();
+      ctx.rect(gx, shadedY, gw, shadedHeight);
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
+
+    ctx.lineWidth = gridWidth; ctx.strokeStyle = gridLine;
+    for(let r=0; r <= rows; r++){
+      const y = gy + r * ch;
+      ctx.beginPath(); ctx.moveTo(gx, crisp(y)); ctx.lineTo(gx+gw, crisp(y)); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(crisp(gx), gy);      ctx.lineTo(crisp(gx), gy+gh);      ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(crisp(gx+gw), gy);  ctx.lineTo(crisp(gx+gw), gy+gh);  ctx.stroke();
+    ctx.restore();
+
+    roundRect(ctx, gx, gy, gw, gh, cornerR);
+    ctx.lineWidth = borderW;
+    ctx.strokeStyle = gridLine;
+    ctx.stroke();
+  }
+
+  function drawResultStrips(ctx, canvas, rows, shadedA, shadedB, colorA, colorB){
+    rows = Math.max(1, rows);
+    shadedA = Math.max(0, Math.min(shadedA, rows));
+    shadedB = Math.max(0, Math.min(shadedB, rows - shadedA));
+    
+    const dpr = window.devicePixelRatio||1;
+    const cssW=canvas.clientWidth||canvas.width, cssH=canvas.clientHeight||canvas.height;
+    canvas.width=Math.round(cssW*dpr); canvas.height=Math.round(cssH*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    ctx.clearRect(0,0,cssW,cssH);
+    roundRect(ctx, 0, 0, cssW, cssH, 10);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+
+    const gx = padX, gy = padY, gw = cssW - 2*padX, gh = cssH - 2*padY;
+    const ch = gh/rows;
+
+    ctx.save();
+    roundRect(ctx, gx, gy, gw, gh, cornerR);
+    ctx.clip();
+
+    if (shadedA > 0) {
+      const shadedHeightA = shadedA * ch;
+      const shadedYA = gy + gh - shadedHeightA;
+      ctx.beginPath();
+      ctx.rect(gx, shadedYA, gw, shadedHeightA);
+      ctx.fillStyle = colorA;
+      ctx.fill();
+    }
+    
+    if (shadedB > 0) {
+      const shadedHeightA = shadedA * ch;
+      const shadedYA = gy + gh - shadedHeightA;
+      const shadedHeightB = shadedB * ch;
+      const shadedYB = shadedYA - shadedHeightB;
+      ctx.beginPath();
+      ctx.rect(gx, shadedYB, gw, shadedHeightB);
+      ctx.fillStyle = colorB;
+      ctx.fill();
+    }
+
+    ctx.lineWidth = gridWidth; ctx.strokeStyle = gridLine;
+    for(let r=0; r <= rows; r++){
+      const y = gy + r * ch;
+      ctx.beginPath(); ctx.moveTo(gx, crisp(y)); ctx.lineTo(gx+gw, crisp(y)); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(crisp(gx), gy);      ctx.lineTo(crisp(gx), gy+gh);      ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(crisp(gx+gw), gy);  ctx.lineTo(crisp(gx+gw), gy+gh);  ctx.stroke();
+    ctx.restore();
+
+    roundRect(ctx, gx, gy, gw, gh, cornerR);
+    ctx.lineWidth = borderW;
+    ctx.strokeStyle = gridLine;
+    ctx.stroke();
+  }
+
+  function update(){
+    const dA_val = +denA.value;
+    const dB_val = +denB.value;
+    if (+numA.max !== dA_val) numA.max = dA_val;
+    if (+numB.max !== dB_val) numB.max = dB_val;
+    if (+numA.value > dA_val) numA.value = dA_val;
+    if (+numB.value > dB_val) numB.value = dB_val;
+
+    numAOut.textContent = numA.value;  denAOut.textContent = dA_val;
+    numBOut.textContent = numB.value;  denBOut.textContent = dB_val;
+
+    const nA = +numA.value,  nB = +numB.value;
+
+    drawRectStrips(ctxA, canvA, dA_val, nA, colorA);
+    drawRectStrips(ctxB, canvB, dB_val, nB, colorB);
+    setBarLabel(labelA, nA, dA_val);
+    setBarLabel(labelB, nB, dB_val);
+
+    const L  = (dA_val <= 0 || dB_val <= 0) ? 0 : lcm(dA_val, dB_val);
+
+    if (L <= 0) {
+      readout.innerHTML = "Denominator must be 1 or greater.";
+      ctxA_eq.clearRect(0,0,canvA_eq.width,canvA_eq.height);
+      ctxB_eq.clearRect(0,0,canvB_eq.width,canvB_eq.height);
+      ctxR1.clearRect(0,0,canvR1.width,canvR1.height);
+      setBarLabel(labelA_eq, 0, 0);
+      setBarLabel(labelB_eq, 0, 0);
+      setBarLabel(labelR1, 0, 0);
+      itemR2.style.display = 'none';
+      itemR3.style.display = 'none';
+      [numA, denA, numB, denB].forEach(paintRange);
+      ensureMathJax(()=>{ MathJax.typesetPromise([labelA_eq, labelB_eq, labelR1, labelR2, labelR3, readout]); });
+      return;
+    }
+
+    const nAeq = nA*(L/dA_val), nBeq = nB*(L/dB_val), nSum = nAeq + nBeq;
+
+    drawRectStrips(ctxA_eq, canvA_eq, L, nAeq, colorA);
+    drawRectStrips(ctxB_eq, canvB_eq, L, nBeq, colorB);
+    setBarLabel(labelA_eq, nAeq, L);
+    setBarLabel(labelB_eq, nBeq, L);
+
+    const s1 = Math.min(nSum, L);
+    const shadedA_R1 = Math.min(nAeq, L);
+    const shadedB_R1 = s1 - shadedA_R1;
+    drawResultStrips(ctxR1, canvR1, L, shadedA_R1, shadedB_R1, colorA, colorB);
+    setBarLabel(labelR1, s1, L);
+    itemR2.style.display = 'none';
+    itemR3.style.display = 'none';
+
+    const s2 = Math.max(0, Math.min(nSum - L, L));
+    if (s2 > 0){
+      const shadedA_R2 = Math.max(0, nAeq - L);
+      const shadedB_R2 = s2 - shadedA_R2;
+      drawResultStrips(ctxR2, canvR2, L, shadedA_R2, shadedB_R2, colorA, colorB);
+      setBarLabel(labelR2, s2, L);
+      itemR2.style.display = 'flex';
+    }
+
+    const s3 = Math.max(0, nSum - 2*L);
+    if (s3 > 0){
+      const shadedA_R3 = Math.max(0, nAeq - 2*L);
+      const shadedB_R3 = s3 - shadedA_R3;
+      drawResultStrips(ctxR3, canvR3, L, shadedA_R3, shadedB_R3, colorA, colorB);
+      setBarLabel(labelR3, s3, L);
+      itemR3.style.display = 'flex';
+    }
+
+    setEquation(readout, { nA, dA: dA_val, nB, dB: dB_val, L, nAeq, nBeq, nSum });
+
+    ensureMathJax(()=>{
+      const elementsToTypeset = [
+        readout, labelA, labelB, labelA_eq, labelB_eq, labelR1
+      ];
+      if (s2 > 0) elementsToTypeset.push(labelR2);
+      if (s3 > 0) elementsToTypeset.push(labelR3);
+
+      for (const el of elementsToTypeset) {
+         if(el.innerHTML) {
+           if (el.MathJax) el.MathJax.element = null;
+           el.classList.remove('mjx-typeset');
+         }
+      }
+      MathJax.typesetPromise(elementsToTypeset.filter(el => el.innerHTML));
+    });
+
+    [numA, denA, numB, denB].forEach(paintRange);
+  }
+
+  const allSliders = [numA, denA, numB, denB];
+
+  allSliders.forEach(slider => {
+      slider.addEventListener('input', update);
+      slider.addEventListener('change', update);
+  });
+
+  window.addEventListener('resize', update);
+
+  (function kick(){ allSliders.forEach(paintRange); update(); })();
+})();
+</script>
+</div>
+```
+:::
+
+::: {.content-hidden when-format="html"}
+The figure below provides a visual representation of adding $\frac{4}{5}$ (blue) and $\frac{3}{8}$ (red). It uses shaded rectangular bars to show the original fractions on the left, their conversion to a common denominator $40$ in the middle, and the final sum of $1\frac{7}{40}$ on the right. $$\frac{4}{5} + \frac{3}{8} = \frac{32}{40} + \frac{15}{40} = \frac{47}{40} = 1 \frac{7}{40}$$
+
+![Addition of fractions represented by shaded regions of rectangular bars and equivalent fractions.](FiguresPNG/arithmeticonnumericalfractions-fig1.png){fig-align="center"}
+:::
+
+# Multiplying fractions {#multiplying-fractions}
+
+Multiplying fractions means finding a fraction of another fraction. $$\frac{1}{2} \cdot \frac{1}{3} \qquad \textsf{"a half of a third"}$$
+
+When you multiply two fractions that are both less than $1$, the result is smaller than both of the original fractions because you are taking a part of a part. This is different from multiplying whole numbers greater than $1$, where multiplying makes numbers bigger.
+
+Imagine you have a chocolate bar. Suppose you divide it vertically into three equal parts (thirds) and cover the first part so that $\frac{1}{3}$ of the bar is covered. Suppose you now divide the same bar horizontally into two equal parts (halves) and cover the first part so that $\frac{1}{2}$ of the bar is covered. The overlapping section shows the part that is both a half and a third at the same time. It covers one out of six equal parts of the bar. $$\frac{1}{2} \cdot \frac{1}{3} = \frac{1}{6}$$
+
+This is why multiplying fractions means taking one fraction of another.
+
+::: callout-note
+## Multiplying fractions
+
+To multiply two fractions together:
+
+1. Multiply the numerators together and write this as the new numerator.
+2. Multiply the denominators together and write this as the new denominator.
+3. Simplify the result, if possible.
+:::
+
+Unlike with addition or subtraction, you do not need to find a common denominator when multiplying fractions. Each fraction acts as its own scaling. Multiplying by $\frac{1}{2}$ means "take one half of", and multiplying by $\frac{1}{3}$ means "take one third of". If both fractions are less than $1$, each denominator divides the quantity again, so the number gets smaller.
+
+::: {.callout-note appearance="simple"}
+## Example 4
+
+Calculate $\dfrac{3}{4} \cdot \dfrac{8}{9}$.
+
+Multiply the numerators and the denominators separately, and simplify the result. $$\frac{3}{4} \cdot \frac{8}{9} = \frac{3 \cdot 8}{4 \cdot 9} = \frac{24}{36} = \frac{2}{3}$$
+:::
+
+In this example, the numerators and the denominators of the fraction $\frac{24}{36}$ are small enough to make simplifying manageable. When the numbers are larger, multiplying first can create very large numbers on the numerator and the denominator.
+
+A more reliable method is to **simplify before multiplying**. You can do this by **cancelling** any common factors between any numerator and any denominator in the problem.
+
+::: {.callout-note appearance="simple"}
+## Example 5
+
+Calculate $\dfrac{14}{25} \cdot \dfrac{15}{21}$.
+
+The previous method involved multiplying first and then simplifying. $$\frac{14}{25} \cdot \frac{15}{21} = \frac{14 \cdot 15}{25 \cdot 21} = \frac{210}{525}$$
+
+This is a large fraction which could take a while to simplify. You would need to find the highest common factor (which is $105$) or simplify in multiple steps (divide by $5$, then $7$, then $3$). $$\frac{210}{525} = \frac{210 \div 105}{525 \div 105} = \frac{2}{5}$$
+
+The more reliable method is to first look for common factors between any numerator and any denominator.
+
+* The numerator $14$ and the denominator $21$ share a common factor of $7$.
+* The numerator $15$ and the denominator $25$ share a common factor of $5$.
+
+You can show this cancelling process directly on the fractions. First, divide $14$ and $21$ by their common factor of $7$ to get $2$ and $3$, respectively. Next, divide $15$ and $25$ by their common factor of $5$ to get $3$ and $5$, respectively.
+
+The original problem has now become: $$\frac{2}{5} \cdot \frac{3}{3}$$
+
+Notice that $3$ is also a common factor so the final simplified multiplication problem is: $$\frac{2}{5} \cdot \frac{1}{1}$$
+
+You can now multiply the simplified numerators together and the simplified denominators together, as before. $$\frac{2}{5} \cdot \frac{1}{1} = \frac{2 \cdot 1}{5 \cdot 1} = \frac{2}{5}$$
+
+This method gives the final simplified answer directly and avoids large calculations.
+:::
+
+::: callout-warning
+This method of cancelling factors **only works for multiplication**. You cannot cancel factors across numerators and denominators when adding or subtracting fractions.
+:::
+
+::: {.content-visible when-format="html"}
+In the interactive figure below, use the sliders to set the numerators and denominators for the two fractions that are being multiplied together. The grid visually displays the first fraction as blue columns and the second fraction as red rows. The overlapping pink area represents the result or "fraction of a fraction".
+
+This demonstrates how multiplying fractions works. The grid is divided into $\textsf{Denominator A } \times \textsf{ Denominator B}$ total rectangles, and the overlapping area covers $\textsf{Numerator A } \times \textsf{ Numerator B}$ of those rectangles. Hover over the non-overlapping blue or red areas to see each fraction individually. The complete calculation, including any simplification, is shown in the box at the bottom.
+
+```{=html}
+<div id="rvw-grid-mul-final" class="rvw-grid-widget" style="--ctrlW: 220px; --gridMaxW: 450px;
+      width: 100%;
+      display:flex; flex-direction: column; align-items: center;
+      max-width:100%; font-family:Arial, Helvetica, sans-serif; color:#000; margin: 1rem auto; background-color: #ffffff; border-radius: 12px; padding: 1.5rem; box-sizing: border-box;">
+
+<style>
+  #rvw-grid-mul-final .rvw-controls-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: calc(var(--ctrlW) * 2 + 1rem);
+    margin-bottom: 1.5rem;
+  }
+  #rvw-grid-mul-final .rvw-group-a, #rvw-grid-mul-final .rvw-group-b {
+    flex: 1 1 var(--ctrlW);
+    min-width: var(--ctrlW);
+    display:flex;
+    flex-direction:column;
+    gap: .35rem;
+  }
+
+  #rvw-grid-mul-final .rvw-grid-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 3rem;
+    box-sizing: border-box;
+  }
+
+  #rvw-grid-mul-final .rvw-grid-container {
+    position: relative;
+    width: 100%;
+    max-width: var(--gridMaxW);
+    aspect-ratio: 1 / 1;
+  }
+
+  #rvw-grid-mul-final .rvw-canvas{
+    width: 100%;
+    height: 100%;
+    display: block;
+    box-sizing: border-box;
+    cursor: default;
+  }
+  
+  #rvw-grid-mul-final .rvw-grid-label {
+    position: absolute;
+    pointer-events: none;
+    line-height: 1;
+    font-size: 1rem;
+    font-weight: bold;
+    display: none;
+  }
+
+  #rvw-grid-mul-final .rvw-readout{
+    width: 100%;
+    max-width: calc(var(--ctrlW) * 2 + 1rem);
+    text-align: center;
+    margin-top: 3.8rem;
+    background-color: #f0f4f8;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+
+  #rvw-grid-mul-final .rvw-group{ display:flex; flex-direction:column; gap:.25rem; }
+  #rvw-grid-mul-final .rvw-labelrow{ display:grid; grid-template-columns: 1fr auto; align-items:center; font-size:.95rem; }
+  #rvw-grid-mul-final .rvw-badge{ font-variant-numeric: tabular-nums; }
+
+  #rvw-grid-mul-final input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:999px; background:#C0D6FF; outline:none;
+      touch-action: none;
+  }
+  #rvw-grid-mul-final input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:16px; height:16px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer;
+  }
+  #rvw-grid-mul-final input[type="range"]::-moz-range-thumb{
+    width:16px; height:16px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer;
+  }
+
+</style>
+
+<div class="rvw-controls-row">
+  <div class="rvw-group-a">
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Numerator A (blue):</span>
+        <span id="rvw-A-numOut" class="rvw-badge">1</span>
+      </div>
+      <input id="rvw-A-num" type="range" min="0" max="11" value="5" step="1">
+    </div>
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Denominator A (columns):</span>
+        <span id="rvw-A-denOut" class="rvw-badge">3</span>
+      </div>
+      <input id="rvw-A-den" type="range" min="1" max="12" value="11" step="1"> </div>
+  </div>
+
+  <div class="rvw-group-b">
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Numerator B (red):</span>
+        <span id="rvw-B-numOut" class="rvw-badge">1</span>
+      </div>
+      <input id="rvw-B-num" type="range" min="0" max="5" value="3" step="1">
+    </div>
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Denominator B (rows):</span>
+        <span id="rvw-B-denOut" class="rvw-badge">2</span>
+      </div>
+      <input id="rvw-B-den" type="range" min="1" max="12" value="5" step="1"> </div>
+  </div>
+</div>
+
+<div class="rvw-grid-row">
+    <div class="rvw-grid-container">
+        <canvas id="rvw-grid-canvas" width="450" height="450" class="rvw-canvas"></canvas>
+        
+        <div id="rvw-grid-label-a" class="rvw-grid-label" style="transform: translateX(-50%);"></div>
+        
+        <div id="rvw-grid-label-b" class="rvw-grid-label" style="transform: translateY(-50%);"></div>
+        
+        <div id="rvw-grid-label-r" class="rvw-grid-label" style="display: flex; align-items: center; justify-content: center; color: black; font-size: 1.1rem;"></div>
+    </div>
+</div>
+
+<div id="rvw-readout" class="mj rvw-readout"></div>
+
+
+<script>
+(function(){
+  function ensureMathJax(cb){
+    if (window.MathJax && MathJax.typesetPromise){ cb(); return; }
+    if (!document.getElementById('mj-loader')){
+      window.MathJax = window.MathJax || { tex:{inlineMath:[['\\(','\\)'],['$','$']], displayMath:[['$$','$$']]}, svg:{fontCache:'global'} };
+      const s=document.createElement('script'); s.id='mj-loader'; s.defer=true;
+      s.src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+      s.onload=cb; document.head.appendChild(s);
+    } else {
+      const t=setInterval(()=>{ if(window.MathJax && MathJax.typesetPromise){ clearInterval(t); cb(); } }, 50);
+    }
+  }
+
+  function setEquation(el, p){
+    const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1;};
+    
+    const nA = p.nA, dA = p.dA, nB = p.nB, dB = p.dB;
+
+    let tex = `\\dfrac{${nA}}{${dA}} \\cdot \\dfrac{${nB}}{${dB}}`;
+    let lastTexPart = tex;
+    
+    const g_AdB = gcd(nA, dB);
+    const nA_s1 = nA / g_AdB;
+    const dB_s1 = dB / g_AdB;
+    
+    const g_BdA = gcd(nB, dA);
+    const nB_s1 = nB / g_BdA;
+    const dA_s1 = dA / g_BdA;
+    
+    const didCancel_s1 = (g_AdB > 1 || g_BdA > 1);
+    const tex_s1 = `\\dfrac{${nA_s1}}{${dA_s1}} \\cdot \\dfrac{${nB_s1}}{${dB_s1}}`;
+    
+    if (didCancel_s1) {
+        tex += ` = ${tex_s1}`;
+        lastTexPart = tex_s1;
+    }
+    
+    const g_A = gcd(nA_s1, dA_s1);
+    const nA_s2 = nA_s1 / g_A;
+    const dA_s2 = dA_s1 / g_A;
+    
+    const g_B = gcd(nB_s1, dB_s1);
+    const nB_s2 = nB_s1 / g_B;
+    const dB_s2 = dB_s1 / g_B;
+    
+    const didCancel_s2 = (g_A > 1 || g_B > 1);
+    const tex_s2 = `\\dfrac{${nA_s2}}{${dA_s2}} \\cdot \\dfrac{${nB_s2}}{${dB_s2}}`;
+    
+    if (didCancel_s2) {
+        tex += ` = ${tex_s2}`;
+        lastTexPart = tex_s2;
+    }
+    
+    const nRes_s = nA_s2 * nB_s2;
+    const dRes_s = dA_s2 * dB_s2;
+    
+    const tex_mul = `\\dfrac{${nA_s2} \\cdot ${nB_s2}}{${dA_s2} \\cdot ${dB_s2}}`;
+
+    if (lastTexPart !== tex_mul && (nA_s2 !== nRes_s || nB_s2 !== nRes_s || dA_s2 !== dRes_s || dB_s2 !== dRes_s)) {
+         tex += ` = ${tex_mul}`;
+         lastTexPart = tex_mul;
+    }
+    
+    const tex_res = `\\dfrac{${nRes_s}}{${dRes_s}}`;
+    
+    if (lastTexPart !== tex_res && !(nRes_s === 0 && dRes_s !== 0) && !(dRes_s === 1) && !(nRes_s === dRes_s)) {
+         tex += ` = ${tex_res}`;
+         lastTexPart = tex_res;
+    }
+    
+    let finalFormTex = "";
+    if (nRes_s === 0 && dRes_s !== 0) {  
+        finalFormTex = "0";
+    } else if (dRes_s === 1) {  
+        finalFormTex = `${nRes_s}`;
+    } else if (nRes_s === dRes_s && dRes_s !== 0) {  
+         finalFormTex = "1";
+    } else if (nRes_s > dRes_s && dRes_s !== 0){  
+      const q = Math.floor(nRes_s / dRes_s);
+      const r = nRes_s % dRes_s;
+      finalFormTex = r > 0 ? `${q}\\dfrac{${r}}{${dRes_s}}` : `${q}`;
+    } else {
+        finalFormTex = lastTexPart;  
+    }
+
+    if (finalFormTex !== lastTexPart && ` = ${finalFormTex}` !== lastTexPart ) {  
+         tex += ` = ${finalFormTex}`;
+    }
+
+    el.innerHTML = `\\(${tex}\\)`;
+    
+    if (el.MathJax) el.MathJax.element = null;
+    el.classList.remove('mjx-typeset');
+  }
+
+
+  const root  = document.getElementById('rvw-grid-mul-final');
+  if (!root) { console.warn("Fraction multiplication widget root 'rvw-grid-mul-final' not found."); return; }
+
+  const canvas = root.querySelector('#rvw-grid-canvas'), ctx = canvas.getContext('2d');
+  
+  const numA  = root.querySelector('#rvw-A-num'),  numAOut  = root.querySelector('#rvw-A-numOut');
+  const denA  = root.querySelector('#rvw-A-den'),  denAOut  = root.querySelector('#rvw-A-denOut');
+  const numB  = root.querySelector('#rvw-B-num'),  numBOut  = root.querySelector('#rvw-B-numOut');
+  const denB  = root.querySelector('#rvw-B-den'),  denBOut  = root.querySelector('#rvw-B-denOut');
+  
+  const readout = root.querySelector('#rvw-readout');
+  
+  const labelA = root.querySelector('#rvw-grid-label-a');
+  const labelB = root.querySelector('#rvw-grid-label-b');
+  const labelR = root.querySelector('#rvw-grid-label-r');
+  
+  let lastSliderValues = {};
+  let lastMousePos = { x: -1, y: -1 };
+
+  const fillA = 'rgba(63, 104, 182, 0.5)';
+  const fillB = 'rgba(217, 83, 79, 0.5)';
+  const gridLine  = '#000';
+  const gridWidth = 1;
+  const pad = 10;
+  const borderW = 1.5;
+
+  const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1;}
+  const crisp = x => Math.round(x) + 0.5;
+
+  function paintRange(el){
+    const min=+el.min,max=+el.max,val=+el.value, pct=(max > min ? (val-min)/(max-min) : 0)*100;
+    el.style.background = `linear-gradient(to right,#3F68B6 0%,#3F68B6 ${pct}%,#C0D6FF ${pct}%,#C0D6FF 100%)`;
+  }
+
+  function drawGrid(params){
+    if (!params) return;  
+    
+    let { nA, dA_val, nB, dB_val } = params;
+    
+    let cols = Math.max(1, dA_val);
+    let rows = Math.max(1, dB_val);
+    let shadedCols = Math.max(0, Math.min(nA, cols));
+    let shadedRows = Math.max(0, Math.min(nB, rows));
+    
+    const dpr = window.devicePixelRatio||1;
+    const cssW=canvas.clientWidth||canvas.width, cssH=canvas.clientHeight||canvas.height;
+    canvas.width=Math.round(cssW*dpr); canvas.height=Math.round(cssH*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    ctx.clearRect(0,0,cssW,cssH);
+    
+    const gx = pad, gy = pad, gw = cssW - 2*pad, gh = cssH - 2*pad;
+    const cw = gw / cols;
+    const ch = gh / rows;
+
+    const { x, y } = lastMousePos;
+    
+    const isHoverA = (shadedCols > 0 &&  
+                       x >= gx && x < gx + shadedCols * cw &&  
+                       y >= gy + shadedRows * ch && y < gy + gh);
+                       
+    const isHoverB = (shadedRows > 0 &&
+                       x >= gx + shadedCols * cw && x < gx + gw &&
+                       y >= gy && y < gy + shadedRows * ch);
+    
+    if (isHoverA) {
+        ctx.save();
+        
+        if (shadedCols > 0) {
+            ctx.fillStyle = fillA;
+            ctx.fillRect(gx, gy, shadedCols * cw, gh);
+        }
+        
+        ctx.lineWidth = gridWidth; ctx.strokeStyle = gridLine;
+        for(let c=0; c <= cols; c++){
+          const x_pos = gx + c * cw;
+          ctx.beginPath(); ctx.moveTo(crisp(x_pos), gy); ctx.lineTo(crisp(x_pos), gy+gh); ctx.stroke();
+        }
+        
+        ctx.lineWidth = borderW;
+        ctx.strokeStyle = gridLine;
+        ctx.strokeRect(crisp(gx), crisp(gy), gw, gh);
+        ctx.restore();
+        
+        labelA.style.left = `${gx + (shadedCols * cw) / 2}px`;
+        labelA.style.top = `${gy + gh / 2}px`;
+        labelA.style.transform = 'translate(-50%, -50%)';
+        labelA.style.color = 'black';
+        labelA.style.textShadow = 'none';
+        labelA.innerHTML = `$$\\frac{${shadedCols}}{${cols}}$$`;
+        labelA.style.display = 'block';
+        
+        labelB.style.display = 'none'; labelB.innerHTML = '';
+        labelR.style.display = 'none'; labelR.innerHTML = '';
+        
+    } else if (isHoverB) {
+        ctx.save();
+
+        if (shadedRows > 0) {
+            ctx.fillStyle = fillB;
+            ctx.fillRect(gx, gy, gw, shadedRows * ch);
+        }
+
+        ctx.lineWidth = gridWidth; ctx.strokeStyle = gridLine;
+        for(let r=0; r <= rows; r++){
+          const y_pos = gy + r * ch;
+          ctx.beginPath(); ctx.moveTo(gx, crisp(y_pos)); ctx.lineTo(gx+gw, crisp(y_pos)); ctx.stroke();
+        }
+        
+        ctx.lineWidth = borderW;
+        ctx.strokeStyle = gridLine;
+        ctx.strokeRect(crisp(gx), crisp(gy), gw, gh);
+        ctx.restore();
+
+        labelB.style.top = `${gy + (shadedRows * ch) / 2}px`;
+        labelB.style.left = `${gx + gw / 2}px`;
+        labelB.style.transform = 'translate(-50%, -50%)';
+        labelB.style.color = 'black';
+        labelB.style.textShadow = 'none';
+        labelB.innerHTML = `$$\\frac{${shadedRows}}{${rows}}$$`;
+        labelB.style.display = 'block';
+
+        labelA.style.display = 'none'; labelA.innerHTML = '';
+        labelR.style.display = 'none'; labelR.innerHTML = '';
+
+    } else {
+
+        if (shadedCols > 0) {
+          ctx.fillStyle = fillA;
+          ctx.fillRect(gx, gy, shadedCols * cw, gh);
+        }
+        
+        if (shadedRows > 0) {
+          ctx.fillStyle = fillB;
+          ctx.fillRect(gx, gy, gw, shadedRows * ch);
+        }
+
+        ctx.lineWidth = gridWidth; ctx.strokeStyle = gridLine;
+        for(let c=0; c <= cols; c++){
+          const x_pos = gx + c * cw;
+          ctx.beginPath(); ctx.moveTo(crisp(x_pos), gy); ctx.lineTo(crisp(x_pos), gy+gh); ctx.stroke();
+        }
+        for(let r=0; r <= rows; r++){
+          const y_pos = gy + r * ch;
+          ctx.beginPath(); ctx.moveTo(gx, crisp(y_pos)); ctx.lineTo(gx+gw, crisp(y_pos)); ctx.stroke();
+        }
+
+        ctx.lineWidth = borderW;
+        ctx.strokeStyle = gridLine;
+        ctx.strokeRect(crisp(gx), crisp(gy), gw, gh);
+        
+        if (shadedCols > 0) {
+            labelA.style.left = `${gx + (shadedCols * cw) / 2}px`;
+            labelA.style.top = `${gy + gh + 5}px`;
+            labelA.style.transform = 'translateX(-50%)';
+            labelA.style.color = 'black';
+            labelA.style.textShadow = 'none';
+            labelA.innerHTML = `$$\\frac{${shadedCols}}{${cols}}$$`;
+            labelA.style.display = 'block';
+        } else {
+            labelA.style.display = 'none';
+            labelA.innerHTML = '';
+        }
+
+        if (shadedRows > 0) {
+            labelB.style.top = `${gy + (shadedRows * ch) / 2}px`;
+            labelB.style.left = `${gx + gw + 25}px`;
+            labelB.style.transform = 'translateY(-50%)';
+            labelB.style.color = 'black';
+            labelB.style.textShadow = 'none';
+            labelB.innerHTML = `$$\\frac{${shadedRows}}{${rows}}$$`;
+            labelB.style.display = 'block';
+        } else {
+            labelB.style.display = 'none';
+            labelB.innerHTML = '';
+        }
+
+        if (shadedCols > 0 && shadedRows > 0) {
+            labelR.style.left = `${gx}px`;
+            labelR.style.top = `${gy}px`;
+            labelR.style.width = `${shadedCols * cw}px`;
+            labelR.style.height = `${shadedRows * ch}px`;
+            labelR.innerHTML = `$$\\frac{${shadedCols * shadedRows}}{${cols * rows}}$$`;
+            labelR.style.display = 'flex';
+        } else {
+            labelR.style.display = 'none';
+            labelR.innerHTML = '';
+        }
+    }
+    
+    [labelA, labelB, labelR].forEach(el => {
+        if (el.MathJax) el.MathJax.element = null;
+        el.classList.remove('mjx-typeset');
+    });
+    
+    ensureMathJax(()=>{
+       MathJax.typesetPromise([labelA, labelB, labelR].filter(el => el.innerHTML));
+    });
+  }
+
+  function update(){
+    const dA_val = +denA.value;
+    const dB_val = +denB.value;
+    
+    if (+numA.max !== dA_val) numA.max = dA_val;
+    if (+numB.max !== dB_val) numB.max = dB_val;
+    if (+numA.value > dA_val) numA.value = dA_val;
+    if (+numB.value > dB_val) numB.value = dB_val;
+
+    const nA = +numA.value, nB = +numB.value;
+
+    numAOut.textContent = nA; denAOut.textContent = dA_val;
+    numBOut.textContent = nB; denBOut.textContent = dB_val;
+
+    lastSliderValues = { nA, dA_val, nB, dB_val };
+
+    if (dA_val <= 0 || dB_val <= 0) {
+      readout.innerHTML = "Denominator must be 1 or greater.";
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      [labelA, labelB, labelR].forEach(el => { el.style.display = 'none'; el.innerHTML = ''; });
+      [numA, denA, numB, denB].forEach(paintRange);
+      ensureMathJax(()=>{ MathJax.typesetPromise([readout]); });
+      return;
+    }
+    
+    drawGrid(lastSliderValues);
+    
+    const nRes = nA * nB;
+    const dRes = dA_val * dB_val;
+
+    setEquation(readout, { nA, dA: dA_val, nB, dB: dB_val, nRes, dRes });
+    ensureMathJax(()=>{
+       MathJax.typesetPromise([readout]);
+    });
+
+    [numA, denA, numB, denB].forEach(paintRange);
+  }
+  
+  function handleMouseMove(e) {
+      const rect = canvas.getBoundingClientRect();
+      lastMousePos.x = e.clientX - rect.left;
+      lastMousePos.y = e.clientY - rect.top;
+      drawGrid(lastSliderValues);
+  }
+  
+  function handleMouseOut(e) {
+      lastMousePos = { x: -1, y: -1 };
+      drawGrid(lastSliderValues);
+  }
+
+  const allSliders = [numA, denA, numB, denB];
+
+  allSliders.forEach(slider => {
+      slider.addEventListener('input', update);
+      slider.addEventListener('change', update);  
+  });
+  
+  canvas.addEventListener('mousemove', handleMouseMove);
+  canvas.addEventListener('mouseout', handleMouseOut);
+
+  window.addEventListener('resize', update);
+
+  (function kick(){ allSliders.forEach(paintRange); update(); })();
+})();
+</script>
+</div>
+```
+:::
+
+::: {.content-hidden when-format="html"}
+The figures below provide a visual representation of multiplying $\frac{5}{11}$ (blue) and $\frac{3}{5}$ (red). The figure on the left shows $\frac{5}{11}$ as $5$ shaded columns out of $11$. The figure in the middle shows $\frac{3}{5}$ as $3$ shaded rows out of $5$. The figure on the right overlays these two grids, creating a new $11 \times 5$ grid of $55$ total squares. The overlapping (pink) area contains $5 \cdot 3 = 15$ squares, visually demonstrating the multiplication result $\frac{15}{55}$. $$\frac{5}{11} \cdot \frac{3}{5} = \frac{1}{11} \cdot \frac{3}{1} = \frac{1 \cdot 3}{11 \cdot 1} = \frac{3}{11}$$
+
+![Multiplication of fractions $\frac{5}{11}$ and $\frac{3}{5}$ represented by overlapping shaded grids.](FiguresPNG/arithmeticonnumericalfractions-fig2.png){fig-align="center"}
+:::
+
+::: callout-tip
+If you want to multiply a fraction by a whole number, rewrite the whole number as an improper fraction, then multiply. $$\frac{3}{5} \cdot 6 = \frac{3}{5} \cdot \frac{6}{1} = \frac{3 \cdot 6}{5 \cdot 1} = \frac{18}{5} = 3 \frac{3}{5}$$
+:::
+
+# Dividing fractions
+
+When dividing one fraction by another fraction, you are asking yourself the question "How many times does this fraction fit into the other?"
+
+The process for dividing fractions is similar to the process for multiplying fractions. Dividing by a fraction is the same as multiplying by its **reciprocal**.
+
+The reciprocal of a fraction is what you get by swapping its numerator and denominator. For example, the reciprocal of $\frac{5}{7}$ is $\frac{7}{5}$.
+
+So, instead of working directly with division, you can rewrite the question as a multiplication problem.
+
+Imagine you have $\frac{2}{3}$ of a chocolate bar, and you want to know how many pieces of size $\frac{5}{7}$ fit inside that amount. Instead of trying to figure out how many times $\frac{5}{7}$ fits into $\frac{2}{3}$, you can flip $\frac{5}{7}$ to get its reciprocal $\frac{7}{5}$ and then turn the division into multiplication. $$\frac{2}{3} \div \frac{5}{7} = \frac{2}{3} \cdot \frac{7}{5}$$
+
+::: callout-note
+## Dividing fractions
+
+To divide fractions, follow the **Keep, Change, Flip** method:
+
+1. **Keep** the first fraction the same.
+2. **Change** division to multiplication.
+3. **Flip** the second fraction (take its reciprocal).
+
+This turns the division problem into a multiplication problem.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 6
+
+Calculate $\dfrac{3}{4} \div \dfrac{1}{8}$.
+
+Follow the **Keep, Change, Flip** method.
+
+Keep the first fraction as $\frac{3}{4}$, change the division sign to a multiplication sign, and flip the second fraction so that $\frac{1}{8}$ becomes $\frac{8}{1}$. Now multiply the fractions together. $$\frac{3}{4} \div \frac{1}{8} = \frac{3}{4} \cdot \frac{8}{1} = \frac{3}{1} \cdot \frac{2}{1} = \frac{3 \cdot 2}{1 \cdot 1} = \frac{6}{1} = 6$$
+:::
+
+As seen in the [Multiplying Fractions](#multiplying-fractions) section, when you multiply two fractions that are both less than $1$, the result gets smaller because you are taking a fraction of a fraction. Dividing by fractions works differently. When you divide by a fraction, you are asking how many of those smaller pieces fit into what you already have. This means that the answer can actually be larger than the number you started with.
+
+# Quick check problems {.unnumbered}
+
+:::: {.content-visible when-format="html" data-topic="AONF1"}
+::: {.webex-check .webex-box}
+1. $\quad \dfrac{1}{5} + \dfrac{2}{5} =$ `r fitb("3/5")`
+
+<!-- -->
+
+2. $\quad$What is the least common multiple of $6$ and $10$? `r mcq(c("6", "10", "16", answer = "30", "60"))`
+
+<!-- -->
+
+3. $\quad \dfrac{1}{2} + \dfrac{1}{4} =$ `r mcq(c(answer = "3/4", "2/6", "1/3", "1/4", "1/8"))`
+
+<!-- -->
+
+4. $\quad \dfrac{1}{3} - \dfrac{1}{2} =$ `r fitb("-1/6")`
+
+<!-- -->
+
+5. $\quad \dfrac{1}{2} \cdot \dfrac{3}{4} =$ `r mcq(c("3/6", "4/6", "4/8", answer = "3/8"))`
+
+<!-- -->
+
+6. $\quad \dfrac{1}{2} \div \dfrac{1}{4} =$ `r fitb("2")`
+:::
+::::
+
+::: {.content-hidden when-format="html"}
+1. Calculate $\dfrac{1}{5} + \dfrac{2}{5}$.
+
+<!-- -->
+
+2. What is the least common multiple of $6$ and $10$?
+
+<!-- -->
+
+(a) $6$
+
+(b) $10$
+
+(c) $16$
+
+(d) $30$
+
+(e) $60$
+
+<!-- -->
+
+3. Calculate $\dfrac{1}{2} + \dfrac{1}{4}$.
+
+<!-- -->
+
+(a) $\dfrac{3}{4}$
+
+(b) $\dfrac{2}{6}$
+
+(c) $\dfrac{1}{3}$
+
+(d) $\dfrac{1}{4}$
+
+(e) $\dfrac{1}{8}$
+
+<!-- -->
+
+4. Calculate $\dfrac{1}{3} - \dfrac{1}{2}$.
+
+<!-- -->
+
+5. Calculate $\dfrac{1}{2} \cdot \dfrac{3}{4}$.
+
+<!-- -->
+
+(a) $\dfrac{3}{6}$
+
+(b) $\dfrac{4}{6}$
+
+(c) $\dfrac{4}{8}$
+
+(d) $\dfrac{3}{8}$
+
+<!-- -->
+
+6. Calculate $\dfrac{1}{2} \div \dfrac{1}{4}$.
+:::
+
+# Further reading {.unnumbered}
+
+[For more questions on the subject, please go to Questions: Arithmetic on numerical fractions.](../questions/qs-arithmeticonnumericalfractions.qmd)
+
+[To learn about fractions which include algebra, please see Guide: Introduction to algebraic fractions.](introtoalgebraicfractions.qmd)
+
+## Version history {.unnumbered}
+
+v1.0: initial version created 12/25 by Donald Campbell as part of a University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

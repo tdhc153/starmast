@@ -1,0 +1,1571 @@
+---
+title: "Overview: Recognizing 3D surfaces"
+author: Donald Campbell
+abstract-title: Summary
+abstract: An overview of different three-dimensional surfaces with their corresponding equations.
+draft: true
+---
+
+*Before reading this overview, it is recommended that you read [Guide: Introduction to coordinates], [Overview: Recognizing 2D curves] and [Guide: Introduction to 2D conic sections].*
+
+# What is a 3D surface?
+
+When graphs first appear in mathematics, they are often shown as curves in a plane. A **point** is described by two coordinates $(x,y)$, and a **curve** shows how one variable depends on the other. In this overview, the focus shifts up one dimension to shapes in three dimensions, expanding upon what you learned in [Overview: Recognizing 2D curves]. These shapes are called **surfaces**.
+
+In three-dimensional space, each point has three coordinates $(x,y,z)$. It is helpful to think of $x$ and $y$ as a position in a horizontal plane, and $z$ as the height above or below that plane. A surface is a collection of points $(x,y,z)$ that fit a particular rule.
+
+::: {.callout-note}
+## Definition of a 3D surface
+
+A **3D surface** is a set of points $(x,y,z)$ that satisfy an equation.
+
+There are two common ways to write such an equation.
+
+* A graph of a function of two variables has an equation of the form $z=f(x,y)$. This is an equation in terms of $x$ and $y$, where $z$ is the subject. For each pair $(x,y)$ in the domain of the function, the equation gives a height $z$. The surface is the set of all points $(x,y,z)$ with that height.
+* A **level surface** has an equation of the form $F(x,y,z) = c$ for some constant $c$. For example, the equation $x^2+y^2+z^2 = 4$ describes a sphere of radius $\sqrt{4} = 2$. Every point on that sphere satisfies the equation.
+
+:::
+
+Sometimes a level surface can be rewritten as a graph of a function of two variables. For instance, solving $$x^2+y^2+z^2 = 4$$ for $z$ gives $$z = \sqrt{4-x^2-y^2} \quad \textsf{and} \quad z = -\sqrt{4-x^2-y^2}$$ which represent the upper and lower halves of the same sphere. In other situations, it is not convenient or even possible to solve explicitly for $z$, so the level surface description is more useful.
+
+This overview concentrates on a small number of important families of surfaces. The aim is to recognize these surfaces from their equations and from their graphs. Throughout this overview, interactive graphs provide a way to explore surfaces directly. These graphs can be rotated, zoomed, and inspected from different viewpoints. The first example below shows a surface given by an equation of the form $z=f(x,y)$.
+
+::: {.content-visible when-format="html"}
+This interactive graph shows a surface of the form $z = a x^2 - b y^2 + c$. 
+The sliders for $a$ and $b$ control the curvature in the $x$- and $y$-directions, changing how steeply the surface bends up or down, while the slider for $c$ shifts the surface vertically. You will learn more about this surface later.
+
+<div id="surface-intro-3d" style="width: 100%; height: 520px;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verify that the container element and Desmos library exist
+  const elt3d = document.getElementById("surface-intro-3d");
+  if (!elt3d || !window.Desmos) return;
+
+  // Initialize the 3D Calculator with a minimal UI configuration
+  const calc3d = Desmos.Calculator3D(elt3d, {
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false
+  });
+
+  // Define the initial viewport boundaries
+  calc3d.setMathBounds({
+    xMin: -4, xMax: 4,
+    yMin: -4, yMax: 4,
+    zMin: -3, zMax: 3
+  });
+
+  // Configure interactive sliders for coefficients 'a' and 'b'
+  calc3d.setExpression({
+    id: "a",
+    latex: "a=0.3",
+    sliderBounds: { min: -1, max: 1, step: 0.05 }
+  });
+
+  calc3d.setExpression({
+    id: "b",
+    latex: "b=0.3",
+    sliderBounds: { min: -1, max: 1, step: 0.05 }
+  });
+
+  // Configure the slider for the vertical offset constant 'c'
+  calc3d.setExpression({
+    id: "c",
+    latex: "c=1.7",
+    sliderBounds: { min: -2, max: 2, step: 0.1 }
+  });
+
+  // Render the saddle surface equation using the defined parameters
+  calc3d.setExpression({
+    id: "saddle",
+    latex: "z = a x^2 - b y^2 + c",
+    color: "#3F68B6",
+    secret: true
+  });
+});
+</script>
+:::
+
+::: {.content-hidden when-format="html"}
+The graph below shows a surface of the form $z = a x^2 - b y^2 + c$. The figure illustrates how a quadratic expression in two variables defines a three-dimensional surface. You will learn more about this specific graph later.
+
+![A general surface of the form $z = a x^2 - b y^2 + c$.](FiguresPNG/o-recognizing3dsurfaces-fig1.png){fig-align="center"}
+:::
+
+# Seeing surfaces by slicing them
+
+A full view of a surface often contains many features at once. A helpful way to focus on part of the surface is to cut it with a plane and study the slice. A slice is created by fixing one coordinate and allowing the other two coordinates to vary. The result is a curve that lies in a plane.
+
+* Fixing a value of $z$ (for example $z=c$) gives a **horizontal slice**. The equation of the surface then becomes a relation between $x$ and $y$ in the $xy$-plane.
+* Fixing a value of $x$ or $y$ (for example $x=a$ or $y=b$) gives a **vertical slice**. The surface is viewed inside a vertical plane.
+
+Each slice is a two-dimensional picture of part of the surface. By combining several slices, it is possible to build a mental image of the full three-dimensional shape.
+
+::: {.callout-note}
+## Definition of cross-sections and traces
+
+A **cross-section** of a surface is the set of points that lie on both the surface and a given plane.
+
+A **trace** is a cross-section taken in a plane parallel to one of the coordinate planes. Common examples include:
+
+* the trace in the plane $z=c$ (a horizontal slice)
+* the trace in the plane $x=a$ or $y=b$ (a vertical slice)
+
+These traces are curves in two dimensions that describe how the surface behaves along that slice.
+:::
+
+Many surfaces in this overview are recognized by the appearance of their traces. For a surface like a sphere, horizontal traces $z=c$ are circles of different radii.
+
+The curves that appear in these slices are often circles, ellipses, parabolas or hyperbolas. These curves are examples of **conic sections**. Their detailed properties, and the different algebraic forms they can take, are explained in [Guide: Introduction to 2D conic sections]. In this overview, they act as a language for describing what the slices of a three-dimensional surface look like.
+
+::: {.content-visible when-format="html"}
+The interactive graphs below show a surface $z = f(x,y)$ together with a vertical plane $y = a$. The slider moves the plane left and right. The yellow curve marks the intersection between the plane and the surface. The 2D graph underneath displays the same trace in the $xz$-plane, with equation $z = f(x,a)$. Updating the slider changes both the vertical slice and its two-dimensional counterpart, showing how a family of traces helps describe the full surface.
+
+<div id="calculator3d" style="width: 100%; height: 400px;"></div>
+
+<div id="calculator2d" style="width: 100%; height: 200px; margin-bottom: 1rem;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // --- 3D Graph Initialization ---
+  const elt3d = document.getElementById("calculator3d");
+  const elt2d = document.getElementById("calculator2d");
+  if (!elt3d || !elt2d || !window.Desmos) return;
+
+  // Configure the 3D calculator instance
+  const calculator3d = Desmos.Calculator3D(elt3d, {
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false
+  });
+
+  // Set the initial viewport bounds for the 3D space
+  calculator3d.setMathBounds({
+    xMin: -5, xMax: 5,
+    yMin: -5, yMax: 5,
+    zMin: -1, zMax: 3
+  });
+
+  // Plot the main surface z = f(x,y)
+  calculator3d.setExpression({
+    id: "surface",
+    latex: "z=0.3\\sin(x)\\cos(y)+0.2\\sin(2x+y)+0.1\\cos(x-2y)+1",
+    color: "#3F68B6",
+    secret: true
+  });
+
+  // Highlight the specific intersection curve where y = a
+  calculator3d.setExpression({
+    id: "trace3d",
+    latex: "z=0.3\\sin(x)\\cos(y)+0.2\\sin(2x+y)+0.1\\cos(x-2y)+1\\left\\{y=a\\right\\}",
+    color: "#FFCB00",
+    secret: true
+  });
+
+  // Visualize the cutting plane y = a
+  calculator3d.setExpression({
+    id: "plane",
+    latex: "y = a + 0x + 0z",
+    color: "#DB4315",
+    secret: true
+  });
+
+  // Create the interactive slider for parameter 'a'
+  calculator3d.setExpression({
+    id: "a",
+    latex: "a=1",
+    sliderBounds: { min: -5, max: 5, step: 0.01 }
+  });
+
+  // --- 2D Graph Initialization ---
+  const calculator2d = Desmos.GraphingCalculator(elt2d, {
+    expressions: true,
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false,
+    lockViewport: true,
+    expressionsTopbar: false
+  });
+
+  // Lock the 2D view bounds
+  calculator2d.setMathBounds({ left: -5, right: 5, bottom: -1, top: 3 });
+
+  // Initialize parameter 'a' in the 2D scope (hidden)
+  calculator2d.setExpression({ id: "a", latex: "a=1", secret: true });
+
+  // Plot the resulting cross-section z = f(x,a)
+  calculator2d.setExpression({
+    id: "trace2d",
+    latex: "z = 0.3\\sin(x)\\cos(a) + 0.2\\sin(2x + a) + 0.1\\cos(x - 2a) + 1",
+    color: "#3F68B6",
+    secret: true
+  });
+
+  // --- Synchronization Logic ---
+  // Create a helper to monitor the value of 'a' in the 3D calculator
+  const aHelper = calculator3d.HelperExpression({ latex: "a" });
+
+  // Observe changes to 'a' and propagate them to the 2D calculator
+  aHelper.observe("numericValue", function () {
+    const v = aHelper.numericValue;
+    if (typeof v === "number" && !isNaN(v)) {
+      calculator2d.setExpression({
+        id: "a",
+        latex: "a=" + v,
+        secret: true
+      });
+    }
+  });
+});
+</script>
+:::
+
+::: {.content-hidden when-format="html"}
+The graphs below show the surface $z = f(x,y)$ together with a vertical slice in the plane $y = a$. Changing $a$ moves the plane and updates the yellow intersection curve. The graph on the right shows this same curve as a two-dimensional trace $z = f(x,a)$ in the $xz$-plane. The pair of graphs illustrates how vertical slices reveal the structure of a surface.
+
+![Intersection of the surface $z = f(x,y)$ with the plane $y = a$, shown with its 2D trace $z = f(x,a)$.](FiguresPNG/o-recognizing3dsurfaces-fig2.png){fig-align="center"}
+:::
+
+# Planes
+
+A plane is a completely flat surface that extends without bound in every direction inside that flat sheet. In two dimensions, straight lines play this role. In three dimensions, planes do.
+
+A plane can be described by a single linear equation in the three variables $x$, $y$ and $z$.
+
+::: {.callout-note}
+## Definition of a plane
+
+A **plane** in a three-dimensional space is a surface given by an equation of the form $$ax + by + cz = d$$ where $a$, $b$, $c$ and $d$ are constants, and at least one of $a$, $b$ and $c$ is non-zero.
+
+Another common way to write the equation of a plane is $$z = mx + ny + c$$ provided $c$ here is a constant and the equation is linear in $x$ and $y$.
+:::
+
+The numbers $a$, $b$ and $c$ control the orientation of the plane. Changing these values tilts the plane in different directions. The constant $d$ controls where the plane sits in space. Changing this value moves the plane parallel to itself without changing its orientation.
+
+A quick way to recognize the equation of a plane is to look at the powers of the variables. In the examples above, $x$, $y$ and $z$ only appear to the first power. There are no squared terms such as $x^2$ or $z^2$, and there are no products such as $xy$ or $yz$. Any equation of this form describes a plane.
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+Consider the equation $$z = 2 - x - \frac{1}{2}y$$
+
+Every point $(x,y,z)$ on this plane satisfies this rule. For instance:
+
+* When $x=0$ and $y=0$, the equation gives $z=2$, so the point $(0,0,2)$ lies on the plane.
+* When $x=2$ and $y=0$, the equation gives $z=0$, so the point $(2,0,0)$ lies on the plane.
+* When $x=0$ and $y=4$, the equation gives $z=0$, so the point $(0,4,0)$ lies on the plane.
+
+These three points do not lie on a straight line. The plane passes through all of them, and through every other point that satisfies the equation.
+:::
+
+Planes often appear as slices of other surfaces. For example, taking the cross-section of a curved surface with a plane produces a curve. Later sections will use planes to cut through spheres, cylinders and other shapes. In each case, the points of intersection are those that satisfy both equations at once (the equation of the plane and the equation of the curved surface).
+
+::: {.content-visible when-format="html"}
+This interactive graph shows the plane $z = a x + b y + c$. The sliders for $a$ and $b$ tilt the plane in different directions, while the slider for $c$ shifts it up or down without changing its orientation. All points on the plane satisfy this rule, and adjusting the sliders demonstrates how the coefficients control the plane’s tilt and height.
+
+<div id="plane-3d" style="width: 100%; height: 410px;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verify that the container element and Desmos library exist
+  const elt = document.getElementById("plane-3d");
+  if (!elt || !window.Desmos) return;
+
+  // Initialize the 3D Calculator with minimal UI settings
+  const calc3d = Desmos.Calculator3D(elt, {
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false
+  });
+
+  // Define the initial viewport boundaries
+  calc3d.setMathBounds({
+    xMin: -5, xMax: 5,
+    yMin: -5, yMax: 5,
+    zMin: -5, zMax: 5
+  });
+
+  // Configure interactive sliders for slope coefficients 'a' and 'b'
+  calc3d.setExpression({
+    id: "a",
+    latex: "a=-0.3",
+    sliderBounds: { min: -1, max: 1, step: 0.05 }
+  });
+
+  calc3d.setExpression({
+    id: "b",
+    latex: "b=-0.2",
+    sliderBounds: { min: -1, max: 1, step: 0.05 }
+  });
+
+  // Configure the slider for the z-intercept 'c'
+  calc3d.setExpression({
+    id: "c",
+    latex: "c=1",
+    sliderBounds: { min: -3, max: 3, step: 0.1 }
+  });
+
+  // Render the plane equation z = ax + by + c
+  calc3d.setExpression({
+    id: "plane",
+    latex: "z = a x + b y + c",
+    color: "#3F68B6",
+    secret: true
+  });
+});
+</script>
+:::
+
+::: {.content-hidden when-format="html"}
+The graph below shows a plane described by $z = a x + b y + c$. The coefficients $a$ and $b$ determine the tilt of the plane, while $c$ shifts it vertically. Because the equation contains only first powers of the variables, the resulting surface is flat in every direction. The figure illustrates how linear equations describe planes in three-dimensional space.
+
+![Plane given by $z = a x + b y + c$, with parameters $a$, $b$ and $c$ controlling tilt and height.](FiguresPNG/o-recognizing3dsurfaces-fig3.png){fig-align="center"}
+:::
+
+# Spheres and ellipsoids
+
+Spheres and ellipsoids are closed surfaces that curve in all directions. A sphere has the same radius in every direction, whereas an ellipsoid can be thought of as a stretched or squashed sphere.
+
+Both shapes have a pattern in their equations as every variable appears squared, and all squared terms have the same sign.
+
+::: {.callout-note}
+## Definition of a sphere
+
+A **sphere** of radius $r>0$ centred at $(h,k,l)$ is the set of points $(x,y,z)$ that satisfy $$(x-h)^2 + (y-k)^2 + (z-l)^2 = r^2$$
+
+When the centre is at the origin, the equation simplifies to $$x^2 + y^2 + z^2 = r^2$$
+:::
+
+The equation of a sphere contains three squared terms with the same coefficient and the same sign. There are no mixed products such as $xy$ or $yz$, and there are no higher powers such as $x^3$.
+
+An ellipsoid has a similar structure, but its equation has different coefficients in front of the squared terms. These different coefficients stretch or squash the sphere along the coordinate axes.
+
+::: {.callout-note}
+## Definition of an ellipsoid
+
+An **ellipsoid** centred at the origin has an equation of the form $$\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1$$ where $a$, $b$ and $c$ are positive constants.
+
+The numbers $a$, $b$ and $c$ control how much the ellipsoid extends along the $x$-, $y$- and $z$-axes.
+:::
+
+A quick recognition rule is:
+
+* all three variables $x$, $y$ and $z$ appear squared
+* the squared terms all have the same sign
+* there are no cross terms such as $xy$ and no higher powers.
+
+If all three coefficients are equal, the surface is a sphere. If the coefficients differ, the surface is an ellipsoid.
+
+Slicing gives a geometric picture. For an ellipsoid $$\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1$$ a horizontal slice at height $z=k$ gives $$\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1 - \frac{k^2}{c^2}$$
+
+* When $|k|<c$, the right-hand side is positive and this equation describes an ellipse in the $xy$-plane.
+* When $|k|=c$, the right-hand side is zero and the slice reduces to a single point on the top or bottom of the ellipsoid.
+* When $|k|>c$, there are no real solutions, so the horizontal slice does not meet the ellipsoid.
+
+For a sphere, a similar description applies, but with $a=b=c=r$. Horizontal slices are circles of different radii. Vertical slices in a plane such as $x=a_0$ or $y=b_0$ are also circles.
+
+Circles and ellipses are conic sections. Their algebraic forms and geometric features are described in [Guide: Introduction to 2D conic sections]. In this overview, they help describe how spheres and ellipsoids change with height.
+
+::: {.content-visible when-format="html"}
+These interactive graphs show the ellipsoid $\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1$ together with a horizontal plane $z = k$. Sliders for $a$, $b$ and $c$ stretch the ellipsoid along different axes, while the slider for $k$ changes the height of the slice. The yellow curve marks the intersection between the ellipsoid and the plane, and the 2D graph shows the corresponding cross-section in the $xy$-plane, satisfying $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1 - \frac{k^2}{c^2}$. For $|k| < c$ the slice is an ellipse, for $|k| = c$ it reduces to a single point, and for $|k| > c$ no intersection occurs.
+
+<div id="ellipsoid-3d" style="width: 100%; height: 470px;"></div>
+
+<div id="ellipsoid-2d" style="width: 100%; height: 220px; margin-bottom: 1rem;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // --- 3D Graph Initialization ---
+  const elt3d = document.getElementById("ellipsoid-3d");
+  const elt2d = document.getElementById("ellipsoid-2d");
+  if (!elt3d || !elt2d || !window.Desmos) return;
+
+  // Configure the 3D calculator instance
+  const calc3d = Desmos.Calculator3D(elt3d, {
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false
+  });
+
+  // Set the initial viewport bounds for the 3D space
+  calc3d.setMathBounds({
+    xMin: -3, xMax: 3,
+    yMin: -3, yMax: 3,
+    zMin: -3, zMax: 3
+  });
+
+  // Configure sliders for ellipsoid dimensions (a, b, c)
+  calc3d.setExpression({
+    id: "a",
+    latex: "a=2.8",
+    sliderBounds: { min: 1, max: 3, step: 0.1 }
+  });
+
+  calc3d.setExpression({
+    id: "b",
+    latex: "b=1.8",
+    sliderBounds: { min: 1, max: 3, step: 0.1 }
+  });
+
+  calc3d.setExpression({
+    id: "c",
+    latex: "c=2.6",
+    sliderBounds: { min: 1, max: 3, step: 0.1 }
+  });
+
+  // Configure slider for the cutting plane height (k)
+  calc3d.setExpression({
+    id: "k",
+    latex: "k=0",
+    sliderBounds: { min: -2.5, max: 2.5, step: 0.05 }
+  });
+
+  // Render the main ellipsoid surface
+  calc3d.setExpression({
+    id: "ellipsoid",
+    latex: "x^2/a^2 + y^2/b^2 + z^2/c^2 = 1",
+    color: "#3F68B6",
+    secret: true
+  });
+
+  // Visualize the horizontal cutting plane z = k
+  calc3d.setExpression({
+    id: "plane",
+    latex: "z = k",
+    color: "#DB4315",
+    secret: true
+  });
+
+  // Highlight the intersection curve between the surface and the plane
+  calc3d.setExpression({
+    id: "intersection",
+    latex: "x^2/a^2 + y^2/b^2 + z^2/c^2 = 1\\left\\{z = k\\right\\}",
+    color: "#FFCB00",
+    secret: true
+  });
+
+  // --- 2D Graph Initialization ---
+  const calc2d = Desmos.GraphingCalculator(elt2d, {
+    expressions: true,
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false,
+    lockViewport: true,
+    expressionsTopbar: false
+  });
+
+  // Lock the 2D view bounds
+  calc2d.setMathBounds({
+    left: -3, right: 3,
+    bottom: -3, top: 3
+  });
+
+  // Initialize shared parameters in the 2D calculator (hidden)
+  calc2d.setExpression({ id: "a", latex: "a=2.8", secret: true });
+  calc2d.setExpression({ id: "b", latex: "b=1.8", secret: true });
+  calc2d.setExpression({ id: "c", latex: "c=2.6", secret: true });
+  calc2d.setExpression({ id: "k", latex: "k=0", secret: true });
+
+  // Plot the resulting 2D cross-section ellipse
+  calc2d.setExpression({
+    id: "section",
+    latex: "x^2/a^2 + y^2/b^2 = 1 - k^2/c^2",
+    color: "#3F68B6",
+    secret: true
+  });
+
+  // --- Synchronization Logic ---
+  // Define helpers to monitor variables in the 3D instance
+  const aHelper = calc3d.HelperExpression({ latex: "a" });
+  const bHelper = calc3d.HelperExpression({ latex: "b" });
+  const cHelper = calc3d.HelperExpression({ latex: "c" });
+  const kHelper = calc3d.HelperExpression({ latex: "k" });
+
+  // Function to bind changes in 3D values to the 2D calculator
+  function bindHelper(helper, id) {
+    helper.observe("numericValue", function () {
+      const v = helper.numericValue;
+      if (typeof v === "number" && !isNaN(v)) {
+        calc2d.setExpression({
+          id: id,
+          latex: id + "=" + v,
+          secret: true
+        });
+      }
+    });
+  }
+
+  // Apply bindings to all relevant variables
+  bindHelper(aHelper, "a");
+  bindHelper(bHelper, "b");
+  bindHelper(cHelper, "c");
+  bindHelper(kHelper, "k");
+});
+</script>
+:::
+
+::: {.content-hidden when-format="html"}
+The graphs below show an ellipsoid $\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1$ cut by a plane $z = k$. Changing parameters $a$, $b$ and $c$ control the axis lengths, while $k$ controls the height of the slicing plane. The intersection curve appears in yellow, and the 2D graph shows its equation $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1 - \frac{k^2}{c^2}$. Depending on the value of $k$, this slice may be an ellipse ($|k|<c$), a single point ($|k|=c$), or non-existent ($|k|>c$).
+
+![Ellipsoid $\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1$ with horizontal slice $z = k$, showing  the ellipse $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1 - \frac{k^2}{c^2}$.](FiguresPNG/o-recognizing3dsurfaces-fig4.png){fig-align="center"}
+:::
+
+# Paraboloids and saddles
+
+Paraboloids are three-dimensional relatives of parabolas. They are curved surfaces that can look like a bowl or like a saddle, depending on the signs of the squared terms in their equations.
+
+A common starting point is a surface of the form $$z = ax^2 + by^2$$ where $a$ and $b$ are constants. The values of $a$ and $b$ control the curvature in the $x$- and $y$-directions.
+
+::: {.callout-note}
+## Elliptic paraboloid
+
+An **elliptic paraboloid** has an equation that can be written in the form $$z = ax^2 + by^2 + c$$ with $a>0$ and $b>0$.
+
+The point where both $x$ and $y$ are zero is the lowest point of the surface when $a$ and $b$ are positive. The surface curves upwards in all horizontal directions from this point. Vertical traces in planes such as $x=x_0$ or $y=y_0$ are parabolas. Horizontal slices $z=k$ give ellipses, provided the level is below the "rim" of the surface.
+:::
+
+This surface resembles a bowl. The cross-sections by vertical planes are parabolic curves, which connect with the two-dimensional parabolas in [Guide: Introduction to 2D conic sections].
+
+Changing the signs of the coefficients creates a very different shape.
+
+::: {.callout-note}
+## Hyperbolic paraboloid
+
+A **hyperbolic paraboloid** has an equation of the form $$z = ax^2 - by^2$$ with $a>0$ and $b>0$.
+
+Along lines where $y$ is fixed at zero, the equation becomes $z=ax^2$, so the trace is an upward-opening parabola. Along lines where $x$ is fixed at zero, the equation  becomes $z=-by^2$, so the trace is a downward-opening parabola.
+
+The surface bends up in one direction and down in the perpendicular direction. This gives a saddle shape.
+:::
+
+Horizontal slices of a hyperbolic paraboloid show further structure.
+
+For values of $z$ away from zero, the equation $z = ax^2 - by^2$ can be rearranged to give $$\frac{x^2}{|z|/a} - \frac{y^2}{|z|/b} = \pm 1$$ depending on the sign of $z$. These slices are hyperbolas, with the sign on the right-hand side depending on whether $z$ is positive or negative.
+
+A useful recognition rule for surfaces written in the form $z = f(x,y)$ is:
+
+* if the squared terms in $x$ and $y$ have the **same sign**, the surface is bowl-shaped (an elliptic paraboloid).
+* if the squared terms in $x$ and $y$ have **opposite signs**, the surface is saddle-shaped (a hyperbolic paraboloid).
+
+::: {.content-visible when-format="html"}
+These interactive graphs show the surface $z = a x^2 + b y^2$ and the horizontal plane $z = k$. The sliders for $a$ and $b$ control curvature. If both are positive, the shape is an elliptic paraboloid, while opposite signs give a saddle. The slider for $k$ sets the slice height. The yellow curve in the 3D graph is the intersection where $a x^2 + b y^2 = k$, and the 2D graph below shows this cross-section in the $xy$-plane. Changing the parameters alters both the surface and the conic-section slice.
+
+<div id="paraboloid-3d" style="width: 100%; height: 410px;"></div>
+
+<div id="paraboloid-2d" style="width: 100%; height: 220px; margin-bottom: 1rem;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // --- 3D Graph Initialization ---
+  const elt3d = document.getElementById("paraboloid-3d");
+  const elt2d = document.getElementById("paraboloid-2d");
+  if (!elt3d || !elt2d || !window.Desmos) return;
+
+  // Configure the 3D calculator instance
+  const calc3d = Desmos.Calculator3D(elt3d, {
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false
+  });
+
+  // Set the initial viewport bounds for the 3D space
+  calc3d.setMathBounds({
+    xMin: -3, xMax: 3,
+    yMin: -3, yMax: 3,
+    zMin: -3, zMax: 3
+  });
+
+  // Configure sliders for surface coefficients (a, b) and plane height (k)
+  calc3d.setExpression({
+    id: "a",
+    latex: "a=0.5",
+    sliderBounds: { min: -1, max: 1, step: 0.05 }
+  });
+
+  calc3d.setExpression({
+    id: "b",
+    latex: "b=0.5",
+    sliderBounds: { min: -1, max: 1, step: 0.05 }
+  });
+
+  calc3d.setExpression({
+    id: "k",
+    latex: "k=1",
+    sliderBounds: { min: -3, max: 3, step: 0.05 }
+  });
+
+  // Render the quadric surface z = ax^2 + by^2
+  calc3d.setExpression({
+    id: "paraboloid",
+    latex: "z = a x^2 + b y^2",
+    color: "#3F68B6",
+    secret: true
+  });
+
+  // Visualize the horizontal cutting plane z = k
+  calc3d.setExpression({
+    id: "plane",
+    latex: "z = k",
+    color: "#DB4315",
+    secret: true
+  });
+
+  // Highlight the intersection curve between the surface and the plane
+  calc3d.setExpression({
+    id: "intersection",
+    latex: "z = k\\left\\{a x^2 + b y^2 = k\\right\\}",
+    color: "#FFCB00",
+    secret: true
+  });
+
+  // --- 2D Graph Initialization ---
+  const calc2d = Desmos.GraphingCalculator(elt2d, {
+    expressions: true,
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false,
+    lockViewport: true,
+    expressionsTopbar: false
+  });
+
+  // Lock the 2D view bounds
+  calc2d.setMathBounds({
+    left: -3, right: 3,
+    bottom: -3, top: 3
+  });
+
+  // Initialize shared parameters in the 2D calculator (hidden)
+  calc2d.setExpression({ id: "a", latex: "a=0.5", secret: true });
+  calc2d.setExpression({ id: "b", latex: "b=0.5", secret: true });
+  calc2d.setExpression({ id: "k", latex: "k=1", secret: true });
+
+  // Plot the resulting 2D cross-section contour
+  calc2d.setExpression({
+    id: "section",
+    latex: "a x^2 + b y^2 = k",
+    color: "#3F68B6",
+    secret: true
+  });
+
+  // --- Synchronization Logic ---
+  // Define helpers to monitor variables in the 3D instance
+  const aHelper = calc3d.HelperExpression({ latex: "a" });
+  const bHelper = calc3d.HelperExpression({ latex: "b" });
+  const kHelper = calc3d.HelperExpression({ latex: "k" });
+
+  // Function to bind changes in 3D values to the 2D calculator
+  function bindHelper(helper, id) {
+    helper.observe("numericValue", function () {
+      const v = helper.numericValue;
+      if (typeof v === "number" && !isNaN(v)) {
+        calc2d.setExpression({
+          id: id,
+          latex: id + "=" + v,
+          secret: true
+        });
+      }
+    });
+  }
+
+  // Apply bindings to all relevant variables
+  bindHelper(aHelper, "a");
+  bindHelper(bHelper, "b");
+  bindHelper(kHelper, "k");
+});
+</script>
+:::
+
+::: {.content-hidden when-format="html"}
+The graphs below display the surface $z = a x^2 + b y^2$ together with a slice $z = k$. Adjusting $a$ and $b$ changes the curvature so that the surface becomes either a bowl-shaped elliptic paraboloid or a saddle. The slice equation is $a x^2 + b y^2 = k$, shown as a yellow curve in the 3D graph and in the corresponding 2D cross-section. The figure illustrates how changing parameters affects both the surface and its traces.
+
+![Surface $z = a x^2 + b y^2$ with horizontal slice $z = k$, giving the cross-section $a x^2 + b y^2 = k$.](FiguresPNG/o-recognizing3dsurfaces-fig5.png){fig-align="center"}
+:::
+
+# Cones and hyperboloids
+
+Cones and hyperboloids are part of the same family of quadratic surfaces. Their equations involve squared terms in $x$, $y$ and $z$ with **mixed signs**, in contrast to spheres and ellipsoids where all squared terms have the same sign.
+
+A useful family to keep in mind is $$\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = k$$ where $a$, $b$ and $c$ are positive constants and $k$ is a constant that can take different values.
+
+::: {.callout-note}
+## Double cone
+
+Consider the family $$\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = k$$ where $a$, $b$ and $c$ are positive constants and $k$ is a constant that can take different values.
+
+When $k=0$, the equation becomes $$\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = 0$$ which can be rearranged to $$\frac{x^2}{a^2} + \frac{y^2}{b^2} = \frac{z^2}{c^2}$$
+
+This surface is a **double cone**. The point $(0,0,0)$ is the tip of the cone. For each non-zero value of $z$, the horizontal slice $z=k_0$ is an ellipse. As $|z|$ increases, these ellipses grow in size. The cone opens both upwards and downwards along the $z$-axis.
+:::
+
+The cross-sections of a cone with planes are examples of conic sections. Horizontal slices are ellipses, and other slices at an angle can give parabolas or hyperbolas. Detailed properties of these curves appear in [Guide: Introduction to 2D conic sections]. Here, they are mainly used to describe the three-dimensional shape.
+
+Changing the value of $k$ in the same family of equations produces hyperboloids.
+
+::: {.callout-note}
+## Hyperboloids
+
+Consider again the family of surfaces $$\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = k$$
+
+* When $k>0$, the surface is a **hyperboloid of one sheet**. It is a connected shape (the surface is all in one piece) that looks a little like a curved column with a narrow "waist". Horizontal slices $z=z_0$ are ellipses. Vertical slices in some directions are hyperbolas.
+* When $k<0$, the surface is a **hyperboloid of two sheets**. It breaks into two separate pieces, with one above the origin and one below. Horizontal slices near each piece are ellipses. For values of $z$ close to zero, there are no real points that satisfy the equation, so there is a gap between the two sheets.
+
+:::
+
+The recognition pattern for this family is:
+
+* all three variables $x$, $y$, $z$ appear squared
+* at least one squared term has a positive coefficient and at least one has a negative coefficient
+* there are no cross terms such as $xy$ or $yz$.
+
+This mixed-sign pattern distinguishes cones and hyperboloids from spheres and ellipsoids, where the squared terms all have the same sign.
+
+::: {.content-visible when-format="html"}
+The interactive graphs below show the family $\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = k$. Sliders for $a$, $b$ and $c$ adjust the stretching along each axis, and the slider for $k$ changes the surface type:
+
+* a two-sheet hyperboloid when $k < 0$,
+* a double cone when $k = 0$,
+* a one-sheet hyperboloid when $k > 0$.
+
+The plane $z = h$ creates a slice shown in yellow, and the corresponding 2D cross-section satisfies $\frac{x^2}{a^2} + \frac{y^2}{b^2} = k + \frac{h^2}{c^2}$. When the right-hand side is positive, the slice is an ellipse. Otherwise, no real intersection occurs.
+
+<div id="hyperboloid-3d" style="width: 100%; height: 560px;"></div>
+
+<div id="hyperboloid-2d" style="width: 100%; height: 220px; margin-bottom: 1rem;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // --- 3D Graph Initialization ---
+  const elt3d = document.getElementById("hyperboloid-3d");
+  const elt2d = document.getElementById("hyperboloid-2d");
+  if (!elt3d || !elt2d || !window.Desmos) return;
+
+  // Configure the 3D calculator instance
+  const calc3d = Desmos.Calculator3D(elt3d, {
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false
+  });
+
+  // Set the initial viewport bounds for the 3D space
+  calc3d.setMathBounds({
+    xMin: -4, xMax: 4,
+    yMin: -4, yMax: 4,
+    zMin: -4, zMax: 4
+  });
+
+  // Configure sliders for the surface dimensions (a, b, c)
+  calc3d.setExpression({
+    id: "a",
+    latex: "a=1.4",
+    sliderBounds: { min: 1, max: 3, step: 0.1 }
+  });
+
+  calc3d.setExpression({
+    id: "b",
+    latex: "b=1.4",
+    sliderBounds: { min: 1, max: 3, step: 0.1 }
+  });
+
+  calc3d.setExpression({
+    id: "c",
+    latex: "c=1.5",
+    sliderBounds: { min: 1, max: 3, step: 0.1 }
+  });
+
+  // Configure the slider for the family constant 'k' (determines sheet count/cone)
+  calc3d.setExpression({
+    id: "k",
+    latex: "k=0.5",
+    sliderBounds: { min: -2, max: 2, step: 0.05 }
+  });
+
+  // Configure the slider for the cutting plane height 'h'
+  calc3d.setExpression({
+    id: "h",
+    latex: "h=-2.5",
+    sliderBounds: { min: -3.5, max: 3.5, step: 0.05 }
+  });
+
+  // Render the hyperboloid/cone family surface
+  calc3d.setExpression({
+    id: "family",
+    latex: "x^2/a^2 + y^2/b^2 - z^2/c^2 = k",
+    color: "#3F68B6",
+    secret: true
+  });
+
+  // Visualize the horizontal cutting plane z = h
+  calc3d.setExpression({
+    id: "plane",
+    latex: "z = h",
+    color: "#DB4315",
+    secret: true
+  });
+
+  // Highlight the intersection curve between the surface and the plane
+  calc3d.setExpression({
+    id: "intersection",
+    latex: "x^2/a^2 + y^2/b^2 - z^2/c^2 = k\\left\\{z = h\\right\\}",
+    color: "#FFCB00",
+    secret: true
+  });
+
+  // --- 2D Graph Initialization ---
+  const calc2d = Desmos.GraphingCalculator(elt2d, {
+    expressions: true,
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false,
+    lockViewport: true,
+    expressionsTopbar: false
+  });
+
+  // Lock the 2D view bounds
+  calc2d.setMathBounds({
+    left: -4, right: 4,
+    bottom: -4, top: 4
+  });
+
+  // Initialize shared parameters in the 2D calculator (hidden)
+  calc2d.setExpression({ id: "a", latex: "a=1.4", secret: true });
+  calc2d.setExpression({ id: "b", latex: "b=1.4", secret: true });
+  calc2d.setExpression({ id: "c", latex: "c=1.5", secret: true });
+  calc2d.setExpression({ id: "k", latex: "k=0.5", secret: true });
+  calc2d.setExpression({ id: "h", latex: "h=-2.5",   secret: true });
+
+  // Plot the resulting 2D cross-section contour
+  calc2d.setExpression({
+    id: "section",
+    latex: "x^2/a^2 + y^2/b^2 = k + h^2/c^2",
+    color: "#3F68B6",
+    secret: true
+  });
+
+  // --- Synchronization Logic ---
+  // Define helpers to monitor variables in the 3D instance
+  const aHelper = calc3d.HelperExpression({ latex: "a" });
+  const bHelper = calc3d.HelperExpression({ latex: "b" });
+  const cHelper = calc3d.HelperExpression({ latex: "c" });
+  const kHelper = calc3d.HelperExpression({ latex: "k" });
+  const hHelper = calc3d.HelperExpression({ latex: "h" });
+
+  // Function to bind changes in 3D values to the 2D calculator
+  function bindHelper(helper, id) {
+    helper.observe("numericValue", function () {
+      const v = helper.numericValue;
+      if (typeof v === "number" && !isNaN(v)) {
+        calc2d.setExpression({
+          id: id,
+          latex: id + "=" + v,
+          secret: true
+        });
+      }
+    });
+  }
+
+  // Apply bindings to all relevant variables
+  bindHelper(aHelper, "a");
+  bindHelper(bHelper, "b");
+  bindHelper(cHelper, "c");
+  bindHelper(kHelper, "k");
+  bindHelper(hHelper, "h");
+});
+</script>
+:::
+
+::: {.content-hidden when-format="html"}
+The graphs below show the quadratic family $\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = k$. Changing $a$, $b$ and $c$ adjusts the stretching along each axis. Changing the value of $k$ moves between a two-sheet hyperboloid ($k<0$), a cone ($k=0$), and a one-sheet hyperboloid ($k>0$). A plane $z = h$ cuts the surface, and the resulting cross-section satisfies $\frac{x^2}{a^2} + \frac{y^2}{b^2} = k + \frac{h^2}{c^2}$. The interactive figure demonstrates how changes in parameters 
+affect both the three-dimensional surface and its slices.
+
+![Family $\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = k$ with slice $z = h$, showing elliptical sections when $k + \frac{h^2}{c^2} > 0$.](FiguresPNG/o-recognizing3dsurfaces-fig6.png){fig-align="center"}
+:::
+
+# When two surfaces intersect
+
+So far, most figures have shown a single surface at a time. In many problems, more than one surface is present, and the main question is where they meet. The set of common points is called the **intersection** of the surfaces.
+
+For example, a plane cutting through a sphere produces a circle of intersection. A horizontal plane cutting through a paraboloid produces a closed curve (the curve joins up with itself to make a complete loop) or no intersection at all, depending on where the plane sits. In each case, the intersection is a curve in three dimensions.
+
+::: {.callout-note}
+## Definition of the intersection of two surfaces
+
+Suppose two surfaces are given by the equations $$F(x,y,z) = 0 \quad \textsf{and} \quad G(x,y,z) = 0$$
+
+The intersection of these surfaces is the set of points $(x,y,z)$ that satisfy **both** equations at the same time. In other words, the points in the intersection solve the system
+$$
+\begin{aligned}
+F(x,y,z) &= 0 \\
+G(x,y,z) &= 0
+\end{aligned}
+$$
+
+Geometrically, this set is usually a curve in three dimensions, sometimes called a **space curve**.
+:::
+
+Many of the slices seen earlier can be rephrased this way. A "horizontal slice" of a surface at height $z=k$ is exactly the intersection between the surface and the horizontal plane $z=k$. A "vertical trace" in the plane $y=a$ is the intersection between the surface and that vertical plane.
+
+::: {.callout-note appearance="simple"}
+## Example 2
+
+Consider the paraboloid $$z = x^2 + y^2$$ and the horizontal plane $$z=k$$ where $k$ is a constant.
+
+The points that lie on both surfaces satisfy both equations, so $$z = x^2 + y^2 \quad \textsf{and} \quad z=k$$
+
+Setting these expressions for $z$ equal to each other gives $$x^2 + y^2 = k$$
+
+* When $k>0$, this equation describes a circle of radius $\sqrt{k}$ in the plane $z=k$. The intersection of the plane and the paraboloid is this circle.
+* When $k=0$, the intersection reduces to a single point at the origin, where the paraboloid touches the plane.
+* When $k<0$, there are no real solutions, so the plane lies away from the surface and the two do not meet.
+
+Here the intersection curve is a circle, which is a conic section. Its properties as a two-dimensional curve are discussed in [Guide: Introduction to 2D conic sections]. In this overview, the main point is that the curve appears as the set of points where the two surfaces agree.
+:::
+
+Other pairs of surfaces give different intersection curves, and two quadratic surfaces can meet in a range of shapes. In each case, the guiding principle is the same. The two surfaces intersect where their equations are satisfied simultaneously.
+
+::: {.content-visible when-format="html"}
+This interactive graph shows the paraboloid $z = x^2 + y^2$ together with the plane $z = k$. The slider for $k$ moves the plane vertically. The yellow curve marks the intersection, where points satisfy $x^2 + y^2 = k$ in the plane $z = k$.
+
+* For $k>0$ the curve is a circle of radius $\sqrt{k}$.
+* For $k=0$ it reduces to the single point at the origin.
+* For $k<0$ the plane lies below the surface and no intersection occurs.
+
+<div id="intersection-3d" style="width: 100%; height: 400px;"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Verify that the container element and Desmos library exist
+  const elt3d = document.getElementById("intersection-3d");
+  if (!elt3d || !window.Desmos) return;
+
+  // Initialize the 3D Calculator with minimal UI configuration
+  const calc3d = Desmos.Calculator3D(elt3d, {
+    settingsMenu: false,
+    keypad: false,
+    zoomButtons: false
+  });
+
+  // Define the initial viewport boundaries
+  calc3d.setMathBounds({
+    xMin: -3, xMax: 3,
+    yMin: -3, yMax: 3,
+    zMin: -1, zMax: 5
+  });
+
+  // Configure the slider for the plane height 'k'
+  calc3d.setExpression({
+    id: "k",
+    latex: "k=1",
+    sliderBounds: { min: -0.5, max: 4, step: 0.05 }
+  });
+
+  // Render the paraboloid surface z = x^2 + y^2
+  calc3d.setExpression({
+    id: "paraboloid",
+    latex: "z = x^2 + y^2",
+    color: "#3F68B6",
+    secret: true
+  });
+
+  // Visualize the horizontal plane z = k
+  calc3d.setExpression({
+    id: "plane",
+    latex: "z = k",
+    color: "#DB4315",
+    secret: true
+  });
+
+  // Highlight the intersection circle at height z = k
+  calc3d.setExpression({
+    id: "circle",
+    latex: "x^2 + y^2 = k\\left\\{z = k\\right\\}",
+    color: "#FFCB00",
+    secret: true
+  });
+});
+</script>
+:::
+
+::: {.content-hidden when-format="html"}
+The graph below shows the intersection of the paraboloid $z = x^2 + y^2$ with the plane $z = k$. The slider for $k$ shifts the plane up and down. The intersection curve satisfies $x^2 + y^2 = k$, which:
+
+* is a circle for $k>0$,
+* is a single point for $k=0$,
+* has no real intersection for $k<0$.
+
+This highlights how the position of a slicing plane affects its intersection with a surface.
+
+![Intersection of $z = x^2 + y^2$ with the plane $z = k$, giving a circle of radius $\sqrt{k}$ when $k>0$.](FiguresPNG/o-recognizing3dsurfaces-fig7.png){fig-align="center"}
+:::
+
+# Decision tree
+
+::: {.content-visible when-format="html"}
+You can use this widget to help guide the classification of an equation in $x$, $y$ and $z$ into one of the surface types in this overview. Start from Question 1 and click Yes or No for each statement about the equation. The suggested surface type and a 3D example interactive graph update as the questions are answered.
+
+Have a go at classifying the following surfaces based upon their equations:
+
+1. $z = 2x^2 + y^2$
+2. $x^2 + y^2 - z^2 = 1$
+3. $3x - 2y + z = 5$
+
+```{=html}
+<style>
+  /* --- CSS: Styles for the decision tree widget --- */
+  .surface-helper {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem 1rem;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+    background-color: #f9fafc;
+    text-indent: 0;
+  }
+  
+  .surface-helper p {
+    margin: 0.2rem 0;
+    text-indent: 0;
+  }
+
+  .sh-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+  }
+
+  .sh-question-card,
+  .sh-result-card {
+    border-radius: 10px;
+    background-color: #f5f8ff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .sh-question-label {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+
+  .sh-question-text {
+    margin-bottom: 0.6rem;
+  }
+
+  .sh-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .sh-buttons button {
+    border-radius: 999px;
+    border: 1px solid #3F68B6;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.95rem;
+    background-color: #ffffff;
+    color: #3F68B6;
+    cursor: pointer;
+  }
+
+  .sh-buttons button:hover {
+    background-color: #e6edff;
+  }
+
+  .sh-buttons button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .sh-result-title {
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .sh-result-shape {
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+
+  .sh-result-body {
+    font-size: 0.93rem;
+  }
+
+  .sh-footer {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sh-path {
+    font-size: 0.85rem;
+    color: #555;
+    margin: 0;
+  }
+
+  /* 3D container styling */
+  #surface-3d {
+    width: 100%;
+    height: 380px;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .surface-helper {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<div class="surface-helper" id="surface-helper">
+  <div class="sh-layout">
+    <div class="sh-question-card">
+      <div class="sh-question-label" id="sh-question-label">Question 1</div>
+      <div class="sh-question-text" id="sh-question-text">
+        Does the equation contain squared terms?
+      </div>
+      <div class="sh-buttons">
+        <button type="button" data-choice="yes">Yes</button>
+        <button type="button" data-choice="no">No</button>
+        <button type="button" id="sh-restart">Start again</button>
+      </div>
+    </div>
+
+    <div class="sh-result-card">
+      <div class="sh-result-title">Suggested surface</div>
+      <div class="sh-result-body" id="sh-result-body">
+        Start with the questions above. A suggestion and a 3D example will appear here.
+      </div>
+    </div>
+  </div>
+
+  <div id="surface-3d" aria-label="3D graph of the suggested surface"></div>
+
+  <div class="sh-footer">
+    <p class="sh-path" id="sh-path"></p>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const helper = document.getElementById("surface-helper");
+  if (!helper || !window.Desmos) return;
+
+  // DOM Elements
+  const qLabel = helper.querySelector("#sh-question-label");
+  const qText  = helper.querySelector("#sh-question-text");
+  const result = helper.querySelector("#sh-result-body");
+  const pathEl = helper.querySelector("#sh-path");
+  const buttons = helper.querySelectorAll(".sh-buttons button[data-choice]");
+  const restart = helper.querySelector("#sh-restart");
+
+  // --- 3D Graph Initialization ---
+  const elt3d = document.getElementById("surface-3d");
+  const calc3d = Desmos.Calculator3D(elt3d, {
+    keypad: false,
+    settingsMenu: false,
+    zoomButtons: true
+  });
+
+  let initial3DState = null;
+
+  function init3D() {
+    // Set up a clean initial state with specific bounds
+    calc3d.setExpressions([]);
+    calc3d.setMathBounds({
+      xMin: -4, xMax: 4,
+      yMin: -4, yMax: 4,
+      zMin: -4, zMax: 4
+    });
+    initial3DState = calc3d.getState();
+  }
+
+  function reset3D() {
+    if (initial3DState) {
+      calc3d.setState(initial3DState);
+    } else {
+      init3D();
+    }
+  }
+
+  // --- Visualization Logic ---
+  // Renders the specific 3D surface corresponding to the decision tree result
+  function showShape(shapeKey) {
+    calc3d.setExpressions([]); // Clear previous graph
+    const mainColour = "#3F68B6";
+
+    switch (shapeKey) {
+      case "plane":
+        // 1. Plane: z = ax + by + c
+        calc3d.setMathBounds({ xMin: -4, xMax: 4, yMin: -4, yMax: 4, zMin: -4, zMax: 4 });
+        calc3d.setExpression({ id: "a", latex: "a=0.3", sliderBounds: {min:-2, max:2, step:0.1} });
+        calc3d.setExpression({ id: "b", latex: "b=-0.2", sliderBounds: {min:-2, max:2, step:0.1} });
+        calc3d.setExpression({ id: "c", latex: "c=1", sliderBounds: {min:-3, max:3, step:0.1} });
+        calc3d.setExpression({ id: "plane", latex: "z = a x + b y + c", color: mainColour });
+        break;
+
+      case "cylinder":
+        // 2. Elliptic Cylinder: x^2/a^2 + y^2/b^2 = 1 (z is free)
+        calc3d.setMathBounds({ xMin: -4, xMax: 4, yMin: -4, yMax: 4, zMin: -4, zMax: 4 });
+        calc3d.setExpression({ id: "a", latex: "a=2", sliderBounds: {min:0.5, max:4, step:0.1} });
+        calc3d.setExpression({ id: "b", latex: "b=1", sliderBounds: {min:0.5, max:4, step:0.1} });
+        // Restrict z strictly for visualization purposes
+        calc3d.setExpression({ id: "cyl", latex: "x^2/a^2 + y^2/b^2 = 1\\left\\{-4\\le z\\le 4\\right\\}", color: mainColour });
+        break;
+
+      case "parabolic-cylinder":
+        // 3. Parabolic Cylinder: z = ax^2 + b
+        calc3d.setMathBounds({ xMin: -3, xMax: 3, yMin: -3, yMax: 3, zMin: -2, zMax: 6 });
+        calc3d.setExpression({ id: "a", latex: "a=1", sliderBounds: {min:-2, max:2, step:0.1} });
+        calc3d.setExpression({ id: "b", latex: "b=0", sliderBounds: {min:-3, max:3, step:0.1} });
+        calc3d.setExpression({ id: "pcyl", latex: "z = a x^2 + b", color: mainColour });
+        break;
+
+      case "elliptic-paraboloid":
+        // 4. Elliptic Paraboloid: z = ax^2 + by^2 + c
+        calc3d.setMathBounds({ xMin: -3, xMax: 3, yMin: -3, yMax: 3, zMin: -2, zMax: 8 });
+        calc3d.setExpression({ id: "a", latex: "a=1", sliderBounds: {min:0.2, max:2, step:0.1} });
+        calc3d.setExpression({ id: "b", latex: "b=0.5", sliderBounds: {min:0.2, max:2, step:0.1} });
+        calc3d.setExpression({ id: "c", latex: "c=0", sliderBounds: {min:-3, max:3, step:0.1} });
+        calc3d.setExpression({ id: "epara", latex: "z = a x^2 + b y^2 + c", color: mainColour });
+        break;
+
+      case "hyperbolic-paraboloid":
+        // 5. Hyperbolic Paraboloid (Saddle): z = ax^2 - by^2 + c
+        calc3d.setMathBounds({ xMin: -3, xMax: 3, yMin: -3, yMax: 3, zMin: -5, zMax: 5 });
+        calc3d.setExpression({ id: "a", latex: "a=1", sliderBounds: {min:0.2, max:2, step:0.1} });
+        calc3d.setExpression({ id: "b", latex: "b=1", sliderBounds: {min:0.2, max:2, step:0.1} });
+        calc3d.setExpression({ id: "c", latex: "c=0", sliderBounds: {min:-3, max:3, step:0.1} });
+        calc3d.setExpression({ id: "hpara", latex: "z = a x^2 - b y^2 + c", color: mainColour });
+        break;
+
+      case "sphere-ellipsoid":
+        // 6. Ellipsoid: x^2/a^2 + y^2/b^2 + z^2/c^2 = 1
+        calc3d.setMathBounds({ xMin: -3, xMax: 3, yMin: -3, yMax: 3, zMin: -3, zMax: 3 });
+        calc3d.setExpression({ id: "a", latex: "a=2", sliderBounds: {min:0.5, max:3, step:0.1} });
+        calc3d.setExpression({ id: "b", latex: "b=1.5", sliderBounds: {min:0.5, max:3, step:0.1} });
+        calc3d.setExpression({ id: "c", latex: "c=1", sliderBounds: {min:0.5, max:3, step:0.1} });
+        calc3d.setExpression({ id: "ellipsoid", latex: "x^2/a^2 + y^2/b^2 + z^2/c^2 = 1", color: mainColour });
+        break;
+
+      case "cone":
+        // 7. Double Cone: x^2/a^2 + y^2/b^2 = z^2/c^2
+        calc3d.setMathBounds({ xMin: -3, xMax: 3, yMin: -3, yMax: 3, zMin: -3, zMax: 3 });
+        calc3d.setExpression({ id: "a", latex: "a=1", sliderBounds: {min:0.5, max:3, step:0.1} });
+        calc3d.setExpression({ id: "b", latex: "b=1", sliderBounds: {min:0.5, max:3, step:0.1} });
+        calc3d.setExpression({ id: "c", latex: "c=1", sliderBounds: {min:0.5, max:3, step:0.1} });
+        calc3d.setExpression({ id: "cone", latex: "x^2/a^2 + y^2/b^2 = z^2/c^2", color: mainColour });
+        break;
+
+      case "hyperboloid":
+        // 8. Hyperboloid of One Sheet
+        calc3d.setMathBounds({ xMin: -3, xMax: 3, yMin: -3, yMax: 3, zMin: -3, zMax: 3 });
+        calc3d.setExpression({ id: "a", latex: "a=1.5", sliderBounds: {min:0.5, max:3, step:0.1} });
+        calc3d.setExpression({ id: "b", latex: "b=1", sliderBounds: {min:0.5, max:3, step:0.1} });
+        calc3d.setExpression({ id: "c", latex: "c=1", sliderBounds: {min:0.5, max:3, step:0.1} });
+        calc3d.setExpression({ id: "hyperboloid", latex: "x^2/a^2 + y^2/b^2 - z^2/c^2 = 1", color: mainColour });
+        break;
+
+      case "other":
+      default:
+        reset3D();
+        break;
+    }
+  }
+
+  // --- Decision Tree Data Structures ---
+  // Nodes: Define the questions and branching logic
+  const steps = {
+    q1: {
+      label: "Question 1",
+      text: "Does the equation contain squared terms?",
+      yes: "q2",
+      no: "plane"
+    },
+    q2: {
+      label: "Question 2",
+      text: "Is one variable missing entirely? (For example, the equation uses only \\(x\\) and \\(y\\), and \\(z\\) does not appear)",
+      yes: "cylinder",
+      no: "q3"
+    },
+    q3: {
+      label: "Question 3",
+      text: "Can the equation be written as \\(z = f(x,y)\\) with \\(z\\) not squared?",
+      yes: "q3a",
+      no: "q4"
+    },
+    q3a: {
+      label: "Question 4",
+      text: "In \\(f(x,y)\\), do both \\(x^2\\) and \\(y^2\\) appear?",
+      yes: "q3b",
+      no: "parabolic-cylinder"
+    },
+    q3b: {
+      label: "Question 5",
+      text: "In \\(f(x,y)\\), do \\(x^2\\) and \\(y^2\\) have the same sign after moving everything to one side?",
+      yes: "elliptic-paraboloid",
+      no: "hyperbolic-paraboloid"
+    },
+    q4: {
+      label: "Question 6",
+      text: "Do \\(x^2\\), \\(y^2\\) and \\(z^2\\) all appear, with no cross terms such as \\(xy\\), \\(xz\\) or \\(yz\\)?",
+      yes: "q4a",
+      no: "other"
+    },
+    q4a: {
+      label: "Question 7",
+      text: "After moving everything to one side, do the coefficients of \\(x^2\\), \\(y^2\\) and \\(z^2\\) all have the same sign?",
+      yes: "sphere-ellipsoid",
+      no: "q4b"
+    },
+    q4b: {
+      label: "Question 8",
+      text: "Is the constant term \\(0\\) (so the surface passes through the origin)?",
+      yes: "cone",
+      no: "hyperboloid"
+    }
+  };
+
+  // Leaves: Define the result content (titles and mathematical descriptions)
+  const leaves = {
+    plane: {
+      title: "Plane",
+      html:
+        "General form:<br>" +
+        "\\[ z = a x + b y + c \\]" +
+        "<br>Linear surface in three variables (a plane)."
+    },
+    cylinder: {
+      title: "Cylinder",
+      html:
+        "General form (elliptic cylinder):<br>" +
+        "\\[ \\frac{x^2}{a^2} + \\frac{y^2}{b^2} = r^2 \\]" +
+        "<br>The third variable \\(z\\) is free, so this curve extends vertically to form a cylinder."
+    },
+    "parabolic-cylinder": {
+      title: "Parabolic cylinder",
+      html:
+        "General form:<br>" +
+        "\\[ z = a x^2 + b \\]" +
+        "<br>Curves in the \\(x\\)-direction and is flat in the \\(y\\)-direction."
+    },
+    "elliptic-paraboloid": {
+      title: "Elliptic paraboloid",
+      html:
+        "General form:<br>" +
+        "\\[ z = a x^2 + b y^2 + c \\quad a,b \neq 0 \\]" +
+        "<br>Bowl-shaped surface opening up or down depending on the signs of \\(a\\) and \\(b\\)."
+    },
+    "hyperbolic-paraboloid": {
+      title: "Hyperbolic paraboloid (saddle)",
+      html:
+        "General form:<br>" +
+        "\\[ z = a x^2 - b y^2 + c \\quad a,b > 0 \\]" +
+        "<br>Saddle-shaped surface: curves up in one direction and down in the other."
+    },
+    "sphere-ellipsoid": {
+      title: "Sphere / ellipsoid",
+      html:
+        "General form (ellipsoid):<br>" +
+        "\\[ \\frac{x^2}{a^2} + \\frac{y^2}{b^2} + \\frac{z^2}{c^2} = 1 \\]" +
+        "<br>A closed, rounded surface (a sphere if \\(a=b=c\\))."
+    },
+    cone: {
+      title: "Double cone",
+      html:
+        "General form:<br>" +
+        "\\[ \\frac{x^2}{a^2} + \\frac{y^2}{b^2} = \\frac{z^2}{c^2} \\]" +
+        "<br>Surface opening out in opposite directions from the origin."
+    },
+    hyperboloid: {
+      title: "Hyperboloid",
+      html:
+        "A common one-sheet form:<br>" +
+        "\\[ \\frac{x^2}{a^2} + \\frac{y^2}{b^2} - \\frac{z^2}{c^2} = k \\]" +
+        "<br>A related two-sheet form is:<br>" +
+        "\\[ -\\frac{x^2}{a^2} - \\frac{y^2}{b^2} + \\frac{z^2}{c^2} = k \\]" +
+        "<br>Mixed signs with a non-zero constant \\(k\\) give a hyperboloid shape."
+    },
+    other: {
+      title: "Other surface",
+      html:
+        "The equation may describe a surface that is not covered by this short list.<br>" +
+        "Traces and cross-sections can still give information about its local shape."
+    }
+  };
+
+  // --- UI & Interaction Logic ---
+  let current = "q1";
+  let path = [];
+
+  // Update the DOM to show the current question
+  function updateQuestion() {
+    const step = steps[current];
+    if (!step) {
+      qLabel.textContent = "Finished";
+      qText.textContent =
+        "A suggestion is shown below.";
+      buttons.forEach(b => b.disabled = true);
+    } else {
+      qLabel.textContent = step.label;
+      qText.innerHTML = step.text;
+      buttons.forEach(b => b.disabled = false);
+    }
+    // Re-render math expressions if MathJax is present
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise([qText]);
+    }
+  }
+
+  // Reset the results pane
+  function clearResult() {
+    result.textContent =
+      "Start with the first question above. A suggestion and a 3D example will appear here.";
+    reset3D();
+  }
+
+  // Display the final classification result
+  function updateResult(leafKey) {
+    const leaf = leaves[leafKey];
+    if (!leaf) {
+      clearResult();
+      return;
+    }
+    result.innerHTML =
+      "<div class='sh-result-shape'>" + leaf.title + "</div>" +
+      "<div>" + leaf.html + "</div>";
+
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise([result]);
+    }
+
+    // Trigger the 3D visualization
+    showShape(leafKey);
+  }
+
+  // Update the breadcrumb trail of answers
+  function updatePath() {
+    if (!path.length) {
+      pathEl.textContent = "";
+      return;
+    }
+    const text = path.map(p => "Q" + p.q + ": " + p.a).join("  ·  ");
+    pathEl.textContent = "Answers so far: " + text;
+  }
+
+  // Attach click handlers to Yes/No buttons
+  buttons.forEach(btn => {
+    btn.addEventListener("click", function () {
+      const choice = btn.getAttribute("data-choice");
+      const step = steps[current];
+      if (!step) return;
+
+      // Log answer and update path
+      path.push({ q: current.slice(1), a: choice === "yes" ? "Yes" : "No" });
+      updatePath();
+
+      // Navigate to next node or leaf
+      const nextKey = step[choice];
+      if (leaves[nextKey]) {
+        current = null;
+        updateQuestion();
+        updateResult(nextKey);
+      } else if (steps[nextKey]) {
+        current = nextKey;
+        updateQuestion();
+        clearResult();
+      }
+    });
+  });
+
+  // Attach click handler to Restart button
+  restart.addEventListener("click", function () {
+    current = "q1";
+    path = [];
+    updateQuestion();
+    clearResult();
+    updatePath();
+  });
+
+  // --- Initial Setup ---
+  init3D();
+  updateQuestion();
+});
+</script>
+```
+:::
+
+::: {.content-hidden when-format="html"}
+The decision tree below helps you classify equations in three variables into the surface types seen in this overview.
+
+To use it, start at Question 1 and answer Yes or No to each statement about your equation. Follow the instructions according to your answers until you reach a suggested surface type and its typical general form.
+
+Have a go at classifying the following surfaces based upon their equations:
+
+1. $z = 2x^2 + y^2$
+2. $x^2 + y^2 - z^2 = 1$
+3. $3x - 2y + z = 5$
+
+**Question 1**: Does the equation contain squared terms?
+
+* **Yes**: Go to Question 2.
+* **No**: Plane
+  * General form: $z = ax + by + c$
+
+**Question 2**: Is one variable missing entirely from the equation (for example, the equation uses only $x$ and $y$, and $z$ does not appear)?
+
+* **Yes**: Cylinder
+  * General form: $\frac{x^2}{a^2} + \frac{y^2}{b^2} = r^2$
+* **No**: Go to Question 3.
+
+**Question 3**: Can the equation be rewritten in the form $z = f(x,y)$ with $z$ not squared?
+
+* **Yes**: Go to Question 4.
+* **No**: Go to Question 6.
+
+**Question 4**: In the expression $f(x,y)$, do both $x^2$ and $y^2$ appear?
+
+* **Yes**: Go to Question 5.
+* **No**: Parabolic cylinder
+  * General form: $z = ax^2 + b$
+
+**Question 5**: After moving everything to one side, do the coefficients of $x^2$ and $y^2$ have the same sign?
+
+* **Yes**: Elliptic paraboloid
+  * General form: $z = ax^2 + by^2 + c$, $a,b > 0$
+* **No**: Hyperbolic paraboloid (saddle)
+  * General form: $z = ax^2 - by^2 + c$, $a,b > 0$
+
+**Question 6**: Do $x^2$, $y^2$, and $z^2$ all appear, with no cross-terms such as $xy$, $xz$, or $yz$?
+
+* **Yes**: Go to Question 7.
+* **No**: Other surface (The equation may describe a surface that is not covered by this short list. Traces and cross-sections can still give information about its local shape.)
+
+**Question 7**: After moving everything to one side, do the coefficients of $x^2$, $y^2$, and $z^2$ all have the same sign?
+
+* **Yes**: Sphere / Ellipsoid
+  * General form: $\frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = r^2$.
+* **No**: Go to Question 8.
+
+**Question 8**: Is the constant term $0$, so that the surface passes through the origin?
+
+* **Yes**: Double cone
+  * General form: $\frac{x^2}{a^2} + \frac{y^2}{b^2} = \frac{z^2}{c^2}$.
+* **No**: Hyperboloid
+  * One-sheet form: $\frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = k$.
+  * Two-sheet form: $-\frac{x^2}{a^2} - \frac{y^2}{b^2} + \frac{z^2}{c^2} = k$.
+
+:::
+
+# Further reading {.unnumbered}
+
+[For an overview of 2D curves, please see Overview: Recognizing 2D curves.]
+
+[To learn more about what conic sections are, please see Guide: Introduction to 2D conic sections.]
+
+## Version history {.unnumbered}
+
+v1.0: initial version created 12/25 by Donald Campbell as part of a University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

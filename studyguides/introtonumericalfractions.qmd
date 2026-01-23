@@ -1,0 +1,2336 @@
+---
+title: Introduction to numerical fractions
+author: Donald Campbell
+abstract-title: Summary
+abstract: Fractions are a fundamental concept used to represent parts of a whole. They provide a precise way to describe values that are not whole numbers, helping you to understand the relationship between different quantities. Fractions are essential in many daily tasks, such as managing finances or using recipes, and are vital in technical fields from engineering to medicine.
+categories: 
+  - Topics in arithmetic
+image: FiguresPNG/introtonumericalfractions-image.png
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+<!--No prerequisites for this guide-->
+
+# What is a fraction?
+
+A **fraction** is a way of showing part of a whole object. Fractions give you a way of writing numbers that do not come out as whole numbers.
+
+Imagine you cut a pizza into eight equal slices. If you eat three slices, you have eaten $$\frac{3}{8} \qquad \textsf{three eighths}$$
+
+This means that you have eaten three out of eight slices of the whole pizza.
+
+::: {.callout-note}
+## Definition of a fraction
+
+A **fraction** is used to represent part of a whole. It has a **numerator** and a **denominator**, and is written in the form $$\frac{\textsf{numerator}}{\textsf{denominator}}$$
+
+* The numerator (top number) tells you how many parts you have.
+* The denominator (bottom number) tells you how many equal parts the whole is divided into.
+:::
+
+The idea of fractions is ancient. The Egyptians used a system for fractions around 1550 BC, but they mostly used **unit fractions**. These are fractions with a numerator of one (like $\frac{1}{2}$ or $\frac{1}{4}$). Indian and Arabic mathematicians developed the modern style used today, where fractions are written with a numerator on top of a denominator separated by a bar.
+
+In the pizza example, the numerator is the three pizza slices eaten, and the denominator is the eight equal parts the whole pizza is divided into.
+
+::: {.content-visible when-format="html"}
+You can move the sliders below to change the number of pizza slices shaded (numerator) and the total number of slices the pizza is divided into (denominator).
+
+```{=html}
+<style>
+  .frac { display:inline-flex; flex-direction:column; align-items:center; line-height:1.05; font-weight:700; font-size:1.6rem; }
+  .frac .top, .frac .bottom { padding:0 .25em; }
+  .frac .bar { width:100%; height:0; border-top:2px solid currentColor; margin:.12em 0 .06em; }
+  .pizza-overlay { display:inline-block; width:fit-content; max-width:100%; margin:0; font-family: Arial, Helvetica, sans-serif; color:#000; background-color: #f5f8ff; padding: 1.5rem; border-radius: 12px; }
+  .pizza-overlay input[type="range"]{ -webkit-appearance:none; appearance:none; width:100%; height:10px; border-radius:999px; background:#C0D6FF; outline:none; }
+  .pizza-overlay input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer; }
+  .pizza-overlay input[type="range"]::-moz-range-thumb{ width:18px; height:18px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer; }
+  .pizza-overlay label, .pizza-overlay #pizzaReadout, .pizza-overlay #denOut, .pizza-overlay #numOut, .pizza-overlay .frac, .pizza-overlay .frac .top, .pizza-overlay .frac .bottom { font-family: Arial, Helvetica, sans-serif; color: #000; }
+  .pizza-overlay .readout-title{ font-size: 1rem; color: #000; opacity: 1; margin-right: 0.5em; }
+  .pizza-overlay #numOut, .pizza-overlay #denOut { display: inline-block; min-width: 1.6em; text-align: left; }
+  #pizzaReadout { margin-top:.75rem; padding:.75rem 1rem; border-radius:10px; background:#f5f8ff; min-height: 4em; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
+  @media (max-width: 600px){
+    .pizza-grid{ grid-template-columns: 1fr !important; justify-items: center; gap: 0.75rem; }
+    .pizza-overlay{ max-width: 96vw !important; }
+    .pizza-overlay .frac .top, .pizza-overlay .frac .bottom{ font-size:1.35rem; }
+    #pizzaReadout > div { display: flex; align-items: center; flex-wrap: nowrap; }
+  }
+</style>
+
+<div style="display:flex; justify-content:center; margin:1rem 0;">
+  <div class="pizza-overlay">
+    <div class="pizza-grid" style="display:grid; grid-template-columns: 300px 240px; gap:1rem; align-items:start;">
+      <div style="max-width:300px;">
+        <img id="pizzaImg" src="FiguresPNG/introtonumericalfractions-fig1.png" alt="Pizza" style="display:none;">
+        <canvas id="pizzaCanvas" width="600" height="600" style="width:100%; height:auto; border-radius:12px; background:#f5f8ff;"></canvas>
+      </div>
+      <div>
+        <label for="num" style="display:block; margin-bottom:.25rem;">
+          Shaded (numerator):
+          <span id="numOut" style="margin-left:.35rem;">3</span>
+        </label>
+        <input id="num" type="range" min="0" max="8" value="3" step="1" style="margin-top:.35rem; margin-bottom:.75rem;">
+        <label for="den" style="display:block; margin-bottom:.25rem;">
+          Slices (denominator):
+          <span id="denOut" style="margin-left:.35rem;">8</span>
+        </label>
+        <input id="den" type="range" min="1" max="20" value="8" step="1" style="margin-top:.35rem; margin-bottom:.75rem;">
+        <div id="pizzaReadout">
+          <div>
+            <span class="readout-title">Shaded fraction:</span>
+            <span id="fracMain"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function ensureMathJax(cb){
+    if (window.MathJax && MathJax.typesetPromise){ cb(); return; }
+    if (!document.getElementById('mj-loader')){
+      window.MathJax = window.MathJax || { tex:{inlineMath:[['\\(','\\)'],['$','$']]}, svg:{fontCache:'global'} };
+      const s=document.createElement('script'); s.id='mj-loader'; s.defer=true;
+      s.src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+      s.onload=cb; document.head.appendChild(s);
+    } else {
+      const t=setInterval(()=>{ if(window.MathJax && MathJax.typesetPromise){ clearInterval(t); cb(); } }, 50);
+    }
+  }
+  const cssFrac = (n,d)=>`<span class="frac"><span class="top">${n}</span><span class="bar"></span><span class="bottom">${d}</span></span>`;
+  function setMJ(el, n, d){
+    if (window.MathJax && MathJax.typesetPromise){
+      el.innerHTML = `\\(\\dfrac{${n}}{${d}}\\)`;
+      MathJax.typesetPromise([el]);
+    } else {
+      el.innerHTML = cssFrac(n,d);
+    }
+  }
+
+  const ALIGN = { rScale: 0.90, angleDeg: 0, offsetX: 0, offsetY: 0.5 };
+  const base  = "#371f09";
+  const line  = "#371f09";
+  const shade = "rgba(63,104,182,.60)";
+  const img = document.getElementById("pizzaImg");
+  const canvas = document.getElementById("pizzaCanvas");
+  const ctx = canvas.getContext("2d");
+  const den = document.getElementById("den");
+  const num = document.getElementById("num");
+  const denOut = document.getElementById("denOut");
+  const numOut = document.getElementById("numOut");
+  const fracMain = document.getElementById("fracMain");
+
+  let W = canvas.width, H = canvas.height;
+  let cx = W/2, cy = H/2, R = Math.min(W,H)*0.42;
+
+  function paintRange(el){
+    const min = +el.min, max = +el.max, val = +el.value;
+    const pct = (max > min) ? ((val - min) / (max - min)) * 100 : 0;
+    el.style.background = `linear-gradient(to right, #3F68B6 0%, #3F68B6 ${pct}%, #C0D6FF ${pct}%, #C0D6FF 100%)`;
+  }
+
+  function draw(){
+    const d = +den.value;
+    if (d < 1) { den.value = '1'; return; }
+    if (+num.max !== d) num.max = String(d);
+    if (+num.value > d) num.value = d;
+    const dpr = window.devicePixelRatio || 1;
+    const cssW = canvas.clientWidth || W;
+    const cssH = canvas.clientHeight || H;
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    W = cssW; H = cssH;
+    ctx.clearRect(0,0,W,H);
+    if (!img.complete || img.naturalWidth === 0) {
+        console.error("Pizza image not loaded or has zero dimensions.");
+        ctx.fillStyle = "#ddd";
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = "#000";
+        ctx.textAlign = "center";
+        ctx.fillText("Image loading...", W/2, H/2);
+        updateReadout();
+        paintRange(num); paintRange(den);
+        return;
+    }
+    const scale = Math.min(W / img.naturalWidth, H / img.naturalHeight);
+    const drawW = img.naturalWidth * scale;
+    const drawH = img.naturalHeight * scale;
+    const dx = (W - drawW)/2;
+    const dy = (H - drawH)/2;
+    try { ctx.drawImage(img, dx, dy, drawW, drawH); }
+    catch (e) {
+        console.error("Error drawing image:", e);
+        ctx.fillStyle = "#fdd";
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = "#000";
+        ctx.textAlign = "center";
+        ctx.fillText("Error drawing image", W/2, H/2);
+    }
+
+    const imgMin = Math.min(drawW, drawH);
+    R  = (imgMin * 0.5) * ALIGN.rScale;
+    cx = W/2 + ALIGN.offsetX;
+    cy = H/2 + ALIGN.offsetY;
+    const startShift = (-Math.PI/2) + (ALIGN.angleDeg * Math.PI/180);
+    const step = 2*Math.PI / d;
+    const nAuto = +num.value;
+    for(let k=0;k<d;k++){
+      const a0 = startShift + k*step;
+      const a1 = a0 + step;
+      const shaded = k < nAuto;
+      if (shaded){
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.arc(cx,cy,R,a0,a1);
+        ctx.closePath();
+        ctx.fillStyle = shade;
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.moveTo(cx,cy);
+      ctx.lineTo(cx + R*Math.cos(a0), cy + R*Math.sin(a0));
+      ctx.strokeStyle = line; ctx.lineWidth = 4; ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.arc(cx,cy,R,0,2*Math.PI);
+    ctx.lineWidth = 6;
+    ctx.strokeStyle = base;
+    ctx.stroke();
+    updateReadout();
+    paintRange(num);
+    paintRange(den);
+  }
+
+  function updateReadout() {
+      const d = +den.value;
+      const n = +num.value;
+      denOut.textContent = d;
+      numOut.textContent = n;
+      if (d === 0) {
+          fracMain.innerHTML = "Denominator cannot be zero.";
+      } else {
+          setMJ(fracMain, n, d);
+      }
+  }
+
+  den.addEventListener("input", draw);
+  num.addEventListener("input", draw);
+  window.addEventListener("resize", draw);
+
+  ensureMathJax(()=>{
+      paintRange(num);
+      paintRange(den);
+      if (img.complete && img.naturalWidth > 0) {
+        draw();
+      } else {
+        img.onload = () => { if (img.naturalWidth > 0) { draw(); } else { console.error("Image loaded but has zero width."); } };
+        img.onerror = () => { console.error("Pizza image failed to load."); draw(); };
+      }
+  });
+})();
+</script>
+```
+:::
+
+::: {.content-hidden when-format="html"}
+Below are pizzas each divided into eight slices. In each case, the number of shaded slices corresponds to the numerator and the total number of slices corresponds to the denominator.
+
+![Fractions represented by shaded slices of a pizza.](FiguresPNG/introtonumericalfractions-fig2.png){fig-align="center"}
+:::
+
+::: callout-tip
+You can think of a fraction as: $$\frac{\textsf{numerator}}{\textsf{denominator}} = \frac{\textsf{"number you have"}}{\textsf{"number in total"}}$$
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+You cannot avoid fractions! They are used all the time.
+
+1. Suppose a recipe asks for one quarter of a kilogram of flour. If you do not use fractions and guess, you might add a whole cup, making your cake dry and crumbly!
+2. If £10 is split between four people, each person gets a quarter of £10 which is £2.50. If you do not use fractions and guess, some of your friends might be unhappy!
+3. If your boss says "I will meet you here in half an hour", they are using a fraction. They mean they are expecting you to arrive in 30 minutes. If you do not use fractions, you might be late, and your boss might not be happy!
+:::
+
+Fractions are different from whole numbers as whole numbers are numbers which have no fractional part. In fractions, you get a whole number when the numerator can be perfectly divided by the denominator with no remainder. The horizontal bar that separates the numerator and the denominator is another way of saying division. When talking about fractions, a whole number is typically referred to as a **whole**. $$\frac{8}{8} = 1 \qquad \frac{12}{4} = 3 \qquad \frac{24}{4} = 6$$
+
+::: callout-tip
+Any fraction for which the numerator is the same as the denominator is equivalent to one whole.
+:::
+
+# Types of fractions
+
+So far, you have seen how fractions represent parts of a single whole. But what happens when you have more than one whole, such as one full pizza and an extra slice? To handle amounts that are less than, equal to, or greater than one, there are three different types of fractions you can use.
+$$
+\begin{array}{c}
+\dfrac{3}{8} \\[1ex]
+\textsf{three eighths} \\[0.5ex]
+\textsf{proper fraction}
+\end{array}
+\qquad
+\begin{array}{c}
+\dfrac{7}{4} \\[1ex]
+\textsf{seven quarters} \\[0.5ex]
+\textsf{improper fraction}
+\end{array}
+\qquad
+\begin{array}{c}
+1\dfrac{3}{4} \\[1ex]
+\textsf{one and three quarters} \\[0.5ex]
+\textsf{mixed number}
+\end{array}
+$$
+
+In each case, there is a different relationship between the numerator and the denominator. These differences are what define the three main types of fractions.
+
+::: callout-note
+## Types of fractions
+
+There are three types of fractions.
+
+* **Proper fraction**: A fraction where the numerator is less than the denominator.
+* **Improper fraction**: A fraction where the numerator is greater than or equal to the denominator.
+* **Mixed number**: A whole number and a proper fraction together.
+
+An improper fraction is also known as a "top-heavy" fraction.
+:::
+
+How does this compare to the examples from before?
+
+* The fraction $\frac{3}{8}$ is a proper fraction as the numerator $3$ is less than the denominator $8$.
+* The fraction $\frac{7}{4}$ is an improper fraction as the numerator $7$ is greater than or equal to the denominator $4$.
+* The fraction $1\frac{3}{4}$ is a mixed number as it consists of a whole number $1$ and a proper fraction $\frac{3}{4}$.
+
+::: {.callout-note appearance="simple"}
+## Example 2
+
+Below are some more examples of proper fractions, improper fractions and mixed numbers.
+$$
+\begin{aligned}
+\textsf{Proper fractions:} \quad & \frac{1}{4} \quad \frac{1}{2} \quad \frac{14}{25} \\[0.5em]
+\textsf{Improper fractions:} \quad & \frac{7}{4} \quad \frac{5}{2} \quad \frac{27}{25} \quad \frac{2}{2} \\[0.5em]
+\textsf{Mixed numbers:} \quad & 1\frac{3}{4} \quad 2\frac{1}{2} \quad 1\frac{2}{25}
+\end{aligned}
+$$
+:::
+
+::: {.callout-important}
+Notice that all the proper fractions are less than one whole, and that all the improper fractions are greater than or equal to one whole. This is what distinguishes these two types of fractions from each other.
+:::
+
+::: {.content-visible when-format="html"}
+Use the sliders below to plot a fraction on the number line. For values greater than one, this interactive figure shows how an improper fraction (top) is equivalent to its mixed number form (bottom), reinforcing that they represent the same point on the line.
+
+```{=html}
+<style>
+    .numberline-widget {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        max-width: 800px;
+        margin: 1rem auto;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #000;
+        background-color: #f5f8ff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    #numberline-canvas {
+        width: 100%;
+        height: auto;
+        margin-bottom: 1.5rem;
+        background-color: #f5f8ff;
+        border-radius: 8px;
+    }
+
+    .nl-controls {
+        max-width: 450px;
+        margin: 0 auto;
+    }
+
+    .numberline-widget input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 10px;
+        border-radius: 999px;
+        background: #C0D6FF;
+        outline: none;
+        margin-top: 0.35rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .numberline-widget input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #3F68B6;
+        border: none;
+        cursor: pointer;
+    }
+
+    .numberline-widget input[type="range"]::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #3F68B6;
+        border: none;
+        cursor: pointer;
+    }
+
+    .numberline-widget label {
+        display: block;
+        text-align: left;
+        margin-bottom: 0.25rem;
+        font-size: 1rem;
+    }
+
+    .numberline-widget .slider-val {
+        margin-left: .35rem;
+        display: inline-block;
+        min-width: 1.5em;
+    }
+    
+    .nl-label {
+        position: absolute;
+        display: none;
+        background-color: transparent;
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        pointer-events: none;
+        transform: translateX(-50%);
+        white-space: nowrap;
+    }
+
+</style>
+
+<div class="numberline-widget">
+    <canvas id="numberline-canvas" width="1600" height="250"></canvas>
+    <div id="nl-label-top" class="nl-label"></div>
+    <div id="nl-label-bottom" class="nl-label"></div>
+    <div class="nl-controls">
+        <div>
+            <label for="nl-num">
+                Numerator:
+                <span id="nl-numOut" class="slider-val">7</span>
+            </label>
+            <input id="nl-num" type="range" min="0" max="10" value="7" step="1">
+        </div>
+        <div>
+            <label for="nl-den">
+                Denominator:
+                <span id="nl-denOut" class="slider-val">4</span>
+            </label>
+            <input id="nl-den" type="range" min="1" max="10" value="4" step="1">
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        function ensureMathJax(cb) {
+            if (window.MathJax && MathJax.typesetPromise) {
+                cb();
+                return;
+            }
+            if (!document.getElementById('mj-loader')) {
+                window.MathJax = window.MathJax || {
+                    tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+                    svg: { fontCache: 'global' }
+                };
+                const s = document.createElement('script');
+                s.id = 'mj-loader';
+                s.defer = true;
+                s.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+                s.onload = cb;
+                document.head.appendChild(s);
+            } else {
+                const t = setInterval(() => {
+                    if (window.MathJax && MathJax.typesetPromise) {
+                        clearInterval(t);
+                        cb();
+                    }
+                }, 50);
+            }
+        }
+
+        const canvas = document.getElementById("numberline-canvas");
+        const ctx = canvas.getContext("2d");
+        const numSlider = document.getElementById("nl-num");
+        const denSlider = document.getElementById("nl-den");
+        const numOut = document.getElementById("nl-numOut");
+        const denOut = document.getElementById("nl-denOut");
+        const topLabel = document.getElementById('nl-label-top');
+        const bottomLabel = document.getElementById('nl-label-bottom');
+        const MAX_WHOLE_NUM = 4;
+
+        function paintRange(el) {
+            if (!el) return;
+            const min = +el.min, max = +el.max, val = +el.value;
+            const pct = (max > min) ? ((val - min) / (max - min)) * 100 : 0;
+            el.style.background = `linear-gradient(to right, #3F68B6 0%, #3F68B6 ${pct}%, #C0D6FF ${pct}%, #C0D6FF 100%)`;
+        }
+        
+        function updateAndDraw() {
+            const d = +denSlider.value;
+            const newNumMax = MAX_WHOLE_NUM * d;
+            if (+numSlider.max !== newNumMax) numSlider.max = newNumMax;
+            const n = +numSlider.value; 
+            numOut.textContent = n;
+            denOut.textContent = d;
+
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+            const W = rect.width;
+            const H = rect.height;
+
+            ctx.clearRect(0, 0, W, H);
+            const yLine = H * 0.5;
+            const margin = W * 0.05;
+            const unitWidth = (W - 2 * margin) / MAX_WHOLE_NUM;
+            const tickSize = 10;
+            const pointRadius = 12;
+            
+            ctx.beginPath();
+            ctx.moveTo(margin, yLine);
+            ctx.lineTo(W - margin, yLine);
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            for (let i = 0; i <= MAX_WHOLE_NUM * d; i++) {
+                const x = margin + (i / d) * unitWidth;
+                if (i % d === 0) {
+                    const wholeNumber = i / d;
+                    ctx.beginPath();
+                    ctx.arc(x, yLine, pointRadius, 0, 2 * Math.PI);
+                    ctx.fillStyle = '#f5f8ff';
+                    ctx.fill();
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    ctx.font = 'bold 16px Arial';
+                    ctx.fillStyle = '#000';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(wholeNumber, x, yLine + 1);
+                } else {
+                    ctx.beginPath();
+                    ctx.moveTo(x, yLine - tickSize / 2);
+                    ctx.lineTo(x, yLine + tickSize / 2);
+                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = '#000';
+                    ctx.stroke();
+                }
+            }
+            
+            const fracValue = n / d;
+            const fracX = margin + fracValue * unitWidth;
+            ctx.beginPath();
+            ctx.arc(fracX, yLine, pointRadius, 0, 2 * Math.PI);
+            ctx.fillStyle = '#DB4315';
+            ctx.fill();
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            topLabel.innerHTML = `\\(\\dfrac{${n}}{${d}}\\)`;
+
+            let bottomLatex = '';
+
+            if (n === 0) {
+                bottomLatex = `\\(0\\)`;
+            } else {
+                const isImproper = Math.abs(n) >= d && d !== 0;
+                if (isImproper) {
+                    const whole = Math.trunc(n / d);
+                    const remN = Math.abs(n % d);
+                    if (remN !== 0) {
+                        bottomLatex = `\\(${whole}\\dfrac{${remN}}{${d}}\\)`;
+                    } else {
+                        bottomLatex = `\\(${whole}\\)`;
+                    }
+                }
+            }
+
+            bottomLabel.innerHTML = bottomLatex;
+            
+            MathJax.typesetPromise([topLabel, bottomLabel]).then(() => {
+                topLabel.style.left = `${canvas.offsetLeft + fracX}px`;
+                topLabel.style.top = `${canvas.offsetTop + yLine - 80}px`; 
+                topLabel.style.display = 'block';
+                if (bottomLatex) {
+                    bottomLabel.style.left = `${canvas.offsetLeft + fracX}px`;
+                    bottomLabel.style.top = `${canvas.offsetTop + yLine + 18}px`;
+                    bottomLabel.style.display = 'block';
+                } else {
+                    bottomLabel.style.display = 'none';
+                }
+            });
+
+            paintRange(numSlider);
+            paintRange(denSlider);
+        }
+        
+        numSlider.addEventListener('input', updateAndDraw);
+        denSlider.addEventListener('input', updateAndDraw);
+        window.addEventListener('resize', updateAndDraw);
+        ensureMathJax(updateAndDraw);
+    })();
+</script>
+```
+:::
+
+::: {.content-hidden when-format="html"}
+The number line below shows that fractions are numbers between whole numbers. This example illustrates the equivalence between improper fractions and mixed numbers. The red dot is placed at $\frac{7}{4}$, which is the same value as $1\frac{3}{4}$.
+
+![A number line showing the equivalence of the improper fraction $\frac{7}{4}$ and the mixed number $1\frac{3}{4}$.](FiguresPNG/introtonumericalfractions-fig3.png){fig-align="center"}
+:::
+
+# Converting between improper fractions and mixed numbers
+
+As the number line illustrates, improper fractions and mixed numbers are equivalent forms of each other. There is a rule that you can follow to convert between them.
+
+::: callout-note
+## Converting between improper fractions and mixed numbers
+
+To convert an improper fraction into a mixed number:
+
+1. Divide the numerator by the denominator.
+2. Write the whole number part of your answer first.
+3. Write the remainder over the same denominator for the fractional part of your answer.
+
+To convert a mixed number into an improper fraction:
+
+1. Multiply the whole number part by the denominator.
+2. Add the numerator.
+3. Write this total over the same denominator.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 3
+Write $\dfrac{11}{4}$ as a mixed number.
+
+Start by dividing the numerator $11$ by the denominator $4$ to get $2$ remainder $3$. Write the whole number part $2$ first, then write the remainder $3$ over the denominator $4$ as the fractional part. $$\frac{11}{4} = 2\frac{3}{4}$$
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 4
+Write $3\dfrac{2}{5}$ as an improper fraction.
+
+Start by multiplying the whole number $3$ by the denominator $5$ to get $15$. Then, add the numerator $2$ to get $17$. Write this total over the same denominator $5$. $$3\frac{2}{5} = \frac{17}{5}$$
+:::
+
+::: {.content-visible when-format="html"}
+You can explore the relationship between improper and mixed numbers in the interactive figure below. Click the arrow to switch between building an improper fraction and a mixed number. Use the sliders to adjust the values and see how the visual representation and the numerical equation are connected.
+
+```{=html}
+<style>
+  .frac { display:inline-flex; flex-direction:column; align-items:center; line-height:1.05; font-weight:700; margin-left: 0.3em; font-size:1.6rem; }
+  .frac .top, .frac .bottom { padding:0 .25em; }
+  .frac .bar { width:100%; height:0; border-top:2px solid currentColor; margin:.12em 0 .06em; }
+  .frac-whole { font-size: 1.6rem; font-weight: 700; }
+
+  .fraction-widget {
+    display:inline-block;
+    width:fit-content;
+    max-width:100%;
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    color:#000;
+    background-color: #f5f8ff;
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .fraction-widget input[type="range"]{
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
+    height:10px;
+    border-radius:999px;
+    background:#C0D6FF;
+    outline:none;
+  }
+  .fraction-widget input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    appearance:none;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#3F68B6;
+    border:none;
+    cursor: pointer;
+  }
+  .fraction-widget input[type="range"]::-moz-range-thumb{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#3F68B6;
+    border:none;
+    cursor: pointer;
+  }
+  .fraction-widget label {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000;
+    font-size: 1rem;
+  }
+
+  .fraction-grid {
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:1.5rem;
+    align-items:start;
+  }
+
+  .fraction-canvases {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  .fraction-canvases canvas {
+    width: 34%;
+    max-width: 240px;
+    height: auto;
+    border-radius: 12px;
+    background: #f5f8ff;
+  }
+
+  .fraction-controls {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  #fractionReadout {
+    margin-bottom: 1.5rem;
+    padding:.75rem 1rem;
+    border-radius:10px;
+    background:#f5f8ff;
+    height: 90px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  #fraction-equation-output { font-size: 1.3rem; }
+
+  .conversion-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    background-color: #f5f8ff;
+    padding: 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .conversion-label { font-weight: normal; }
+  #conversion-arrow { color: #3F68B6; transition: transform 0.4s ease-in-out; margin: 0 1rem; }
+  #conversion-arrow.reversed { transform: rotate(180deg); }
+  #fraction-whole-container { transition: opacity 0.3s ease-in-out; }
+
+  @media (max-width: 800px){
+    .fraction-widget{ max-width: 96vw !important; }
+    .fraction-canvases { flex-direction: column; align-items: center; }
+    .fraction-canvases canvas { width: 100%; max-width: 250px; }
+  }
+</style>
+
+<div style="display:flex; justify-content:center; margin:1rem 0;">
+  <div class="fraction-widget">
+    <div class="fraction-grid">
+      <div id="fractionCanvasContainer" class="fraction-canvases">
+        <canvas id="fractionCanvas1" width="600" height="600"></canvas>
+        <canvas id="fractionCanvas2" width="600" height="600"></canvas>
+        <canvas id="fractionCanvas3" width="600" height="600"></canvas>
+      </div>
+
+      <div class="fraction-controls">
+        <div id="fractionReadout">
+          <span id="fraction-equation-output"></span>
+        </div>
+
+        <div id="conversion-toggle" class="conversion-toggle">
+          <span id="label-improper" class="conversion-label">Improper Fraction</span>
+          <svg id="conversion-arrow" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12H20M20 12L14 6M20 12L14 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span id="label-mixed" class="conversion-label">Mixed Number</span>
+        </div>
+
+        <div id="fraction-whole-container">
+          <label for="fraction-whole" style="display:block; margin-bottom:.25rem;">
+            Whole Number:
+            <span id="fraction-wholeOut" style="margin-left:.35rem;">0</span>
+          </label>
+          <input id="fraction-whole" type="range" min="0" max="2" value="0" step="1" style="margin-top:.35rem; margin-bottom:.75rem;">
+        </div>
+
+        <div>
+          <label for="fraction-num" id="fraction-num-label" style="display:block; margin-bottom:.25rem;">
+            Shaded (numerator):
+            <span id="fraction-numOut" style="margin-left:.35rem;">13</span>
+          </label>
+          <input id="fraction-num" type="range" min="0" max="24" value="13" step="1" style="margin-top:.35rem; margin-bottom:.75rem;">
+        </div>
+
+        <div>
+          <label for="fraction-den" style="display:block; margin-bottom:.25rem;">
+            Parts (denominator):
+            <span id="fraction-denOut" style="margin-left:.35rem;">8</span>
+          </label>
+          <input id="fraction-den" type="range" min="1" max="10" value="8" step="1" style="margin-top:.35rem; margin-bottom:.75rem;">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function ensureMathJax(cb){
+    if (window.MathJax && MathJax.typesetPromise){ cb(); return; }
+    if (!document.getElementById('mj-loader')){
+      window.MathJax = window.MathJax || {
+        tex:{inlineMath:[['\\(','\\)'],['$','$']]},
+        svg:{fontCache:'global'}
+      };
+      const s=document.createElement('script'); s.id='mj-loader'; s.defer=true;
+      s.src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+      s.onload=cb; document.head.appendChild(s);
+    } else {
+      const t=setInterval(()=>{
+        if(window.MathJax && MathJax.typesetPromise){ clearInterval(t); cb(); }
+      },50);
+    }
+  }
+
+  function setMJEquation(el, latexString) {
+    if (window.MathJax && MathJax.typesetPromise) {
+      el.innerHTML = latexString;
+      MathJax.typesetPromise([el]);
+    } else {
+      el.innerHTML = `<span style="font-family: monospace; font-size: 1.4rem;">${latexString
+        .replace(/\\\(|\\\)/g, '')
+        .replace(/\\dfrac\{|\}/g, '')
+        .replace(/\{/g, '/')}</span>`;
+    }
+  }
+
+  const base  = "#000";
+  const line  = "#000";
+  const shade = "#3F68B6";
+
+  const canvases = [
+    document.getElementById("fractionCanvas1"),
+    document.getElementById("fractionCanvas2"),
+    document.getElementById("fractionCanvas3")
+  ];
+  const ctxs = canvases.map(canvas => canvas.getContext("2d"));
+
+  const conversionToggle = document.getElementById("conversion-toggle");
+  const conversionArrow = document.getElementById("conversion-arrow");
+
+  const wholeContainer = document.getElementById("fraction-whole-container");
+  const wholeSlider = document.getElementById("fraction-whole");
+  const wholeOut = document.getElementById("fraction-wholeOut");
+
+  const numSlider = document.getElementById("fraction-num");
+  const numOut = document.getElementById("fraction-numOut");
+
+  const denSlider = document.getElementById("fraction-den");
+  const denOut = document.getElementById("fraction-denOut");
+
+  const equationOutput = document.getElementById("fraction-equation-output");
+
+  let isImproperToMixedMode = true;
+
+  function paintRange(el){
+    if (!el) return;
+    const min = +el.min, max = +el.max, val = +el.value;
+    const pct = (max > min) ? ((val - min) / (max - min)) * 100 : 0;
+    el.style.background =
+      `linear-gradient(to right, #3F68B6 0%, #3F68B6 ${pct}%, #C0D6FF ${pct}%, #C0D6FF 100%)`;
+  }
+
+  function drawCircle(canvas, ctx, numShaded, totalSlices) {
+    const dpr = window.devicePixelRatio || 1;
+    const cssW = canvas.clientWidth;
+    if (cssW === 0) return;
+    const cssH = canvas.clientHeight;
+
+    canvas.width  = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,cssW,cssH);
+
+    const sizeMin = Math.min(cssW, cssH);
+    const R  = sizeMin * 0.42;
+    const cx = cssW / 2;
+    const cy = cssH / 2;
+
+    const startShift = -Math.PI / 2;
+    const step = 2 * Math.PI / totalSlices;
+
+    for (let k = 0; k < totalSlices; k++) {
+      const a0 = startShift + k * step;
+      const a1 = a0 + step;
+
+      if (k < numShaded) {
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, R, a0, a1);
+        ctx.closePath();
+        ctx.fillStyle = shade;
+        ctx.fill();
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + R * Math.cos(a0), cy + R * Math.sin(a0));
+      ctx.strokeStyle = line;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, 2 * Math.PI);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = base;
+    ctx.stroke();
+  }
+
+  function handleModeChange() {
+    const denominator = +denSlider.value;
+    const totalNumerator = isImproperToMixedMode
+      ? +numSlider.value
+      : (+wholeSlider.value * denominator) + +numSlider.value;
+
+    isImproperToMixedMode = !isImproperToMixedMode;
+    conversionArrow.classList.toggle('reversed', !isImproperToMixedMode);
+
+    if (isImproperToMixedMode) {
+      wholeSlider.disabled = true;
+      wholeContainer.style.opacity = '0.5';
+      numSlider.max = denominator * 3;
+      numSlider.value = totalNumerator;
+    } else {
+      const wholePart = Math.floor(totalNumerator / denominator);
+      const fractionalPart = totalNumerator % denominator;
+      wholeSlider.disabled = false;
+      wholeContainer.style.opacity = '1';
+      wholeSlider.value = Math.min(+wholeSlider.max, wholePart);
+      numSlider.max = Math.max(0, denominator);
+      numSlider.value = fractionalPart;
+    }
+    draw();
+  }
+
+  function handleDenominatorChange() {
+    const denominator = +denSlider.value;
+    if (isImproperToMixedMode) {
+      numSlider.max = denominator * 3;
+    } else {
+      numSlider.max = Math.max(0, denominator);
+      if (+numSlider.value > +numSlider.max) {
+        numSlider.value = numSlider.max;
+      }
+    }
+    draw();
+  }
+
+  function draw() {
+    const denominator = +denSlider.value;
+    let totalNumerator = isImproperToMixedMode
+      ? +numSlider.value
+      : (+wholeSlider.value * denominator) + +numSlider.value;
+
+    if (isImproperToMixedMode) {
+      const wholePart = Math.floor(totalNumerator / denominator);
+      wholeSlider.value = wholePart;
+    }
+
+    const slices1 = Math.min(totalNumerator, denominator);
+    const slices2 = Math.min(Math.max(0, totalNumerator - denominator), denominator);
+    const slices3 = Math.min(Math.max(0, totalNumerator - (denominator * 2)), denominator);
+
+    drawCircle(canvases[0], ctxs[0], slices1, denominator);
+    drawCircle(canvases[1], ctxs[1], slices2, denominator);
+    drawCircle(canvases[2], ctxs[2], slices3, denominator);
+
+    updateReadout(totalNumerator, denominator);
+    paintRange(numSlider);
+    paintRange(denSlider);
+    paintRange(wholeSlider);
+  }
+
+  function updateReadout(totalNumerator, denominator) {
+    denOut.textContent = denominator;
+    numOut.textContent = numSlider.value;
+    wholeOut.textContent = wholeSlider.value;
+
+    if (denominator === 0) {
+      equationOutput.innerHTML = "Denominator cannot be zero.";
+      return;
+    }
+
+    const wholePart = Math.floor(totalNumerator / denominator);
+    const fractionalNumerator = totalNumerator % denominator;
+
+    let improperLatex = '';
+    if (totalNumerator === 0) {
+      improperLatex = '0';
+    } else {
+      improperLatex = `\\dfrac{${totalNumerator}}{${denominator}}`;
+    }
+
+    let mixedLatex = '';
+    if (totalNumerator === 0) {
+      mixedLatex = '0';
+    } else if (fractionalNumerator === 0) {
+      mixedLatex = String(wholePart);
+    } else if (wholePart === 0) {
+      mixedLatex = `\\dfrac{${fractionalNumerator}}{${denominator}}`;
+    } else {
+      mixedLatex = `${wholePart}\\dfrac{${fractionalNumerator}}{${denominator}}`;
+    }
+
+    const equationLatex = `\\(${improperLatex} = ${mixedLatex}\\)`;
+    setMJEquation(equationOutput, equationLatex);
+  }
+
+  conversionToggle.addEventListener('click', handleModeChange);
+  denSlider.addEventListener('input', handleDenominatorChange);
+  numSlider.addEventListener('input', draw);
+  wholeSlider.addEventListener('input', draw);
+
+  const resizeObserver = new ResizeObserver(() => draw());
+  resizeObserver.observe(document.getElementById('fractionCanvasContainer'));
+
+  function initialize() {
+    handleDenominatorChange();
+    if (isImproperToMixedMode) {
+      wholeSlider.disabled = true;
+      wholeContainer.style.opacity = '0.5';
+    }
+    draw();
+  }
+
+  ensureMathJax(initialize);
+})();
+</script>
+
+```
+:::
+
+::: {.content-hidden when-format="html"}
+Below are three circles, each divided into equal parts. The shaded parts show how an improper fraction can be converted into a mixed number, represented by whole circles and any extra shaded parts.
+
+![Improper fractions and mixed numbers represented by shaded parts of three circles.](FiguresPNG/introtonumericalfractions-fig4.png){fig-align="center"}
+:::
+
+# Equivalent fractions
+
+Two fractions are called **equivalent** if they represent the same value, even though they have different numerators and denominators.
+
+Imagine eating a pizza. Eating two slices out of a total of four is the same as eating four slices out of a total of eight, as you have eaten one half of the whole pizza in both cases.
+
+This means that the two fractions are equivalent: $$\frac{2}{4} = \frac{4}{8}$$
+
+But why are they the same? Notice that to get from $\frac{2}{4}$ to $\frac{4}{8}$, you need to multiply both the numerator and the denominator by two.
+
+::: callout-note
+## Creating equivalent fractions
+To create an **equivalent fraction**, multiply or divide both the numerator and the denominator by the same non-zero number. What you do to the top must be done to the bottom.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 5
+Find an equivalent fraction for $\dfrac{2}{3}$.
+
+To find an equivalent fraction, you need to multiply the top and bottom by any non-zero number, say five. $$\frac{2}{3} = \frac{2 \cdot 5}{3 \cdot 5} = \frac{10}{15}$$
+
+This means $\frac{2}{3}$ and $\frac{10}{15}$ are equivalent fractions.
+:::
+
+::: {.content-visible when-format="html"}
+The fraction wall below is a great way to see many common equivalent fractions at a glance. Hover over any block to highlight the cumulative fraction up to that point and see all the other fractions on the wall that represent the same value.
+
+```{=html}
+<style>
+.fw-widget{
+  width:100%;
+  max-width:800px;
+  margin:1rem auto;
+  font-family:Arial,Helvetica,sans-serif;
+  border-radius:12px;
+  background-color:#f5f8ff;
+  padding:1.5rem;
+  box-sizing:border-box
+}
+.fw-readout{
+  min-height:4em;
+  padding:.5em 1em;
+  background-color:#f5f8ff;
+  border-radius:8px;
+  margin-bottom:1.25rem;
+  text-align:center;
+  font-size:1.1rem;
+  color:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap
+}
+.fw-row{
+  display:flex;
+  width:100%;
+  border-radius:0;
+  overflow:hidden;
+  margin-bottom:0
+}
+.fw-block{
+  flex-grow:1;
+  flex-basis:0;
+  border-left:1px solid rgba(255,255,255,.35);
+  border-top:1px solid rgba(0,0,0,.08);
+  text-align:center;
+  padding:.85em 0;
+  font-weight:bold;
+  font-size:.9rem;
+  transition:opacity .15s ease-out;
+  cursor:pointer;
+  user-select:none;
+  line-height:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#000
+}
+.fw-block:first-child{
+  border-left:none
+}
+.fw-row[data-d="1"] .fw-block{
+  border-top:none
+}
+.css-frac{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  line-height:1.1;
+  font-weight:700;
+  vertical-align:middle;
+  color:inherit;
+  font-size:1em
+}
+.css-frac .top,.css-frac .bottom{
+  padding:0 .15em
+}
+.css-frac .bar{
+  width:90%;
+  height:0;
+  border-top:1.5px solid currentColor;
+  margin:.05em 0
+}
+.fw-readout-css-frac{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  line-height:1.05;
+  font-weight:700;
+  font-size:1.25rem;
+  margin:0 .25em;
+  vertical-align:middle;
+  color:#000
+}
+.fw-readout-css-frac .top{
+  padding:0 .25em
+}
+.fw-readout-css-frac .bar{
+  width:100%;
+  height:0;
+  border-top:2px solid currentColor;
+  margin:.12em 0 .06em
+}
+.fw-readout-css-frac .bottom{
+  padding:0 .25em
+}
+.fw-block.fw-dimmed{
+  opacity:.3
+}
+.fw-block.fw-highlighted{
+  opacity:1
+}
+@media (max-width:600px){
+  .fw-block{
+    font-size:.8rem;
+    padding:.7em .1em
+  }
+  .css-frac{
+    font-size:1em
+  }
+  .fw-row[data-d="10"] .css-frac,
+  .fw-row[data-d="12"] .css-frac{
+    font-size:.9em
+  }
+}
+@media (max-width:420px){
+  .fw-row[data-d="8"] .css-frac,
+  .fw-row[data-d="10"] .css-frac,
+  .fw-row[data-d="12"] .css-frac{
+    font-size:0
+  }
+}
+</style>
+
+<div class="fw-widget" id="fraction-wall-1">
+  <div class="fw-readout">Hover over a block to see the fraction highlighted and its equivalent fractions.</div>
+  <div class="fw-row" data-d="1">
+    <div class="fw-block" data-n="1">1 Whole</div>
+  </div>
+  <div class="fw-row" data-d="2">
+    <div class="fw-block" data-n="1"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">2</span></span></div>
+    <div class="fw-block" data-n="2"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">2</span></span></div>
+  </div>
+  <div class="fw-row" data-d="3">
+    <div class="fw-block" data-n="1"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">3</span></span></div>
+    <div class="fw-block" data-n="2"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">3</span></span></div>
+    <div class="fw-block" data-n="3"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">3</span></span></div>
+  </div>
+  <div class="fw-row" data-d="4">
+    <div class="fw-block" data-n="1"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">4</span></span></div>
+    <div class="fw-block" data-n="2"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">4</span></span></div>
+    <div class="fw-block" data-n="3"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">4</span></span></div>
+    <div class="fw-block" data-n="4"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">4</span></span></div>
+  </div>
+  <div class="fw-row" data-d="5">
+    <div class="fw-block" data-n="1"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">5</span></span></div>
+    <div class="fw-block" data-n="2"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">5</span></span></div>
+    <div class="fw-block" data-n="3"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">5</span></span></div>
+    <div class="fw-block" data-n="4"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">5</span></span></div>
+    <div class="fw-block" data-n="5"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">5</span></span></div>
+  </div>
+  <div class="fw-row" data-d="6">
+    <div class="fw-block" data-n="1"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">6</span></span></div>
+    <div class="fw-block" data-n="2"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">6</span></span></div>
+    <div class="fw-block" data-n="3"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">6</span></span></div>
+    <div class="fw-block" data-n="4"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">6</span></span></div>
+    <div class="fw-block" data-n="5"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">6</span></span></div>
+    <div class="fw-block" data-n="6"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">6</span></span></div>
+  </div>
+  <div class="fw-row" data-d="8">
+    <div class="fw-block" data-n="1"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">8</span></span></div>
+    <div class="fw-block" data-n="2"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">8</span></span></div>
+    <div class="fw-block" data-n="3"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">8</span></span></div>
+    <div class="fw-block" data-n="4"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">8</span></span></div>
+    <div class="fw-block" data-n="5"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">8</span></span></div>
+    <div class="fw-block" data-n="6"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">8</span></span></div>
+    <div class="fw-block" data-n="7"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">8</span></span></div>
+    <div class="fw-block" data-n="8"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">8</span></span></div>
+  </div>
+  <div class="fw-row" data-d="10">
+    <div class="fw-block" data-n="1"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">10</span></span></div>
+    <div class="fw-block" data-n="2"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">10</span></span></div>
+    <div class="fw-block" data-n="3"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">10</span></span></div>
+    <div class="fw-block" data-n="4"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">10</span></span></div>
+    <div class="fw-block" data-n="5"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">10</span></span></div>
+    <div class="fw-block" data-n="6"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">10</span></span></div>
+    <div class="fw-block" data-n="7"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">10</span></span></div>
+    <div class="fw-block" data-n="8"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">10</span></span></div>
+    <div class="fw-block" data-n="9"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">10</span></span></div>
+    <div class="fw-block" data-n="10"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">10</span></span></div>
+  </div>
+  <div class="fw-row" data-d="12">
+    <div class="fw-block" data-n="1"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="2"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="3"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="4"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="5"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="6"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="7"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="8"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="9"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="10"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="11"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+    <div class="fw-block" data-n="12"><span class="css-frac"><span class="top">1</span><span class="bar"></span><span class="bottom">12</span></span></div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+  const widget=document.getElementById("fraction-wall-1");
+  if(!widget)return;
+  const allBlocks=widget.querySelectorAll(".fw-block");
+  const allRows=[...widget.querySelectorAll(".fw-row")];
+  const readout=widget.querySelector(".fw-readout");
+  const defaultReadout=readout.innerHTML;
+  let currentTarget=null;
+
+  const cssReadoutFrac=(n,d)=>`<span class="fw-readout-css-frac"><span class="top">${n}</span><span class="bar"></span><span class="bottom">${d}</span></span>`;
+
+  function hexToRgb(hex){
+    const h=hex.replace("#","");
+    const num=parseInt(h,16);
+    return{
+      r:(num>>16)&255,
+      g:(num>>8)&255,
+      b:num&255
+    };
+  }
+
+  function relativeLuminance(r,g,b){
+    const srgb=[r,g,b].map(v=>v/255);
+    const lin=srgb.map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));
+    return .2126*lin[0]+.7152*lin[1]+.0722*lin[2];
+  }
+
+  function contrastRatio(l1,l2){
+    const L1=l1>l2?l1:l2;
+    const L2=l1>l2?l2:l1;
+    return (L1+.05)/(L2+.05);
+  }
+
+  function textColorForBg(rgb){
+    const Lbg=relativeLuminance(rgb.r,rgb.g,rgb.b);
+    const cw=contrastRatio(Lbg,1);
+    const cb=contrastRatio(Lbg,0);
+    return cw>=cb?"#f5f8ff":"#000000";
+  }
+
+  function lerpColor(c1,c2,t){
+    return{
+      r:Math.round(c1.r+(c2.r-c1.r)*t),
+      g:Math.round(c1.g+(c2.g-c1.g)*t),
+      b:Math.round(c1.b+(c2.b-c1.b)*t)
+    };
+  }
+
+  const TOP_COLOR=hexToRgb("#3F68B6");
+  const MID_COLOR=hexToRgb("#FFCB00");
+  const BOTTOM_COLOR=hexToRgb("#DB4315");
+
+  allRows.forEach((row,idx)=>{
+    const blocks=[...row.querySelectorAll(".fw-block")];
+    const t=allRows.length<=1?0:idx/(allRows.length-1);
+    let rgb;
+    if(t<=0.5){
+      const f=t/0.5;
+      rgb=lerpColor(TOP_COLOR,MID_COLOR,f);
+    }else{
+      const f=(t-0.5)/0.5;
+      rgb=lerpColor(MID_COLOR,BOTTOM_COLOR,f);
+    }
+    const bg=`rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    const tc=textColorForBg(rgb);
+    blocks.forEach(bk=>{
+      bk.style.backgroundColor = bg;
+      bk.style.color = "#000";
+      bk.style.borderLeftColor = "rgba(255,255,255,.35)";
+      bk.style.borderTopColor = "rgba(0,0,0,.08)";
+    });
+  });
+
+  function setReadout(n,d,equivalents){
+    let html="";
+    const equivHtml=equivalents.map(f=>{
+      if(window.MathJax&&MathJax.typesetPromise){
+        return`\\(\\dfrac{${f.n}}{${f.d}}\\)`;
+      }
+      return cssReadoutFrac(f.n,f.d);
+    }).join('<span style="margin:0 .25em;">, </span>');
+    if(window.MathJax&&MathJax.typesetPromise){
+      html=`\\(\\dfrac{${n}}{${d}}\\)`;
+      if(equivalents.length>0){
+        html+='<span style="margin:0 .5em;"> is equivalent to </span>'+equivHtml;
+      }
+      readout.innerHTML=html;
+      MathJax.typesetPromise([readout]);
+    }else{
+      html=cssReadoutFrac(n,d);
+      if(equivalents.length>0){
+        html+='<span style="margin:0 .5em;"> is equivalent to </span>'+equivHtml;
+      }
+      readout.innerHTML=html;
+    }
+  }
+
+  function gcd(a,b){
+    a=Math.abs(a);
+    b=Math.abs(b);
+    while(b){
+      [a,b]=[b,a%b];
+    }
+    return a||1;
+  }
+
+  function handleHover(e){
+    if(e.currentTarget===currentTarget)return;
+    currentTarget=e.currentTarget;
+    const targetBlock=e.currentTarget;
+    const n=parseInt(targetBlock.dataset.n);
+    const d=parseInt(targetBlock.parentElement.dataset.d);
+    if(isNaN(n)||isNaN(d))return;
+    const g=gcd(n,d);
+    const ns=n/g;
+    const ds=d/g;
+    let equivalents=[];
+    allBlocks.forEach(b=>{
+      b.classList.remove("fw-highlighted");
+      b.classList.add("fw-dimmed");
+    });
+    const parentRow=targetBlock.parentElement;
+    for(let i=0;i<n;i++){
+      if(parentRow.children[i]){
+        parentRow.children[i].classList.remove("fw-dimmed");
+        parentRow.children[i].classList.add("fw-highlighted");
+      }
+    }
+    allRows.forEach(row=>{
+      if(row===parentRow)return;
+      const rowD=parseInt(row.dataset.d);
+      if(isNaN(rowD))return;
+      if((ns*rowD)%ds===0){
+        const equivN=(ns*rowD)/ds;
+        const equivG=gcd(equivN,rowD);
+        if(equivN/equivG===ns&&rowD/equivG===ds){
+          for(let i=0;i<equivN;i++){
+            if(row.children[i]){
+              row.children[i].classList.remove("fw-dimmed");
+              row.children[i].classList.add("fw-highlighted");
+            }
+          }
+          equivalents.push({n:equivN,d:rowD});
+        }
+      }
+    });
+    setReadout(n,d,equivalents);
+  }
+
+  function clearHover(){
+    allBlocks.forEach(b=>{
+      b.classList.remove("fw-dimmed");
+      b.classList.remove("fw-highlighted");
+    });
+    readout.innerHTML=defaultReadout;
+    currentTarget=null;
+  }
+
+  allBlocks.forEach(block=>block.addEventListener("mouseover",handleHover));
+  widget.addEventListener("mouseleave",clearHover);
+});
+</script>
+
+```
+:::
+
+::: {.content-hidden when-format="html"}
+The figure below shows a fraction wall, a tool used to visualize equivalent fractions. Each row represents one whole, divided into equal parts corresponding to the denominator. Fractions that are equivalent (represent the same amount) align vertically.
+
+For example, if you look at the line for $\frac{1}{2}$, you can see it lines up perfectly with the end of:
+
+* two $\frac{1}{4}$ blocks (showing $\frac{1}{2} = \frac{2}{4}$)
+* three $\frac{1}{6}$ blocks (showing $\frac{1}{2} = \frac{3}{6}$)
+* four $\frac{1}{8}$ blocks (showing $\frac{1}{2} = \frac{4}{8}$)
+* five $\frac{1}{10}$ blocks (showing $\frac{1}{2} = \frac{5}{10}$)
+* six $\frac{1}{12}$ blocks (showing $\frac{1}{2} = \frac{6}{12}$)
+
+![A fraction wall showing equivalent fractions.](FiguresPNG/introtonumericalfractions-fig5.png){fig-align="center"}
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 6
+
+Below are some more examples of equivalent fractions. The fractions in each row are all equivalent to each other.
+$$
+\begin{aligned}
+&\frac{1}{2} = \frac{2}{4} = \frac{3}{6} = \frac{25}{50} \\[0.5em]
+&\frac{1}{3} = \frac{2}{6} = \frac{3}{9} = \frac{25}{75} \\[0.5em]
+&\frac{5}{6} = \frac{10}{12} = \frac{15}{18} = \frac{250}{300}
+\end{aligned}
+$$
+:::
+
+::: {.content-visible when-format="html"}
+You can explore the concept of equivalent fractions using the interactive figure below. Use the sliders to create an initial fraction (shown on the left) by setting the total number of parts (denominator) and the number of shaded parts (numerator). Then, adjust the multiplier slider to see how the visual representation and the numerical equation change.
+
+Notice how both circles always represent the same shaded amount, demonstrating that the two fractions are equivalent.
+
+```{=html}
+<style>
+  .frac { display:inline-flex; flex-direction:column; align-items:center; line-height:1.05; font-weight: 700; font-size: 1.6rem; }
+  .frac .top, .frac .bottom { padding:0 .25em; }
+  .frac .bar { width:100%; height:0; border-top:2px solid currentColor; margin:.12em 0 .06em; }
+
+  .circle-widget { 
+    display:inline-block; 
+    width:fit-content; 
+    max-width:100%; 
+    margin:0; 
+    font-family: Arial, Helvetica, sans-serif; 
+    color:#000; 
+    background-color: #f5f8ff;
+    padding: 1.5rem; 
+    border-radius: 12px; 
+  }
+  .circle-widget input[type="range"]{ -webkit-appearance:none; appearance:none; width:100%; height:10px; border-radius:999px; background:#C0D6FF; outline:none; }
+  .circle-widget input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer; }
+  .circle-widget input[type="range"]::-moz-range-thumb{ width:18px; height:18px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer; }
+  .circle-widget label { font-family: Arial, Helvetica, sans-serif; color: #000; font-size: 1rem; }
+
+  #circle-numOut, #circle-denOut, #circle-multOut { display: inline-block; min-width: 1.2em; text-align: left; }
+
+  .circle-grid { display:grid; grid-template-columns: 1fr; gap:1.5rem; align-items:start; }
+  .circle-canvases { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
+  .circle-canvases canvas { width: 100%; max-width: 250px; height: auto; border-radius: 12px; background: #f5f8ff; }
+
+  .circle-controls { max-width: 400px; margin: 0 auto; }
+
+  #circleReadout { 
+    margin-bottom: 1rem; 
+    padding: 1rem; 
+    border-radius:10px; 
+    background:#f5f8ff; 
+    text-align: center; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+  }
+
+  .equiv-container { display: inline-flex; align-items: center; gap: 1rem; font-size: 1.6rem; font-weight: 700; }
+  .equiv-op { display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
+  .multiplier-text { font-size: 0.9rem; margin-bottom: -0.2em; color: #555; min-height: 1em; }
+
+  @media (max-width: 600px){
+    .circle-widget{ max-width: 96vw !important; }
+  }
+</style>
+
+<div style="display:flex; justify-content:center; margin:1rem 0;">
+  <div class="circle-widget">
+    <div class="circle-grid">
+      <div id="circleCanvasContainer" class="circle-canvases">
+        <canvas id="circleCanvas1" width="600" height="600"></canvas>
+        <canvas id="circleCanvas2" width="600" height="600"></canvas>
+      </div>
+      <div class="circle-controls">
+        <div id="circleReadout">
+          <span id="equiv-readout"></span>
+        </div>
+        <div>
+          <label for="circle-num" style="display:block; margin-bottom:.25rem;">
+            Shaded (numerator):
+            <span id="circle-numOut" style="margin-left:.35rem;">2</span>
+          </label>
+          <input id="circle-num" type="range" min="0" max="4" value="2" step="1" style="margin-top:.35rem; margin-bottom:.75rem;">
+        </div>
+        <div>
+          <label for="circle-den" style="display:block; margin-bottom:.25rem;">
+            Parts (denominator):
+            <span id="circle-denOut" style="margin-left:.35rem;">4</span>
+          </label>
+          <input id="circle-den" type="range" min="1" max="10" value="4" step="1" style="margin-top:.35rem; margin-bottom:.75rem;">
+        </div>
+        <div>
+          <label for="circle-mult" style="display:block; margin-bottom:.25rem;">
+            Multiplier:
+            <span id="circle-multOut" style="margin-left:.35rem;">3</span>
+          </label>
+          <input id="circle-mult" type="range" min="1" max="5" value="3" step="1" style="margin-top:.35rem; margin-bottom:.75rem;">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  function ensureMathJax(cb){
+    if (window.MathJax && MathJax.typesetPromise){ cb(); return; }
+    if (!document.getElementById('mj-loader')){
+      window.MathJax = window.MathJax || { tex:{inlineMath:[['\\(','\\)'],['$','$']]}, svg:{fontCache:'global'} };
+      const s=document.createElement('script'); s.id='mj-loader'; s.defer=true;
+      s.src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+      s.onload=cb; document.head.appendChild(s);
+    } else {
+      const t=setInterval(()=>{ if(window.MathJax && MathJax.typesetPromise){ clearInterval(t); cb(); } }, 50);
+    }
+  }
+
+  const cssFrac = (n,d)=>`<span class="frac"><span class="top">${n}</span><span class="bar"></span><span class="bottom">${d}</span></span>`;
+
+  function setMJEquiv(el, n1, d1, m, n2, d2) {
+    const multiplierText = `\\times ${m}`;
+    if (window.MathJax && MathJax.typesetPromise) {
+      el.innerHTML = `\\(\\dfrac{${n1}}{${d1}} \\overset{${multiplierText}}{=} \\dfrac{${n2}}{${d2}}\\)`;
+      MathJax.typesetPromise([el]);
+    } else {
+      const multiplierHTML = `&times;${m}`;
+      el.innerHTML = `
+        <div class="equiv-container">
+          ${cssFrac(n1, d1)}
+          <div class="equiv-op">
+            <span class="multiplier-text">${multiplierHTML}</span>
+            <span>=</span>
+          </div>
+          ${cssFrac(n2, d2)}
+        </div>
+      `;
+    }
+  }
+
+  const base  = "#000";
+  const line  = "#000";
+  const shade = "#3F68B6";
+
+  const canvases = [ document.getElementById("circleCanvas1"), document.getElementById("circleCanvas2") ];
+  const ctxs = canvases.map(canvas => canvas.getContext("2d"));
+
+  const numSlider = document.getElementById("circle-num");
+  const denSlider = document.getElementById("circle-den");
+  const multSlider = document.getElementById("circle-mult");
+
+  const numOut = document.getElementById("circle-numOut");
+  const denOut = document.getElementById("circle-denOut");
+  const multOut = document.getElementById("circle-multOut");
+  const equivReadout = document.getElementById("equiv-readout");
+
+  function paintRange(el){
+    if (!el) return;
+    const min = +el.min, max = +el.max, val = +el.value;
+    const pct = (max > min) ? ((val - min) / (max - min)) * 100 : 0;
+    el.style.background = `linear-gradient(to right, #3F68B6 0%, #3F68B6 ${pct}%, #C0D6FF ${pct}%, #C0D6FF 100%)`;
+  }
+
+  function drawCircle(canvas, ctx, numShaded, totalSlices) {
+    const dpr = window.devicePixelRatio || 1;
+    const cssW = canvas.clientWidth || 250;
+    const cssH = canvas.clientHeight || 250;
+    canvas.width = Math.round(cssW * dpr); 
+    canvas.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,cssW,cssH);
+
+    const sizeMin = Math.min(cssW, cssH);
+    const R  = sizeMin * 0.4;
+    const cx = cssW/2;
+    const cy = cssH/2;
+    const startShift = -Math.PI/2;
+    const step = 2*Math.PI / totalSlices;
+
+    for(let k=0; k < totalSlices; k++){
+      const a0 = startShift + k * step;
+      const a1 = a0 + step;
+      if (k < numShaded){
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.arc(cx,cy,R,a0,a1);
+        ctx.closePath();
+        ctx.fillStyle = shade;
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.moveTo(cx,cy);
+      ctx.lineTo(cx + R * Math.cos(a0), cy + R * Math.sin(a0));
+      ctx.strokeStyle = line; 
+      ctx.lineWidth = 3; 
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.arc(cx,cy,R,0,2*Math.PI);
+    ctx.lineWidth = 4; 
+    ctx.strokeStyle = base; 
+    ctx.stroke();
+  }
+
+  function draw() {
+    const denominator = +denSlider.value;
+    numSlider.max = denominator;
+    if (+numSlider.value > denominator) {
+      numSlider.value = denominator;
+    }
+    const numerator = +numSlider.value;
+    const multiplier = +multSlider.value;
+    const equivDenominator = denominator * multiplier;
+    const equivNumerator = numerator * multiplier;
+
+    drawCircle(canvases[0], ctxs[0], numerator, denominator);
+    drawCircle(canvases[1], ctxs[1], equivNumerator, equivDenominator);
+    updateReadout(numerator, denominator, multiplier, equivNumerator, equivDenominator);
+    paintRange(numSlider); 
+    paintRange(denSlider); 
+    paintRange(multSlider);
+  }
+
+  function updateReadout(n1, d1, m, n2, d2) {
+    numOut.textContent = n1;
+    denOut.textContent = d1;
+    multOut.textContent = m;
+    setMJEquiv(equivReadout, n1, d1, m, n2, d2);
+  }
+
+  denSlider.addEventListener('input', draw);
+  numSlider.addEventListener('input', draw);
+  multSlider.addEventListener('input', draw);
+
+  const resizeObserver = new ResizeObserver(() => draw());
+  resizeObserver.observe(document.getElementById('circleCanvasContainer'));
+
+  function initialize() {
+    draw();
+  }
+
+  ensureMathJax(initialize);
+})();
+</script>
+```
+:::
+
+::: {.content-hidden when-format="html"}
+The figure below illustrates the concept of equivalent fractions. The circle on the left is divided into four equal parts, with two shaded, representing the fraction $\frac{2}{4}$. The circle on the right is divided into twelve smaller parts, with six shaded, representing the fraction $\frac{6}{12}$. Since the shaded area is the same for both circles, this visually demonstrates that the two fractions are equivalent.
+
+![Equivalent fractions represented by shaded parts of two circles.](FiguresPNG/introtonumericalfractions-fig6.png){fig-align="center"}
+:::
+
+::: {.callout-important}
+The concept of equivalent fractions also applies to negative fractions. A single negative sign can be placed with the numerator, the denominator, or in front of the entire fraction, and the value remains the same.
+
+For example, all three of these forms represent the same value: $$-\frac{3}{5} = \frac{-3}{5} = \frac{3}{-5}$$
+
+By convention, it is most common to place the sign in front of the fraction, like $-\frac{3}{5}$.
+
+Also, positive fractions are equivalent to fractions with a negative numerator and a negative denominator as the multiplier is $-1$. $$\frac{3}{5} \overset{\times -1}{=} \frac{-3}{-5}$$
+:::
+
+Finding equivalent fractions is necessary for comparing fractions, performing calculations with fractions, and developing good habits for later topics such as those explored in [Guide: Arithmetic on numerical fractions](arithmeticonnumericalfractions.qmd), [Guide: Introduction to algebraic fractions](introtoalgebraicfractions.qmd) and [Guide: Arithmetic on algebraic fractions](arithmeticonalgebraicfractions.qmd). They are particularly helpful when you need to add together two fractions with different denominators.
+
+The case of **dividing** the numerator and the denominator by the same number to find an equivalent fraction has a specific name. This is the topic of the next section.
+
+# Simplifying fractions
+
+In the previous section, you saw how to create equivalent fractions by multiplying the numerator and the denominator by the same number, such as changing $\frac{2}{3}$ into $\frac{10}{15}$. You can also go in the other direction. The process of dividing both the numerator and the denominator by the same number is called **simplifying**.
+
+Simplifying is how you find the **lowest terms** version of a fraction. In the pizza example, $\frac{2}{4}$ is equivalent to $\frac{1}{2}$. Simplifying is the formal process for getting from $\frac{2}{4}$ back to $\frac{1}{2}$. $$\frac{2}{4} = \frac{2 \div 2}{4 \div 2} = \frac{1}{2}$$
+
+To simplify fractions, it is important to know what is meant by common factors and, in particular, the **highest common factor**.
+
+::: callout-note
+## Factors, common factors, and the highest common factor
+
+A **factor** is a whole number that divides exactly into another number, leaving no remainder.
+
+When comparing the factors of two (or more) numbers, you can find their **common factors**. The numbers that appear in both lists of factors are the common factors.
+
+The **highest common factor** is the largest number in the list of common factors.
+
+To find the highest common factor:
+
+1. List all the factors of the first number.
+2. List all the factors of the second number.
+3. Identify all the common factors (the numbers that appear in both lists).
+4. The largest of these common factors is the highest common factor.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 7
+
+Find the highest common factor of $20$ and $30$.
+
+Start by identifying the factors of $20$. These are the whole numbers that divide exactly into $20$, leaving no remainder. $$\textsf{Factors of } 20 \textsf{:} \quad 1 \quad 2 \quad 4 \quad 5 \quad 10 \quad 20$$
+
+Now identify the factors of $30$. These are the whole numbers that divide exactly into $30$, leaving no remainder. $$\textsf{Factors of } 30 \textsf{:} \quad 1 \quad 2 \quad 3 \quad 5 \quad 6 \quad 10 \quad 15 \quad 30$$
+
+The numbers that appear in both lists are the common factors. $$\textsf{Common factors:} \quad 1 \quad 2 \quad 5 \quad 10$$
+
+The largest number appearing in this list of common factors is the highest common factor. $$\textsf{Highest common factor:} \quad 10$$
+:::
+
+Common factors are used in the process of determining whether a fraction is fully simplified or not. The method for fully simplifying a fraction depends on finding the highest common factor.
+
+::: callout-note
+## Simplifying fractions
+
+A fraction is **fully simplified**, in its **simplest form**, or in its **lowest terms** when its numerator and denominator have no common factors other than one.
+
+To fully simplify a fraction that is not already in its simplest form, divide the numerator and the denominator by its highest common factor.
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 8
+
+Write $\dfrac{12}{18}$ in its simplest form.
+
+Start by identifying the factors of both the numerator $12$ and the denominator $18$.
+
+$$
+\begin{aligned}
+\textsf{Factors of } 12 \textsf{:} &\quad 1 \quad 2 \quad 3 \quad 4 \quad 6 \quad 12 \\
+\textsf{Factors of } 18 \textsf{:} &\quad 1 \quad 2 \quad 3 \quad 6 \quad 9 \quad 18 \\
+\textsf{Common factors:} &\quad 1 \quad 2 \quad 3 \quad 6 \\
+\textsf{Highest common factor:} &\quad 6
+\end{aligned}
+$$
+
+The highest common factor is $6$, so divide the numerator and the denominator by $6$. $$\frac{12}{18} = \frac{12 \div 6}{18 \div 6} = \frac{2}{3}$$
+
+Therefore, the fraction $\frac{12}{18}$ can be written in its simplest form as $\frac{2}{3}$.
+:::
+
+Not all fractions can be simplified as some may already be written in their simplest form.
+
+::: {.callout-note appearance="simple"}
+## Example 9
+
+Consider the fraction $$\frac{7}{20}$$
+
+Start by identifying the factors of both the numerator $7$ and the denominator $20$.
+$$
+\begin{aligned}
+\textsf{Factors of } 7 \textsf{:} &\quad 1 \quad 7 \\
+\textsf{Factors of } 20 \textsf{:} &\quad 1 \quad 2 \quad 4 \quad 5 \quad 10 \quad 20 \\
+\textsf{Common factors:} &\quad 1
+\end{aligned}
+$$
+
+Since the numerator and the denominator have no common factors other than $1$, the fraction is already in its simplest form.
+:::
+
+::: {.content-visible when-format="html"}
+You can explore the process of simplifying fractions by using the interactive figure below. Use the sliders to pick a numerator and a denominator. The figure will show you the original fraction and the simplified fraction, list all the factors, and show you how to simplify using the highest common factor.
+
+```{=html}
+<style>
+.simplify-widget {
+  display:inline-block;
+  width:fit-content;
+  max-width:100%;
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+  color:#000;
+  background-color: #f5f8ff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+.simplify-widget input[type="range"]{
+  -webkit-appearance:none; appearance:none; width:100%; height:10px; border-radius:999px; background:#C0D6FF; outline:none;
+}
+.simplify-widget input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer;
+}
+.simplify-widget input[type="range"]::-moz-range-thumb{
+  width:18px; height:18px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer;
+}
+.simplify-widget label { font-family: Arial, Helvetica, sans-serif; color: #000; font-size: 1rem; }
+.simplify-widget .slider-val { margin-left:.35rem; font-weight: normal; }
+
+.simplify-canvases {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.simplify-widget .canvas-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  max-width: 220px;
+}
+.simplify-widget .canvas-container canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  background: #f5f8ff;
+}
+.simplify-widget .frac-readout {
+  font-size: 1.25rem;
+  font-weight: normal;
+  min-height: 1.2em;
+  margin-top: 1rem;
+}
+.simplify-widget .frac {
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  line-height:1.05;
+  font-size: 1.25rem;
+  font-weight: normal;
+}
+.simplify-widget .frac .top,
+.simplify-widget .frac .bottom {
+  padding:0 .25em;
+}
+.simplify-widget .frac .bar {
+  width:100%;
+  height:0;
+  border-top:2px solid currentColor;
+  margin:.12em 0 .06em;
+}
+
+#simplify-readout-main {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: normal;
+  padding: 0.75rem;
+  background: #f5f8ff;
+  border-radius: 8px;
+  height: 4.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+#simplify-factors {
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  min-height: 8em;
+  box-sizing: border-box;
+}
+#simplify-factors div {
+  margin-bottom: 0.5rem;
+  word-wrap: break-word;
+  font-weight: normal;
+}
+#simplify-factors div:last-child {
+  margin-bottom: 0;
+}
+#simplify-factors strong {
+  font-weight: normal;
+}
+#simplify-factors span.factor {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin: 2px;
+}
+#simplify-factors span.factor.common {
+  background: none;
+}
+#simplify-factors span.factor.hcf {
+  background: none;
+  color: inherit;
+}
+.simplify-controls {
+  max-width: 450px;
+  margin: 1.5rem auto 0;
+}
+</style>
+
+<div style="display:flex; justify-content:center; margin:1rem 0;">
+  <div class="simplify-widget">
+
+    <div class="simplify-canvases">
+      <div class="canvas-container">
+        <canvas id="simplifyCanvas1" width="600" height="600"></canvas>
+        <div id="simplifyReadout1" class="frac-readout"></div>
+      </div>
+      <div class="canvas-container">
+        <canvas id="simplifyCanvas2" width="600" height="600"></canvas>
+        <div id="simplifyReadout2" class="frac-readout"></div>
+      </div>
+    </div>
+
+    <div class="simplify-controls">
+      <div>
+        <label for="simplify-num" style="display:block; margin-bottom:.25rem;">
+          Numerator:
+          <span id="simplify-numOut" class="slider-val">15</span>
+        </label>
+        <input id="simplify-num" type="range" min="0" max="20" value="15" step="1" style="margin-top:.35rem; margin-bottom:.75rem;">
+      </div>
+      <div>
+        <label for="simplify-den" style="display:block; margin-bottom:.25rem;">
+          Denominator:
+          <span id="simplify-denOut" class="slider-val">20</span>
+        </label>
+        <input id="simplify-den" type="range" min="1" max="30" value="20" step="1" style="margin-top:.35rem; margin-bottom:.75rem;">
+      </div>
+    </div>
+
+    <div id="simplify-factors">
+      <div id="factors-num"><strong>Factors of Numerator:</strong></div>
+      <div id="factors-den"><strong>Factors of Denominator:</strong></div>
+      <div id="factors-common"><strong>Common Factors:</strong></div>
+      <div id="factors-hcf"><strong>Highest Common Factor:</strong></div>
+    </div>
+
+    <div id="simplify-readout-main">Select a fraction to begin.</div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  function ensureMathJax(cb){
+    if (window.MathJax && MathJax.typesetPromise){
+      cb();
+      return;
+    }
+    if (!document.getElementById('mj-loader')){
+      window.MathJax = window.MathJax || { tex:{inlineMath:[['\\(','\\)'],['$','$']]}, svg:{fontCache:'global'} };
+      const s=document.createElement('script');
+      s.id='mj-loader';
+      s.defer=true;
+      s.src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+      s.onload=cb;
+      document.head.appendChild(s);
+    } else {
+      const t=setInterval(()=>{
+        if(window.MathJax && MathJax.typesetPromise){
+          clearInterval(t);
+          cb();
+        }
+      },50);
+    }
+  }
+
+  const cssFrac = (n,d)=>`<span class="frac"><span class="top">${n}</span><span class="bar"></span><span class="bottom">${d}</span></span>`;
+
+  function setMJFraction(el, n, d){
+    if (window.MathJax && MathJax.typesetPromise){
+      el.innerHTML = `\\(\\dfrac{${n}}{${d}}\\)`;
+      MathJax.typesetPromise([el]);
+    } else {
+      el.innerHTML = cssFrac(n,d);
+    }
+  }
+
+  function setMJReadout(el, n, d, g, n_s, d_s) {
+    let html = '';
+    if (g === 1 || (n === 0 && d === 0)) {
+       html = `\\(\\dfrac{${n}}{${d}}\\)&nbsp;is already in its simplest form.`;
+    } else {
+       html = `\\(\\dfrac{${n}}{${d}} = \\dfrac{${n} \\div ${g}}{${d} \\div ${g}} = \\dfrac{${n_s}}{${d_s}}\\)`;
+    }
+    if (window.MathJax && MathJax.typesetPromise) {
+      el.innerHTML = html;
+      MathJax.typesetPromise([el]);
+    } else {
+      if (g === 1) {
+        el.innerHTML = `${n}/${d} &nbsp;is already in its simplest form.`;
+      } else {
+        el.innerHTML = `${n}/${d} = (${n} ÷ ${g}) / (${d} ÷ ${g}) = ${n_s}/${d_s}`;
+      }
+    }
+  }
+
+  const base  = "#000";
+  const line  = "#000";
+  const shade = "#3F68B6";
+
+  const canvas1 = document.getElementById("simplifyCanvas1");
+  const ctx1 = canvas1.getContext("2d");
+  const canvas2 = document.getElementById("simplifyCanvas2");
+  const ctx2 = canvas2.getContext("2d");
+
+  const numSlider = document.getElementById("simplify-num");
+  const denSlider = document.getElementById("simplify-den");
+  const numOut = document.getElementById("simplify-numOut");
+  const denOut = document.getElementById("simplify-denOut");
+
+  const readout1 = document.getElementById("simplifyReadout1");
+  const readout2 = document.getElementById("simplifyReadout2");
+  const readoutMain = document.getElementById("simplify-readout-main");
+
+  const factorsNum = document.getElementById("factors-num");
+  const factorsDen = document.getElementById("factors-den");
+  const factorsCommon = document.getElementById("factors-common");
+  const factorsHcf = document.getElementById("factors-hcf");
+  const factorsContainer = document.getElementById("simplify-factors");
+
+  function gcd(a,b){
+    a=Math.abs(a);
+    b=Math.abs(b);
+    while(b){
+      const t = a % b;
+      a = b;
+      b = t;
+    }
+    return a||1;
+  }
+
+  function getFactors(num) {
+    if (num === 0) return [0];
+    if (num === 1) return [1];
+    num = Math.abs(num);
+    const factors = new Set();
+    const limit = Math.floor(Math.sqrt(num));
+    for (let i = 1; i <= limit; i++) {
+      if (num % i === 0) {
+        factors.add(i);
+        factors.add(num / i);
+      }
+    }
+    return Array.from(factors).sort((a, b) => a - b);
+  }
+
+  function paintRange(el){
+    if (!el) return;
+    const min = +el.min, max = +el.max, val = +el.value;
+    const pct = (max > min) ? ((val - min) / (max - min)) * 100 : 0;
+    el.style.background = `linear-gradient(to right, #3F68B6 0%, #3F68B6 ${pct}%, #C0D6FF ${pct}%, #C0D6FF 100%)`;
+  }
+
+  function drawCircle(canvas, ctx, numShaded, totalSlices) {
+    const dpr = window.devicePixelRatio || 1;
+    const cssW = canvas.clientWidth || 220;
+    const cssH = canvas.clientHeight || 220;
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,cssW,cssH);
+
+    if (totalSlices <= 0) return;
+
+    const sizeMin = Math.min(cssW, cssH);
+    const R  = sizeMin * 0.4;
+    const cx = cssW/2;
+    const cy = cssH/2;
+    const startShift = -Math.PI/2;
+    const step = 2*Math.PI / totalSlices;
+
+    for(let k=0; k < totalSlices; k++){
+      const a0 = startShift + k * step;
+      const a1 = a0 + step;
+      if (k < numShaded){
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.arc(cx,cy,R,a0,a1);
+        ctx.closePath();
+        ctx.fillStyle = shade;
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.moveTo(cx,cy);
+      ctx.lineTo(cx + R * Math.cos(a0), cy + R * Math.sin(a0));
+      ctx.strokeStyle = line;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.arc(cx,cy,R,0,2*Math.PI);
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = base;
+    ctx.stroke();
+  }
+
+  function update() {
+    const d_val = +denSlider.value;
+    if (+numSlider.max !== d_val) {
+      numSlider.max = d_val;
+    }
+    if (+numSlider.value > d_val) {
+      numSlider.value = d_val;
+    }
+    const n_val = +numSlider.value;
+    numOut.textContent = n_val;
+    denOut.textContent = d_val;
+    const n = n_val;
+    const d = d_val;
+
+    if (d === 0) {
+      readoutMain.innerHTML = "The denominator cannot be zero.";
+      factorsNum.innerHTML = "<strong>Factors of Numerator:</strong>";
+      factorsDen.innerHTML = "<strong>Factors of Denominator:</strong>";
+      factorsCommon.innerHTML = "<strong>Common Factors:</strong>";
+      factorsHcf.innerHTML = "<strong>Highest Common Factor:</strong>";
+      setMJFraction(readout1, n, d);
+      setMJFraction(readout2, "?", "?");
+      ctx1.clearRect(0,0,canvas1.width,canvas1.height);
+      ctx2.clearRect(0,0,canvas2.width,canvas2.height);
+      paintRange(numSlider);
+      paintRange(denSlider);
+      return;
+    }
+
+    const g = gcd(n, d);
+    const n_simple = n / g;
+    const d_simple = d / g;
+
+    const factorsN = getFactors(n);
+    const factorsD = getFactors(d);
+    const commonFactors = factorsN.filter(f => factorsD.includes(f));
+
+    factorsNum.innerHTML = "<strong>Factors of \\(" + n + "\\):</strong> " + factorsN.map(f => `<span class="factor">\\(${f}\\)</span>`).join('');
+    factorsDen.innerHTML = "<strong>Factors of \\(" + d + "\\):</strong> " + factorsD.map(f => `<span class="factor">\\(${f}\\)</span>`).join('');
+    factorsCommon.innerHTML = "<strong>Common Factors:</strong> " + commonFactors.map(f => `<span class="factor common">\\(${f}\\)</span>`).join('');
+    factorsHcf.innerHTML = `<strong>Highest Common Factor:</strong> <span class="factor hcf">\\(${g}\\)</span>`;
+
+    if (window.MathJax && MathJax.typesetPromise) {
+      MathJax.typesetPromise([factorsContainer]);
+    }
+
+    drawCircle(canvas1, ctx1, n, d);
+    drawCircle(canvas2, ctx2, n_simple, d_simple);
+
+    setMJFraction(readout1, n, d);
+    setMJFraction(readout2, n_simple, d_simple);
+    setMJReadout(readoutMain, n, d, g, n_simple, d_simple);
+
+    paintRange(numSlider);
+    paintRange(denSlider);
+  }
+
+  numSlider.addEventListener('input', update);
+  denSlider.addEventListener('input', update);
+
+  const resizeObserver1 = new ResizeObserver(() => update());
+  resizeObserver1.observe(document.getElementById('simplifyCanvas1'));
+  const resizeObserver2 = new ResizeObserver(() => update());
+  resizeObserver2.observe(document.getElementById('simplifyCanvas2'));
+
+  ensureMathJax(update);
+})();
+</script>
+
+```
+:::
+
+::: {.content-hidden when-format="html"}
+The figure below demonstrates how to simplify a fraction. The circle on the left represents the original fraction $\frac{15}{20}$. The circle on the right shows the equivalent simplified fraction $\frac{3}{4}$. Both circles have the same amount shaded, showing they represent the same value.
+
+![The process of simplifying fractions, represented by shaded parts of two circles.](FiguresPNG/introtonumericalfractions-fig7.png){fig-align="center"}
+
+To simplify $\frac{15}{20}$, you need to find the highest common factor of the numerator $15$ and the denominator $20$, which is $5$. Then, divide both the numerator and the denominator by this highest common factor. $$\frac{15}{20} = \frac{15 \div 5}{20 \div 5} = \frac{3}{4}$$
+
+This gives the fraction in its simplest form.
+:::
+
+::: {.callout-tip}
+All unit fractions (fractions where the numerator is one) are already in their simplest form as there are no common factors other than one.
+:::
+
+::: {.callout-important}
+When both the numerator and the denominator of a fraction are negative, the negative signs cancel each other out through the simplifying process, resulting in an equivalent positive fraction. This is because you can divide the numerator and denominator by their common factor of $-1$. $$\frac{-3}{-5} = \frac{-3 \div -1}{-5 \div -1} = \frac{3}{5}$$
+:::
+
+::: callout-warning
+A common mistake is stopping before fully simplifying, such as simplifying $\frac{12}{24}$ to $\frac{6}{12}$ instead of $\frac{1}{2}$.
+
+This arises when you simplify using a common factor that is not the highest common factor. In this case, the common factors of $12$ and $24$ are $1$, $2$, $3$, $4$, $6$ and $12$. The highest common factor is $12$, but the common factor $2$ was used for simplifying instead.
+
+Choosing any of the common factors to simplify by is still an acceptable method that you may prefer to use over this method, but it means that you need to simplify more than once to get to the simplest form of the original fraction.
+:::
+
+It is good practice to simplify fractions whenever possible. Therefore, remembering to simplify your fractions is a good habit to develop, and it will be particularly useful for later topics such as those explored in [Guide: Arithmetic on numerical fractions](arithmeticonnumericalfractions.qmd), [Guide: Introduction to algebraic fractions](introtoalgebraicfractions.qmd) and [Guide: Arithmetic on algebraic fractions](arithmeticonalgebraicfractions.qmd).
+
+# Quick check problems {.unnumbered}
+
+:::: {.content-visible when-format="html" data-topic="INF1"}
+::: {.webex-check .webex-box}
+1. In the fraction $\frac{7}{10}$, the number $10$ is called the `r mcq(c("Numerator", answer = "Denominator", "Quotient", "Dividend"))`
+
+<!-- -->
+
+2. If a chocolate bar is divided into $7$ equal squares and you eat $5$ of them, what fraction of the bar have you eaten? `r fitb("5/7")`
+
+<!-- -->
+
+3. The fraction $\frac{12}{5}$ is an example of what type of fraction? `r mcq(c("Proper fraction", answer = "Improper fraction", "Mixed number"))`
+
+<!-- -->
+
+4. Convert $2\frac{1}{3}$ into an improper fraction. `r fitb("7/3")`
+
+<!-- -->
+
+5. Which of the following fractions is equivalent to $\frac{2}{5}$? `r mcq(c("5/2", "4/5", answer = "4/10", "2/10"))`
+
+<!-- -->
+
+6. What is the fraction $\frac{9}{12}$ in its simplest form? `r fitb("3/4")`
+:::
+::::
+
+::: {.content-hidden when-format="html"}
+1. In the fraction $\frac{7}{10}$, what is the number $10$ called?
+
+<!-- -->
+
+(a) Numerator
+
+(b) Denominator
+
+(c) Quotient
+
+(d) Dividend
+
+<!-- -->
+
+2. If a chocolate bar is divided into $7$ equal squares and you eat $5$ of them, what fraction of the bar have you eaten?
+
+<!-- -->
+
+3. Classify the fraction $\frac{12}{5}$.
+
+<!-- -->
+
+(a) Proper fraction
+
+(b) Improper fraction
+
+(c) Mixed number
+
+<!-- -->
+
+4. Convert $2\frac{1}{3}$ into an improper fraction.
+
+<!-- -->
+
+5. Which of the following fractions is equivalent to $\frac{2}{5}$?
+
+<!-- -->
+
+(a) $\dfrac{5}{2}$
+
+(b) $\dfrac{4}{5}$
+
+(c) $\dfrac{4}{10}$
+
+(d) $\dfrac{2}{10}$
+
+<!-- -->
+
+6. Write the fraction $\frac{9}{12}$ in its simplest form.
+:::
+
+# Further reading {.unnumbered}
+
+[For more questions on the subject, please go to Questions: Introduction to numerical fractions.](../questions/qs-introtonumericalfractions.qmd)
+
+[To learn how to perform arithmetic on numerical fractions, please see Guide: Arithmetic on numerical fractions.](arithmeticonnumericalfractions.qmd)
+
+## Version history {.unnumbered}
+
+v1.0: initial version created 12/25 by Donald Campbell as part of a University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
