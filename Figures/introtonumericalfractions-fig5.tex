@@ -1,0 +1,69 @@
+\documentclass[preview,border=5pt]{standalone}
+\usepackage{teaching}
+%\definecolor{slightblue}{RGB}{245,248,255}
+\begin{document}
+%\pagecolor{slightblue}
+
+
+\centering
+\renewcommand{\arraystretch}{1}
+\begin{tikzpicture}[yscale=1,xscale=1,scale=0.5,inner sep=0.3mm, label distance=1.5mm]
+  
+\begin{scope}[xshift=-2.5cm]
+  \def\radius{2}
+  \def\n{4}      % number of slices
+  \def\k{2}      % number of shaded slices
+
+  % shaded sectors
+  \foreach \i in {0,...,\numexpr\k-1\relax} {
+    \fill[sblu!50]
+      (0,0) -- (\i*360/\n:\radius)
+      arc[start angle=\i*360/\n,
+          end angle=(\i+1)*360/\n,
+          radius=\radius] -- cycle;
+  }
+
+  % circle outline
+  \draw (0,0) circle (\radius);
+
+  % radial lines
+  \foreach \i in {0,...,\numexpr\n-1\relax} {
+    \draw (0,0) -- (\i*360/\n:\radius);
+  }
+  
+\node(a) at (0,-3) {$\dfrac{2}{4}$};
+\end{scope}
+
+\begin{scope}[xshift=2.5cm]
+  \def\radius{2}
+  \def\n{12}      % number of slices
+  \def\k{6}      % number of shaded slices
+
+  % shaded sectors
+  \foreach \i in {0,...,\numexpr\k-1\relax} {
+    \fill[sblu!50]
+      (0,0) -- (\i*360/\n:\radius)
+      arc[start angle=\i*360/\n,
+          end angle=(\i+1)*360/\n,
+          radius=\radius] -- cycle;
+  }
+
+  % circle outline
+  \draw (0,0) circle (\radius);
+
+  % radial lines
+  \foreach \i in {0,...,\numexpr\n-1\relax} {
+    \draw (0,0) -- (\i*360/\n:\radius);
+  }
+\node(a) at (0,-3) {$\dfrac{6}{12}$};
+\end{scope}
+
+%\node(b) at (-2.5,-5) {$\dfrac{21}{8}$};
+\node(ee) at (0,-3) {$=$};
+%\node(c) at (2.5,-5) {$2\,\dfrac{5}{8}$};
+%
+%\node(d) at (-2.9,-6.58) {improper fraction};
+%\node(e) at (2.9,-6.5) {mixed number};
+\end{tikzpicture}
+
+\end{document}

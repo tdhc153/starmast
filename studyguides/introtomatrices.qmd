@@ -2,26 +2,32 @@
 title: "Introduction to matrices"
 author: "Jessica Taberner"
 abstract-title: Summary
-abstract: Matrices are rectangular arrays of mathematical objects with entries arranged in rows and columns. Matrices are a very useful concept within mathematics, you'll see them used for solving simultaneous equations and much more, this guide will explain what they are and how to perform arithmetic with matrices.
+abstract: Matrices are rectangular arrays of mathematical objects with entries arranged in rows and columns. Matrices are a very useful concept within mathematics, you'll see them used for solving simultaneous equations and much more. This guide will explain what they are, some special kinds of matrices, and how to add, subtract, and scalar multiply matrices.
 categories:
   - Linear mathematics
   - Matrices
-draft: true
+image: FiguresPNG/introtomatrices-image.png
 ---
 
 ```{r, setup, include = FALSE}
 library("webexercises")
 ```
 
+::: {.content-visible when-format="html"}
 
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/introtomatrices.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
 
 # What is a matrix? {.unnumbered}
 
 A matrix is a rectangular array or table, with entries in rows and columns. Understanding matrices can make solving equations more efficient and can open the door to learning much more mathematics.
 
-If you have read [Guide: Introduction to solving simultaneous equations] then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations.
+If you have read [Guide: Introduction to solving simultaneous equations](introtosimeqs.qmd) then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations.
 
-Matrices are a fundamental tool within linear algebra, and they have a wide range of real-life applications. They are used in computer graphics, data analysis, search engine optimization, cryptography, economics, robotics, genetics, quantum mechanics, and many more areas of study. Matrices are used anywhere where information needs to be analyzed and calculated efficiently. 
+Matrices are a fundamental tool within mathematics, and they have a wide range of real-life applications. They are used in computer graphics, data analysis, search engine optimization, cryptography, economics, robotics, genetics, quantum mechanics, and many more areas of study. Matrices are used anywhere where information needs to be analyzed and calculated efficiently. 
 
 In this guide, you will see how you can: read, write, and understand matrices; learn how to do addition, subtraction and scalar multiplication with matrices; and be able to identify some special matrices. 
 
@@ -43,9 +49,11 @@ $$
 
 This matrix has **dimension** $m \times n$.
 
-The notation $a_{ij}$ refers to the $ij^{th}$ entry of your matrix, that is the number in the **$i^{th}$ row and the $j^{th}$ column**. An alternative way of writing the above matrix is $A = [a_{ij}]$. 
+The notation $a_{ij}$ refers to the $(i,j)$th entry of your matrix, that is the number in the **$i$th row and the $j$th column**. An alternative way of writing the above matrix is $A = [a_{ij}]$. 
 
-You can specify the $ij^{th}$ entry of a particular matrix $A$ by writing $[A]_{ij} = a_{ij}$.
+You can specify the $(i,j)$th entry $a_{ij}$ of a particular matrix $A$ by writing $[A]_{ij} = a_{ij}$.
+
+<!-- A matrix is **square** if $m = n$; so the shape of the matrix is square. -->
 
 :::
 
@@ -85,8 +93,8 @@ C =\begin{bmatrix}
 \end{bmatrix}, \quad\textsf{ and }\quad D=
 \begin{bmatrix}
 -5 & 1/2 & 0  \\
-0 & -\pi & 4/9 \\
-7 & 0 & -\sqrt{3} \\
+0 & 7 & 4/9 \\
+-\pi & 0 & -\sqrt{3} \\
 -1 & 5 & 0 \\
 1/4 & 0 & 8
 \end{bmatrix}
@@ -98,66 +106,235 @@ As $D$ has five rows and three columns, the matrix $D$ has dimension $5 \times 3
 
 :::
 
-You can notice that $B$ only has one row; you can call such a matrix a **row matrix**. Similarly, you would call a matrix like $C$, with only one column, a **column matrix**. These are commonly known as **vectors**. You can read more about vectors in [Guide: Introduction to vectors].
+You can notice that $B$ only has one row; you can call such a matrix a **row matrix**. Similarly, you would call a matrix like $C$, with only one column, a **column matrix**. These are commonly known as **vectors**. You can read more about vectors in [Guide: Introduction to vectors](introductiontovectors.qmd).
+
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Example 2 -->
+<!-- For example the $3 \times 2$ matrix, $\begin{bmatrix} 1 & 1  \\1 & 1  \\1 & 1 \end{bmatrix}$ could be written as $[1]_{32}$. -->
+
+<!-- ::: -->
+
+One important set of entries in a matrix is the **main diagonal**:
+
+::: callout-note
+## Definition of a main diagonal
+
+For a $m\times n$ matrix $A=[a_{ij}]$, the entries ${a_{11},a_{22},\ldots,a_{kk}}$ make up the **main diagonal** of $A$. This is where 
+
+- $k = m$ if $m < n$ 
+- $k = n$ if $n\leq m$.
+
+You can write the **main diagonal** using this notation:
+
+$$\textsf{diag}(A) = ({a_{11},a_{22},\ldots,a_{kk}})$$
+
+which state the entries of the main diagonal.
+
+:::
+
+:::{.callout-warning}
+
+$\textsf{diag}(A) = ({a_{11},a_{22},\ldots,a_{nn}})$ is **not** a matrix, but a set of entries of the matrix. 
+
+:::
 
 ::: {.callout-note appearance="simple"}
-## Example 2
-For example the $3 \times 2$ matrix, $\begin{bmatrix} 1 & 1  \\1 & 1  \\1 & 1 \end{bmatrix}$ could be written as $[1]_{32}$.
+
+## Example 3
+
+What are the main diagonals of the matrices in Example 1?
+
+Since $A$ is a $3\times 2$ matrix, it follows that $n < m$ and so $k = 2$, meaning the main diagonal of $A$ is $\textsf{diag}(A) = (a_{11},a_{22}) = (0,5)$. You can see these entries highlighted in bold below:
+
+$$A =\begin{bmatrix}\mathbf{0} & -2  \\\pi & \mathbf{5}  \\1/3 & 0 \end{bmatrix}$$
+
+Since $B$ is a $1\times 4$ matrix, it follows that $m < n$ and so $k = 1$, meaning the main diagonal of $B$ is $\textsf{diag}(B) = (b_{11}) = (-1)$. You can see this entry highlighted in bold below: 
+$$B = \begin{bmatrix}\mathbf{-1} & 2/5 & 0 & \sqrt{3} \end{bmatrix}$$
+
+You do not need to be so thorough every time. You can read off the main diagonals of $C$ and $D$ (entries highlighted in bold): 
+
+$$
+C =\begin{bmatrix}
+\mathbf{\sqrt{2}} \\
+11 \\
+-3/8
+\end{bmatrix} \quad\textsf{ and }\quad D=
+\begin{bmatrix}
+\mathbf{-5} & 1/2 & 0  \\
+0 & \mathbf{7} & 4/9 \\
+\pi & 0 & \mathbf{-\sqrt{3}} \\
+-1 & 5 & 0 \\
+1/4 & 0 & 8
+\end{bmatrix}
+$$
+
+
+to say $$\textsf{diag}(C) = (\sqrt{2})\quad\textsf{and}\quad\textsf{diag}(D) = (-5,7,-\sqrt{3}).$$
 
 :::
 
 # Special matrices
 
-There are special matrices 
+There are special matrices that often appear in mathematics and statistics. 
 
 ## Zero matrix
 
-## Identity matrix
-
-## Diagonal matrix 
+There are a special class of matrices where all of the entries are zero; they are somewhat uninspiringly called the **zero matrices**.
 
 ::: callout-note
-## Definition of a main diagonal
+## Definition of a zero matrix
 
-For a matrix $A=[a_{ij}]_{mn}$, the entries ${a_{11},a_{22},\ldots,a_{nn}}$ make up the **main diagonal** of $A$. You can define the **main diagonal** like so:
+The $m\times n$ **zero matrix** $0_{m\times n}$ is the $m\times n$ matrix where all entries are $0$.
 
-$$\textsf{diag}A = ({a_{11},a_{22},\ldots,a_{nn}})$$
 :::
 
 ::: {.callout-note appearance="simple"}
+
 ## Example 3
 
-For the matrices in Example 1, the main diagonals are:
-
-$\textsf{diag}A = (0,5)$
-
-$\textsf{diag}B = (-1)$
-
-$\textsf{diag}C = (\sqrt{2})$
-
-$\textsf{diag}D = (-5,-\pi,-\sqrt{3})$
+Here are some zero matrices: $$0_{1\times 3} = \begin{bmatrix}0&0&0\end{bmatrix},\quad 0_{3\times 1} = \begin{bmatrix}0\\0\\0\end{bmatrix}, \quad 0_{4\times 3} = \begin{bmatrix}0&0&0\\0&0&0\\0&0&0\\0&0&0\end{bmatrix}$$
 
 :::
 
+There is one zero matrix for every ordered pair of positive numbers $(m,n)$. There is one warning to say though:
+
+
+:::{.callout-warning}
+
+If $m\neq n$, then $0_{m\times n} \neq 0_{n\times m}$, as the matrices have different shapes! You saw this in Example 3, where $0_{1\times 3} \neq 0_{3\times 1}$.
+
+:::
+
+Finally, here's a way to define zero matrices using the alternative definition of a matrix.
+
+:::{.callout-tip}
+
+You can use the alternate way of writing a matrix to define the zero matrix: $$0_{m\times n} = [a_{ij}] \quad \textsf{ where }\quad a_{ij} = 0 \textsf{ for }1\leq i \leq m\textsf{ and }1\leq j \leq n.$$ This way of defining matrices is incredibly common in computer coding, as it relies on for loops. 
+
+:::
+
+## Square matrix
+
+The only time $0_{m\times n} = 0_{n\times m}$ is if $m = n$. Then, the number of rows equals the number of columns, and so the matrix is **square**. This is precisely the definition of a **square matrix**:
+
+::: callout-note
+
+## Definition of a square matrix
+
+A matrix $A$ is a **square matrix** if the number of rows of $A$ equals the number of columns of $A$. So an $m\times n$ matrix is square if $m = n$. 
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 4
+
+Here are some square matrices: $$E = \begin{bmatrix}0&-4&\pi&6\\e&-1&1&1\\6&6&6&6\\9&4&3&-2\end{bmatrix},\quad F = \begin{bmatrix}1&1\\0&1\end{bmatrix}, \quad 0_{3\times 3} = \begin{bmatrix}0&0&0\\0&0&0\\0&0&0\end{bmatrix}$$
+
+:::
 
 
 ## Upper and lower triangular matrices
 
+A special kind of square matrix are **upper and lower triangular matrices**, where a large portion of the entries are $0$.
 
+::: callout-note
+## Definition of upper and lower triangular matrices
+
+Suppose that $A,B$ are $n\times n$ square matrices. A matrix $A$ is an **upper triangular matrix** if every entry *below* the main diagonal of $A$ is $0$. Similarly, $B$ is a **lower triangular matrix** if every entry *above* the main diagonal of $B$ is $0$.  
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 4
+
+None of the matrices in Example 1 are upper or lower triangular, as they are all not square. The matrix $E$ in Example 2 is not upper triangular, as there is only one entry equalling $0$ and it is on the main diagonal. 
+
+The matrix $F$ in Example 2 is upper triangular, as all the entries below the main diagonal are $0$. You can see this in the recreation of $F$ below, where the main diagonal is highlighted in bold:
+
+$$F = \begin{bmatrix}\mathbf{1}&1\\0&\mathbf{1}\end{bmatrix}$$
+
+
+The zero matrix $0_{3\times 3}$ is **both** upper and lower triangular; as the entries both above and below the main diagonal are $0$. The main diagonal is highlighted in bold to help you visualise this: $$\quad 0_{3\times 3} = \begin{bmatrix}\mathbf{0}&0&0\\0&\mathbf{0}&0\\0&0&\mathbf{0}\end{bmatrix}$$
+
+:::
+
+:::{.callout-tip}
+
+Similar to the zero matrices, you can use alternative definitions to specify upper and lower triangular matrices in more detail. For instance, for an $n\times n$ upper triangular matrix $A$: $$A = [a_{ij}] \quad \textsf{ where }\quad a_{ij} = 0 \textsf{ for }1\leq i < j\leq n$$ and an $n\times n$ lower triangular matrix $B$ can be defined by $$B = [b_{ij}] \quad \textsf{ where }\quad a_{ij} = 0 \textsf{ for }1\leq j < i\leq n.$$ 
+
+:::
+
+
+## Diagonal matrices
+
+::: callout-note
+## Definition of a diagonal matrix
+
+Let $D$ be a square $n\times n$ matrix. Then $D$ is a **diagonal matrix** if all entries not on the main diagonal are $0$. 
+
+:::
+
+This means that diagonal matrices are **both** upper and lower triangular matrices. So if a matrix is not upper triangular, then it can't possibly be a diagonal matrix. 
+
+::: {.callout-note appearance="simple"}
+
+## Example 5
+
+The matrix $F$ in Example 2 is not diagonal. Although it is upper triangular, as all the entries below the main diagonal are $0$, it is not diagonal as there is a non-zero entry $1$ above the main diagonal.
+
+$$F = \begin{bmatrix}\mathbf{1}&1\\0&\mathbf{1}\end{bmatrix}$$
+
+The following matrices are all diagonal, with the main diagonal highlighted in bold so you can see that the entries above and below are all $0$;
+
+$$G = \begin{bmatrix}\mathbf{0}&0&0\\0&\mathbf{-1}&0\\0&0&\mathbf{-1}\end{bmatrix}, \quad H = \begin{bmatrix}\mathbf{76}&0\\0&\mathbf{-45}\end{bmatrix}, \quad I_4 = \begin{bmatrix}\mathbf{1}&0&0&0\\0&\mathbf{1}&0&0\\0&0&\mathbf{1}&0\\0&0&0&\mathbf{1}\end{bmatrix}$$
+
+
+The zero matrix $0_{3\times 3}$ is diagonal, as the entries both above and below the main diagonal are $0$: $$0_{3\times 3} = \begin{bmatrix}\mathbf{0}&0&0\\0&\mathbf{0}&0\\0&0&\mathbf{0}\end{bmatrix}$$
+
+:::
+
+:::{.callout-tip}
+
+You can define an $n\times n$ diagonal matrix $A$ using the following: $$A = [a_{ij}] \quad \textsf{ where }\quad a_{ij} = 0 \textsf{ for }1\leq i \neq j\leq n.$$
+
+:::
+
+## Identity matrices
+
+The final special kind of matrix is the idea of an **identity matrix**:
+
+::: callout-note
+## Definition of the identity matrix $I_n$
+
+The $n\times n$ square matrix with all entries $1$ on the main diagonal and $0$'s everywhere else is called the $n\times n$ **identity matrix** $I_n$.
+
+:::
+
+You saw an example of an identity matrix in Example 5 ($I_4$). Here are two more examples $$I_2 = \begin{bmatrix}1&0\\0&1\end{bmatrix}, \quad I_6 = \begin{bmatrix}1&0&0&0&0&0\\0&1&0&0&0&0\\0&0&1&0&0&0\\0&0&0&1&0&0\\0&0&0&0&1&0\\0&0&0&0&0&1\end{bmatrix}$$
+
+:::{.callout-tip}
+
+The reason why identity matrices are called the identity matrices is because they act as 'multiplicative identities'. See [Guide: Matrix multiplication](matrixmultiplication.qmd) for more. 
+
+You can define an $n\times n$ identity matrix $I_n$ using the following: $$I_n = [a_{ij}] \quad \textsf{ where }\quad a_{ij} = \begin{cases}1 \textsf{ for }1\leq i = j\leq n\\[0.5em] 0 \textsf{ for }1\leq i \neq j\leq n.\end{cases}$$
+
+:::
 
 
 # Addition and subtraction with matrices {.unnumbered}
 
-In this section, you will see when and how you can add and subtract matrices.
+In this section, you will see when and how you can add and subtract matrices. The first thing to notice is the following.
 
 ::: callout-important
-You can only add and subtract matrices if they share the same dimensions.
+**You can only add and subtract matrices if they share the same dimensions.**
 :::
 
 ::: callout-note
 ## Definition of matrix addition and subtraction
 
-Let $A$ and $B$ be matrices of the same dimension.
+Let $A$ and $B$ be $m\times n$ matrices (so they have the same dimension).
 The **matrix sum of** $A$ and $B$ can be calculated by adding corresponding entries of $A$ and $B$,
 
 $$(A + B)_{ij} = a_{ij} + b_{ij}$$
@@ -180,7 +357,6 @@ The sum $A + B$ is:
 $$A + B = \begin{bmatrix} 1+5 & 2+6 \\ 3+7 & 4+8 \end{bmatrix}= \begin{bmatrix} 6 & 8 \\ 10 & 12 \end{bmatrix}$$
 The difference $A-B$ is:
 
-
 $$A - B = \begin{bmatrix} 1-5 & 2-6 \\ 3-7 & 4-8 \end{bmatrix}= \begin{bmatrix} -4 & -4 \\ -4 & -4 \end{bmatrix}$$
 
 :::
@@ -191,7 +367,6 @@ $$A - B = \begin{bmatrix} 1-5 & 2-6 \\ 3-7 & 4-8 \end{bmatrix}= \begin{bmatrix} 
 
 Now let $A$ and $B$ be two $3 \times 4$ matrices.
 
-\
 $$A = \begin{bmatrix} 
 1 & -3 & 5 & -4 \\
 3 & 0 & -2 & 2 \\
@@ -203,7 +378,7 @@ $$A = \begin{bmatrix}
 -6 & -3 & 5 & 1/2
 \end{bmatrix}$$
 
-To subtract these matrices, you subtract the corresponding elements:
+To subtract these matrices, you can subtract the corresponding elements:
 
 $$
 A - B = \begin{bmatrix}
@@ -226,16 +401,20 @@ A-B= \begin{bmatrix}
 $$
 :::
 
-
 You saw earlier that you can only add and subtract matrices if they share the same dimensions. You can look to this non-example to see why this is the case.
 
 ::: {.callout-note appearance="simple"}
 ## Non-example
-$$A =\begin{bmatrix}
+$$
+\begin{aligned}
+A &=\begin{bmatrix}
 1 & 2 & -3 \\
-4/5 & 0 & 6 \end{bmatrix} \quad \textsf{(a $2 \times 3$ matrix)} \quad B =\begin{bmatrix}
+4/5 & 0 & 6 \end{bmatrix} \quad \textsf{(a }2 \times 3\textsf{ matrix)}\\[0.5em]
+B &=\begin{bmatrix}
 -8 & 8 \\
-0 & 11\end{bmatrix} \quad \textsf{(a $2 \times 2$ matrix)}$$
+0 & 11\end{bmatrix} \quad \textsf{(a }2 \times 2\textsf{ matrix)}
+\end{aligned}
+$$
 
 Why can you not add $A$ and $B$?
 
@@ -245,11 +424,12 @@ Matrix addition requires that each entry in one matrix corresponds to an entry i
 - Matrix $B$ has dimensions $2 \times 2$, that is, 2 rows and 2 columns 
 
 they do **not** have the same dimensions. How you would attempt to calculate entries $(A+B)_{13}$ and $(B-A)_{23}$? 
+
 :::
 
 # Scalar multiplication {.unnumbered}
 
-Sometimes you will multiply a matrix by a number or variable. This is called **scalar multiplication**.
+Sometimes you can multiply a matrix by a number or variable. This is called **scalar multiplication**.
 
 ::: callout-note
 ## Definition of scalar multipication with matrices
@@ -272,7 +452,7 @@ $$A =\begin{bmatrix}
 -7 & 12 
 \end{bmatrix} \quad\quad k=3$$
 
-To multiply this matrix by $3$, you multiply each element by $3$:
+To scalar multiply this matrix by $3$, you multiply each element by $3$:
 
 $$3A=\begin{bmatrix} 
 {3 \cdot 0} & {3 \cdot 4/3} \\
@@ -283,6 +463,14 @@ $$3A=\begin{bmatrix}
 -9 & 3\sqrt{2} \\
 -21 & 36
 \end{bmatrix}$$
+
+To scalar multiply this matrix by $x$, you multiply each element by $x$:
+$$xA=\begin{bmatrix} 
+0 & 4x \\
+-9x & (3\sqrt{2})x \\
+-21x & 36x
+\end{bmatrix}$$
+
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -295,12 +483,12 @@ $$A =\begin{bmatrix}
 
 To multiply this matrix by $-1/2$, you can multiply each element by $-1/2$:
 
-$$-1/2 A=\begin{bmatrix} 
-{-1/2 \cdot -6} & {-1/2 \cdot 7/3} & {-1/2 \cdot \pi} & {-1/2 \cdot 12} \end{bmatrix} =\begin{bmatrix} 
+$$-\frac{1}{2}A=\begin{bmatrix} 
+{-\frac{1}{2} \cdot -6} & {-\frac{1}{2} \cdot 7/3} & {-\frac{1}{2} \cdot \pi} & {-\frac{1}{2}\cdot 12} \end{bmatrix} =\begin{bmatrix} 
 -3 & -7/6 & -\pi/2 & -6 \end{bmatrix}$$
 :::
 
-Now you can combine your understanding of matrix addition and scalar multiplication to tackle questions that combine both of these skills.
+Now you can combine your understanding of matrix addition and scalar multiplication to tackle questions that ask for both of these skills.
 
 ::: {.callout-note appearance="simple"}
 ## Example 8
@@ -334,6 +522,12 @@ $$A +  2B = \begin{bmatrix}
 
 :::
 
+:::{.callout-tip}
+
+You can also multiply two matrices together; see [Guide: Matrix multiplication](matrixmultiplication.qmd) for more.
+
+:::
+
 # Quick check problems {-}
 
 <!-- add facility for webexercises to work on html -->
@@ -342,7 +536,7 @@ $$A +  2B = \begin{bmatrix}
 
 <!-- add facility to check answers at end rather than one at a time -->
 
-::: {.webex-check .webex-box}
+::: {.webex-check .webex-box data-topic="ITM1"}
 
 1. Give the dimensions of the following matrices:
 
@@ -372,23 +566,21 @@ The dimension of $B =$ `r fitb(3)`$\times$ `r fitb(3)`.
 The dimension of $C =$ `r fitb(5)`$\times$ `r fitb(2)`.
 
 
-2. You are given three statements below. Decide whether they are true or false.
+2. You are given five statements below. Decide whether they are true or false.
 
-(a) If $A$ is a $2 \times 3$ matrix, and $B$ is a $3 \times 2$ matrix, then $AB$ is a $3 \times 3$ matrix. Answer: `r torf(FALSE)`.
+(a) For the matrix $B$ in Q$1$, the entry $b_{21} = 1/3$. Answer: `r torf(TRUE)`.
 
-(b) For the matrix $B$ in Q$1$, the entry $b_{12} = 1/3$. Answer: `r torf(TRUE)`.
+(b) In any $3\times 3$ matrix $C = [c_{ij}]$, then $c_{13} = c_{31}$. Answer: `r torf(FALSE)`.
 
-(c) You can only add or subtract matrices that share the same dimensions. Answer: `r torf(TRUE)`.
+(c) Any diagonal matrix is an identity matrix. Answer: `r torf(FALSE)`
 
-3. Multiply the following matrices, $$D = \begin{bmatrix} 
-3 & 0 \\ 
-4 & -2
-\end{bmatrix} \quad\textsf{ and }\quad E =
-\begin{bmatrix} 
-1 \\
-1/3\end{bmatrix}.$$ Give the first entry, $de_{11}$, of the product $DE$.
+(d) You can only add or subtract matrices that share the same dimensions. Answer: `r torf(TRUE)`.
 
-Answer: The entry $de_{11} =$ `r fitb(3)`.
+(e) A matrix can be both upper and lower triangular. Answer: `r torf(TRUE)`
+
+3. You are given $D = \begin{bmatrix}1&-1\\0&4\end{bmatrix}$ and $E=\begin{bmatrix}-4&1\\1&-4\end{bmatrix}$. Find the $(2,2)$th entry of the matrix $D-3E$.
+
+Answer: The entry $[D-3E]_{22} =$ `r fitb(16)`.
 
 :::
 
@@ -415,28 +607,27 @@ $$A = \begin{bmatrix}
 0 & -2
 \end{bmatrix}$$
 
-2. You are given three statements below. Decide whether they are true or false.
+2. You are given five statements below. Decide whether they are true or false.
 
-(a) If $A$ is a $2 \times 3$ matrix, and $B$ is a $3 \times 2$ matrix, then $AB$ is a $3 \times 3$ matrix.
+(a) For the matrix $B$ in Q$1$, the entry $b_{21} = 1/3$.
 
-(b) For the matrix $B$ in Q$1$, the entry $b_{12} = 1/3$.
+(b) In any $3\times 3$ matrix $C = [c_{ij}]$, then $c_{13} = c_{31}$.
 
-(c) You can only add or subtract matrices that share the same dimensions.
+(c) Any diagonal matrix is an identity matrix.
 
-3. Multiply the following matrices, $$D = \begin{bmatrix} 
-3 & 0 \\ 
-4 & -2
-\end{bmatrix} \quad\textsf{ and }\quad E =
-\begin{bmatrix} 
-1 \\
-1/3\end{bmatrix}.$$ Give the first entry, $de_{11}$, of the product $DE$.
+(d) You can only add or subtract matrices that share the same dimensions.
+
+(e) A matrix can be both upper and lower triangular.
+
+3. You are given $D = \begin{bmatrix}1&-1\\0&4\end{bmatrix}$ and $E=\begin{bmatrix}-4&1\\1&-4\end{bmatrix}$. Find the $(2,2)$th entry of the matrix $D-3E$.
+
 :::
 
 # Further reading
 
-For more questions on this topic, please go to [Questions: Introduction to matrices].
+For more questions on this topic, please go to [Questions: Introduction to matrices](../questions/qs-introtomatrices.qmd).
 
-For more on this topic, please go to [Guide: Introduction to Gaussian elimination].
+For more operations of matrices outside of addition and scalar multiplications [Guide: Matrix multiplication](matrixmultiplication.qmd) and [Guide: Transposing matrices].
 
 ## Version history {-}
 

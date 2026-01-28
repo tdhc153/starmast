@@ -1,2 +1,1936 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jessica Taberner">
+
+<title>Introduction to matrices – STARMAST</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aa1d8570cb8b85794c5c5a916513ecb9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5f5484d7ec656626cab3b40347c418b2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-aa1d8570cb8b85794c5c5a916513ecb9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, alongside enabling our non-identifiable QuickCheck problem tracking. These are the sole purposes of enabling cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<script src="https://esm.sh/shinylive-r"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../logo-big.png" alt="" class="navbar-logo light-content">
+    <img src="../logo-big.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html"> 
+<span class="menu-text">Full index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="78946bb30c4840548b707679e0eb265d" class="alert alert-danger hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> Celebrating over 600 active users since launch - thank you for all your support! (01/12/25)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-a-matrix" id="toc-what-is-a-matrix" class="nav-link active" data-scroll-target="#what-is-a-matrix">What is a matrix?</a></li>
+  <li><a href="#working-with-matrices" id="toc-working-with-matrices" class="nav-link" data-scroll-target="#working-with-matrices">Working with matrices</a></li>
+  <li><a href="#special-matrices" id="toc-special-matrices" class="nav-link" data-scroll-target="#special-matrices">Special matrices</a>
+  <ul class="collapse">
+  <li><a href="#zero-matrix" id="toc-zero-matrix" class="nav-link" data-scroll-target="#zero-matrix">Zero matrix</a></li>
+  <li><a href="#square-matrix" id="toc-square-matrix" class="nav-link" data-scroll-target="#square-matrix">Square matrix</a></li>
+  <li><a href="#upper-and-lower-triangular-matrices" id="toc-upper-and-lower-triangular-matrices" class="nav-link" data-scroll-target="#upper-and-lower-triangular-matrices">Upper and lower triangular matrices</a></li>
+  <li><a href="#diagonal-matrices" id="toc-diagonal-matrices" class="nav-link" data-scroll-target="#diagonal-matrices">Diagonal matrices</a></li>
+  <li><a href="#identity-matrices" id="toc-identity-matrices" class="nav-link" data-scroll-target="#identity-matrices">Identity matrices</a></li>
+  </ul></li>
+  <li><a href="#addition-and-subtraction-with-matrices" id="toc-addition-and-subtraction-with-matrices" class="nav-link" data-scroll-target="#addition-and-subtraction-with-matrices">Addition and subtraction with matrices</a></li>
+  <li><a href="#scalar-multiplication" id="toc-scalar-multiplication" class="nav-link" data-scroll-target="#scalar-multiplication">Scalar multiplication</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="introtomatrices.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="introtomatrices.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to matrices</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Linear mathematics</div>
+    <div class="quarto-category">Matrices</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jessica Taberner </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    Matrices are rectangular arrays of mathematical objects with entries arranged in rows and columns. Matrices are a very useful concept within mathematics, you’ll see them used for solving simultaneous equations and much more. This guide will explain what they are, some special kinds of matrices, and how to add, subtract, and scalar multiply matrices.
+  </div>
+</div>
+
+
+</header>
+
+
+<table><tbody><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls=""><source src="./Narrations/introtomatrices.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></td></tr></tbody></table>
+<section id="what-is-a-matrix" class="level1 unnumbered">
+<h1 class="unnumbered">What is a matrix?</h1>
+<p>A matrix is a rectangular array or table, with entries in rows and columns. Understanding matrices can make solving equations more efficient and can open the door to learning much more mathematics.</p>
+<p>If you have read <a href="../studyguides/introtosimeqs.html">Guide: Introduction to solving simultaneous equations</a> then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations.</p>
+<p>Matrices are a fundamental tool within mathematics, and they have a wide range of real-life applications. They are used in computer graphics, data analysis, search engine optimization, cryptography, economics, robotics, genetics, quantum mechanics, and many more areas of study. Matrices are used anywhere where information needs to be analyzed and calculated efficiently.</p>
+<p>In this guide, you will see how you can: read, write, and understand matrices; learn how to do addition, subtraction and scalar multiplication with matrices; and be able to identify some special matrices.</p>
+</section>
+<section id="working-with-matrices" class="level1">
+<h1>Working with matrices</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of a matrix
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <span class="math inline">\(m \times n\)</span> <strong>matrix</strong> <span class="math inline">\(A\)</span> is a rectangular array of <span class="math inline">\(mn\)</span> many numbers (called <strong>entries</strong>) set out in <span class="math inline">\(m\)</span> <strong>rows</strong> and <span class="math inline">\(n\)</span> <strong>columns</strong>. You can write it like so:</p>
+<p><span class="math display">\[
+A = \begin{bmatrix}
+a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
+a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
+\end{bmatrix}
+\]</span></p>
+<p>This matrix has <strong>dimension</strong> <span class="math inline">\(m \times n\)</span>.</p>
+<p>The notation <span class="math inline">\(a_{ij}\)</span> refers to the <span class="math inline">\((i,j)\)</span>th entry of your matrix, that is the number in the <strong><span class="math inline">\(i\)</span>th row and the <span class="math inline">\(j\)</span>th column</strong>. An alternative way of writing the above matrix is <span class="math inline">\(A = [a_{ij}]\)</span>.</p>
+<p>You can specify the <span class="math inline">\((i,j)\)</span>th entry <span class="math inline">\(a_{ij}\)</span> of a particular matrix <span class="math inline">\(A\)</span> by writing <span class="math inline">\([A]_{ij} = a_{ij}\)</span>.</p>
+<!-- A matrix is **square** if $m = n$; so the shape of the matrix is square. -->
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The entries in a matrix are usually numbers, but they can be other mathematical objects. Any type of number could be an entry in a matrix, positive or negative, rational or irrational, real or complex. (If complex numbers are unfamiliar to you, you can read more about them at <a href="../studyguides/introtocomplexnumbers.html">Guide: Introduction to complex numbers</a>.</p>
+<p>Note that while entries can be other mathematical objects, for this study guide you will exclusively use entries within the real numbers.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here are some matrices:</p>
+<p><span class="math display">\[
+A =\begin{bmatrix}
+0 &amp; -2  \\
+\pi &amp; 5  \\
+1/3 &amp; 0
+\end{bmatrix},\quad\textsf{and}\quad B =
+\begin{bmatrix}
+-1 &amp; 2/5 &amp; 0 &amp; \sqrt{3}
+\end{bmatrix}
+\]</span></p>
+<p>As <span class="math inline">\(A\)</span> has three rows and two columns, it has dimension <span class="math inline">\(3 \times 2\)</span>. The entry in the 2nd row and 1st column is called <span class="math inline">\(a_{21} = [A]_{21}\)</span>, and here that is equal to <span class="math inline">\(\pi\)</span>. The entry in the 1st row and 2nd column is called <span class="math inline">\(a_{12} = [A]_{21}\)</span>, and here that is equal to <span class="math inline">\(-2\)</span>. You can notice here that <span class="math inline">\(a_{21}\)</span> is <strong>not equal</strong> to <span class="math inline">\(a_{12}\)</span>.</p>
+<p>Matrix <span class="math inline">\(B\)</span> here has dimension <span class="math inline">\(1 \times 4\)</span>, as it has one row and four columns. The entry in the 1st row and 2nd column is called <span class="math inline">\(b_{12} = [B]_{12}\)</span>, and here that is equal to <span class="math inline">\(2/5\)</span>. The entry in the 1st row and 4th column is called <span class="math inline">\(b_{14} = [B]_{12}\)</span>, and here that is equal to <span class="math inline">\(\sqrt{3}\)</span>.</p>
+<p><span class="math display">\[
+C =\begin{bmatrix}
+\sqrt{2} \\
+11 \\
+-3/8
+\end{bmatrix}, \quad\textsf{ and }\quad D=
+\begin{bmatrix}
+-5 &amp; 1/2 &amp; 0  \\
+0 &amp; 7 &amp; 4/9 \\
+-\pi &amp; 0 &amp; -\sqrt{3} \\
+-1 &amp; 5 &amp; 0 \\
+1/4 &amp; 0 &amp; 8
+\end{bmatrix}
+\]</span></p>
+<p>Matrix <span class="math inline">\(C\)</span> has dimension <span class="math inline">\(3 \times 1\)</span>, as it has three rows and one column.</p>
+<p>As <span class="math inline">\(D\)</span> has five rows and three columns, the matrix <span class="math inline">\(D\)</span> has dimension <span class="math inline">\(5 \times 3\)</span>.</p>
+</div>
+</div>
+<p>You can notice that <span class="math inline">\(B\)</span> only has one row; you can call such a matrix a <strong>row matrix</strong>. Similarly, you would call a matrix like <span class="math inline">\(C\)</span>, with only one column, a <strong>column matrix</strong>. These are commonly known as <strong>vectors</strong>. You can read more about vectors in <a href="../studyguides/introductiontovectors.html">Guide: Introduction to vectors</a>.</p>
+<!-- ::: {.callout-note appearance="simple"} -->
+<!-- ## Example 2 -->
+<!-- For example the $3 \times 2$ matrix, $\begin{bmatrix} 1 & 1  \\1 & 1  \\1 & 1 \end{bmatrix}$ could be written as $[1]_{32}$. -->
+<!-- ::: -->
+<p>One important set of entries in a matrix is the <strong>main diagonal</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of a main diagonal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(A=[a_{ij}]\)</span>, the entries <span class="math inline">\({a_{11},a_{22},\ldots,a_{kk}}\)</span> make up the <strong>main diagonal</strong> of <span class="math inline">\(A\)</span>. This is where</p>
+<ul>
+<li><span class="math inline">\(k = m\)</span> if <span class="math inline">\(m &lt; n\)</span></li>
+<li><span class="math inline">\(k = n\)</span> if <span class="math inline">\(n\leq m\)</span>.</li>
+</ul>
+<p>You can write the <strong>main diagonal</strong> using this notation:</p>
+<p><span class="math display">\[\textsf{diag}(A) = ({a_{11},a_{22},\ldots,a_{kk}})\]</span></p>
+<p>which state the entries of the main diagonal.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\textsf{diag}(A) = ({a_{11},a_{22},\ldots,a_{nn}})\)</span> is <strong>not</strong> a matrix, but a set of entries of the matrix.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What are the main diagonals of the matrices in Example 1?</p>
+<p>Since <span class="math inline">\(A\)</span> is a <span class="math inline">\(3\times 2\)</span> matrix, it follows that <span class="math inline">\(n &lt; m\)</span> and so <span class="math inline">\(k = 2\)</span>, meaning the main diagonal of <span class="math inline">\(A\)</span> is <span class="math inline">\(\textsf{diag}(A) = (a_{11},a_{22}) = (0,5)\)</span>. You can see these entries highlighted in bold below:</p>
+<p><span class="math display">\[A =\begin{bmatrix}\mathbf{0} &amp; -2  \\\pi &amp; \mathbf{5}  \\1/3 &amp; 0 \end{bmatrix}\]</span></p>
+<p>Since <span class="math inline">\(B\)</span> is a <span class="math inline">\(1\times 4\)</span> matrix, it follows that <span class="math inline">\(m &lt; n\)</span> and so <span class="math inline">\(k = 1\)</span>, meaning the main diagonal of <span class="math inline">\(B\)</span> is <span class="math inline">\(\textsf{diag}(B) = (b_{11}) = (-1)\)</span>. You can see this entry highlighted in bold below: <span class="math display">\[B = \begin{bmatrix}\mathbf{-1} &amp; 2/5 &amp; 0 &amp; \sqrt{3} \end{bmatrix}\]</span></p>
+<p>You do not need to be so thorough every time. You can read off the main diagonals of <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span> (entries highlighted in bold):</p>
+<p><span class="math display">\[
+C =\begin{bmatrix}
+\mathbf{\sqrt{2}} \\
+11 \\
+-3/8
+\end{bmatrix} \quad\textsf{ and }\quad D=
+\begin{bmatrix}
+\mathbf{-5} &amp; 1/2 &amp; 0  \\
+0 &amp; \mathbf{7} &amp; 4/9 \\
+\pi &amp; 0 &amp; \mathbf{-\sqrt{3}} \\
+-1 &amp; 5 &amp; 0 \\
+1/4 &amp; 0 &amp; 8
+\end{bmatrix}
+\]</span></p>
+<p>to say <span class="math display">\[\textsf{diag}(C) = (\sqrt{2})\quad\textsf{and}\quad\textsf{diag}(D) = (-5,7,-\sqrt{3}).\]</span></p>
+</div>
+</div>
+</section>
+<section id="special-matrices" class="level1">
+<h1>Special matrices</h1>
+<p>There are special matrices that often appear in mathematics and statistics.</p>
+<section id="zero-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="zero-matrix">Zero matrix</h2>
+<p>There are a special class of matrices where all of the entries are zero; they are somewhat uninspiringly called the <strong>zero matrices</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of a zero matrix
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <span class="math inline">\(m\times n\)</span> <strong>zero matrix</strong> <span class="math inline">\(0_{m\times n}\)</span> is the <span class="math inline">\(m\times n\)</span> matrix where all entries are <span class="math inline">\(0\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here are some zero matrices: <span class="math display">\[0_{1\times 3} = \begin{bmatrix}0&amp;0&amp;0\end{bmatrix},\quad 0_{3\times 1} = \begin{bmatrix}0\\0\\0\end{bmatrix}, \quad 0_{4\times 3} = \begin{bmatrix}0&amp;0&amp;0\\0&amp;0&amp;0\\0&amp;0&amp;0\\0&amp;0&amp;0\end{bmatrix}\]</span></p>
+</div>
+</div>
+<p>There is one zero matrix for every ordered pair of positive numbers <span class="math inline">\((m,n)\)</span>. There is one warning to say though:</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If <span class="math inline">\(m\neq n\)</span>, then <span class="math inline">\(0_{m\times n} \neq 0_{n\times m}\)</span>, as the matrices have different shapes! You saw this in Example 3, where <span class="math inline">\(0_{1\times 3} \neq 0_{3\times 1}\)</span>.</p>
+</div>
+</div>
+<p>Finally, here’s a way to define zero matrices using the alternative definition of a matrix.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can use the alternate way of writing a matrix to define the zero matrix: <span class="math display">\[0_{m\times n} = [a_{ij}] \quad \textsf{ where }\quad a_{ij} = 0 \textsf{ for }1\leq i \leq m\textsf{ and }1\leq j \leq n.\]</span> This way of defining matrices is incredibly common in computer coding, as it relies on for loops.</p>
+</div>
+</div>
+</section>
+<section id="square-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="square-matrix">Square matrix</h2>
+<p>The only time <span class="math inline">\(0_{m\times n} = 0_{n\times m}\)</span> is if <span class="math inline">\(m = n\)</span>. Then, the number of rows equals the number of columns, and so the matrix is <strong>square</strong>. This is precisely the definition of a <strong>square matrix</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of a square matrix
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A matrix <span class="math inline">\(A\)</span> is a <strong>square matrix</strong> if the number of rows of <span class="math inline">\(A\)</span> equals the number of columns of <span class="math inline">\(A\)</span>. So an <span class="math inline">\(m\times n\)</span> matrix is square if <span class="math inline">\(m = n\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here are some square matrices: <span class="math display">\[E = \begin{bmatrix}0&amp;-4&amp;\pi&amp;6\\e&amp;-1&amp;1&amp;1\\6&amp;6&amp;6&amp;6\\9&amp;4&amp;3&amp;-2\end{bmatrix},\quad F = \begin{bmatrix}1&amp;1\\0&amp;1\end{bmatrix}, \quad 0_{3\times 3} = \begin{bmatrix}0&amp;0&amp;0\\0&amp;0&amp;0\\0&amp;0&amp;0\end{bmatrix}\]</span></p>
+</div>
+</div>
+</section>
+<section id="upper-and-lower-triangular-matrices" class="level2">
+<h2 class="anchored" data-anchor-id="upper-and-lower-triangular-matrices">Upper and lower triangular matrices</h2>
+<p>A special kind of square matrix are <strong>upper and lower triangular matrices</strong>, where a large portion of the entries are <span class="math inline">\(0\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of upper and lower triangular matrices
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(A,B\)</span> are <span class="math inline">\(n\times n\)</span> square matrices. A matrix <span class="math inline">\(A\)</span> is an <strong>upper triangular matrix</strong> if every entry <em>below</em> the main diagonal of <span class="math inline">\(A\)</span> is <span class="math inline">\(0\)</span>. Similarly, <span class="math inline">\(B\)</span> is a <strong>lower triangular matrix</strong> if every entry <em>above</em> the main diagonal of <span class="math inline">\(B\)</span> is <span class="math inline">\(0\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>None of the matrices in Example 1 are upper or lower triangular, as they are all not square. The matrix <span class="math inline">\(E\)</span> in Example 2 is not upper triangular, as there is only one entry equalling <span class="math inline">\(0\)</span> and it is on the main diagonal.</p>
+<p>The matrix <span class="math inline">\(F\)</span> in Example 2 is upper triangular, as all the entries below the main diagonal are <span class="math inline">\(0\)</span>. You can see this in the recreation of <span class="math inline">\(F\)</span> below, where the main diagonal is highlighted in bold:</p>
+<p><span class="math display">\[F = \begin{bmatrix}\mathbf{1}&amp;1\\0&amp;\mathbf{1}\end{bmatrix}\]</span></p>
+<p>The zero matrix <span class="math inline">\(0_{3\times 3}\)</span> is <strong>both</strong> upper and lower triangular; as the entries both above and below the main diagonal are <span class="math inline">\(0\)</span>. The main diagonal is highlighted in bold to help you visualise this: <span class="math display">\[\quad 0_{3\times 3} = \begin{bmatrix}\mathbf{0}&amp;0&amp;0\\0&amp;\mathbf{0}&amp;0\\0&amp;0&amp;\mathbf{0}\end{bmatrix}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Similar to the zero matrices, you can use alternative definitions to specify upper and lower triangular matrices in more detail. For instance, for an <span class="math inline">\(n\times n\)</span> upper triangular matrix <span class="math inline">\(A\)</span>: <span class="math display">\[A = [a_{ij}] \quad \textsf{ where }\quad a_{ij} = 0 \textsf{ for }1\leq i &lt; j\leq n\]</span> and an <span class="math inline">\(n\times n\)</span> lower triangular matrix <span class="math inline">\(B\)</span> can be defined by <span class="math display">\[B = [b_{ij}] \quad \textsf{ where }\quad a_{ij} = 0 \textsf{ for }1\leq j &lt; i\leq n.\]</span></p>
+</div>
+</div>
+</section>
+<section id="diagonal-matrices" class="level2">
+<h2 class="anchored" data-anchor-id="diagonal-matrices">Diagonal matrices</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of a diagonal matrix
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(D\)</span> be a square <span class="math inline">\(n\times n\)</span> matrix. Then <span class="math inline">\(D\)</span> is a <strong>diagonal matrix</strong> if all entries not on the main diagonal are <span class="math inline">\(0\)</span>.</p>
+</div>
+</div>
+<p>This means that diagonal matrices are <strong>both</strong> upper and lower triangular matrices. So if a matrix is not upper triangular, then it can’t possibly be a diagonal matrix.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The matrix <span class="math inline">\(F\)</span> in Example 2 is not diagonal. Although it is upper triangular, as all the entries below the main diagonal are <span class="math inline">\(0\)</span>, it is not diagonal as there is a non-zero entry <span class="math inline">\(1\)</span> above the main diagonal.</p>
+<p><span class="math display">\[F = \begin{bmatrix}\mathbf{1}&amp;1\\0&amp;\mathbf{1}\end{bmatrix}\]</span></p>
+<p>The following matrices are all diagonal, with the main diagonal highlighted in bold so you can see that the entries above and below are all <span class="math inline">\(0\)</span>;</p>
+<p><span class="math display">\[G = \begin{bmatrix}\mathbf{0}&amp;0&amp;0\\0&amp;\mathbf{-1}&amp;0\\0&amp;0&amp;\mathbf{-1}\end{bmatrix}, \quad H = \begin{bmatrix}\mathbf{76}&amp;0\\0&amp;\mathbf{-45}\end{bmatrix}, \quad I_4 = \begin{bmatrix}\mathbf{1}&amp;0&amp;0&amp;0\\0&amp;\mathbf{1}&amp;0&amp;0\\0&amp;0&amp;\mathbf{1}&amp;0\\0&amp;0&amp;0&amp;\mathbf{1}\end{bmatrix}\]</span></p>
+<p>The zero matrix <span class="math inline">\(0_{3\times 3}\)</span> is diagonal, as the entries both above and below the main diagonal are <span class="math inline">\(0\)</span>: <span class="math display">\[0_{3\times 3} = \begin{bmatrix}\mathbf{0}&amp;0&amp;0\\0&amp;\mathbf{0}&amp;0\\0&amp;0&amp;\mathbf{0}\end{bmatrix}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can define an <span class="math inline">\(n\times n\)</span> diagonal matrix <span class="math inline">\(A\)</span> using the following: <span class="math display">\[A = [a_{ij}] \quad \textsf{ where }\quad a_{ij} = 0 \textsf{ for }1\leq i \neq j\leq n.\]</span></p>
+</div>
+</div>
+</section>
+<section id="identity-matrices" class="level2">
+<h2 class="anchored" data-anchor-id="identity-matrices">Identity matrices</h2>
+<p>The final special kind of matrix is the idea of an <strong>identity matrix</strong>:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of the identity matrix <span class="math inline">\(I_n\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <span class="math inline">\(n\times n\)</span> square matrix with all entries <span class="math inline">\(1\)</span> on the main diagonal and <span class="math inline">\(0\)</span>’s everywhere else is called the <span class="math inline">\(n\times n\)</span> <strong>identity matrix</strong> <span class="math inline">\(I_n\)</span>.</p>
+</div>
+</div>
+<p>You saw an example of an identity matrix in Example 5 (<span class="math inline">\(I_4\)</span>). Here are two more examples <span class="math display">\[I_2 = \begin{bmatrix}1&amp;0\\0&amp;1\end{bmatrix}, \quad I_6 = \begin{bmatrix}1&amp;0&amp;0&amp;0&amp;0&amp;0\\0&amp;1&amp;0&amp;0&amp;0&amp;0\\0&amp;0&amp;1&amp;0&amp;0&amp;0\\0&amp;0&amp;0&amp;1&amp;0&amp;0\\0&amp;0&amp;0&amp;0&amp;1&amp;0\\0&amp;0&amp;0&amp;0&amp;0&amp;1\end{bmatrix}\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The reason why identity matrices are called the identity matrices is because they act as ‘multiplicative identities’. See Guide: Matrix multiplication for more.</p>
+<p>You can define an <span class="math inline">\(n\times n\)</span> identity matrix <span class="math inline">\(I_n\)</span> using the following: <span class="math display">\[I_n = [a_{ij}] \quad \textsf{ where }\quad a_{ij} = \begin{cases}1 \textsf{ for }1\leq i = j\leq n\\[0.5em] 0 \textsf{ for }1\leq i \neq j\leq n.\end{cases}\]</span></p>
+</div>
+</div>
+</section>
+</section>
+<section id="addition-and-subtraction-with-matrices" class="level1 unnumbered">
+<h1 class="unnumbered">Addition and subtraction with matrices</h1>
+<p>In this section, you will see when and how you can add and subtract matrices. The first thing to notice is the following.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>You can only add and subtract matrices if they share the same dimensions.</strong></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of matrix addition and subtraction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be <span class="math inline">\(m\times n\)</span> matrices (so they have the same dimension). The <strong>matrix sum of</strong> <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> can be calculated by adding corresponding entries of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>,</p>
+<p><span class="math display">\[(A + B)_{ij} = a_{ij} + b_{ij}\]</span></p>
+<p>Similarly, the <strong>matrix difference of</strong> <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> can be calculated by subtracting corresponding entries of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>,</p>
+<p><span class="math display">\[(A - B)_{ij} = a_{ij} - b_{ij}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be the following two <span class="math inline">\(2 \times 2\)</span> matrices.</p>
+<p><span class="math display">\[A =\begin{bmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{bmatrix} \quad\textsf{ and }\quad B =
+\begin{bmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{bmatrix}\]</span></p>
+<p>The sum <span class="math inline">\(A + B\)</span> is:</p>
+<p><span class="math display">\[A + B = \begin{bmatrix} 1+5 &amp; 2+6 \\ 3+7 &amp; 4+8 \end{bmatrix}= \begin{bmatrix} 6 &amp; 8 \\ 10 &amp; 12 \end{bmatrix}\]</span> The difference <span class="math inline">\(A-B\)</span> is:</p>
+<p><span class="math display">\[A - B = \begin{bmatrix} 1-5 &amp; 2-6 \\ 3-7 &amp; 4-8 \end{bmatrix}= \begin{bmatrix} -4 &amp; -4 \\ -4 &amp; -4 \end{bmatrix}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Now let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be two <span class="math inline">\(3 \times 4\)</span> matrices.</p>
+<p><span class="math display">\[A = \begin{bmatrix}
+1 &amp; -3 &amp; 5 &amp; -4 \\
+3 &amp; 0 &amp; -2 &amp; 2 \\
+-7 &amp; 8 &amp; 4 &amp; 3
+\end{bmatrix}\quad\textsf{ and }\quad B =
+\begin{bmatrix}
+-1 &amp; 4 &amp; 3 &amp; -2 \\
+2 &amp; -3 &amp; 0 &amp; 1 \\
+-6 &amp; -3 &amp; 5 &amp; 1/2
+\end{bmatrix}\]</span></p>
+<p>To subtract these matrices, you can subtract the corresponding elements:</p>
+<p><span class="math display">\[
+A - B = \begin{bmatrix}
+1 - (-1) &amp; -3 - 4 &amp; 5 - 3 &amp; -4 - (-2) \\
+3 - 2 &amp; 0 - 3 &amp; -1/2 - 0 &amp; 2 - 1 \\
+-7 - (-6) &amp; 8 - (-3) &amp; 4 - 5 &amp; 3 -1/2
+\end{bmatrix}
+\]</span> Then you can simplify the signs, <span class="math display">\[
+A-B= \begin{bmatrix}
+1 + 1 &amp; -3 - 4 &amp; 5 - 3 &amp; -4 + 2 \\
+3 - 2 &amp; 0 - 3 &amp; -1/2 &amp; 2 - 1 \\
+-7 + 6 &amp; 8 + 3 &amp; 4 - 5 &amp; 3 - 1/2
+\end{bmatrix} = \begin{bmatrix}
+2 &amp; -7 &amp; 2 &amp; -2 \\
+1 &amp; -3 &amp; -1/2 &amp; 1 \\
+-1 &amp; 11 &amp; -1 &amp; 5/2
+\end{bmatrix}
+\]</span></p>
+</div>
+</div>
+<p>You saw earlier that you can only add and subtract matrices if they share the same dimensions. You can look to this non-example to see why this is the case.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Non-example
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+\begin{aligned}
+A &amp;=\begin{bmatrix}
+1 &amp; 2 &amp; -3 \\
+4/5 &amp; 0 &amp; 6 \end{bmatrix} \quad \textsf{(a }2 \times 3\textsf{ matrix)}\\[0.5em]
+B &amp;=\begin{bmatrix}
+-8 &amp; 8 \\
+0 &amp; 11\end{bmatrix} \quad \textsf{(a }2 \times 2\textsf{ matrix)}
+\end{aligned}
+\]</span></p>
+<p>Why can you not add <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>?</p>
+<p>Matrix addition requires that each entry in one matrix corresponds to an entry in the other matrix. But, since:</p>
+<ul>
+<li>Matrix <span class="math inline">\(A\)</span> has dimensions <span class="math inline">\(2 \times 3\)</span>, that is, 2 rows and 3 columns</li>
+<li>Matrix <span class="math inline">\(B\)</span> has dimensions <span class="math inline">\(2 \times 2\)</span>, that is, 2 rows and 2 columns</li>
+</ul>
+<p>they do <strong>not</strong> have the same dimensions. How you would attempt to calculate entries <span class="math inline">\((A+B)_{13}\)</span> and <span class="math inline">\((B-A)_{23}\)</span>?</p>
+</div>
+</div>
+</section>
+<section id="scalar-multiplication" class="level1 unnumbered">
+<h1 class="unnumbered">Scalar multiplication</h1>
+<p>Sometimes you can multiply a matrix by a number or variable. This is called <strong>scalar multiplication</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of scalar multipication with matrices
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>scalar multiplication</strong> of a matrix <span class="math inline">\(A\)</span>, by a number or variable <span class="math inline">\(k\)</span>, is obtained by multiplying each entry in <span class="math inline">\(A\)</span> by <span class="math inline">\(k\)</span>,</p>
+<p><span class="math display">\[kA =[k \cdot a_{ij}]\]</span></p>
+</div>
+</div>
+<p>You can now see a few examples of this.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s multiply a <span class="math inline">\(3 \times 2\)</span> matrix by a scalar.</p>
+<p><span class="math display">\[A =\begin{bmatrix}
+0 &amp; 4/3 \\
+-3 &amp; \sqrt{2} \\
+-7 &amp; 12
+\end{bmatrix} \quad\quad k=3\]</span></p>
+<p>To scalar multiply this matrix by <span class="math inline">\(3\)</span>, you multiply each element by <span class="math inline">\(3\)</span>:</p>
+<p><span class="math display">\[3A=\begin{bmatrix}
+{3 \cdot 0} &amp; {3 \cdot 4/3} \\
+{3 \cdot -3} &amp; {3 \cdot \sqrt{2}} \\
+{3 \cdot -7} &amp; {3 \cdot 12}
+\end{bmatrix}=\begin{bmatrix}
+0 &amp; 4 \\
+-9 &amp; 3\sqrt{2} \\
+-21 &amp; 36
+\end{bmatrix}\]</span></p>
+<p>To scalar multiply this matrix by <span class="math inline">\(x\)</span>, you multiply each element by <span class="math inline">\(x\)</span>: <span class="math display">\[xA=\begin{bmatrix}
+0 &amp; 4x \\
+-9x &amp; (3\sqrt{2})x \\
+-21x &amp; 36x
+\end{bmatrix}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s multiply a <span class="math inline">\(1 \times 4\)</span> matrix by a scalar.</p>
+<p><span class="math display">\[A =\begin{bmatrix}
+-6 &amp; 7/3 &amp; \pi &amp; 12 \end{bmatrix} \quad\quad k=-1/2\]</span></p>
+<p>To multiply this matrix by <span class="math inline">\(-1/2\)</span>, you can multiply each element by <span class="math inline">\(-1/2\)</span>:</p>
+<p><span class="math display">\[-\frac{1}{2}A=\begin{bmatrix}
+{-\frac{1}{2} \cdot -6} &amp; {-\frac{1}{2} \cdot 7/3} &amp; {-\frac{1}{2} \cdot \pi} &amp; {-\frac{1}{2}\cdot 12} \end{bmatrix} =\begin{bmatrix}
+-3 &amp; -7/6 &amp; -\pi/2 &amp; -6 \end{bmatrix}\]</span></p>
+</div>
+</div>
+<p>Now you can combine your understanding of matrix addition and scalar multiplication to tackle questions that ask for both of these skills.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let’s calculate <span class="math inline">\(A + 2B\)</span>, for <span class="math display">\[A =\begin{bmatrix}
+-2 &amp; 3 \\
+0 &amp; 1 \\
+\end{bmatrix} \quad\quad B =\begin{bmatrix}
+-1 &amp; 2 \\
+-1 &amp; -3 \\
+\end{bmatrix}\]</span></p>
+<p>First, let’s work out <span class="math inline">\(2B\)</span>, <span class="math display">\[2 B =
+\begin{bmatrix}\
+2 \cdot -1 &amp; 2 \cdot 2 \\
+2 \cdot -1 &amp; 2 \cdot -3 \end{bmatrix}\]</span> By carrying out these multiplications, you can arrive at, <span class="math display">\[2  B =
+\begin{bmatrix}\
+-2 &amp; 4 \\
+-2 &amp; -6 \end{bmatrix}\]</span> Now <span class="math inline">\(A + 2  B\)</span>, <span class="math display">\[A +  2B = \begin{bmatrix}
+-1 + (-2) &amp; 2 +4 \\
+-1 + (-2) &amp; -3+(-6) \\
+\end{bmatrix} = \begin{bmatrix}
+-3 &amp; 6 \\
+-3 &amp; -9 \\
+\end{bmatrix}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can also multiply two matrices together; see Guide: Matrix multiplication for more.</p>
+</div>
+</div>
+</section>
+<section id="quick-check-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Quick check problems</h1>
+<!-- add facility for webexercises to work on html -->
+<!-- add facility to check answers at end rather than one at a time -->
+<div class="webex-check webex-box" data-topic="ITM1">
+<ol type="1">
+<li>Give the dimensions of the following matrices:</li>
+</ol>
+<p><span class="math display">\[A = \begin{bmatrix}
+3 \\
+7
+\end{bmatrix} \quad\textsf{ and }\quad B =
+\begin{bmatrix}
+0 &amp; 4 &amp; -2 \\
+1/3 &amp; -5 &amp; 6 \\
+8 &amp; -3/7 &amp; 2
+\end{bmatrix} \quad\textsf{ and }\quad C =
+\begin{bmatrix}
+1 &amp; -6 \\
+-4 &amp; 2/3 \\
+0 &amp; 5 \\
+7/8 &amp; -9 \\
+0 &amp; -2
+\end{bmatrix}\]</span></p>
+<p>Answers:</p>
+<p>The dimension of <span class="math inline">\(A =\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"><span class="math inline">\(\times\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]">.</p>
+<p>The dimension of <span class="math inline">\(B =\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]"><span class="math inline">\(\times\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]">.</p>
+<p>The dimension of <span class="math inline">\(C =\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;5&quot;]"><span class="math inline">\(\times\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]">.</p>
+<ol start="2" type="1">
+<li>You are given five statements below. Decide whether they are true or false.</li>
+</ol>
+<ol type="a">
+<li><p>For the matrix <span class="math inline">\(B\)</span> in Q<span class="math inline">\(1\)</span>, the entry <span class="math inline">\(b_{21} = 1/3\)</span>. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+<li><p>In any <span class="math inline">\(3\times 3\)</span> matrix <span class="math inline">\(C = [c_{ij}]\)</span>, then <span class="math inline">\(c_{13} = c_{31}\)</span>. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select>.</p></li>
+<li><p>Any diagonal matrix is an identity matrix. Answer: <select class="webex-select"><option value="blank"></option><option value="">TRUE</option><option value="answer">FALSE</option></select></p></li>
+<li><p>You can only add or subtract matrices that share the same dimensions. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select>.</p></li>
+<li><p>A matrix can be both upper and lower triangular. Answer: <select class="webex-select"><option value="blank"></option><option value="answer">TRUE</option><option value="">FALSE</option></select></p></li>
+</ol>
+<ol start="3" type="1">
+<li>You are given <span class="math inline">\(D = \begin{bmatrix}1&amp;-1\\0&amp;4\end{bmatrix}\)</span> and <span class="math inline">\(E=\begin{bmatrix}-4&amp;1\\1&amp;-4\end{bmatrix}\)</span>. Find the <span class="math inline">\((2,2)\)</span>th entry of the matrix <span class="math inline">\(D-3E\)</span>.</li>
+</ol>
+<p>Answer: The entry <span class="math inline">\([D-3E]_{22} =\)</span> <input class="webex-solveme nospaces" size="2" data-answer="[&quot;16&quot;]">.</p>
+</div>
+</section>
+<section id="further-reading" class="level1">
+<h1>Further reading</h1>
+<p>For more questions on this topic, please go to <a href="../questions/qs-introtomatrices.html">Questions: Introduction to matrices</a>.</p>
+<p>For more operations of matrices outside of addition and scalar multiplications Guide: Matrix multiplication and [Guide: Transposing matrices].</p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 04/25 by Jessica Taberner as part of a University of St Andrews VIP project.</p>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+  let allCorrect = false;
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) 
+  {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
+  }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Answers";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Show Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if (this.dataset.tol > 0)
+  {
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Show Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* check each question to see whether it was answered correctly */
+  update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
+}
+
+</script>
+<!--------------------  Email Forms -----------------------------------
+        Compiled into each .html page by Quarto.
+        Website hosted and form handled by Netlify now
+        Mailing list provided by mailerlite
+        Input verified by reCaptcha2 
+        
+        Authors (recent to latest): 
+           Tristin Doherty (Trido)
+           Mohit Agarwal (Mohit-Agarwa1)
+--------------------------------------------------------------------->
+<script>
+  // Adds an extra layer of validation to aid user input,
+  // some of these are covered by basic html form validations as well, but netlify handles everything else
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[name='feedback']"); 
+    
+    form.addEventListener("submit", function(event) {
+        const nameInput = document.querySelector("input[name='name']")?.value.trim();
+        const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+        const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+
+        if (!nameInput)    { alert("Please enter a name."); return; }
+        if (!emailInput)   { alert("Please enter an email."); return; }
+        if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+        
+        event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+        const subjectInput = document.querySelector("input[name='subject']");
+                
+        // sanitise inputs
+        const sanitizedName = sanitizeInput(nameInput); 
+        const sanitizedEmail = sanitizeEmail(emailInput);
+        const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+        // validate email
+        if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+        subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+        form.submit();
+    });
+});
+
+// Removes leading and trailing whitespace for formatting, and replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+function sanitizeInput(input) {
+  input = input.trim();                                      
+  input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return input;
+}
+
+// remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+function sanitizeEmail(email) {
+  email = email.trim(); 
+  email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+  return email;
+}
+
+// This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+function validateEmail(email) {
+  const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+  return re.test(email);
+}
+
+</script>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here, <br>
+but please be specific with any issues you encounter so we can help to resolve them <br>
+(for example, what page it occured on, what you tried, and so on). </p>
+
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+  <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+  <input type="hidden" name="subject" value="Feedback from unknown">
+
+  <label for="name">Name: </label>
+  <br>
+  <input type="text" name="name" required="">
+  <br><br>
+  
+  <label for="email">E-mail: </label>
+  <br>
+  <input type="email" name="email" required="">
+  <br><br>
+  
+  <label for="feedback">Feedback: </label>
+  <br>
+  <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+  <br><br>
+
+  <!-- Google reCAPTCHA Widget -->
+  <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+  <br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.VERTICAL },
+      'google_translate_element'
+    );
+  }
+</script>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    const targetSidebar = document.getElementById('quarto-margin-sidebar');
+    if (!targetSidebar) return;
+
+    const translateWrapper = document.createElement('div');
+    translateWrapper.className = 'sidebar-section';
+    translateWrapper.style.marginTop = '2em';
+
+    const title = document.createElement('h5');
+    title.innerText = 'Translate';
+
+    const translatorDiv = document.createElement('div');
+    translatorDiv.id = 'google_translate_element';
+
+    translateWrapper.appendChild(title);
+    translateWrapper.appendChild(translatorDiv);
+    targetSidebar.appendChild(translateWrapper);
+
+    const googleScript = document.createElement('script');
+    googleScript.type = 'text/javascript';
+    googleScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(googleScript);
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>STARMAST © 2025 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

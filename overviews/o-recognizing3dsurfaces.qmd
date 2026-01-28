@@ -6,11 +6,11 @@ abstract: An overview of different three-dimensional surfaces with their corresp
 draft: true
 ---
 
-*Before reading this overview, it is recommended that you read [Guide: Introduction to coordinates], [Overview: Recognizing 2D curves] and [Guide: Introduction to 2D conic sections].*
+*Before reading this overview, it is recommended that you read [Guide: Introduction to polar coordinates], [Overview: Recognizing 2D curves] and [Guide: Introduction to 2D conic sections].*
 
 # What is a 3D surface?
 
-When graphs first appear in mathematics, they are often shown as curves in a plane. A **point** is described by two coordinates $(x,y)$, and a **curve** shows how one variable depends on the other. In this overview, the focus shifts up one dimension to shapes in three dimensions, expanding upon what you learned in [Overview: Recognizing 2D curves]. These shapes are called **surfaces**.
+When graphs first appear in mathematics, they are often shown as curves in a plane. A **point** is described by two coordinates $(x,y)$, and a **curve** $(x,f(x))$ shows how one variable depends on the other by some function $f(x)$ of $x$. In this overview, the focus shifts up one dimension to shapes in three dimensions, expanding upon what you learned in [Overview: Recognizing 2D curves]. These shapes are called **surfaces**.
 
 In three-dimensional space, each point has three coordinates $(x,y,z)$. It is helpful to think of $x$ and $y$ as a position in a horizontal plane, and $z$ as the height above or below that plane. A surface is a collection of points $(x,y,z)$ that fit a particular rule.
 
@@ -22,6 +22,7 @@ A **3D surface** is a set of points $(x,y,z)$ that satisfy an equation.
 There are two common ways to write such an equation.
 
 * A graph of a function of two variables has an equation of the form $z=f(x,y)$. This is an equation in terms of $x$ and $y$, where $z$ is the subject. For each pair $(x,y)$ in the domain of the function, the equation gives a height $z$. The surface is the set of all points $(x,y,z)$ with that height.
+
 * A **level surface** has an equation of the form $F(x,y,z) = c$ for some constant $c$. For example, the equation $x^2+y^2+z^2 = 4$ describes a sphere of radius $\sqrt{4} = 2$. Every point on that sphere satisfies the equation.
 
 :::
@@ -31,6 +32,7 @@ Sometimes a level surface can be rewritten as a graph of a function of two varia
 This overview concentrates on a small number of important families of surfaces. The aim is to recognize these surfaces from their equations and from their graphs. Throughout this overview, interactive graphs provide a way to explore surfaces directly. These graphs can be rotated, zoomed, and inspected from different viewpoints. The first example below shows a surface given by an equation of the form $z=f(x,y)$.
 
 ::: {.content-visible when-format="html"}
+
 This interactive graph shows a surface of the form $z = a x^2 - b y^2 + c$. 
 The sliders for $a$ and $b$ control the curvature in the $x$- and $y$-directions, changing how steeply the surface bends up or down, while the slider for $c$ shifts the surface vertically. You will learn more about this surface later.
 
@@ -88,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
 :::
 
 ::: {.content-hidden when-format="html"}
+
 The graph below shows a surface of the form $z = a x^2 - b y^2 + c$. The figure illustrates how a quadratic expression in two variables defines a three-dimensional surface. You will learn more about this specific graph later.
 
 ![A general surface of the form $z = a x^2 - b y^2 + c$.](FiguresPNG/o-recognizing3dsurfaces-fig1.png){fig-align="center"}
@@ -98,6 +101,7 @@ The graph below shows a surface of the form $z = a x^2 - b y^2 + c$. The figure 
 A full view of a surface often contains many features at once. A helpful way to focus on part of the surface is to cut it with a plane and study the slice. A slice is created by fixing one coordinate and allowing the other two coordinates to vary. The result is a curve that lies in a plane.
 
 * Fixing a value of $z$ (for example $z=c$) gives a **horizontal slice**. The equation of the surface then becomes a relation between $x$ and $y$ in the $xy$-plane.
+
 * Fixing a value of $x$ or $y$ (for example $x=a$ or $y=b$) gives a **vertical slice**. The surface is viewed inside a vertical plane.
 
 Each slice is a two-dimensional picture of part of the surface. By combining several slices, it is possible to build a mental image of the full three-dimensional shape.
@@ -113,6 +117,7 @@ A **trace** is a cross-section taken in a plane parallel to one of the coordinat
 * the trace in the plane $x=a$ or $y=b$ (a vertical slice)
 
 These traces are curves in two dimensions that describe how the surface behaves along that slice.
+
 :::
 
 Many surfaces in this overview are recognized by the appearance of their traces. For a surface like a sphere, horizontal traces $z=c$ are circles of different radii.
@@ -120,6 +125,7 @@ Many surfaces in this overview are recognized by the appearance of their traces.
 The curves that appear in these slices are often circles, ellipses, parabolas or hyperbolas. These curves are examples of **conic sections**. Their detailed properties, and the different algebraic forms they can take, are explained in [Guide: Introduction to 2D conic sections]. In this overview, they act as a language for describing what the slices of a three-dimensional surface look like.
 
 ::: {.content-visible when-format="html"}
+
 The interactive graphs below show a surface $z = f(x,y)$ together with a vertical plane $y = a$. The slider moves the plane left and right. The yellow curve marks the intersection between the plane and the surface. The 2D graph underneath displays the same trace in the $xz$-plane, with equation $z = f(x,a)$. Updating the slider changes both the vertical slice and its two-dimensional counterpart, showing how a family of traces helps describe the full surface.
 
 <div id="calculator3d" style="width: 100%; height: 400px;"></div>
@@ -222,6 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
 :::
 
 ::: {.content-hidden when-format="html"}
+
 The graphs below show the surface $z = f(x,y)$ together with a vertical slice in the plane $y = a$. Changing $a$ moves the plane and updates the yellow intersection curve. The graph on the right shows this same curve as a two-dimensional trace $z = f(x,a)$ in the $xz$-plane. The pair of graphs illustrates how vertical slices reveal the structure of a surface.
 
 ![Intersection of the surface $z = f(x,y)$ with the plane $y = a$, shown with its 2D trace $z = f(x,a)$.](FiguresPNG/o-recognizing3dsurfaces-fig2.png){fig-align="center"}
@@ -239,6 +246,7 @@ A plane can be described by a single linear equation in the three variables $x$,
 A **plane** in a three-dimensional space is a surface given by an equation of the form $$ax + by + cz = d$$ where $a$, $b$, $c$ and $d$ are constants, and at least one of $a$, $b$ and $c$ is non-zero.
 
 Another common way to write the equation of a plane is $$z = mx + ny + c$$ provided $c$ here is a constant and the equation is linear in $x$ and $y$.
+
 :::
 
 The numbers $a$, $b$ and $c$ control the orientation of the plane. Changing these values tilts the plane in different directions. The constant $d$ controls where the plane sits in space. Changing this value moves the plane parallel to itself without changing its orientation.
@@ -248,7 +256,7 @@ A quick way to recognize the equation of a plane is to look at the powers of the
 ::: {.callout-note appearance="simple"}
 ## Example 1
 
-Consider the equation $$z = 2 - x - \frac{1}{2}y$$
+Consider the equation $$z = 2 - x - \frac{1}{2}y.$$
 
 Every point $(x,y,z)$ on this plane satisfies this rule. For instance:
 
@@ -257,11 +265,13 @@ Every point $(x,y,z)$ on this plane satisfies this rule. For instance:
 * When $x=0$ and $y=4$, the equation gives $z=0$, so the point $(0,4,0)$ lies on the plane.
 
 These three points do not lie on a straight line. The plane passes through all of them, and through every other point that satisfies the equation.
+
 :::
 
 Planes often appear as slices of other surfaces. For example, taking the cross-section of a curved surface with a plane produces a curve. Later sections will use planes to cut through spheres, cylinders and other shapes. In each case, the points of intersection are those that satisfy both equations at once (the equation of the plane and the equation of the curved surface).
 
 ::: {.content-visible when-format="html"}
+
 This interactive graph shows the plane $z = a x + b y + c$. The sliders for $a$ and $b$ tilt the plane in different directions, while the slider for $c$ shifts it up or down without changing its orientation. All points on the plane satisfy this rule, and adjusting the sliders demonstrates how the coefficients control the plane’s tilt and height.
 
 <div id="plane-3d" style="width: 100%; height: 410px;"></div>
