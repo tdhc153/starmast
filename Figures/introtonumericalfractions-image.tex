@@ -7,9 +7,29 @@
 
 \centering
 \renewcommand{\arraystretch}{1}
-\begin{tikzpicture}[yscale=2,xscale=1,scale=0.5,inner sep=0.3mm, label distance=1.5mm]
+\begin{tikzpicture}[yscale=1,xscale=1,scale=0.5,inner sep=0.3mm, label distance=1.5mm]
 
-\node(t) at (0,1) {\Large $\dfrac{13}{5} = 2\,\dfrac{3}{5}$};
+\node(t) at (-2.75,0) {$\dfrac{5}{8}$};
+\def\radius{2}
+  \def\n{8}      % number of slices
+  \def\k{5}      % number of shaded slices
+
+  % shaded sectors
+  \foreach \i in {0,...,\numexpr\k-1\relax} {
+    \fill[sblu!50]
+      (0,0) -- (\i*360/\n:\radius)
+      arc[start angle=\i*360/\n,
+          end angle=(\i+1)*360/\n,
+          radius=\radius] -- cycle;
+  }
+
+  % circle outline
+  \draw (0,0) circle (\radius);
+
+  % radial lines
+  \foreach \i in {0,...,\numexpr\n-1\relax} {
+    \draw (0,0) -- (\i*360/\n:\radius);
+  }
 
 \end{tikzpicture}
 

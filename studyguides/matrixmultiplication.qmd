@@ -134,6 +134,121 @@ Matrix multiplication is **non-commutative**. This means that it is not always t
 
 To take a better look at this unusual property, you can now see some examples of this in action.
 
+```{=html}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Propositional Logic Truth Table</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 20px;
+    }
+    input, button {
+      margin: 5px 0;
+      padding: 5px;
+      font-size: 1rem;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 6px 10px;
+      text-align: center;
+    }
+    th {
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Interactive Propositional Logic Truth Table</h2>
+
+<label>
+  Variables (comma separated):
+  <input id="vars" value="P,Q">
+</label>
+<br>
+
+<label>
+  Formula:
+  <input id="formula" value="P && Q">
+</label>
+<br>
+
+<button onclick="generate()">Generate Truth Table</button>
+
+<div id="table"></div>
+
+<script>
+function parseFormula(formula) {
+  return formula
+    .replace(/->/g, "|| !")        // temporary placeholder
+    .replace(/<->/g, "===")
+}
+
+function implication(a, b) {
+  return !a || b
+}
+
+function generate() {
+  const vars = document.getElementById("vars").value
+    .split(",")
+    .map(v => v.trim())
+    .filter(Boolean)
+
+  const rawFormula = document.getElementById("formula").value
+
+  const rows = Math.pow(2, vars.length)
+  let html = "<table><tr>"
+
+  vars.forEach(v => html += `<th>${v}</th>`)
+  html += `<th>${rawFormula}</th></tr>`
+
+  for (let i = 0; i < rows; i++) {
+    let env = {}
+    html += "<tr>"
+
+    vars.forEach((v, idx) => {
+      const value = Boolean((i >> (vars.length - idx - 1)) & 1)
+      env[v] = value
+      html += `<td>${value ? "T" : "F"}</td>`
+    })
+
+    try {
+      let expr = rawFormula
+      vars.forEach(v => {
+        expr = expr.replaceAll(v, env[v])
+      })
+
+      expr = expr
+        .replace(/<->/g, "===")
+        .replace(/(\w+)\s*->\s*(\w+)/g, "(!($1) || $2)")
+
+      const result = eval(expr)
+      html += `<td>${result ? "T" : "F"}</td>`
+    } catch {
+      html += "<td>Error</td>"
+    }
+
+    html += "</tr>"
+  }
+
+  html += "</table>"
+  document.getElementById("table").innerHTML = html
+}
+</script>
+
+</body>
+</html>
+
+```
+
 ::: {.content-visible when-format="html"}
 
 ```{=html}
