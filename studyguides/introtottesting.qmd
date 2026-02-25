@@ -1,0 +1,1141 @@
+---
+title: "Introduction to $t$-testing"
+author: Millie Harris
+abstract-title: Summary
+abstract: A $t$-test is a statistical test used to compare the means of two groups of data. They are a specific type of hypothesis test, where the test statistic follows a $t$-distribution. This guide will focus on the different types of $t$-test, explain when each one is used and show you how to construct and use them in practice.  
+categories:
+  - Statistics
+  - Probability
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, it is recommended that you read [Guide: Introduction to hypothesis testing](hypothesistesting.qmd), [Guide: Introduction to probability](introtoprobability.qmd), and* [Factsheet: t-distribution](f-tdist.qmd)
+
+# What is a $t$-test and when do you use a $t$-test?
+
+A $t$**-test** is a commonly used statistical method for comparing means and determining whether any observed differences are statistically significant. $t$**-testing** is most suitable when working with small sample sizes and when the population standard deviation is unknown. $t$**-tests** can be used to compare the mean of a single group to a known value, or to compare the means of two groups, either independent or not.
+
+For example, if you had two samples of bags of sweets and were looking to compare their average weights, you could use a $t$**-test.** Or, if you had one sample of a bag of sweets and wanted to know whether the difference in its mean, to the market average of $100$ grams, was statistically significant, you could also use a $t$**-test.**
+
+$t$**-tests** are a special case of hypothesis testing, where the test statistic follows a $t$-distribution. For more on hypothesis testing, see [*Guide: Introduction to hypothesis testing*](hypothesistesting.qmd) *and for more on* $t$-distributions, see [Factsheet: $t$-distribution](../factsheets/f-tdist.qmd)*.*
+
+# What types of $t$-test are there?
+
+The **type of** $t$**-test** you use depends on: The number of samples you have; the type of samples you have, and the properties of the variances of the samples you have.
+
+The two types of $t$-test you find are the **Student's** $t$**-test** the **Welch's** $t$**-test.**
+
+::: callout-note
+## Definition of the Student's $t$-test
+
+A **Student's** $t$**-test** is a statistical test conducted to look at the significance of population means. It is a special type of hypothesis testing where the test statistic follows a Student's $t$-distribution and the observations are assumed to have common, unknown variance $(\sigma^2)$.
+:::
+
+::: callout-note
+## Definition of the Welch's $t$-test
+
+A **Welch’s** $t$**-test** is a two sample hypothesis test of population means in which the test statistic follows a $t$-distribution approximately, without assuming a common population variance. Instead, it allows the two populations to have unequal and unknown variances $(\sigma_{1}^2)$ and $(\sigma_{2}^2)$.
+:::
+
+## So, what is the difference?
+
+The difference between the Student's $t$-test and Welch's $t$-test is their assumption about the variances.
+
+-   Students $t$-test: **Assumes equal variances** across samples
+
+-   Welch's $t$-test: **Does not assume equal variance** across samples
+
+For more information on variances, see [Guide: Expected value, variance, standard deviation](expectedvariance.qmd)
+
+These $t$-tests cover different scenarios. You can perform $t$-tests on one sample of data, two samples of data, paired, and unpaired data and will use either a **Student's** $t$**-test** or **Welch's** $t$**-test** for each.
+
+# When to use a Student's $t$-test
+
+## 1. One-sample test
+
+A **one-sample Student's** $t$**-test** is a test where you have a single group of data, with one sample mean. The test involves comparing the sample mean to a particular value. For example, comparing the average weight of a chocolate bar from a sample to the market average of $50$ grams.
+
+The Student's $t$-test is conducted by setting the null hypothesis to be that the sample mean equals the particular value. So, for the example above, the null hypothesis says that the sample mean is equal to $50$.
+
+## 2. Two-sample test
+
+A **two-sample Student's** $t$**-test** is a test were you have two groups of data, with two sample means. The test involves comparing the sample means to **one another.** For example, are the average weights of two samples of chocolate bars the same? What makes the two-sample $t$-test specifically a Student's $t$-test is that you know, or assume, constant variance. In this scenario, that means that the population variances of the two samples of weights of chocolate bars **are the same.**
+
+The Student's $t$-test is conducted by setting the null hypothesis to be that the sample means of the two groups of data are equal to each other. So, for the example above, the null hypothesis says that the first sample mean is equal to the second sample mean.
+
+## 3. Paired test
+
+A **paired Student’s t-test** is used to determine whether the sample means of two groups of data are the same. Just as in a two-sample test. The difference is that the paired test is typically applied when the same subjects are measured twice. For example, measuring the weights of sweets before and after a sugar coating. Or, when observations are naturally matched in pairs.
+
+Rather than comparing two independent means, the **Student's** $t$**-test** works by calculating the **differences** within each pair and then performing a one-sample $t$-test on these differences.
+
+::: callout-tip
+## Summary: When to use a Student's $t$-test
+
+-   One-sampled tests are always Student's $t$-tests
+
+-   Two-sampled tests with constant variance
+
+-   Paired tests with constant variance
+:::
+
+# When to use a Welch's $t$-test
+
+## 1. Two-sample test, unpaired (independent)
+
+A **Welch's** $t$**-test** must always be a two-sample test. This is because the **Welch's** $t$**-test** is used on samples with **unequal variances and be independent**. It still measures that the sample means of the two populations are the same. For example, for two samples of bags of sweets with average weights $53$ grams and $49$ grams, with sample variances $1$ gram and $2$ grams, you would use a Welch's $t$-test.
+
+The **Welch's** $t$**-test** is conducted the same way as a Student's $t$-test but the test statistic accounts for the different variances.
+
+::: callout-tip
+## Summary: When to use a Welch's $t$-test
+
+-   Two-sampled tests with non-constant variance
+:::
+
+# What other assumptions are made when using $t$-tests?
+
+## 1. Normality
+
+For all types of $t$-testing, it is assumed that the observations of the samples follow a **normal distribution**.
+
+For more information on the **normal distribution**, see [Guide: Expected value, variance, standard deviation](expectedvariance.qmd), [Overview: Probability distributions](o-distributions.qmd), and [Factsheet: Normal distribution](f-normaldist.qmd),
+
+## 2. Independence
+
+All types of $t$-test require the observations to be **independent**. So, within the sample itself, the observations must be **independent**. Also, for more than one sample, the observations between samples must be **independent** too.
+
+## 3. Sampling methods
+
+$t$-testing assumes that all of the data used is collected using a random sampling method. Typically, this method is **simple random sampling**. Meaning that all of the data is selected randomly using a random number generator.
+
+For more information on **simple random sampling**, see [Factsheet: Simple random sampling](fs-srs.qmd).
+
+# How to construct a $t$-test
+
+A $t$**-test** is constructed similarly to a hypothesis test with a test statistic that follows the $t$-distribution. For more on hypothesis testing, see [*Guide: Introduction to hypothesis testing*](hypothesistesting.qmd)
+
+::: callout-important
+A Student's $t$-test and a Welch's $t$-test are conducted are both special cases of hypothesis testing, with **different null and alternative hypotheses** and **different test statistics**.
+:::
+
+## Step 1: What type of $t$-test?
+
+Before performing your $t$-test it is important to know what type of data you have and from that, decide what type of test you will perform.
+
+This includes:
+
+-   Is your data one or two-sampled?
+
+-   Is your data paired or unpaired (independent)?
+
+-   If you have a two-sample data set, is the variance constant?
+
+You must also decide what type of difference you are looking for with the means. This will tell you if you want to perform a **one or two tailed test**.
+
+-   If you want to know whether the two populations are different from each other, perform a **two-tailed test**
+
+-   If you want to know whether one population mean is greater or less than the other, perform a **one-tailed test**
+
+For more about one and two tailed tests and why they are used, see: [Guide: One and two-tailed tests](tailedtests.qmd)
+
+## Step 2: Define your null and alternative hypothesis
+
+$$
+H_0
+$$
+
+is your **null hypothesis.** This is what you have believed to be to be true. For example, in a one-sample test where you are comparing the average weight of a bag of sweets to the market average of $100$ grams
+
+$$
+H_0:\mu=100
+$$
+
+and
+
+$$
+H_1
+$$
+
+is your **alternative** **hypothesis**. This is the alternative case which you are testing for. For example, in a one-sample test where you are comparing the average weight of a bag of sweets to the market average of $100$ grams
+
+$$
+H_1:\mu \neq 100
+$$
+
+::: callout-important
+Your null and alternative hypothesis will depend on the type of test, amount and types of samples you have.
+:::
+
+::: callout-note
+## Example 1
+
+Cantor's Confectionery want to know whether their best selling bag of sweets differ significantly in weight from the market average. The current market average is $100$ grams. They first take one sample. What is the null and alternative hypothesis?
+
+$$
+H_0:\mu=100
+$$
+
+$$
+H_1: \mu \neq100
+$$
+
+$H_0$ is what Cantor's Confectionery expect to be true and are testing against whereas $H_1$ is what the alternative case is and what they are testing for.
+
+What type of test is this the hypothesis for?
+
+A **one-sample Student's** $t$**-test**.
+:::
+
+::: callout-note
+## Example 2
+
+Cantor's Confectionery now take a second sample. They call the average weight of sample one $\mu_1$ and the average weight of sample two $\mu_2$. The two samples have the same constant variance. What is the null and alternative hypothesis?
+
+$$
+H_0:\mu_1 = \mu_2
+$$
+
+$$
+H_1: \mu_1 \neq \mu_2
+$$
+
+$H_0$ is what Cantor's Confectionery expect to be true and are testing against whereas $H_1$ is what the alternative case is and what they are testing for.
+
+What type of test is this the hypothesis for?
+
+A **two-sample Student's** $t$**-test**, as variance is constant.
+:::
+
+## Step 3: Decide on your level of significance $(\alpha)$
+
+For all types of hypothesis testing, including $t$-testing. You need to choose a level of significance. This is sometimes called the alpha value and is denoted by $\alpha$. It defines the probability of rejecting the null hypothesis, when it is true. This is also known as making a Type l error.
+
+$\alpha$ gives a threshold to decide whether a result is statistically significant, or not and is decided by you **before** performing the $t$-test.
+
+In statistical testing and $t$-testing, it is very common to come across alpha values such as
+
+$$
+\alpha = 0.10
+$$
+
+$$
+\alpha = 0.05
+$$
+
+$$
+\alpha = 0.01
+$$
+
+as they allow small margins for making a Type l error.
+
+## Step 4: Calculate your test statistic $(\tau)$
+
+The **test statistic** is used to tell you how far away your result is from the null. How you calculate $\tau$ depends on the type of test you are conducting and the number of samples you have.
+
+::: callout-tip
+## What does the test statistic tell you?
+
+-   If your test statistic is **small**, it suggests that your result is **close** to what was predicted in your null hypothesis
+
+-   If your test statistic is **large**, it suggests that your result is **far** to what was predicted in your **null** hypothesis
+
+This is because the test statistic is a measurement of **how many** standard errors away your sample mean is.
+:::
+
+### One-sample test statistic
+
+For a **one-sample test,** where:
+
+-   $\bar{x}$ is the sample mean
+
+-   $\mu_0$ is the particular value you are comparing the sample mean to
+
+-   $s$ is the sample standard deviation
+
+-   $n$ is the sample size
+
+then the $t$**-test statistic** $(\tau)$ is:
+
+$$
+\tau=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}
+$$
+
+::: callout-important
+Often, $s/\sqrt{n}$ is referred to as the **standard error** of the sample.
+:::
+
+::: callout-note
+## Example 3
+
+Cantor's Confectionery need to calculate a test statistic for the small, one sample, $t$-test that they are performing. Their computer outputs the following information after taking one sample of the average weights of bags of sweets, which they want to compare to the market average:
+
+| Quantity                  | Symbol    | Value and unit |
+|---------------------------|-----------|----------------|
+| Sample mean               | $\bar{x}$ | $92$ grams     |
+| Market average            | $\mu_0$   | $88.5$ grams   |
+| Sample standard deviation | $s$       | $2.3$ grams    |
+| Sample number             | $n$       | $13$           |
+
+The test statistic is given by
+
+$$
+\tau=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}
+$$
+
+so
+
+$$
+\tau = \frac{92 - 88.5}{2.3/\sqrt{13}}\\
+$$
+
+$$
+\tau = 5.49
+$$
+:::
+
+### Two-sample test statistic
+
+For a **two-sample test,** where:
+
+-   $\mu_1$ is the sample mean of the first sample
+
+-   $\mu_2$ is the sample mean of the second sample
+
+-   $s_1$ is the sample standard deviation of the first sample
+
+-   $s_2$ is the sample standard deviation of the second sample,
+
+-   $n_1$ is the sample size of the first sample
+
+-   $n_2$ is the sample size of the second sample
+
+then the $t$**-test statistic** $(\tau)$ is:
+
+$$ \tau=\frac{\mu_1-\mu_2}{\sqrt{(\frac{s_1^2}{n_1})+(\frac{s_2^2}{n_2})}} $$
+
+::: callout-note
+## Example 4
+
+A rival company, Lovelace's Lollies, perform a two sample $t$-test on their best selling bags of sweets. They want to calculate a test statistic using the following information from their computer output:
+
+| Quantity                      | Symbol   | Value and unit |
+|-------------------------------|----------|----------------|
+| Sample $1$ mean               | $\mu_1$  | $94.23$ grams  |
+| Sample $2$ mean               | $\mu_2$  | $94.76$ grams  |
+| Sample $1$ standard deviation | $s_1$    | $0.49$ grams   |
+| Sample $2$ standard deviation | $s_2$    | $0.49$ grams   |
+| Sample $1$ size               | $n_1$    | $15$           |
+| Sample $2$ size               | $n_2$    | $18$           |
+| Population variance           | $\sigma$ | $0.2401$ grams |
+
+The test statistic is given by
+
+$$ \tau=\frac{\mu_1-\mu_2}{\sqrt{(\frac{s_1^2}{n_1})+(\frac{s_2^2}{n_2})}} $$
+
+so
+
+$$
+ \tau = \frac{94.23 - 94.76}{\sqrt{(\frac{0.49^2}{15}) + (\frac{0.49^2}{18})}}
+$$
+
+$$
+\tau = -2.17
+$$
+
+The population variance is **constant**. This example is a **Student's** $t$**-test statistic**.
+:::
+
+::: callout-important
+A test statistic can be negative! The sign of a test statistic depends on the **nature** of the test and the data you have. In **Example 4**, sample mean 2 is greater than sample mean 1 and so you have a negative result.
+:::
+
+::: callout-note
+## Example 5
+
+Cantor's Confectionery now take a second sample of bags of sweets on another day to compare to their first sample in **Example 3.** They want to produce a test statistic with the following computer output:
+
+| Quantity                       | Symbol     | Value and unit |
+|--------------------------------|------------|----------------|
+| Sample $1$ mean                | $\mu_1$    | $92$ grams     |
+| Sample $2$ mean                | $\mu_2$    | $91.45$ grams  |
+| Sample $1$ standard deviation  | $s_1$      | $0.4$ grams    |
+| Sample $2$ standard deviation  | $s_2$      | $0.25$ grams   |
+| Sample $1$ size                | $n_1$      | $23$           |
+| Sample $2$ size                | $n_2$      | $21$           |
+| Sample $1$ population variance | $\sigma_1$ | $0.16$ grams   |
+| Sample $2$ population variance | $\sigma_2$ | $0.0625$ grams |
+
+The test statistic is given by
+
+$$ \tau=\frac{\mu_1-\mu_2}{\sqrt{(\frac{s_1^2}{n_1})+(\frac{s_2^2}{n_2})}} $$\
+so
+
+$$
+\tau = \frac{92 - 91.45}{\sqrt{(\frac{0.4^2}{23})+ (\frac{0.25^2}{21})}}
+$$
+
+$$
+\tau = 5.52
+$$
+
+The population variance is **not constant**. This example is a **Welch's** $t$**-test statistic**.
+:::
+
+Use the following calculator to generate $t$**-test statistics.**
+
+```{html}
+#| eval: false
+#| include: false
+#| standalone: true
+#| viewerHeight: 820
+
+library(shiny)
+library(bslib)
+
+ui <- page_fluid(
+  title = "t-statistic Calculator",
+  
+  # Navigation buttons
+  layout_columns(
+    col_widths = 12,
+    card(
+      card_body(
+        div(
+          style = "text-align: center; margin-bottom: 20px;",
+          actionButton("show_one_sample", "One sample t-test", 
+                       class = "btn-primary", style = "margin-right: 10px;"),
+          actionButton("show_two_sample", "Two-sample t-test", 
+                       class = "btn-outline-primary")
+        )
+      )
+    )
+  ),
+  
+  # One-sample t-test panel
+  conditionalPanel(
+    condition = "input.current_tab == 'one_sample'",
+    layout_columns(
+      col_widths = c(6, 6),
+      card(
+        card_header("Sample Data"),
+        card_body(
+          numericInput("n1", "Sample size (n)", value = 30, min = 1, step = 1),
+          numericInput("xbar1", "Sample mean", value = 50, step = 0.01),
+          numericInput("s1", "Sample standard deviation", value = 10, min = 0.001, step = 0.01),
+          numericInput("mu0", "Population mean (μ₀)", value = 45, step = 0.01),
+          hr(),
+          helpText("Calculate t-statistic for testing whether sample mean differs from population mean.")
+        )
+      ),
+      card(
+        card_header("Results"),
+        card_body(
+          verbatimTextOutput("one_sample_results")
+        )
+      )
+    )
+  ),
+  
+  # Two-sample t-test panel
+  conditionalPanel(
+    condition = "input.current_tab == 'two_sample'",
+    layout_columns(
+      col_widths = c(4, 4, 4),
+      card(
+        card_header("Sample 1"),
+        card_body(
+          numericInput("n1_two", "Sample Size (n₁)", value = 25, min = 1, step = 1),
+          numericInput("xbar1_two", "Sample Mean (x̄₁)", value = 52, step = 0.01),
+          numericInput("s1_two", "Sample Standard Deviation (s₁)", value = 8, min = 0.001, step = 0.01)
+        )
+      ),
+      card(
+        card_header("Sample 2"),
+        card_body(
+          numericInput("n2_two", "Sample Size (n₂)", value = 30, min = 1, step = 1),
+          numericInput("xbar2_two", "Sample Mean (x̄₂)", value = 48, step = 0.01),
+          numericInput("s2_two", "Sample Standard Deviation (s₂)", value = 10, min = 0.001, step = 0.01)
+        )
+      ),
+      card(
+        card_header("Test Settings"),
+        card_body(
+          radioButtons("test_type", "Test type:",
+                       choices = list("Independent Samples (Equal variances)" = "independent",
+                                      "Independent Samples (Welch's t-test)" = "welch",
+                                      "Paired Samples" = "paired"),
+                       selected = "independent"),
+          hr(),
+          helpText("Choose between pooled t-test, Welch's t-test, or paired samples t-test.")
+        )
+      )
+    ),
+    layout_columns(
+      col_widths = 12,
+      card(
+        card_header("Results"),
+        card_body(
+          verbatimTextOutput("two_sample_results")
+        )
+      )
+    )
+  ),
+  
+  # Hidden input to track current tab
+  textInput("current_tab", "", value = "one_sample", width = "0px"),
+  tags$style("#current_tab { display: none; }"),
+  uiOutput("button_css")
+)
+
+server <- function(input, output, session) {
+  
+  # Switch tab logic
+  observeEvent(input$show_one_sample, {
+    updateTextInput(session, "current_tab", value = "one_sample")
+  })
+  
+  observeEvent(input$show_two_sample, {
+    updateTextInput(session, "current_tab", value = "two_sample")
+  })
+  
+  # Dynamic CSS
+  output$button_css <- renderUI({
+    if (input$current_tab == "one_sample") {
+      tags$style("
+        #show_one_sample { 
+          background-color: #3F6BB6 !important; 
+          border-color: #3F6BB6 !important; 
+          color: white !important; 
+        }
+        #show_two_sample { 
+          background-color: transparent !important; 
+          border-color: #3F6BB6 !important; 
+          color: #3F6BB6 !important; 
+        }
+      ")
+    } else {
+      tags$style("
+        #show_one_sample { 
+          background-color: transparent !important; 
+          border-color: #3F6BB6 !important; 
+          color: #3F6BB6 !important; 
+        }
+        #show_two_sample { 
+          background-color: #3F6BB6 !important; 
+          border-color: #3F6BB6 !important; 
+          color: white !important; 
+        }
+      ")
+    }
+  })
+  
+  # One-sample t-test logic
+  output$one_sample_results <- renderText({
+    n <- input$n1
+    xbar <- input$xbar1
+    s <- input$s1
+    mu0 <- input$mu0
+    
+    t_stat <- (xbar - mu0) / (s / sqrt(n))
+    df <- n - 1
+    se <- s / sqrt(n)
+    
+    paste0(
+      "T-statistic: ", round(t_stat, 6), "\n",
+      "Degrees of freedom: ", df, "\n",
+      "Standard error: ", round(se, 6), "\n\n",
+      "Formula: t = (x̄ - μ₀) / (s / √n)\n",
+      "x̄ = ", xbar, ", μ₀ = ", mu0, ", s = ", s, ", n = ", n
+    )
+  })
+  
+  # Two-sample t-test logic
+  output$two_sample_results <- renderText({
+    n1 <- input$n1_two
+    xbar1 <- input$xbar1_two
+    s1 <- input$s1_two
+    n2 <- input$n2_two
+    xbar2 <- input$xbar2_two
+    s2 <- input$s2_two
+    test_type <- input$test_type
+    
+    if (test_type == "independent") {
+      # Pooled t-test
+      sp <- sqrt(((n1 - 1) * s1^2 + (n2 - 1) * s2^2) / (n1 + n2 - 2))
+      se <- sp * sqrt(1/n1 + 1/n2)
+      t_stat <- (xbar1 - xbar2) / se
+      df <- n1 + n2 - 2
+      
+      result <- paste0(
+        "Independent samples t-test (Equal variances assumed)\n",
+        "T-statistic: ", round(t_stat, 6), "\n",
+        "Degrees of freedom: ", df, "\n",
+        "Pooled standard deviation: ", round(sp, 6), "\n",
+        "Standard error: ", round(se, 6), "\n\n",
+        "Formula: t = (x̄₁ - x̄₂) / (sp × √(1/n₁ + 1/n₂))"
+      )
+      
+    } else if (test_type == "welch") {
+      # Welch's t-test
+      se <- sqrt((s1^2 / n1) + (s2^2 / n2))
+      t_stat <- (xbar1 - xbar2) / se
+      df_num <- (s1^2 / n1 + s2^2 / n2)^2
+      df_den <- ((s1^2 / n1)^2 / (n1 - 1)) + ((s2^2 / n2)^2 / (n2 - 1))
+      df <- df_num / df_den
+      
+      result <- paste0(
+        "Welch's t-test (Unequal variances)\n",
+        "T-statistic: ", round(t_stat, 6), "\n",
+        "Degrees of freedom (Welch): ", round(df, 2), "\n",
+        "Standard error: ", round(se, 6), "\n\n",
+        "Formula: t = (x̄₁ - x̄₂) / √(s₁²/n₁ + s₂²/n₂)\n",
+        "df = [(s₁²/n₁ + s₂²/n₂)²] / [ (s₁²/n₁)²/(n₁−1) + (s₂²/n₂)²/(n₂−1) ]"
+      )
+      
+    } else {
+      # Paired t-test approximation
+      n <- min(n1, n2)
+      s_diff <- sqrt(s1^2 + s2^2)
+      se <- s_diff / sqrt(n)
+      t_stat <- (xbar1 - xbar2) / se
+      df <- n - 1
+      
+      result <- paste0(
+        "Paired samples t-test (approximation)\n",
+        "T-statistic: ", round(t_stat, 6), "\n",
+        "Degrees of freedom: ", df, "\n",
+        "Standard error of differences: ", round(se, 6), "\n\n",
+        "Formula: t = (x̄₁ - x̄₂) / (s_diff / √n)\n",
+        "s_diff ≈ √(s₁² + s₂²) = ", round(s_diff, 6)
+      )
+    }
+    
+    return(result)
+  })
+}
+
+shinyApp(ui, server)
+
+
+```
+
+## Step 5: Forming a conclusion
+
+You now have:
+
+-   Either a Student's $t$-test or a Welch's $t$-test
+
+-   Either a one or two-tailed test
+
+-   A null and alternative hypothesis
+
+-   A significance level $(\alpha)$
+
+-   A test statistic $(\tau)$
+
+In order to draw a conclusion for your $t$ test, you have two options:
+
+1.  Compare the test statistic **directly** to a **critical value**
+2.  Convert the test statistic to a $p$**-value**
+
+::: callout-important
+To use **either** approach, you will be asked for the **degrees of freedom**. For all types of $t$-testing the degrees of freedom are $n - p$. Where $p$ is the number of parameters in the scenario. For example, if you had a one-sample test, your degrees of freedom would be $n-1$. If you had a two-sample test, your degrees of freedom would be $n-2$.
+:::
+
+### 1. Comparing the test statistic directly to a critical value $(t)$
+
+Because all $t$-tests assume that the test statistic follows a $t$-distribution. You can use a critical value $(t)$ and compare it to your test statistic $(\tau)$.
+
+The following calculator to generates a **critical value.**
+
+## Critical value calculator
+
+```{r}
+#| eval: false
+#| include: false
+library(shiny)
+library(bslib)
+
+ui <- page_sidebar(
+  title = "t-Distribution Critical Value Calculator",
+  sidebar = sidebar(
+    numericInput(
+      "df",
+      "Degrees of Freedom:",
+      value = 10,
+      min = 1,
+      step = 1
+    ),
+    radioButtons(
+      "test_type",
+      "Type of Test:",
+      choices = c(
+        "Two-tailed" = "two",
+        "One-tailed (right)" = "right",
+        "One-tailed (left)" = "left"
+      ),
+      selected = "two"
+    ),
+    numericInput(
+      "alpha",
+      "Significance Level (α):",
+      value = 0.05,
+      min = 0.001,
+      max = 0.5,
+      step = 0.01
+    )
+  ),
+  card(
+    card_header("Critical Value(s)"),
+    verbatimTextOutput("critical_value")
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Calculate critical value(s)
+  critical_vals <- reactive({
+    req(input$df, input$alpha)
+    
+    if (input$test_type == "two") {
+      # Two-tailed test
+      t_crit <- qt(1 - input$alpha / 2, df = input$df)
+      list(lower = -t_crit, upper = t_crit)
+    } else if (input$test_type == "right") {
+      # One-tailed right test
+      t_crit <- qt(1 - input$alpha, df = input$df)
+      list(upper = t_crit)
+    } else {
+      # One-tailed left test
+      t_crit <- qt(input$alpha, df = input$df)
+      list(lower = t_crit)
+    }
+  })
+  
+  output$critical_value <- renderText({
+    vals <- critical_vals()
+    
+    if (input$test_type == "two") {
+      paste0(
+        "Two-tailed test (α = ", input$alpha, "):\n",
+        "Critical values: t = ±", round(vals$upper, 4), "\n",
+        "Reject H₀ if t < ", round(vals$lower, 4), 
+        " or t > ", round(vals$upper, 4)
+      )
+    } else if (input$test_type == "right") {
+      paste0(
+        "One-tailed test (right, α = ", input$alpha, "):\n",
+        "Critical value: t = ", round(vals$upper, 4), "\n",
+        "Reject H₀ if t > ", round(vals$upper, 4)
+      )
+    } else {
+      paste0(
+        "One-tailed test (left, α = ", input$alpha, "):\n",
+        "Critical value: t = ", round(vals$lower, 4), "\n",
+        "Reject H₀ if t < ", round(vals$lower, 4)
+      )
+    }
+  })
+}
+```
+
+::: callout-note
+## Summary of critical value method
+
+1.  Calculate your test statistic
+2.  Calculate critical value
+
+If your test statistic lies outside of $[-t, t]$ then you **reject** $H_0$**.**
+:::
+
+### 2. Converting the test statistic to a $p$-value
+
+You can also use the following calculator to convert your test statistic into a $p$-value. This will give you a value which you can compare to your **level of significance** $(\alpha)$.
+
+## $p$-value calculator
+
+```{r}
+#| eval: false
+#| include: false
+#| standalone: true
+#| viewerHeight: 730
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fluid(
+  title = "T-test calculator",
+  
+  layout_columns(
+    col_widths = c(4, 8),
+    
+    # Left column - Input parameters
+    card(
+      card_header("Input parameters"),
+      card_body(
+        numericInput("tscore", "T-statistic", value = 2.0, step = 0.01),
+        numericInput("df", "Degrees of freedom", value = 20, min = 1, step = 1),
+        radioButtons("test_type", "Test type",
+                    choices = list("Two-tailed" = "two",
+                                  "One-tailed (upper)" = "upper",
+                                  "One-tailed (lower)" = "lower"),
+                    selected = "two"),
+        hr(),
+        helpText("This app calculates p-values for t-tests based on the t-distribution with specified degrees of freedom.")
+      )
+    ),
+    
+    # Right column - Graphical representation
+    card(
+      card_header("Graphical representation"),
+      card_body(
+        plotOutput("density_plot", height = "300px")
+      )
+    )
+  ),
+  
+  # Results at the bottom
+  card(
+    card_header("T-test results"),
+    card_body(
+      verbatimTextOutput("pvalue_result")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Calculate p-value based on test type
+  p_value <- reactive({
+    t <- input$tscore
+    df <- input$df
+    test <- input$test_type
+    
+    if (test == "two") {
+      p <- 2 * pt(-abs(t), df = df)
+      result <- paste0("Two-tailed p-value: ", round(p, 4))
+    } else if (test == "upper") {
+      p <- pt(t, df = df, lower.tail = FALSE)
+      result <- paste0("Upper-tailed p-value: ", round(p, 4))
+    } else if (test == "lower") {
+      p <- pt(t, df = df, lower.tail = TRUE)
+      result <- paste0("Lower-tailed p-value: ", round(p, 4))
+    }
+    
+    return(list(p = p, result = result, test = test))
+  })
+  
+  # Display p-value
+  output$pvalue_result <- renderText({
+    p_value()$result
+  })
+  
+  # Create density plot
+  output$density_plot <- renderPlot({
+    t <- input$tscore
+    df <- input$df
+    test <- p_value()$test
+    
+    # Generate x values for t-distribution
+    x <- seq(-4, 4, length.out = 1000)
+    y <- dt(x, df = df)
+    df_data <- data.frame(x = x, y = y)
+    
+    # Base plot
+    p <- ggplot(df_data, aes(x = x, y = y)) +
+      geom_line() +
+      labs(x = "T-statistic", y = "Density", 
+           title = paste("T-distribution (df =", df, ")")) +
+      theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
+      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5)
+    
+    # Add shaded area based on test type, using #3F6BB6 as the color
+    if (test == "two") {
+      # Two-tailed test: shade both tails
+      if (t > 0) {
+        p <- p + 
+          geom_area(data = subset(df_data, x >= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_area(data = subset(df_data, x <= -t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_vline(xintercept = t, color = "#3F6BB6") +
+          geom_vline(xintercept = -t, color = "#3F6BB6")
+      } else {
+        p <- p + 
+          geom_area(data = subset(df_data, x <= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_area(data = subset(df_data, x >= -t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+          geom_vline(xintercept = t, color = "#3F6BB6") +
+          geom_vline(xintercept = -t, color = "#3F6BB6")
+      }
+    } else if (test == "upper") {
+      # Upper-tailed test: shade area above t
+      p <- p + 
+        geom_area(data = subset(df_data, x >= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+        geom_vline(xintercept = t, color = "#3F6BB6")
+    } else if (test == "lower") {
+      # Lower-tailed test: shade area below t
+      p <- p + 
+        geom_area(data = subset(df_data, x <= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
+        geom_vline(xintercept = t, color = "#3F6BB6")
+    }
+    
+    return(p)
+  })
+}
+```
+
+::: callout-note
+## Summary of $p$-value method
+
+1.  Calculate your test statistic
+2.  Convert to a $p$-value
+3.  Compare $p$-value to the level of significance
+
+If your test statistic **less** than your $p$-value then you **reject** $H_0$**.**
+:::
+
+## Step 6: Summarize findings in context
+
+Once you have formed your conclusion, you can explain what this means for your scenario or study. It is putting the $t$-test in context. You write a concluding statement to say what rejecting, or failing to reject the null hypothesis means.
+
+For example, in **Example 1** where Cantor's Confectionery were testing whether the difference in weight between their bags of sweets to the market average was significant, $H_0$ suggested no significant difference and $H_1$ suggested significant difference. If you were to reject $H_0$ that means there is enough evidence to suggest a significant difference and so the statement would read:
+
+"There is sufficient evidence to reject $H_0$ meaning there is significant evidence to suggest that the average weight of a bag of sweets produced by Cantor's Confectionery differs significantly from the market average."
+
+::: callout-warning
+## Suggests does not mean total certainty
+
+In your concluding statement, do not state the results as $100\%$ certain. The results of the test suggests a likelihood so make sure to use the phrases:
+
+-   "There is enough evidence to suggest..."
+
+-   "There is not enough evidence to suggest..."
+:::
+
+::: callout-note
+## Example 6
+
+Cantor's Confectionery want to perform a $t$-test, at $5\%$ significance level, to see whether their famous chocolate swirls weigh, on average, the same as the market average of $5.12$ grams. The take a sample of $25$ swirls with average weight of $4.22$ grams and sample standard deviation of $1.23$ grams.
+
+Step 1: What type of $t$-test?
+
+-   This is a one-sampled test meaning it is a Student's $t$-test
+
+-   They are testing whether the weight is equal to the market average meaning it is a two-tailed test
+
+Step 2: Define your null and alternative hypothesis
+
+$$
+H_0: \bar{x} = \mu_0 
+$$
+
+$$
+H_1: \bar{x} \neq \mu_0
+$$
+
+Step 3: Decide on your significance level $(\alpha)$
+
+This is a $5\%$ significance level test, so
+
+$$
+\alpha = 0.05
+$$
+
+Step 4: Calculate your test statistic $(\tau)$
+
+For a one-sample Student's $t$-test the test statistic is
+
+$$
+\tau=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}
+$$
+
+so
+
+$$ \tau = \frac{4.22 - 5.12}{1.23/ \sqrt{25}}
+$$
+
+$$
+\tau = -3.66
+$$
+
+Step 5: Forming a conclusion (either approach can be used)
+
+As $n = 25$ and this is a one-sample test, the degrees of freedom are $25 - 1 = 24$.
+
+Critical value approach:
+
+-   Critical value calculator gives $t = 2.06$
+
+-   Test statistic gives $\tau = -3.66$
+
+-   $-3.66$ lies outside of range $[-2.06, 2.06]$
+
+so $H_0$ is rejected.
+
+$p$-value approach:
+
+-   $p$-value calculator gives $p = 0.0012$
+
+-   Level of significance $(\alpha) = 0.05$
+
+-   $0.0012 < 0.05$
+
+so $H_0$ is rejected.
+
+Step 6: Summarize findings in context
+
+There is enough evidence to reject $H_0$ meaning there is sufficient evidence to suggest that the average weight of a chocolate swirl produced by Cantor's Confectionery differs significantly from the market average.
+:::
+
+::: callout-note
+## Example 7
+
+Lovelace's Lollies decide to test whether their chocolate swirls weigh more, on average, than the chocolate swirls made by Cantor's Confectionery. They decide to also use a $5\%$ significance level. They use a computer to produce the following summary statistics:
+
+|                               | Cantor's Confectionery | Lovelace's Lollies |
+|-------------------------------|------------------------|--------------------|
+| **Sample mean**               | $\mu_1 = 4.22$         | $\mu_2 = 3.76$     |
+| **Sample Standard deviation** | $s = 1.23$             | $s=1.39$           |
+| **Sample size**               | $25$                   | $25$               |
+
+Step 1: What type of $t$-test?
+
+-   This is a two-sampled test with two different sample standard deviations meaning non-constant variance. Meaning it is a Welch's $t$-test
+
+<!-- -->
+
+-   They are testing whether the weight is more than Cantor's Confectionery meaning it is a one-tailed test
+
+Step 2: Define your null and alternative hypothesis
+
+$$
+H_0:\mu_1 < \mu_2 
+$$
+
+$$
+H_1:\mu_1 \geq \mu_2
+$$
+
+Step 3: Decide on your significance level $(\alpha)$
+
+$$
+\alpha = 0.05
+$$
+
+Step 4: Calculate your test statistic $(\tau)$
+
+For a one-sample Student's $t$-test the test statistic is
+
+$$ \tau=\frac{\mu_1-\mu_2}{\sqrt{(\frac{s_1^2}{n_1})+(\frac{s_2^2}{n_2})}} $$
+
+$$
+\tau = \frac{4.22 - 3.76}{\sqrt{(\frac{1.23^2}{25})+(\frac{1.39^2}{25})}}
+$$
+
+$$
+\tau = 1.24
+$$
+
+Step 5: Forming a conclusion (either approach can be used)
+
+As $n = 25$ and this is a two-sample test, the degrees of freedom are $25 - 2 = 23$.
+
+Critical value approach:
+
+-   Critical value calculator gives $t = 2.07$
+
+-   Test statistic gives $\tau = 1.24$
+
+-   $1.24$ lies inside of range $[-2.07, 2.07]$
+
+so $H_0$ cannot be rejected.
+
+$p$-value approach:
+
+-   $p$-value calculator gives $p = 0.1137$
+
+-   Level of significance $(\alpha) = 0.05$
+
+-   $0.1137 > 0.05$
+
+so $H_0$ cannot be rejected.
+
+Step 6: Summarize findings in context
+
+There is not enough evidence to reject $H_0$ meaning there is insufficient evidence to suggest that the average weight of a chocolate swirl produced by Lovelace's Lollies is greater than those produced by Cantor's Confectionery.
+:::
+
+::: callout-note
+## Example 8
+:::
+
+# Quick check problems {.unnumbered}
+
+<!-- add facility for webexercises to work on html -->
+
+:::: {.content-visible when-format="html"}
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box data-topic="ITHT1"}
+1.  Which of the following is an appropriate null hypothesis for a one-sample $t$-test?
+
+<!-- -->
+
+(a) $H_0:\mu_1 > \mu_2$
+
+(b) $H_0:\mu_1 = \mu_2$
+
+(c) $H_0:\mu=81$
+
+Answer: `r mcq(c("a", "b", answer = "c"))`.
+
+2.  What is the *rule of thumb* sample size for a $t$-test?
+
+Answer: `r fitb("30")`.
+
+3.  What test would you use to compare means when you have two samples and your data is independent, with different variances?
+
+Answer:`r mcq(c(answer = "Welch's t-test", "Welch's", "Welch's test"))`.
+
+4.  You are performing a one-sample $t$-test with $H_0:\mu = 10$. Do you perform a Student's $t$-test or a Welch's $t$-test?
+
+Answer:`r mcq(c("Welch's $t$-test", answer = "Student's $t$-test"))`.
+:::
+::::
+
+::: {.content-hidden when-format="html"}
+1.  Which of the following is an appropriate null hypothesis for a one-sample $t$-test?
+
+<!-- -->
+
+(a) $H_0:\mu_1 > \mu_2$
+
+(b) $H_0:\mu_1=\mu_2$
+
+(c) $H_0:\mu= 81$
+
+<!-- -->
+
+2.  What is the *rule of thumb* sample size for a $t$-test?
+
+3.  What test would you use to compare means when you have two samples and your data is independent, with different variances?
+
+4.  You are performing a one-sample $t$-test with $H_0:\mu = 10$. Do you perform a Student's $t$-test or a Welch's $t$-test?
+:::
+
+# Further reading {.unnumbered}
+
+[For more questions on the subject, please go to Questions: Introduction to t-testing.](../questions/qs-introtottesting.qmd)
+
+\[For more information on other types of testing, see Guide: More on statistical testing\]
+
+## Version history {.unnumbered}
+
+v1.0: initial version created 21/01 by Millie Harris as part of a University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

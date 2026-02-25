@@ -1,0 +1,357 @@
+---
+title: "Syllabus Mapping"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+draft: true
+---
+
+This page will let you find resources tailored to your learning pathway, allowing you to navigate by country, exam board, course, and topic.
+
+
+```{r}
+#| results: asis
+library(jsonlite)
+
+nav <- read.csv("finalised_csv_content_management_final.csv", stringsAsFactors = FALSE)
+nav_clean <- nav[!is.na(nav$Starmast.Link) &
+nav$Starmast.Link != "" &
+nav$Starmast.Link != "no",
+c(1, 2, 3, 4, 5)]
+names(nav_clean) <- c("country", "board", "course", "unit", "link")
+
+get_title_from_qmd <- function(path) {
+  if (is.na(path) || path == "") return(NA_character_)
+  # remove leading ./ if present
+  file_path <- sub("^\\./", "", path)
+  if (!file.exists(file_path)) return(NA_character_)
+  lines <- readLines(file_path, warn = FALSE)
+  # expect YAML front matter starting with ---
+  if (length(lines) < 3 || !grepl("^---\\s*$", lines[1])) return(NA_character_)
+  end_yaml <- which(grepl("^---\\s*$", lines[-1]))[1] + 1
+  yaml_text <- paste(lines[2:(end_yaml - 1)], collapse = "\n")
+  y <- yaml::yaml.load(yaml_text)
+  if (!is.null(y$title)) as.character(y$title) else NA_character_
+}
+
+unique_links <- unique(nav_clean$link)
+title_lookup <- setNames(
+  vapply(unique_links, get_title_from_qmd, character(1)),
+  unique_links
+)
+
+nav_clean$title <- title_lookup[nav_clean$link]
+
+countries <- sort(unique(nav$Country))
+countries <- countries[!is.na(countries) & countries != ""]
+countries_json <- toJSON(countries, auto_unbox = TRUE)
+
+boards <- sort(unique(nav$Exam.board))
+boards <- boards[!is.na(boards) & boards != ""]
+boards_json <- toJSON(boards, auto_unbox = TRUE)
+
+nav_json <- toJSON(nav_clean, dataframe = "rows", auto_unbox = TRUE)
+
+cat('
+<h2>Pick your country</h2>
+<div id="country-container" class="country-grid"></div>
+
+<h2 id="board-title" style="display:none; margin-top:2rem;">Pick your exam board</h2>
+<div id="board-container" class="country-grid"></div>
+
+<h2 id="course-title" style="display:none; margin-top:2rem;">Pick your course</h2>
+<div id="course-container" class="country-grid"></div>
+
+<h2 id="unit-title" style="display:none; margin-top:2rem;">Pick your topic</h2>
+<div id="unit-container" class="country-grid"></div>
+
+<h2 id="guide-title" style="display:none; margin-top:2rem;">Relevant STARMAST guides</h2>
+<div id="guide-container" class="country-grid"></div>
+
+<script>
+const countries = ', countries_json, ';
+const navData   = ', nav_json, ';
+
+const container       = document.getElementById("country-container");
+const boardTitle      = document.getElementById("board-title");
+const boardContainer  = document.getElementById("board-container");
+const courseTitle     = document.getElementById("course-title");
+const courseContainer = document.getElementById("course-container");
+const unitTitle       = document.getElementById("unit-title");
+const unitContainer   = document.getElementById("unit-container");
+const guideTitle      = document.getElementById("guide-title");
+const guideContainer  = document.getElementById("guide-container");
+
+let selectedCountry = null;
+let selectedBoard   = null;
+let selectedCourse  = null;
+let selectedUnit    = null;
+
+// COUNTRY SELECTION BOXES
+countries.forEach(country => {
+  const box = document.createElement("div");
+  box.className = "country-box";
+  box.textContent = country;
+
+  box.onclick = () => {
+    selectedCountry = country;
+    selectedBoard = null;
+    selectedCourse = null;
+    selectedUnit   = null;
+
+    container.querySelectorAll(".country-box").forEach(b =>
+      b.classList.remove("selected")
+    );
+    box.classList.add("selected");
+
+    boardContainer.innerHTML = "";
+    courseContainer.innerHTML = "";
+    unitContainer.innerHTML = "";
+    guideContainer.innerHTML = "";
+    courseTitle.style.display = "none";
+    unitTitle.style.display = "none";
+    guideTitle.style.display = "none";
+
+    updateBoards();
+  };
+
+  container.appendChild(box);
+});
+
+// EXAM BOARD SELECTION BOXES
+function updateBoards() {
+  boardContainer.innerHTML = "";
+
+  if (!selectedCountry) {
+    boardTitle.style.display = "none";
+    return;
+  }
+
+  boardTitle.style.display = "block";
+
+  const boardsForCountry = Array.from(new Set(
+    navData
+      .filter(row => row.country === selectedCountry)
+      .map(row => row.board)
+  )).sort();
+
+  boardsForCountry.forEach(board => {
+    const box = document.createElement("div");
+    box.className = "board-box";
+    box.textContent = board;
+
+    box.onclick = () => {
+      selectedBoard = board;
+      selectedCourse = null;
+      selectedUnit   = null;
+
+      boardContainer.querySelectorAll(".board-box").forEach(b =>
+        b.classList.remove("selected")
+      );
+      box.classList.add("selected");
+
+      courseContainer.innerHTML = "";
+      unitContainer.innerHTML = "";
+      guideContainer.innerHTML = "";
+      unitTitle.style.display = "none";
+      guideTitle.style.display = "none";
+
+      updateCourses();
+    };
+
+    boardContainer.appendChild(box);
+  });
+}
+
+// COURSE SELECTION BOXES
+function updateCourses() {
+  if (!selectedCountry || !selectedBoard) {
+    courseTitle.style.display = "none";
+    return;
+  }
+
+  courseTitle.style.display = "block";
+  courseContainer.innerHTML = "";
+
+  const coursesForSelection = Array.from(new Set(
+    navData
+      .filter(row =>
+        row.country === selectedCountry &&
+        row.board === selectedBoard
+      )
+      .map(row => row.course)
+  )).sort();
+
+  coursesForSelection.forEach(course => {
+    const box = document.createElement("div");
+    box.className = "course-box";
+    box.textContent = course;
+
+    box.onclick = () => {
+      selectedCourse = course;
+      selectedUnit   = null;
+
+      courseContainer.querySelectorAll(".course-box").forEach(b =>
+        b.classList.remove("selected")
+      );
+      box.classList.add("selected");
+
+      unitContainer.innerHTML = "";
+      guideContainer.innerHTML = "";
+      guideTitle.style.display = "none";
+
+      updateUnits();
+    };
+
+    courseContainer.appendChild(box);
+  });
+}
+
+// UNIT (TOPIC) SELECTION BOXES
+function updateUnits() {
+  if (!selectedCountry || !selectedBoard || !selectedCourse) {
+    unitTitle.style.display = "none";
+    return;
+  }
+
+  unitTitle.style.display = "block";
+  unitContainer.innerHTML = "";
+
+  const unitsForSelection = Array.from(new Set(
+    navData
+      .filter(row =>
+        row.country === selectedCountry &&
+        row.board === selectedBoard &&
+        row.course === selectedCourse
+      )
+      .map(row => row.unit)
+  )).sort();
+
+  unitsForSelection.forEach(unit => {
+    const box = document.createElement("div");
+    box.className = "unit-box";
+    box.textContent = unit;
+
+    box.onclick = () => {
+      selectedUnit = unit;
+
+      unitContainer.querySelectorAll(".unit-box").forEach(b =>
+        b.classList.remove("selected")
+      );
+      box.classList.add("selected");
+
+      updateGuides();
+    };
+
+    unitContainer.appendChild(box);
+  });
+}
+
+
+// GUIDE LISTING SELECTION
+function updateGuides() {
+  guideContainer.innerHTML = "";
+
+  if (!selectedUnit) {
+    guideTitle.style.display = "none";
+    return;
+  }
+
+  guideTitle.style.display = "block";
+
+  const guidesForSelection = navData.filter(row =>
+    row.country === selectedCountry &&
+    row.board === selectedBoard &&
+    row.course === selectedCourse &&
+    row.unit === selectedUnit
+  );
+
+  guidesForSelection.forEach(guide => {
+    const card = document.createElement("a");
+    card.className = "guide-card";
+
+    // Convert ./studyguides/file.qmd → /studyguides/file.html
+    let href = guide.link || "";
+
+    if (href.startsWith("./")) {
+      href = href.substring(2);
+    }
+
+    if (href.endsWith(".qmd")) {
+      href = href.slice(0, -4) + ".html";
+    }
+
+    if (!href.startsWith("/")) {
+      href = "/" + href;
+    }
+
+    card.href = href;
+    card.target = "_self";
+
+    card.textContent = guide.title || guide.unit;
+
+    guideContainer.appendChild(card);
+  });
+}
+
+</script>
+
+<style>
+.country-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 1rem;
+}
+
+.country-box,
+.board-box,
+.course-box,
+.unit-box,
+.guide-card {
+  padding: 16px;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+  background-color: #f8f8f8;
+  text-decoration: none;
+  color: black;
+}
+
+.country-box:hover,
+.board-box:hover,
+.course-box:hover,
+.unit-box:hover,
+.guide-card:hover {
+  border-color: #000;
+  background-color: #eee;
+}
+
+.country-box.selected {
+  border-color: #2563eb;
+  background-color: #dbeafe;
+}
+
+.board-box.selected {
+  border-color: #16a34a;
+  background-color: #dcfce7;
+}
+
+.course-box.selected {
+  border-color: #2563eb;
+  background-color: #dbeafe;
+}
+
+.unit-box.selected {
+  border-color: #16a34a;
+  background-color: #dcfce7;
+}
+</style>
+')
+
+```
