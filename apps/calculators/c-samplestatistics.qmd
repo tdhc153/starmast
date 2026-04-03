@@ -1,0 +1,153 @@
+---
+title: "Calculator: Sample data statistics"
+author: Tom Coleman and Millie Harris
+format: html
+abstract-title: Summary
+abstract: A calculator to provide a statistical summary of a sample of data you have taken.
+filters: 
+  - shinylive
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+## Sample data statistics calculator
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 700
+
+library(shiny)
+library(bslib)
+
+ui <- page_sidebar(
+  title = "Sample data statistics calculator",
+  sidebar = sidebar(
+    textAreaInput(
+      "data_input",
+      "Enter sample data (separated by spaces, commas, tabs, or line breaks):",
+      placeholder = "for example, 1 2 3 4 5\nor 1,2,3,4,5",
+      rows = 12
+    ),
+    actionButton(
+      "calculate",
+      "Calculate Statistics",
+      class = "btn-primary w-100",
+      style = "background-color: #3f68b6; border-color: #3f68b6;"
+    )
+  ),
+  card(
+    card_header("Sample statistics"),
+    tableOutput("stats_table")
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Parse the input data
+  parsed_data <- eventReactive(input$calculate, {
+    req(input$data_input)
+    
+    # Replace commas, tabs, and newlines with spaces, then split
+    text <- gsub("[,\t\n]+", " ", input$data_input)
+    values <- strsplit(text, "\\s+")[[1]]
+    values <- values[values != ""]  # Remove empty strings
+    
+    # Convert to numeric
+    numeric_values <- suppressWarnings(as.numeric(values))
+    
+    # Remove NAs (invalid entries)
+    numeric_values <- numeric_values[!is.na(numeric_values)]
+    
+    if (length(numeric_values) == 0) {
+      return(NULL)
+    }
+    
+    numeric_values
+  })
+  
+  # Calculate statistics
+  output$stats_table <- renderTable({
+    data <- parsed_data()
+    
+    if (is.null(data)) {
+      return(data.frame(
+        Statistic = "Error",
+        Value = "No valid numeric data found"
+      ))
+    }
+    
+    # Calculate mode (most frequent value)
+    get_mode <- function(x) {
+      ux <- unique(x)
+      tab <- tabulate(match(x, ux))
+      mode_val <- ux[tab == max(tab)]
+      if (length(mode_val) == length(ux)) {
+        return("No mode")
+      } else {
+        return(paste(mode_val, collapse = ", "))
+      }
+    }
+    
+    # Calculate all statistics
+    n <- length(data)
+    min_val <- min(data)
+    max_val <- max(data)
+    mean_val <- mean(data)
+    mode_val <- get_mode(data)
+    median_val <- median(data)
+    range_val <- max_val - min_val
+    q1 <- quantile(data, 0.25, names = FALSE)
+    q3 <- quantile(data, 0.75, names = FALSE)
+    iqr_val <- IQR(data)
+    var_val <- var(data)
+    sd_val <- sd(data)
+    
+    # Create results data frame
+    data.frame(
+      Statistic = c(
+        "Sample size",
+        "Minimum",
+        "Maximum",
+        "Mean",
+        "Mode",
+        "Median",
+        "Range",
+        "Lower quartile (Q1)",
+        "Upper quartile (Q3)",
+        "Interquartile range (IQR)",
+        "Sample variance",
+        "Sample standard deviation"
+      ),
+      Value = c(
+        as.character(n),
+        format(min_val, digits = 6),
+        format(max_val, digits = 6),
+        format(mean_val, digits = 6),
+        mode_val,
+        format(median_val, digits = 6),
+        format(range_val, digits = 6),
+        format(q1, digits = 6),
+        format(q3, digits = 6),
+        format(iqr_val, digits = 6),
+        format(var_val, digits = 6),
+        format(sd_val, digits = 6)
+      ),
+      stringsAsFactors = FALSE
+    )
+  }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%")
+}
+
+shinyApp(ui = ui, server = server)
+
+```
+
+## Version history {-}
+
+v1.0: created by tdhc and Millie Harris in 03/26 as part of a University of St Andrews VIP project.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

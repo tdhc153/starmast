@@ -1,2 +1,2150 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Millie Harris">
+
+<title>Introduction to confidence intervals – STARMAST</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aa1d8570cb8b85794c5c5a916513ecb9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5f5484d7ec656626cab3b40347c418b2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-aa1d8570cb8b85794c5c5a916513ecb9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content="..">
+<script src="../site_libs/quarto-contrib/shinylive-0.9.1/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../site_libs/quarto-contrib/shinylive-0.9.1/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/shinylive-0.9.1/shinylive/shinylive.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, alongside enabling our non-identifiable QuickCheck problem tracking. These are the sole purposes of enabling cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<script src="https://esm.sh/shinylive-r"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../logo-big.png" alt="" class="navbar-logo light-content">
+    <img src="../logo-big.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html"> 
+<span class="menu-text">Full index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../faqs.html"> 
+<span class="menu-text">FAQs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="5f57153153e0bbf7f7337c1d33b76048" class="alert alert-danger hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> Welcome! We are celebrating over 1000 active users since launch with 21 new pages of resources! (03/04/26)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-a-confidence-interval" id="toc-what-is-a-confidence-interval" class="nav-link active" data-scroll-target="#what-is-a-confidence-interval">What is a confidence interval?</a>
+  <ul class="collapse">
+  <li><a href="#initial-example-and-set-up" id="toc-initial-example-and-set-up" class="nav-link" data-scroll-target="#initial-example-and-set-up">Initial example and set up</a></li>
+  <li><a href="#what-a-confidence-interval-tells-you" id="toc-what-a-confidence-interval-tells-you" class="nav-link" data-scroll-target="#what-a-confidence-interval-tells-you">What a confidence interval tells you</a></li>
+  <li><a href="#whats-the-point" id="toc-whats-the-point" class="nav-link" data-scroll-target="#whats-the-point">What’s the point?</a></li>
+  <li><a href="#in-this-guide" id="toc-in-this-guide" class="nav-link" data-scroll-target="#in-this-guide">In this guide</a></li>
+  </ul></li>
+  <li><a href="#constructing-confidence-intervals" id="toc-constructing-confidence-intervals" class="nav-link" data-scroll-target="#constructing-confidence-intervals">Constructing confidence intervals</a>
+  <ul class="collapse">
+  <li><a href="#the-normal-distribution" id="toc-the-normal-distribution" class="nav-link" data-scroll-target="#the-normal-distribution">The normal distribution</a></li>
+  <li><a href="#tails" id="toc-tails" class="nav-link" data-scroll-target="#tails">Tails</a></li>
+  <li><a href="#confidence-level" id="toc-confidence-level" class="nav-link" data-scroll-target="#confidence-level">Confidence level</a></li>
+  <li><a href="#z-value" id="toc-z-value" class="nav-link" data-scroll-target="#z-value"><span class="math inline">\(Z\)</span> value</a></li>
+  <li><a href="#how-do-you-construct-a-confidence-interval" id="toc-how-do-you-construct-a-confidence-interval" class="nav-link" data-scroll-target="#how-do-you-construct-a-confidence-interval">How do you construct a confidence interval?</a></li>
+  </ul></li>
+  <li><a href="#applications-of-confidence-intervals" id="toc-applications-of-confidence-intervals" class="nav-link" data-scroll-target="#applications-of-confidence-intervals">Applications of confidence intervals</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a></li>
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="confidenceintervals.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="confidenceintervals.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction to confidence intervals</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Statistics</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Millie Harris </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    In statistics, to estimate an unknown parameter you can construct a confidence interval. This is the range of values you expect the true estimate to fall between if you were to repeat the study several times, with a certain level of confidence. This study guide introduces confidence intervals, confidence levels, and <span class="math inline">\(Z\)</span>-values using the normal distribution.
+  </div>
+</div>
+
+
+</header>
+
+
+<p><em>Before reading this guide, it is recommended that you read <a href="../studyguides/introtoprobability.html">Guide: Introduction to probability</a>, <a href="../studyguides/hypothesistesting.html">Guide: Introduction to hypothesis testing</a>, and <a href="../studyguides/expectedvariance.html">Guide: Expected value, variance, standard deviation</a>.</em></p>
+<table><tbody><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls=""><source src="./Narrations/confidenceintervals.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></td></tr></tbody></table>
+<section id="what-is-a-confidence-interval" class="level1">
+<h1>What is a confidence interval?</h1>
+<p>If you were conducting a study about a population of people and took several different samples of data, the sample means could be different for each sample. This makes estimating a population mean very difficult, as this variability affects your confidence that the sample is a true reflection of the population. A population mean is a fixed, unknown constant, and providing a confident estimate of this quantity that cannot be measured is one of the fundamental goals of statistics.</p>
+<section id="initial-example-and-set-up" class="level3">
+<h3 class="anchored" data-anchor-id="initial-example-and-set-up">Initial example and set up</h3>
+<p>For instance, suppose that you were investigating average weights of chocolate bars. To do this, you had taken five samples of <span class="math inline">\(30\)</span> chocolate bars from the massive conglomerate that is Cantor’s Confectionery, and worked out the average weights of each of these five samples:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Sample number <span class="math inline">\(S_m\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(S_1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(S_2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(S_3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(S_4\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(S_5\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Sample mean <span class="math inline">\(\bar{x}_m\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(28.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(29.6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(27.9\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(29.1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(28.8\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Which of these is most reflective of the average weight of all of the chocolate bars produced by Cantor’s Confectionery? It’s impossible to say! So what you can do is consider a <strong>range of values</strong>. This range of values is called a <strong>confidence interval (CI)</strong>, which is specified up to a <strong>confidence level</strong> (usually 95%, but this can vary). This range of values is centred at the sample mean <span class="math inline">\(\bar{x}\)</span>, and the bounds are given by the <strong>margin of error</strong> of your sample.</p>
+<p>So each of these sample means will have a confidence interval associated to it, which is worked out using the data from the sample. You can then expand the above table to include the confidence intervals:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Sample number <span class="math inline">\(S_m\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(S_1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(S_2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(S_3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(S_4\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(S_5\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Sample mean <span class="math inline">\(\bar{x}_m\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(28.2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(29.6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(27.9\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(29.1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(28.8\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">95% CI for sample <span class="math inline">\(m\)</span></td>
+<td style="text-align: center;"><span class="math inline">\([27.6,28.8]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\([29.1,30.1]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\([27.6,28.2]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\([28.3,29.9]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\([28.1,29.5]\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>What does a confidence interval do? It should give you an idea of where the population mean should be. But given the various confidence intervals for the samples above, it’s not even clear where the population mean could be in any one of these. For instance, the confidence intervals for samples <span class="math inline">\(1\)</span> and <span class="math inline">\(2\)</span> do not meet; the population mean cannot be in both! This is because it is a fixed, unknown constant which does not vary.</p>
+<p>It’s important to note that there is one confidence interval <strong>per sample</strong> of a population, and so if you take many samples (as has been done above), there are many confidence intervals that each estimate the population mean <span class="math inline">\(\mu\)</span>.</p>
+</section>
+<section id="what-a-confidence-interval-tells-you" class="level3">
+<h3 class="anchored" data-anchor-id="what-a-confidence-interval-tells-you">What a confidence interval tells you</h3>
+<p>Suppose that CL is the confidence level of your confidence interval. The general rule is that for CL<span class="math inline">\(\%\)</span> confidence intervals, then <strong>if you sample the population 100 times, then you can expect the population mean to lie within approximately CL many of the calculated CL <span class="math inline">\(\%\)</span> CIs.</strong> You can replace CL with your given confidence level.</p>
+<p>So you can say</p>
+<blockquote class="blockquote">
+<p>It is likely (with CL<span class="math inline">\(\%\)</span> confidence) that the population mean is within this confidence interval.</p>
+</blockquote>
+<p>because the population mean will be in approximately CL/100 of all CL<span class="math inline">\(\%\)</span> CI’s, but you <strong>cannot say</strong></p>
+<blockquote class="blockquote">
+<p>For <em>this particular</em> confidence interval, the probability that the population mean is within this confidence interval is CL<span class="math inline">\(\%\)</span>.</p>
+</blockquote>
+<p>This is because the population mean <span class="math inline">\(\mu\)</span> is a <strong>fixed, unknown constant</strong>; and so the probability that it is in a given CL<span class="math inline">\(\%\)</span> CI is either <span class="math inline">\(0\)</span> (it’s not in there) or <span class="math inline">\(1\)</span> (it’s in there). Note the important difference between ‘probability’ and ‘confidence’!</p>
+<p>The concept that does this is known as a <strong>credible interval</strong>; see [Guide: Credible intervals] for more.</p>
+<!-- :::{.callout-important} -->
+<!-- A 95% CI **does not mean** that the population mean is in the calculated CI with a 95% probability.  -->
+<!-- ::: -->
+<!-- So, when estimating population means, instead of providing only one fixed value for the population mean, you can specify a **range of values** which is likely (up to a statistical point) to contain the population mean. This range of values is called a **confidence interval** (CI). -->
+</section>
+<section id="whats-the-point" class="level3">
+<h3 class="anchored" data-anchor-id="whats-the-point">What’s the point?</h3>
+<p>Confidence intervals are a vital tool used to measure uncertainties in everyday life. For example:</p>
+<ul>
+<li><p>In politics, confidence intervals can be used to show the uncertainty in polling estimates.</p></li>
+<li><p>In economics, confidence intervals can be used to show uncertainties in market trends and inflation.</p></li>
+<li><p>In medicine and biology, confidence intervals can be used to show uncertainties around effects like mean weight loss, drug effectiveness, or survival rates.</p></li>
+<li><p>In sports, confidence intervals can be used by coaches to measure the true performance levels of athletes.</p></li>
+</ul>
+</section>
+<section id="in-this-guide" class="level3">
+<h3 class="anchored" data-anchor-id="in-this-guide">In this guide</h3>
+<p>This guide will focus on how to construct and interpret confidence intervals using the <strong>normal distribution only</strong>. This will include looking at <span class="math inline">\(Z\)</span>-values, two-tailed alpha values, and confidence levels. Then, the guide will discuss how to interpret what your confidence interval means.</p>
+<p>For information on confidence intervals using other distributions see [Guide: More on confidence intervals].</p>
+</section>
+</section>
+<section id="constructing-confidence-intervals" class="level1">
+<h1>Constructing confidence intervals</h1>
+<section id="the-normal-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="the-normal-distribution">The normal distribution</h2>
+<p>The <strong>normal distribution,</strong> or sometimes called the “bell-curve” because of its shape, is a function used to model the probability of various naturally occurring measurements, such as the average height of trees, average ages of cats, average IQs of humans, and so on. You would expect these measurements to have lots of measurements close to the middle (the average) and fewer measurements towards the extremes (the tails).</p>
+<p>More mathematically, the function is called a <strong>probability density function</strong> and it is written as <span class="math inline">\(N(\mu,\sigma^2)\)</span>, which depends on two parameters: the <strong>mean</strong> <span class="math inline">\((\mu)\)</span> and the <strong>standard deviation</strong> <span class="math inline">\((\sigma)\)</span>. In situations where <span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(\sigma = 1\)</span>, you have a <strong>standard normal distribution</strong>. For more on <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> see <a href="../studyguides/expectedvariance.html">Guide: Expected value, variance, standard deviation</a>; for more on probability density functions, please see <a href="../studyguides/pmfspdfscdfs.html">Guide: PMFs, PDFs, CDFs</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of a normally distributed random variable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a population where <span class="math inline">\(\mu\)</span> is the population mean and <span class="math inline">\(\sigma\)</span> is the population standard deviation, a random variable <span class="math inline">\(X\)</span> which is modelled by the normal distribution with these parameters is written as</p>
+<p><span class="math display">\[ X \sim N(\mu, \sigma^2) \]</span></p>
+<p>which you can read as ‘<span class="math inline">\(X\)</span> is normally distributed with parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>’.</p>
+</div>
+</div>
+<p>So to use the mathematical tools associated with the normal distribution on a population, you need to have a fairly good idea of the two parameters, the mean <span class="math inline">\(\mu\)</span> (mu) and standard deviation <span class="math inline">\(\sigma\)</span> (sigma).</p>
+<p>For more information on the normal distribution (such as what the function <span class="math inline">\(N(\mu,\sigma^2)\)</span> actually is) see <a href="../factsheets/f-normaldist.html">Factsheet: Normal distribution</a>.</p>
+</section>
+<section id="tails" class="level2">
+<h2 class="anchored" data-anchor-id="tails">Tails</h2>
+<p>Because of the ‘bell-shape’ of the normal distribution, there are less values at each end. The extremes of the normal distribution are called the <strong>tails</strong>.</p>
+<p>By drawing two vertical lines on the <span class="math inline">\(x\)</span>-axis at the two points <span class="math inline">\(x = x_0\)</span> and <span class="math inline">\(x = -x_0\)</span> (where <span class="math inline">\(x_0\)</span> is some number), and drawing upwards, you can define the area under the curve bounded to the right of <span class="math inline">\(x = x_0\)</span> and to the left of <span class="math inline">\(x = -x_0\)</span>. These areas at each end of the curve are often also called the <strong>tails</strong> of the distribution.</p>
+<p>The total area of both tails combined is called <span class="math inline">\(\alpha\)</span> (alpha), and this is always a number between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>. Since the graph is symmetric and the lines are drawn at <span class="math inline">\(x = x_0\)</span> and <span class="math inline">\(x = -x_0\)</span>, the area of each tail is exactly <span class="math inline">\({\alpha/2}\)</span>.</p>
+<p>To construct a confidence interval you need both tails, because you are looking at values both above and below the population mean, which is unknown. So you will construct what is called a <strong>two-tailed test.</strong></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Try!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try different values of <span class="math inline">\(\alpha\)</span> and see how the size of the tails change.</p>
+</div>
+</div>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 700
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui &lt;- page_sidebar(
+  title = "Normal distribution tails explained",
+  sidebar = sidebar(
+    numericInput("mu", 
+                 "Mean (μ):", 
+                 value = 0, 
+                 step = 0.1),
+    numericInput("sigma", 
+                 "Standard deviation (σ):", 
+                 value = 1, 
+                 min = 0.1, 
+                 step = 0.1),
+    hr(),
+    sliderInput("tail_threshold",
+                "Tails:",
+                min = 1,
+                max = 3,
+                value = 2,
+                step = 0.1),
+    hr(),
+    p("The distribution curve is shown in blue."),
+    p("Red areas represent the tails beyond the threshold."),
+    p("Use the threshold slider to see how tail areas change.")
+  ),
+  card(
+    card_header("Normal distribution with highlighted tails"),
+    plotOutput("tail_plot", height = "500px")
+  )
+)
+
+server &lt;- function(input, output, session) {
+  output$tail_plot &lt;- renderPlot({
+    x_range &lt;- c(input$mu - 4 * input$sigma, input$mu + 4 * input$sigma)
+    x &lt;- seq(x_range[1], x_range[2], length.out = 1000)
+    
+    y &lt;- dnorm(x, mean = input$mu, sd = input$sigma)
+    
+    left_tail &lt;- input$mu - input$tail_threshold * input$sigma
+    right_tail &lt;- input$mu + input$tail_threshold * input$sigma
+    
+    df &lt;- data.frame(x = x, y = y)
+    
+    p &lt;- ggplot(df, aes(x = x, y = y)) +
+      geom_line(color = "#3f68b6", size = 1.2) +
+      geom_area(data = df[df$x &gt;= left_tail &amp; df$x &lt;= right_tail, ], 
+                alpha = 0.2, fill = "#c0d6ff") +
+      geom_area(data = df[df$x &lt;= left_tail, ], 
+                alpha = 0.6, fill = "#db4315") +
+      geom_area(data = df[df$x &gt;= right_tail, ], 
+                alpha = 0.6, fill = "#db4315") +
+      geom_vline(xintercept = left_tail, color = "#db4315", size = 1, linetype = "dashed") +
+      geom_vline(xintercept = right_tail, color = "#db4315", size = 1, linetype = "dashed") +
+      geom_vline(xintercept = input$mu, color = "#3f68b6", size = 1, linetype = "dotted") +
+      labs(
+        title = "The normal distribution",
+        subtitle = paste("μ =", input$mu, ", σ =", input$sigma)
+      ) +
+      theme_minimal() +
+      theme(
+        plot.title = element_text(size = 16, hjust = 0.5),
+        plot.subtitle = element_text(size = 12, hjust = 0.5),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10)
+      )
+    
+    max_y &lt;- max(y)
+    p + annotate("text", 
+                 x = input$mu, 
+                 y = max_y * 0.9, 
+                 label = "μ", 
+                 color = "#3f68b6", 
+                 size = 5) +
+        annotate("text", 
+                 x = left_tail, 
+                 y = max_y * 0.5, 
+                 label = paste("-", input$tail_threshold, "σ"), 
+                 color = "#db4315", 
+                 size = 4, 
+                 hjust = 1.1) +
+        annotate("text", 
+                 x = right_tail, 
+                 y = max_y * 0.5, 
+                 label = paste("+", input$tail_threshold, "σ"), 
+                 color = "#db4315", 
+                 size = 4, 
+                 hjust = -0.1)
+  })
+}
+
+shinyApp(ui = ui, server = server)</code></pre>
+</section>
+<section id="confidence-level" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-level">Confidence level</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of a confidence level
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>confidence level</strong> (CL) suggests that if you were to repeat the sample and construction of a confidence interval <span class="math inline">\(100\)</span> times, you would expect the true value of the population mean to fall within CL of the constructed confidence intervals. A CL is typically represented using a percentage.</p>
+<p>For example, a <span class="math inline">\(95\%\)</span> CL suggests that the true value of the population mean would fall within <span class="math inline">\(95\)</span> out of <span class="math inline">\(100\)</span> computed confidence intervals.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span><span class="math inline">\(\alpha\)</span> is <span class="math inline">\(1\)</span> minus the CL
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(1 - \alpha\)</span> is the confidence level. So you only need <strong>one</strong> of either <span class="math inline">\(\alpha\)</span> or the confidence level in order to generate a confidence interval.</p>
+</div>
+</div>
+</section>
+<section id="z-value" class="level2">
+<h2 class="anchored" data-anchor-id="z-value"><span class="math inline">\(Z\)</span> value</h2>
+<p>The value of <span class="math inline">\(\alpha\)</span> (and/or the CL) is decided before constructing the confidence interval. Every value of <span class="math inline">\(\alpha\)</span> gives scores on the <span class="math inline">\(x\)</span> axis which leaves that much <span class="math inline">\({\alpha/2}\)</span> in each tail. Because of the symmetry of the normal distribution, these scores are plus and minus each other. This is called the <span class="math inline">\(Z\)</span>-value.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of the <span class="math inline">\(Z\)</span> value using the normal distribution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the normal distribution, a <span class="math inline">\(Z\)</span>-<strong>value</strong> (sometimes called <span class="math inline">\(Z\)</span>-<strong>score</strong> or <strong>standard score</strong>) is a known test statistic. It shows how many standard deviations above or below the mean an observed data point is.</p>
+<p>For the purposes of constructing confidence intervals, the <span class="math inline">\(Z\)</span>-value is written as <span class="math inline">\(Z_{\alpha/2}\)</span>. To work out <span class="math inline">\(Z_{\alpha/2}\)</span>, you need to specify the <span class="math inline">\(\alpha\)</span> (and/ or CL) value. You can then use the calculator below to find out <span class="math inline">\(Z_{\alpha/2}\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the <span class="math inline">\(Z\)</span>-value calculator below to find the <span class="math inline">\(Z\)</span> values for <span class="math inline">\(\alpha = 0.1\)</span>, <span class="math inline">\(\alpha = 0.05\)</span>, and <span class="math inline">\(\alpha = 0.01\)</span>. These values have been chosen as these are the most commonly used alpha values in statistics, with <span class="math inline">\(\alpha = 0.05\)</span> in particular giving <span class="math inline">\(95\%\)</span> confidence intervals.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 400
+
+
+library(shiny)
+library(bslib)
+
+ui &lt;- page_fillable(
+  title = "Z-value calculator",
+  
+  # Z-value card in full width
+  layout_columns(
+    col_widths = c(12),
+    card(
+      card_header("Z α/2"),
+      card_body(
+        class = "p-2",
+        div(
+          h1(textOutput("z_value"), style = "text-align: center; color: #3f68b6; font-size: 2.5rem; margin: 0;")
+        )
+      ),
+      height = "120px"
+    )
+  ),
+  
+  # Manual input and common alpha values in two columns
+  layout_columns(
+    col_widths = c(6, 6),
+    
+    # Manual input section
+    card(
+      card_header("Manual Input"),
+      card_body(
+        class = "p-2",
+        numericInput("alpha", 
+                     "Alpha level (α):", 
+                     value = 0.05, 
+                     min = 0.001, 
+                     max = 0.999, 
+                     step = 0.001),
+        helpText("α is the significance level for a two-tailed normal distribution")
+      ),
+      height = "200px"
+    ),
+    
+    # Common alpha values as buttons
+    card(
+      card_header("Common Alpha Values"),
+      card_body(
+        class = "p-2",
+        div(
+          actionButton("alpha_01", "α = 0.01", class = "btn-primary", color = "#3f68b6", style = "margin: 5px;"),
+          actionButton("alpha_05", "α = 0.05", class = "btn-primary", color = "#3f68b6", style = "margin: 5px;"),
+          actionButton("alpha_10", "α = 0.10", class = "btn-primary", color = "#3f68b6", style = "margin: 5px;")
+        )
+      ),
+      height = "200px"
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  
+  # Update alpha when buttons are clicked
+  observeEvent(input$alpha_01, {
+    updateNumericInput(session, "alpha", value = 0.01)
+  })
+  
+  observeEvent(input$alpha_05, {
+    updateNumericInput(session, "alpha", value = 0.05)
+  })
+  
+  observeEvent(input$alpha_10, {
+    updateNumericInput(session, "alpha", value = 0.10)
+  })
+  
+  # Calculate and display z-value
+  output$z_value &lt;- renderText({
+    z_critical &lt;- qnorm(1 - input$alpha/2)
+    round(z_critical, 4)
+  })
+}
+
+shinyApp(ui = ui, server = server)</code></pre>
+</div>
+</div>
+<p>Using the normal distribution, alpha value (and/or the confidence level), and the corresponding <span class="math inline">\(Z\)</span> value, you can then construct a confidence interval.</p>
+</section>
+<section id="how-do-you-construct-a-confidence-interval" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-you-construct-a-confidence-interval">How do you construct a confidence interval?</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of confidence interval using the normal distribution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <strong>sample margin of error</strong> is defined to be the following:</p>
+<p><span class="math display">\[
+ME = Z_{\alpha/2} \cdot \frac{s}{\sqrt{n}}
+\]</span></p>
+<p>where</p>
+<ul>
+<li><p><span class="math inline">\((Z_{\alpha/2})\)</span> is the <span class="math inline">\(Z\)</span>-value corresponding to the chosen confidence level <span class="math inline">\((1 -\alpha)\)</span>,</p></li>
+<li><p><span class="math inline">\(s\)</span> is the sample standard deviation</p></li>
+<li><p><span class="math inline">\(n\)</span> is the sample size.</p></li>
+</ul>
+<p>The fraction <span class="math inline">\(s/\sqrt{n}\)</span> is often known as the <strong>standard error</strong> of the sample.</p>
+<p>A <strong>CL% confidence interval</strong> (CI) is defined to be the interval <span class="math display">\[[\bar{x}-ME\,,\,\bar{x} + ME]\]</span> where <span class="math inline">\(\bar{x}\)</span> is the sample mean and <span class="math inline">\(ME\)</span> is the sample margin of error.</p>
+<!-- $$ -->
+<!-- \bar{x}\pm SE -->
+<!-- $$ -->
+<!-- Which you read as $x$ bar plus or minus the standard error. -->
+<!-- So your confidence interval is written as -->
+<!-- $$ -->
+<!-- [\bar{x} - SE,\bar{x} + SE] -->
+<!-- $$ -->
+<p>Here, <span class="math inline">\(\bar{x} - ME\)</span> is called your <strong>lower bound</strong> and <span class="math inline">\(\bar{x} + ME\)</span> is called your <strong>upper bound</strong>. The</p>
+</div>
+</div>
+<p>Here’s a step-by-step guide to working out a confidence interval.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>General steps for constructing a confidence interval using the normal distribution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Step 1</strong>: Write down everything you need to work out a confidence interval, which is</p>
+<ul>
+<li><p>your sample size <span class="math inline">\(n\)</span></p></li>
+<li><p>a sample mean <span class="math inline">\(\bar{x}\)</span> and sample standard deviation <span class="math inline">\(s\)</span></p></li>
+<li><p>your alpha value <span class="math inline">\((\alpha)\)</span> (or the confidence level (CL)) together with its corresponding <span class="math inline">\(Z\)</span> value</p></li>
+</ul>
+<p><strong>Step 2:</strong> Use your <span class="math inline">\(\alpha\)</span> (or CL) and the <span class="math inline">\(Z\)</span>-value calculator to find <span class="math inline">\(Z_{\alpha/2}\)</span>.</p>
+<p><strong>Step 3:</strong> Find the margin of error <span class="math display">\[ME = Z_{\alpha/2} \cdot \frac{s}{\sqrt{n}}\]</span> and then construct the confidence interval for this sample mean: <span class="math display">\[[\bar{x} - ME\,,\,\bar{x} + ME]\]</span></p>
+<p><strong>Step 4:</strong> Check your work! The average of your confidence interval should equal your sample mean.</p>
+<!-- For example, -->
+<!-- $$ -->
+<!-- \bar{x} = 50, \\[0.5em] -->
+<!-- [49.2, 50.8] -->
+<!-- $$ -->
+<!-- sum the upper and lower bound of the confidence interval, so -->
+<!-- $$ -->
+<!-- 49.2 + 50.8 = 100 -->
+<!-- $$ -->
+<!-- and when you divide by $2$ -->
+<!-- $$ -->
+<!-- \frac{100}{2} = 50 = \bar{x} -->
+<!-- $$ -->
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cantor’s Confectionery have purchased a new computer to help monitor the quality of their products. The computer allows them to input the mean and standard deviation of a sample of their best-selling products, and then put them into the following program.</p>
+<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
+#|   shinylive does not work in self-contained HTML documents.
+#|   Please set `embed-resources: false` in your metadata.
+#| standalone: true
+#| viewerHeight: 900
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+library(plotly)
+
+ui &lt;- page_sidebar(
+  title = "Confidence interval for mean weight of a product in Cantor's Confectionery",
+  
+  sidebar = sidebar(
+    sliderInput("alpha",
+                "significance level (α):",
+                min = 0.01,
+                max = 0.20,
+                value = 0.05,
+                step = 0.01),
+    
+    hr(),
+    
+    numericInput("x_bar",
+                 "sample mean (x̄) in grams:",
+                 value = 75,
+                 min = 50,
+                 max = 100,
+                 step = 0.1),
+    
+    numericInput("sigma",
+                 "standard deviation (σ) in grams:",
+                 value = 10,
+                 min = 1,
+                 max = 20,
+                 step = 0.1),
+    
+    numericInput("n",
+                 "sample size (n):",
+                 value = 100,
+                 min = 10,
+                 max = 500,
+                 step = 1)
+  ),
+  
+  card(
+    card_header("Normal distribution and confidence interval"),
+    plotlyOutput("normal_plot", height = "600px")
+  ),
+  
+  card(
+    card_header("Confidence interval summary"),
+    div(
+      style = "font-size: 16px; padding: 10px;",
+      uiOutput("ci_summary")
+    ),
+  height = "250px"
+  )
+)
+
+server &lt;- function(input, output, session) {
+  
+  # Reactive calculations
+  confidence_level &lt;- reactive({
+    (1 - input$alpha) * 100
+  })
+  
+  alpha_half &lt;- reactive({
+    input$alpha / 2
+  })
+  
+  z_critical &lt;- reactive({
+    qnorm(1 - alpha_half())
+  })
+  
+  standard_error &lt;- reactive({
+    input$sigma / sqrt(input$n)
+  })
+  
+  margin_of_error &lt;- reactive({
+    z_critical() * standard_error()
+  })
+  
+  ci_lower &lt;- reactive({
+    input$x_bar - margin_of_error()
+  })
+  
+  ci_upper &lt;- reactive({
+    input$x_bar + margin_of_error()
+  })
+  
+  # Main plot
+  output$normal_plot &lt;- renderPlotly({
+    
+    # Create data for the normal distribution
+    x_seq &lt;- seq(-4, 4, length.out = 1000)
+    y_seq &lt;- dnorm(x_seq)
+    
+    # Create the base plot
+    p &lt;- ggplot(data.frame(x = x_seq, y = y_seq), aes(x = x, y = y)) +
+      geom_line(size = 1.2, color = "#3f68b6") +
+      
+      # Shade the rejection regions
+      geom_area(data = data.frame(x = x_seq[x_seq &lt;= -z_critical()], 
+                                  y = y_seq[x_seq &lt;= -z_critical()]),
+                aes(x = x, y = y), fill = "#db4315", alpha = 0.3) +
+      geom_area(data = data.frame(x = x_seq[x_seq &gt;= z_critical()], 
+                                  y = y_seq[x_seq &gt;= z_critical()]),
+                aes(x = x, y = y), fill = "#db4315", alpha = 0.3) +
+      
+      # Shade the confidence region
+      geom_area(data = data.frame(x = x_seq[x_seq &gt;= -z_critical() &amp; x_seq &lt;= z_critical()], 
+                                  y = y_seq[x_seq &gt;= -z_critical() &amp; x_seq &lt;= z_critical()]),
+                aes(x = x, y = y), fill = "#3f68b6", alpha = 0.2) +
+      
+      # Add vertical lines for critical values
+      geom_vline(xintercept = c(-z_critical(), z_critical()), 
+                 linetype = "dashed", color = "#db4315", size = 1) +
+      geom_vline(xintercept = 0, linetype = "solid", color = "black", size = 1) +
+      
+      # Add labels
+      annotate("text", x = -z_critical(), y = 0.1, 
+               label = paste("-Z =", round(-z_critical(), 3)), 
+               hjust = 1.1, color = "#db4315", size = 4) +
+      annotate("text", x = z_critical(), y = 0.1, 
+               label = paste("Z =", round(z_critical(), 3)), 
+               hjust = -0.1, color = "#db4315", size = 4) +
+      annotate("text", x = 0, y = 0.45, 
+               label = paste(confidence_level(), "% Confidence"), 
+               hjust = 0.5, color = "#3f68b6", size = 5, fontface = "bold") +
+      annotate("text", x = -3, y = 0.05, 
+               label = paste("α/2 =", round(alpha_half(), 4)), 
+               hjust = 0.5, color = "#db4315", size = 4) +
+      annotate("text", x = 3, y = 0.05, 
+               label = paste("α/2 =", round(alpha_half(), 4)), 
+               hjust = 0.5, color = "#db4315", size = 4) +
+      
+      labs(
+        title = "Standard normal distribution for confidence interval",
+        x = "Z-score",
+        y = "Probability density",
+        subtitle = paste("Confidence Interval for μ: [", round(ci_lower(), 2), "g,", round(ci_upper(), 2), "g]")
+      ) +
+      theme_minimal() +
+      theme(
+        plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5, size = 12),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10)
+      ) +
+      xlim(-4, 4) +
+      ylim(0, 0.5)
+    
+    ggplotly(p) %&gt;%
+      config(displayModeBar = FALSE)
+  })
+  
+  # Confidence interval summary
+  output$ci_summary &lt;- renderUI({
+    tagList(
+      p(strong("Confidence level:"), paste0(sprintf("%.1f", confidence_level()), "%")),
+      p(strong("Confidence interval:"), 
+        paste0("[", sprintf("%.3f", ci_lower()), " g , ", sprintf("%.3f", ci_upper()), " g]")),
+      p(strong("Margin of error (ME):"), paste0(sprintf("%.3f", margin_of_error()), " g")),
+      p(strong("Standard error (SE):"), paste0(sprintf("%.3f", standard_error()), " g"))
+    )
+  })
+}
+
+shinyApp(ui = ui, server = server)</code></pre>
+<p>What can you tell from this?</p>
+<ul>
+<li><p>First of all, you can see that this is a normal distribution for the mean weight of one of Cantor’s Confectionery’s best selling products.</p></li>
+<li><p>This takes an input of a sample mean and a sample standard deviation.</p></li>
+<li><p>When different values for <span class="math inline">\(\alpha\)</span> are selected, the tails of the normal distribution change. This means that when constructing a confidence interval, the <span class="math inline">\(Z\)</span>-values will be different depending on your confidence level.</p></li>
+<li><p>By changing any of the parameters, the values of the confidence interval changes. This is because the value of the confidence intervals depend on all of these parameters.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cantor’s Confectionery uses the normal distribution from Example 1 and the computer from Example 2 to construct a <span class="math inline">\(95\%\)</span> confidence interval for the mean weight of their bags of sweets. They take a sample of <span class="math inline">\(100\)</span> bags which has an average weight of <span class="math inline">\(75\)</span> grams. The calculated standard deviation is <span class="math inline">\(10\)</span> grams.</p>
+<p>They ask you, an eminent and capable statistician, to check the results of their computation.</p>
+<p><strong>Step 1:</strong> What do you need?</p>
+<ul>
+<li><p>The sample size is <span class="math inline">\(100\)</span> bags of sweets, so <span class="math inline">\(n = 100\)</span>.</p></li>
+<li><p>The average weight of the bags of sweets is <span class="math inline">\(75\)</span> grams so <span class="math inline">\(\bar{x} = 75\,\textrm{g}\)</span>. The sample standard deviation of the sample is <span class="math inline">\(10\)</span> grams so <span class="math inline">\(s = 10\,\textrm{g}\)</span>.</p></li>
+<li><p>The confidence level is <span class="math inline">\(95\%\)</span>; so <span class="math inline">\(\alpha = 0.05\)</span> and <span class="math inline">\({\alpha/2} = 0.025\)</span>.</p></li>
+</ul>
+<p><strong>Step 2:</strong> Use the Z value calculator to identify <span class="math inline">\(Z_\frac{0.05}{2} = Z_{0.025} = 1.960\)</span>.</p>
+<p><strong>Step 3:</strong> Construct the confidence interval. First, you’ll need to work out the margin of error; which since the sample standard deviation is in grams, and the <span class="math inline">\(Z\)</span>-value and square root of sample size are unitless, should be expressed in grams. Here, <span class="math display">\[ME = Z_{0.025} \cdot \frac{s}{\sqrt{n}} = 1.960\cdot \frac{10\,\textrm{g}}{\sqrt{100}} = 1.960\cdot \frac{10\,\textrm{g}}{10} = 1.960\,\textrm{g}.\]</span></p>
+<!-- $$ -->
+<!-- [\bar{x} - Z_{0.025} \frac{\sigma}{\sqrt{n}}, \bar{x} + Z_{0.025} \frac{\sigma}{\sqrt{n}}]   -->
+<!-- $$ -->
+<p>Then a 95% CI can be calculated:</p>
+<p><span class="math display">\[
+95\%\textsf{ CI }= [(75 - 1.960)\,\textrm{g}\,,\, (75 + 1.960)\,\textrm{g}] = [73.04\,\textrm{g}\,, 76.96\,\textrm{g}]
+\]</span></p>
+<!-- $$ -->
+<!-- = [73.04, 76.96] -->
+<!-- $$ -->
+<p><strong>Step 4:</strong> Check your work. You know that the sample mean should be the exact centre of your confidence interval. Here</p>
+<p><span class="math display">\[
+73.04\,\textrm{g} + 76.96\,\textrm{g} = 150 \,\textrm{g}
+\]</span> and since</p>
+<p><span class="math display">\[
+\frac{150\,\textrm{g}}{2}\,\textrm{g} = 75 \,\textrm{g}
+\]</span></p>
+<p>you can see that the centre of the confidence interval is the sample mean <span class="math inline">\(\bar{x} = 75\,\textrm{g}\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the sample mean and sample standard deviation from Example 3, you can ask the computer from Cantor’s Confectionery in Example 2 to work out a <span class="math inline">\(90\%\)</span> confidence interval and <span class="math inline">\(99\%\)</span> confidence interval. It outputs the following results:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\textsf{A }90\%\textsf{ CI }&amp;= [73.36\,\textrm{g}, 76.64\,\textrm{g}] \\[0.5em]
+\textsf{A }99\%\textsf{ CI }&amp;=[72.424\,\textrm{g}, 77.576\,\textrm{g}]
+\end{aligned}
+\]</span></p>
+<p>What does this suggest about the confidence levels and the corresponding confidence intervals?</p>
+<p>For all three examples, the sample mean falls in the centre of the confidence interval. But, as the confidence level <strong>increases</strong>, so does the <strong>width</strong> of the confidence interval. This makes sense; if you want to be more confident as to where the population mean <span class="math inline">\(\mu\)</span> is, then you need to give a wider set of values.</p>
+<p>This is also linked to the tails of the normal distribution. If you were to think about the tails of these normal graphs, as the CL increases the amount of area underneath each extreme decreases. This means you have more values in the middle of the graph, which is why you have more values in the confidence interval. For more on this, see [Guide: More on confidence intervals].</p>
+</div>
+</div>
+<p>Here’s another example which shows that you do not need to follow the precise steps.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There is a new shop in town! Lovelace’s Lollies are claiming their products are better than Cantor’s Confectionery. They have employed you to construct some <span class="math inline">\(95\%\)</span> confidence intervals for them.</p>
+<p>They take a sample of <span class="math inline">\(77\)</span> of their best selling boxes of lollies. The average weight of these boxes is <span class="math inline">\(84\)</span> grams with a standard deviation of <span class="math inline">\(9.5\)</span> grams. So</p>
+<ul>
+<li><p>The sample size is <span class="math inline">\(n = 77\)</span>.</p></li>
+<li><p><span class="math inline">\(\bar{x} = 84\,\textrm{g}\)</span> is the sample mean, and <span class="math inline">\(s = 9.5\,\textrm{g}\)</span> is the sample standard deviation.</p></li>
+<li><p>It’s a <span class="math inline">\(95\%\)</span> CI, and so <span class="math inline">\(Z_\frac{0.05}{2} = Z_{0.025} = 1.960\)</span>.</p></li>
+</ul>
+<p>So to construct the confidence interval you need to first compute the standard error:</p>
+<p><span class="math display">\[ME = Z_{\alpha/2}\cdot \frac{s}{\sqrt{n}} = 1.960\cdot \frac{9.5\,\textrm{g}}{\sqrt{77}} = 2.122\,\textrm{g} \qquad \textsf{ to 3dp.}\]</span></p>
+<p>Which means that the <span class="math inline">\(95\%\)</span> CI for this sample is <span class="math display">\[
+95\%\textsf{ CI }= [(84 - 2.122)\,\textrm{g}, (84 + 2.122)\,\textrm{g}] = [81.878\,\textrm{g}\,, 86.122\,\textrm{g}]
+\]</span></p>
+<p>This completes your work for Lovelace’s Lollies.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="applications-of-confidence-intervals" class="level1">
+<h1>Applications of confidence intervals</h1>
+<p>It’s really important to scrutinize any of your answers and check your understanding of the statistics you are presenting.</p>
+<p>So in Examples 3 and 5, Cantor’s Confectionery and Lovelace’s Lollies have both constructed a <span class="math inline">\(95\%\)</span> confidence interval from a sample of their best selling products. What does this tell you?</p>
+<ul>
+<li><p>If Cantor’s Confectionery were to repeat the study several times, they would expect the average weight of a bag of sweets to <strong>lie between</strong> <span class="math inline">\(73.04\)</span> grams and <span class="math inline">\(76.96\)</span> grams, <strong>with</strong> <span class="math inline">\(95\%\)</span> <strong>confidence.</strong></p></li>
+<li><p>If Lovelace’s Lollies were to repeat the study several times, they would expect the average weight of a box of lollies to <strong>lie between</strong> <span class="math inline">\(81.88\)</span> and <span class="math inline">\(86.12\)</span> grams, <strong>with</strong> <span class="math inline">\(95\%\)</span> <strong>confidence.</strong></p></li>
+</ul>
+<p>The next example shows what these <strong>do not</strong> tell you.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The imminent rivalry between Cantor’s Confectionery and Lovelace’s Lollies has reached STARMAST News with the following headline:</p>
+<p>“Here to compete with Cantor’s Confectionery: Lovelace’s Lollies <strong>guarantee</strong> that <span class="math inline">\(95\%\)</span> of all boxes of lollies will weigh <span class="math inline">\(86.12\)</span> grams”.</p>
+<p>There are issues with this statement.</p>
+<p>From the definition of a confidence level, you know that a confidence level suggests that if you were to repeat the study many times, you would expect the true estimate to fall within CL<span class="math inline">\(\%\)</span> of the results.</p>
+<p>This is <strong>not the same</strong> as saying CL<span class="math inline">\(\%\)</span> of the products weigh a certain amount.</p>
+<p>Instead, the STARMAST News headline should read</p>
+<p>“Here to compete with Cantor’s Confectionery: A study on a sample of Lovelace’s Lollies suggest that if more boxes were to be sampled, they expect <span class="math inline">\(95\%\)</span> of boxes would weigh between <span class="math inline">\(81.88\)</span> and <span class="math inline">\(86.12\)</span> grams”.</p>
+</div>
+</div>
+<p>Finally, you can use a published confidence interval and some rearranging of equations to find out both the sample mean and sample standard deviation from a confidence interval.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cantor’s Confectionery release a new “family-sized” bag of sweets to compete with Lovelace’s Lollies. They publish a news report on STARMAST News to counter some of the claims made by Lovelace’s Lollies.</p>
+<blockquote class="blockquote">
+<p>“We’ve made a family-sized bag of sweets. Out of a sample of 81 bags, the <span class="math inline">\(99\%\)</span> confidence interval was <span class="math inline">\([100.00g, 104.00g]\)</span> to two decimal places!</p>
+</blockquote>
+<p>(Probably not the best PR people at Cantor’s Confectionery.)</p>
+<p>Anyway, Lovelace’s Lollies have got hold of this news report and want you to investigate the sample mean and sample standard deviation of their competitor’s study. This is to compare their manufacturing processes with their sample standard deviation from Example 5.</p>
+<p>You know that the sample mean is always at the centre of a confidence interval, and so here <span class="math display">\[\bar{x} = \frac{100.00 + 104.00}{2}\,\textrm{g} = 102\,\textrm{g}.\]</span> To work out the sample standard deviation <span class="math inline">\(s\)</span>, you will need to take the equation for the standard error and rearrange for <span class="math inline">\(s\)</span>.</p>
+<ul>
+<li><p>Here, the margin of error is the upper bound of the CI minus the sample mean, which is <span class="math inline">\(ME = (104 - 102)\,\textrm{g} = 2\,\textrm{g}\)</span>.</p></li>
+<li><p>The confidence level is <span class="math inline">\(99\%\)</span>. This means that <span class="math inline">\(\alpha = 0.01\)</span> and so, from the <span class="math inline">\(Z\)</span>-value calculator: <span class="math display">\[Z_{\alpha/2} = Z_{0.005} = 2.576.\]</span></p></li>
+<li><p>The sample size is <span class="math inline">\(n = 81\)</span>, which means that <span class="math inline">\(\sqrt{n} = \sqrt{81} = 9\)</span>.</p></li>
+</ul>
+<p>So you will have to rearrange the equation <span class="math display">\[2 = 2.576\cdot \frac{s}{\sqrt{81}}\]</span> and doing so gives <span class="math display">\[s = \frac{2\cdot 9}{2.576} = 6.99\,\textrm{g} \qquad\textsf{ to 2dp.}\]</span></p>
+<!-- Cantor's Confectionery want to know the standard deviation of this sample to compare with their standard deviation of $10$ grams from example 3 and Lovelace's Lollies standard deviation of $9.5$ grams from example 5 -->
+<!-- The sample mean is given as -->
+<!-- $$ -->
+<!-- \bar{x} = 102 -->
+<!-- $$ -->
+<!-- The confidence level is $99\%$ so under the normal distribution -->
+<!-- $$ -->
+<!-- Z_{\alpha/2} = Z_{0.005} = 2.576 -->
+<!-- $$ -->
+<!-- The sample size is -->
+<!-- $$ -->
+<!-- n = 81 -->
+<!-- $$ -->
+<!-- So, to work out the sample standard deviation $(\sigma)$, you must work back from the confidence interval -->
+<!-- You can then use **either bound**. So, using the lower bound you know that -->
+<!-- $$ -->
+<!-- 100 = 102- 2.576(\frac{\sigma}{\sqrt{81}}) -->
+<!-- $$ -->
+<!-- by rearranging the equation -->
+<!-- $$ -->
+<!-- -2 = -\frac{2.576(\sigma)}{\sqrt{81}} -->
+<!-- $$ -->
+<!-- and so, -->
+<!-- $$ -->
+<!-- \sigma = 7 -->
+<!-- $$ -->
+<p>This is the lowest sample standard deviation yet; it seems that Cantor’s Confectionery have better manufacturing facilities!</p>
+</div>
+</div>
+</section>
+<section id="quick-check-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Quick check problems</h1>
+<!-- add facility for webexercises to work on html -->
+<!-- add facility to check answers at end rather than one at a time -->
+<div class="webex-check webex-box" data-topic="CI1">
+<ol type="1">
+<li>Cantor’s Confectionery has constructed a <span class="math inline">\(99\%\)</span> CI for the population mean length of their pulled taffy, which is <span class="math inline">\([29.1\,\textrm{mm}, 32.9\,\textrm{mm}]\)</span>. Below are three statements about this working; two are false, and one is true. Select the true statement:</li>
+</ol>
+<p><select class="webex-select"><option value="blank"></option><option value="">There is a 99% probability that the population mean is in this interval.</option><option value="">99% of the sample data is within this interval.</option><option value="answer">It’s likely (to a 99% confidence level) that the population mean is in this interval.</option></select></p>
+<ol start="2" type="1">
+<li>What would your CL be for <span class="math inline">\(\alpha = 0.05\)</span>?</li>
+</ol>
+<!-- -->
+<ol type="a">
+<li><p><span class="math inline">\(85\%\)</span></p></li>
+<li><p><span class="math inline">\(90\%\)</span></p></li>
+<li><p><span class="math inline">\(95\%\)</span></p></li>
+</ol>
+<p>Answer: <select class="webex-select"><option value="blank"></option><option value="">a</option><option value="">b</option><option value="answer">c</option></select>.</p>
+<ol start="3" type="1">
+<li>What is the <span class="math inline">\(Z\)</span>-value for <span class="math inline">\(\alpha = 0.1\)</span>, to 4 decimal places?</li>
+</ol>
+<p>Answer: <input class="webex-solveme nospaces" size="6" data-answer="[&quot;1.6449&quot;]">.</p>
+<ol start="4" type="1">
+<li>If a random variable <span class="math inline">\(X\)</span> is normally distributed, which parameters are used?</li>
+</ol>
+<p>Answer: <select class="webex-select"><option value="blank"></option><option value="">n and Z</option><option value="">mu and n</option><option value="answer">mu and sigma</option></select>.</p>
+<ol start="5" type="1">
+<li>What are the extremes of the normal distribution called?</li>
+</ol>
+<p>Answer: <select class="webex-select"><option value="blank"></option><option value="">ends</option><option value="">sides</option><option value="answer">tails</option></select>.</p>
+</div>
+</section>
+<section id="further-reading" class="level1">
+<h1>Further reading</h1>
+<p><a href="../questions/qs-confidenceintervals.html">For more questions on the subject, please go to Questions: Introduction to confidence intervals.</a></p>
+<p><a href="../apps/calculators/c-confidenceintervalsnormal.html">If you would like to use a calculator to check your answers, please go to Calculator: Confidence intervals with normal distribution.</a></p>
+</section>
+<section id="version-history" class="level1">
+<h1>Version history</h1>
+<p>v1.0: initial version created 12/25 by Millie Harris as part of a University of St Andrews VIP project.</p>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+  let allCorrect = false;
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) 
+  {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
+  }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Checks";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Check Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if (this.dataset.tol > 0)
+  {
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Check Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* check each question to see whether it was answered correctly */
+  update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
+}
+
+</script>
+<!--------------------  Email Forms -----------------------------------
+        Compiled into each .html page by Quarto.
+        Website hosted and form handled by Netlify now
+        Mailing list provided by mailerlite
+        Input verified by reCaptcha2 
+        
+        Authors (recent to latest): 
+           Tristin Doherty (Trido)
+           Mohit Agarwal (Mohit-Agarwa1)
+--------------------------------------------------------------------->
+<script>
+  // Adds an extra layer of validation to aid user input,
+  // some of these are covered by basic html form validations as well, but netlify handles everything else
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[name='feedback']"); 
+    
+    form.addEventListener("submit", function(event) {
+        const nameInput = document.querySelector("input[name='name']")?.value.trim();
+        const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+        const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+
+        if (!nameInput)    { alert("Please enter a name."); return; }
+        if (!emailInput)   { alert("Please enter an email."); return; }
+        if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+        
+        event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+        const subjectInput = document.querySelector("input[name='subject']");
+                
+        // sanitise inputs
+        const sanitizedName = sanitizeInput(nameInput); 
+        const sanitizedEmail = sanitizeEmail(emailInput);
+        const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+        // validate email
+        if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+        subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+        form.submit();
+    });
+});
+
+// Removes leading and trailing whitespace for formatting, and replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+function sanitizeInput(input) {
+  input = input.trim();                                      
+  input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return input;
+}
+
+// remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+function sanitizeEmail(email) {
+  email = email.trim(); 
+  email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+  return email;
+}
+
+// This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+function validateEmail(email) {
+  const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+  return re.test(email);
+}
+
+</script>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here, <br>
+but please be specific with any issues you encounter so we can help to resolve them <br>
+(for example, what page it occured on, what you tried, and so on). </p>
+
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+  <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+  <input type="hidden" name="subject" value="Feedback from unknown">
+
+  <label for="name">Name: </label>
+  <br>
+  <input type="text" name="name" required="">
+  <br><br>
+  
+  <label for="email">E-mail: </label>
+  <br>
+  <input type="email" name="email" required="">
+  <br><br>
+  
+  <label for="feedback">Feedback: </label>
+  <br>
+  <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+  <br><br>
+
+  <!-- Google reCAPTCHA Widget -->
+  <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+  <br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.VERTICAL },
+      'google_translate_element'
+    );
+  }
+</script>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    const targetSidebar = document.getElementById('quarto-margin-sidebar');
+    if (!targetSidebar) return;
+
+    const translateWrapper = document.createElement('div');
+    translateWrapper.className = 'sidebar-section';
+    translateWrapper.style.marginTop = '2em';
+
+    const title = document.createElement('h5');
+    title.innerText = 'Translate';
+
+    const translatorDiv = document.createElement('div');
+    translatorDiv.id = 'google_translate_element';
+
+    translateWrapper.appendChild(title);
+    translateWrapper.appendChild(translatorDiv);
+    targetSidebar.appendChild(translateWrapper);
+
+    const googleScript = document.createElement('script');
+    googleScript.type = 'text/javascript';
+    googleScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(googleScript);
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>STARMAST © 2026 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -4,24 +4,31 @@ author: Donald Campbell
 abstract-title: Summary
 abstract: Algebraic fractions extend the idea of numerical fractions to expressions that include variables. This guide explains what algebraic fractions are and why certain values are not allowed in the denominator. You will learn how to rewrite algebraic fractions in equivalent forms and how to simplify them by factorizing and cancelling common factors. These skills are essential for later topics such as solving algebraic equations, manipulating formulas, and working with rational functions.
 categories: 
-  - Key skills in algebra
+  - Algebra
 image: FiguresPNG/introtoalgebraicfractions-image.png
-draft: true
 ---
 
 ```{r, setup, include = FALSE}
 library("webexercises")
 ```
 
-*Before reading this guide, it is recommended that you read [Guide: Introduction to numerical fractions](introtonumericalfractions.qmd), [Guide: Arithmetic on numerical fractions](arithmeticonnumericalfractions.qmd) and [Guide: Factorization](factorization.qmd).*
+*Before reading this guide, it is recommended that you read [Guide: Introduction to fractions](introtonumericalfractions.qmd), [Guide: Arithmetic on fractions](arithmeticonnumericalfractions.qmd) and [Guide: Factorization](factorization.qmd).*
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/introtoalgebraicfractions.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
 
 # What is an algebraic fraction?
 
-In [Guide: Introduction to numerical fractions](introtonumericalfractions.qmd), you learned about numerical fractions, which are fractions where both the numerator and denominator are numbers: $$\frac{3}{4} \qquad \frac{15}{7} \qquad \frac{23}{100}$$
+In [Guide: Introduction to fractions](introtonumericalfractions.qmd), you learned about numerical fractions, which are fractions where both the numerator and denominator are numbers: $$\frac{3}{4} \qquad \frac{15}{7} \qquad \frac{23}{100}$$
 
-These ideas can be extended to **algebraic fractions**. These look similar, but instead of including only numbers, the numerator or denominator (or both) can include letters and expressions: $$\frac{x}{5} \qquad \frac{2}{x^2} \qquad \frac{x+3}{x-2}$$
+These ideas can be extended to **algebraic fractions**. These look similar, but instead of including only numbers, the numerator or denominator (or both) can include letters and expressions: $$\frac{x}{5} \qquad \frac{2}{x^2} \qquad \frac{x+3}{x-2} \qquad \frac{4\pi r^3}{3} \qquad \frac{1}{x^2 + y^2}$$
 
-By the end of this guide, you will be able to find equivalent fractions for algebraic fractions and simplify them in a similar way to numerical fractions. The main difference is that, because the denominator may contain algebra, you must be careful about restrictions.
+By the end of this guide, you will be able to find equivalent fractions for algebraic fractions and simplify them in a similar way to numerical fractions. The main difference between algebraic and numerical fractions is that, because the denominator may contain algebra, you must be careful about dividing by zero.
 
 # Restrictions on the denominator
 
@@ -29,26 +36,47 @@ Every algebraic fraction has a denominator, and one of the most important rules 
 
 If the denominator of a fraction becomes zero for a certain value of a variable, then the fraction is said to be **undefined** at that point. This means that the expression has no value at that point.
 
-When working with algebraic fractions, you need to state any values of the variable that make the denominator zero. These are called the **restricted values**.
 
 ::: {.callout-note}
 ## Restrictions on the denominator
 
-Let $f(x)$ and $g(x)$ be functions of the variable $x$.
+When working with algebraic fractions, you need to find any values of the variable(s) that make the denominator zero. These are called the **restricted values**. Any condition that says that a variable is not equal to a restricted value is called a **restriction**.
 
-For any algebraic fraction $$\frac{f(x)}{g(x)}$$
-
-the fraction is defined only when $$g(x) \neq 0$$
-
-The **restricted values** are the values of $x$ that make $g(x) = 0$. At these points, the fraction is said to be **undefined**.
 :::
+
+For instance, for the fraction $$\frac{1}{x-1}$$ 
+
+- $x = 1$ is a **restricted value**
+
+- $x\neq 1$ is a **restriction**. 
+
+:::{.callout-important}
+
+You should clearly state the restriction for any algebraic fraction you use. 
+
+:::
+
+
+
+<!-- ::: {.callout-note} -->
+<!-- ## Restrictions on the denominator -->
+
+<!-- Let $f(x)$ and $g(x)$ be functions of the variable $x$. -->
+
+<!-- For any algebraic fraction $$\frac{f(x)}{g(x)}$$ -->
+
+<!-- the fraction is defined only when $$g(x) \neq 0$$ -->
+
+<!-- The **restricted values** are the values of $x$ that make $g(x) = 0$. At these points, the fraction is said to be **undefined**. -->
+<!-- ::: -->
 
 ::: {.callout-note appearance="simple"}
 ## Example 1
 
 For what values of $x$ is the following fraction undefined? $$\frac{2}{x}$$
 
-Here, the denominator is $x$. The fraction is undefined when $x = 0$, so the restriction is $$x \neq 0$$
+Here, the denominator is $x$. The fraction is undefined when $x = 0$, so the restriction on this expression is $x \neq 0$.
+
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -56,7 +84,8 @@ Here, the denominator is $x$. The fraction is undefined when $x = 0$, so the res
 
 For what values of $x$ is the following fraction undefined? $$\frac{1}{x-3}$$
 
-Here, the denominator is $x-3$. The fraction is undefined when $x-3 = 0$, which occurs when $x = 3$, so the restriction is $$x \neq 3$$
+Here, the denominator is $x-3$. The fraction is undefined when $x-3 = 0$, which occurs when $x = 3$. So the restriction is $x \neq 3$.
+
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -64,9 +93,38 @@ Here, the denominator is $x-3$. The fraction is undefined when $x-3 = 0$, which 
 
 For what values of $x$ is the following fraction undefined? $$\frac{x+2}{(x-1)(x+4)}$$
 
-Here the denominator is $(x-1)(x+4)$. The fraction is undefined when $(x-1)(x+4) = 0$, which occurs when either $x=1$ or $x=-4$, so the restrictions are $$x \neq 1 \, \textsf{ and } \, x \neq -4$$
+Here the denominator is $(x-1)(x+4)$. The fraction is undefined when $(x-1)(x+4) = 0$, which occurs when either $x=1$ or $x=-4$, so the restrictions are $$x \neq 1 \, \textsf{ and } \, x \neq -4.$$
 
-Restrictions of multiple values can also be written in set notation. In this example, you can also write $x \not\in \{1,-4\}$. The symbol $\in$ means "is a member of" and the symbol $\not\in$ means "is not a member of". This means that $x \not\in \{1,-4\}$ reads as "$x$ is not any of $1$ and $-4$".
+:::
+
+:::{.callout-tip}
+
+Restrictions of multiple values can also be written in set notation. In this example, you can also write $x \not\in \{1,-4\}$. The symbol $\in$ means "is a member of" and the symbol $\not\in$ means "is not a member of". This means that $x \not\in \{1,-4\}$ reads as "$x$ is not any of $1$ and $-4$". For more on this, see [Guide: Introduction to sets].
+
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 4
+
+For what values of $x$ and $y$ is the following fraction undefined? $$\frac{x+2y}{xy}$$
+
+Here the denominator is $xy$. The fraction is undefined when $xy = 0$, which occurs when $x=0$, or $y=0$, or when both $x = y = 0$. So the restrictions are $$x \neq 0 \, \textsf{ and } \, y \neq 0,$$ which you can also write as $x,y\neq 0$. 
+
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 5
+
+For what values of $x$ and $y$ is the following fraction undefined? $$\frac{10}{x^2 + y^2}$$
+
+Here the denominator is $x^2 + y^2$. The fraction is undefined when $x^2 + y^2 = 0$. Since $x^2,y^2 > 0$ for all $x$ and $y$ not equal to zero, it follows that $x^2 + y^2 = 0 $ occurs only when both $x$ and $y$ are $0$. So the restrictions are $$x \neq 0 \, \textsf{ or } \, y \neq 0,$$ as $x^2 + y^2 \neq 0$ whenever one or both of $x$ or $y$ are non-zero.
+
+:::
+
+:::{.callout-tip}
+
+Notice the difference between the two denominators $xy$ and $x^2 + y^2$ in Examples 4 and 5. In Example 4 for $xy$, the restricted values were $x\neq 0$ **and** $y\neq 0$; in Example 5 for $x^2 + y^2$, the restricted values were $x\neq 0$ **or** $y\neq 0$. This is a crucial difference, and is a way into thinking **logically** about your work. For more on this, see [Guide: Introduction to predicate logic].
+
 :::
 
 # Equivalent algebraic fractions
@@ -82,10 +140,17 @@ Two algebraic fractions are equivalent if they have the same value, even though 
 
 You can create an equivalent algebraic fraction by:
 
-* Multiplying the numerator and denominator by the same expression (not equal to zero).
+* Multiplying the numerator and denominator by the same **non-zero** expression.
 * Dividing the numerator and denominator by the same common factor.
 
-A simplified fraction is an equivalent fraction of one of its unsimplified forms.
+Both of these are the same thing as multiplying your expression by $1$. 
+
+:::
+
+:::{.callout-important}
+
+Dividing the numerator and denominator by the same common factor is known as **cancelling the factors out**, or even only **cancelling**.
+
 :::
 
 ::: {.callout-note appearance="simple"}
@@ -93,13 +158,14 @@ A simplified fraction is an equivalent fraction of one of its unsimplified forms
 
 Below are some examples of equivalent algebraic fractions.
 
-Multiplying by a constant: $$\frac{1}{x} = \frac{1 \cdot 3}{x \cdot 3} = \frac{3}{3x} \qquad \textsf{if } \, x \neq 0$$
+Multiplying both numerator and denominator by the same non-zero constant: $$\frac{1}{x} = \frac{1 \cdot 3}{x \cdot 3} = \frac{3}{3x} \qquad \textsf{if } \, x \neq 0$$
 
-Dividing by a common factor: $$\frac{6x^2}{9x} = \frac{6x^2 \div 3x}{9x \div 3x} = \frac{2x}{3} \qquad \textsf{if } \, x \neq 0$$
+Dividing both numerator and denominator by a common factor (**cancelling**): $$\frac{6x^2}{9x} = \frac{6x^2 \div 3x}{9x \div 3x} = \frac{2x}{3} \qquad \textsf{if } \, x \neq 0$$
 
-Multiplying by a variable expression: $$\frac{2}{x} = \frac{2(x+1)}{x(x+1)} \qquad \textsf{if } \, x \neq 0 \, \textsf{ and } \, x \neq -1$$
+Multiplying both numerator and denominator by the same non-zero variable expression: $$\frac{2}{x} = \frac{2(t+1)}{x(t+1)} \qquad \textsf{if } \, x \neq 0 \, \textsf{ and } \, t\neq -1$$
 
-Writing a whole number as an algebraic fraction: $$2 = \frac{2}{1} = \frac{2x}{x} = \frac{2x(x+1)}{x(x+1)} \qquad \textsf{if } \, x \neq 0 \, \textsf{ and } \, x \neq -1$$
+Writing a non-zero whole number as an algebraic fraction: $$2 = \frac{2}{1} = \frac{2x}{x} = \frac{2x(x+1)}{x(x+1)} \qquad \textsf{if } \, x \neq 0 \, \textsf{ and } \, x \neq -1$$
+
 :::
 
 # Simplifying algebraic fractions
@@ -109,43 +175,56 @@ Similarly to numerical fractions, algebraic fractions can also be written in a s
 ::: {.callout-note}
 ## Simplifying algebraic fractions
 
+A **simplified algebraic fraction** is one where you have divided the numerator and denominator by all their common factors. 
+
 To simplify an algebraic fraction:
 
 1. Factorize the numerator and the denominator completely.
 2. State the restrictions on the denominator, if any exist.
 3. Cancel any common factors that appear in both the numerator and the denominator.
 4. Write the final simplified result.
+
 :::
 
 ::: {.callout-important}
-Between the numerator and the denominator, you can only cancel factors, not terms.
+
+Between the numerator and the denominator, you can only cancel **factors**, not terms.
 
 * A factor is part of a multiplication. In $x(x+3)$, both $x$ and $(x+3)$ are factors.
 * A term is part of an addition or subtraction. In $x+3$, both $x$ and $3$ are terms.
 
 This is why, in the simplifying process, you cannot cancel the $x$ terms by writing $$\frac{x+3}{x+2} = \frac{\not{x} +3}{\not{x} +2} = \frac{3}{2}$$
+
+For more about factors and terms, see [Guide: Factorization](factorization.qmd).
+
 :::
 
-::: {.callout-note appearance="simple"}
-## Example 5
+::: {.callout-important}
 
-Simplify $\dfrac{6x}{9x}$.
+It's really important that the restrictions are kept, even when the simplified algebraic expression doesn't require any. This is because when cancelling factors, you cannot cancel by a factor of $0$ on top and bottom. In addition to this, you can't 'forget' that the restrictions ever existed in the first place. This is of critical importance when it comes to viewing algebraic fractions as formal functions with domains and codomains: see [Guide: Introduction to real-valued functions] for more. 
 
-Both the numerator and denominator contain $x$ as a factor. As long as $x \neq 0$, it can be cancelled out to reduce the algebraic fraction to a numerical fraction. $$\frac{6x}{9x} = \frac{6}{9} = \frac{2}{3} \qquad \textsf{if } \, x \neq 0$$
 :::
 
 ::: {.callout-note appearance="simple"}
 ## Example 6
 
-Simplify $\dfrac{x^2 + 3x}{x}$.
+Simplify $\dfrac{6x}{9x}$.
 
-The numerator can be factorized to give a common factor of $x$: $$x^2 + 3x = x(x+3)$$
-
-As long as $x \neq 0$, the common factor of $x$ can be cancelled out to give $x+3$. $$\frac{x^2 + 3x}{x} = \frac{x(x+3)}{x} = x+3 \qquad \textsf{if } \, x \neq 0$$
+Both the numerator and denominator contain $x$ as a factor. **As long as $x \neq 0$**, it can be cancelled out to reduce the algebraic fraction to a numerical fraction. $$\frac{6x}{9x} = \frac{6}{9} = \frac{2}{3} \qquad \textsf{if } \, x \neq 0$$
 :::
 
 ::: {.callout-note appearance="simple"}
 ## Example 7
+
+Simplify $\dfrac{x^2 + 3x}{x}$.
+
+The numerator can be factorized to give a common factor of $x$: $$x^2 + 3x = x(x+3)$$
+
+**As long as $x \neq 0$**, the common factor of $x$ can be cancelled out to give $x+3$. $$\frac{x^2 + 3x}{x} = \frac{x(x+3)}{x} = x+3 \qquad \textsf{if } \, x \neq 0$$
+:::
+
+::: {.callout-note appearance="simple"}
+## Example 8
 
 Simplify $\dfrac{x^2-9}{x^2-3x}$.
 
@@ -153,7 +232,25 @@ The numerator can be factorized as it is a difference of two squares: $$x^2-9 = 
 
 The denominator can be factorized to give a common factor of $x$: $$x^2-3x = x(x-3)$$
 
-As long as $x \neq 3$, the common factor of $x-3$ can be cancelled out to give $\frac{x+3}{x}$. $$\frac{x^2-9}{x^2-3x} = \frac{(x+3)(x-3)}{x(x-3)} = \frac{x+3}{x} \qquad \textsf{if } \, x \neq 0 \, \textsf{ and } \, x \neq 3$$
+**As long as $x \neq 3$**, the common factor of $x-3$ can be cancelled out to give $\frac{x+3}{x}$. $$\frac{x^2-9}{x^2-3x} = \frac{(x+3)(x-3)}{x(x-3)} = \frac{x+3}{x} \qquad \textsf{if } \, x \neq 0 \, \textsf{ and } \, x \neq 3$$
+:::
+
+Here's one final example that brings together everything you have learned.
+
+::: {.callout-note appearance="simple"}
+## Example 9
+
+You are given the fraction $$\frac{tx + ty}{x^2 - y^2}$$ Give its restricted values and simplify as much as you can.
+
+First of all, the restricted values are when $x^2 - y^2 = 0$. This happens when $x^2 = y^2$. As negative numbers squared equals a positive number, it follows that $x^2 = y^2$ when $x = y$ or $x = -y$. You can write $x = \pm y$ to represent this. It follows that the fraction is defined when $x \neq pm y$.
+
+Now, how can you simplify this?
+
+The numerator has a common factor of $t$, so you can factorize to get : $$tx + ty = t(x+y)$$
+
+The denominator can be factorized as it is a difference of two squares $$x^2-y^2= (x+y)(x-y)$$
+
+**As long as $x \neq -y$**, the common factor of $x+y$ can be cancelled out to give $\frac{t}{x-y}$. So $$\frac{tx + ty}{x^2 - y^2} = \frac{t(x+y)}{(x+y)(x-y)} = \frac{t}{x-y} \qquad \textsf{if } \, x \neq \pm y.$$
 :::
 
 # Quick check problems {.unnumbered}
@@ -220,6 +317,7 @@ As long as $x \neq 3$, the common factor of $x-3$ can be cancelled out to give $
 (c) $x = 0$ or $x = 4$
 
 (d) There are no restricted values
+
 :::
 
 # Further reading {.unnumbered}

@@ -1,2 +1,1729 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Donald Campbell">
+
+<title>Arithmetic on algebraic fractions – STARMAST</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aa1d8570cb8b85794c5c5a916513ecb9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5f5484d7ec656626cab3b40347c418b2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-aa1d8570cb8b85794c5c5a916513ecb9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, alongside enabling our non-identifiable QuickCheck problem tracking. These are the sole purposes of enabling cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<script src="https://esm.sh/shinylive-r"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../logo-big.png" alt="" class="navbar-logo light-content">
+    <img src="../logo-big.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html"> 
+<span class="menu-text">Full index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../faqs.html"> 
+<span class="menu-text">FAQs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="5f57153153e0bbf7f7337c1d33b76048" class="alert alert-danger hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> Welcome! We are celebrating over 1000 active users since launch with 21 new pages of resources! (03/04/26)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#adding-and-subtracting-algebraic-fractions" id="toc-adding-and-subtracting-algebraic-fractions" class="nav-link active" data-scroll-target="#adding-and-subtracting-algebraic-fractions">Adding and subtracting algebraic fractions</a></li>
+  <li><a href="#multiplying-algebraic-fractions" id="toc-multiplying-algebraic-fractions" class="nav-link" data-scroll-target="#multiplying-algebraic-fractions">Multiplying algebraic fractions</a></li>
+  <li><a href="#dividing-algebraic-fractions" id="toc-dividing-algebraic-fractions" class="nav-link" data-scroll-target="#dividing-algebraic-fractions">Dividing algebraic fractions</a></li>
+  <li><a href="#compound-algebraic-fractions" id="toc-compound-algebraic-fractions" class="nav-link" data-scroll-target="#compound-algebraic-fractions">Compound algebraic fractions</a></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="arithmeticonalgebraicfractions.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="arithmeticonalgebraicfractions.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Arithmetic on algebraic fractions</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Algebra</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Donald Campbell </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    Algebraic fractions extend numerical fractions to expressions that include variables. This guide explains how to add, subtract, multiply and divide algebraic fractions, including how to simplify fractions within fractions. You will see how techniques for arithmetic on numerical fractions still apply, provided you factorize carefully and keep track of any restricted values where the denominator would be zero.
+  </div>
+</div>
+
+
+</header>
+
+
+<p><em>Before reading this guide, it is recommended that you read <a href="../studyguides/introtonumericalfractions.html">Guide: Introduction to numerical fractions</a>, <a href="../studyguides/arithmeticonnumericalfractions.html">Guide: Arithmetic on numerical fractions</a>, <a href="../studyguides/introtoalgebraicfractions.html">Guide: Introduction to algebraic fractions</a> and <a href="../studyguides/factorization.html">Guide: Factorization</a>.</em></p>
+<table><tbody><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls=""><source src="./Narrations/arithmeticonalgebraicfractions.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></td></tr></tbody></table>
+<p>In <a href="../studyguides/introtoalgebraicfractions.html">Guide: Introduction to algebraic fractions</a>, you learned how to:</p>
+<ul>
+<li>identify restrictions on the denominator for values that make it zero</li>
+<li>rewrite algebraic fractions in equivalent forms</li>
+<li>simplify algebraic fractions by factorizing and cancelling common factors</li>
+</ul>
+<p>In this guide, you will see how the arithmetic rules from <a href="../studyguides/arithmeticonnumericalfractions.html">Guide: Arithmetic on numerical fractions</a> still apply to algebraic fractions. You will learn how to add, subtract, multiply and divide algebraic fractions, and simplify compound fractions (fractions within fractions), while keeping track of any restricted values.</p>
+<section id="adding-and-subtracting-algebraic-fractions" class="level1">
+<h1>Adding and subtracting algebraic fractions</h1>
+<p>When adding or subtracting algebraic fractions, the key idea is that the denominators of both fractions must be the same. The denominator tells you the size of each part, and you can only combine parts that are of equal size.</p>
+<p>As with numerical fractions, <strong>you cannot add directly if the denominators are different</strong>. Instead, you first rewrite the fractions as equivalent fractions with a common denominator, then add or subtract the numerators. Thankfully, if the denominators are the same, then you can proceed straight away:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Adding and subtracting fractions with the same denominator
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To add or subtract fractions, the denominators of both fractions <strong>must be the same</strong>. If the fractions already have the same denominator, add or subtract the numerators and keep the same denominator.</p>
+<ul>
+<li><p>If the fractions have different denominators, you could do the following:</p>
+<p><strong>Step 1</strong>: Multiply the denominators together.</p>
+<p><strong>Step 2</strong>: Rewrite the two terms in the addition/subtraction as equivalent fractions so that the two new fractions have the same denominator as found in Step 1.</p>
+<p><strong>Step 3</strong>: Add or subtract the numerators and keep the same denominator.</p>
+<p><strong>Step 4</strong>: Cancel any common factors if needed.</p></li>
+</ul>
+</div>
+</div>
+<p>For more about writing equivalent algebraic fractions or cancelling common factors, please see <a href="../studyguides/introtoalgebraicfractions.html">Guide: Introduction to algebraic fractions</a>.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\dfrac{2}{x} + \dfrac{5}{x}\)</span>.</p>
+<p>Both fractions already have denominator equal to <span class="math inline">\(x\)</span>, so you can add the numerators and keep the same denominator. <span class="math display">\[\frac{2}{x} + \frac{5}{x} = \frac{2+5}{x} = \frac{7}{x} \qquad \textsf{if } \, x \neq 0\]</span></p>
+<p>There are no common factors other than <span class="math inline">\(1\)</span>, so the fraction is already in its simplest form.</p>
+</div>
+</div>
+<p>When the denominators are different, you need to find a common denominator. For algebraic fractions, this usually means multiplying the denominators together or using their lowest common multiple, similar to what you did for numerical fractions.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Adding and subtracting fractions with different denominators
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To add or subtract fractions, the denominators of both fractions <strong>must be the same</strong>. If the fractions have different denominators, you could do the following:</p>
+<ol type="1">
+<li><p>Multiply the denominators together.</p></li>
+<li><p>Rewrite the two terms in the addition/subtraction as equivalent fractions so that the two new fractions have the same denominator as found in Step 1.</p></li>
+<li><p>Add or subtract the numerators and keep the same denominator.</p></li>
+<li><p>Cancel any common factors if needed.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\dfrac{1}{x} + \dfrac{1}{x+1}\)</span>.</p>
+<p>Both fractions have different denominators. The denominators are <span class="math inline">\(x\)</span> and <span class="math inline">\(x+1\)</span>.</p>
+<p>For step 1, a common denominator for the fractions is found by multiplying the denominators together: <span class="math display">\[x(x+1)\]</span></p>
+<p>In step 2, you can write both fractions as equivalent fractions with this common denominator, by multiplying the numerator and denominator by the same term. Remember that what you do to the denominator must also be done to the numerator to keep the fractions equivalent. Here, multiplying <span class="math inline">\(1/x\)</span> by <span class="math inline">\(x+1\)</span> on both top and bottom gives an equivalent fraction with denominator <span class="math inline">\(x(x+1)\)</span> as found in step 1. So <span class="math display">\[
+\begin{aligned}
+\frac{1}{x} = \frac{x+1}{x(x+1)}
+\end{aligned}
+\]</span></p>
+<p>Similarly, multiplying <span class="math inline">\(1/x+1\)</span> by <span class="math inline">\(x\)</span> on both top and bottom gives an equivalent fraction with denominator <span class="math inline">\(x(x+1)\)</span> as found in step 1. <span class="math display">\[
+\begin{aligned}
+\frac{1}{x+1} = \frac{x}{x(x+1)}
+\end{aligned}
+\]</span></p>
+<p>Now the denominators are the same, you can add the numerators: <span class="math display">\[
+\begin{aligned}
+\frac{1}{x} + \frac{1}{x+1} &amp;= \frac{x+1}{x(x+1)} + \frac{x}{x(x+1)}\\[0.5em]
+&amp;= \frac{x+1+x}{x(x+1)}\\[0.5em]
+&amp;= \frac{2x+1}{x(x+1)} \qquad \textsf{if } \, x \neq 0 \, \textsf{ and } \, x \neq -1
+\end{aligned}
+\]</span></p>
+<p>This fraction cannot be simplified further as there are no common factors other than <span class="math inline">\(1\)</span>. So the fraction is in its simplest form and this is your final answer.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This process can be done more quickly by using a technique called <strong>cross-multiplication</strong>. For two fractions <span class="math inline">\(A/B\)</span> and <span class="math inline">\(C/D\)</span>, this can be done by</p>
+<ul>
+<li>multiplying <span class="math inline">\(B\)</span> and <span class="math inline">\(D\)</span> together to get <span class="math inline">\(BD\)</span> to get your denominator of your added fraction</li>
+<li>multiplying the <span class="math inline">\(A\)</span> and <span class="math inline">\(D\)</span> to get <span class="math inline">\(AD\)</span> and multiplying <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span> to get <span class="math inline">\(BC\)</span>; then add <span class="math inline">\(AD\)</span> and <span class="math inline">\(BC\)</span> to get the numerator of your added fraction.</li>
+</ul>
+<p>In short: <span class="math display">\[\frac{A}{B} + \frac{C}{D} = \frac{AD + BC}{BD}.\]</span></p>
+<p>The reason why this is called ‘cross-multiplication’ is because you are ‘crossing’ the denominators of each added term to the numerator of the other.</p>
+</div>
+</div>
+<p>Here’s an example of cross-multiplication. This working is probably closer to what you would expect to do if you are working on these problems on your own.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\dfrac{1}{x} + \dfrac{1}{x+1}\)</span>.</p>
+<p>Here, the denominators are <span class="math inline">\(x\)</span> and <span class="math inline">\(x+1\)</span>, so multiply together to get <span class="math inline">\(x(x+1)\)</span>. This is the denominator of your final answer.</p>
+<p>Multiply the numerator of the first fraction <span class="math inline">\(1\)</span> by the denominator of the second <span class="math inline">\(x+1\)</span> to get <span class="math inline">\(x+1\)</span>. Similarly, multiply the numerator of the second fraction <span class="math inline">\(1\)</span> by the denominator of the first <span class="math inline">\(x\)</span> to get <span class="math inline">\(x\)</span>. Adding these together gives <span class="math inline">\(x+1 + x = 2x + 1\)</span>.</p>
+<p>In short:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\dfrac{1}{x} + \dfrac{1}{x+1} &amp;= \frac{(x+1) + x}{x(x+1)}\\[0.5em]
+&amp;= \frac{2x + 1}{x(x+1)} \qquad \textsf{if } \, x \neq 0 \, \textsf{ and } \, x \neq -1
+\end{aligned}
+\]</span></p>
+<p>You know from Example 2 that this fraction is in its simplest form.</p>
+</div>
+</div>
+<p>Typically with algebraic fractions, it’s better to multiply all denominators together rather than try to find a ‘lowest common denominator’. This is because you can always factorise and cancel at the end. Here’s an example of this in action, using the cross multiplication method.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\displaystyle \frac{4}{t} - \frac{1}{t(t-1)}\)</span>.</p>
+<p>Here, the denominators are <span class="math inline">\(t\)</span> and <span class="math inline">\(t(t-1)\)</span>, so multiply together to get <span class="math inline">\(t^2(t-1)\)</span>. This is the denominator of your final answer.</p>
+<p>Multiply the numerator of the first fraction <span class="math inline">\(4\)</span> by the denominator of the second <span class="math inline">\(t(t-1)\)</span> to get <span class="math inline">\(4t(t-1)\)</span>. Similarly, multiply the numerator of the second fraction <span class="math inline">\(1\)</span> by the denominator of the first <span class="math inline">\(t\)</span> to get <span class="math inline">\(t\)</span>. Subtracting these gives <span class="math inline">\(4t(t-1) - t\)</span>. (It is very tempting to expand the brackets at this stage; but don’t!)</p>
+<p>So in short: <span class="math display">\[\frac{4}{t} - \frac{1}{t(t-1)} = \frac{4t(t-1) - t}{t^2(t-1)}\]</span></p>
+<p>Here, you can notice that there is a common factor of <span class="math inline">\(t\)</span> on top and bottom.Unpacking and re-factorising the numerator gives <span class="math display">\[4t(t-1) - t = 4t^2 - 4t - t = 4t^2 - 5t = t(4t-5).\]</span> You can substitute the working in, then cancel the factor of <span class="math inline">\(t\)</span> from top and bottom to get:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{4}{t} - \frac{1}{t(t-1)} &amp;= \frac{4t(t-1) - t}{t^2(t-1)} = \frac{t(4t-5)}{t^2(t-1)}\\[0.5em]
+&amp;= \frac{4t + 3}{t(t-1)} \qquad \textsf{if } \, t \neq 0 \, \textsf{ and } \, t \neq 1
+\end{aligned}
+\]</span> and this is your final answer.</p>
+</div>
+</div>
+<p>A good rule to follow when adding/subtracting algebraic fractions is the following:</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Don’t expand brackets unless you really have to!</strong></p>
+<p>A sub-rule of this is that <strong>it’s also better to wait until the very end of your working to do so.</strong> This is to reduce the chances of a factorization error in your working, where any factorization is not explicitly needed.</p>
+</div>
+</div>
+</section>
+<section id="multiplying-algebraic-fractions" class="level1">
+<h1>Multiplying algebraic fractions</h1>
+<p>When you multiply two fractions, you are finding a fraction of another fraction. The method used for numerical fractions still works for algebraic fractions, in that you multiply the numerators together and you multiply the denominators together.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For instance: <span class="math display">\[\frac{1}{x} \cdot \frac{y}{2} = \frac{1\cdot y}{x\cdot 2} = \frac{y}{2x}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can notice that the alternative notation <span class="math inline">\(\cdot\)</span> is used for multiplication here, instead of <span class="math inline">\(\times\)</span>. This is because <span class="math inline">\(\times\)</span> and <span class="math inline">\(x\)</span> look too similar!</p>
+</div>
+</div>
+<p>For more complicated expressions, which could involve multiple factors or terms in the numerator and denominator, you could follow these steps:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Multiplying algebraic fractions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To multiply two algebraic fractions together:</p>
+<ol type="1">
+<li>Factorize the numerator and denominator where possible.</li>
+<li>Multiply the numerators together.</li>
+<li>Multiply the denominators together.</li>
+<li>Simplify, if possible, by cancelling any common factors in the numerator and denominator.</li>
+</ol>
+</div>
+</div>
+<p>For more about cancelling common factors, see <a href="../studyguides/introtoalgebraicfractions.html">Guide: Introduction to algebraic fractions</a>.</p>
+<p>It’s important to see that you do not need to find a common denominator before multiplying.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\dfrac{x}{2y} \cdot \dfrac{4y}{x^2}\)</span>.</p>
+<p>No expressions in the numerator or denominator can be factorized. So you can proceed by multiplying the numerators and denominators together; doing this gives <span class="math display">\[\frac{x}{2y} \cdot \frac{4y}{x^2} = \frac{x \cdot 4y}{2y \cdot x^2} = \frac{4xy}{2x^2y}\]</span></p>
+<p>Now you can simplify by cancelling any common factors to the numerator and denominator. There is a factor of <span class="math inline">\(2\)</span> common to <span class="math inline">\(4\)</span> and <span class="math inline">\(2\)</span>, and a factor of <span class="math inline">\(xy\)</span> common to the numerator and the denominator. This means you can cancel both of these to get <span class="math display">\[\frac{4xy}{2x^2y} = \frac{4xy\div 2xy}{2x^2y \div 2xy} = \frac{2}{x} \qquad \textsf{if } \, x \neq 0 \, \textsf{ and } \, y \neq 0\]</span></p>
+</div>
+</div>
+<p>You don’t need to write out the division terms in the cancellation step, as the next example demonstrates.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\dfrac{x^2-9}{x^2+2x+1} \cdot \dfrac{x+1}{x-3}\)</span>.</p>
+<p>Start by factorizing numerators and denominators where possible. So here <span class="math display">\[
+\begin{aligned}
+x^2-9 = (x+3)(x-3) \\[0.5em]
+x^2+2x+1 = (x+1)^2
+\end{aligned}
+\]</span></p>
+<p>Now substitute these into the problem, and multiply the numerators and denominators together.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{x^2-9}{x^2+2x+1} \cdot \frac{x+1}{x-3} &amp;= \frac{(x+3)(x-3)}{(x+1)^2} \cdot \frac{x+1}{x-3}\\[0.5em]
+&amp;= \frac{(x+3)(x-3)(x+1)}{(x+1)^2(x-3)}
+\end{aligned}
+\]</span></p>
+<p>Now you can simplify by cancelling some common factors. There are factors of <span class="math inline">\(x-3\)</span> and <span class="math inline">\(x+1\)</span> common to the numerator and the denominator, and cancelling these gives <span class="math display">\[\frac{(x+3)(x-3)(x+1)}{(x+1)^2(x-3)} = \frac{x+3}{x+1} \qquad \textsf{if } \, x \neq -1 \, \textsf{ and } \, x \neq 3\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cancelling factors across the numerator and denominator only works when you have <strong>one fraction at the end</strong>. You cannot cancel in this way when you have more than one fraction.</p>
+</div>
+</div>
+</section>
+<section id="dividing-algebraic-fractions" class="level1">
+<h1>Dividing algebraic fractions</h1>
+<p>As seen in <a href="../studyguides/arithmeticonnumericalfractions.html">Guide: Arithmetic on numerical fractions</a>, when you divide one fraction by another, you are asking “How many times does this fraction fit into the other?”</p>
+<p>Similar to numerical fractions, a good way to handle this for algebraic fractions is to use the <strong>reciprocal</strong> of the second fraction. The reciprocal of a fraction is found by swapping its numerator and denominator.</p>
+<p>For example, the reciprocal of <span class="math inline">\(\frac{x}{3}\)</span> is <span class="math inline">\(\frac{3}{x}\)</span> - provided that <span class="math inline">\(x \neq 0\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Dividing algebraic fractions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To divide algebraic fractions, you can follow the <strong>keep, change, flip</strong> method:</p>
+<ol type="1">
+<li><strong>Keep</strong> the first fraction the same.</li>
+<li><strong>Change</strong> division to multiplication.</li>
+<li><strong>Flip</strong> the second fraction (take its reciprocal).</li>
+</ol>
+<p>This then turns the division problem into a multiplication problem.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\dfrac{2y}{3} \div \dfrac{4}{y}\)</span>.</p>
+<p>Keep the first fraction the same, change the division sign to a multiplication sign, and flip the second fraction so that <span class="math inline">\(\frac{4}{y}\)</span> becomes <span class="math inline">\(\frac{y}{4}\)</span>. The problem then becomes: <span class="math display">\[\dfrac{2y}{3} \div \dfrac{4}{y} = \dfrac{2y}{3} \cdot \dfrac{y}{4} \qquad \textsf{if } \, y \neq 0\]</span> Now you can follow the steps for a multiplication problem. So multiply the fractions together, and simplify by cancelling common factors to get: <span class="math display">\[
+\begin{aligned}
+\frac{2y}{3} \div \frac{4}{y} &amp;= \frac{2y}{3} \cdot \frac{y}{4}\\[0.5em]
+&amp;= \frac{2y \cdot y}{3 \cdot 4}\\[0.5em]
+&amp;= \frac{2y^2}{12} = \frac{y^2}{6} \qquad \textsf{if } \, y \neq 0
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<p>As with multiplication of algebraic fractions, after the keep, change, flip method you can factorize before the multiplication.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 9
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find <span class="math inline">\(\dfrac{x^2-9}{x^2+3x} \div \dfrac{x-3}{x}\)</span>.</p>
+<p>Keep the first fraction the same, change the division sign to a multiplication sign, and flip the second fraction to transform the problem into <span class="math display">\[\dfrac{x^2-9}{x^2+3x} \div \dfrac{x-3}{x} = \dfrac{x^2-9}{x^2+3x} \cdot \dfrac{x}{x-3}\]</span> You can then factorize the first of these to get <span class="math display">\[\dfrac{x^2-9}{x^2+3x} \cdot \dfrac{x}{x-3} = \dfrac{(x-3)(x+3)}{x(x+3)} \cdot \dfrac{x}{x-3}\]</span> Now multiply the fractions together, and simplify by cancelling common factors.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{(x+3)(x-3)}{x(x+3)} \cdot \frac{x}{x-3} &amp;= \frac{(x+3)(x-3)x}{x(x+3)(x-3)} \\[0.5em]
+&amp;= 1 \qquad \textsf{if } \, x \neq 0, -3, 3
+\end{aligned}
+\]</span></p>
+<p>Here, the restrictions <span class="math inline">\(x \neq 0\)</span> and <span class="math inline">\(x \neq -3\)</span> come from the denominator <span class="math inline">\(x(x+3)\)</span>, and <span class="math inline">\(x \neq 3\)</span> comes from the denominator <span class="math inline">\(x-3\)</span> in the fraction you are multiplying by.</p>
+</div>
+</div>
+</section>
+<section id="compound-algebraic-fractions" class="level1">
+<h1>Compound algebraic fractions</h1>
+<p>Sometimes, fractions can have other fractions inside them. These are called <strong>compound fractions</strong>. Here are some examples <span class="math display">\[\dfrac{\dfrac{1}{x} + \dfrac{1}{y}}{\dfrac{1}{x}} \qquad \qquad \frac{\dfrac{x}{y}}{\dfrac{a}{b}} \qquad \qquad \frac{1}{1 + \dfrac{1}{c}}\]</span></p>
+<p>It is almost always better to rewrite these fractions in a more standard fractional form, with no fractions in either the numerator or the denominator. The goal is always the same; you need to simplify them so that there is only one single fraction left.</p>
+<p>A fraction <span class="math inline">\(A/B\)</span> is exactly the same as saying <span class="math inline">\(A\div B\)</span>. So every compound fraction can be rephrased as a division problem, which you know how to do!</p>
+<!-- ::: {.callout-note} -->
+<!-- ## Simplifying compound algebraic fractions (method 1) -->
+<!-- To simplify a compound algebraic fraction, you can multiply the fraction by the lowest common multiple of the denominator of the fraction on the bottom. -->
+<!-- 1. Find the lowest common multiple of all the denominators of the fractions inside the large fraction. -->
+<!-- 2. Multiply the numerator and the denominator of the large fraction by this lowest common multiple. -->
+<!-- 3. Factorize and simplify, if possible. -->
+<!-- This clears the denominators of the smaller fractions and leaves an ordinary fraction. -->
+<!-- ::: -->
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Simplifying compound algebraic fractions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To simplifying a compound algebraic fraction, you can rewrite the large fraction as a division problem and use the keep, change, flip rule.</p>
+<ol type="1">
+<li>Remember that “a fraction over a fraction” means division, and rewrite the compound fraction as a division problem.</li>
+<li>Apply the keep, change, flip rule.</li>
+<li>Multiply the fractions together.</li>
+<li>Factorize and simplify, if possible.</li>
+</ol>
+<p>This also clears the denominators of the smaller fractions and leaves an ordinary fraction.</p>
+</div>
+</div>
+<p>This method is best illustrated using some examples.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 10
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simplify <span class="math inline">\(\dfrac{\frac{2a}{3}}{\frac{a+1}{6}}\)</span>.</p>
+<p>First of all, rewrite the compound algebraic fraction as a division problem. The compound fraction <span class="math display">\[\dfrac{\dfrac{2a}{3}}{\dfrac{a+1}{6}} = \dfrac{2a}{3}\div \dfrac{a+1}{6}\]</span> Now, you can apply the keep, change, flip method, changing the division problem into a multiplication one, getting: <span class="math display">\[\dfrac{2a}{3}\div \dfrac{a+1}{6} = \dfrac{2a}{3}\cdot \dfrac{6}{a+1}\]</span> Multiplying the fractions together, and simplifying gives: <span class="math display">\[
+\begin{aligned}
+\frac{2a}{3} \cdot \frac{6}{a+1} &amp;= \frac{2a \cdot 6}{3(a+1)} \\[0.5em]
+&amp;= \frac{12a}{3(a+1)} \\[0.5em]
+&amp;= \frac{4a}{a+1} \qquad \textsf{if } \, a \neq -1
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<p>The final example in this guide requires all the concepts seen so far, and also illustrates the importance of brackets in evaluating compound fractions.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simplify <span class="math inline">\(\dfrac{\dfrac{1}{x} + \dfrac{2}{y^2}}{\dfrac{3}{xy}}\)</span>.</p>
+<p>Here, you can rewrite the compound fraction as a division problem. You can notice there are two fractions in the numerator, both of which must be divided by what’s in the denominator. You can ensure this by using brackets to say that <span class="math display">\[\dfrac{\dfrac{1}{x} + \dfrac{2}{y^2}}{\dfrac{3}{xy}} = \left(\frac{1}{x} + \frac{2}{y^2}\right)\div \frac{3}{xy}\]</span></p>
+<p>The order of operations (see [Guide: Order of operations in algebra]) suggests that you should deal with the bracketed term first. Using cross-multiplication to do this gives <span class="math display">\[\frac{1}{x} + \frac{2}{y^2} = \frac{y^2}{xy^2} + \frac{2x}{xy^2} = \frac{2x + y^2}{xy^2}\]</span> and putting into the problem gives <span class="math display">\[\left(\frac{1}{x} + \frac{2}{y^2}\right)\div \frac{3}{xy} = \frac{2x + y^2}{xy^2} \div \frac{3}{xy}\]</span></p>
+<p>Now you have only two fractions, you can use the keep, change, flip method to get <span class="math display">\[\frac{2x + y^2}{xy^2} \div \frac{3}{xy} = \frac{2x + y^2}{xy^2} \cdot \frac{xy}{3}\]</span> Finally you can multiply together and cancel to get: <span class="math display">\[\frac{2x + y^2}{xy^2} \cdot \frac{xy}{3} = \frac{xy(2x+y^2)}{3xy^2} = \frac{2x+y^2}{3y} \qquad \textsf{ if } \, x \neq 0 \, \textsf{ and } \, y \neq 0.\]</span></p>
+<p>Therefore, your final answer is <span class="math display">\[\dfrac{\dfrac{1}{x} + \dfrac{2}{y^2}}{\dfrac{3}{xy}} = \frac{2x+y^2}{3y} \qquad \textsf{ if } \, x \neq 0 \, \textsf{ and } \, y \neq 0.\]</span></p>
+</div>
+</div>
+</section>
+<section id="quick-check-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Quick check problems</h1>
+<div class="webex-check webex-box">
+<ol type="1">
+<li><span class="math inline">\(\quad \dfrac{2}{x} + \dfrac{3}{x} =\)</span> <input class="webex-solveme nospaces" size="3" data-answer="[&quot;5/x&quot;]"></li>
+</ol>
+<!-- -->
+<ol start="2" type="1">
+<li><span class="math inline">\(\quad \dfrac{1}{x} + \dfrac{1}{2x} =\)</span> <select class="webex-select"><option value="blank"></option><option value="">1/(3x)</option><option value="">2/(3x)</option><option value="answer">3/(2x)</option><option value="">1/(2x)</option><option value="">(x+1)/(2x)</option></select></li>
+</ol>
+<!-- -->
+<ol start="3" type="1">
+<li>By writing <code>x^2</code> for <span class="math inline">\(x^2\)</span>, work out <span class="math inline">\(\dfrac{1}{x} - \dfrac{3}{x^2} =\)</span> <input class="webex-solveme nospaces" size="9" data-answer="[&quot;(x-3)/x^2&quot;]"></li>
+</ol>
+<!-- -->
+<ol start="4" type="1">
+<li><span class="math inline">\(\quad \dfrac{2}{x} \cdot \dfrac{x}{5} =\)</span> <select class="webex-select"><option value="blank"></option><option value="">x/10</option><option value="">2x/5</option><option value="">x/5</option><option value="">10/x</option><option value="answer">2/5</option></select></li>
+</ol>
+<!-- -->
+<ol start="5" type="1">
+<li><span class="math inline">\(\quad \dfrac{3x}{4} \div \dfrac{x}{2} =\)</span> <input class="webex-solveme nospaces" size="3" data-answer="[&quot;3/2&quot;]"></li>
+</ol>
+<!-- -->
+<ol start="6" type="1">
+<li><span class="math inline">\(\quad \dfrac{\dfrac{2x}{3}}{\dfrac{x}{6}} =\)</span> <select class="webex-select"><option value="blank"></option><option value="">2</option><option value="answer">4</option><option value="">x/2</option><option value="">6/x</option><option value="">4x</option></select></li>
+</ol>
+</div>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../questions/qs-arithmeticonalgebraicfractions.html">For more questions on the subject, please go to Questions: Arithmetic on algebraic fractions.</a></p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 12/25 by Donald Campbell as part of a University of St Andrews VIP project.</p>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+  let allCorrect = false;
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) 
+  {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
+  }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Checks";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Check Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if (this.dataset.tol > 0)
+  {
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Check Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* check each question to see whether it was answered correctly */
+  update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
+}
+
+</script>
+<!--------------------  Email Forms -----------------------------------
+        Compiled into each .html page by Quarto.
+        Website hosted and form handled by Netlify now
+        Mailing list provided by mailerlite
+        Input verified by reCaptcha2 
+        
+        Authors (recent to latest): 
+           Tristin Doherty (Trido)
+           Mohit Agarwal (Mohit-Agarwa1)
+--------------------------------------------------------------------->
+<script>
+  // Adds an extra layer of validation to aid user input,
+  // some of these are covered by basic html form validations as well, but netlify handles everything else
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[name='feedback']"); 
+    
+    form.addEventListener("submit", function(event) {
+        const nameInput = document.querySelector("input[name='name']")?.value.trim();
+        const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+        const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+
+        if (!nameInput)    { alert("Please enter a name."); return; }
+        if (!emailInput)   { alert("Please enter an email."); return; }
+        if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+        
+        event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+        const subjectInput = document.querySelector("input[name='subject']");
+                
+        // sanitise inputs
+        const sanitizedName = sanitizeInput(nameInput); 
+        const sanitizedEmail = sanitizeEmail(emailInput);
+        const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+        // validate email
+        if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+        subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+        form.submit();
+    });
+});
+
+// Removes leading and trailing whitespace for formatting, and replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+function sanitizeInput(input) {
+  input = input.trim();                                      
+  input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return input;
+}
+
+// remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+function sanitizeEmail(email) {
+  email = email.trim(); 
+  email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+  return email;
+}
+
+// This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+function validateEmail(email) {
+  const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+  return re.test(email);
+}
+
+</script>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here, <br>
+but please be specific with any issues you encounter so we can help to resolve them <br>
+(for example, what page it occured on, what you tried, and so on). </p>
+
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+  <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+  <input type="hidden" name="subject" value="Feedback from unknown">
+
+  <label for="name">Name: </label>
+  <br>
+  <input type="text" name="name" required="">
+  <br><br>
+  
+  <label for="email">E-mail: </label>
+  <br>
+  <input type="email" name="email" required="">
+  <br><br>
+  
+  <label for="feedback">Feedback: </label>
+  <br>
+  <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+  <br><br>
+
+  <!-- Google reCAPTCHA Widget -->
+  <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+  <br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.VERTICAL },
+      'google_translate_element'
+    );
+  }
+</script>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    const targetSidebar = document.getElementById('quarto-margin-sidebar');
+    if (!targetSidebar) return;
+
+    const translateWrapper = document.createElement('div');
+    translateWrapper.className = 'sidebar-section';
+    translateWrapper.style.marginTop = '2em';
+
+    const title = document.createElement('h5');
+    title.innerText = 'Translate';
+
+    const translatorDiv = document.createElement('div');
+    translatorDiv.id = 'google_translate_element';
+
+    translateWrapper.appendChild(title);
+    translateWrapper.appendChild(translatorDiv);
+    targetSidebar.appendChild(translateWrapper);
+
+    const googleScript = document.createElement('script');
+    googleScript.type = 'text/javascript';
+    googleScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(googleScript);
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>STARMAST © 2026 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,2 +1,2607 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Donald Campbell">
+
+<title>Arithmetic with fractions – STARMAST</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aa1d8570cb8b85794c5c5a916513ecb9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5f5484d7ec656626cab3b40347c418b2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-aa1d8570cb8b85794c5c5a916513ecb9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, alongside enabling our non-identifiable QuickCheck problem tracking. These are the sole purposes of enabling cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<script src="https://esm.sh/shinylive-r"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../logo-big.png" alt="" class="navbar-logo light-content">
+    <img src="../logo-big.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html"> 
+<span class="menu-text">Full index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../faqs.html"> 
+<span class="menu-text">FAQs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="5f57153153e0bbf7f7337c1d33b76048" class="alert alert-danger hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> Welcome! We are celebrating over 1000 active users since launch with 21 new pages of resources! (03/04/26)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#adding-and-subtracting-fractions" id="toc-adding-and-subtracting-fractions" class="nav-link active" data-scroll-target="#adding-and-subtracting-fractions">Adding and subtracting fractions</a></li>
+  <li><a href="#multiplying-fractions" id="toc-multiplying-fractions" class="nav-link" data-scroll-target="#multiplying-fractions">Multiplying fractions</a></li>
+  <li><a href="#dividing-fractions" id="toc-dividing-fractions" class="nav-link" data-scroll-target="#dividing-fractions">Dividing fractions</a>
+  <ul class="collapse">
+  <li><a href="#arithmetic-with-mixed-numbers" id="toc-arithmetic-with-mixed-numbers" class="nav-link" data-scroll-target="#arithmetic-with-mixed-numbers">Arithmetic with mixed numbers</a></li>
+  </ul></li>
+  <li><a href="#quick-check-problems" id="toc-quick-check-problems" class="nav-link" data-scroll-target="#quick-check-problems">Quick check problems</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further reading</a>
+  <ul class="collapse">
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="arithmeticonnumericalfractions.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="arithmeticonnumericalfractions.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Arithmetic with fractions</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">Arithmetic</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Donald Campbell </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    Arithmetic with fractions involves combining, comparing, and scaling parts of a whole through addition, subtraction, multiplication, and division. Mastering these operations on fractions is essential, as these operations are widely used in everyday situations such as cooking, construction, finance, science, or in any application where quantities must be measured, divided, or compared accurately.
+  </div>
+</div>
+
+
+</header>
+
+
+<p><em>Before reading this guide, it is recommended that you read <a href="../studyguides/introtonumericalfractions.html">Guide: Introduction to fractions</a>.</em></p>
+<table><tbody><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls=""><source src="./Narrations/arithmeticonnumericalfractions.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></td></tr></tbody></table>
+<p>In <a href="../studyguides/introtonumericalfractions.html">Guide: Introduction to fractions</a>, you saw that a fraction represents part of a whole, and that it consists of a numerator and a denominator. This guide explains how to add, subtract, multiply and divide fractions. It explores the reasoning and methods behind applying these four main arithmetic operations, showing how the core concepts of fractions can be extended to calculations.</p>
+<section id="adding-and-subtracting-fractions" class="level1">
+<h1>Adding and subtracting fractions</h1>
+<p>Imagine you have two equal-sized chocolate bars. One bar is split into four equal parts and you eat one piece. This means that <span class="math inline">\(\frac{1}{4}\)</span> of the first bar has been eaten. Suppose the other bar is split into six equal parts and you eat a piece, which means that <span class="math inline">\(\frac{1}{6}\)</span> of the second bar has been eaten.</p>
+<p>Therefore, the total amount of chocolate bar that you have eaten is <span class="math display">\[\frac{1}{4} + \frac{1}{6}.\]</span></p>
+<p>At first glance, it might seem natural to add the numerators and the denominators separately, but this would give <span class="math inline">\(\frac{2}{10}\)</span>, which is <strong>incorrect</strong>. The reason for this is that the parts being added are not the same because they are not the same size; quarters and sixths are different-sized pieces of a whole. This leads into the golden rule of adding and subtracting things:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Golden rule of adding/subtracting fractions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>You can only add or subtract things that are the same</strong>.</p>
+<p>So to add or subtract fractions fairly, the parts being combined must be the same size.</p>
+</div>
+</div>
+<p>If both bars are divided into twelve equal parts, <strong>equivalent fractions</strong> can be found for the amounts eaten from both bars. For more on finding equivalent fractions, please see <a href="../studyguides/introtonumericalfractions.html">Guide: Introduction to fractions</a>. <span class="math display">\[
+\begin{aligned}
+&amp;\frac{1}{4} \overset{\times 3}{=} \frac{3}{12} \\[0.5em]
+&amp;\frac{1}{6} \overset{\times 2}{=} \frac{2}{12}
+\end{aligned}
+\]</span></p>
+<p>Both fractions now share the same denominator, meaning the pieces scoffed from each bar are the same size. You can now add both pieces of chocolate together to get <span class="math display">\[\frac{1}{4} + \frac{1}{6} = \frac{3}{12} + \frac{2}{12} = \frac{5}{12}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Adding and subtracting fractions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To add or subtract fractions, the denominators of both fractions <strong>must be the same</strong> according to the golden rule above.</p>
+<ul>
+<li><p>If the fractions already have the same denominator, add or subtract the numerators and keep the same denominator.</p></li>
+<li><p>If the fractions have different denominators, rewrite them as equivalent fractions so that the two new fractions have the same denominator. Then, add or subtract the numerators and keep the same denominator.</p></li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate <span class="math inline">\(\dfrac{2}{7} + \dfrac{3}{7}\)</span>.</p>
+<p>The fractions have the same denominator so they can be added directly.</p>
+<p>So you can add the numerators and keep the same denominator to get <span class="math display">\[\frac{2}{7} + \frac{3}{7} = \frac{2+3}{7} = \frac{5}{7}\]</span></p>
+<p>You should always look to see if the fraction can be simplified further. In this case, there are no common factors other than <span class="math inline">\(1\)</span> so the fraction is already in its simplest form.</p>
+</div>
+</div>
+<p>To add or subtract fractions with different denominators, you must first find a <strong>common denominator</strong>. A common denominator is a number that can be evenly divided by both of the original denominators.</p>
+<p>A common denominator can always be found by multiplying the two denominators together. For example, for <span class="math inline">\(\frac{1}{4}\)</span> and <span class="math inline">\(\frac{1}{6}\)</span>, you could use <span class="math inline">\(4 \cdot 6 = 24\)</span> as a common denominator.</p>
+<p>But in the example above, <span class="math inline">\(12\)</span> was used as the common denominator. Why can you use this number?</p>
+<p>The problem is that multiplying the denominators can often result in working with very large numbers, especially when it comes to simplifying the resulting fraction. A more reliable method is to find the <strong>lowest common multiple</strong> of the denominators. (It’s important to note that the lowest common multiple is not the same thing as the highest common factor from <a href="../studyguides/introtonumericalfractions.html">Guide: Introduction to fractions</a>.)</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Multiples, common multiples, and the lowest common multiple
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>multiple</strong> of a number is the result of multiplying that number by any whole number.</p>
+<p>When comparing the multiples of two (or more) numbers, you can find their <strong>common multiples</strong>. The numbers that appear in both lists of multiples are the common multiples.</p>
+<p>The <strong>lowest common multiple</strong> is the smallest positive number in the list of common multiples.</p>
+<p>To find the lowest common multiple:</p>
+<ol type="1">
+<li>List the first few multiples of the first number.</li>
+<li>List the first few multiples of the second number.</li>
+<li>Identify the common multiples (the numbers that appear in both lists).</li>
+<li>The smallest of these common multiples is the lowest common multiple.</li>
+</ol>
+<p>If you do not find any common multiples in your initial lists, then extend them by listing more multiples until you find a match.</p>
+<p>You can also find the lowest common multiple by multiplying the two numbers together and dividing by their highest common factor.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Find the lowest common multiple of <span class="math inline">\(4\)</span> and <span class="math inline">\(6\)</span>.</p>
+<p>Start by identifying the first few multiples of <span class="math inline">\(4\)</span>. These are the numbers that are the result of multiplying <span class="math inline">\(4\)</span> by any whole number. <span class="math display">\[\textsf{Multiples of } 4 \textsf{:} \quad 4 \quad 8 \quad 12 \quad 16 \quad 20 \quad 24 \quad \cdots\]</span></p>
+<p>Now identify the first few multiples of <span class="math inline">\(6\)</span>. These are the numbers that are the result of multiplying <span class="math inline">\(6\)</span> by any whole number. <span class="math display">\[\textsf{Multiples of } 6 \textsf{:} \quad 6 \quad 12 \quad 18 \quad 24 \quad 30 \quad 36 \quad \cdots\]</span></p>
+<p>The numbers that appear in both lists are the common multiples. <span class="math display">\[\textsf{Common multiples:} \quad 12 \quad 24 \quad \cdots\]</span></p>
+<p>The smallest number appearing in this list of common multiples is the lowest common multiple. <span class="math display">\[\textsf{lowest common multiple:} \quad 12\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you would like to check your answers for the lowest common multiple of two integers, you can use our calculator at <a href="../apps/calculators/c-hcflcm.html">Calculator: Highest common factor, lowest common multiple</a>.</p>
+</div>
+</div>
+<p>Using the lowest common multiple provides the smallest denominator, which reduces the chances of errors in the final simplifying step.</p>
+<p>This smallest value is also called the <strong>lowest common denominator</strong>. For the example of the chocolate bars, the lowest common denominator is <span class="math inline">\(12\)</span>. The numerators of the original fractions must also be scaled to ensure the fractions remain equivalent.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate <span class="math inline">\(\dfrac{1}{2} - \dfrac{5}{6}\)</span>.</p>
+<p>The fractions have different denominators so they cannot be subtracted directly. You will then need to find the lowest common denominator.</p>
+<p>You can start by identifying the multiples of the denominators <span class="math inline">\(2\)</span> and <span class="math inline">\(6\)</span>. <span class="math display">\[
+\begin{aligned}
+\textsf{Multiples of } 2 \textsf{:} &amp;\quad 2 \quad 4 \quad 6 \quad 8 \quad 10 \quad 12 \quad \cdots \\
+\textsf{Multiples of } 6 \textsf{:} &amp;\quad 6 \quad 12 \quad 18 \quad \cdots \\
+\textsf{Common multiples:} &amp;\quad 6 \quad 12 \quad \cdots \\
+\textsf{lowest common multiple:} &amp;\quad 6
+\end{aligned}
+\]</span></p>
+<p>The lowest common multiple is <span class="math inline">\(6\)</span>, so you can rewrite both fractions so that they both have a denominator of <span class="math inline">\(6\)</span>. <span class="math display">\[
+\begin{aligned}
+&amp;\frac{1}{2} \overset{\times 3}{=} \frac{3}{6} \\[0.5em]
+&amp;\frac{5}{6} \overset{\times 1}{=} \frac{5}{6}
+\end{aligned}
+\]</span></p>
+<p>Now that both fractions have the same denominator, you can now subtract the numerators. <span class="math display">\[\frac{3}{6} - \frac{5}{6} = \frac{3-5}{6} = \frac{-2}{6}\]</span></p>
+<p>Simplifying the fraction gives <span class="math display">\[\dfrac{1}{2} - \dfrac{5}{6} = \frac{-2}{6} = \frac{-1}{3} = -\frac{1}{3}\]</span> and this is your final answer.</p>
+</div>
+</div>
+<p>In the interactive figure below, you can use the sliders to set the numerator and the denominator for the first two fractions (blue and red). The figure visually displays these two original fractions on the left. It then shows them converted into equivalent fractions with the lowest common denominator. Finally, the bars on the right show their sum, stacking the two amounts. The complete calculation steps, including any simplification or conversion to a mixed number, are shown in the box at the bottom.</p>
+<div id="rvw-vrect-add-final" class="rvw-vrect-widget" style="--barW: 80px; --barH: 400px; --ctrlW: 220px; --gap: 0px;
+      width: 100%;
+      display:flex; flex-direction: column; align-items: center;
+      max-width:100%; font-family:Arial, Helvetica, sans-serif; color:#000; margin: 1rem auto; background-color: #ffffff; border-radius: 12px; padding: 1.5rem; box-sizing: border-box;">
+
+<style>
+  #rvw-vrect-add-final .rvw-controls-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: calc(var(--ctrlW) * 2 + 1rem);
+    margin-bottom: 1.5rem;
+  }
+  #rvw-vrect-add-final .rvw-group-a, #rvw-vrect-add-final .rvw-group-b {
+    flex: 1 1 var(--ctrlW);
+    min-width: var(--ctrlW);
+    display:flex;
+    flex-direction:column;
+    gap: .35rem;
+  }
+
+  #rvw-vrect-add-final .rvw-bars-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    gap: var(--gap);
+    padding: 1rem;
+    min-height: calc(var(--barH) + 3em);
+  }
+
+  #rvw-vrect-add-final .rvw-bar-item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .1rem;
+    flex-shrink: 0;
+  }
+
+  #rvw-vrect-add-final .rvw-bar-label{
+    text-align:center;
+    font-size: 0.9rem;
+    min-height: 1.2em;
+    width: var(--barW);
+  }
+
+  #rvw-vrect-add-final .rvw-canvas{
+    width: var(--barW);
+    height: var(--barH);
+    border-radius:10px;
+    display: block;
+    box-sizing: border-box;
+  }
+
+  #rvw-vrect-add-final .rvw-result-group {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: var(--gap);
+    flex-shrink: 0;
+  }
+
+  #rvw-vrect-add-final .rvw-readout{
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    margin-top: 1rem;
+    background-color: #f0f4f8;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+
+  #rvw-vrect-add-final .rvw-group{ display:flex; flex-direction:column; gap:.25rem; }
+  #rvw-vrect-add-final .rvw-labelrow{ display:grid; grid-template-columns: 1fr auto; align-items:center; font-size:.95rem; }
+  #rvw-vrect-add-final .rvw-badge{ font-variant-numeric: tabular-nums; }
+
+  #rvw-vrect-add-final input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:999px; background:#C0D6FF; outline:none;
+      touch-action: none;
+  }
+  #rvw-vrect-add-final input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:16px; height:16px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer;
+  }
+  #rvw-vrect-add-final input[type="range"]::-moz-range-thumb{
+    width:16px; height:16px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer;
+  }
+
+</style>
+
+<div class="rvw-controls-row">
+  <div class="rvw-group-a">
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Numerator A (blue):</span>
+        <span id="rvw-A-numOut" class="rvw-badge">2</span>
+      </div>
+      <input id="rvw-A-num" type="range" min="0" max="5" value="4" step="1">
+    </div>
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Denominator A (blue):</span>
+        <span id="rvw-A-denOut" class="rvw-badge">6</span>
+      </div>
+      <input id="rvw-A-den" type="range" min="1" max="8" value="5" step="1"> </div>
+  </div>
+
+  <div class="rvw-group-b">
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Numerator B (red):</span>
+        <span id="rvw-B-numOut" class="rvw-badge">3</span>
+      </div>
+      <input id="rvw-B-num" type="range" min="0" max="8" value="3" step="1">
+    </div>
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Denominator B (red):</span>
+        <span id="rvw-B-denOut" class="rvw-badge">8</span>
+      </div>
+      <input id="rvw-B-den" type="range" min="1" max="8" value="8" step="1"> </div>
+  </div>
+</div>
+
+<div class="rvw-bars-row">
+
+  <div class="rvw-bar-item">
+    <canvas id="rvw-A-canvas" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-A-label" class="rvw-bar-label"></div>
+  </div>
+
+  <div class="rvw-bar-item">
+    <canvas id="rvw-B-canvas" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-B-label" class="rvw-bar-label"></div>
+  </div>
+
+  <div class="rvw-bar-item" style="margin-left: 20px;">
+    <canvas id="rvw-A_eq-canvas" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-A_eq-label" class="rvw-bar-label"></div>
+  </div>
+
+  <div class="rvw-bar-item">
+    <canvas id="rvw-B_eq-canvas" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-B_eq-label" class="rvw-bar-label"></div>
+  </div>
+
+  <div class="rvw-result-group" style="margin-left: 20px;">
+    <div class="rvw-bar-item" id="rvw-R1-item">
+      <canvas id="rvw-R1" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-R1-label" class="rvw-bar-label"></div>
+    </div>
+    <div class="rvw-bar-item" id="rvw-R2-item" style="display:none;">
+      <canvas id="rvw-R2" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-R2-label" class="rvw-bar-label"></div>
+    </div>
+    <div class="rvw-bar-item" id="rvw-R3-item" style="display:none;">
+      <canvas id="rvw-R3" width="80" height="400" class="rvw-canvas"></canvas> <div id="rvw-R3-label" class="rvw-bar-label"></div>
+    </div>
+  </div>
+
+</div>
+
+<div id="rvw-readout" class="mj rvw-readout"></div>
+
+<script>
+(function(){
+  function ensureMathJax(cb){
+    if (window.MathJax && MathJax.typesetPromise){ cb(); return; }
+    if (!document.getElementById('mj-loader')){
+      window.MathJax = window.MathJax || { tex:{inlineMath:[['\\(','\\)'],['$','$']], displayMath:[['$$','$$']]}, svg:{fontCache:'global'} };
+      const s=document.createElement('script'); s.id='mj-loader'; s.defer=true;
+      s.src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+      s.onload=cb; document.head.appendChild(s);
+    } else {
+      const t=setInterval(()=>{ if(window.MathJax && MathJax.typesetPromise){ clearInterval(t); cb(); } }, 50);
+    }
+  }
+
+  function setEquation(el, p){
+    const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1;};
+    const gFinal = gcd(p.nSum, p.L);
+    const ns = p.nSum / gFinal;
+    const ls = p.L / gFinal;
+    let tex = `\\dfrac{${p.nA}}{${p.dA}} + \\dfrac{${p.nB}}{${p.dB}} = `
+          + `\\dfrac{${p.nAeq}}{${p.L}} + \\dfrac{${p.nBeq}}{${p.L}} = `
+          + `\\dfrac{${p.nSum}}{${p.L}}`;
+          
+    if (ns === 0 && ls !== 0) {
+        tex += ` = 0`;
+    } else {
+        if (gFinal > 1){ tex += ` = \\dfrac{${ns}}{${ls}}`; }
+        if (ns >= ls){
+          const q = Math.floor(ns / ls);
+          const r = ns % ls;
+          if (tex.endsWith(`\\dfrac{${ns}}{${ls}}`) || tex.endsWith(`\\dfrac{${p.nSum}}{${p.L}}`)) {
+             tex += ` = ` + (r ? `${q}\\dfrac{${r}}{${ls}}` : `${q}`);
+          }
+        }
+    }
+    el.innerHTML = `\\(${tex}\\)`;
+  }
+
+  function setBarLabel(el, n, d) {
+    if (d > 0) {
+      el.innerHTML = `$$\\dfrac{${n}}{${d}}$$`;
+    } else {
+      el.innerHTML = '';
+    }
+  }
+
+  const root  = document.getElementById('rvw-vrect-add-final');
+
+  const canvA = root.querySelector('#rvw-A-canvas'), ctxA = canvA.getContext('2d');
+  const canvB = root.querySelector('#rvw-B-canvas'), ctxB = canvB.getContext('2d');
+  const canvA_eq = root.querySelector('#rvw-A_eq-canvas'), ctxA_eq = canvA_eq.getContext('2d');
+  const canvB_eq = root.querySelector('#rvw-B_eq-canvas'), ctxB_eq = canvB_eq.getContext('2d');
+  const canvR1= root.querySelector('#rvw-R1'),        ctxR1= canvR1.getContext('2d');
+  const canvR2= root.querySelector('#rvw-R2'),        ctxR2= canvR2.getContext('2d');
+  const canvR3= root.querySelector('#rvw-R3'),        ctxR3= canvR3.getContext('2d');
+
+  const labelA = root.querySelector('#rvw-A-label');
+  const labelB = root.querySelector('#rvw-B-label');
+  const labelA_eq = root.querySelector('#rvw-A_eq-label');
+  const labelB_eq = root.querySelector('#rvw-B_eq-label');
+  const labelR1 = root.querySelector('#rvw-R1-label');
+  const labelR2 = root.querySelector('#rvw-R2-label');
+  const labelR3 = root.querySelector('#rvw-R3-label');
+
+  const itemR2 = root.querySelector('#rvw-R2-item');
+  const itemR3 = root.querySelector('#rvw-R3-item');
+
+  const numA  = root.querySelector('#rvw-A-num'),  numAOut  = root.querySelector('#rvw-A-numOut');
+  const denA  = root.querySelector('#rvw-A-den'),  denAOut  = root.querySelector('#rvw-A-denOut');
+  const numB  = root.querySelector('#rvw-B-num'),  numBOut  = root.querySelector('#rvw-B-numOut');
+  const denB  = root.querySelector('#rvw-B-den'),  denBOut  = root.querySelector('#rvw-B-denOut');
+
+  const readout = root.querySelector('#rvw-readout');
+
+  const colorA = '#C0D6FF';
+  const colorB = '#FF9677';
+
+  const gridLine  = '#000';
+  const gridWidth = 1;
+  const padX = 10, padY = 12;
+  const cornerR = 8;
+  const borderW = 1.5;
+
+  const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1;}
+  const lcm=(a,b)=>a*b/gcd(a,b);
+  const crisp = x => Math.round(x) + 0.5;
+
+  function paintRange(el){
+    const min=+el.min,max=+el.max,val=+el.value, pct=(max > min ? (val-min)/(max-min) : 0)*100;
+    el.style.background = `linear-gradient(to right,#3F68B6 0%,#3F68B6 ${pct}%,#C0D6FF ${pct}%,#C0D6FF 100%)`;
+  }
+
+  function roundRect(ctx, x, y, w, h, r){
+    const rr = Math.min(r, w/2, h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+rr,y); ctx.arcTo(x+w,y, x+w,y+h, rr); ctx.arcTo(x+w,y+h, x,y+h, rr);
+    ctx.arcTo(x,y+h, x,y, rr); ctx.arcTo(x,y, x+w,y, rr); ctx.closePath();
+  }
+
+  function drawRectStrips(ctx, canvas, rows, shaded, fillColor){
+    rows = Math.max(1, rows);
+    shaded = Math.max(0, Math.min(shaded, rows));
+    const dpr = window.devicePixelRatio||1;
+    const cssW=canvas.clientWidth||canvas.width, cssH=canvas.clientHeight||canvas.height;
+    canvas.width=Math.round(cssW*dpr); canvas.height=Math.round(cssH*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    ctx.clearRect(0,0,cssW,cssH);
+    roundRect(ctx, 0, 0, cssW, cssH, 10);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+
+    const gx = padX, gy = padY, gw = cssW - 2*padX, gh = cssH - 2*padY;
+    const ch = gh/rows;
+
+    ctx.save();
+    roundRect(ctx, gx, gy, gw, gh, cornerR);
+    ctx.clip();
+
+    if (shaded > 0) {
+      const shadedHeight = shaded * ch;
+      const shadedY = gy + gh - shadedHeight;
+      ctx.beginPath();
+      ctx.rect(gx, shadedY, gw, shadedHeight);
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+    }
+
+    ctx.lineWidth = gridWidth; ctx.strokeStyle = gridLine;
+    for(let r=0; r <= rows; r++){
+      const y = gy + r * ch;
+      ctx.beginPath(); ctx.moveTo(gx, crisp(y)); ctx.lineTo(gx+gw, crisp(y)); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(crisp(gx), gy);      ctx.lineTo(crisp(gx), gy+gh);      ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(crisp(gx+gw), gy);  ctx.lineTo(crisp(gx+gw), gy+gh);  ctx.stroke();
+    ctx.restore();
+
+    roundRect(ctx, gx, gy, gw, gh, cornerR);
+    ctx.lineWidth = borderW;
+    ctx.strokeStyle = gridLine;
+    ctx.stroke();
+  }
+
+  function drawResultStrips(ctx, canvas, rows, shadedA, shadedB, colorA, colorB){
+    rows = Math.max(1, rows);
+    shadedA = Math.max(0, Math.min(shadedA, rows));
+    shadedB = Math.max(0, Math.min(shadedB, rows - shadedA));
+    
+    const dpr = window.devicePixelRatio||1;
+    const cssW=canvas.clientWidth||canvas.width, cssH=canvas.clientHeight||canvas.height;
+    canvas.width=Math.round(cssW*dpr); canvas.height=Math.round(cssH*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    ctx.clearRect(0,0,cssW,cssH);
+    roundRect(ctx, 0, 0, cssW, cssH, 10);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+
+    const gx = padX, gy = padY, gw = cssW - 2*padX, gh = cssH - 2*padY;
+    const ch = gh/rows;
+
+    ctx.save();
+    roundRect(ctx, gx, gy, gw, gh, cornerR);
+    ctx.clip();
+
+    if (shadedA > 0) {
+      const shadedHeightA = shadedA * ch;
+      const shadedYA = gy + gh - shadedHeightA;
+      ctx.beginPath();
+      ctx.rect(gx, shadedYA, gw, shadedHeightA);
+      ctx.fillStyle = colorA;
+      ctx.fill();
+    }
+    
+    if (shadedB > 0) {
+      const shadedHeightA = shadedA * ch;
+      const shadedYA = gy + gh - shadedHeightA;
+      const shadedHeightB = shadedB * ch;
+      const shadedYB = shadedYA - shadedHeightB;
+      ctx.beginPath();
+      ctx.rect(gx, shadedYB, gw, shadedHeightB);
+      ctx.fillStyle = colorB;
+      ctx.fill();
+    }
+
+    ctx.lineWidth = gridWidth; ctx.strokeStyle = gridLine;
+    for(let r=0; r <= rows; r++){
+      const y = gy + r * ch;
+      ctx.beginPath(); ctx.moveTo(gx, crisp(y)); ctx.lineTo(gx+gw, crisp(y)); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(crisp(gx), gy);      ctx.lineTo(crisp(gx), gy+gh);      ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(crisp(gx+gw), gy);  ctx.lineTo(crisp(gx+gw), gy+gh);  ctx.stroke();
+    ctx.restore();
+
+    roundRect(ctx, gx, gy, gw, gh, cornerR);
+    ctx.lineWidth = borderW;
+    ctx.strokeStyle = gridLine;
+    ctx.stroke();
+  }
+
+  function update(){
+    const dA_val = +denA.value;
+    const dB_val = +denB.value;
+    if (+numA.max !== dA_val) numA.max = dA_val;
+    if (+numB.max !== dB_val) numB.max = dB_val;
+    if (+numA.value > dA_val) numA.value = dA_val;
+    if (+numB.value > dB_val) numB.value = dB_val;
+
+    numAOut.textContent = numA.value;  denAOut.textContent = dA_val;
+    numBOut.textContent = numB.value;  denBOut.textContent = dB_val;
+
+    const nA = +numA.value,  nB = +numB.value;
+
+    drawRectStrips(ctxA, canvA, dA_val, nA, colorA);
+    drawRectStrips(ctxB, canvB, dB_val, nB, colorB);
+    setBarLabel(labelA, nA, dA_val);
+    setBarLabel(labelB, nB, dB_val);
+
+    const L  = (dA_val <= 0 || dB_val <= 0) ? 0 : lcm(dA_val, dB_val);
+
+    if (L <= 0) {
+      readout.innerHTML = "Denominator must be 1 or greater.";
+      ctxA_eq.clearRect(0,0,canvA_eq.width,canvA_eq.height);
+      ctxB_eq.clearRect(0,0,canvB_eq.width,canvB_eq.height);
+      ctxR1.clearRect(0,0,canvR1.width,canvR1.height);
+      setBarLabel(labelA_eq, 0, 0);
+      setBarLabel(labelB_eq, 0, 0);
+      setBarLabel(labelR1, 0, 0);
+      itemR2.style.display = 'none';
+      itemR3.style.display = 'none';
+      [numA, denA, numB, denB].forEach(paintRange);
+      ensureMathJax(()=>{ MathJax.typesetPromise([labelA_eq, labelB_eq, labelR1, labelR2, labelR3, readout]); });
+      return;
+    }
+
+    const nAeq = nA*(L/dA_val), nBeq = nB*(L/dB_val), nSum = nAeq + nBeq;
+
+    drawRectStrips(ctxA_eq, canvA_eq, L, nAeq, colorA);
+    drawRectStrips(ctxB_eq, canvB_eq, L, nBeq, colorB);
+    setBarLabel(labelA_eq, nAeq, L);
+    setBarLabel(labelB_eq, nBeq, L);
+
+    const s1 = Math.min(nSum, L);
+    const shadedA_R1 = Math.min(nAeq, L);
+    const shadedB_R1 = s1 - shadedA_R1;
+    drawResultStrips(ctxR1, canvR1, L, shadedA_R1, shadedB_R1, colorA, colorB);
+    setBarLabel(labelR1, s1, L);
+    itemR2.style.display = 'none';
+    itemR3.style.display = 'none';
+
+    const s2 = Math.max(0, Math.min(nSum - L, L));
+    if (s2 > 0){
+      const shadedA_R2 = Math.max(0, nAeq - L);
+      const shadedB_R2 = s2 - shadedA_R2;
+      drawResultStrips(ctxR2, canvR2, L, shadedA_R2, shadedB_R2, colorA, colorB);
+      setBarLabel(labelR2, s2, L);
+      itemR2.style.display = 'flex';
+    }
+
+    const s3 = Math.max(0, nSum - 2*L);
+    if (s3 > 0){
+      const shadedA_R3 = Math.max(0, nAeq - 2*L);
+      const shadedB_R3 = s3 - shadedA_R3;
+      drawResultStrips(ctxR3, canvR3, L, shadedA_R3, shadedB_R3, colorA, colorB);
+      setBarLabel(labelR3, s3, L);
+      itemR3.style.display = 'flex';
+    }
+
+    setEquation(readout, { nA, dA: dA_val, nB, dB: dB_val, L, nAeq, nBeq, nSum });
+
+    ensureMathJax(()=>{
+      const elementsToTypeset = [
+        readout, labelA, labelB, labelA_eq, labelB_eq, labelR1
+      ];
+      if (s2 > 0) elementsToTypeset.push(labelR2);
+      if (s3 > 0) elementsToTypeset.push(labelR3);
+
+      for (const el of elementsToTypeset) {
+         if(el.innerHTML) {
+           if (el.MathJax) el.MathJax.element = null;
+           el.classList.remove('mjx-typeset');
+         }
+      }
+      MathJax.typesetPromise(elementsToTypeset.filter(el => el.innerHTML));
+    });
+
+    [numA, denA, numB, denB].forEach(paintRange);
+  }
+
+  const allSliders = [numA, denA, numB, denB];
+
+  allSliders.forEach(slider => {
+      slider.addEventListener('input', update);
+      slider.addEventListener('change', update);
+  });
+
+  window.addEventListener('resize', update);
+
+  (function kick(){ allSliders.forEach(paintRange); update(); })();
+})();
+</script>
+</div>
+</section>
+<section id="multiplying-fractions" class="level1">
+<h1>Multiplying fractions</h1>
+<p>Multiplying fractions means finding a fraction of another fraction. <span class="math display">\[\frac{1}{2} \cdot \frac{1}{3} \qquad \textsf{"a half of a third"}\]</span></p>
+<p>When you multiply two fractions that are both less than <span class="math inline">\(1\)</span>, the result is smaller than both of the original fractions because you are taking a part of a part. This is different from multiplying whole numbers greater than <span class="math inline">\(1\)</span>, where multiplying makes numbers bigger.</p>
+<p>Imagine you have yet another delicious chocolate bar – probably from Cantor’s Confectionery. Suppose you divide it vertically into three equal parts (thirds) and cover the first part so that <span class="math inline">\(\frac{1}{3}\)</span> of the bar is covered. Suppose you now divide the same bar horizontally into two equal parts (halves) and cover the first part so that <span class="math inline">\(\frac{1}{2}\)</span> of the bar is covered. The overlapping section shows the part that is both a half and a third at the same time. It covers one out of six equal parts of the bar. <span class="math display">\[\frac{1}{2} \cdot \frac{1}{3} = \frac{1}{6}\]</span></p>
+<p>This is why multiplying fractions means taking one fraction of another.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Multiplying fractions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To multiply two fractions together:</p>
+<ol type="1">
+<li>Multiply the numerators together and write this as the new numerator.</li>
+<li>Multiply the denominators together and write this as the new denominator.</li>
+<li>Simplify the result, if possible.</li>
+</ol>
+</div>
+</div>
+<p>Unlike with addition or subtraction, you do not need to find a common denominator when multiplying fractions. Each fraction acts as its own scaling; for instance, multiplying by <span class="math inline">\(\frac{1}{2}\)</span> means “take one half of”, and multiplying by <span class="math inline">\(\frac{1}{3}\)</span> means “take one third of”. If both fractions are less than <span class="math inline">\(1\)</span>, each denominator divides the quantity again, so the number gets smaller.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate <span class="math inline">\(\dfrac{3}{4} \cdot \dfrac{8}{9}\)</span>.</p>
+<p>Multiply the numerators and the denominators separately, and simplify the result. <span class="math display">\[\frac{3}{4} \cdot \frac{8}{9} = \frac{3 \cdot 8}{4 \cdot 9} = \frac{24}{36} = \frac{2}{3}\]</span></p>
+</div>
+</div>
+<p>In this example, the numerators and the denominators of the fraction <span class="math inline">\(\frac{24}{36}\)</span> are small enough to make simplifying manageable. When the numbers are larger, multiplying first can create very large numbers on the numerator and the denominator.</p>
+<p>A more reliable method is to <strong>simplify before multiplying</strong>. You can do this by <strong>cancelling</strong> any common factors between any numerator and any denominator in the problem.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate <span class="math inline">\(\dfrac{14}{25} \cdot \dfrac{15}{21}\)</span>.</p>
+<p>The previous method involved multiplying first and then simplifying. <span class="math display">\[\frac{14}{25} \cdot \frac{15}{21} = \frac{14 \cdot 15}{25 \cdot 21} = \frac{210}{525}\]</span></p>
+<p>This is a large fraction which takes a while to simplify. You would need to find the highest common factor of these two numbers (which is <span class="math inline">\(105\)</span>) or simplify in multiple steps (divide by <span class="math inline">\(5\)</span>, then <span class="math inline">\(7\)</span>, then <span class="math inline">\(3\)</span>). Here, <span class="math display">\[\frac{210}{525} = \frac{210 \div 105}{525 \div 105} = \frac{2}{5}\]</span> and this is your final answers.</p>
+</div>
+</div>
+<p>There is a more reliable method to perform this multiplication by looking for common factors in both numerators and denominators.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 6
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate <span class="math inline">\(\dfrac{14}{25} \cdot \dfrac{15}{21}\)</span>.</p>
+<p>Here, you can see</p>
+<ul>
+<li>The numerator <span class="math inline">\(14\)</span> and the denominator <span class="math inline">\(21\)</span> share a common factor of <span class="math inline">\(7\)</span>.</li>
+<li>The numerator <span class="math inline">\(15\)</span> and the denominator <span class="math inline">\(25\)</span> share a common factor of <span class="math inline">\(5\)</span>.</li>
+</ul>
+<p>You can show this cancelling process directly on the fractions. First, divide <span class="math inline">\(14\)</span> and <span class="math inline">\(21\)</span> by their common factor of <span class="math inline">\(7\)</span> to get <span class="math inline">\(2\)</span> and <span class="math inline">\(3\)</span>, respectively. Next, divide <span class="math inline">\(15\)</span> and <span class="math inline">\(25\)</span> by their common factor of <span class="math inline">\(5\)</span> to get <span class="math inline">\(3\)</span> and <span class="math inline">\(5\)</span>, respectively.</p>
+<p>The original problem has now become: <span class="math display">\[\frac{2}{5} \cdot \frac{3}{3}\]</span></p>
+<p>Notice that <span class="math inline">\(3\)</span> is also a common factor in a numerator and denominator so the final simplified multiplication problem is: <span class="math display">\[\frac{2}{5} \cdot \frac{1}{1}\]</span></p>
+<p>You can now multiply the simplified numerators together and the simplified denominators together, as before <span class="math display">\[\frac{2}{5} \cdot \frac{1}{1} = \frac{2 \cdot 1}{5 \cdot 1} = \frac{2}{5}\]</span></p>
+<p>This method gives the final simplified answer directly and avoids large calculations.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This method of cancelling factors <strong>only works for multiplication</strong>. You cannot cancel factors across numerators and denominators when adding or subtracting fractions.</p>
+</div>
+</div>
+<p>In the interactive figure below, you can use the sliders to set the numerators and denominators for the two fractions that are being multiplied together. The grid visually displays the first fraction as blue columns and the second fraction as red rows. The overlapping pink area represents the result or “fraction of a fraction”.</p>
+<p>This demonstrates how multiplying fractions works. The grid is divided into <span class="math inline">\(\textsf{Denominator A } \times \textsf{ Denominator B}\)</span> total rectangles, and the overlapping area covers <span class="math inline">\(\textsf{Numerator A } \times \textsf{ Numerator B}\)</span> of those rectangles. Hover over the non-overlapping blue or red areas to see each fraction individually. The complete calculation, including any simplification, is shown in the box at the bottom.</p>
+<div id="rvw-grid-mul-final" class="rvw-grid-widget" style="--ctrlW: 220px; --gridMaxW: 450px;
+      width: 100%;
+      display:flex; flex-direction: column; align-items: center;
+      max-width:100%; font-family:Arial, Helvetica, sans-serif; color:#000; margin: 1rem auto; background-color: #ffffff; border-radius: 12px; padding: 1.5rem; box-sizing: border-box;">
+
+<style>
+  #rvw-grid-mul-final .rvw-controls-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: calc(var(--ctrlW) * 2 + 1rem);
+    margin-bottom: 1.5rem;
+  }
+  #rvw-grid-mul-final .rvw-group-a, #rvw-grid-mul-final .rvw-group-b {
+    flex: 1 1 var(--ctrlW);
+    min-width: var(--ctrlW);
+    display:flex;
+    flex-direction:column;
+    gap: .35rem;
+  }
+
+  #rvw-grid-mul-final .rvw-grid-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 3rem;
+    box-sizing: border-box;
+  }
+
+  #rvw-grid-mul-final .rvw-grid-container {
+    position: relative;
+    width: 100%;
+    max-width: var(--gridMaxW);
+    aspect-ratio: 1 / 1;
+  }
+
+  #rvw-grid-mul-final .rvw-canvas{
+    width: 100%;
+    height: 100%;
+    display: block;
+    box-sizing: border-box;
+    cursor: default;
+  }
+  
+  #rvw-grid-mul-final .rvw-grid-label {
+    position: absolute;
+    pointer-events: none;
+    line-height: 1;
+    font-size: 1rem;
+    font-weight: bold;
+    display: none;
+  }
+
+  #rvw-grid-mul-final .rvw-readout{
+    width: 100%;
+    max-width: calc(var(--ctrlW) * 2 + 1rem);
+    text-align: center;
+    margin-top: 3.8rem;
+    background-color: #f0f4f8;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+
+  #rvw-grid-mul-final .rvw-group{ display:flex; flex-direction:column; gap:.25rem; }
+  #rvw-grid-mul-final .rvw-labelrow{ display:grid; grid-template-columns: 1fr auto; align-items:center; font-size:.95rem; }
+  #rvw-grid-mul-final .rvw-badge{ font-variant-numeric: tabular-nums; }
+
+  #rvw-grid-mul-final input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:8px; border-radius:999px; background:#C0D6FF; outline:none;
+      touch-action: none;
+  }
+  #rvw-grid-mul-final input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:16px; height:16px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer;
+  }
+  #rvw-grid-mul-final input[type="range"]::-moz-range-thumb{
+    width:16px; height:16px; border-radius:50%; background:#3F68B6; border:none; cursor: pointer;
+  }
+
+</style>
+
+<div class="rvw-controls-row">
+  <div class="rvw-group-a">
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Numerator A (blue):</span>
+        <span id="rvw-A-numOut" class="rvw-badge">1</span>
+      </div>
+      <input id="rvw-A-num" type="range" min="0" max="11" value="5" step="1">
+    </div>
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Denominator A (columns):</span>
+        <span id="rvw-A-denOut" class="rvw-badge">3</span>
+      </div>
+      <input id="rvw-A-den" type="range" min="1" max="12" value="11" step="1"> </div>
+  </div>
+
+  <div class="rvw-group-b">
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Numerator B (red):</span>
+        <span id="rvw-B-numOut" class="rvw-badge">1</span>
+      </div>
+      <input id="rvw-B-num" type="range" min="0" max="5" value="3" step="1">
+    </div>
+    <div class="rvw-group">
+      <div class="rvw-labelrow">
+        <span>Denominator B (rows):</span>
+        <span id="rvw-B-denOut" class="rvw-badge">2</span>
+      </div>
+      <input id="rvw-B-den" type="range" min="1" max="12" value="5" step="1"> </div>
+  </div>
+</div>
+
+<div class="rvw-grid-row">
+    <div class="rvw-grid-container">
+        <canvas id="rvw-grid-canvas" width="450" height="450" class="rvw-canvas"></canvas>
+        
+        <div id="rvw-grid-label-a" class="rvw-grid-label" style="transform: translateX(-50%);"></div>
+        
+        <div id="rvw-grid-label-b" class="rvw-grid-label" style="transform: translateY(-50%);"></div>
+        
+        <div id="rvw-grid-label-r" class="rvw-grid-label" style="display: flex; align-items: center; justify-content: center; color: black; font-size: 1.1rem;"></div>
+    </div>
+</div>
+
+<div id="rvw-readout" class="mj rvw-readout"></div>
+
+
+<script>
+(function(){
+  function ensureMathJax(cb){
+    if (window.MathJax && MathJax.typesetPromise){ cb(); return; }
+    if (!document.getElementById('mj-loader')){
+      window.MathJax = window.MathJax || { tex:{inlineMath:[['\\(','\\)'],['$','$']], displayMath:[['$$','$$']]}, svg:{fontCache:'global'} };
+      const s=document.createElement('script'); s.id='mj-loader'; s.defer=true;
+      s.src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+      s.onload=cb; document.head.appendChild(s);
+    } else {
+      const t=setInterval(()=>{ if(window.MathJax && MathJax.typesetPromise){ clearInterval(t); cb(); } }, 50);
+    }
+  }
+
+  function setEquation(el, p){
+    const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1;};
+    
+    const nA = p.nA, dA = p.dA, nB = p.nB, dB = p.dB;
+
+    let tex = `\\dfrac{${nA}}{${dA}} \\cdot \\dfrac{${nB}}{${dB}}`;
+    let lastTexPart = tex;
+    
+    const g_AdB = gcd(nA, dB);
+    const nA_s1 = nA / g_AdB;
+    const dB_s1 = dB / g_AdB;
+    
+    const g_BdA = gcd(nB, dA);
+    const nB_s1 = nB / g_BdA;
+    const dA_s1 = dA / g_BdA;
+    
+    const didCancel_s1 = (g_AdB > 1 || g_BdA > 1);
+    const tex_s1 = `\\dfrac{${nA_s1}}{${dA_s1}} \\cdot \\dfrac{${nB_s1}}{${dB_s1}}`;
+    
+    if (didCancel_s1) {
+        tex += ` = ${tex_s1}`;
+        lastTexPart = tex_s1;
+    }
+    
+    const g_A = gcd(nA_s1, dA_s1);
+    const nA_s2 = nA_s1 / g_A;
+    const dA_s2 = dA_s1 / g_A;
+    
+    const g_B = gcd(nB_s1, dB_s1);
+    const nB_s2 = nB_s1 / g_B;
+    const dB_s2 = dB_s1 / g_B;
+    
+    const didCancel_s2 = (g_A > 1 || g_B > 1);
+    const tex_s2 = `\\dfrac{${nA_s2}}{${dA_s2}} \\cdot \\dfrac{${nB_s2}}{${dB_s2}}`;
+    
+    if (didCancel_s2) {
+        tex += ` = ${tex_s2}`;
+        lastTexPart = tex_s2;
+    }
+    
+    const nRes_s = nA_s2 * nB_s2;
+    const dRes_s = dA_s2 * dB_s2;
+    
+    const tex_mul = `\\dfrac{${nA_s2} \\cdot ${nB_s2}}{${dA_s2} \\cdot ${dB_s2}}`;
+
+    if (lastTexPart !== tex_mul && (nA_s2 !== nRes_s || nB_s2 !== nRes_s || dA_s2 !== dRes_s || dB_s2 !== dRes_s)) {
+         tex += ` = ${tex_mul}`;
+         lastTexPart = tex_mul;
+    }
+    
+    const tex_res = `\\dfrac{${nRes_s}}{${dRes_s}}`;
+    
+    if (lastTexPart !== tex_res && !(nRes_s === 0 && dRes_s !== 0) && !(dRes_s === 1) && !(nRes_s === dRes_s)) {
+         tex += ` = ${tex_res}`;
+         lastTexPart = tex_res;
+    }
+    
+    let finalFormTex = "";
+    if (nRes_s === 0 && dRes_s !== 0) {  
+        finalFormTex = "0";
+    } else if (dRes_s === 1) {  
+        finalFormTex = `${nRes_s}`;
+    } else if (nRes_s === dRes_s && dRes_s !== 0) {  
+         finalFormTex = "1";
+    } else if (nRes_s > dRes_s && dRes_s !== 0){  
+      const q = Math.floor(nRes_s / dRes_s);
+      const r = nRes_s % dRes_s;
+      finalFormTex = r > 0 ? `${q}\\dfrac{${r}}{${dRes_s}}` : `${q}`;
+    } else {
+        finalFormTex = lastTexPart;  
+    }
+
+    if (finalFormTex !== lastTexPart && ` = ${finalFormTex}` !== lastTexPart ) {  
+         tex += ` = ${finalFormTex}`;
+    }
+
+    el.innerHTML = `\\(${tex}\\)`;
+    
+    if (el.MathJax) el.MathJax.element = null;
+    el.classList.remove('mjx-typeset');
+  }
+
+
+  const root  = document.getElementById('rvw-grid-mul-final');
+  if (!root) { console.warn("Fraction multiplication widget root 'rvw-grid-mul-final' not found."); return; }
+
+  const canvas = root.querySelector('#rvw-grid-canvas'), ctx = canvas.getContext('2d');
+  
+  const numA  = root.querySelector('#rvw-A-num'),  numAOut  = root.querySelector('#rvw-A-numOut');
+  const denA  = root.querySelector('#rvw-A-den'),  denAOut  = root.querySelector('#rvw-A-denOut');
+  const numB  = root.querySelector('#rvw-B-num'),  numBOut  = root.querySelector('#rvw-B-numOut');
+  const denB  = root.querySelector('#rvw-B-den'),  denBOut  = root.querySelector('#rvw-B-denOut');
+  
+  const readout = root.querySelector('#rvw-readout');
+  
+  const labelA = root.querySelector('#rvw-grid-label-a');
+  const labelB = root.querySelector('#rvw-grid-label-b');
+  const labelR = root.querySelector('#rvw-grid-label-r');
+  
+  let lastSliderValues = {};
+  let lastMousePos = { x: -1, y: -1 };
+
+  const fillA = 'rgba(63, 104, 182, 0.5)';
+  const fillB = 'rgba(217, 83, 79, 0.5)';
+  const gridLine  = '#000';
+  const gridWidth = 1;
+  const pad = 10;
+  const borderW = 1.5;
+
+  const gcd=(a,b)=>{a=Math.abs(a);b=Math.abs(b);while(b){[a,b]=[b,a%b]}return a||1;}
+  const crisp = x => Math.round(x) + 0.5;
+
+  function paintRange(el){
+    const min=+el.min,max=+el.max,val=+el.value, pct=(max > min ? (val-min)/(max-min) : 0)*100;
+    el.style.background = `linear-gradient(to right,#3F68B6 0%,#3F68B6 ${pct}%,#C0D6FF ${pct}%,#C0D6FF 100%)`;
+  }
+
+  function drawGrid(params){
+    if (!params) return;  
+    
+    let { nA, dA_val, nB, dB_val } = params;
+    
+    let cols = Math.max(1, dA_val);
+    let rows = Math.max(1, dB_val);
+    let shadedCols = Math.max(0, Math.min(nA, cols));
+    let shadedRows = Math.max(0, Math.min(nB, rows));
+    
+    const dpr = window.devicePixelRatio||1;
+    const cssW=canvas.clientWidth||canvas.width, cssH=canvas.clientHeight||canvas.height;
+    canvas.width=Math.round(cssW*dpr); canvas.height=Math.round(cssH*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    ctx.clearRect(0,0,cssW,cssH);
+    
+    const gx = pad, gy = pad, gw = cssW - 2*pad, gh = cssH - 2*pad;
+    const cw = gw / cols;
+    const ch = gh / rows;
+
+    const { x, y } = lastMousePos;
+    
+    const isHoverA = (shadedCols > 0 &&  
+                       x >= gx && x < gx + shadedCols * cw &&  
+                       y >= gy + shadedRows * ch && y < gy + gh);
+                       
+    const isHoverB = (shadedRows > 0 &&
+                       x >= gx + shadedCols * cw && x < gx + gw &&
+                       y >= gy && y < gy + shadedRows * ch);
+    
+    if (isHoverA) {
+        ctx.save();
+        
+        if (shadedCols > 0) {
+            ctx.fillStyle = fillA;
+            ctx.fillRect(gx, gy, shadedCols * cw, gh);
+        }
+        
+        ctx.lineWidth = gridWidth; ctx.strokeStyle = gridLine;
+        for(let c=0; c <= cols; c++){
+          const x_pos = gx + c * cw;
+          ctx.beginPath(); ctx.moveTo(crisp(x_pos), gy); ctx.lineTo(crisp(x_pos), gy+gh); ctx.stroke();
+        }
+        
+        ctx.lineWidth = borderW;
+        ctx.strokeStyle = gridLine;
+        ctx.strokeRect(crisp(gx), crisp(gy), gw, gh);
+        ctx.restore();
+        
+        labelA.style.left = `${gx + (shadedCols * cw) / 2}px`;
+        labelA.style.top = `${gy + gh / 2}px`;
+        labelA.style.transform = 'translate(-50%, -50%)';
+        labelA.style.color = 'black';
+        labelA.style.textShadow = 'none';
+        labelA.innerHTML = `$$\\frac{${shadedCols}}{${cols}}$$`;
+        labelA.style.display = 'block';
+        
+        labelB.style.display = 'none'; labelB.innerHTML = '';
+        labelR.style.display = 'none'; labelR.innerHTML = '';
+        
+    } else if (isHoverB) {
+        ctx.save();
+
+        if (shadedRows > 0) {
+            ctx.fillStyle = fillB;
+            ctx.fillRect(gx, gy, gw, shadedRows * ch);
+        }
+
+        ctx.lineWidth = gridWidth; ctx.strokeStyle = gridLine;
+        for(let r=0; r <= rows; r++){
+          const y_pos = gy + r * ch;
+          ctx.beginPath(); ctx.moveTo(gx, crisp(y_pos)); ctx.lineTo(gx+gw, crisp(y_pos)); ctx.stroke();
+        }
+        
+        ctx.lineWidth = borderW;
+        ctx.strokeStyle = gridLine;
+        ctx.strokeRect(crisp(gx), crisp(gy), gw, gh);
+        ctx.restore();
+
+        labelB.style.top = `${gy + (shadedRows * ch) / 2}px`;
+        labelB.style.left = `${gx + gw / 2}px`;
+        labelB.style.transform = 'translate(-50%, -50%)';
+        labelB.style.color = 'black';
+        labelB.style.textShadow = 'none';
+        labelB.innerHTML = `$$\\frac{${shadedRows}}{${rows}}$$`;
+        labelB.style.display = 'block';
+
+        labelA.style.display = 'none'; labelA.innerHTML = '';
+        labelR.style.display = 'none'; labelR.innerHTML = '';
+
+    } else {
+
+        if (shadedCols > 0) {
+          ctx.fillStyle = fillA;
+          ctx.fillRect(gx, gy, shadedCols * cw, gh);
+        }
+        
+        if (shadedRows > 0) {
+          ctx.fillStyle = fillB;
+          ctx.fillRect(gx, gy, gw, shadedRows * ch);
+        }
+
+        ctx.lineWidth = gridWidth; ctx.strokeStyle = gridLine;
+        for(let c=0; c <= cols; c++){
+          const x_pos = gx + c * cw;
+          ctx.beginPath(); ctx.moveTo(crisp(x_pos), gy); ctx.lineTo(crisp(x_pos), gy+gh); ctx.stroke();
+        }
+        for(let r=0; r <= rows; r++){
+          const y_pos = gy + r * ch;
+          ctx.beginPath(); ctx.moveTo(gx, crisp(y_pos)); ctx.lineTo(gx+gw, crisp(y_pos)); ctx.stroke();
+        }
+
+        ctx.lineWidth = borderW;
+        ctx.strokeStyle = gridLine;
+        ctx.strokeRect(crisp(gx), crisp(gy), gw, gh);
+        
+        if (shadedCols > 0) {
+            labelA.style.left = `${gx + (shadedCols * cw) / 2}px`;
+            labelA.style.top = `${gy + gh + 5}px`;
+            labelA.style.transform = 'translateX(-50%)';
+            labelA.style.color = 'black';
+            labelA.style.textShadow = 'none';
+            labelA.innerHTML = `$$\\frac{${shadedCols}}{${cols}}$$`;
+            labelA.style.display = 'block';
+        } else {
+            labelA.style.display = 'none';
+            labelA.innerHTML = '';
+        }
+
+        if (shadedRows > 0) {
+            labelB.style.top = `${gy + (shadedRows * ch) / 2}px`;
+            labelB.style.left = `${gx + gw + 25}px`;
+            labelB.style.transform = 'translateY(-50%)';
+            labelB.style.color = 'black';
+            labelB.style.textShadow = 'none';
+            labelB.innerHTML = `$$\\frac{${shadedRows}}{${rows}}$$`;
+            labelB.style.display = 'block';
+        } else {
+            labelB.style.display = 'none';
+            labelB.innerHTML = '';
+        }
+
+        if (shadedCols > 0 && shadedRows > 0) {
+            labelR.style.left = `${gx}px`;
+            labelR.style.top = `${gy}px`;
+            labelR.style.width = `${shadedCols * cw}px`;
+            labelR.style.height = `${shadedRows * ch}px`;
+            labelR.innerHTML = `$$\\frac{${shadedCols * shadedRows}}{${cols * rows}}$$`;
+            labelR.style.display = 'flex';
+        } else {
+            labelR.style.display = 'none';
+            labelR.innerHTML = '';
+        }
+    }
+    
+    [labelA, labelB, labelR].forEach(el => {
+        if (el.MathJax) el.MathJax.element = null;
+        el.classList.remove('mjx-typeset');
+    });
+    
+    ensureMathJax(()=>{
+       MathJax.typesetPromise([labelA, labelB, labelR].filter(el => el.innerHTML));
+    });
+  }
+
+  function update(){
+    const dA_val = +denA.value;
+    const dB_val = +denB.value;
+    
+    if (+numA.max !== dA_val) numA.max = dA_val;
+    if (+numB.max !== dB_val) numB.max = dB_val;
+    if (+numA.value > dA_val) numA.value = dA_val;
+    if (+numB.value > dB_val) numB.value = dB_val;
+
+    const nA = +numA.value, nB = +numB.value;
+
+    numAOut.textContent = nA; denAOut.textContent = dA_val;
+    numBOut.textContent = nB; denBOut.textContent = dB_val;
+
+    lastSliderValues = { nA, dA_val, nB, dB_val };
+
+    if (dA_val <= 0 || dB_val <= 0) {
+      readout.innerHTML = "Denominator must be 1 or greater.";
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      [labelA, labelB, labelR].forEach(el => { el.style.display = 'none'; el.innerHTML = ''; });
+      [numA, denA, numB, denB].forEach(paintRange);
+      ensureMathJax(()=>{ MathJax.typesetPromise([readout]); });
+      return;
+    }
+    
+    drawGrid(lastSliderValues);
+    
+    const nRes = nA * nB;
+    const dRes = dA_val * dB_val;
+
+    setEquation(readout, { nA, dA: dA_val, nB, dB: dB_val, nRes, dRes });
+    ensureMathJax(()=>{
+       MathJax.typesetPromise([readout]);
+    });
+
+    [numA, denA, numB, denB].forEach(paintRange);
+  }
+  
+  function handleMouseMove(e) {
+      const rect = canvas.getBoundingClientRect();
+      lastMousePos.x = e.clientX - rect.left;
+      lastMousePos.y = e.clientY - rect.top;
+      drawGrid(lastSliderValues);
+  }
+  
+  function handleMouseOut(e) {
+      lastMousePos = { x: -1, y: -1 };
+      drawGrid(lastSliderValues);
+  }
+
+  const allSliders = [numA, denA, numB, denB];
+
+  allSliders.forEach(slider => {
+      slider.addEventListener('input', update);
+      slider.addEventListener('change', update);  
+  });
+  
+  canvas.addEventListener('mousemove', handleMouseMove);
+  canvas.addEventListener('mouseout', handleMouseOut);
+
+  window.addEventListener('resize', update);
+
+  (function kick(){ allSliders.forEach(paintRange); update(); })();
+})();
+</script>
+</div>
+<div class="{callout-tip}">
+<p>If you want to multiply a fraction by a whole number, you can rewrite the whole number as an improper fraction with denominator 1, then multiply. For example, <span class="math display">\[\frac{3}{5} \cdot 6 = \frac{3}{5} \cdot \frac{6}{1} = \frac{3 \cdot 6}{5 \cdot 1} = \frac{18}{5} = 3 \frac{3}{5}\]</span></p>
+</div>
+</section>
+<section id="dividing-fractions" class="level1">
+<h1>Dividing fractions</h1>
+<p>Whenever you are dividing one fraction by another fraction, you are asking yourself the question “How many times does this fraction fit into the other?”</p>
+<p>The process for dividing fractions is similar to the process for multiplying fractions, with one key change: dividing by a fraction is the same as multiplying by the <strong>reciprocal</strong> of that fraction.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reciprocal of a fraction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <strong>reciprocal of a fraction</strong> is what you get by swapping its numerator and denominator.</p>
+<p>For example, the reciprocal of <span class="math inline">\(\dfrac{5}{7}\)</span> is <span class="math inline">\(\dfrac{7}{5}\)</span>.</p>
+</div>
+</div>
+<p>So, instead of working directly with division, you can rewrite the question as a multiplication problem, which you know how to do.</p>
+<p>Imagine you have <span class="math inline">\(\frac{2}{3}\)</span> of a chocolate bar, and you want to know how many pieces of size <span class="math inline">\(\frac{5}{7}\)</span> fit inside that amount. Instead of trying to figure out how many times <span class="math inline">\(\frac{5}{7}\)</span> fits into <span class="math inline">\(\frac{2}{3}\)</span>, you can flip <span class="math inline">\(\frac{5}{7}\)</span> to get its reciprocal <span class="math inline">\(\frac{7}{5}\)</span> and then turn the division into multiplication. <span class="math display">\[\frac{2}{3} \div \frac{5}{7} = \frac{2}{3} \cdot \frac{7}{5}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Dividing fractions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To divide fractions, you can follow the <strong>keep, change, flip</strong> method:</p>
+<ol type="1">
+<li><strong>Keep</strong> the first fraction the same.</li>
+<li><strong>Change</strong> division to multiplication.</li>
+<li><strong>Flip</strong> the second fraction (take its reciprocal).</li>
+</ol>
+<p>This turns the division problem into a multiplication problem, which you know how to do!</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate <span class="math inline">\(\dfrac{3}{4} \div \dfrac{1}{8}\)</span>.</p>
+<p>To do this, you could follow the <strong>keep, change, flip</strong> method.</p>
+<p>Keep the first fraction as <span class="math inline">\(\frac{3}{4}\)</span>, change the division sign to a multiplication sign, and flip the second fraction so that <span class="math inline">\(\frac{1}{8}\)</span> becomes <span class="math inline">\(\frac{8}{1}\)</span>. Now multiply the fractions together. <span class="math display">\[\frac{3}{4} \div \frac{1}{8} = \frac{3}{4} \cdot \frac{8}{1} = \frac{3}{1} \cdot \frac{2}{1} = \frac{3 \cdot 2}{1 \cdot 1} = \frac{6}{1} = 6\]</span></p>
+</div>
+</div>
+<p>As seen in the <a href="#multiplying-fractions">multiplying fractions</a> section, when you multiply two fractions that are both less than <span class="math inline">\(1\)</span>, the result gets smaller because you are taking a fraction of a fraction. Dividing by fractions works differently. When you divide by a fraction, you are asking how many of those smaller pieces fit into what you already have. This means that the answer could actually be larger than the number you started with.</p>
+<section id="arithmetic-with-mixed-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="arithmetic-with-mixed-numbers">Arithmetic with mixed numbers</h2>
+<p>When doing arithmetic on mixed numbers, the safest way to do this is to convert to improper fractions (as seen in <a href="../studyguides/introtonumericalfractions.html">Guide: Introduction to fractions</a> and then use the processes above.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example 8
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Calculate <span class="math inline">\(\displaystyle 1\frac{2}{3} + \frac{4}{5}\)</span>.</p>
+<p>Here, you should first convert the mixed number <span class="math inline">\(1\frac{2}{3}\)</span> into an improper fraction to get <span class="math display">\[1\frac{2}{3} = \frac{5}{3}\]</span> which turns into the sum <span class="math display">\[\frac{5}{3} + \frac{4}{5}\]</span> You can notice that they have different denominators, and so you need to find a common denominator. Since <span class="math inline">\(3\times 5 = 15\)</span>, and <span class="math inline">\(15\)</span> is not too big, this will do. (You can work this out as the lowest common multiple of <span class="math inline">\(3\)</span> and <span class="math inline">\(5\)</span> as well.) So</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\frac{5}{3} \overset{\times 5}{=} \frac{25}{15} \\[0.5em]
+&amp;\frac{4}{5} \overset{\times 3}{=} \frac{12}{15}
+\end{aligned}
+\]</span></p>
+<p>This means that</p>
+<p><span class="math display">\[
+\begin{aligned}
+1\frac{2}{3} + \frac{4}{5} = \frac{5}{3} + \frac{4}{5} = \frac{25}{15} + \frac{12}{15} = \frac{37}{15}
+\end{aligned}
+\]</span></p>
+<p>and if you want to, you can write this final answer as the mixed number <span class="math inline">\(2\dfrac{7}{15}\)</span>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="quick-check-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Quick check problems</h1>
+<div class="webex-check webex-box">
+<p>Work out each of the following. If you answer is a whole number, write that whole number. If your answer is a fraction, write your answer as <span class="math inline">\(a/b\)</span> where <span class="math inline">\(a/b\)</span> is the fraction in its simplest form.</p>
+<ol type="1">
+<li><span class="math inline">\(\quad \dfrac{1}{5} + \dfrac{2}{5} =\)</span> <input class="webex-solveme nospaces" size="3" data-answer="[&quot;3/5&quot;]"></li>
+</ol>
+<!-- -->
+<ol start="2" type="1">
+<li><span class="math inline">\(\quad\)</span> What is the lowest common multiple of <span class="math inline">\(6\)</span> and <span class="math inline">\(10\)</span>? <input class="webex-solveme nospaces" size="2" data-answer="[&quot;30&quot;]"></li>
+</ol>
+<!-- -->
+<ol start="3" type="1">
+<li><span class="math inline">\(\quad \dfrac{1}{2} + \dfrac{1}{4} =\)</span> <input class="webex-solveme nospaces" size="3" data-answer="[&quot;3/4&quot;]"></li>
+</ol>
+<!-- -->
+<ol start="4" type="1">
+<li><span class="math inline">\(\quad \dfrac{1}{3} - \dfrac{1}{2} =\)</span> <input class="webex-solveme nospaces" size="4" data-answer="[&quot;-1/6&quot;]"></li>
+</ol>
+<!-- -->
+<ol start="5" type="1">
+<li><span class="math inline">\(\quad \dfrac{1}{2} \cdot \dfrac{3}{4} =\)</span> <input class="webex-solveme nospaces" size="3" data-answer="[&quot;3/5&quot;]"></li>
+</ol>
+<!-- -->
+<ol start="6" type="1">
+<li><span class="math inline">\(\quad \dfrac{1}{2} \div \dfrac{1}{4} =\)</span> <input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"></li>
+</ol>
+</div>
+</section>
+<section id="further-reading" class="level1 unnumbered">
+<h1 class="unnumbered">Further reading</h1>
+<p><a href="../questions/qs-arithmeticonnumericalfractions.html">For more questions on the subject, please go to Questions: Arithmetic on numerical fractions.</a></p>
+<p><a href="../studyguides/introtoalgebraicfractions.html">To learn about fractions which include algebraic terms, please see Guide: Introduction to algebraic fractions.</a></p>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 12/25 by Donald Campbell as part of a University of St Andrews VIP project.</p>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+  let allCorrect = false;
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) 
+  {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
+  }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Checks";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Check Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if (this.dataset.tol > 0)
+  {
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Check Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* check each question to see whether it was answered correctly */
+  update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
+}
+
+</script>
+<!--------------------  Email Forms -----------------------------------
+        Compiled into each .html page by Quarto.
+        Website hosted and form handled by Netlify now
+        Mailing list provided by mailerlite
+        Input verified by reCaptcha2 
+        
+        Authors (recent to latest): 
+           Tristin Doherty (Trido)
+           Mohit Agarwal (Mohit-Agarwa1)
+--------------------------------------------------------------------->
+<script>
+  // Adds an extra layer of validation to aid user input,
+  // some of these are covered by basic html form validations as well, but netlify handles everything else
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[name='feedback']"); 
+    
+    form.addEventListener("submit", function(event) {
+        const nameInput = document.querySelector("input[name='name']")?.value.trim();
+        const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+        const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+
+        if (!nameInput)    { alert("Please enter a name."); return; }
+        if (!emailInput)   { alert("Please enter an email."); return; }
+        if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+        
+        event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+        const subjectInput = document.querySelector("input[name='subject']");
+                
+        // sanitise inputs
+        const sanitizedName = sanitizeInput(nameInput); 
+        const sanitizedEmail = sanitizeEmail(emailInput);
+        const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+        // validate email
+        if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+        subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+        form.submit();
+    });
+});
+
+// Removes leading and trailing whitespace for formatting, and replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+function sanitizeInput(input) {
+  input = input.trim();                                      
+  input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return input;
+}
+
+// remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+function sanitizeEmail(email) {
+  email = email.trim(); 
+  email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+  return email;
+}
+
+// This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+function validateEmail(email) {
+  const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+  return re.test(email);
+}
+
+</script>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here, <br>
+but please be specific with any issues you encounter so we can help to resolve them <br>
+(for example, what page it occured on, what you tried, and so on). </p>
+
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+  <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+  <input type="hidden" name="subject" value="Feedback from unknown">
+
+  <label for="name">Name: </label>
+  <br>
+  <input type="text" name="name" required="">
+  <br><br>
+  
+  <label for="email">E-mail: </label>
+  <br>
+  <input type="email" name="email" required="">
+  <br><br>
+  
+  <label for="feedback">Feedback: </label>
+  <br>
+  <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+  <br><br>
+
+  <!-- Google reCAPTCHA Widget -->
+  <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+  <br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.VERTICAL },
+      'google_translate_element'
+    );
+  }
+</script>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    const targetSidebar = document.getElementById('quarto-margin-sidebar');
+    if (!targetSidebar) return;
+
+    const translateWrapper = document.createElement('div');
+    translateWrapper.className = 'sidebar-section';
+    translateWrapper.style.marginTop = '2em';
+
+    const title = document.createElement('h5');
+    title.innerText = 'Translate';
+
+    const translatorDiv = document.createElement('div');
+    translatorDiv.id = 'google_translate_element';
+
+    translateWrapper.appendChild(title);
+    translateWrapper.appendChild(translatorDiv);
+    targetSidebar.appendChild(translateWrapper);
+
+    const googleScript = document.createElement('script');
+    googleScript.type = 'text/javascript';
+    googleScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(googleScript);
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>STARMAST © 2026 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

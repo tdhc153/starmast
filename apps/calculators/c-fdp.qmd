@@ -1,0 +1,500 @@
+---
+title: "Calculator: Fractions, decimals, percentages"
+author: Tom Coleman and Millie Harris
+format: html
+abstract-title: Summary
+abstract: A calculator to convert between fractions, decimals, and percentages.
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+```{=html}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fractions • Decimals • Percentages Converter</title>
+
+  <style>
+    :root {
+      --btn-color: #3f68b6;
+      --btn-hover: #345597;
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --error: #b63f3f;
+      --focus: #74a0ff;
+    }
+    body { margin:0; padding:2rem; background:var(--bg);
+      font-family:system-ui, Segoe UI, Roboto, Arial; color:var(--text); }
+    .container {
+      max-width:580px; margin:0 auto; background:var(--card);
+      padding:1.75rem; border-radius:12px;
+      box-shadow:0 10px 30px rgba(16,24,40,.08);
+    }
+    h1 { margin:0 0 1rem; font-size:1.4rem; }
+    p.helper { color:var(--muted); margin-bottom:1.25rem; }
+
+    label { font-weight:600; display:block; margin-bottom:.35rem; }
+    input[type="text"] {
+      width:100%; padding:.75rem .85rem; border-radius:8px;
+      border:1px solid #e5e7eb; font-size:1rem;
+      outline:none; transition:.15s;
+    }
+    input[type="text"]:focus {
+      border-color:var(--focus);
+      box-shadow:0 0 0 3px rgba(116,160,255,.25);
+    }
+    .error { color:var(--error); min-height:1.1rem; }
+
+    .section { margin-bottom:1.4rem; }
+
+    .buttons{
+      display:grid; gap:.7rem;
+      grid-template-columns:repeat(3,1fr);
+    }
+    button {
+      padding:.75rem .5rem; border:none; border-radius:8px;
+      background:var(--btn-color); color:white;
+      font-weight:600; cursor:pointer;
+      transition:.15s;
+    }
+    button:hover{ background:var(--btn-hover); }
+    button:active{ transform:translateY(1px); }
+
+    .clearBtn{
+      background:#94a3b8;
+      grid-column: span 3;
+    }
+
+    .output{
+      margin-top:1.25rem; padding:1rem;
+      background:#eef3ff; border:1px solid #d9e2ff;
+      border-radius:8px; min-height:3rem;
+      line-height:1.5;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Fractions • Decimals • Percentages Converter</h1>
+    <p class="helper">
+      Enter a value in one form and convert to the other two.<br>
+      Supports mixed numbers (for example: 1 3/4) and recurring decimals 
+      using parentheses (for example: 0.(3), 1.2(45), 33.(3)).
+    </p>
+
+    <!-- FRACTION -->
+    <div class="section">
+      <label for="fraction">Fraction (for example: 3/4 or 2 1/5)</label>
+      <input id="fraction" type="text" placeholder="for example: 1 3/4">
+      <div id="errFraction" class="error"></div>
+    </div>
+
+    <!-- DECIMAL -->
+    <div class="section">
+      <label for="decimal">Decimal (for example: 0.75 or 33.(3))</label>
+      <input id="decimal" type="text" placeholder="for example: 0.(3)">
+      <div id="errDecimal" class="error"></div>
+    </div>
+
+    <!-- PERCENT -->
+    <div class="section">
+      <label for="percent">Percentage (for example: 75 or 12.(3))</label>
+      <input id="percent" type="text" placeholder="for example: 62.5 or 33.(3)">
+      <div id="errPercent" class="error"></div>
+    </div>
+
+    <div class="buttons">
+      <button id="btnFrac">Convert Fraction</button>
+      <button id="btnDec">Convert Decimal</button>
+      <button id="btnPerc">Convert Percent</button>
+      <button class="clearBtn" id="btnClear">Clear All</button>
+    </div>
+
+    <div class="output" id="outputBox"></div>
+
+  </main>
+
+<script>
+/* ---------- DOM refs ---------- */
+const fracIn = document.getElementById("fraction");
+const decIn  = document.getElementById("decimal");
+const percIn = document.getElementById("percent");
+
+const errF = document.getElementById("errFraction");
+const errD = document.getElementById("errDecimal");
+const errP = document.getElementById("errPercent");
+
+const out = document.getElementById("outputBox");
+
+function clearErrors(){ errF.textContent = errD.textContent = errP.textContent = ""; }
+function clearOut(){ out.textContent = ""; }
+
+/* ---------- Utilities ---------- */
+function gcd(a,b){ a = Math.abs(a); b = Math.abs(b); while(b){ [a,b] = [b, a%b]; } return a || 1; }
+
+function reduceFraction(n,d){
+  if (d === 0) return [NaN, NaN];
+  const sign = d < 0 ? -1 : 1;
+  n = n * sign; d = Math.abs(d);
+  const g = gcd(n,d);
+  return [n/g, d/g];
+}
+
+function toMixed(n, d){
+  const sign = n < 0 ? -1 : 1;
+  n = Math.abs(n);
+  const whole = Math.trunc(n / d) * sign;
+  const rem = n % d;
+  return { whole, num: rem, den: d };
+}
+
+/* ---------- Fraction & mixed number parser ---------- */
+function parseFraction(str){
+  str = str.trim();
+
+  // Mixed number: "2 1/3" or "-2 1/3"
+  if (/^-?\d+\s+\d+\/\d+$/.test(str)){
+    let [whole, frac] = str.split(/\s+/);
+    let [n, d] = frac.split("/").map(Number);
+    whole = Number(whole);
+    n = Math.abs(n);
+    let improper = whole < 0 ? whole*d - n : whole*d + n;
+    return [improper, d];
+  }
+
+  // Simple fraction "3/4" or "-5/6"
+  if (/^-?\d+\/\d+$/.test(str)){
+    let [n,d] = str.split("/").map(Number);
+    return [n,d];
+  }
+
+  return null;
+}
+
+/* ---------- Recurring decimal → exact fraction ----------
+   Accepts: "A.B(C)" with optional sign, e.g., "0.(3)", "1.2(45)", "33.(3)", "-0.(6)"
+--------------------------------------------------------- */
+function recurringToFraction(input){
+  let str = input.trim();
+
+  // Extract sign explicitly
+  let sign = 1;
+  if (str.startsWith("-")) { sign = -1; str = str.slice(1); }
+  else if (str.startsWith("+")) { str = str.slice(1); }
+
+  const m = str.match(/^(\d*)\.?(\d*)\((\d+)\)$/);
+  if (!m) return null;
+
+  const A = m[1] === "" ? 0 : Number(m[1]); // integer part (unsigned)
+  const B = m[2] || "";                     // non-repeating part
+  const C = m[3];                            // repeating part
+
+  const bLen = B.length;
+  const cLen = C.length;
+
+  const bNum  = B === "" ? 0 : Number(B);
+  const bcNum = Number(B + C);
+
+  // fractional numerator and denominator
+  const numFrac = bcNum - bNum;
+  const denFrac = (10**(bLen + cLen)) - (10**bLen);
+
+  // total as improper fraction
+  let num = A * denFrac + numFrac;
+  let den = denFrac;
+
+  num = sign * num;
+
+  return reduceFraction(num, den);
+}
+
+/* ---------- Plain decimal string → exact fraction (no parentheses) ----------
+   Accepts: "+12.34", "-.5", "0.125", "10", "0."
+----------------------------------------------------------------------------- */
+function plainDecimalToFraction(input){
+  let s = input.trim();
+  if (!s) return null;
+
+  // Extract sign
+  let sign = 1;
+  if (s[0] === "-") { sign = -1; s = s.slice(1); }
+  else if (s[0] === "+") { s = s.slice(1); }
+
+  // Validate (no exponent support)
+  if (!/^(\d+(\.\d*)?|\.\d+)$/.test(s)) return null;
+
+  // Split parts
+  let [intPart, fracPart] = s.split(".");
+  if (typeof fracPart === "undefined") fracPart = "";
+  if (intPart === "") intPart = "0";
+
+  // Compose integer without decimal point
+  const wholeDigits = intPart + fracPart;
+  const numeratorAbs = Number(wholeDigits === "" ? "0" : wholeDigits);
+  const denom = 10 ** (fracPart.length);
+
+  const num = sign * numeratorAbs;
+  return reduceFraction(num, denom === 0 ? 1 : denom);
+}
+
+/* ---------- Fraction → decimal parts (detect recurring) ----------
+   Returns: { label, text, note, decNumeric }
+   - If repeating with period ≤ 9: label="Decimal (recurring):", text="A.B(C)"
+   - If repeating with period > 9: label="Decimal:", text="A.BBB…", note="(Repeating decimal too long to display)"
+   - If terminating: label="Decimal:", text="A.B"
+------------------------------------------------------------------- */
+function fractionToDecimalDisplay(numer, denom, options = {}) {
+  const MAX_NORMAL_DIGITS = options.maxDigits || 30; // for the plain decimal text
+  const MAX_REPEAT_ALLOWED = options.maxRepeat || 9;
+
+  if (denom === 0) {
+    return { label: "Decimal:", text: "undefined", note: "", decNumeric: NaN };
+  }
+
+  // Sign handling
+  const sign = (numer < 0) ^ (denom < 0) ? "-" : "";
+  let N = Math.abs(numer);
+  let D = Math.abs(denom);
+
+  const intPart = Math.floor(N / D);
+  let remainder = N % D;
+
+  // If no fractional part
+  if (remainder === 0) {
+    return { label: "Decimal:", text: sign + intPart, note: "", decNumeric: numer/denom };
+  }
+
+  // Long division with remainder map to detect cycles
+  const digits = [];
+  const remainderIndex = new Map();
+  let repeatStart = -1;
+
+  while (remainder !== 0 && digits.length <= 5000) {
+    if (remainderIndex.has(remainder)) {
+      repeatStart = remainderIndex.get(remainder);
+      break;
+    }
+    remainderIndex.set(remainder, digits.length);
+    remainder *= 10;
+    const digit = Math.floor(remainder / D);
+    digits.push(digit);
+    remainder = remainder % D;
+  }
+
+  if (repeatStart >= 0) {
+    const nonRepeat = digits.slice(0, repeatStart).join("");
+    const repeat = digits.slice(repeatStart).join("");
+    const period = repeat.length;
+
+    if (period <= MAX_REPEAT_ALLOWED) {
+      // Show recurring with parentheses
+      const dot = (nonRepeat || repeat) ? "." : ""; // safety
+      return {
+        label: "Decimal (recurring):",
+        text: `${sign}${intPart}${dot}${nonRepeat}(${repeat})`,
+        note: "",
+        decNumeric: numer/denom
+      };
+    } else {
+      // Too long: show normal decimal, capped, with note
+      const flat = digits.join("");
+      const shown = flat.slice(0, Math.max(repeatStart + Math.min(period, 6),  // show some of the cycle
+                                            MAX_NORMAL_DIGITS));
+      const dot = shown ? "." : "";
+      return {
+        label: "Decimal:",
+        text: `${sign}${intPart}${dot}${shown}${shown.length < flat.length ? "…" : ""}`,
+        note: "(Repeating decimal too long to display)",
+        decNumeric: numer/denom
+      };
+    }
+  } else {
+    // Terminating decimal
+    const fracDigits = digits.join("");
+    const dot = fracDigits ? "." : "";
+    return {
+      label: "Decimal:",
+      text: `${sign}${intPart}${dot}${fracDigits}`,
+      note: "",
+      decNumeric: numer/denom
+    };
+  }
+}
+
+/* ================
+   FRACTION → DEC / %  (Option B behavior)
+   ================ */
+document.getElementById("btnFrac").onclick=()=>{
+  clearErrors(); clearOut();
+
+  const f = parseFraction(fracIn.value);
+  if(!f){ errF.textContent="Enter a valid fraction or mixed number."; return; }
+
+  let [n,d]=f;
+  if(d===0){ errF.textContent="Denominator cannot be 0."; return; }
+
+  const [sn, sd] = reduceFraction(n, d);
+
+  // Decimal display with recurring support
+  const decDisp = fractionToDecimalDisplay(sn, sd, { maxDigits: 30, maxRepeat: 9 });
+
+  // Percent numeric
+  const per = (decDisp.decNumeric * 100);
+
+  // Mixed-form display for simplified fraction
+  const mixed = toMixed(sn, sd);
+  const mixedDisplay = mixed.num === 0
+    ? `${mixed.whole}`
+    : (mixed.whole !== 0 ? `${mixed.whole} ${mixed.num}/${mixed.den}` : `${mixed.num}/${mixed.den}`);
+
+  out.innerHTML = `
+    <strong>Fraction (as entered):</strong> ${n}/${d}<br>
+    <strong>Simplified fraction:</strong> ${sn}/${sd} (${mixedDisplay})<br>
+    <strong>${decDisp.label}</strong> ${decDisp.text}<br>
+    ${decDisp.note ? `<em>${decDisp.note}</em><br>` : ""}
+    <strong>Percent:</strong> ${per}%
+  `;
+};
+
+/* ===================
+   DECIMAL → FRAC / %
+   =================== */
+document.getElementById("btnDec").onclick=()=>{
+  clearErrors(); clearOut();
+  const raw = decIn.value.trim();
+  if (!raw){ errD.textContent="Enter a decimal (supports recurring with parentheses)."; return; }
+
+  // First try recurring decimal form exactly
+  let frac = recurringToFraction(raw);
+  let label = "Decimal:";
+
+  if (!frac){
+    // Then try plain decimal string
+    frac = plainDecimalToFraction(raw);
+    if(!frac){ errD.textContent="Enter a valid decimal (for example: 0.75, .5, 12, 0.(3), 1.2(45))."; return; }
+  } else {
+    label = "Decimal (recurring):";
+  }
+
+  let [numer, denom] = frac;
+
+  const mixed = toMixed(numer, denom);
+  const mixedDisplay = mixed.num === 0
+    ? `${mixed.whole}`
+    : (mixed.whole !== 0 ? `${mixed.whole} ${mixed.num}/${mixed.den}` : `${mixed.num}/${mixed.den}`);
+
+  // Percent (simple numeric)
+  const decNumeric = numer/denom;
+  const per = decNumeric*100;
+
+  out.innerHTML = `
+    <strong>${label}</strong> ${raw}<br>
+    <strong>Simplified fraction:</strong> ${numer}/${denom} (${mixedDisplay})<br>
+    <strong>Percent:</strong> ${per}%
+  `;
+};
+
+/* ===================
+   PERCENT → DEC / FRAC
+   (now supports recurring in the percent box)
+   =================== */
+document.getElementById("btnPerc").onclick=()=>{
+  clearErrors(); clearOut();
+  let raw = percIn.value.trim();
+  if (!raw){ errP.textContent="Enter a percentage (for example: 75, 62.5, or 33.(3))."; return; }
+
+  // Accept an optional trailing % sign and remove internal spaces
+  raw = raw.replace(/\s+/g, "");
+  let hadPercentSign = false;
+  if (/%$/.test(raw)) { hadPercentSign = true; raw = raw.slice(0, -1); }
+
+  // Try recurring percent first, then plain decimal
+  let pFrac = recurringToFraction(raw); // fraction for the percent *value* p
+  let percentLabel = hadPercentSign ? "Percent:" : "Percent:"; // keep label text stable
+  if (pFrac) {
+    percentLabel = "Percent (recurring):";
+  } else {
+    pFrac = plainDecimalToFraction(raw);
+  }
+  if (!pFrac) { errP.textContent="Enter a valid percentage (for example: 50, 12.5, 33.(3))."; return; }
+
+  // Convert p% to proportion: p/100 exactly
+  let [pNum, pDen] = pFrac;
+  let numer = pNum;
+  let denom = pDen * 100;
+  [numer, denom] = reduceFraction(numer, denom);
+
+  // Decimal display with recurring support (Option B + fallback Option 2)
+  const decDisp = fractionToDecimalDisplay(numer, denom, { maxDigits: 30, maxRepeat: 9 });
+
+  const mixed = toMixed(numer, denom);
+  const mixedDisplay = mixed.num === 0
+    ? `${mixed.whole}`
+    : (mixed.whole !== 0 ? `${mixed.whole} ${mixed.num}/${mixed.den}` : `${mixed.num}/${mixed.den}`);
+
+  // Use the cleaned raw number in the display (re-append %)
+  out.innerHTML = `
+    <strong>${percentLabel}</strong> ${raw}%<br>
+    <strong>${decDisp.label}</strong> ${decDisp.text}<br>
+    ${decDisp.note ? `<em>${decDisp.note}</em><br>` : ""}
+    <strong>Simplified fraction:</strong> ${numer}/${denom} (${mixedDisplay})
+  `;
+};
+
+/* ============
+   CLEAR BUTTON
+   ============ */
+document.getElementById("btnClear").onclick=()=>{
+  fracIn.value = decIn.value = percIn.value = "";
+  clearErrors(); clearOut();
+  fracIn.focus();
+};
+
+/* ===========================
+   KEYBOARD SUPPORT
+   =========================== */
+const fields = [fracIn, decIn, percIn];
+fields.forEach((el, index)=>{
+  el.addEventListener("keydown",(e)=>{
+    if(e.key==="Enter"){
+      if(el===fracIn) document.getElementById("btnFrac").click();
+      if(el===decIn)  document.getElementById("btnDec").click();
+      if(el===percIn) document.getElementById("btnPerc").click();
+    }
+    if(e.key==="Escape"){
+      document.getElementById("btnClear").click();
+    }
+    if(e.key==="ArrowDown"){
+      fields[(index+1)%3].focus();
+    }
+    if(e.key==="ArrowUp"){
+      fields[(index+2)%3].focus();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
+
+```
+
+
+## Version history {-}
+
+v1.0: initial version created 03/26 by tdhc and Millie Harris as part of a University of St Andrews VIP project. 
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

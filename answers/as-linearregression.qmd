@@ -3,7 +3,6 @@ title: "Answers: Introduction to linear regression"
 author: "Flora Green"
 abstract-title: Summary
 abstract: Answers to questions relating to the guide on introduction to linear regression.
-draft: true
 ---
 
 *These are the answers to [Questions: Introduction to linear regression](../questions/qs-linearregression.qmd).*
@@ -12,24 +11,61 @@ draft: true
 
 ## Q1 {-}
 
-**1.1** The y-intercept of the regression line $\mathbb{E}(Y) = \alpha + \beta x$
+1.1. $\alpha$ is the $y$-intercept of the regression line $\mathbb{E}(Y) = \alpha + \beta x$.
 
-**1.2** The gradient of the regression line $\mathbb{E}(Y) = \alpha + \beta x$
+1.2. $\beta$ is the gradient of the regression line $\mathbb{E}(Y) = \alpha + \beta x$.
 
 
 ## Q2 {-}
 
-**2.1** The difference between the observed value $y_i$ and the estimated value $\mathbb{E}(Y_{i})$. 
+2.1. A residual is the difference between the observed value $y_i$ and the estimated value $\mathbb{E}(Y_{i})$. 
 
-**2.2** It minimizes the squared sum of the residuals to find the optimal regression line for a sample of data.
+2.2. It minimizes the squared sum of the residuals to find the optimal regression line for a sample of data.
 
 ## Q3 {-}
 
-**3.1.**  $\hat{\alpha} = 146.6853$
+3.1.  Here, $\hat{\alpha} = 146.6853$.
 
-**3.2.**  $\hat{\beta} = 1.7044$
+3.2.  Here, $\hat{\beta} = 1.7044$.
 
-**3.3.**  $\mathbb{E}(Y) = \alpha + \beta x = \hat{\alpha} + \hat{\beta} x = 146.6853 + 1.7044 x$
+3.3.  $\mathbb{E}(Y) = \alpha + \beta x = \hat{\alpha} + \hat{\beta} x = 146.6853 + 1.7044 x$
+
+3.4. The $R^2$ coefficient of determination is $0.2691$, which suggests that the response variable is not well modelled by a linear model of the explanatory variable.
+
+Please note that for this question, the following `R` code was used. It is recommended that you use [Calculator: Simple linear regression](../apps/calculators/c-simplelinearregression.qmd) or statistical software like this to do these calculations, as these can be very tedious to do by hand. 
+
+```{.r}
+confectionery = data.frame(customers=c(43,54,65,42,68,49, 
+63,57,71,47,75,67),sweets=c(188,197,215,217,233,244,254,256,
+274,286,291,300))
+model=lm(sweets~customers,data=confectionery)
+summary(model)
+
+plot(confectionery$customers, confectionery$sweets,
+     pch = 19, col = "#3f68b6",
+     xlab = "Number of customers",
+     ylab = "Sweets sold")
+
+abline(model, col = "#db4315", lwd = 2)
+```
+
+**Code output:**
+
+```{r}
+#| echo: false
+
+confectionery = data.frame(customers=c(43,54,65,42,68,49, 63,57,71,47,75,67),sweets=c(188,197,215,217,233,244,254,256,274,286,291,300))
+model=lm(sweets~customers,data=confectionery)
+summary(model)
+
+plot(confectionery$customers, confectionery$sweets,
+     pch = 19, col = "#3f68b6",
+     xlab = "Number of customers",
+     ylab = "Sweets sold")
+
+abline(model, col = "#db4315", lwd = 2)
+
+```
 
 <!-- ## Q2 {-} -->
 

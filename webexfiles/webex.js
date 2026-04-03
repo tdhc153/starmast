@@ -78,10 +78,10 @@ check_func = function() {
   var cl = this.parentElement.classList;
   if (cl.contains('unchecked')) {
     cl.remove("unchecked");
-    this.innerHTML = "Hide Answers";
+    this.innerHTML = "Hide Checks";
   } else {
     cl.add("unchecked");
-    this.innerHTML = "Show Answers";
+    this.innerHTML = "Check Answers";
   }
 }
 
@@ -175,7 +175,7 @@ window.onload = function() {
     check_sections[i].classList.add("unchecked");
 
     let btn = document.createElement("button");
-    btn.innerHTML = "Show Answers";
+    btn.innerHTML = "Check Answers";
     btn.classList.add("webex-check-button");
     btn.onclick = check_func;
     check_sections[i].appendChild(btn);

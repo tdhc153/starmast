@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jakub Brzozowski, Jacob Carey, Tom Coleman">
+
+<title>Rationale for accessibility and inclusion – STARMAST</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-aa1d8570cb8b85794c5c5a916513ecb9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-5f5484d7ec656626cab3b40347c418b2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-aa1d8570cb8b85794c5c5a916513ecb9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, alongside enabling our non-identifiable QuickCheck problem tracking. These are the sole purposes of enabling cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<script src="https://esm.sh/shinylive-r"></script>
+
+
+<link rel="stylesheet" href="webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./logo-big.png" alt="" class="navbar-logo light-content">
+    <img src="./logo-big.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./fullindex.html"> 
+<span class="menu-text">Full index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./faqs.html"> 
+<span class="menu-text">FAQs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="5f57153153e0bbf7f7337c1d33b76048" class="alert alert-danger hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest content:</strong> Welcome! We are celebrating over 1000 active users since launch with 21 new pages of resources! (03/04/26)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#aims" id="toc-aims" class="nav-link" data-scroll-target="#aims">Aims</a></li>
+  </ul></li>
+  <li><a href="#content" id="toc-content" class="nav-link" data-scroll-target="#content">Content</a>
+  <ul class="collapse">
+  <li><a href="#global-content-style" id="toc-global-content-style" class="nav-link" data-scroll-target="#global-content-style">Global content style</a>
+  <ul class="collapse">
+  <li><a href="#global-formatting" id="toc-global-formatting" class="nav-link" data-scroll-target="#global-formatting">Global formatting</a></li>
+  <li><a href="#typical-structure-of-a-guide" id="toc-typical-structure-of-a-guide" class="nav-link" data-scroll-target="#typical-structure-of-a-guide">Typical structure of a guide</a></li>
+  <li><a href="#context-free" id="toc-context-free" class="nav-link" data-scroll-target="#context-free">Context free</a></li>
+  </ul></li>
+  <li><a href="#wider-structure-of-content" id="toc-wider-structure-of-content" class="nav-link" data-scroll-target="#wider-structure-of-content">Wider structure of content</a></li>
+  <li><a href="#language" id="toc-language" class="nav-link" data-scroll-target="#language">Language</a>
+  <ul class="collapse">
+  <li><a href="#its-you-not-we." id="toc-its-you-not-we." class="nav-link" data-scroll-target="#its-you-not-we.">It’s you, not we.</a></li>
+  <li><a href="#nothing-is-easy." id="toc-nothing-is-easy." class="nav-link" data-scroll-target="#nothing-is-easy.">Nothing is easy.</a></li>
+  <li><a href="#minimise-jargon." id="toc-minimise-jargon." class="nav-link" data-scroll-target="#minimise-jargon.">Minimise jargon.</a></li>
+  <li><a href="#keep-it-simple." id="toc-keep-it-simple." class="nav-link" data-scroll-target="#keep-it-simple.">Keep it simple.</a></li>
+  <li><a href="#its-not-magic." id="toc-its-not-magic." class="nav-link" data-scroll-target="#its-not-magic.">It’s not magic.</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#presentation" id="toc-presentation" class="nav-link" data-scroll-target="#presentation">Presentation</a>
+  <ul class="collapse">
+  <li><a href="#multiple-outputs" id="toc-multiple-outputs" class="nav-link" data-scroll-target="#multiple-outputs">Multiple outputs</a>
+  <ul class="collapse">
+  <li><a href="#html-template" id="toc-html-template" class="nav-link" data-scroll-target="#html-template">html template</a></li>
+  <li><a href="#printable-pdf-template" id="toc-printable-pdf-template" class="nav-link" data-scroll-target="#printable-pdf-template">printable pdf template</a></li>
+  <li><a href="#editable-ms-word-template" id="toc-editable-ms-word-template" class="nav-link" data-scroll-target="#editable-ms-word-template">editable MS Word template</a></li>
+  <li><a href="#mp3-narration" id="toc-mp3-narration" class="nav-link" data-scroll-target="#mp3-narration">mp3 narration</a></li>
+  <li><a href="#video-examples" id="toc-video-examples" class="nav-link" data-scroll-target="#video-examples">video examples</a></li>
+  </ul></li>
+  <li><a href="#colours-and-branding" id="toc-colours-and-branding" class="nav-link" data-scroll-target="#colours-and-branding">Colours and branding</a></li>
+  <li><a href="#interactive-figures" id="toc-interactive-figures" class="nav-link" data-scroll-target="#interactive-figures">Interactive figures</a></li>
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Rationale for accessibility and inclusion</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jakub Brzozowski, Jacob Carey, Tom Coleman </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    Our main principles when it comes to writing accessible and inclusive mathematics resources.
+  </div>
+</div>
+
+
+</header>
+
+
+<section id="introduction" class="level1 unnumbered">
+<h1 class="unnumbered">Introduction</h1>
+<section id="aims" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="aims">Aims</h2>
+<p>The aim of this website is to produce accessible and inclusive online resources for any and all interested students in mathematics and statistics. Here are</p>
+<ul>
+<li><p><strong>accessible</strong>: ensuring that the way that material is presented is accessible to any user. These include things like ability to screen-read, ability to zoom, correct colour contrasts, etc.</p></li>
+<li><p><strong>inclusive</strong>: ensuring that the material itself is both understandable by all who read it, and representative of diverse backgrounds and cultures.</p></li>
+</ul>
+</section>
+</section>
+<section id="content" class="level1">
+<h1>Content</h1>
+<p>Our aim is to make our guides are readable as possible to suit all learning styles and backgrounds. To that end, we are aiming to provide the following in all our study guides:</p>
+<ul>
+<li><p><strong>chunked content</strong>: information organised into digestible units with summaries and worked examples</p></li>
+<li><p><strong>multiple representations</strong>: use of diagrams, symbolic notation, text explanations, audio, and interactive elements.</p></li>
+<li><p><strong>consistency and predictability</strong>: stable layouts, repeated patterns, and uniform instructions.</p></li>
+<li><p><strong>guidance and prompts</strong>: step-by-step instructions, examples before tasks, scaffolded explanations.</p></li>
+<li><p><strong>clarity of language, purpose and formatting</strong>: minimized jargon, active voice, nothing is easy, as well as ease of readability in all of our materials.</p></li>
+</ul>
+<p>We aim to achieve this by our choices in our <strong>global content style</strong>, which is detailed below.</p>
+<section id="global-content-style" class="level2">
+<h2 class="anchored" data-anchor-id="global-content-style">Global content style</h2>
+<section id="global-formatting" class="level3">
+<h3 class="anchored" data-anchor-id="global-formatting">Global formatting</h3>
+<p>The key points across all of our text formatting are:</p>
+<ul>
+<li><p>sans serif font used in all materials, as letters appear less ‘crowded’ and easier to read.</p></li>
+<li><p>emphasis is provided by bold text, as italic text can be difficult to read for dyslexic learners; no underlining</p></li>
+<li><p>all internal hyperlinks look the same (Content type: Title of resource) so these are identifiable as hyperlinks regardless of colour</p></li>
+</ul>
+</section>
+<section id="typical-structure-of-a-guide" class="level3">
+<h3 class="anchored" data-anchor-id="typical-structure-of-a-guide">Typical structure of a guide</h3>
+<ul>
+<li><p>summary at start explaining what’s in the guide and what the point of the subject is.</p></li>
+<li><p>any <strong>recommended reading</strong> at the start of every guide, detailing the STARMAST resources needed to understand the content of the guide at hand.</p></li>
+<li><p>clear headings and structure throughout every document.</p></li>
+<li><p>content contained in <strong>action boxes</strong> containing key points, each in a specific style, with their own icon and colour</p>
+<ul>
+<li><strong>important</strong>: things to remember</li>
+<li><strong>warning</strong>: things not to do</li>
+<li><strong>note</strong>: key definition or result</li>
+<li><strong>note (simple)</strong>: worked example</li>
+<li><strong>tip</strong>: something to consider in the future</li>
+</ul></li>
+<li><p><strong>quick check problems</strong>, designed to provide instant true/false feedback to students’ understanding on the key points of the guide.</p></li>
+</ul>
+</section>
+<section id="context-free" class="level3">
+<h3 class="anchored" data-anchor-id="context-free">Context free</h3>
+<p>It is tempting for our authors to relate everything written in the website to some form of personal education (‘saw this in A-level/Higher’, ‘this is used in physics’). However, this is not very useful to those who have no knowledge of what these things may contain. So we <strong>avoid educational context</strong> where possible, linking only internally within STARMAST.</p>
+<p>In general, we <strong>aim to avoid subject-specific examples</strong>. It’s important to remember that the reader could be of any background; so including (say) a physics problem may put readers off who have absolutely no knowledge of (or interest in) physics.</p>
+<p>There are some exceptions; particularly when motivating the subject at hand, where we try to give at least <strong>three</strong> different applications of the material in the guide.</p>
+</section>
+</section>
+<section id="wider-structure-of-content" class="level2">
+<h2 class="anchored" data-anchor-id="wider-structure-of-content">Wider structure of content</h2>
+<p>Each of our guides is designed to be as self-contained as possible; however we understand that prior knowledge in mathematics and statistics is unavoidable in certain circumstances. For example, solving a quadratic equation is dependent is knowing what a quadratic equation is; this in turn is dependent is knowing what an equation is.</p>
+<p>To minimize the amount of searching that a learner would need to do, we include a <strong>recommended reading</strong> section at the start of every guide, detailing the STARMAST resources needed to understand the content of the guide at hand.</p>
+<p>At the other end, a <strong>further reading</strong> section included at the bottom of every guide signposts learners to further topics in the subject.</p>
+<p>Each study guide is sorted into its own <strong>category</strong>, which can be explored through the <a href="./studyguidelist.html">study guide index (clickable link)</a>.</p>
+<p>Eventually, with enough content behind us, we’ll be able to provide <strong>structured pathways for learning</strong>, leading to competency in key skills in any area of mathematics and statistics.</p>
+</section>
+<section id="language" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="language">Language</h2>
+<p>When writing for learners using these materials, it’s important to know that these learners could be coming from any level of mathematical knowledge or any level of literal knowledge. In particular, a reader can have <strong>any</strong> level of confidence in their ability to do mathematics or statistics.</p>
+<p>Our aim is to write using plain English to make our resources as reader-friendly as possible. Writing in this style can help users with: specific learning difficulties (such as dyslexia or attention deficit disorder), low literacy skills, international readers where English is not their first language, or even younger people looking for more mathematical support. In addition, the way that materials are presented can directly affect the mathematical confidence of the reader; it’s really important that this affect is minimized.</p>
+<p>There are a few main principles that are followed in the creation of resources for this website.</p>
+<section id="its-you-not-we." class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="its-you-not-we.">It’s you, not we.</h3>
+<p>Traditionally, mathematical writing uses the first-person plural ‘we’, intending to lead the reader on a journey through the material. This is all well and good if you assume that the reader is confident with the work; but what if they are <strong>not</strong> confident in their ability?</p>
+<p>If introductory material is written in an exclusive manner, then a student with absolutely no confidence will struggle. Every student needs to feel included and inspired when reading about mathematics or statistics; so write inclusively and in the active voice.</p>
+<p>The problem is that ‘we’ could be inclusive (including the reader) or exclusive (not including the reader). If this is married to concepts which are quite difficult, it can be quick to feel excluded; not part of the journey. In addition, using ‘we’ can be passive – if you want your reader to do mathematics, saying ‘we see this’ and ‘we deduce that’ may create a false sense of security.</p>
+<p>Therefore, <strong>the writing for this project will use the second-person singular ‘you’, with an emphasis on the active voice</strong>. Saying ‘you can do this’ rather than ‘we can see that’ helps to instill confidence in the reader, and shifts the focus to the reader doing mathematics.</p>
+<!-- | Old phrase                          | New phrase                       | -->
+<!-- |:------------------------------------|:------------------------------------| -->
+<!-- | 'We see that...'                    | 'You can see that...'            | -->
+<!-- | 'We deduce that...'                 | 'You can work this through to get...' | -->
+<!-- | 'We will come back to this later'   | 'This will be used later at (reference)...' -->
+</section>
+<section id="nothing-is-easy." class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="nothing-is-easy.">Nothing is easy.</h3>
+<p>Your experiences with mathematics are unique, and will not be generally applicable to all students reading your work. If you think that something is ‘easy’ or ‘obvious’, then good for you; but even mentioning this in your writing could crush the confidence of any student reading your work.</p>
+<p>So <strong>nothing is easy</strong>. Not even things you learned in high school. Everyone has to start somewhere, and that somewhere might be here. A consequence of this is that <em>nothing should be hard</em> either; present your material objectively.</p>
+<p>Below is a table of banned adjectives, which does not claim to be complete. You can change most of these into adverbs by adding ‘ly’ to the end; these adverbs are banned too.</p>
+<table class="caption-top table">
+<caption>A list of banned words.</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Don’t use these. Ever.</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Easy</td>
+<td style="text-align: left;">Obvious</td>
+<td style="text-align: left;">Trivial</td>
+<td style="text-align: left;">Straightforward</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Simple</td>
+<td style="text-align: left;">Effortless</td>
+<td style="text-align: left;">Painless</td>
+<td style="text-align: left;">Not hard</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Foolproof</td>
+<td style="text-align: left;">Elementary</td>
+<td style="text-align: left;">Basic</td>
+<td style="text-align: left;">Clear</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Run-of-the-mill</td>
+<td style="text-align: left;">Unchallenging</td>
+<td style="text-align: left;">No trouble</td>
+<td style="text-align: left;">Just</td>
+</tr>
+</tbody>
+</table>
+<p>Please feel free to let tdhc know if you want to make any addition to the list.</p>
+</section>
+<section id="minimise-jargon." class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="minimise-jargon.">Minimise jargon.</h3>
+<p>If a difficult concept is explained behind jargon or symbols that the student has to look up while trying to understand, then that concept becomes far harder to master. Learning mathematics is hard enough without students trying to translate what is going on.</p>
+<p>However, at some point, students will need to be introduced to mathematical terminology. It is a language after all. It is too much to expect to eliminate mathematical or statistical terms entirely, so we <strong>minimize jargon</strong> where we can, and provide references to terms if needed. This includes symbols including the therefore symbol, quantifier symbols, the implied sign, etc; these are often substituted in place for explanation, and learning resources without explanation aren’t good learning resources.</p>
+<!-- One of the main aims of this project is going to be a glossary of mathematical terms, so a link to this could be included in every study guide. -->
+</section>
+<section id="keep-it-simple." class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="keep-it-simple.">Keep it simple.</h3>
+<p>Which is easier to read or understand: ‘so’, or ‘whenceforth’? How about: ‘deduction’ or ‘working’?</p>
+<p>Again, there may be significant linguistic barriers to understanding; barriers which should not be in place when trying to learn mathematics. Therefore, <strong>writing is as simple as practically possible.</strong> This includes</p>
+<ul>
+<li><p><strong>avoiding Latin/Greek terms</strong>; confusion between ‘e.g’ and ‘i.e.’ is rife.</p></li>
+<li><p><strong>idioms/proverbs</strong>; these are particularly problematic for non-native users of English and some neurodivergent students.</p></li>
+</ul>
+<p>Exceptions of course should be made for mathematical terms, which should be clearly defined.</p>
+</section>
+<section id="its-not-magic." class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="its-not-magic.">It’s not magic.</h3>
+<p>The idea of a stage magician conjures up illusory elements; of sleight-of-hand, of work behind the screen, of misdirection and mystery. This is the opposite of our stated mission to make mathematics and statistics accessible for everybody and as inclusive as possible.</p>
+<p>Pervasive in mathematics and statistics is the idea of quick ‘tricks’ to help with mathematics; things like the difference of two squares, or creative addition of 0/multiplication by 1. The trouble is that these steps can be hard to see or justify to a mathematician who is low on confidence.</p>
+<p>Therefore, there’s <strong>no such thing as a trick</strong> on this website. ‘Technique’ or ‘tool’ are far better words for our purposes. Writing out the working in full helps to properly convey the material.</p>
+</section>
+</section>
+</section>
+<section id="presentation" class="level1">
+<h1>Presentation</h1>
+<p>The website is written in the Quarto markup language, which was specifically chosen to satisfy web accessibility requirements and cater to multiple outputs, using only a single set of source code.</p>
+<section id="multiple-outputs" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-outputs">Multiple outputs</h2>
+<p>The Quarto rendering process uses Pandoc together with some custom templates in pdf and word to output all materials to html, pdf, and word simultaneously. Here are some of the key features of our multiple outputs</p>
+<section id="html-template" class="level3">
+<h3 class="anchored" data-anchor-id="html-template">html template</h3>
+<p>This template uses custom scss files (starmast-base, starmast-typography, can be found in the GitHub repository) on top of the standard Quarto html output to make the site look as clean as possible. This includes:</p>
+<ul>
+<li>sans-serif font used throughout (Arial)</li>
+<li>off-white background picked for readability for all audiences</li>
+<li>multiple line spacing</li>
+<li>in-built dark mode for all pages</li>
+<li>in-built Google Translate widget to output our content to 170+ languages</li>
+</ul>
+</section>
+<section id="printable-pdf-template" class="level3">
+<h3 class="anchored" data-anchor-id="printable-pdf-template">printable pdf template</h3>
+<p>This customized LaTeX class file ensures that the pdf output uses all of the power of LaTeX while still being as accessible as print material can be. This includes</p>
+<ul>
+<li>sans-serif font used throughout (Computer Modern Sans Serif)</li>
+<li>multiple line spacing</li>
+<li>options in class to output to large print fonts</li>
+<li>all maths done in LaTeX</li>
+</ul>
+</section>
+<section id="editable-ms-word-template" class="level3">
+<h3 class="anchored" data-anchor-id="editable-ms-word-template">editable MS Word template</h3>
+<p>The custom STARMAST word template makes sure the editable word documents look as close to the html as possible This includes</p>
+<ul>
+<li>sans-serif font used throughout (Helvetica)</li>
+<li>multiple line spacing</li>
+<li>all maths re-rendered in Microsoft Equation Editor format, which can be screen-read</li>
+</ul>
+</section>
+<section id="mp3-narration" class="level3">
+<h3 class="anchored" data-anchor-id="mp3-narration">mp3 narration</h3>
+<p>Every study guide comes with a downloadable mp3 narration. This is made possible by code written by Sophie Chowgule, one of our very first VIP students. She wrote a Jupyter notebook that takes a html page and turns it into a .txt file, which after minor edits is turned into an mp3 file. This has the following advantages:</p>
+<ul>
+<li>produced using computerized text-to-speech to make it as understandable as possible with no specific regional accents</li>
+<li>downloadable for offline use with printed versions of the guide</li>
+<li>has a modifiable playback speed for faster or slower narrations</li>
+</ul>
+<p>The Jupyter notebook is available on our GitHub repository.</p>
+</section>
+<section id="video-examples" class="level3">
+<h3 class="anchored" data-anchor-id="video-examples">video examples</h3>
+<p>We have recently been able to start rolling out video examples. Developed by our VIP team in 2025/26 and hosted on our <a href="https://www.youtube.com/@starmast-video">STARMAST YouTube channel (clickable link)</a>, these short videos illustrate specific examples from selected study guides.</p>
+<ul>
+<li>all videos are captioned</li>
+<li>faces are recorded in order for lip-reading to take place if needed</li>
+<li>examples are written clearly and accessibly, and match the source material</li>
+<li>using YouTube allows for accessible playback options such as speed modification</li>
+<li>full transcripts are given in the guide along with the video</li>
+</ul>
+<p><a href="./videostyleguide.html">Our video making process can be found by clicking on this link.</a></p>
+</section>
+</section>
+<section id="colours-and-branding" class="level2">
+<h2 class="anchored" data-anchor-id="colours-and-branding">Colours and branding</h2>
+<p>Our colour palette has been picked to be colourblind-safe according to [this webpage (clickable link)], and all figures and interactive figures use this palette. As is standard, we never use colour on its own to distinguish between different objects.</p>
+</section>
+<section id="interactive-figures" class="level2">
+<h2 class="anchored" data-anchor-id="interactive-figures">Interactive figures</h2>
+<p>We are privileged to have some of our interactive figures provided by Desmos, which has its own set of accessibility tools. We also try and build in keyboard accessibility into our html and R Shiny figures as well.</p>
+<hr>
+<hr>
+</section>
+<section id="version-history" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
+<p>v1.0: initial version created 03/26 by tdhc.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+  let allCorrect = false;
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) 
+  {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
+  }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Checks";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Check Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if (this.dataset.tol > 0)
+  {
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Check Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* check each question to see whether it was answered correctly */
+  update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
+}
+
+</script>
+<!--------------------  Email Forms -----------------------------------
+        Compiled into each .html page by Quarto.
+        Website hosted and form handled by Netlify now
+        Mailing list provided by mailerlite
+        Input verified by reCaptcha2 
+        
+        Authors (recent to latest): 
+           Tristin Doherty (Trido)
+           Mohit Agarwal (Mohit-Agarwa1)
+--------------------------------------------------------------------->
+<script>
+  // Adds an extra layer of validation to aid user input,
+  // some of these are covered by basic html form validations as well, but netlify handles everything else
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[name='feedback']"); 
+    
+    form.addEventListener("submit", function(event) {
+        const nameInput = document.querySelector("input[name='name']")?.value.trim();
+        const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+        const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+
+        if (!nameInput)    { alert("Please enter a name."); return; }
+        if (!emailInput)   { alert("Please enter an email."); return; }
+        if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+        
+        event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+        const subjectInput = document.querySelector("input[name='subject']");
+                
+        // sanitise inputs
+        const sanitizedName = sanitizeInput(nameInput); 
+        const sanitizedEmail = sanitizeEmail(emailInput);
+        const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+        // validate email
+        if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+        subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+        form.submit();
+    });
+});
+
+// Removes leading and trailing whitespace for formatting, and replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+function sanitizeInput(input) {
+  input = input.trim();                                      
+  input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return input;
+}
+
+// remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+function sanitizeEmail(email) {
+  email = email.trim(); 
+  email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+  return email;
+}
+
+// This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+function validateEmail(email) {
+  const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+  return re.test(email);
+}
+
+</script>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here, <br>
+but please be specific with any issues you encounter so we can help to resolve them <br>
+(for example, what page it occured on, what you tried, and so on). </p>
+
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+  <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+  <input type="hidden" name="subject" value="Feedback from unknown">
+
+  <label for="name">Name: </label>
+  <br>
+  <input type="text" name="name" required="">
+  <br><br>
+  
+  <label for="email">E-mail: </label>
+  <br>
+  <input type="email" name="email" required="">
+  <br><br>
+  
+  <label for="feedback">Feedback: </label>
+  <br>
+  <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+  <br><br>
+
+  <!-- Google reCAPTCHA Widget -->
+  <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+  <br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.VERTICAL },
+      'google_translate_element'
+    );
+  }
+</script>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    const targetSidebar = document.getElementById('quarto-margin-sidebar');
+    if (!targetSidebar) return;
+
+    const translateWrapper = document.createElement('div');
+    translateWrapper.className = 'sidebar-section';
+    translateWrapper.style.marginTop = '2em';
+
+    const title = document.createElement('h5');
+    title.innerText = 'Translate';
+
+    const translatorDiv = document.createElement('div');
+    translatorDiv.id = 'google_translate_element';
+
+    translateWrapper.appendChild(title);
+    translateWrapper.appendChild(translatorDiv);
+    targetSidebar.appendChild(translateWrapper);
+
+    const googleScript = document.createElement('script');
+    googleScript.type = 'text/javascript';
+    googleScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(googleScript);
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="./about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="./fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="./cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="./license.html">
+<p>STARMAST © 2026 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

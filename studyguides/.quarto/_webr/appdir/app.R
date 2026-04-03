@@ -1,120 +1,165 @@
 library(shiny)
 library(bslib)
 library(ggplot2)
+library(plotly)
 
-ui <- page_fluid(
-  title = "Example of lower, upper, two-tailed tests",
+ui <- page_sidebar(
+  title = "Confidence interval for mean weight of a product in Cantor's Confectionery",
   
-  layout_columns(
-    col_widths = c(4, 8),
+  sidebar = sidebar(
+    sliderInput("alpha",
+                "significance level (α):",
+                min = 0.01,
+                max = 0.20,
+                value = 0.05,
+                step = 0.01),
     
-    # Left column - Input parameters
-    card(
-      card_header("Input parameters"),
-      card_body(
-        numericInput("zscore", "Z-score", value = 1.96, step = 0.01),
-        radioButtons("test_type", "Test Type",
-                    choices = list("Two-tailed" = "two",
-                                  "One-tailed (upper)" = "upper",
-                                  "One-tailed (lower)" = "lower"),
-                    selected = "two"),
-        hr(),
-        helpText("This app demonstrates p-values in the normal distribution, for use in Z-testing (see Example 4).")
-      )
-    ),
+    hr(),
     
-    # Right column - Graphical representation
-    card(
-      card_header("Graphical representation"),
-      card_body(
-        plotOutput("density_plot", height = "300px")
-      )
-    )
+    numericInput("x_bar",
+                 "sample mean (x̄) in grams:",
+                 value = 75,
+                 min = 50,
+                 max = 100,
+                 step = 0.1),
+    
+    numericInput("sigma",
+                 "standard deviation (σ) in grams:",
+                 value = 10,
+                 min = 1,
+                 max = 20,
+                 step = 0.1),
+    
+    numericInput("n",
+                 "sample size (n):",
+                 value = 100,
+                 min = 10,
+                 max = 500,
+                 step = 1)
   ),
   
-  # Results at the bottom
   card(
-    card_header("Result"),
-    card_body(
-      verbatimTextOutput("pvalue_result")
-    )
+    card_header("Normal distribution and confidence interval"),
+    plotlyOutput("normal_plot", height = "600px")
+  ),
+  
+  card(
+    card_header("Confidence interval summary"),
+    div(
+      style = "font-size: 16px; padding: 10px;",
+      uiOutput("ci_summary")
+    ),
+  height = "250px"
   )
 )
 
 server <- function(input, output, session) {
   
-  # Calculate p-value based on test type
-  p_value <- reactive({
-    z <- input$zscore
-    test <- input$test_type
-    
-    if (test == "two") {
-      p <- 2 * pnorm(-abs(z))
-      result <- paste0("Two-tailed p-value: ", round(p, 6))
-    } else if (test == "upper") {
-      p <- pnorm(z, lower.tail = FALSE)
-      result <- paste0("Upper-tailed p-value: ", round(p, 6))
-    } else if (test == "lower") {
-      p <- pnorm(z, lower.tail = TRUE)
-      result <- paste0("Lower-tailed p-value: ", round(p, 6))
-    }
-    
-    return(list(p = p, result = result, test = test))
+  # Reactive calculations
+  confidence_level <- reactive({
+    (1 - input$alpha) * 100
   })
   
-  # Display p-value
-  output$pvalue_result <- renderText({
-    p_value()$result
+  alpha_half <- reactive({
+    input$alpha / 2
   })
   
-  # Create density plot
-  output$density_plot <- renderPlot({
-    z <- input$zscore
-    test <- p_value()$test
+  z_critical <- reactive({
+    qnorm(1 - alpha_half())
+  })
+  
+  standard_error <- reactive({
+    input$sigma / sqrt(input$n)
+  })
+  
+  margin_of_error <- reactive({
+    z_critical() * standard_error()
+  })
+  
+  ci_lower <- reactive({
+    input$x_bar - margin_of_error()
+  })
+  
+  ci_upper <- reactive({
+    input$x_bar + margin_of_error()
+  })
+  
+  # Main plot
+  output$normal_plot <- renderPlotly({
     
-    # Generate x values for normal distribution
-    x <- seq(-4, 4, length.out = 1000)
-    y <- dnorm(x)
-    df <- data.frame(x = x, y = y)
+    # Create data for the normal distribution
+    x_seq <- seq(-4, 4, length.out = 1000)
+    y_seq <- dnorm(x_seq)
     
-    # Base plot
-    p <- ggplot(df, aes(x = x, y = y)) +
-      geom_line() +
-      labs(x = "Z-score", y = "Density") +
+    # Create the base plot
+    p <- ggplot(data.frame(x = x_seq, y = y_seq), aes(x = x, y = y)) +
+      geom_line(size = 1.2, color = "#3f68b6") +
+      
+      # Shade the rejection regions
+      geom_area(data = data.frame(x = x_seq[x_seq <= -z_critical()], 
+                                  y = y_seq[x_seq <= -z_critical()]),
+                aes(x = x, y = y), fill = "#db4315", alpha = 0.3) +
+      geom_area(data = data.frame(x = x_seq[x_seq >= z_critical()], 
+                                  y = y_seq[x_seq >= z_critical()]),
+                aes(x = x, y = y), fill = "#db4315", alpha = 0.3) +
+      
+      # Shade the confidence region
+      geom_area(data = data.frame(x = x_seq[x_seq >= -z_critical() & x_seq <= z_critical()], 
+                                  y = y_seq[x_seq >= -z_critical() & x_seq <= z_critical()]),
+                aes(x = x, y = y), fill = "#3f68b6", alpha = 0.2) +
+      
+      # Add vertical lines for critical values
+      geom_vline(xintercept = c(-z_critical(), z_critical()), 
+                 linetype = "dashed", color = "#db4315", size = 1) +
+      geom_vline(xintercept = 0, linetype = "solid", color = "black", size = 1) +
+      
+      # Add labels
+      annotate("text", x = -z_critical(), y = 0.1, 
+               label = paste("-Z =", round(-z_critical(), 3)), 
+               hjust = 1.1, color = "#db4315", size = 4) +
+      annotate("text", x = z_critical(), y = 0.1, 
+               label = paste("Z =", round(z_critical(), 3)), 
+               hjust = -0.1, color = "#db4315", size = 4) +
+      annotate("text", x = 0, y = 0.45, 
+               label = paste(confidence_level(), "% Confidence"), 
+               hjust = 0.5, color = "#3f68b6", size = 5, fontface = "bold") +
+      annotate("text", x = -3, y = 0.05, 
+               label = paste("α/2 =", round(alpha_half(), 4)), 
+               hjust = 0.5, color = "#db4315", size = 4) +
+      annotate("text", x = 3, y = 0.05, 
+               label = paste("α/2 =", round(alpha_half(), 4)), 
+               hjust = 0.5, color = "#db4315", size = 4) +
+      
+      labs(
+        title = "Standard normal distribution for confidence interval",
+        x = "Z-score",
+        y = "Probability density",
+        subtitle = paste("Confidence Interval for μ: [", round(ci_lower(), 2), "g,", round(ci_upper(), 2), "g]")
+      ) +
       theme_minimal() +
-      theme(panel.grid.minor = element_blank()) +
-      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5)
+      theme(
+        plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+        plot.subtitle = element_text(hjust = 0.5, size = 12),
+        axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10)
+      ) +
+      xlim(-4, 4) +
+      ylim(0, 0.5)
     
-    # Add shaded area based on test type, using #3F6BB6 as the color
-    if (test == "two") {
-      # Two-tailed test: shade both tails
-      if (z > 0) {
-        p <- p + 
-          geom_area(data = subset(df, x >= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_area(data = subset(df, x <= -z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_vline(xintercept = z, color = "#3F6BB6") +
-          geom_vline(xintercept = -z, color = "#3F6BB6")
-      } else {
-        p <- p + 
-          geom_area(data = subset(df, x <= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_area(data = subset(df, x >= -z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_vline(xintercept = z, color = "#3F6BB6") +
-          geom_vline(xintercept = -z, color = "#3F6BB6")
-      }
-    } else if (test == "upper") {
-      # Upper-tailed test: shade area above z
-      p <- p + 
-        geom_area(data = subset(df, x >= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-        geom_vline(xintercept = z, color = "#3F6BB6")
-    } else if (test == "lower") {
-      # Lower-tailed test: shade area below z
-      p <- p + 
-        geom_area(data = subset(df, x <= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-        geom_vline(xintercept = z, color = "#3F6BB6")
-    }
-    
-    return(p)
+    ggplotly(p) %>%
+      config(displayModeBar = FALSE)
+  })
+  
+  # Confidence interval summary
+  output$ci_summary <- renderUI({
+    tagList(
+      p(strong("Confidence level:"), paste0(sprintf("%.1f", confidence_level()), "%")),
+      p(strong("Confidence interval:"), 
+        paste0("[", sprintf("%.3f", ci_lower()), " g , ", sprintf("%.3f", ci_upper()), " g]")),
+      p(strong("Margin of error (ME):"), paste0(sprintf("%.3f", margin_of_error()), " g")),
+      p(strong("Standard error (SE):"), paste0(sprintf("%.3f", standard_error()), " g"))
+    )
   })
 }
 
-shinyApp(ui, server)
+shinyApp(ui = ui, server = server)

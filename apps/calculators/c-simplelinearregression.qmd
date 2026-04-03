@@ -1,0 +1,187 @@
+---
+title: "Calculator: Simple linear regression"
+author: Tom Coleman
+format: html
+abstract-title: Summary
+abstract: A calculator to provide simple linear regression for your data.
+filters: 
+  - shinylive
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+## Simple linear regression calculator
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 1400
+
+library(shiny)
+library(bslib)
+library(ggplot2)
+
+ui <- page_fillable(
+  title = "Simple linear regression calculator",
+  
+  card(
+    card_header("Variable names"),
+    height = "175px",
+    layout_columns(
+      col_widths = c(6, 6),
+      textInput("x_name", "X Variable Name:", value = "X Variable", placeholder = "Enter X variable name"),
+      textInput("y_name", "Y Variable Name:", value = "Y Variable", placeholder = "Enter Y variable name")
+    )
+  ),
+  
+  card(
+    card_header("Input data"),
+    height = "375px",
+    p("Enter x and y values (one pair per line, separated by space, comma, or tab):"),
+    textAreaInput(
+      "data_input",
+      NULL,
+      placeholder = "for example,\n1 2\n2 4\n3 5\n4 4\n5 5",
+      height = "150px",
+      width = "100%"
+    ),
+    actionButton("calculate", "Calculate simple linear regression", class = "btn-primary")
+  ),
+  
+  card(
+    card_header("Regression results"),
+    height = "350px",
+    verbatimTextOutput("regression_summary")
+  ),
+  
+  card(
+    card_header("Regression plot"),
+    height = "500px",
+    plotOutput("regression_plot", height = "400px")
+  )
+)
+
+server <- function(input, output, session) {
+  
+  # Reactive expression to parse and validate data
+  parsed_data <- reactive({
+    req(input$calculate)
+    
+    # Get input text
+    text <- input$data_input
+    
+    if (text == "" || is.null(text)) {
+      return(NULL)
+    }
+    
+    # Split by newlines
+    lines <- strsplit(text, "\n")[[1]]
+    lines <- lines[lines != ""]  # Remove empty lines
+    
+    # Parse each line (split by space, comma, or tab)
+    data_list <- lapply(lines, function(line) {
+      # Split by space, comma, or tab
+      parts <- strsplit(line, "[,\\s\t]+")[[1]]
+      parts <- parts[parts != ""]  # Remove empty strings
+      
+      if (length(parts) >= 2) {
+        return(c(as.numeric(parts[1]), as.numeric(parts[2])))
+      } else {
+        return(NULL)
+      }
+    })
+    
+    # Remove NULL entries
+    data_list <- data_list[!sapply(data_list, is.null)]
+    
+    if (length(data_list) < 2) {
+      return(NULL)
+    }
+    
+    # Convert to data frame
+    df <- data.frame(
+      x = sapply(data_list, `[`, 1),
+      y = sapply(data_list, `[`, 2)
+    )
+    
+    # Remove rows with NA values
+    df <- na.omit(df)
+    
+    if (nrow(df) < 2) {
+      return(NULL)
+    }
+    
+    return(df)
+  })
+  
+  # Reactive expression to fit linear model
+  regression_model <- reactive({
+    df <- parsed_data()
+    req(df)
+    
+    lm(y ~ x, data = df)
+  })
+  
+  # Output: Regression summary
+  output$regression_summary <- renderPrint({
+    model <- regression_model()
+    req(model)
+    
+    coefs <- coef(model)
+    r_squared <- summary(model)$r.squared
+    x_name <- input$x_name
+    y_name <- input$y_name
+    
+    cat("Simple linear regression results\n")
+    cat("=========================\n\n")
+    cat(sprintf("Equation: %s = %.4f + %.4f * %s\n\n", y_name, coefs[1], coefs[2], x_name))
+    cat(sprintf("Intercept (alpha): %.4f\n", coefs[1]))
+    cat(sprintf("Gradient (beta): %.4f\n", coefs[2]))
+    cat(sprintf("R-squared: %.4f\n\n", r_squared))
+    cat("Sample size:", nrow(parsed_data()), "\n")
+  })
+  
+  # Output: Regression plot
+  output$regression_plot <- renderPlot({
+    df <- parsed_data()
+    model <- regression_model()
+    req(df, model)
+    
+    x_name <- input$x_name
+    y_name <- input$y_name
+    
+    # Get predictions for the regression line
+    df$predicted <- predict(model)
+    df$se <- predict(model, se.fit = TRUE)$se.fit
+    
+    ggplot(df, aes(x = x, y = y)) +
+      geom_point(size = 3, color = "#3f68b6") +
+      geom_line(aes(y = predicted), color = "#db4315", linewidth = 1) +
+      geom_ribbon(aes(ymin = predicted - 1.96 * se, ymax = predicted + 1.96 * se), 
+                  fill = "#db4315", alpha = 0.2) +
+      labs(
+        title = "Simple linear regression",
+        x = x_name,
+        y = y_name
+      ) +
+      theme_minimal(base_size = 14) +
+      theme(
+        plot.title = element_text(hjust = 0.5, face = "bold"),
+        panel.grid.minor = element_blank()
+      )
+  })
+}
+
+shinyApp(ui, server)
+
+```
+
+## Version history {-}
+
+v1.0: created by tdhc 03/26.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

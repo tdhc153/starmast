@@ -1,0 +1,303 @@
+---
+title: "Calculator: Highest common factor, lowest common multiple"
+author: Tom Coleman
+format: html
+abstract-title: Summary
+abstract: A calculator to provide highest common factors and lowest common multiples for two integers.
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+```{=html}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Highest common factor and lowest common multiple calculator</title>
+  <style>
+    :root {
+      --btn-color: #3f68b6;
+      --btn-color-hover: #345597;
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --error: #b63f3f;
+      --focus: #74a0ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 2rem;
+      background: var(--bg); color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+    .container {
+      max-width: 560px; margin: 0 auto;
+      background: var(--card);
+      border-radius: 12px; box-shadow: 0 10px 30px rgba(16,24,40,.08);
+      padding: 1.75rem;
+    }
+    h1 { font-size: 1.4rem; margin: 0 0 1rem; }
+    p.helper { color: var(--muted); margin: 0 0 1.25rem; }
+
+    .grid {
+      display: grid; grid-template-columns: 1fr; gap: 1rem;
+    }
+    @media (min-width: 520px) {
+      .grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    label { font-weight: 600; display: block; margin-bottom: .5rem; }
+    input[type="text"] {
+      width: 100%; padding: .75rem .85rem;
+      border: 1px solid #e5e7eb; border-radius: 8px;
+      font-size: 1rem;
+      outline: none; transition: border .15s, box-shadow .15s;
+    }
+    input[type="text"]:focus {
+      border-color: var(--focus);
+      box-shadow: 0 0 0 3px rgba(116,160,255,.25);
+    }
+    .error { color: var(--error); font-size: .95rem; margin-top: .25rem; min-height: 1.2em; }
+
+    .buttons {
+      display: grid; gap: .75rem; margin: 1.25rem 0 0;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (min-width: 520px) {
+      .buttons { grid-template-columns: repeat(4, 1fr); }
+    }
+    button {
+      cursor: pointer; padding: .75rem .5rem;
+      border: none; border-radius: 8px; color: #fff;
+      background: var(--btn-color);
+      font-weight: 600; font-size: .98rem;
+      transition: background .15s, transform .03s;
+    }
+    button:hover { background: var(--btn-color-hover); }
+    button:active { transform: translateY(1px); }
+    button.secondary {
+      background: #94a3b8;
+    }
+    button.secondary:hover { background: #7b8aa3; }
+
+    .output {
+      margin-top: 1.25rem; padding: .9rem 1rem;
+      background: #f0f5ff; border: 1px solid #d9e2ff;
+      border-radius: 8px; min-height: 3.2rem;
+    }
+    .row { margin: .15rem 0; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); border: 0;
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="main" aria-labelledby="title">
+    <h1 id="title">HCF and LCM calculator</h1>
+    <p class="helper">Enter two integers (for example, -12 and 18). The calculator accepts negatives and zeros.</p>
+
+    <div class="grid" role="group" aria-labelledby="inputs-label">
+      <span id="inputs-label" class="sr-only">Number inputs</span>
+
+      <div>
+        <label for="numA">First integer</label>
+        <input
+          id="numA"
+          type="text"
+          inputmode="numeric"
+          pattern="^-?\d+$"
+          placeholder="Number here"
+          aria-describedby="errA"
+          autocomplete="off"
+        />
+        <div id="errA" class="error" aria-live="polite"></div>
+      </div>
+
+      <div>
+        <label for="numB">Second integer</label>
+        <input
+          id="numB"
+          type="text"
+          inputmode="numeric"
+          pattern="^-?\d+$"
+          placeholder="Another number here"
+          aria-describedby="errB"
+          autocomplete="off"
+        />
+        <div id="errB" class="error" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="buttons" role="group" aria-label="Actions">
+      <button id="btnHCF" title="Calculate Highest Common Factor (a.k.a. GCD)">HCF</button>
+      <button id="btnLCM" title="Calculate Least Common Multiple">LCM</button>
+      <button id="btnBoth" title="Calculate both HCF and LCM">Both</button>
+      <button id="btnClear" class="secondary" title="Clear inputs and results">Clear</button>
+    </div>
+
+    <section class="output" aria-live="polite" aria-atomic="true">
+      <div class="row" id="outHCF"></div>
+      <div class="row" id="outLCM"></div>
+      <div class="row mono" id="outDetails"></div>
+    </section>
+  </main>
+
+  <script>
+    // Utility: strict integer parsing & validation
+    function parseInteger(value) {
+      // Require optional leading '-' and digits only
+      if (!/^[-]?\d+$/.test(value.trim())) return { ok: false };
+      // Safe integer check
+      const n = Number(value);
+      if (!Number.isSafeInteger(n)) return { ok: false };
+      return { ok: true, value: n };
+    }
+
+    // Euclidean algorithm for GCD (HCF)
+    function gcd(a, b) {
+      a = Math.abs(a); b = Math.abs(b);
+      // Define gcd(0,0) as 0 by convention here
+      if (a === 0 && b === 0) return 0;
+      while (b !== 0) {
+        const t = b;
+        b = a % b;
+        a = t;
+      }
+      return a;
+    }
+
+    // LCM via |a*b| / gcd(a,b); define lcm(0, x) = 0 and lcm(0,0) = 0
+    function lcm(a, b) {
+      a = Math.abs(a); b = Math.abs(b);
+      if (a === 0 || b === 0) return 0;
+      return Math.floor((a / gcd(a, b)) * b); // order prevents overflow a*b
+    }
+
+    // DOM elements
+    const numA = document.getElementById('numA');
+    const numB = document.getElementById('numB');
+    const errA = document.getElementById('errA');
+    const errB = document.getElementById('errB');
+    const outHCF = document.getElementById('outHCF');
+    const outLCM = document.getElementById('outLCM');
+    const outDetails = document.getElementById('outDetails');
+
+    const btnHCF = document.getElementById('btnHCF');
+    const btnLCM = document.getElementById('btnLCM');
+    const btnBoth = document.getElementById('btnBoth');
+    const btnClear = document.getElementById('btnClear');
+
+    function clearErrors() { errA.textContent = ''; errB.textContent = ''; }
+    function clearOutputs() { outHCF.textContent = ''; outLCM.textContent = ''; outDetails.textContent = ''; }
+
+    function getInputs() {
+      clearErrors();
+      const aParsed = parseInteger(numA.value);
+      const bParsed = parseInteger(numB.value);
+
+      let ok = true;
+      if (!aParsed.ok) {
+        errA.textContent = 'Please enter a valid integer.';
+        ok = false;
+      }
+      if (!bParsed.ok) {
+        errB.textContent = 'Please enter a valid integer.';
+        ok = false;
+      }
+      return ok ? { ok: true, a: aParsed.value, b: bParsed.value } : { ok: false };
+    }
+
+    function showHCF(a, b) {
+      const g = gcd(a, b);
+      outHCF.innerHTML = `<strong>HCF</strong> of ${a} and ${b} = <strong>${g}</strong>`;
+      outDetails.textContent = '';
+    }
+
+    function showLCM(a, b) {
+      const L = lcm(a, b);
+      outLCM.innerHTML = `<strong>LCM</strong> of ${a} and ${b} = <strong>${L}</strong>`;
+      outDetails.textContent = '';
+    }
+
+    function showBoth(a, b) {
+      const g = gcd(a, b);
+      const L = lcm(a, b);
+      outHCF.innerHTML = `<strong>HCF</strong> of ${a} and ${b} = <strong>${g}</strong>`;
+      outLCM.innerHTML = `<strong>LCM</strong> of ${a} and ${b} = <strong>${L}</strong>`;
+    }
+
+    // Wire up buttons
+    btnHCF.addEventListener('click', () => {
+      clearOutputs();
+      const inp = getInputs();
+      if (!inp.ok) return;
+      showHCF(inp.a, inp.b);
+    });
+
+    btnLCM.addEventListener('click', () => {
+      clearOutputs();
+      const inp = getInputs();
+      if (!inp.ok) return;
+      showLCM(inp.a, inp.b);
+    });
+
+    btnBoth.addEventListener('click', () => {
+      clearOutputs();
+      const inp = getInputs();
+      if (!inp.ok) return;
+      showBoth(inp.a, inp.b);
+    });
+
+    btnClear.addEventListener('click', () => {
+      numA.value = '';
+      numB.value = '';
+      clearErrors();
+      clearOutputs();
+      numA.focus();
+    });
+
+    // Also validate on-the-fly (optional nicety)
+    [numA, numB].forEach((el, i) => {
+      el.addEventListener('input', () => {
+        const res = parseInteger(el.value);
+        const errEl = i === 0 ? errA : errB;
+        if (el.value.trim() === '') {
+          errEl.textContent = '';
+          return;
+        }
+        errEl.textContent = res.ok ? '' : 'Integers only (…, -2, -1, 0, 1, 2, …)';
+      });
+    });
+
+    // Enter key triggers "Both"
+    [numA, numB].forEach(el => {
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          btnBoth.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+```
+
+
+## Version history {-}
+
+v1.0: initial version created 03/26 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

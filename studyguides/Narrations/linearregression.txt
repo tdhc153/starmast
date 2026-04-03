@@ -1,0 +1,295 @@
+Introduction to linear regression
+
+STATISTICS
+
+AUTHOR
+
+Flora Green
+
+SUMMARY
+Linear regression is a statistical model which uses one or more variables to predict the behaviour of another. It is widely used in fields such as business, economics and social sciences.
+
+Before reading this guide, it is strongly recommended that you read [Guide: Introduction to straight lines] and Guide: Expected value, variance, standard deviation.
+
+What is linear regression?
+
+One of the key purposes of statistics is the understanding of data, which often involves considering the relationships between variables. Typically, this information is split into two categories: ‘the thing which is observed’ and ‘the thing(s) which affect this observation’, and a statistician collects information in both categories to build a full picture of the scenario. Then, the statistician tries to explain how and why a certain outcome is reached - which is incredibly useful for predicting which outcome may be reached in the future!
+
+For instance, if the seaside branch of Cantor’s Confectionery had 150 ice cream sales in one day, and only 30 in another, they may wish to understand what it was that motivated this change, so that they can have the appropriate number of ice creams in stock. It could be that one of these days was a warm, sunny, summer’s Saturday, while the other was a cold, rainy winter’s Monday. If you take a sample of the weather, season and day of the week and the corresponding number of ice cream sales across multiple days, you can build a model which allows you to predict the number of ice cream sales on a particular day.
+
+One of the models which describes the relationship between variables is known as linear regression. Linear regression finds a line of best fit for your data (known as a regression line) which can be used to predict outcomes - like the number of ice cream sales. Linear regression is used almost everywhere where predictions need to be made from data; such as economics, medicine, and the social sciences.
+
+This guide will introduce you to linear regression. It will explain how to apply a simple linear regression model to a sample of data by finding the regression line, by using the least squares method. The guide will also explore further practical applications of linear regression, including in the construction of confidence intervals which explains the uncertainty about how closely your sample matches the real-world scenario, and in testing hypotheses about whether some factors impact the overall outcome.
+
+Simple linear regression
+
+Roughly speaking, variables in statistics fall into two kinds:
+
+things which you can see, measure, or control
+
+things which are impacted by the above kind of variables.
+
+These are called explanatory and response variables respectively:
+
+Note
+Explanatory and response variables, statistical model
+
+There are two types of variable used in statistical modelling.
+
+The first is an explanatory variable; an independent variable controlled by the user to try and explain the behaviour of the model. These are typically variables that you can observe or measure.
+
+The second is a response variable; a dependent variable which changes as any explanatory variables change.
+
+A statistical model uses one or more explanatory variables to attempt to describe the behaviour of a response variable.
+
+You can add or subtract as many explanatory variables as you like in your statistical model.
+
+Note
+Definition of linear regression, simple linear regression
+
+A linear regression model is a statistical model that attempts to find a line of best fit through your data, by representing your response variable as a linear expression (no squared terms) involving one or more explanatory variables.
+
+Simple linear regression is a linear regression model used when there is only one explanatory variable x. The regression line predicts the value of the response variable, which is written as double struck E of Y.
+
+Tip
+
+For more on expected values, please see Guide: Expected value, variance, standard deviation. For more about explanatory and response variables, please see Overview: Statistical notation.
+
+To find the equation of the regression line for a population of data, you will need to find the y-intercept of the line, which will be written as alpha, and its gradient, which will be described as beta. For more about the equation of a straight line, please read [Guide: Introduction to straight lines].
+
+The equation of the regression line is given by: double struck E of Y equals alpha plus beta x
+
+In practice, it is impractical to work with an entire population of data; what if there were millions of samples? Instead, statisticians analyze samples of the population. This means that you will need to obtain estimates for the values of alpha and beta from your sample of data. These will be called by alpha hat and beta hat.
+
+Tip
+
+alpha hat and beta hat are known as unbiased estimators of the population regression parameters alpha and beta. Here, ‘unbiased’ means that the expected value of alpha hat is the same as alpha (similar for beta hat and beta).
+
+For more about biased estimators, please read [Guide: Biased and unbiased estimators]. For a proof that alpha hat and beta hat are unbiased estimators, please see [Proof: Simple linear regression].
+
+Note
+Example 1
+
+The seaside branch of Cantor’s Confectionery wants to statistically model the relationship between temperature (x) and ice cream sales (Y). To do this, they track the number of ice cream sales in a 10 day period alongside the peak temperature that day.
+
+You can define Y to be the random variable describing the number of sales, associated with the explanatory variable x (temperature). Then, you can plot the graph of the simple linear regression model:
+
+double struck E of Y equals alpha plus beta x
+
+You can use the tool below to observe how changing the values of regression parameters affects how closely the simple linear regression model fits the observed data.
+
+The question: ‘what values of alpha and beta give the best fit?’ is precisely the goal of simple linear regression.
+
+Tip
+
+There are always a positive whole number n many observations in any sample of data. (You could also write n is a member of the natural numbers to say this.)
+
+If you have a whole number i such that 1 is less than or equal to i is less than or equal to n, the i^{th} data point on the graph of your data is given by open paren x sub i comma y sub i close paren and its corresponding estimated value is given by: double struck E of open paren Y sub i close paren equals alpha plus beta x sub i
+
+Least squares estimation
+
+Residuals
+
+In practice, it is not always possible to plot the data points on a set of axes and manually tweak the values of the regression parameters until they appear to match the data - especially when you are working with a large sample of data. In addition, this is not a very scientific method for working anything out.
+
+A quantitative method is a far more practical, and also far more correct, way to compute the regression parameters alpha and beta. You can use residuals in the method of least squares estimation to find the optimal regression line for your data.
+
+Note
+Definition of residuals
+
+The residual describes the difference between the observed value y sub i and the estimated value double struck E of open paren Y sub i close paren.
+
+Each residual is denoted e sub i, where i is a whole number such that 1 is less than or equal to i is less than or equal to n, where n is your number of observations.
+
+So, using the equation for double struck E of open paren Y sub i close paren, you can define the residuals by:
+
+e sub i equals y sub i minus double struck E of open paren Y sub i close paren equals y sub i minus open paren alpha plus beta x sub i close paren
+
+Tip
+
+When plotted on a graph, the residual can be viewed as the vertical difference between the line of best fit and the plotted data point. However, the difference may be positive or negative, which means that the residuals may be positive or negative.
+
+Method of least squares
+
+Ideally, you want double struck E of open paren Y sub i close paren to be as close to your observed data as it possibly can be, so you want the difference between your observed data and the data estimated by the model to be as small as possible. This is made more difficult because these differences could be negative; adding all of the differences together would then misrepresent how close the data points are to the regression lines. You can get around this by squaring the residuals; this makes every quantity positive while still retaining a sense of size.
+
+To find the values of the regression parameters which achieve this closeness, you can use the method of least squares (or least squares estimation).
+
+Note
+Method of least squares
+
+Taking the sum of each e sub i squared, you can define S of open paren alpha comma beta close paren equals the sum from i equals 1 to n of e sub i squared equals the sum from i equals 1 to n of open paren y sub i minus open paren alpha plus beta x sub i close paren close paren squared The method of least squares minimizes this quantity S of open paren alpha comma beta close paren to find estimates (sometimes known as point estimates) for the regression parameters alpha hat and beta hat. These estimates generate a line of best fit where the average difference between the observed data and that estimated by the model is as small as possible.
+
+Note
+Example 2
+
+Use the tool below to explore how changing the values of the regression parameters affects how close the estimated values double struck E of open paren Y sub i close paren are to the observed values y sub i. You can see that the residuals are the vertical differences between the observed and expected values.
+
+You can see that the regression line which uses the least squares estimates fits the data the closest.
+
+Finding estimates of the regression parameters
+
+Example 2 gave values for the estimates of the regression parameters. So, how can you find estimates for the regression parameters? To do this, you could use the following steps:
+
+Find the sample means x bar and y bar are the sample means of x and y.
+
+The sum of the squared differences between each observation x sub i and the sample mean x bar is given by: S S sub X X equals the sum from i equals 1 to n of open paren x sub i minus x bar close paren squared
+
+The sum of the differences between each observation x sub i and the sample mean x bar, multiplied by the differences between each observation y sub i and the sample mean y bar is described by: S S sub X Y equals the sum from i equals 1 to n of open paren x sub i minus x bar close paren times open paren y sub i minus y bar close paren
+
+(For more detail about these terms, please read Overview: Statistical notation.)
+
+The least squares estimate for the regression parameter beta is therefore:
+
+beta hat equals S S sub X Y over S S sub X X equals the fraction with numerator the sum from i equals 1 to n of open paren x sub i minus x bar close paren times open paren y sub i minus y bar close paren and denominator the sum from i equals 1 to n of open paren x sub i minus x bar close paren squared
+
+The least squares estimate for the regression parameter alpha is therefore:
+
+alpha hat equals y bar minus beta hat x bar
+
+Important
+
+When working with large sums of squares, you could use programming languages (such as R or Python, or even Microsoft Excel) to save time manually typing each value into a calculator!
+
+Tip
+
+Another way of doing this method is by using calculus. You can differentiate S of open paren alpha comma beta close paren with respect to the parameters alpha and beta and set these equal to 0 to find the point at which there is no change in the value of the parameters. These are then the estimates for the parameters.
+
+For more about partial derivatives, please read Guide: Introduction to partial differentiation. For a proof that these really are the values of alpha hat and beta hat, please see [Proof: Simple linear regression].
+
+Now, here’s how to use least squares to best fit the ice-cream data from Cantor’s Confectionery.
+
+Note
+Example 3
+
+In Example 1, you saw the following data from Cantor’s Confectionery.
+
+You defined temperature as the explanatory variable x and the number of ice cream sales as the response variable Y. You also saw how changing the values of the regression parameters alpha and beta affected how closely the simple linear regression model double struck E of Y equals alpha plus beta x fitted the observed data.
+
+Now, let’s use least squares estimation to estimate the values alpha hat and beta hat which best fit the data. You can see that there are n equals 10 entries in the table.
+
+Step 1: You can use the definition of sample means (as seen in Overview: Statistical notation) to obtain values of x bar and y bar. Here
+
+2 lines Line 1: x bar equals 1 over n the sum from i equals 1 to n of x sub i equals one tenth the sum from i equals 1 to 10 of x sub i equals 23.7 Line 2: y bar equals 1 over n the sum from i equals 1 to n of y sub i equals one tenth the sum from i equals 1 to 10 of y sub i equals 240
+
+Step 2: Now, you can use these sample means to calculate S S sub X X and S S sub X Y:
+
+2 lines Line 1: S S sub X Y equals the sum from i equals 1 to 10 of open paren x sub i minus x bar close paren times open paren y sub i minus y bar close paren equals 2460 Line 2: S S sub X X equals the sum from i equals 1 to 10 of open paren x sub i minus x bar close paren squared equals 84.1
+
+Step 3: Finally, using these results, you can find estimates for the regression parameters.
+
+beta hat equals S S sub X Y over S S sub X X equals 2460 over 84.1 equals 29.2509 to 4 dp
+
+3 lines Line 1: alpha hat equals y bar minus beta hat x bar Line 2: the above equals 240 minus 29.2509 times 23.7 Line 3: the above equals negative 453.2461 to 4 dp
+
+Where to from here?
+
+First things first, it was mentioned that you really don’t want to do this method by hand. Luckily, the STARMAST team has provided the following:
+
+Tip
+
+You can use Calculator: Simple linear regression to calculate alpha hat and beta hat.
+
+Now, what else is there?
+
+Likelihood estimation
+
+As you saw earlier, the observations y sub 1 comma dot dot dot comma y sub n are representatives of random variables Y sub 1 comma dot dot dot comma Y sub n and these random variables therefore be assumed to follow a probability distribution. Since the observations y sub 1 comma dot dot dot comma y sub n are functions of the regression parameters alpha comma beta, the least squares estimates for the regression parameters alpha hat and beta hat are also random variables. For more information about this, please see [Guide: Maximum likelihood estimation].
+
+Probability distributions and confidence intervals
+
+Since the least squares estimates alpha hat and beta hat are random variables, you can assume that these also follow a probability distribution. For more information about the types of probability distributions which your data could follow, please read Overview: Probability distributions.
+
+Important
+
+Before you can assume that your data follows a particular distribution, you must check whether your data aligns with the assumptions which underpin this distribution.
+
+It is useful for your regression parameters to follow probability distributions because it allows you to construct confidence intervals and test hypotheses about them. Constructing confidence intervals for the regression parameters enables you to construct a plausible range of values, within which it is likely that your estimation lies. This recognizes the uncertainty as to how closely your sample matches the real-life scenario. (On Calculator: Simple linear regression, this uncertainty is present in a shaded portion around the regression line.)
+
+For more information about confidence intervals, please read Guide: Confidence intervals.
+
+To learn how to apply these ideas to data which follow a normal distribution, please read [Guide: Normal linear regression].
+
+Correlation and determination coefficients
+
+Linear regression is all about finding the regression line to try and model your data. You can measure how well your data is approximated by a line of best fit by using a correlation coefficient. Correlation coefficients tell you how much of the variability of your response variable Y is explained by your linear model. You can then use one or many correlation coefficients to find the coefficient of determination. This is a positive number ranging from 0 to 1, and tells you how much of the variation in the response variable is due to changes in the explanatory variables.
+
+For simple linear regression on a data set of size n, you can find the R squared coefficient of determination by using the following formula: R squared equals 1 minus the fraction with numerator S of open paren alpha hat comma beta hat close paren and denominator S of S sub Y Y where
+
+S of open paren alpha hat comma beta hat close paren, the minimum value of the sum of squares of residuals, with alpha hat comma beta hat determined by the least squares method given above;
+
+S S sub Y Y equals the sum from i equals 1 to n of open paren y sub i minus y bar close paren squared, the total sum of squares of the vertical differences (which is related to the variance of the random variable Y).
+
+Here, you can see that if the residuals are all 0, then S of open paren alpha hat comma beta hat close paren is exactly 0 and so R squared equals 1, meaning that the regression line double struck E of Y equals alpha hat plus beta hat x perfectly represents the data. A good rule to follow in simple linear regression is that the closer a coefficient of determination is to 1, the better the data is represented by a linear model.
+
+Tip
+
+Calculator: Simple linear regression calculates the R squared coefficient of determination for you.
+
+For more about correlation coefficients and the R squared coefficient of determination, please see [Guide: Correlation coefficients] and [Guide: Coefficient of determination].
+
+Multiple linear regression
+
+The idea of testing hypotheses is particularly useful when there are multiple explanatory variables, because you can test whether some of them are equal to zero - and if so, they can be discounted. This reduces the complexity of the linear regression model, meaning it is more transferable to new data.
+
+For more on this, please read [Guide: Introduction to multiple linear regression].
+
+Quick check problems
+
+Which of these is the equation of a linear regression model?
+
+double struck E of Y equals alpha plus beta x sub i
+
+alpha hat equals y bar minus beta hat x bar
+
+beta hat equals S S sub X Y over S S sub X X
+
+Answer: 
+a
+b
+c
+ .
+
+What is the name of the type of linear regression with one explanatory variable?
+
+Answer: 
+Independent
+Simple
+Single
+ .
+
+Are the following statements true or false?
+
+e sub i is used to describe a residual. Answer: 
+TRUE
+FALSE
+ .
+
+To use linear regression, your data must be normally distributed. Answer: 
+TRUE
+FALSE
+ .
+
+The regression parameter alpha can be equal to zero. Answer: 
+TRUE
+FALSE
+ .
+
+If the R squared coefficient of determination is equal to 0, the data is perfectly represented by a simple linear regression model. Answer: 
+TRUE
+FALSE
+ .
+
+Further reading
+
+For more questions on the subject, please go to Questions: Introduction to linear regression.
+
+You can work out a simple linear regression model for a data set by using Calculator: Simple linear regression.
+
+For more about why the formulas in this sheet are true, please see [Proof: Simple linear regression].
+
+To learn about normal linear regression, please read [Guide: Normal linear regression].
+
+To extend linear regression to encompass multiple explanatory variables, please read [Guide: Introduction to multiple linear regression].
+
+Version history
