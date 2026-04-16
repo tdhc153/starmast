@@ -106,15 +106,359 @@ A full transcript is available on the
 
 ::::
 
-A pictorial representation of this process is given in @fig-1. Notice that breaking down the top and rearranging gives the bottom figure. This is the source of the phrase 'completing the square'!
-
 ::: {.content-visible when-format="html"}
 
-![Completing the square of $x^2 + 4x + 9$. Rearranging the constituent parts of the top gives the completed square on the bottom.](./FiguresPNG/completingthesquare-fig1-1.png){width="150%" fig-alt="Two figures, one on top, one on the bottom. The top figure has a red square with side labelled $x$, a blue rectangle split into four strips with sides labelled $4$ and $x$, and an orange square, split into $9$ smaller squares, sides labelled $3$ and $3$. There is a $x^2 + 4x + 9$ term. The bottom figure has a larger square, with a red square portion in the top left with two blue strips to the right and two blue strips below, and four orange cells in the bottom right, side lengths of $x+2$. There are five more orange squares in a strip separate to the larger square. There are two terms, saying that $(x+2)^2 + 5 = x^2 + 4x + 9$, completing the figure." #fig-1}
+You can investigate what happens in the completing the square for $x^2 + bx + c$ in this interactive figure, which works for whole numbered values of $b$ which are **positive and even**. Put your choice of $b$ and $c$ into the boxes given, and click through the steps to see how 'completing the square' gets its name!
+
+<!-- ![Completing the square of $x^2 + 4x + 9$. Rearranging the constituent parts of the top gives the completed square on the bottom.](./FiguresPNG/completingthesquare-fig1-1.png){width="150%" fig-alt="Two figures, one on top, one on the bottom. The top figure has a red square with side labelled $x$, a blue rectangle split into four strips with sides labelled $4$ and $x$, and an orange square, split into $9$ smaller squares, sides labelled $3$ and $3$. There is a $x^2 + 4x + 9$ term. The bottom figure has a larger square, with a red square portion in the top left with two blue strips to the right and two blue strips below, and four orange cells in the bottom right, side lengths of $x+2$. There are five more orange squares in a strip separate to the larger square. There are two terms, saying that $(x+2)^2 + 5 = x^2 + 4x + 9$, completing the figure." #fig-1} -->
+
+```{=html}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Completing the Square (Interactive)</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+body {
+  font-family: Arial;
+  padding-left: 20px;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 6px 12px;
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#warning {
+  color: red;
+  margin-top: 8px;
+}
+
+.canvas {
+  position: relative;
+  width: 800px;
+  height: 420px;
+  border: 1px solid #ccc;
+  overflow: hidden;
+}
+
+/* square */
+.square {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: #e6b8b7;
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* strips */
+.strip {
+  position: absolute;
+  background: #b4a7d6;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.8s ease;
+}
+
+/* tiles */
+.tile {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #f3d5c0;
+  border: 1px solid #333;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.8s ease;
+}
+
+/* missing square */
+.missing {
+  position: absolute;
+  border: 2px dashed red;
+  background: rgba(255,0,0,0.15);
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="controls">
+  b: <input id="bVal" type="number" value="4" step="2">
+  c: <input id="cVal" type="number" value="9">
+
+  <br><br>
+
+  <button id="prevBtn" onclick="prevStage()">Previous step</button>
+  <button id="nextBtn" onclick="nextStage()">Next step</button>
+
+  <div id="warning"></div>
+</div>
+
+<div class="canvas" id="canvas"></div>
+
+<div class="result" id="result"></div>
+
+<script>
+const size = 120;
+const unit = 20;
+
+let stage = 0;
+let strips = [];
+let tiles = [];
+let square;
+
+function validate() {
+  const b = +bVal.value;
+
+  if (b < 0) {
+    warning.textContent = "b must be non-negative";
+    return false;
+  }
+
+  if (b % 2 !== 0) {
+    warning.textContent = "b must be even";
+    return false;
+  }
+
+  warning.textContent = "";
+  return true;
+}
+
+/* ---------------- BUTTON STATE ---------------- */
+function updateButtons() {
+  prevBtn.disabled = (stage === 0);
+  nextBtn.disabled = (stage === 2);
+}
+
+/* ---------------- DRAW STAGE 0 ---------------- */
+function drawInitial() {
+  if (!validate()) return;
+
+  canvas.innerHTML = "";
+  strips = [];
+  tiles = [];
+  stage = 0;
+
+  const b = +bVal.value;
+  const c = +cVal.value;
+
+  let x = 20;
+
+  // square
+  square = document.createElement("div");
+  square.className = "square";
+  square.style.left = x + "px";
+  square.style.top = "150px";
+  square.textContent = "x²";
+  canvas.appendChild(square);
+
+  x += size + 20;
+
+  // b strips (n + n)
+  for (let i = 0; i < b; i++) {
+    const s = document.createElement("div");
+    s.className = "strip";
+    s.style.width = "20px";
+    s.style.height = size + "px";
+    s.style.left = x + "px";
+    s.style.top = "150px";
+    s.textContent = "x";
+    canvas.appendChild(s);
+    strips.push(s);
+    x += 20;
+  }
+
+  x += 20;
+
+  // tiles
+  for (let i = 0; i < c; i++) {
+    const t = document.createElement("div");
+    t.className = "tile";
+    t.textContent = "1";
+
+    t.style.left = (x + (i % 6) * 22) + "px";
+    t.style.top = (150 + Math.floor(i / 6) * 22) + "px";
+
+    canvas.appendChild(t);
+    tiles.push(t);
+  }
+
+  updateMath();
+  updateButtons();
+}
+
+/* ---------------- NEXT ---------------- */
+function nextStage() {
+  if (!validate()) return;
+
+  if (stage === 0) {
+    splitStrips();
+    stage = 1;
+  } 
+  else if (stage === 1) {
+    completeSquare();
+    stage = 2;
+  }
+
+  updateMath();
+  updateButtons();
+}
+
+/* ---------------- PREVIOUS ---------------- */
+function prevStage() {
+  if (!validate()) return;
+  if (stage === 0) return;
+
+  if (stage === 1) {
+    drawInitial();
+    return;
+  }
+
+  if (stage === 2) {
+    drawInitial();
+    splitStrips();
+    stage = 1;
+  }
+
+  updateMath();
+  updateButtons();
+}
+
+/* ---------------- STAGE 1 ---------------- */
+function splitStrips() {
+  const b = +bVal.value;
+  const n = b / 2;
+
+  const baseX = 50;
+  const baseY = 80;
+
+  square.style.left = baseX + "px";
+  square.style.top = baseY + "px";
+
+  strips.forEach((s, i) => {
+    if (i < n) {
+      // vertical
+      s.style.width = "20px";
+      s.style.height = size + "px";
+      s.style.left = (baseX + size + i * 20) + "px";
+      s.style.top = baseY + "px";
+    } else {
+      // horizontal
+      s.style.width = size + "px";
+      s.style.height = "20px";
+      s.style.left = baseX + "px";
+      s.style.top = (baseY + size + (i - n) * 20) + "px";
+    }
+  });
+}
+
+/* ---------------- STAGE 2 ---------------- */
+function completeSquare() {
+  const b = +bVal.value;
+  const c = +cVal.value;
+  const n = b / 2;
+
+  const baseX = 50;
+  const baseY = 80;
+
+  const needed = n * n;
+
+  // missing square
+  const missing = document.createElement("div");
+  missing.className = "missing";
+  missing.style.left = (baseX + size) + "px";
+  missing.style.top = (baseY + size) + "px";
+  missing.style.width = (n * 20) + "px";
+  missing.style.height = (n * 20) + "px";
+  canvas.appendChild(missing);
+
+  tiles.forEach((t, i) => {
+    if (i < needed) {
+      const row = Math.floor(i / n);
+      const col = i % n;
+
+      t.style.left = (baseX + size + col * 20) + "px";
+      t.style.top = (baseY + size + row * 20) + "px";
+    } else {
+      // 🔥 FIXED GRID (10 per row)
+      const col = (i - needed) % 10;
+      const row = Math.floor((i - needed) / 10);
+
+      t.style.left = (baseX + size + n * 20 + 60 + col * 20) + "px";
+      t.style.top = (baseY + row * 20) + "px";
+    }
+  });
+
+  if (c < needed) {
+    missing.style.background = "rgba(255,0,0,0.3)";
+  }
+}
+
+/* ---------------- MATH ---------------- */
+function updateMath() {
+  const b = +bVal.value;
+  const c = +cVal.value;
+
+  if (!validate()) return;
+
+  const n = b / 2;
+  const diff = c - n * n;
+
+  const sign = diff >= 0 ? "+" : "-";
+  const val = Math.abs(diff);
+
+  result.innerHTML =
+    `\\[x^2 + ${b}x + ${c} = (x + ${n})^2 ${sign} ${val}\\]`;
+
+  MathJax.typesetPromise();
+}
+
+/* ---------------- EVENTS ---------------- */
+bVal.addEventListener("input", drawInitial);
+cVal.addEventListener("input", drawInitial);
+
+/* ---------------- START ---------------- */
+drawInitial();
+</script>
+
+</body>
+</html>
+
+```
 
 :::
 
 ::: {.content-hidden when-format="html"}
+
+A pictorial representation of this process is given in @fig-1. Notice that breaking down the top and rearranging gives the bottom figure. This is the source of the phrase 'completing the square'!
 
 ![Completing the square of $x^2 + 4x + 9$. Rearranging the constituent parts of the top gives the completed square on the bottom.](./FiguresPNG/completingthesquare-fig1-1.png){fig-alt="Two figures, one on top, one on the bottom. The top figure has a red square with side labelled $x$, a blue rectangle split into four strips with sides labelled $4$ and $x$, and an orange square, split into $9$ smaller squares, sides labelled $3$ and $3$. There is a $x^2 + 4x + 9$ term. The bottom figure has a larger square, with a red square portion in the top left with two blue strips to the right and two blue strips below, and four orange cells in the bottom right, side lengths of $x+2$. There are five more orange squares in a strip separate to the larger square. There are two terms, saying that $(x+2)^2 + 5 = x^2 + 4x + 9$, completing the figure." #fig-1}
 :::
@@ -411,6 +755,10 @@ Complete the square on each of the following quadratic expressions.
 
 v1.0: initial version created 09/24 by tdhc.
 
-v1.1: updated with Example 1 video 12/25 by Donald Campbell as part of a University of St Andrews VIP project.
+- v1.1: updated with Example 1 video 12/25 by Donald Campbell as part of a University of St Andrews VIP project.
+
+- v1.2: updated with new interactive html figure 04/26 by tdhc.
+
+
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

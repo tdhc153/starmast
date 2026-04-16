@@ -2,7 +2,7 @@
 title: "Matrix multiplication"
 author: "Jessica Taberner"
 abstract-title: Summary
-abstract: Matrices are rectangular arrays of mathematical objects with entries arranged in rows and columns. Matrices are a very useful concept within mathematics, you'll see them used for solving simultaneous equations and much more, this guide will explain what they are and how to perform arithmetic with matrices.
+abstract: Matrices are rectangular arrays of mathematical objects with entries arranged in rows and columns. Matrices are a very useful concept within mathematics and statistics. You'll see them used for solving simultaneous equations, modelling data in several variables, and much more this guide will explain what they are and how to perform arithmetic with matrices.
 categories:
   - Key skills
   - Algebra
@@ -40,36 +40,120 @@ The entries in a matrix are usually numbers, but they can be other mathematical 
 
 If you have read [Guide: Introduction to solving simultaneous equations] then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations.
 
-Matrices are a fundamental tool within linear algebra, and they have a wide range of real-life applications. They are used in computer graphics, data analysis, search engine optimization, cryptography, economics, robotics, genetics, quantum mechanics, and many more areas of study. Matrices are used anywhere where information needs to be analyzed and calculated efficiently. 
+Matrices are a fundamental tool within linear algebra, and they have a wide range of real-life applications. They are used in computer graphics, data analysis, search engine optimization, cryptography, economics, robotics, genetics, quantum mechanics, and many more places. Matrices are used anywhere where information in multiple variables needs to be analyzed and calculated efficiently. 
 
-In this guide, you will see how you can read, write, and understand matrices, and you will learn how to do arithmetic with matrices. 
+A key skill in matrix arithmetic is **matrix multiplication**. This is different from the scalar multiplication that you saw in [Guide: Introduction to matrices](introtomatrices.qmd), in that instead of multiplying a matrix by a constant, you are multiplying a matrix by **another matrix**. In this guide, you will see how and when you can multiply together two matrices, as well as interactions of matrix multiplication with special matrices from [Guide: Introduction to matrices](introtomatrices.qmd).
 
 # Matrix multiplication {.unnumbered}
 
 Now you can look at how and when you can two multiply matrices together.
 
-First, let's see how you can multiply two $2 \times 2$ matrices. Let $A$ and $B$ be $2 \times 2$ matrices:
+## Initial example: $2\times 2$ matrices
+
+First, let's see how you can multiply two $2 \times 2$ matrices via an example. Let $A$ and $B$ be $2 \times 2$ matrices with entries given below:
 
 $$A =
 \begin{bmatrix} 
-\textcolor{red}{a_{11}} & \textcolor{blue}{a_{12}} \\ 
-\textcolor{red}{a_{21}} & \textcolor{blue}{a_{22}} 
+1 & -1 \\ 
+2 & 1
 \end{bmatrix} \quad B =\begin{bmatrix} 
-\textcolor{black}{b_{11}} & \textcolor{orange}{b_{12}} \\ 
-\textcolor{black}{b_{21}} & \textcolor{orange}{b_{22}} 
+3 & 0 \\ 
+1 & -1 
 \end{bmatrix}$$
 
-The product $C = AB$ is also a $2 \times 2$ matrix:
+How can you find their product $AB$? Since a matrix is defined by its entries, you could think about  working out each entry. The idea for the $(i,j)$th entry is to find a 'product' of the $i$th row of $A$ by the $j$th column of $B$.
 
-$$C =\begin{bmatrix} 
-\textcolor{red}{a_{11}\textcolor{black}{b_{11}}} + \textcolor{blue}{a_{12} \textcolor{black}{b_{21}}} & \textcolor{red}{a_{11} \textcolor{orange}{b_{12}}} + \textcolor{blue}{a_{12} \textcolor{orange}{b_{22}}} \\ 
-\textcolor{red}{a_{21} \textcolor{black}{b_{11}}} + \textcolor{blue}{a_{22} \textcolor{black}{b_{21}}} & \textcolor{red}{a_{21} \textcolor{orange}{b_{12}}} + \textcolor{blue}{a_{22} \textcolor{orange}{b_{22}}} 
+For the $(1,1)$th entry of $AB$, you can match the $1$st row of $A$ to the $1$st column of $B$, multiply the matched entries together, and add up all the entries. The first row of $A$ is $\begin{matrix}1 & -1\end{matrix}$, and the first column of $B$ is $\begin{matrix}3 & 1\end{matrix}$. Here, $1$ (from $A$) and $3$ (from $B$) are matched, and $-1$ (from $A$) and $1$ (from $B$) are matched. Multiplying these together and adding gives $$[AB]_{1,1} = 1\cdot 3 + (-1)\cdot 1 = 3 - 1 = 2$$
+
+This process is illustrated in the following equation, with the appropriate row and column highlighted in bold: 
+
+$$AB =
+\begin{bmatrix} 
+\mathbf{1} & \mathbf{-1} \\ 
+2 & 1 
+\end{bmatrix}\begin{bmatrix} 
+\mathbf{3} & 0 \\ 
+\mathbf{1} & -1 
+\end{bmatrix} = \begin{bmatrix}1\cdot 3 + (-1)\cdot 1 & \\ & \end{bmatrix} = \begin{bmatrix}2 & \\ & \end{bmatrix}$$
+
+You can now repeat this process to find the other entries. For the $(1,2)$th entry of $AB$, you can match the $1$st row of $A$ to the $2$nd column of $B$, multiply the matched entries together, and add up all the entries. Doing this in the matrix with the appropriate values highlighted in bold gives 
+
+$$AB =
+\begin{bmatrix} 
+\mathbf{1} & \mathbf{-1} \\ 
+2 & 1 
+\end{bmatrix}\begin{bmatrix} 
+3 & \mathbf{0} \\ 
+1 & \mathbf{-1} 
+\end{bmatrix} = \begin{bmatrix}2 & 1\cdot 0 + (-1)\cdot (-1)\\ & \end{bmatrix} = \begin{bmatrix}2 & 1\\ & \end{bmatrix}$$
+
+For the $(2,1)$th entry of $AB$, you can match the $2$nd row of $A$ to the $1$st column of $B$. Doing this in the matrix with the appropriate values highlighted in bold gives 
+
+$$AB =
+\begin{bmatrix} 
+1 & -1 \\ 
+\mathbf{2} & \mathbf{1} 
+\end{bmatrix}\begin{bmatrix} 
+\mathbf{3} & 0 \\ 
+\mathbf{1} & -1 
+\end{bmatrix} = \begin{bmatrix}2 & 1\\ 2\cdot 3 + 1\cdot 1& \end{bmatrix} = \begin{bmatrix}2 & 1\\ 7 & \end{bmatrix}$$
+
+Finally, for the $(2,2)$th entry of $AB$, you can match the $2$nd row of $A$ to the $2$nd column of $B$. Doing this in the matrix with the appropriate values highlighted in bold gives 
+
+$$AB =
+\begin{bmatrix} 
+1 & -1 \\ 
+\mathbf{2} & \mathbf{1} 
+\end{bmatrix}\begin{bmatrix} 
+3 & \mathbf{0} \\ 
+1 & \mathbf{-1} 
+\end{bmatrix} = \begin{bmatrix}2 & 1\\ 7 & 2\cdot 0 + 1\cdot (-1)\end{bmatrix} = \begin{bmatrix}2 & 1\\ 7 & -1\end{bmatrix}$$
+
+and this is your final answer!
+
+This process can be generalised to any two $2\times 2$ matrices.
+
+:::{.callout-note}
+
+## Multiplying $2\times 2$ matrices
+
+Suppose that 
+$$A =
+\begin{bmatrix} 
+a & b \\ 
+c & d 
+\end{bmatrix} \quad\textsf{ and }\quad B =\begin{bmatrix} 
+e & f \\ 
+g & h 
 \end{bmatrix}$$
+are two $2\times 2$ matrices. Then their product $AB$ is the matrix $$AB = \begin{bmatrix} 
+a & b \\ 
+c & d 
+\end{bmatrix}\begin{bmatrix} 
+e & f \\ 
+g & h 
+\end{bmatrix} = 
+\begin{bmatrix}ae + bg & af + 
+bh \\ ce + dg & cf + dh \end{bmatrix}$$
 
-Here you can see that in order to calculate the first entry of $C$ you multiply the corresponding elements from the first row of $A$ by the elements from the first column of $B$, and sum together the results.
+:::
+
+:::{.callout-important}
+
+Going ahead, it's more important to **learn the process** of how this formula is found, rather than learn the formula itself. This is because this process can be extended to work out general matrix multiplication, and not every matrix is a $2\times 2$ matrix!
+
+:::
+
+:::{.callout-tip}
+
+The 'product' of the $i$th row of $A$ and the $j$th column of $B$ to form the $(i,j)$th entry of $AB$ can be recognised as the **scalar product** of the vectors given by $i$th row of $A$ and the $j$th column of $B$. For more on the scalar product, please see [Guide: The scalar product](scalarproduct.qmd).
+
+:::
+
+<!-- Here you can see that in order to calculate the first entry of $C$ you multiply the corresponding elements from the first row of $A$ by the elements from the first column of $B$, and sum together the results. -->
 
 ::: {.callout-note appearance="simple"}
-## Example 9
+## Example 1
 
 Let $A$ and $B$ be two $2\times 2$ matrices.
 $$A =\begin{bmatrix} 
@@ -81,15 +165,21 @@ $$A =\begin{bmatrix}
 6 & 7 
 \end{bmatrix}$$
 
-Since both matrices are $2 \times 2$, their product $AB$ is also $2 \times 2$:
+You can follow the process illustrated above to write
 
-$$AB =
+$$AB = \begin{bmatrix} 
+1 & 2 \\ 
+3 & 4 
+\end{bmatrix}\begin{bmatrix} 
+0 & 5 \\ 
+6 & 7 
+\end{bmatrix} =
 \begin{bmatrix} 
 1 \cdot 0 + 2 \cdot 6 & 1 \cdot 5 + 2 \cdot 7 \\ 
 3 \cdot 0 + 4 \cdot 6 & 3 \cdot 5 + 4 \cdot 7 
 \end{bmatrix}$$
 
-By carrying out these multiplications you will have,
+By carrying out these calculations you will have,
 $$AB=\begin{bmatrix} 
 0 + 12 & 5 + 14 \\ 
 0 + 24 & 15 + 28 
@@ -98,6 +188,57 @@ $$AB=\begin{bmatrix}
 24 & 43 
 \end{bmatrix}$$
 :::
+
+Unlike for numbers, the **order** of multiplication matters in matrix multiplication. This is because you take the rows from the left matrix in the product, and columns from the right matrix; these could be different if the order swaps between the left and right matrices! You can see this in the following example. 
+
+::: {.callout-note appearance="simple"}
+## Example 2
+
+Using the $A$ and $B$ from Example 1, you can compute $BA$:
+
+$$BA = \begin{bmatrix} 
+0 & 5 \\ 
+6 & 7 
+\end{bmatrix}\begin{bmatrix} 
+1 & 2 \\ 
+3 & 4 
+\end{bmatrix} =
+\begin{bmatrix} 
+0 \cdot 1 + 5 \cdot 3 & 0 \cdot 2 + 5 \cdot 4 \\ 
+6 \cdot 1 + 7 \cdot 3 & 6 \cdot 2 + 7 \cdot 4 
+\end{bmatrix}$$
+By carrying out these calculations you will have,
+$$BA=\begin{bmatrix} 
+0 + 15 & 0 + 20 \\ 
+6 + 21 & 12 + 28 
+\end{bmatrix}=BA=\begin{bmatrix} 
+15 & 20 \\ 
+27 & 40 
+\end{bmatrix}$$
+
+You can compare $AB$ and $BA$.
+
+$$AB =\begin{bmatrix} 
+12 & 19 \\ 
+24 & 43 
+\end{bmatrix}, \quad BA =
+\begin{bmatrix} 
+15 & 20 \\ 
+27 & 40 
+\end{bmatrix}$$
+and here, **none** of the entries match! Since $AB \neq BA$, this example confirms that **matrix multiplication is not commutative** in general.
+
+:::
+
+## Generalising this process
+
+Not all matrices are $2\times 2$ matrices. How would you multiply two $3\times 3$ matrices? Or two $40\times 40$ matrices? 
+
+The idea in multiplying $2\times 2$ matrices was the following: 
+
+> The idea for the $(i,j)$th entry is to find a 'product' of the $i$th row of $A$ by the $j$th column of $B$. This is done by matching entries in the $i$th row of $A$ to entries in the $j$th column of $B$, multiplying the matched entries, and adding them all together.
+
+This applies to matrices $A$ and $B$ of any dimensions, **provided that there is a match for all the entries in the $i$th row of $A$ to the $j$th column of $B$**. What this means is that two matrices $A$ and $B$ can be multiplied together *if and only if* **the number of columns of $A$ equals the number of rows of $B$**. This is because the number of entries in the $i$th row of $A$ is the same as the number of columns of $A$, and the number of entries in the $j$th column of $B$ is the same as the number of rows of $B$.
 
 Here is a definition of matrix multiplication for more general matrices.
 
@@ -116,156 +257,53 @@ b_{21} & b_{22} & \cdots & b_{2p} \\
 b_{n1} & b_{n2} & \cdots & b_{np} 
 \end{bmatrix}$$
 
-The product $C = AB$ is an $m \times p$ matrix, where each entry $c_{ij}$ is given by the following summation formula:
+The product $C = AB$ is an $m \times p$ matrix, where each entry $c_{ij}$ of $C$ is given by the following summation formula:
 
-$$c_{ij} = \sum_{k=1}^{n} a_{ik} b_{kj} \quad\textsf{ where } 1 \le i \le m \textsf{ and } 1 \le j \le p$$
-In the context of vectors, this is the scalar product, read more about this at [Guide: The scalar product].
+$$
+\begin{aligned}
+c_{ij} &= a_{i1}b_{1j} + a_{i2}b_{2j} + \ldots + a_{in}b_{nj}\\[0.5em]
+&= \sum_{k=1}^{n} a_{ik} b_{kj}
+\end{aligned}
+$$
+In the context of vectors, this is the scalar product of the $i$th row of $A$ with the $j$th column of $B$. You can read more about this at [Guide: The scalar product](scalarproduct.qmd).
+
 :::
 
-If sigma notation is unfamiliar to you, you can read more about it in [Guide: Introduction to sigma notation].
+If sigma notation is unfamiliar to you, you can read more about it in [Guide: Introduction to sigma notation](sigmanotation.qmd).
 
 ::: callout-important
 You can only multiply matrices $A$ and $B$ if $A$ has the same number of columns as $B$ has rows, otherwise this operation is **undefined**.
 :::
 
 ::: callout-warning 
-Matrix multiplication is **non-commutative**. This means that it is not always true for matrices that $AB = BA$. In fact, in some cases, $AB$ may be defined when $BA$ is not defined.
+As seen in Example 2, matrix multiplication is **non-commutative**. This means that it is not always true for matrices that $AB = BA$. In fact, in some cases, $AB$ may be defined when $BA$ is not defined.
 :::
 
-To take a better look at this unusual property, you can now see some examples of this in action.
+::: {.content-visible when-format="html"}
+
+To take a better look at this unusual property, you can now see some examples of this in action. You can use the interactive figure below to investigate multiplying a $2\times 3$ matrix by a $3\times 2$ matrix (and the other way around). You are able to change the numbers inside the matrices $A,B,C,D$ by clicking on the entry you want to change. 
 
 ```{=html}
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Propositional Logic Truth Table</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      padding: 20px;
-    }
-    input, button {
-      margin: 5px 0;
-      padding: 5px;
-      font-size: 1rem;
-    }
-    table {
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-    th, td {
-      border: 1px solid #444;
-      padding: 6px 10px;
-      text-align: center;
-    }
-    th {
-      background: #eee;
-    }
-  </style>
-</head>
-<body>
+<meta charset="UTF-8">
+<title>Accessible Matrix Multiplication</title>
 
-<h2>Interactive Propositional Logic Truth Table</h2>
-
-<label>
-  Variables (comma separated):
-  <input id="vars" value="P,Q">
-</label>
-<br>
-
-<label>
-  Formula:
-  <input id="formula" value="P && Q">
-</label>
-<br>
-
-<button onclick="generate()">Generate Truth Table</button>
-
-<div id="table"></div>
-
-<script>
-function parseFormula(formula) {
-  return formula
-    .replace(/->/g, "|| !")        // temporary placeholder
-    .replace(/<->/g, "===")
-}
-
-function implication(a, b) {
-  return !a || b
-}
-
-function generate() {
-  const vars = document.getElementById("vars").value
-    .split(",")
-    .map(v => v.trim())
-    .filter(Boolean)
-
-  const rawFormula = document.getElementById("formula").value
-
-  const rows = Math.pow(2, vars.length)
-  let html = "<table><tr>"
-
-  vars.forEach(v => html += `<th>${v}</th>`)
-  html += `<th>${rawFormula}</th></tr>`
-
-  for (let i = 0; i < rows; i++) {
-    let env = {}
-    html += "<tr>"
-
-    vars.forEach((v, idx) => {
-      const value = Boolean((i >> (vars.length - idx - 1)) & 1)
-      env[v] = value
-      html += `<td>${value ? "T" : "F"}</td>`
-    })
-
-    try {
-      let expr = rawFormula
-      vars.forEach(v => {
-        expr = expr.replaceAll(v, env[v])
-      })
-
-      expr = expr
-        .replace(/<->/g, "===")
-        .replace(/(\w+)\s*->\s*(\w+)/g, "(!($1) || $2)")
-
-      const result = eval(expr)
-      html += `<td>${result ? "T" : "F"}</td>`
-    } catch {
-      html += "<td>Error</td>"
-    }
-
-    html += "</tr>"
-  }
-
-  html += "</table>"
-  document.getElementById("table").innerHTML = html
-}
-</script>
-
-</body>
-</html>
-
-```
-
-::: {.content-visible when-format="html"}
-
-```{=html}
-
-<!-- MathJax for pretty math explanations -->
-<script type="text/javascript" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <style>
-  .matrix-figure {
+  body {
     font-family: Arial, sans-serif;
+  }
+
+  .matrix-figure {
     background-color: white;
     color: black;
     text-align: center;
     padding: 20px;
-    border-radius: 8px;
   }
 
   .matrix-row {
@@ -286,13 +324,11 @@ function generate() {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
   }
 
   .matrix {
     position: relative;
     display: inline-block;
-    background-color: white;
   }
 
   .matrix table {
@@ -300,7 +336,6 @@ function generate() {
   }
 
   .matrix td {
-    border-bottom: 1px solid white;
     padding: 0;
     min-width: 30px;
     text-align: center;
@@ -310,17 +345,13 @@ function generate() {
     width: 40px;
     text-align: center;
     border: none;
-    background: white;
     font-family: monospace;
     font-size: 14px;
-    color: black;
     padding: 4px;
   }
 
-  /* AB matrix larger size (20% bigger) */
   #matrixAB td {
     min-width: 35px;
-    padding: 5px;
     font-size: 18px;
     font-weight: bold;
   }
@@ -354,31 +385,36 @@ function generate() {
   .result-cell {
     font-weight: bold;
     cursor: pointer;
+    outline: none;
   }
 
-  .highlight-row input {
-    background-color: #c0d6ff !important;
+  /* Focus style for keyboard users */
+  .result-cell:focus {
+    outline: 3px solid #4a90e2;
+    background-color: #e6f0ff;
   }
 
+  .highlight-row input,
   .highlight-col input {
     background-color: #c0d6ff !important;
   }
 
   .explanation {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    margin-bottom: 30px;
-    line-height: 1.5;
+    margin-bottom: 20px;
   }
 </style>
 
+</head>
+
+<body>
+
 <div class="matrix-figure">
-  <div class="explanation" id="explanation-text">
-    You can click on the entries of matrices A, B, C, and D to change them to any integers.<br>
-    Hover over the entries of the matrices AB and DC to see how they are calculated.
+  <div class="explanation">
+    Click or use keyboard (Tab + Enter) on result cells to see how values are calculated.
   </div>
 
   <!-- AB -->
+
   <div class="matrix-row">
     <div class="matrix-wrapper">
       <div class="matrix-label">Matrix A (2×3)</div>
@@ -390,37 +426,39 @@ function generate() {
       </div>
     </div>
 
-    <div class="matrix-wrapper">
-      <div class="matrix-label">Matrix B (3×2)</div>
-      <div class="matrix">
-        <table id="matrixB">
-          <tr><td><input value="7"></td><td><input value="8"></td></tr>
-          <tr><td><input value="9"></td><td><input value="10"></td></tr>
-          <tr><td><input value="11"></td><td><input value="12"></td></tr>
-        </table>
-      </div>
-    </div>
+<div class="matrix-wrapper">
+  <div class="matrix-label">Matrix B (3×2)</div>
+  <div class="matrix">
+    <table id="matrixB">
+      <tr><td><input value="7"></td><td><input value="8"></td></tr>
+      <tr><td><input value="9"></td><td><input value="10"></td></tr>
+      <tr><td><input value="11"></td><td><input value="12"></td></tr>
+    </table>
+  </div>
+</div>
 
-    <div class="equals-sign">=</div>
+<div class="equals-sign">=</div>
 
-    <div class="matrix-wrapper">
-      <div class="matrix-label">AB (2×2)</div>
-      <div class="matrix">
-        <table id="matrixAB">
-          <tr>
-            <td class="result-cell" data-row="0" data-col="0">58</td>
-            <td class="result-cell" data-row="0" data-col="1">64</td>
-          </tr>
-          <tr>
-            <td class="result-cell" data-row="1" data-col="0">139</td>
-            <td class="result-cell" data-row="1" data-col="1">154</td>
-          </tr>
-        </table>
-      </div>
-    </div>
+<div class="matrix-wrapper">
+  <div class="matrix-label">AB (2×2)</div>
+  <div class="matrix">
+    <table id="matrixAB" role="grid">
+      <tr>
+        <td class="result-cell" tabindex="0" data-row="0" data-col="0" aria-label="AB row 1 column 1">58</td>
+        <td class="result-cell" tabindex="0" data-row="0" data-col="1" aria-label="AB row 1 column 2">64</td>
+      </tr>
+      <tr>
+        <td class="result-cell" tabindex="0" data-row="1" data-col="0" aria-label="AB row 2 column 1">139</td>
+        <td class="result-cell" tabindex="0" data-row="1" data-col="1" aria-label="AB row 2 column 2">154</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
   </div>
 
   <!-- DC -->
+
   <div class="matrix-row">
     <div class="matrix-wrapper">
       <div class="matrix-label">Matrix D (3×2)</div>
@@ -433,198 +471,192 @@ function generate() {
       </div>
     </div>
 
-    <div class="matrix-wrapper">
-      <div class="matrix-label">Matrix C (2×3)</div>
-      <div class="matrix">
-        <table id="matrixC">
-          <tr><td><input value="1"></td><td><input value="2"></td><td><input value="3"></td></tr>
-          <tr><td><input value="4"></td><td><input value="5"></td><td><input value="6"></td></tr>
-        </table>
-      </div>
-    </div>
-
-    <div class="equals-sign">=</div>
-
-    <div class="matrix-wrapper">
-      <div class="matrix-label">DC (3×3)</div>
-      <div class="matrix">
-        <table id="matrixDC">
-          <tr>
-            <td class="result-cell" data-row="0" data-col="0">39</td>
-            <td class="result-cell" data-row="0" data-col="1">54</td>
-            <td class="result-cell" data-row="0" data-col="2">69</td>
-          </tr>
-          <tr>
-            <td class="result-cell" data-row="1" data-col="0">49</td>
-            <td class="result-cell" data-row="1" data-col="1">68</td>
-            <td class="result-cell" data-row="1" data-col="2">87</td>
-          </tr>
-          <tr>
-            <td class="result-cell" data-row="2" data-col="0">59</td>
-            <td class="result-cell" data-row="2" data-col="1">82</td>
-            <td class="result-cell" data-row="2" data-col="2">105</td>
-          </tr>
-        </table>
-      </div>
-    </div>
+<div class="matrix-wrapper">
+  <div class="matrix-label">Matrix C (2×3)</div>
+  <div class="matrix">
+    <table id="matrixC">
+      <tr><td><input value="1"></td><td><input value="2"></td><td><input value="3"></td></tr>
+      <tr><td><input value="4"></td><td><input value="5"></td><td><input value="6"></td></tr>
+    </table>
   </div>
 </div>
 
+<div class="equals-sign">=</div>
+
+<div class="matrix-wrapper">
+  <div class="matrix-label">DC (3×3)</div>
+  <div class="matrix">
+    <table id="matrixDC" role="grid">
+      <tr>
+        <td class="result-cell" tabindex="0" data-row="0" data-col="0">39</td>
+        <td class="result-cell" tabindex="0" data-row="0" data-col="1">54</td>
+        <td class="result-cell" tabindex="0" data-row="0" data-col="2">69</td>
+      </tr>
+      <tr>
+        <td class="result-cell" tabindex="0" data-row="1" data-col="0">49</td>
+        <td class="result-cell" tabindex="0" data-row="1" data-col="1">68</td>
+        <td class="result-cell" tabindex="0" data-row="1" data-col="2">87</td>
+      </tr>
+      <tr>
+        <td class="result-cell" tabindex="0" data-row="2" data-col="0">59</td>
+        <td class="result-cell" tabindex="0" data-row="2" data-col="1">82</td>
+        <td class="result-cell" tabindex="0" data-row="2" data-col="2">105</td>
+      </tr>
+    </table>
+  </div>
+</div>
+  </div>
+
+  <div id="explanation"></div>
+</div>
+
 <script>
-  function parseMatrix(table) {
-    return Array.from(table.rows).map(row =>
-      Array.from(row.cells).map(cell =>
-        parseFloat(cell.querySelector("input")?.value || 0)
-      )
-    );
-  }
+function parseMatrix(table) {
+  return Array.from(table.rows).map(row =>
+    Array.from(row.cells).map(cell =>
+      parseFloat(cell.querySelector("input")?.value || 0)
+    )
+  );
+}
 
-  function updateProduct(A, B, outId) {
-    const resultTable = document.getElementById(outId);
-    for (let i = 0; i < A.length; i++) {
-      for (let j = 0; j < B[0].length; j++) {
-        let sum = 0;
-        for (let k = 0; k < B.length; k++) {
-          sum += A[i][k] * B[k][j];
-        }
-        resultTable.rows[i].cells[j].textContent = sum;
+function updateProduct(A, B, outId) {
+  const resultTable = document.getElementById(outId);
+  for (let i = 0; i < A.length; i++) {
+    for (let j = 0; j < B[0].length; j++) {
+      let sum = 0;
+      for (let k = 0; k < B.length; k++) {
+        sum += A[i][k] * B[k][j];
       }
+      resultTable.rows[i].cells[j].textContent = sum;
     }
   }
+}
 
-  function highlight(row, col, leftId, rightId) {
-    const left = document.getElementById(leftId).rows;
-    const right = document.getElementById(rightId).rows;
-    for (let i = 0; i < left[row].cells.length; i++) {
-      left[row].cells[i].classList.add("highlight-row");
-    }
-    for (let i = 0; i < right.length; i++) {
-      right[i].cells[col].classList.add("highlight-col");
-    }
+function highlight(row, col, leftId, rightId) {
+  clearHighlights();
+  const left = document.getElementById(leftId).rows;
+  const right = document.getElementById(rightId).rows;
+
+  for (let i = 0; i < left[row].cells.length; i++) {
+    left[row].cells[i].classList.add("highlight-row");
   }
 
-  function clearHighlights() {
-    document.querySelectorAll("td").forEach(td => {
-      td.classList.remove("highlight-row", "highlight-col");
-    });
+  for (let i = 0; i < right.length; i++) {
+    right[i].cells[col].classList.add("highlight-col");
+  }
+}
+
+function clearHighlights() {
+  document.querySelectorAll("td").forEach(td =>
+    td.classList.remove("highlight-row", "highlight-col")
+  );
+}
+
+function explain(name, A, B, row, col) {
+  const rowVals = A[row];
+  const colVals = B.map(r => r[col]);
+  const terms = rowVals.map((a, i) => `(${a})(${colVals[i]})`);
+  const result = rowVals.reduce((acc, a, i) => acc + a * colVals[i], 0);
+
+  document.getElementById("explanation").innerHTML =
+    `\\[${name}_{${row+1},${col+1}} = ${terms.join(" + ")} = ${result}\\]`;
+
+  MathJax.typesetPromise();
+}
+
+function activate(cell, leftId, rightId, name, A, B) {
+  const row = +cell.dataset.row;
+  const col = +cell.dataset.col;
+  highlight(row, col, leftId, rightId);
+  explain(name, A, B, row, col);
+}
+
+function handleKeys(e, cell, tableId, callback) {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    callback();
   }
 
-  function explain(matrixName, A, B, row, col) {
-    const rowVals = A[row];
-    const colVals = B.map(r => r[col]);
-    const terms = rowVals.map((a, i) => `(${a})(${colVals[i]})`);
-    const result = rowVals.reduce((acc, a, i) => acc + a * colVals[i], 0);
-    // Use MathJax display math:
-    const explanationHTML = `\\[${matrixName}_{${row + 1},${col + 1}} = ${terms.join(" + ")} = ${result}\\]`;
-    document.getElementById("explanation").innerHTML = explanationHTML;
-    MathJax.typesetPromise();
+  const row = +cell.dataset.row;
+  const col = +cell.dataset.col;
+  const table = document.getElementById(tableId);
+
+  let r = row, c = col;
+
+  if (e.key === "ArrowRight") c++;
+  if (e.key === "ArrowLeft") c--;
+  if (e.key === "ArrowDown") r++;
+  if (e.key === "ArrowUp") r--;
+
+  if (table.rows[r] && table.rows[r].cells[c]) {
+    e.preventDefault();
+    table.rows[r].cells[c].focus();
   }
+}
 
-  function getMatrices() {
-    return {
-      A: parseMatrix(document.getElementById("matrixA")),
-      B: parseMatrix(document.getElementById("matrixB")),
-      C: parseMatrix(document.getElementById("matrixC")),
-      D: parseMatrix(document.getElementById("matrixD")),
-    };
-  }
+function init() {
+  const updateAll = () => {
+    const A = parseMatrix(matrixA);
+    const B = parseMatrix(matrixB);
+    const C = parseMatrix(matrixC);
+    const D = parseMatrix(matrixD);
 
-  function init() {
-    const explanationDiv = document.createElement("div");
-    explanationDiv.id = "explanation";
-    explanationDiv.style.marginTop = "10px";
-    explanationDiv.style.minHeight = "2.2em";
-    document.querySelector(".matrix-figure").appendChild(explanationDiv);
+    updateProduct(A, B, "matrixAB");
+    updateProduct(D, C, "matrixDC");
+  };
 
-    const updateAll = () => {
-      const { A, B, C, D } = getMatrices();
-      updateProduct(A, B, "matrixAB");
-      updateProduct(D, C, "matrixDC");
-    };
+  document.querySelectorAll("input").forEach(i =>
+    i.addEventListener("input", () => {
+      clearHighlights();
+      explanation.innerHTML = "";
+      updateAll();
+    })
+  );
 
-    document.querySelectorAll("input").forEach(input => {
-      input.addEventListener("input", () => {
-        clearHighlights();
-        document.getElementById("explanation").innerHTML = "";
-        updateAll();
-      });
+  document.querySelectorAll("#matrixAB .result-cell").forEach(cell => {
+    cell.addEventListener("click", () => {
+      activate(cell, "matrixA", "matrixB", "AB",
+        parseMatrix(matrixA), parseMatrix(matrixB));
     });
 
-    document.querySelectorAll("#matrixAB .result-cell").forEach(cell => {
-      cell.addEventListener("mouseover", () => {
-        const { A, B } = getMatrices();
-        const row = +cell.dataset.row;
-        const col = +cell.dataset.col;
-        clearHighlights();
-        highlight(row, col, "matrixA", "matrixB");
-        explain("AB", A, B, row, col);
-      });
+    cell.addEventListener("keydown", e => {
+      handleKeys(e, cell, "matrixAB", () =>
+        activate(cell, "matrixA", "matrixB", "AB",
+          parseMatrix(matrixA), parseMatrix(matrixB))
+      );
+    });
+  });
+
+  document.querySelectorAll("#matrixDC .result-cell").forEach(cell => {
+    cell.addEventListener("click", () => {
+      activate(cell, "matrixD", "matrixC", "DC",
+        parseMatrix(matrixD), parseMatrix(matrixC));
     });
 
-    document.querySelectorAll("#matrixDC .result-cell").forEach(cell => {
-      cell.addEventListener("mouseover", () => {
-        const { C, D } = getMatrices();
-        const row = +cell.dataset.row;
-        const col = +cell.dataset.col;
-        clearHighlights();
-        highlight(row, col, "matrixD", "matrixC");
-        explain("DC", D, C, row, col);
-      });
+    cell.addEventListener("keydown", e => {
+      handleKeys(e, cell, "matrixDC", () =>
+        activate(cell, "matrixD", "matrixC", "DC",
+          parseMatrix(matrixD), parseMatrix(matrixC))
+      );
     });
+  });
 
-    document.body.addEventListener("mouseout", e => {
-      if (e.target.classList.contains("result-cell")) {
-        clearHighlights();
-        document.getElementById("explanation").innerHTML = "";
-      }
-    });
+  updateAll();
+}
 
-    updateAll();
-  }
-
-  init();
+init();
 </script>
+
+</body>
+</html>
 
 
 ```
 
 :::
 
-::: {.callout-note appearance="simple"}
-## Example 10
-
-Now, using the $A$ and $B$ from example $9$, lets compute $BA$:
-
-$$BA =\begin{bmatrix} 
-0 \cdot 1 + 5 \cdot 3 & 0 \cdot 2 + 5 \cdot 4 \\ 
-6 \cdot 1 + 7 \cdot 3 & 6 \cdot 2 + 7 \cdot 4 
-\end{bmatrix}$$
-By carrying out these multiplications you will have,
-$$BA=\begin{bmatrix} 
-0 + 15 & 0 + 20 \\ 
-6 + 21 & 12 + 28 
-\end{bmatrix}=BA=\begin{bmatrix} 
-15 & 20 \\ 
-27 & 40 
-\end{bmatrix}$$
-
-Compare $AB$ and $BA$.
-
-$$AB =\begin{bmatrix} 
-12 & 19 \\ 
-24 & 43 
-\end{bmatrix}, \quad BA =
-\begin{bmatrix} 
-15 & 20 \\ 
-27 & 40 
-\end{bmatrix}$$
-
-Since $AB \neq BA$, this example confirms that **matrix multiplication is not commutative** in general.
-
-:::
-
 :::{.callout-note appearance="simple"}
-## Example 11
+## Example 3
 Let $A$ be a $2 \times 3$ matrix and $B$ be a $3 \times 2$ matrix.
 
 $$A = \begin{bmatrix} 
@@ -709,6 +741,11 @@ $$AB = \begin{bmatrix}
 So here $AB$ is the $2 \times 1$ matrix given above. However, in this example, $BA$ is undefined, as you require the first matrix to have the same number of columns as the second matrix has rows, $B$ here only has 1 column, whereas $A$ has 2 rows.
 ::: 
 
+
+# Matrix multiplication with special matrices
+
+## Matrix multiplication with vectors
+
 Matrix multiplication can be linked to simultaneous equations. This involves multiplying a multiplying a matrix by a vector, $\mathbf{v}$, where the entries are variables.
 
 :::{.callout-note appearance="simple"}
@@ -741,8 +778,15 @@ x + 2y\\
 Here you can see, the equation $A\mathbf{v}=B$ is equivalent to the following set simultaneous equations:
 $$x+2y=5$$
 $$3x+3y=6$$
-So you could solve for $x$ and $y$ in $A\mathbf{v}=B$, using tools you can learn in [Guide: Introduction to solving simultaneous equations]. You'll see this solved in example 1 of that guide.
+So you could solve for $x$ and $y$ in $A\mathbf{v}=B$, using tools you can learn in [Guide: Introduction to solving simultaneous equations]. You'll see this solved in Example 1 of that guide.
+
 :::
+
+## Matrix multiplication with zero matrices
+
+## Matrix multiplication with identity matrices
+
+## Matrix multiplication with other special matrices
 
 It may be most efficient for you to solve a system of simultaneous equations using matrices, you can read more about this in [Guide: Introduction to Gaussian elimination].
 
