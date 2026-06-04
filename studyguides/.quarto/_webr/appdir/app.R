@@ -1,165 +1,223 @@
 library(shiny)
 library(bslib)
-library(ggplot2)
-library(plotly)
+library(DT)
 
-ui <- page_sidebar(
-  title = "Confidence interval for mean weight of a product in Cantor's Confectionery",
-  
-  sidebar = sidebar(
-    sliderInput("alpha",
-                "significance level (α):",
-                min = 0.01,
-                max = 0.20,
-                value = 0.05,
-                step = 0.01),
-    
-    hr(),
-    
-    numericInput("x_bar",
-                 "sample mean (x̄) in grams:",
-                 value = 75,
-                 min = 50,
-                 max = 100,
-                 step = 0.1),
-    
-    numericInput("sigma",
-                 "standard deviation (σ) in grams:",
-                 value = 10,
-                 min = 1,
-                 max = 20,
-                 step = 0.1),
-    
-    numericInput("n",
-                 "sample size (n):",
-                 value = 100,
-                 min = 10,
-                 max = 500,
-                 step = 1)
+# Generate truth table
+generate_truth_table <- function(vars) {
+  expand.grid(rep(list(c(TRUE, FALSE)), length(vars))) |>
+    setNames(vars)
+}
+
+# Convert logic symbols to R syntax (UPDATED for brackets)
+convert_logic <- function(expr) {
+  expr <- gsub("¬", "!", expr)
+  expr <- gsub("∧", "&", expr)
+  expr <- gsub("∨", "|", expr)
+
+  # implication (supports brackets now)
+  expr <- gsub("(.*)→(.*)", "(!\\1 | \\2)", expr)
+
+  # biconditional (supports brackets now)
+  expr <- gsub("(.*)↔(.*)", "(\\1 == \\2)", expr)
+
+  expr
+}
+
+# Safe evaluation
+evaluate_expr <- function(expr, data) {
+  expr <- convert_logic(expr)
+
+  tryCatch({
+    eval(parse(text = expr), envir = data)
+  }, error = function(e) {
+    rep(NA, nrow(data))
+  })
+}
+
+ui <- fluidPage(
+
+  tags$head(
+    tags$style(HTML("
+      .T { color:#3f68b6; font-weight:bold; font-size:18px; }
+      .F { color:#db4315; font-weight:bold; font-size:18px; }
+
+      table {
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-family: sans-serif;
+        min-width: 300px;
+      }
+
+      th {
+        background-color: #f5f5f5;
+        padding: 10px 16px;
+        text-align: center;
+        font-weight: 600;
+        border-bottom: 2px solid #ddd;
+      }
+
+      td {
+        padding: 10px 16px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+      }
+
+      tr:nth-child(even) {
+        background-color: #fafafa;
+      }
+
+      tr:hover {
+        background-color: #f1f7ff;
+      }
+
+      button {
+        margin: 2px;
+      }
+    "))
   ),
-  
-  card(
-    card_header("Normal distribution and confidence interval"),
-    plotlyOutput("normal_plot", height = "600px")
-  ),
-  
-  card(
-    card_header("Confidence interval summary"),
-    div(
-      style = "font-size: 16px; padding: 10px;",
-      uiOutput("ci_summary")
+
+  titlePanel("Truth Table Builder"),
+
+  sidebarLayout(
+    sidebarPanel(
+      textInput("vars", "Variables:", "p q"),
+      textInput("expr", "Expression:", ""),
+
+      h4("Variables"),
+      uiOutput("var_buttons"),
+
+      h4("Connectives"),
+      div(
+        actionButton("not", "¬"),
+        actionButton("and", "∧"),
+        actionButton("or", "∨"),
+        actionButton("imp", "→"),
+        actionButton("iff", "↔")
+      ),
+
+      h4("Brackets"),
+      div(
+        actionButton("lpar", "("),
+        actionButton("rpar", ")")
+      ),
+
+      br(),
+      actionButton("clear", "Clear")
     ),
-  height = "250px"
+
+    mainPanel(
+      htmlOutput("table")
+    )
   )
 )
 
 server <- function(input, output, session) {
-  
-  # Reactive calculations
-  confidence_level <- reactive({
-    (1 - input$alpha) * 100
+
+  # Reactive variable list
+  vars <- reactive({
+    v <- strsplit(input$vars, "\\s+")[[1]]
+    v[v != ""]
   })
-  
-  alpha_half <- reactive({
-    input$alpha / 2
+
+  # Variable buttons
+  output$var_buttons <- renderUI({
+    lapply(vars(), function(v) {
+      actionButton(paste0("var_", v), v)
+    })
   })
-  
-  z_critical <- reactive({
-    qnorm(1 - alpha_half())
+
+  # Handle variable button clicks
+  observe({
+    for (v in vars()) {
+      local({
+        var <- v
+        observeEvent(input[[paste0("var_", var)]], {
+          updateTextInput(session, "expr",
+                          value = paste0(input$expr, var))
+        }, ignoreInit = TRUE)
+      })
+    }
   })
-  
-  standard_error <- reactive({
-    input$sigma / sqrt(input$n)
+
+  # Connectives
+  observeEvent(input$not, {
+    updateTextInput(session, "expr", value = paste0(input$expr, "¬"))
   })
-  
-  margin_of_error <- reactive({
-    z_critical() * standard_error()
+
+  observeEvent(input$and, {
+    updateTextInput(session, "expr", value = paste0(input$expr, " ∧ "))
   })
-  
-  ci_lower <- reactive({
-    input$x_bar - margin_of_error()
+
+  observeEvent(input$or, {
+    updateTextInput(session, "expr", value = paste0(input$expr, " ∨ "))
   })
-  
-  ci_upper <- reactive({
-    input$x_bar + margin_of_error()
+
+  observeEvent(input$imp, {
+    updateTextInput(session, "expr", value = paste0(input$expr, " → "))
   })
-  
-  # Main plot
-  output$normal_plot <- renderPlotly({
-    
-    # Create data for the normal distribution
-    x_seq <- seq(-4, 4, length.out = 1000)
-    y_seq <- dnorm(x_seq)
-    
-    # Create the base plot
-    p <- ggplot(data.frame(x = x_seq, y = y_seq), aes(x = x, y = y)) +
-      geom_line(size = 1.2, color = "#3f68b6") +
-      
-      # Shade the rejection regions
-      geom_area(data = data.frame(x = x_seq[x_seq <= -z_critical()], 
-                                  y = y_seq[x_seq <= -z_critical()]),
-                aes(x = x, y = y), fill = "#db4315", alpha = 0.3) +
-      geom_area(data = data.frame(x = x_seq[x_seq >= z_critical()], 
-                                  y = y_seq[x_seq >= z_critical()]),
-                aes(x = x, y = y), fill = "#db4315", alpha = 0.3) +
-      
-      # Shade the confidence region
-      geom_area(data = data.frame(x = x_seq[x_seq >= -z_critical() & x_seq <= z_critical()], 
-                                  y = y_seq[x_seq >= -z_critical() & x_seq <= z_critical()]),
-                aes(x = x, y = y), fill = "#3f68b6", alpha = 0.2) +
-      
-      # Add vertical lines for critical values
-      geom_vline(xintercept = c(-z_critical(), z_critical()), 
-                 linetype = "dashed", color = "#db4315", size = 1) +
-      geom_vline(xintercept = 0, linetype = "solid", color = "black", size = 1) +
-      
-      # Add labels
-      annotate("text", x = -z_critical(), y = 0.1, 
-               label = paste("-Z =", round(-z_critical(), 3)), 
-               hjust = 1.1, color = "#db4315", size = 4) +
-      annotate("text", x = z_critical(), y = 0.1, 
-               label = paste("Z =", round(z_critical(), 3)), 
-               hjust = -0.1, color = "#db4315", size = 4) +
-      annotate("text", x = 0, y = 0.45, 
-               label = paste(confidence_level(), "% Confidence"), 
-               hjust = 0.5, color = "#3f68b6", size = 5, fontface = "bold") +
-      annotate("text", x = -3, y = 0.05, 
-               label = paste("α/2 =", round(alpha_half(), 4)), 
-               hjust = 0.5, color = "#db4315", size = 4) +
-      annotate("text", x = 3, y = 0.05, 
-               label = paste("α/2 =", round(alpha_half(), 4)), 
-               hjust = 0.5, color = "#db4315", size = 4) +
-      
-      labs(
-        title = "Standard normal distribution for confidence interval",
-        x = "Z-score",
-        y = "Probability density",
-        subtitle = paste("Confidence Interval for μ: [", round(ci_lower(), 2), "g,", round(ci_upper(), 2), "g]")
-      ) +
-      theme_minimal() +
-      theme(
-        plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
-        plot.subtitle = element_text(hjust = 0.5, size = 12),
-        axis.title = element_text(size = 12),
-        axis.text = element_text(size = 10)
-      ) +
-      xlim(-4, 4) +
-      ylim(0, 0.5)
-    
-    ggplotly(p) %>%
-      config(displayModeBar = FALSE)
+
+  observeEvent(input$iff, {
+    updateTextInput(session, "expr", value = paste0(input$expr, " ↔ "))
   })
-  
-  # Confidence interval summary
-  output$ci_summary <- renderUI({
-    tagList(
-      p(strong("Confidence level:"), paste0(sprintf("%.1f", confidence_level()), "%")),
-      p(strong("Confidence interval:"), 
-        paste0("[", sprintf("%.3f", ci_lower()), " g , ", sprintf("%.3f", ci_upper()), " g]")),
-      p(strong("Margin of error (ME):"), paste0(sprintf("%.3f", margin_of_error()), " g")),
-      p(strong("Standard error (SE):"), paste0(sprintf("%.3f", standard_error()), " g"))
-    )
+
+  # Brackets (NEW)
+  observeEvent(input$lpar, {
+    updateTextInput(session, "expr", value = paste0(input$expr, "("))
+  })
+
+  observeEvent(input$rpar, {
+    updateTextInput(session, "expr", value = paste0(input$expr, ")"))
+  })
+
+  observeEvent(input$clear, {
+    updateTextInput(session, "expr", value = "")
+  })
+
+  # Render table
+  output$table <- renderUI({
+
+    req(vars())
+
+    df <- generate_truth_table(vars())
+
+    if (nchar(input$expr) > 0) {
+      df$result <- evaluate_expr(input$expr, df)
+    }
+
+    format_val <- function(x) {
+      if (isTRUE(x)) return('<span class="T">T</span>')
+      if (identical(x, FALSE)) return('<span class="F">F</span>')
+      return("")
+    }
+
+    html <- "<table>"
+
+    # Header
+    html <- paste0(html, "<thead><tr>",
+                   paste0("<th>", c(vars(), "Result"), "</th>", collapse = ""),
+                   "</tr></thead>")
+
+    # Body
+    html <- paste0(html, "<tbody>")
+
+    for (i in 1:nrow(df)) {
+      html <- paste0(html, "<tr>")
+
+      for (v in vars()) {
+        html <- paste0(html, "<td>", format_val(df[[v]][i]), "</td>")
+      }
+
+      if ("result" %in% colnames(df)) {
+        html <- paste0(html, "<td>", format_val(df$result[i]), "</td>")
+      }
+
+      html <- paste0(html, "</tr>")
+    }
+
+    html <- paste0(html, "</tbody></table>")
+
+    HTML(html)
   })
 }
 
-shinyApp(ui = ui, server = server)
+shinyApp(ui, server)

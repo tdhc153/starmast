@@ -1,0 +1,713 @@
+---
+title: "Matrix multiplication with special matrices"
+author: "Tom Coleman"
+abstract-title: Summary
+abstract: Matrices are rectangular arrays of mathematical objects with entries arranged in rows and columns. Matrices are a very useful concept within mathematics and statistics. You'll see them used for solving simultaneous equations, modelling data in several variables, and much more. This guide will explain how multiplication of special kinds of matrices work. 
+image: FiguresPNG/matrixmultiplicationspecial-image.png
+categories:
+  - Linear mathematics
+  - Matrices
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*Before reading this guide, it is strongly recommended that you read [Guide: Introduction to matrices](introtomatrices.qmd) and [Guide: Matrix multiplication](matrixmultiplication.qmd)*.
+
+::: {.content-visible when-format="html"}
+
+```{=html}
+<table><tr><td style="vertical-align: middle"><strong>Narration of study guide:</strong>&nbsp;&nbsp;</td><td><audio controls><source src="./Narrations/matrixmultiplicationspecial.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio></tr></table>
+```
+
+:::
+
+As seen in [Guide: Matrix multiplication](matrixmultiplication.qmd), the idea of matrix multiplication is a key skill in the study of linear mathematics.  If $A,B$ are matrices, the idea for the $(i,j)$th entry of their product $AB$ is to find a 'product' of the $i$th row of $A$ by the $j$th column of $B$. This is done by matching entries in the $i$th row of $A$ to entries in the $j$th column of $B$, multiplying the matched entries, and adding them all together.
+
+Mastering matrix multiplication can make your life much easier in many different mathematical aspects. As an example, if you have read [Guide: Introduction to solving simultaneous equations](introtosimeqs.qmd) then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations. You can then use matrix multiplication to rewrite your simultaneous equations and use matrix methods to solve them: either by row-reduction (see [Guide: Introduction to row-reduction]) or by using matrix inverses (see [Guide: Matrix inverses]). The way this is facilitated is by multiplying a matrix by a vector of variables, which is equal to a vector of answers. This is a special kind of matrix multiplication because of the matrices involved.
+
+This guide looks at matrix multiplication with the special matrices introduced in [Guide: Introduction to matrices](introtomatrices.qmd): vectors, zero and identity matrices, upper- and lower-triangular matrices, and diagonal matrices. 
+
+# Matrix multiplication with vectors
+
+As you saw in [Guide: Introduction to matrices](introtomatrices.qmd), a matrix with exactly **one** column and any number of rows is called a **column vector**, which is often shortened to **vector**. Vectors are important because they represent positions in co-ordinate systems; they are usually given by lowercase letters in bold fonts $\mathbf{v}$ (when typed), or underlined $\underline{v}$ (when using a pen and paper). See [Guide: Introduction to vectors](introductiontovectors.qmd) for more. 
+
+Example 4 in [Guide: Matrix multiplication](matrixmultiplication.qmd) shows that a $2\times 3$ matrix multiplied by a a $3\times 1$ vector gives a $2\times 1$ vector. This behaviour is true in general:
+
+:::{.callout-note}
+
+## Product of matrix and a vector
+
+The product of an $m\times n$ matrix $A$ with an $n\times 1$ vector $\mathbf{x}$ is an $m\times 1$ vector $\mathbf{b}$.
+
+:::
+
+:::{.callout-tip}
+
+What this means is that a $m\times n$ matrix maps a point in $n$-dimensional space to a point in $m$-dimensional space. You can see this in Example 4; the $2\times 3$ matrix $A$ took a point in $3$-dimensional space to a point in $2$-dimensional space. This is the idea of a matrix acting as a **linear transformation**; see [Guide: Matrices as linear transformations] for more. 
+
+:::
+
+One important application of matrix multiplication of a matrix with a vector is in solving simultaneous equations. This involves multiplying a multiplying a matrix by a vector, $\mathbf{v}$, where the entries are variables.
+
+:::{.content-hidden when-format="pdf"}
+
+:::{.callout-note appearance="simple"}
+
+## Example 1
+
+Let's explore the equation $A\mathbf{x}=\mathbf{b}$ for
+$$A =\begin{bmatrix} 
+1 & 2\\ 
+3 & 3 \\ 
+\end{bmatrix},\quad \mathbf{x}=\begin{bmatrix} 
+x\\ 
+y \end{bmatrix}, \quad \mathbf{b} =\begin{bmatrix} 
+5\\ 
+6 \end{bmatrix}$$ 
+You can look at the product of $A$ and $\mathbf{x}$ here. Doing this gives 
+$$A\mathbf{x}= \begin{bmatrix}
+1 \cdot x + 2 \cdot y\\
+3 \cdot x + 3 \cdot y \\
+\end{bmatrix} = \begin{bmatrix}
+x + 2y\\
+3x + 3y
+\end {bmatrix}$$
+So the equation $A\mathbf{x} = \mathbf{b}$ becomes
+$$\begin{bmatrix}
+x + 2y\\
+3x + 3y
+\end {bmatrix} = \begin{bmatrix} 
+5\\ 
+6 \end{bmatrix}$$
+
+As two vectors are equal if and only if their entries are equal, the equation $A\mathbf{x}=\mathbf{b}$ is equivalent to the following set of simultaneous equations:
+$$
+\begin{aligned}
+x+2y&=5\\
+3x+3y&=6
+\end{aligned}
+$$
+You can solve for $x$ and $y$ in $A\mathbf{x}=\mathbf{b}$, using tools you can learn in [Guide: Introduction to solving simultaneous equations](introtosimeqs.qmd). You'll see this solved in Example 1 of that guide.
+
+Conversely, you can write any set of simultaneous equations as the product $A\mathbf{x} = \mathbf{b}$ where:
+
+- $A$ is a matrix orresponding to the coefficients attached to variables of the equations
+- $\mathbf{x}$ is a vector of variables
+- $\mathbf{b}$ is a vector of answers to the equations. 
+
+For instance, the set of simultaneous equations 
+$$
+\begin{aligned}
+-2x+8y&=16\\
+x+9y&=-8
+\end{aligned}
+$$
+can be written as $A\mathbf{x} = \mathbf{b}$ where
+$$\underbrace{\begin{bmatrix}-2&8\\1&9\end{bmatrix}}_{A}\underbrace{\begin{bmatrix}x\\y\end{bmatrix}}_{\mathbf{x}} = \underbrace{\begin{bmatrix}16\\-8\end{bmatrix}}_{\mathbf{b}}.$$
+
+:::
+
+:::
+
+:::{.content-visible when-format="pdf"}
+
+:::{.callout-note appearance="simple"}
+
+## Example 1
+
+Let's explore the equation $A\mathbf{x}=\mathbf{b}$ for
+$$A =\begin{bmatrix} 
+1 & 2\\ 
+3 & 3 \\ 
+\end{bmatrix},\quad \mathbf{x}=\begin{bmatrix} 
+x\\ 
+y \end{bmatrix}, \quad \mathbf{b} =\begin{bmatrix} 
+5\\ 
+6 \end{bmatrix}$$ 
+You can look at the product of $A$ and $\mathbf{x}$ here. Doing this gives 
+$$A\mathbf{x}= \begin{bmatrix}
+1 \cdot x + 2 \cdot y\\
+3 \cdot x + 3 \cdot y \\
+\end{bmatrix} = \begin{bmatrix}
+x + 2y\\
+3x + 3y
+\end {bmatrix}$$
+So the equation $A\mathbf{x} = \mathbf{b}$ becomes
+$$\begin{bmatrix}
+x + 2y\\
+3x + 3y
+\end {bmatrix} = \begin{bmatrix} 
+5\\ 
+6 \end{bmatrix}$$
+
+As two vectors are equal if and only if their entries are equal, the equation $A\mathbf{x}=\mathbf{b}$ is equivalent to the following set of simultaneous equations:
+$$
+\begin{aligned}
+x+2y&=5\\
+3x+3y&=6
+\end{aligned}
+$$
+You can solve for $x$ and $y$ in $A\mathbf{x}=\mathbf{b}$, using tools you can learn in [Guide: Introduction to solving simultaneous equations](introtosimeqs.qmd). You'll see this solved in Example 1 of that guide.
+
+:::
+
+:::{.callout-note appearance="simple"}
+
+## Example 1 continued
+
+Conversely, you can write any set of simultaneous equations as the product $A\mathbf{x} = \mathbf{b}$ where:
+
+- $A$ is a matrix orresponding to the coefficients attached to variables of the equations
+- $\mathbf{x}$ is a vector of variables
+- $\mathbf{b}$ is a vector of answers to the equations. 
+
+For instance, the set of simultaneous equations 
+$$
+\begin{aligned}
+-2x+8y&=16\\
+x+9y&=-8
+\end{aligned}
+$$
+can be written as $A\mathbf{x} = \mathbf{b}$ where
+$$\underbrace{\begin{bmatrix}-2&8\\1&9\end{bmatrix}}_{A}\underbrace{\begin{bmatrix}x\\y\end{bmatrix}}_{\mathbf{x}} = \underbrace{\begin{bmatrix}16\\-8\end{bmatrix}}_{\mathbf{b}}.$$
+
+:::
+
+:::
+
+:::{.callout-tip}
+
+In fact, you can use matrices multiplied by vectors to help find solutions (if they exist) to any number of linear equations in any number of variables. This technique of solving simultaneous equations is based on a set of matrix operations known as **row-reduction** and you can find out more about it in [Guide: Introduction to row-reduction].
+
+Typically, if you have $m$ many equations in $n$ many variables, then this is represented by an $m\times n$ matrix of coefficients multiplying an $n\times 1$ column vector of variables to output an $m\times 1$ column vector of answers.
+
+:::
+
+Let's see this in action where the matrix isn't square to begin with:
+
+:::{.content-hidden when-format="pdf"}
+
+:::{.callout-note appearance="simple"}
+
+## Example 2
+
+The matrix equation $A\mathbf{x}=\mathbf{b}$ for
+$$A =\begin{bmatrix} 
+-1 & 2 & 3\\ 
+0 & 3 & -9\\ 
+\end{bmatrix},\quad \mathbf{x}=\begin{bmatrix} 
+x\\ 
+y\\
+z\end{bmatrix}, \quad \mathbf{b} =\begin{bmatrix} 
+-1\\ 
+6\end{bmatrix}$$ 
+can be written as a system of $2$ equations in $3$ variables. Evaluating the product gives
+$$A\mathbf{x}= \begin{bmatrix}
+(-1) \cdot x + 2 \cdot y + 3\cdot z\\
+0 \cdot x + 3 \cdot y + (-9)\cdot z\\
+\end{bmatrix} = \begin{bmatrix}
+-x + 2y + 3z\\
+3y - 9z
+\end{bmatrix}$$
+So the equation $A\mathbf{x} = \mathbf{b}$ becomes
+$$\begin{bmatrix}
+-x + 2y + 3z\\
+3y - 9z
+\end {bmatrix} = \begin{bmatrix} 
+-1\\ 
+6\end{bmatrix}$$
+
+As two vectors are equal if and only if their entries are equal, the equation $A\mathbf{x}=\mathbf{b}$ is equivalent to the following set of simultaneous equations:
+$$
+\begin{aligned}
+-x+2y + 3z&=-1\\
+3y-9z&=6
+\end{aligned}
+$$
+
+You can write any number of linear equations in any number of variables as a matrix product. For instance, the system of linear equations:
+$$
+\begin{aligned}
+x+9y-4z + t + w &=19\\
+-y + z + t -5w&=1\\
+- 8t - 8w&= 0
+\end{aligned}
+$$
+can be written as $A\mathbf{x} = \mathbf{b}$ where
+$$\underbrace{\begin{bmatrix}1&9&-4&1&1\\0&-1&1&1&-5\\0&0&0&-8&-8\end{bmatrix}}_{A}\underbrace{\begin{bmatrix}x\\y\\z\\t\\w\end{bmatrix}}_{\mathbf{x}} = \underbrace{\begin{bmatrix}19\\1\\0\end{bmatrix}}_{\mathbf{b}}.$$
+
+You can notice here that for three equations in five variables, the coefficient matrix is represented by a $3\times 5$ matrix. This is true in general: for $m$ equations in $n$ variables, the coefficient matrix is an $m\times n$ matrix. 
+
+:::
+
+:::
+
+:::{.content-visible when-format="pdf"}
+
+:::{.callout-note appearance="simple"}
+
+## Example 2
+
+The matrix equation $A\mathbf{x}=\mathbf{b}$ for
+$$A =\begin{bmatrix} 
+-1 & 2 & 3\\ 
+0 & 3 & -9\\ 
+\end{bmatrix},\quad \mathbf{x}=\begin{bmatrix} 
+x\\ 
+y\\
+z\end{bmatrix}, \quad \mathbf{b} =\begin{bmatrix} 
+-1\\ 
+6\end{bmatrix}$$ 
+can be written as a system of $2$ equations in $3$ variables. Evaluating the product gives
+$$A\mathbf{x}= \begin{bmatrix}
+(-1) \cdot x + 2 \cdot y + 3\cdot z\\
+0 \cdot x + 3 \cdot y + (-9)\cdot z\\
+\end{bmatrix} = \begin{bmatrix}
+-x + 2y + 3z\\
+3y - 9z
+\end{bmatrix}$$
+So the equation $A\mathbf{x} = \mathbf{b}$ becomes
+$$\begin{bmatrix}
+-x + 2y + 3z\\
+3y - 9z
+\end {bmatrix} = \begin{bmatrix} 
+-1\\ 
+6\end{bmatrix}$$
+
+As two vectors are equal if and only if their entries are equal, the equation $A\mathbf{x}=\mathbf{b}$ is equivalent to the following set of simultaneous equations:
+$$
+\begin{aligned}
+-x+2y + 3z&=-1\\
+3y-9z&=6
+\end{aligned}
+$$
+
+:::
+
+:::{.callout-note appearance="simple"}
+
+## Example 2 continued
+
+You can write any number of linear equations in any number of variables as a matrix product. For instance, the system of linear equations:
+$$
+\begin{aligned}
+x+9y-4z + t + w &=19\\
+-y + z + t -5w&=1\\
+- 8t - 8w&= 0
+\end{aligned}
+$$
+can be written as $A\mathbf{x} = \mathbf{b}$ where
+$$\underbrace{\begin{bmatrix}1&9&-4&1&1\\0&-1&1&1&-5\\0&0&0&-8&-8\end{bmatrix}}_{A}\underbrace{\begin{bmatrix}x\\y\\z\\t\\w\end{bmatrix}}_{\mathbf{x}} = \underbrace{\begin{bmatrix}19\\1\\0\end{bmatrix}}_{\mathbf{b}}.$$
+
+You can notice here that for three equations in five variables, the coefficient matrix is represented by a $3\times 5$ matrix. This is true in general: for $m$ equations in $n$ variables, the coefficient matrix is an $m\times n$ matrix. 
+
+:::
+
+:::
+
+# Matrix multiplication with zero and identity matrices
+
+You saw in [Guide: Introduction to matrices](introtomatrices.qmd) that two other special kinds of matrices are 
+
+- **$m\times n$ zero matrices $0_{m\times n}$** where all the entries in an $m\times n$ matrix are $0$, and 
+- **$n\times n$ identity matrices $I_n$** where the entries in an $n\times n$ matrix are $1$'s down the main diagonal and $0$'s everywhere else.
+
+These matrices play the same role respectively that the numbers $0$ and $1$ do in multiplication of numbers. **Where the multiplication is defined**, you'd expect any matrix multiplied by a zero matrix to equal another zero matrix, and any matrix multiplied by an identity matrix to not change at all. This is the exact behaviour that happens:
+
+:::{.callout-note}
+
+## Matrix multiplication with zero and identity matrices
+
+Let $A$ be any $m\times n$ matrix. 
+
+(a) If $0_{p\times m}$ is the $p\times m$ zero matrix, then $0_{p\times m}A = 0_{p\times n}$ is the $p\times n$ zero matrix. 
+  Similarly, if $0_{n\times q}$ is the $n\times q$ zero matrix, then $A0_{n\times q}A = 0_{m\times q}$ is the $m\times q$ zero matrix.
+  
+(b) If $I_m$ is the $m\times m$ identity matrix, then $I_mA = A$. 
+  Similarly, if $I_n$ is the $n\times n$ identity matrix, then $AI_n = A$. 
+  
+:::
+
+For explanations as to why these results are true, please see [Proof sheet: Properties of matrix arithmetic].
+
+:::{.callout-warning}
+
+Although it is true that the product of any matrix with a zero matrix is a zero matrix, it's **not** true that if the product of two matrices is a zero matrix, then at least one of the matrices is a zero matrix. See Example 7 for more on this. 
+
+:::
+
+:::{.content-hidden when-format="pdf"}
+
+:::{.callout-note appearance="simple"}
+
+## Example 3
+
+Let $A$ be the following $2\times 3$ matrix: $$A =\begin{bmatrix} 
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix}$$
+
+It follows that if $0_{4\times 2}$ is the $4\times 2$ zero matrix, then 
+$$
+\begin{aligned}
+0_{4\times 2}A &= \begin{bmatrix}0&0\\0&0\\0&0\\0&0\end{bmatrix}\begin{bmatrix}
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix}\\[0.5em] 
+&= \begin{bmatrix}{0\cdot 0 + 0\cdot 4} & {0\cdot 2 + 0\cdot 0} & {0\cdot (-1) + 0\cdot 3} \\ {0\cdot 0 + 0\cdot 4} & {0\cdot 2 + 0\cdot 0} & {0\cdot (-1) + 0\cdot 3} \\ {0\cdot 0 + 0\cdot 4} & {0\cdot 2 + 0\cdot 0} & {0\cdot (-1) + 0\cdot 3}
+\\ {0\cdot 0 + 0\cdot 4} & {0\cdot 2 + 0\cdot 0} & {0\cdot (-1) + 0\cdot 3}\end{bmatrix}\\[0.5em]
+&= \begin{bmatrix} 
+0 & 0 & 0\\ 
+0 & 0 & 0 \\
+0 & 0 & 0 \\ 
+0 & 0 & 0
+\end{bmatrix} = 0_{4\times 3}
+\end{aligned}
+$$
+
+But you absolutely don't have to write out all of the working for this! It is enough to write something like $$A0_{3\times 8} = 0_{2\times 8}$$ which saves you from writing out at least 42 zeroes - and more if you show working!
+
+If $I_3$ is the $3\times 3$ identity matrix, then 
+
+$$
+\begin{aligned}
+AI_3 &= \begin{bmatrix}
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix}
+\begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix}\\[0.5em]
+&=
+\begin{bmatrix} 
+0 \cdot 1 + 2 \cdot 0 + (-1) \cdot 0 & 0 \cdot 0 + 2 \cdot 1 + (-1) \cdot 0 & 0 \cdot 0 + 2 \cdot 0 + (-1) \cdot 1 \\ 
+4 \cdot 1 + 0 \cdot 0 + 3 \cdot 0 & 4 \cdot 0 + 0 \cdot 1 + 3 \cdot 0 & 4 \cdot 0 + 0 \cdot 0 + 3 \cdot 1\end{bmatrix}\\[0.5em]
+&=\begin{bmatrix}
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix} = A
+\end{aligned}
+$$
+
+:::
+
+:::
+
+:::{.content-visible when-format="pdf"}
+
+:::{.callout-note appearance="simple"}
+
+## Example 3
+
+Let $A$ be the following $2\times 3$ matrix: $$A =\begin{bmatrix} 
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix}$$
+
+It follows that if $0_{4\times 2}$ is the $4\times 2$ zero matrix, then 
+$$
+\begin{aligned}
+0_{4\times 2}A &= \begin{bmatrix}0&0\\0&0\\0&0\\0&0\end{bmatrix}\begin{bmatrix}
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix}\\[0.5em] 
+&= \begin{bmatrix}{0\cdot 0 + 0\cdot 4} & {0\cdot 2 + 0\cdot 0} & {0\cdot (-1) + 0\cdot 3} \\ {0\cdot 0 + 0\cdot 4} & {0\cdot 2 + 0\cdot 0} & {0\cdot (-1) + 0\cdot 3} \\ {0\cdot 0 + 0\cdot 4} & {0\cdot 2 + 0\cdot 0} & {0\cdot (-1) + 0\cdot 3}
+\\ {0\cdot 0 + 0\cdot 4} & {0\cdot 2 + 0\cdot 0} & {0\cdot (-1) + 0\cdot 3}\end{bmatrix}\\[0.5em]
+&= \begin{bmatrix} 
+0 & 0 & 0\\ 
+0 & 0 & 0 \\
+0 & 0 & 0 \\ 
+0 & 0 & 0
+\end{bmatrix} = 0_{4\times 3}
+\end{aligned}
+$$
+
+But you absolutely don't have to write out all of the working for this! It is enough to write something like $$A0_{3\times 8} = 0_{2\times 8}$$ which saves you from writing out at least 42 zeroes - and more if you show working!
+
+:::
+
+:::{.callout-note appearance="simple"}
+
+## Example 3 continued 
+
+If $I_3$ is the $3\times 3$ identity matrix, then 
+
+$$
+\begin{aligned}
+AI_3 &= \begin{bmatrix}
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix}
+\begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix}\\[0.5em]
+&=
+\begin{bmatrix} 
+0 \cdot 1 + 2 \cdot 0 + (-1) \cdot 0 & 0 \cdot 0 + 2 \cdot 1 + (-1) \cdot 0 & 0 \cdot 0 + 2 \cdot 0 + (-1) \cdot 1 \\ 
+4 \cdot 1 + 0 \cdot 0 + 3 \cdot 0 & 4 \cdot 0 + 0 \cdot 1 + 3 \cdot 0 & 4 \cdot 0 + 0 \cdot 0 + 3 \cdot 1\end{bmatrix}\\[0.5em]
+&=\begin{bmatrix}
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix} = A
+\end{aligned}
+$$
+
+:::
+
+:::
+
+
+# Matrix multiplication with other special matrices
+
+The other kinds of special matrices that you saw in [Guide: Introduction to matrices](introtomatrices.qmd) were **square matrices**, **upper triangular and lower triangular matrices**, and **diagonal matrices**. 
+
+These are special because all of these types of matrices are said to be **closed** under matrix multiplication. Unlike general matrix multiplication, which could have matrices of three different dimensions involved in a product, because all of these types of matrices are square this is not a problem. 
+
+Here's the lowdown.
+
+:::{.callout-note}
+
+## Matrix multiplication with other special matrices
+
+Let $A,B$ be any two $n\times n$ square matrices.
+
+(a) The products $AB$ and $BA$ are defined, and both $AB$ and $BA$ are $n\times n$ square matrices.
+
+(b) The matrix power $$A^n =\underbrace{A\cdot A \cdot A \cdot \ldots \cdot A}_{n\textsf{ times}}$$ exists and is an $n\times n$ square matrix.
+  
+(c) If both $A,B$ are upper triangular matrices, then both $AB$ and $BA$ are upper triangular matrices.
+
+(d) If both $A,B$ are lower triangular matrices, then both $AB$ and $BA$ are lower triangular matrices.
+
+(e) If both $A,B$ are diagonal matrices, then both $AB$ and $BA$ are diagonal matrices. 
+  
+:::
+
+This next example shows part (d) of this statement in detail. 
+
+:::{.content-hidden when-format="pdf"}
+
+:::{.callout-note appearance="simple"}
+
+## Example 4
+
+Let $A,B,C$ be the following $3\times 3$ diagonal matrices: $$A = \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix},\quad B = \begin{bmatrix}1&0&0\\0&2&0\\0&0&3\end{bmatrix}\quad\textsf{and}\quad B = \begin{bmatrix}5&0&0\\0&0&0\\0&0&0\end{bmatrix}$$
+
+Then 
+
+$$
+\begin{aligned}
+AB &= \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix}\begin{bmatrix}1&0&0\\0&2&0\\0&0&3\end{bmatrix}\\[0.5em] 
+&= \begin{bmatrix}{0\cdot 1 + 0\cdot 0 + 0\cdot 0} & {0\cdot 0 + 0\cdot 2 + 0\cdot 0} & {0\cdot 1 + 0\cdot 0 + 0\cdot 3} \\ {0\cdot 1 + (-1)\cdot 0 + 0\cdot 0} & {0\cdot 0 + (-1)\cdot 2 + 0\cdot 0} & {0\cdot 0 + (-1)\cdot 0 + 0\cdot 3} \\ {0\cdot 1 + 0\cdot 0 + (-1)\cdot 0} & {0\cdot 0 + 0\cdot 2 + (-1)\cdot 0} & {0\cdot 0 + 0\cdot 0 + (-1)\cdot 3}\end{bmatrix}\\[0.5em]
+&= \begin{bmatrix} 
+0\cdot 1 & 0 & 0\\ 
+0 & (-1)\cdot 2 & 0 \\
+0 & 0 & (-1)\cdot 3
+\end{bmatrix} = \begin{bmatrix} 
+0 & 0 & 0\\ 
+0 & -2 & 0 \\
+0 & 0 & -3
+\end{bmatrix}
+\end{aligned}
+$$
+Here, you can notice the product of $AB$ is the diagonal matrix where each main diagonal entry in $AB$ is the product of the corresponding diagonal entries from $A$ and $B$. In fact, this is true in general, for any two $n\times n$ diagonal matrices.
+
+You can apply this to find out the product of matrices $AC$:
+
+$$
+AC = \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix}\begin{bmatrix}5&0&0\\0&0&0\\0&0&0\end{bmatrix} = \begin{bmatrix} 
+0\cdot 5 & 0 & 0\\ 
+0 & (-1)\cdot 0 & 0 \\
+0 & 0 & (-1)\cdot 0
+\end{bmatrix} = \begin{bmatrix} 
+0 & 0 & 0\\ 
+0 & 0 & 0 \\
+0 & 0 & 0
+\end{bmatrix}
+$$
+This shows that there are two non-zero matrices that multiply together to make a zero matrix!
+
+Finally, finding powers of diagonal matrices can be obtained by finding the corresponding powers of its entries. For instance 
+
+$$
+A^4 = \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix}^4 = \begin{bmatrix}(0)^4&0&0\\0&(-1)^4&0\\0&0&(-1)^4\end{bmatrix} = \begin{bmatrix}0&0&0\\0&1&0\\0&0&1\end{bmatrix} = -A.
+$$
+
+:::
+
+:::
+
+:::{.content-visible when-format="pdf"}
+
+:::{.callout-note appearance="simple"}
+
+## Example 4
+
+Let $A,B,C$ be the following $3\times 3$ diagonal matrices: $$A = \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix},\quad B = \begin{bmatrix}1&0&0\\0&2&0\\0&0&3\end{bmatrix}\quad\textsf{and}\quad B = \begin{bmatrix}5&0&0\\0&0&0\\0&0&0\end{bmatrix}$$
+
+Then 
+
+$$
+\begin{aligned}
+AB &= \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix}\begin{bmatrix}1&0&0\\0&2&0\\0&0&3\end{bmatrix}\\[0.5em] 
+&= \begin{bmatrix}{0\cdot 1 + 0\cdot 0 + 0\cdot 0} & {0\cdot 0 + 0\cdot 2 + 0\cdot 0} & {0\cdot 1 + 0\cdot 0 + 0\cdot 3} \\ {0\cdot 1 + (-1)\cdot 0 + 0\cdot 0} & {0\cdot 0 + (-1)\cdot 2 + 0\cdot 0} & {0\cdot 0 + (-1)\cdot 0 + 0\cdot 3} \\ {0\cdot 1 + 0\cdot 0 + (-1)\cdot 0} & {0\cdot 0 + 0\cdot 2 + (-1)\cdot 0} & {0\cdot 0 + 0\cdot 0 + (-1)\cdot 3}\end{bmatrix}\\[0.5em]
+&= \begin{bmatrix} 
+0\cdot 1 & 0 & 0\\ 
+0 & (-1)\cdot 2 & 0 \\
+0 & 0 & (-1)\cdot 3
+\end{bmatrix} = \begin{bmatrix} 
+0 & 0 & 0\\ 
+0 & -2 & 0 \\
+0 & 0 & -3
+\end{bmatrix}
+\end{aligned}
+$$
+Here, you can notice the product of $AB$ is the diagonal matrix where each main diagonal entry in $AB$ is the product of the corresponding diagonal entries from $A$ and $B$. In fact, this is true in general, for any two $n\times n$ diagonal matrices.
+
+:::
+
+:::{.callout-note appearance="simple"}
+
+## Example 4 continued
+
+You can apply this to find out the product of matrices $AC$:
+
+$$
+AC = \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix}\begin{bmatrix}5&0&0\\0&0&0\\0&0&0\end{bmatrix} = \begin{bmatrix} 
+0\cdot 5 & 0 & 0\\ 
+0 & (-1)\cdot 0 & 0 \\
+0 & 0 & (-1)\cdot 0
+\end{bmatrix} = \begin{bmatrix} 
+0 & 0 & 0\\ 
+0 & 0 & 0 \\
+0 & 0 & 0
+\end{bmatrix}
+$$
+This shows that there are two non-zero matrices that multiply together to make a zero matrix!
+
+Finally, finding powers of diagonal matrices can be obtained by finding the corresponding powers of its entries. For instance 
+
+$$
+A^4 = \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix}^4 = \begin{bmatrix}(0)^4&0&0\\0&(-1)^4&0\\0&0&(-1)^4\end{bmatrix} = \begin{bmatrix}0&0&0\\0&1&0\\0&0&1\end{bmatrix} = -A.
+$$
+
+:::
+
+:::
+
+:::{.callout-note}
+
+## Multiplying diagonal matrices
+
+Let $A,B$ be two $n\times n$ diagonal matrices with $\textsf{diag}(A) = ({a_{11},a_{22},\ldots,a_{nn}})$ and $\textsf{diag}(B) = ({b_{11},b_{22},\ldots,b_{nn}})$. Then $AB$ is an $n\times n$ diagonal matrix with $\textsf{diag}(AB) = ({a_{11}b_{11},a_{22}b_{22},\ldots,a_{nn}b_{nn}})$.
+
+:::
+
+:::{.callout-warning}
+
+If two matrices $AB$ multiply together to make some zero matrix, this does **not** guarantee that either of $A$ or $B$ is a zero matrix!
+
+:::
+
+:::{.callout-tip}
+
+As you have seen, multiplying together diagonal matrices is computationally far easier than multiplying together general matrices; compare Example 2 to Example 7! In fact, this is one of the reasons behind the mathematical technique of **diagonalizing a square matrix**: see [Guide: Introduction to matrix diagonalization] for more. 
+
+:::
+
+# Quick check problems {-}
+
+<!-- add facility for webexercises to work on html -->
+
+::: {.content-visible when-format="html"}
+
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box data-topic="MMS1"}
+
+1. Decide whether the following statements are true or false. 
+
+(a) If $A$ is an $n\times n$ diagonal matrix, then $AI_n$ is a diagonal matrix. Answer: `r torf(TRUE)`.
+
+(b) If $A$ is an $m\times n$ matrix and $\mathbb{x}$ is an $m\times 1$ column vector, then $A\mathbf{x}$ is an $n\times 1$ column vector.  Answer: `r torf(FALSE)`.
+
+(c) The product of an $n\times n$ upper-triangular matrix with an $n\times p$ zero matrix gives another upper-triangular matrix. Answer `r torf(FALSE)`
+
+
+2. Find the product $\mathbf{A}\mathbf{v}$ where $$\displaystyle A = \begin{bmatrix} 
+3 & 0 \\ 
+4 & -2
+\end{bmatrix} \quad\textsf{ and }\quad \mathbf{v} =
+\begin{bmatrix} 
+1 \\
+3\end{bmatrix}.$$
+
+Answer: The entry $[A\mathbf{v}]_{11} =$ `r fitb(3)` and $[A\mathbf{v}]_{21} =$ `r fitb(-2)`.
+
+3. You are given the following equation $$\begin{bmatrix} 
+1 & 1 & -1 \\
+0 & 2 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix} 
+3 & 1 & 0 \\
+0 & 1 & -2 \\
+0 & 0 & -1\end{bmatrix} = \begin{bmatrix}
+3 & a & -1 \\
+b & 2 & -4 \\
+c & d & e
+\end{bmatrix}$$ 
+Find $a,b,c,d,e$.
+
+Answer: $a =$ `r fitb(2)`, $b =$ `r fitb(0)`, $c =$ `r fitb(0)`, $d =$ `r fitb(0)`, $e =$ `r fitb(-1)`
+
+:::
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+1. Decide whether the following statements are true or false. 
+
+(a) If $A$ is an $n\times n$ diagonal matrix, then $AI_n$ is a diagonal matrix.
+
+(b) If $A$ is an $m\times n$ matrix and $\mathbb{x}$ is an $m\times 1$ column vector, then $A\mathbf{x}$ is an $n\times 1$ column vector.
+
+(c) The product of an $n\times n$ upper-triangular matrix with an $n\times p$ zero matrix gives another upper-triangular matrix.
+
+2. Find the product $\mathbf{A}\mathbf{v}$ where $$\displaystyle A = \begin{bmatrix} 
+3 & 0 \\ 
+4 & -2
+\end{bmatrix} \quad\textsf{ and }\quad \mathbf{v} =
+\begin{bmatrix} 
+1 \\
+3\end{bmatrix}.$$
+
+3. You are given the following equation $$\begin{bmatrix} 
+1 & 1 & -1 \\
+0 & 2 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix} 
+3 & 1 & 0 \\
+0 & 1 & -2 \\
+0 & 0 & -1\end{bmatrix} = \begin{bmatrix}
+3 & a & -1 \\
+b & 2 & -4 \\
+c & d & e
+\end{bmatrix}$$ 
+Find $a,b,c,d,e$.
+
+
+:::
+
+# Further reading
+
+For more questions on this topic, please go to [Questions: Matrix multiplication with special matrices](../questions/qs-matrixmultiplicationspecial.qmd).
+
+For more about the definition of matrix multiplication, please go to [Guide: Matrix multiplication](matrixmultiplication.qmd).
+
+## Version history {-}
+
+v1.0: initial version created 05/26 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+

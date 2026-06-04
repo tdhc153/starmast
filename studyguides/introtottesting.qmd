@@ -7,8 +7,8 @@ categories:
   - Statistics
   - Probability
 filters:
-  - shinylive
-draft: True
+  - shinylive 
+draft: true
 ---
 
 ```{r, setup, include = FALSE}
@@ -34,14 +34,14 @@ This guide will cover two types of $t$-tests: **Student’s** $t$**-test** and *
 A $t$**-test** is a hypothesis test where the test statistic follows a $t$-distribution.
 :::
 
-For more on hypothesis testing, see [Guide: Introduction to hypothesis testing](hypothesistesting.qmd) and for more on $t$-distributions, see [Factsheet: t-distribution]((../factsheets/t-dist.qmd).
+For more on hypothesis testing, see [Guide: Introduction to hypothesis testing](hypothesistesting.qmd) and for more on $t$-distributions, see [Factsheet: t-distribution](../factsheets/t-dist.qmd).
 
-::: callout-note
+::: callout-tip
 In statistics, a $t$-test is typically used when the sample size is less than $30$. With small samples, the estimate of the standard deviation is less stable. As the sample size increases, the estimate of the standard deviation becomes more stable, and the $t$-distribution gradually approaches the normal distribution. As the sample size reaches $30$, the difference between the $t$-distribution and the normal distribution becomes insignificant.
 So, a common *rule of thumb* in statistics is to use the $t$-distribution when the sample size is *less than* $30$.
 :::
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 1
 Cantor's Confectionery wants to test the average weight of their best selling chocolate swirls. They gather a sample of $21$ swirls and weigh each one, calculating the sample mean weight.
 
@@ -59,7 +59,7 @@ A **Student's** $t$**-test** is a $t$-test where the samples are known to, or as
 #### When you have one sample
 A **one-sample Student's** $t$**-test** is a $t$-test where you have a single sample with one sample mean. The test involves comparing the sample mean to a known value.
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 2
 Cantor's Confectionery sell a $24$ door advent calendar, behind each door is a chocolate swirl. They open up one advent calendar and weigh all $24$ swirls. The sample mean is $12.1$ grams. They want to test if the average weight of a chocolate swirl is equal to $13$ grams, as stated on their website.
 
@@ -69,7 +69,7 @@ You have a small sample of $24$ chocolate swirls, which has a sample mean of $12
 #### When you have two samples with equal variance
 A **two-sample Student's** $t$**-test** is a $t$-test where you have two samples, so two sample means. The test involves comparing the two sample means to **one another**.
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 3
 Cantor's Confectionery sells a vegan alternative to their $24$ door advent calendar. They open one vegan calendar and calculate the sample mean weight of the swirls, then do the same for a regular chocolate calendar. They want to test if the average weight of the vegan swirls is the same as the average weight of the regular swirls, assuming both samples have equal variance.
 
@@ -80,7 +80,7 @@ You have two samples, each of size $24$ and with equal variance. So, you can use
 
 A **paired Student’s t-test** is a $t$-test that is used when you measure the same sample twice. The test involves comparing two sample means, taken from the same sample. It is most commonly used when sampling before and after a change to the sample. For example, before and after packaging.
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 4
 
 During the festive season, Cantor's Confectionery bring out their snowball caramel apples (which are their regular caramel apples... dipped in white chocolate). They take a sample of $15$ caramel apples and calculate the sample mean weight. They then dip the caramel apples in chocolate and re-calculate the sample mean weight. The samples are assumed to have equal variance.
@@ -112,7 +112,7 @@ You have two samples which are paired and have equal variance. So, you can use a
 
 A **Welch's** $t$**-test** must always be a two sample test. This is because Welch's $t$-test is used on two samples with unequal variances.
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 5
 
 Cantor's Confectionery are partnering with Dirichlet's Distributors to mass produce chocolate swirls. They open two new factories and want to make sure that the average weight of a chocolate swirl is the same in both factories. They collect two batches, both of sample size $25$. The sample means and sample variances are different from both factories.
@@ -123,7 +123,7 @@ You have two samples with unequal variance, so you can use a Welch's $t$-test to
 ::: callout-tip
 ## Summary: When to use a Welch's $t$-test
 
--   When you are comparing two sample means, with unequal oe unknown variances, to each other
+-   When you are comparing two sample means, with unequal or unknown variances, to each other
 :::
 
 ### What other assumptions are made when constructing a $t$-test?
@@ -144,7 +144,7 @@ Before constructing a $t$-test you also must decide whether you are performing a
 
 -   If you want to know whether two sample means are equal or different from each other, perform a **two-tailed test.**
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 6
 
 Cantor's Confectionery wants to test if their profits are the same on weekdays and weekends. To do this, they take a sample of profits from $2$ random weekdays and the $2$ weekend days, then calculate the sample means.
@@ -154,7 +154,7 @@ Since you are testing whether the sample means are equal, this is a **two-tailed
 
 -   If you want to know whether one sample mean is greater or less than the other sample mean, perform a **one-tailed test**.
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 7
 
 Cantor's Confectionery wants to test if their profits are higher on weekends than on weekdays. To do this, they take a sample of profits from $2$ random weekdays and the $2$ weekend days, then calculate the sample means.
@@ -363,13 +363,13 @@ No: Welch's t-test
 
 $H_0$ is your **null hypothesis.** This is what you believe to be to be true. $H_1$ is your **alternative hypothesis**. This is the alternative case which you are testing for.
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 8
 Cantor's Confectionery takes a sample of $10$ sugar cookies and calculates their average diameter to determine how much sugar to purchase for next month. This month, they assumed the average diameter was $9$cm but now they want to test if the average diameter is greater than $9$cm.
 
 You can construct a null and alternative hypothesis for this.
 
--   This is a one-sample Student's $t$-test
+-   This is a one-sample Student's $t$-test.
 -   This is a one-tailed $t$-test.
 
 So, your hypothesis is $H_0: \mu = 9 \hspace{0.5cm} H_1: \mu > 9$.
@@ -378,21 +378,21 @@ Cantor's Confectionery take a second sample of $10$ sugar cookies and calculate 
 
 You can construct a null and alternative hypothesis for this.
 
--   This is a two-sample Student's $t$-test
+-   This is a two-sample Student's $t$-test.
 
 -   This is a two-tailed $t$-test.
 
 So, your hypothesis is $H_0: \mu_1 = \mu_2 \hspace{0.5cm} H_1: \mu_1 \neq \mu_2$.
 :::
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 9
 
 A rival company, Lovelace's Lollies, believes their sugar cookies have a wider diameter than those made at Cantor's Confectionery. They take a sample of $10$ sugar cookies and calculate the average diameter. They assume equal variance between their sample and Cantor's Confectionery's sample.
 
 You can construct a null and alternative hypothesis for this.
 
--   This is a two-sample Student's $t$-test
+-   This is a two-sample Student's $t$-test.
 
 -   This is a one-tailed $t$-test.
 
@@ -420,7 +420,7 @@ The **test statistic** is used to tell you how far away your result is from the 
 
 #### One-sample test statistic
 
-For a **one-sample** $t$*-test,** where:
+For a **one-sample** $t$**-test,** where:
 
 -   $\bar{x}$ is the sample mean.
 
@@ -440,7 +440,7 @@ $$
 Often, $s/\sqrt{n}$ is referred to as the **standard error** of the sample.
 :::
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 10
 Cantor's Confectionery want to compare the average weight of their chocolate Easter eggs to the market average. They took a sample of $13$ Easter eggs and calculated the sample mean weight. They now need to calculate a test statistic using the data they have collected.
 
@@ -492,7 +492,7 @@ $$ \tau=\frac{\mu_1-\mu_2}{\sqrt{\left(\frac{s_1^2}{n_1}\right)+\left(\frac{s_2^
 This test statistic will look different for a Student's $t$-test and a Welch's $t$-test. For a Student's $t$-test, $s_1$ and $s_2$ are the same. For a Welch's $t$-test, they are not.
 :::
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 11
 Lovelace's Lollies have taken two samples of their bestselling lollipops. For both samples, they weighed each lollipop and calculated the sample mean weight. They want to calculate a test statistic so that they can compare the two sample means. Their computer system produced the output below.
 
@@ -512,16 +512,16 @@ $$ \tau=\frac{\mu_1-\mu_2}{\sqrt{(\frac{s_1^2}{n_1})+(\frac{s_2^2}{n_2})}} $$
 so
 
 $$
-     \tau = \frac{11 -12}{\sqrt{(\frac{0.49^2}{15}) + (\frac{0.49^2}{18})}} = -5.8375
+     \tau = \frac{11 -12}{\sqrt{(\frac{0.49^2}{15}) + (\frac{0.49^2}{18})}} = -5.8375\qquad \textsf{ to 4dp.}
 $$
-**to 4 d.p.**
+
 :::
 
 ::: callout-important
 A test statistic can be negative! The sign of a test statistic depends on the nature of the test and the data you have.
 :::
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 12
 
 Cantor's Confectionery now take a second sample of Easter eggs on another day to compare to their first sample in Example 10. They want to produce a test statistic with the following computer output:
@@ -541,9 +541,8 @@ $$ \tau=\frac{\mu_1-\mu_2}{\sqrt{(\frac{s_1^2}{n_1})+(\frac{s_2^2}{n_2})}} $$\
 so
 
 $$
-    \tau = \frac{92 - 91.45}{\sqrt{(\frac{0.4^2}{23})+ (\frac{0.25^2}{21})}} = 5.5185
+    \tau = \frac{92 - 91.45}{\sqrt{(\frac{0.4^2}{23})+ (\frac{0.25^2}{21})}} = 5.5185\qquad \textsf{ to 4dp.}
 $$
-**to 4 d.p.**
 :::
 
 ::: {.content-visible when-format="html"}
@@ -818,7 +817,7 @@ To use **either** approach, you will be asked for the **degrees of freedom**. Fo
 
 Because all $t$-tests assume that the test statistic follows a $t$-distribution. You can use a critical value $(t)$ and compare it to your test statistic $(\tau)$.
 
-:::::::::::: {.content-visible when-format="html"}
+::: {.content-visible when-format="html"}
 ### Critical value calculator
 
 Use the following calculator to generate **critical values.**
@@ -930,13 +929,14 @@ If your test statistic lies outside of $[-t, t]$ then you **reject** $H_0$.
 
 
 ::: {.content-visible when-format="html"}
+
 ### $p$-value calculator
 
 Use the following calculator to convert your test statistic into a $p$-value. You compare the $p$-value to your level of significance.
 
 ```{shinylive-r}
 #| standalone: true
-#| viewerHeight: 600
+#| viewerHeight: 730
 
 library(shiny)
 library(bslib)
@@ -1062,6 +1062,7 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
+
 ```
 
 :::
@@ -1097,7 +1098,9 @@ In your concluding statement, do not state the results as $100\%$ certain. The r
 -   "There is not enough evidence to suggest..."
 :::
 
-::: callout-note
+# Worked examples
+
+::: {.callout-note appearance="simple"}
 ## Example 13
 
 Cantor's Confectionery want to perform a $t$-test, at $5\%$ significance level, to see whether their famous chocolate swirls weigh, on average, the same as the market average of $5.12$ grams. The take a sample of $25$ swirls with average weight of $4.22$ grams and sample standard deviation of $1.23$ grams.
@@ -1129,9 +1132,8 @@ $$
 so
 
 $$
-\tau = \frac{4.22 - 5.12}{1.23/ \sqrt{25}} = -3.6585
+\tau = \frac{4.22 - 5.12}{1.23/ \sqrt{25}} = -3.6585\qquad \textsf{ to 4dp.}
 $$
-**to 4 d.p.**
 
 **Step 5: Forming a conclusion (either approach can be used)**
 
@@ -1162,7 +1164,7 @@ so $H_0$ is rejected.
 There is enough evidence to reject $H_0$ meaning there is sufficient evidence to suggest that the average weight of a chocolate swirl produced by Cantor's Confectionery differs significantly from the market average.
 :::
 
-::: callout-note
+::: {.callout-note appearance="simple"}
 ## Example 14
 
 Lovelace's Lollies decide to test whether their chocolate swirls weigh more, on average, than the chocolate swirls made by Cantor's Confectionery. They decide to also use a $5\%$ significance level. They use a computer to produce the following summary statistics:
@@ -1197,9 +1199,8 @@ For a one-sample Student's $t$-test the test statistic is
 $$ \tau=\frac{\mu_1-\mu_2}{\sqrt{(\frac{s_1^2}{n_1})+(\frac{s_2^2}{n_2})}} $$
 
 $$
-    \tau = \frac{4.22 - 3.76}{\sqrt{(\frac{1.23^2}{25})+(\frac{1.39^2}{25})}} = 1.2392
+    \tau = \frac{4.22 - 3.76}{\sqrt{(\frac{1.23^2}{25})+(\frac{1.39^2}{25})}} = 1.2392\qquad \textsf{ to 4dp.}
 $$
-**to 4 d.p**
 
 **Step 5: Forming a conclusion (either approach can be used)**
 
@@ -1226,7 +1227,7 @@ There is not enough evidence to reject $H_0$ meaning there is insufficient evide
 
 <!-- add facility for webexercises to work on html -->
 
-:::: {.content-visible when-format="html"}
+::: {.content-visible when-format="html"}
 <!-- add facility to check answers at end rather than one at a time -->
 
 ::: {.webex-check .webex-box data-topic="ITHT1"}
@@ -1254,7 +1255,7 @@ Answer:`r mcq(c(answer = "Welch's t-test", "Student's t-test"))`.
 
 Answer:`r mcq(c("Welch's $t$-test", answer = "Student's $t$-test"))`.
 :::
-::::
+:::
 
 ::: {.content-hidden when-format="html"}
 1.  Which of the following is an appropriate null hypothesis for a one-sample $t$-test?

@@ -1,0 +1,188 @@
+---
+title: "Answers: Introduction to logic"
+author: "Jessica Taberner"
+abstract-title: Summary
+abstract: Answers to questions relating to the guide on introduction to logic.
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*These are the answers to [Questions: Introduction to logic.](../questions/qs-introtologic.qmd)*
+
+**Please attempt the questions before reading these answers!**
+
+## Q1 Propositions{-}
+
+**1.1.** "Boole's Burgers is a burger restaurant" is a proposition.
+
+**1.2.** "Our burgers taste amazing!" is not a proposition.
+
+**1.3.** “All burgers in the restaurant cost more than $£2$” is a proposition.
+
+**1.4.** “Please give me a cheeseburger” is not a proposition.
+
+**1.5.** “What are your burger toppings?” is not a proposition.
+
+**1.6.** “Some customers prefer vegan burgers” is a proposition.
+
+**1.7.** “Are the fries sold out?” is not a proposition.
+
+**1.8.** “The fries are sold out” is a proposition.
+
+## Q2 Connectives{-}
+
+**2.1.** The logical structure of "If you buy two burgers, you'll get a discount" is $P \rightarrow Q$.
+
+**2.2.** The logical structure of "I'll get one cheeseburger and one vegan burger" is $P \wedge Q$.
+
+**2.3.** The logical structure of "I won't get cheese on my burger" is $\neg P$.
+
+**2.4.** The logical structure of "I'll get a hamburger, or I'll get a milkshake" is $P \vee Q$.
+
+**2.5.** The logical structure of "I'll only get a cheeseburger if you get one too" is $P \leftrightarrow Q$.
+
+**2.6.** The logical structure of "If you go to Boole's Burgers, I'll go too, and I'll get a vegan burger" is $P \rightarrow (Q \wedge R)$.
+
+## Q3 Truth tables{-}
+
+**3.1.** $P \rightarrow Q$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T", "F", "F"),
+  `$Q$` = c("T", "F", "T", "F"),
+  `$P \\rightarrow Q$`= c("T", "F", "T", "T"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.2.** $\neg P$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "F"),
+  `$\\neg P$`= c("F", "T"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.3.** $(P \vee Q) \wedge \neg Q$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T", "F", "F"),
+  `$Q$` = c("T", "F", "T", "F"),
+  `$(P \\vee Q) \\wedge \\neg Q$`= c("F", "T", "F", "F"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.4.** $\neg (P \leftrightarrow Q)$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T", "F", "F"),
+  `$Q$` = c("T", "F", "T", "F"),
+  `$\\neg (P \\leftrightarrow Q)$`= c("F", "T", "T", "F"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+ 
+**3.5.** $\neg (P\wedge Q)$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T", "F", "F"),
+  `$Q$` = c("T", "F", "T", "F"),
+  `$\\neg (P \\wedge Q)$`= c("F", "T", "T", "T"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.6.** $(P \rightarrow Q) \rightarrow R$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T","T", "T", "F", "F","F", "F"),
+  `$Q$` = c("T", "F", "T", "F","T", "F", "T", "F"),
+  `$R$` = c("T", "T", "F", "F", "T", "T", "F", "F"),
+  `$(P \\rightarrow Q)\\rightarrow R$`= c("T", "T", "F", "T", "T","T", "F", "F"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.7.** $\neg (P \vee (Q \vee R))$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T","T", "T", "F", "F","F", "F"),
+  `$Q$` = c("T", "F", "T", "F","T", "F", "T", "F"),
+  `$R$` = c("T", "T", "F", "F", "T", "T", "F", "F"),
+  `$\\neg (P \\vee (Q \\vee R))$`= c("F", "F", "F", "F","F", "F", "F", "T"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.8.** $(P \leftrightarrow Q) \vee (\neg R)$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T","T", "T", "F", "F","F", "F"),
+  `$Q$` = c("T", "F", "T", "F","T", "F", "T", "F"),
+  `$R$` = c("T", "T", "F", "F", "T", "T", "F", "F"),
+  `$(P \\leftrightarrow Q) \\vee (\\neg R)$`= c("T", "F", "T", "T","F", "T", "T", "T"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+## Q4 Equivalence{-}
+
+
+**4.1.** $\neg (P \wedge Q)$ and $(\neg P) \vee (\neg Q)$ are logically equivalent. This identity is known as **De Morgan's Law**.
+
+**4.2.** $P \rightarrow Q$ and $Q \rightarrow P$ are not logically equivalent.
+
+**4.3.** $P \rightarrow Q$ and $(\neg P) \vee Q$ are logically equivalent.
+
+**4.4.** $P \rightarrow Q$ and $\neg (P \vee Q)$ are not logically equivalent.
+
+## Version history and licensing {-}
+
+v1.0: initial version created 03/26 by Jessica Taberner as part of a University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

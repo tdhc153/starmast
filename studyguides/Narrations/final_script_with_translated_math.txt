@@ -18,13 +18,11 @@ Latest content: Welcome! We are celebrating over 1000 active users since launch 
 
 On this page
 
-What is completing the square?
+Matrix multiplication with vectors
 
-Expressions of the form x squared plus b x plus c
+Matrix multiplication with zero and identity matrices
 
-Expressions of the form a x squared plus b x plus c
-
-Solving quadratic equations
+Matrix multiplication with other special matrices
 
 Quick check problems
 
@@ -38,261 +36,208 @@ PDF
 
 MS Word
 
-Completing the square
+Matrix multiplication with special matrices
 
-ALGEBRA
+LINEAR MATHEMATICS
 
-SOLVING EQUATIONS
-
-KEY SKILLS
+MATRICES
 
 AUTHOR
 
 Tom Coleman
 
 SUMMARY
-Completing the square is an important technique to learn for dealing with quadratic expressions in a variety of places. It can help you solve quadratic equations, accurately sketch graphs of conic sections, and is widely used in integral calculus.
+Matrices are rectangular arrays of mathematical objects with entries arranged in rows and columns. Matrices are a very useful concept within mathematics and statistics. You’ll see them used for solving simultaneous equations, modelling data in several variables, and much more. This guide will explain how multiplication of special kinds of matrices work.
 
-Before reading this guide, it is recommended that you read Guide: Introduction to quadratic equations. Optionally, you may also find it useful to read Guide: Factorization for the purposes of checking your answers, Guide: Laws of indices for algebraic manipulation, Guide: Introduction to rearranging equations for rearranging completed squares to solve quadratics and Guide: Introduction to complex numbers for dealing with square roots of negative numbers.
+Before reading this guide, it is strongly recommended that you read Guide: Introduction to matrices and Guide: Matrix multiplication.
 
-What is completing the square?
+As seen in Guide: Matrix multiplication, the idea of matrix multiplication is a key skill in the study of linear mathematics. If A comma B are matrices, the idea for the open paren i comma j close parenth entry of their product A B is to find a ‘product’ of the ith row of A by the jth column of B. This is done by matching entries in the ith row of A to entries in the jth column of B, multiplying the matched entries, and adding them all together.
 
-As you have seen in Guide: Introduction to quadratic equations, quadratic expressions are incredibly important in mathematics, and having a variety of techniques of dealing with them will be important tools in your future work.
+Mastering matrix multiplication can make your life much easier in many different mathematical aspects. As an example, if you have read Guide: Introduction to solving simultaneous equations then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations. You can then use matrix multiplication to rewrite your simultaneous equations and use matrix methods to solve them: either by row-reduction (see [Guide: Introduction to row-reduction]) or by using matrix inverses (see [Guide: Matrix inverses]). The way this is facilitated is by multiplying a matrix by a vector of variables, which is equal to a vector of answers. This is a special kind of matrix multiplication because of the matrices involved.
 
-One of these techniques is called completing the square, which takes a quadratic expression like a x squared plus b x plus c and expresses it in the form a times open paren x plus p close paren squared plus q; essentially, completing the square is like ‘factorization with a remainder’. Completing the square is a useful tool in many areas of mathematics, such as geometry (particularly in the theory of conic sections), integral calculus, and solving quadratic equations. Not only is it useful in these areas, it also gives you an opportunity to practise your skills involving algebraic manipulation and factorization.
+This guide looks at matrix multiplication with the special matrices introduced in Guide: Introduction to matrices: vectors, zero and identity matrices, upper- and lower-triangular matrices, and diagonal matrices.
 
-This guide will focus on completing the square for quadratic expressions of the form a x squared plus b x plus c, both where a equals 1 and where a is not equal to 1.
+Matrix multiplication with vectors
 
-Expressions of the form x squared plus b x plus c
+As you saw in Guide: Introduction to matrices, a matrix with exactly one column and any number of rows is called a column vector, which is often shortened to vector. Vectors are important because they represent positions in co-ordinate systems; they are usually given by lowercase letters in bold fonts bold v (when typed), or underlined v over horizontal bar (when using a pen and paper). See Guide: Introduction to vectors for more.
 
-The idea is to turn a quadratic expression like x squared plus b x plus c into one that looks like open paren x plus p close paren squared plus q where b comma c comma p comma q are numbers. The best way to see how this works is via an example, which relies on expanding brackets (see [Guide: Expanding brackets] for more).
+Example 4 in Guide: Matrix multiplication shows that a 2 times 3 matrix multiplied by a a 3 times 1 vector gives a 2 times 1 vector. This behaviour is true in general:
+
+Note
+Product of matrix and a vector
+
+The product of an m times n matrix A with an n times 1 vector bold x is an m times 1 vector bold b.
+
+Tip
+
+What this means is that a m times n matrix maps a point in n-dimensional space to a point in m-dimensional space. You can see this in Example 4; the 2 times 3 matrix A took a point in 3-dimensional space to a point in 2-dimensional space. This is the idea of a matrix acting as a linear transformation; see [Guide: Matrices as linear transformations] for more.
+
+One important application of matrix multiplication of a matrix with a vector is in solving simultaneous equations. This involves multiplying a multiplying a matrix by a vector, bold v, where the entries are variables.
 
 Note
 Example 1
 
-Suppose you want to complete the square of a quadratic expression like x squared plus 4 x plus 9. The aim of completing the square is to find numbers p comma q such that open paren x plus p close paren squared plus q equals x squared plus 4 x plus 9 period Expanding the brackets on the left-hand side of this equation gives x squared plus 2 p x plus p squared plus q equals x squared plus 4 x plus 9 period These two expressions are equal if and only if the coefficients match. Comparing the coefficients for the x terms on both sides gives 2 p equals 4 and so p equals 2. With this knowledge, you can then compare the 9 with the p squared plus q term to get 4 plus q equals 9 and so q equals 5. You can then write that x squared plus 4 x plus 9 equals open paren x plus 2 close paren squared plus 5 and you have completed the square.
+Let’s explore the equation A bold x equals bold b for A equals the 2 by 2 matrix Row 1: 1 2 Row 2: 3 3 comma bold x equals the 2 by 1 column matrix x y comma bold b equals the 2 by 1 column matrix 5 6 You can look at the product of A and bold x here. Doing this gives A bold x equals the 2 by 1 column matrix Row 1: 1 times x plus 2 times y Row 2: 3 times x plus 3 times y equals the 2 by 1 column matrix Row 1: x plus 2 y Row 2: 3 x plus 3 y So the equation A bold x equals bold b becomes the 2 by 1 column matrix Row 1: x plus 2 y Row 2: 3 x plus 3 y equals the 2 by 1 column matrix 5 6
 
-To check your answer, you can expand the brackets of the completed square:
+As two vectors are equal if and only if their entries are equal, the equation A bold x equals bold b is equivalent to the following set of simultaneous equations: 2 lines Line 1: x plus 2 y equals 5 Line 2: 3 x plus 3 y equals 6 You can solve for x and y in A bold x equals bold b, using tools you can learn in Guide: Introduction to solving simultaneous equations. You’ll see this solved in Example 1 of that guide.
 
-2 lines Line 1: open paren x plus 2 close paren squared plus 5 equals x squared plus 4 x plus 4 plus 5 Line 2: blank equals x squared plus 4 x plus 9
+Conversely, you can write any set of simultaneous equations as the product A bold x equals bold b where:
 
-which is the original expression.
+A is a matrix orresponding to the coefficients attached to variables of the equations
+
+bold x is a vector of variables
+
+bold b is a vector of answers to the equations.
+
+For instance, the set of simultaneous equations 2 lines Line 1: negative 2 x plus 8 y equals 16 Line 2: x plus 9 y equals negative 8 can be written as A bold x equals bold b where the 2 by 2 matrix Row 1: negative 2 8 Row 2: 1 9 over bottom brace over A the 2 by 1 column matrix x y over bottom brace over bold x equals the 2 by 1 column matrix 16 negative 8 over bottom brace over bold b period
 
 Tip
-Full transcript
 
-So, this example shows how to complete the square for the quadratic expression x squared plus 4 x plus 9
+In fact, you can use matrices multiplied by vectors to help find solutions (if they exist) to any number of linear equations in any number of variables. This technique of solving simultaneous equations is based on a set of matrix operations known as row-reduction and you can find out more about it in [Guide: Introduction to row-reduction].
 
-Now, the aim is to rewrite this expression in the form open paren x plus p close paren squared plus q where p and q are numbers.
+Typically, if you have m many equations in n many variables, then this is represented by an m times n matrix of coefficients multiplying an n times 1 column vector of variables to output an m times 1 column vector of answers.
 
-So, to do this, you need to start from the general form open paren x plus p close paren squared plus q and expand the brackets to get x squared plus 2 p x plus p squared plus q.
-
-Now you need to compare this with the original expression x squared plus 4 x plus 9.
-
-The coefficients of both expressions need to match for the expressions to be equal to each other.
-
-So, start by comparing the x terms. In the expanded form, the coefficient on x is 2 p, and in the original expression the coefficient on x is 4, so p must be 2.
-
-Now you need to compare the constant terms. In the expanded form, the constant term is p squared plus q, and in the original expression the constant term is 9.
-
-So, this means that for p squared plus q to be equal to 9, you can substitute in p equals 2 and rearrange to get q equals 5.
-
-Using these values for p and q, the quadratic can be rewritten in the completed square form as open paren x plus 2 close paren squared plus 5
-
-And you can check if your answer is correct by expanding open paren x plus 2 close paren squared plus 5 to get x squared plus 4 x plus 4 plus 5, which gives x squared plus 4 x plus 9 which is the original quadratic.
-
-Now, the name “completing the square” comes from a geometric idea. The term x squared can be seen as the area of a square with side length x, the term 4 x can be seen as four thin strips placed alongside the sides of this square, and the number 9 can be seen as the area of a smaller square with side length 3.
-
-Rearranging these parts forms a larger square of side length x plus 2, with an extra piece with an area of 5.
-
-This corresponds to the expression open paren x plus 2 close paren squared plus 5, and it explains why the method is called “completing the square”.
-
-You can investigate what happens in the completing the square for x squared plus b x plus c in this interactive figure, which works for whole numbered values of b which are positive and even. Put your choice of b and c into the boxes given, and click through the steps to see how ‘completing the square’ gets its name!
-
-You can notice three things about Example 1:
-
-If you are trying to write x squared plus b x plus c in the form open paren x plus p close paren squared plus q, then the value of p is going to be half that of b, so p equals b divided by 2.
-
-Whether or not q is positive or negative depends on the value of c. If c is greater than p squared, then q is positive; if c is less than p squared, then q is negative.
-
-This gives a method for working out the completed square of any expression of the form x squared plus b x plus c. See below for such a method.
-
-Note
-Method 1 (x squared plus b x plus c)
-
-Suppose you’re given an expression like x squared plus b x plus c and you want to write it in the form open paren x plus p close paren squared plus q. Here’s how to complete the square:
-
-First, write p equals b divided by 2. This gives you p.
-
-Work out p squared, and solve the equation p squared plus q equals c for q. This gives you q.
-
-Then the expression open paren x plus p close paren squared plus q is equal to x squared plus b x plus c, and you have completed the square.
-
-You can use this method to complete the square in the examples that follow.
+Let’s see this in action where the matrix isn’t square to begin with:
 
 Note
 Example 2
 
-Suppose you would like to complete the square of the expression x squared plus 12 x plus 20. Here, you can identify the expression as in the form x squared plus b x plus c with b equals 12 and c equals 20. Now, you can follow the steps in Method 1.
+The matrix equation A bold x equals bold b for A equals the 2 by 3 matrix Row 1: negative 1 2 3 Row 2: 0 3 negative 9 comma bold x equals the 3 by 1 column matrix x y z comma bold b equals the 2 by 1 column matrix negative 1 6 can be written as a system of 2 equations in 3 variables. Evaluating the product gives A bold x equals the 2 by 1 column matrix Row 1: negative 1 times x plus 2 times y plus 3 times z Row 2: 0 times x plus 3 times y plus negative 9 times z equals the 2 by 1 column matrix Row 1: negative x plus 2 y plus 3 z Row 2: 3 y minus 9 z So the equation A bold x equals bold b becomes the 2 by 1 column matrix Row 1: negative x plus 2 y plus 3 z Row 2: 3 y minus 9 z equals the 2 by 1 column matrix negative 1 6
 
-Here, p equals b divided by 2 equals 12 divided by 2 equals 6.
+As two vectors are equal if and only if their entries are equal, the equation A bold x equals bold b is equivalent to the following set of simultaneous equations: 2 lines Line 1: negative x plus 2 y plus 3 z equals negative 1 Line 2: 3 y minus 9 z equals 6
 
-Working out p squared gives 6 squared equals 36. Solving p squared plus q equals c gives q, and so here 36 plus q equals 20. It follows that q equals negative 16.
+You can write any number of linear equations in any number of variables as a matrix product. For instance, the system of linear equations: 3 lines Line 1: x plus 9 y minus 4 z plus t plus w equals 19 Line 2: negative y plus z plus t minus 5 w equals 1 Line 3: negative 8 t minus 8 w equals 0 can be written as A bold x equals bold b where the 3 by 5 matrix Row 1: Column 1, 1 Column 2, 9 Column 3, negative 4 Column 4, 1 Column 5, 1 Row 2: Column 1, 0 Column 2, negative 1 Column 3, 1 Column 4, 1 Column 5, negative 5 Row 3: Column 1, 0 Column 2, 0 Column 3, 0 Column 4, negative 8 Column 5, negative 8 over bottom brace over A the 5 by 1 column matrix Row 1: x Row 2: y Row 3: z Row 4: t Row 5: w over bottom brace over bold x equals the 3 by 1 column matrix 19 1 0 over bottom brace over bold b period
 
-You can then say that open paren x plus 6 close paren squared minus 16 equals x squared plus 12 x plus 20. Expanding the brackets to check your answer gives 1 lines Line 1: open paren x plus 6 close paren squared minus 16 equals x squared plus 12 x plus 36 minus 16 equals x squared plus 12 x plus 20 period
+You can notice here that for three equations in five variables, the coefficient matrix is represented by a 3 times 5 matrix. This is true in general: for m equations in n variables, the coefficient matrix is an m times n matrix.
 
-You can see in this example that q may be negative. The next example demonstrates a case where p is negative.
+Matrix multiplication with zero and identity matrices
+
+You saw in Guide: Introduction to matrices that two other special kinds of matrices are
+
+m times n zero matrices 0 sub m times n where all the entries in an m times n matrix are 0, and
+
+n times n identity matrices I sub n where the entries in an n times n matrix are 1’s down the main diagonal and 0’s everywhere else.
+
+These matrices play the same role respectively that the numbers 0 and 1 do in multiplication of numbers. Where the multiplication is defined, you’d expect any matrix multiplied by a zero matrix to equal another zero matrix, and any matrix multiplied by an identity matrix to not change at all. This is the exact behaviour that happens:
+
+Note
+Matrix multiplication with zero and identity matrices
+
+Let A be any m times n matrix.
+
+If 0 sub p times m is the p times m zero matrix, then 0 sub p times m A equals 0 sub p times n is the p times n zero matrix. Similarly, if 0 sub n times q is the n times q zero matrix, then A 0 sub n times q A equals 0 sub m times q is the m times q zero matrix.
+
+If I sub m is the m times m identity matrix, then I sub m A equals A. Similarly, if I sub n is the n times n identity matrix, then A I sub n equals A.
+
+For explanations as to why these results are true, please see [Proof sheet: Properties of matrix arithmetic].
+
+Warning
+
+Although it is true that the product of any matrix with a zero matrix is a zero matrix, it’s not true that if the product of two matrices is a zero matrix, then at least one of the matrices is a zero matrix. See Example 7 for more on this.
 
 Note
 Example 3
 
-Suppose you would like to complete the square of the expression y squared minus 10 y plus 41. Once again, you can identify the expression as in the form y squared plus b y plus c with b equals negative 10 and c equals 41. Now, you can follow the steps in Method 1.
+Let A be the following 2 times 3 matrix: A equals the 2 by 3 matrix Row 1: 0 2 negative 1 Row 2: 4 0 3
 
-Here, p equals b divided by 2 equals negative 10 divided by 2 equals negative 5.
+It follows that if 0 sub 4 times 2 is the 4 times 2 zero matrix, then 3 lines Line 1: 0 sub 4 times 2 A equals the 4 by 2 matrix Row 1: Column 1, 0 Column 2, 0 Row 2: Column 1, 0 Column 2, 0 Row 3: Column 1, 0 Column 2, 0 Row 4: Column 1, 0 Column 2, 0 times the 2 by 3 matrix Row 1: 0 2 negative 1 Row 2: 4 0 3 Line 2: blank equals the 4 by 3 matrix Row 1: Column 1, 0 times 0 plus 0 times 4 Column 2, 0 times 2 plus 0 times 0 Column 3, 0 times negative 1 plus 0 times 3 Row 2: Column 1, 0 times 0 plus 0 times 4 Column 2, 0 times 2 plus 0 times 0 Column 3, 0 times negative 1 plus 0 times 3 Row 3: Column 1, 0 times 0 plus 0 times 4 Column 2, 0 times 2 plus 0 times 0 Column 3, 0 times negative 1 plus 0 times 3 Row 4: Column 1, 0 times 0 plus 0 times 4 Column 2, 0 times 2 plus 0 times 0 Column 3, 0 times negative 1 plus 0 times 3 Line 3: blank equals the 4 by 3 matrix Row 1: Column 1, 0 Column 2, 0 Column 3, 0 Row 2: Column 1, 0 Column 2, 0 Column 3, 0 Row 3: Column 1, 0 Column 2, 0 Column 3, 0 Row 4: Column 1, 0 Column 2, 0 Column 3, 0 equals 0 sub 4 times 3
 
-Working out p squared gives open paren negative 5 close paren squared equals 25. Solving p squared plus q equals c gives q, and so here 25 plus q equals 41. It follows that q equals 16.
+But you absolutely don’t have to write out all of the working for this! It is enough to write something like A 0 sub 3 times 8 equals 0 sub 2 times 8 which saves you from writing out at least 42 zeroes - and more if you show working!
 
-You can then say that open paren y minus 5 close paren squared plus 16 equals y squared minus 10 y plus 41. Expanding the brackets to check your answer gives 1 lines Line 1: open paren y minus 5 close paren squared plus 16 equals y squared minus 10 y plus 25 plus 16 equals y squared minus 10 y plus 41 period
+If I sub 3 is the 3 times 3 identity matrix, then
 
-The next example contains a case where b is odd, and so p will not be a whole number.
+3 lines Line 1: A I sub 3 equals the 2 by 3 matrix Row 1: 0 2 negative 1 Row 2: 4 0 3 times the 3 by 3 matrix Row 1: 1 0 0 Row 2: 0 1 0 Row 3: 0 0 1 Line 2: blank equals the 2 by 3 matrix Row 1: Column 1, 0 times 1 plus 2 times 0 plus negative 1 times 0 Column 2, 0 times 0 plus 2 times 1 plus negative 1 times 0 Column 3, 0 times 0 plus 2 times 0 plus negative 1 times 1 Row 2: Column 1, 4 times 1 plus 0 times 0 plus 3 times 0 Column 2, 4 times 0 plus 0 times 1 plus 3 times 0 Column 3, 4 times 0 plus 0 times 0 plus 3 times 1 Line 3: blank equals the 2 by 3 matrix Row 1: 0 2 negative 1 Row 2: 4 0 3 equals A
+
+Matrix multiplication with other special matrices
+
+The other kinds of special matrices that you saw in Guide: Introduction to matrices were square matrices, upper triangular and lower triangular matrices, and diagonal matrices.
+
+These are special because all of these types of matrices are said to be closed under matrix multiplication. Unlike general matrix multiplication, which could have matrices of three different dimensions involved in a product, because all of these types of matrices are square this is not a problem.
+
+Here’s the lowdown.
+
+Note
+Matrix multiplication with other special matrices
+
+Let A comma B be any two n times n square matrices.
+
+The products A B and B A are defined, and both A B and B A are n times n square matrices.
+
+The matrix power A to the n-th power equals A times A times A times dot dot dot times A over bottom brace over n times exists and is an n times n square matrix.
+
+If both A comma B are upper triangular matrices, then both A B and B A are upper triangular matrices.
+
+If both A comma B are lower triangular matrices, then both A B and B A are lower triangular matrices.
+
+If both A comma B are diagonal matrices, then both A B and B A are diagonal matrices.
+
+This next example shows part (d) of this statement in detail.
 
 Note
 Example 4
 
-You are given the quadratic expression x squared plus 3 x minus 1, and you would like to complete the square. Identifying the expression as in the form x squared plus b x plus c with b equals 3 and c equals negative 1, you can follow the steps in Method 1.
+Let A comma B comma C be the following 3 times 3 diagonal matrices: A equals the 3 by 3 matrix Row 1: 0 0 0 Row 2: 0 negative 1 0 Row 3: 0 0 negative 1 comma B equals the 3 by 3 matrix Row 1: 1 0 0 Row 2: 0 2 0 Row 3: 0 0 3 sans serif and B equals the 3 by 3 matrix Row 1: 5 0 0 Row 2: 0 0 0 Row 3: 0 0 0
 
-Here, p equals b divided by 2 equals 3 divided by 2.
+Then
 
-Working out p squared gives open paren 3 divided by 2 close paren squared equals 9 divided by 4. Solving p squared plus q equals c gives q, and so here nine fourths plus q equals negative 1 period Since negative 1 equals negative 4 divided by 4, you can work out that q equals negative 13 divided by 4.
+3 lines Line 1: A B equals the 3 by 3 matrix Row 1: 0 0 0 Row 2: 0 negative 1 0 Row 3: 0 0 negative 1 times the 3 by 3 matrix Row 1: 1 0 0 Row 2: 0 2 0 Row 3: 0 0 3 Line 2: blank equals the 3 by 3 matrix Row 1: Column 1, 0 times 1 plus 0 times 0 plus 0 times 0 Column 2, 0 times 0 plus 0 times 2 plus 0 times 0 Column 3, 0 times 1 plus 0 times 0 plus 0 times 3 Row 2: Column 1, 0 times 1 plus negative 1 times 0 plus 0 times 0 Column 2, 0 times 0 plus negative 1 times 2 plus 0 times 0 Column 3, 0 times 0 plus negative 1 times 0 plus 0 times 3 Row 3: Column 1, 0 times 1 plus 0 times 0 plus negative 1 times 0 Column 2, 0 times 0 plus 0 times 2 plus negative 1 times 0 Column 3, 0 times 0 plus 0 times 0 plus negative 1 times 3 Line 3: blank equals the 3 by 3 matrix Row 1: Column 1, 0 times 1 Column 2, 0 Column 3, 0 Row 2: Column 1, 0 Column 2, negative 1 times 2 Column 3, 0 Row 3: Column 1, 0 Column 2, 0 Column 3, negative 1 times 3 equals the 3 by 3 matrix Row 1: 0 0 0 Row 2: 0 negative 2 0 Row 3: 0 0 negative 3 Here, you can notice the product of A B is the diagonal matrix where each main diagonal entry in A B is the product of the corresponding diagonal entries from A and B. In fact, this is true in general, for any two n times n diagonal matrices.
 
-You can then say that open paren x plus three halves close paren squared minus thirteen fourths is the completed square of x squared plus 3 x minus 1.
+You can apply this to find out the product of matrices A C:
 
-Expanding the brackets to check your answer gives 2 lines Line 1: open paren x plus three halves close paren squared minus thirteen fourths equals x squared plus 3 x plus nine fourths minus thirteen fourths Line 2: blank equals x squared plus 3 x minus four fourths equals x squared plus 3 x minus 1 period
+A C equals the 3 by 3 matrix Row 1: 0 0 0 Row 2: 0 negative 1 0 Row 3: 0 0 negative 1 times the 3 by 3 matrix Row 1: 5 0 0 Row 2: 0 0 0 Row 3: 0 0 0 equals the 3 by 3 matrix Row 1: Column 1, 0 times 5 Column 2, 0 Column 3, 0 Row 2: Column 1, 0 Column 2, negative 1 times 0 Column 3, 0 Row 3: Column 1, 0 Column 2, 0 Column 3, negative 1 times 0 equals the 3 by 3 matrix Row 1: 0 0 0 Row 2: 0 0 0 Row 3: 0 0 0 This shows that there are two non-zero matrices that multiply together to make a zero matrix!
 
-Here’s a final example of an important quadratic expression previously seen in Guide: Using the quadratic formula.
+Finally, finding powers of diagonal matrices can be obtained by finding the corresponding powers of its entries. For instance
 
-Note
-Example 5
-
-You are given the quadratic expression m squared minus m minus 1, and you would like to complete the square. Identifying the expression as in the form m squared plus b m plus c with b equals negative 1 and c equals negative 1, you can follow the steps in Method 1.
-
-Here, p equals negative 1 divided by 2.
-
-Working out p squared gives open paren negative 1 divided by 2 close paren squared equals 1 divided by 4. Solving p squared plus q equals c gives q, and so here one fourth plus q equals negative 1 period Since negative 1 equals negative 4 divided by 4, you can work out that q equals negative 5 divided by 4.
-
-You can then say that open paren m minus one half close paren squared minus five fourths is the completed square of m squared minus m minus 1.
-
-Expanding the brackets to check your answer gives 2 lines Line 1: open paren m minus one half close paren squared minus five fourths equals m squared minus m plus one fourth minus five fourths Line 2: blank equals m squared minus m minus four fourths equals m squared minus m minus 1 period
-
-Expressions of the form a x squared plus b x plus c
-
-Unfortunately, not every quadratic expression has the coefficient of the x squared term equal to 1. It is often the case that that a is not equal to 1 in the quadratic expression a x squared plus b x plus c. So how do you deal with this?
-
-The idea is to factorize the quadratic expression, taking out the constant a (which is necessarily non-zero in a quadratic expression). Doing this gives a x squared plus b x plus c equals a times open paren x squared plus b over a x plus c over a close paren You can then notice that the term inside the brackets is of the form x squared plus r x plus s, where r comma s are numbers; but you can complete the square of these kinds of expressions already!
-
-So, to complete the square of a x squared plus b x plus c into a form of a times open paren x plus p close paren squared plus t, you can follow this method:
+A to the fourth power equals the 3 by 3 matrix Row 1: 0 0 0 Row 2: 0 negative 1 0 Row 3: 0 0 negative 1 to the fourth power equals the 3 by 3 matrix Row 1: Column 1, 0 to the fourth power Column 2, 0 Column 3, 0 Row 2: Column 1, 0 Column 2, open paren negative 1 close paren to the fourth power Column 3, 0 Row 3: Column 1, 0 Column 2, 0 Column 3, open paren negative 1 close paren to the fourth power equals the 3 by 3 matrix Row 1: 0 0 0 Row 2: 0 1 0 Row 3: 0 0 1 equals negative A period
 
 Note
-Method 2 (a x squared plus b x plus c)
+Multiplying diagonal matrices
 
-Suppose you’re given an expression like a x squared plus b x plus c and you want to write it in the form a times open paren x plus p close paren squared plus t. Here’s how to complete the square:
+Let A comma B be two n times n diagonal matrices with sans serif diag A equals open paren a sub 11 comma a sub 22 comma dot dot dot comma a sub n n close paren and sans serif diag B equals open paren b sub 11 comma b sub 22 comma dot dot dot comma b sub n n close paren. Then A B is an n times n diagonal matrix with sans serif diag A B equals open paren a sub 11 b sub 11 comma a sub 22 b sub 22 comma dot dot dot comma a sub n n b sub n n close paren.
 
-First of all, take out a factor of a to get a times open paren x squared plus r x plus s close paren, where r equals b divided by a and s equals c divided by a.
+Warning
 
-Complete the square on x squared plus r x plus s to get open paren x plus p close paren squared plus q.
-
-The expression a times open paren open paren x plus p close paren squared plus q close paren is equal to a x squared plus b x plus c. Multiplying out the brackets shows that a times open paren x plus p close paren squared plus a q equals a x squared plus b x plus c.
+If two matrices A B multiply together to make some zero matrix, this does not guarantee that either of A or B is a zero matrix!
 
 Tip
 
-There is a way of completing the square for a x squared plus b x plus c in the form open paren d x plus e close paren squared plus f. The formula is given here: a x squared plus b x plus c equals open paren x the square root of a plus b over 2 the square root of a close paren squared plus open paren c minus the fraction with numerator b squared and denominator 4 a close paren This works well if a is a perfect square; see Example 8 for more.
-
-Do not try and remember this formula! It is much better to reinforce the methods given in this guide rather than input numbers into this formula.
-
-Note
-Example 6
-
-Suppose you would like to complete the square of the expression 2 x squared plus 12 x plus 24. Here, you can identify the expression as in the form a x squared plus b x plus c with a equals 2, b equals 12 and c equals 24. Now, you can follow the steps in Method 1.
-
-Taking out a factor of a equals 2 gives the expression as 2 x squared plus 12 x plus 24 equals 2 times open paren x squared plus 6 x plus 12 close paren You can now notice the part inside the brackets is of the form x squared plus r x plus s with r equals 6 and s equals 12.
-
-Now, complete the square on x squared plus 6 x plus 12. Here p equals 6 divided by 2 equals 3. Working out p squared gives 3 squared equals 9. Solving p squared plus q equals s gives q, and so here 9 plus q equals 12. It follows that q equals 3.
-
-This means that 2 x squared plus 12 x plus 24 equals 2 times open paren open paren x plus 3 close paren squared plus 3 close paren and so taking out the last term in brackets gives 2 x squared plus 12 x plus 24 equals 2 times open paren x plus 3 close paren squared plus 6 This is your final answer.
-
-Once again, you can expand the brackets to check your answer: 2 lines Line 1: 2 times open paren x plus 3 close paren squared plus 6 equals 2 times open paren x squared plus 6 x plus 9 close paren plus 6 Line 2: blank equals 2 x squared plus 12 x plus 18 plus 6 equals 2 x squared plus 12 x plus 24
-
-Note
-Example 7
-
-Suppose you would like to complete the square of the expression 4 y squared plus 12 y minus 4. You can identify the expression as in the form a y squared plus b y plus c with a equals 4, b equals 12 and c equals negative 4.
-
-Taking out a factor of a equals 4 gives the expression as 4 y squared plus 12 y minus 4 equals 4 times open paren y squared plus 3 y minus 1 close paren You can now notice the part inside the brackets is of the form y squared plus r y plus s with r equals 3 and s equals negative 1.
-
-Now, complete the square on y squared plus 3 y minus 1. You can notice that you have already done this in Example 4 with x as the variable. So here y squared plus 3 y minus 1 equals open paren y plus three halves close paren squared minus thirteen fourths period
-
-This means that 4 y squared plus 12 y minus 4 equals 4 times open paren open paren y plus three halves close paren squared minus thirteen fourths close paren and so taking out the last term in brackets gives 4 y squared plus 12 y minus 4 equals 4 times open paren y plus three halves close paren squared minus 4 times thirteen fourths equals 4 times open paren y plus three halves close paren squared minus 13 period
-
-Once again, you can expand the brackets to check your answer: 2 lines Line 1: 4 times open paren y plus three halves close paren squared minus 13 equals 4 times open paren y squared plus 3 y plus nine fourths close paren minus 13 Line 2: blank equals 4 y squared plus 12 y plus 9 minus 13 equals 4 y squared plus 12 y minus 4
-
-You can simplify this example even further. You could notice here that a equals 4 is a square number; specifically, 2 times 2. By writing 4 equals 2 times 2, you can use the laws of indices (see Guide: Laws of indices) to say that 1 lines Line 1: 4 times open paren y plus three halves close paren squared equals 2 squared times open paren y plus three halves close paren squared equals open paren 2 times open paren y plus three halves close paren close paren squared equals open paren 2 y plus 3 close paren squared and so 4 y squared plus 12 y minus 4 equals open paren 2 y plus 3 close paren squared minus 13. This technique is particularly useful if a is the square of an integer; less useful if it is not!
-
-The final example in this section deals with some slightly odder looking numbers. Although the numbers will not be as nice as the previous examples, if you follow the process carefully then uglier numbers will not matter!
-
-Note
-Example 8
-
-Suppose you would like to complete the square of the expression 3 m squared minus 2 m minus 1. You can identify the expression as in the form a m squared plus b m plus c with a equals 3, b equals negative 2 and c equals negative 1.
-
-Taking out a factor of a equals 3 gives the expression as 3 m squared minus 2 m minus 1 equals 3 times open paren m squared minus two thirds m minus one third close paren You can now notice the part inside the brackets is of the form m squared plus r m plus s with r equals negative 2 divided by 3 and s equals negative 1 divided by 3.
-
-Now, complete the square on m squared minus two thirds m minus one third. Here p equals open paren negative 2 divided by 3 close paren divided by 2 equals negative 1 divided by 3. Working out p squared gives open paren negative 1 divided by 3 close paren squared equals 1 divided by 9. Solving p squared plus q equals s gives q, and so here one ninth plus q equals negative one third It follows that q equals negative 4 divided by 9.
-
-This means that 3 m squared minus 2 m minus 1 equals 3 times open paren open paren m minus one third close paren squared minus four ninths close paren and so taking out the last term in brackets gives 3 m squared minus 2 m minus 1 equals 3 times open paren m minus one third close paren squared minus 3 times four ninths equals 3 times open paren m minus one third close paren squared minus four thirds and this is your final answer.
-
-Once again, you can expand the brackets to check your answer: 2 lines Line 1: 3 times open paren m minus one third close paren squared minus four thirds equals 3 times open paren m squared minus two thirds m plus one ninth close paren minus four thirds Line 2: blank equals 3 m squared minus 2 m plus one third minus four thirds equals 3 m squared minus 2 m minus 1
-
-Solving quadratic equations
-
-You can use what you have learned in this guide to solve quadratic equations of the form a x squared plus b x squared plus c equals 0. To do this, write the expression a x squared plus b x plus c as a completed square a times open paren x plus p close paren squared plus t, which is equal to 0. You can then rearrange the equation (see Guide: Introduction to rearranging equations for more) for x to work out the roots of the quadratic equation.
-
-You may find that open paren x plus p close paren squared is equal to a negative number. You can use imaginary numbers to then solve the quadratic. See Guide: Introduction to complex numbers for more.
-
-Note
-Example 9
-
-Suppose that you want to solve the quadratic equation x squared plus 12 x plus 20 equals 0. You completed the square of x squared plus 12 x plus 20 in Example 2, getting open paren x plus 6 close paren squared minus 16. So open paren x plus 6 close paren squared minus 16 equals 0; taking the 16 over and removing the square - taking care to include both the positive and negative roots of 16 - gives x plus 6 equals plus or minus 4 Therefore x equals negative 6 plus 4 equals negative 2 and x equals negative 6 minus 4 equals negative 10 are the two solutions of x squared plus 12 x plus 20 equals 0.
-
-Note
-Example 10
-
-Suppose that you want to solve the quadratic equation y squared minus 10 y plus 41 equals 0. You completed the square of y squared minus 10 y plus 41 in Example 3, getting open paren y minus 5 close paren squared plus 16. So open paren y minus 5 close paren squared plus 16 equals 0; taking the 16 over gives open paren y minus 5 close paren squared equals negative 16. Using imaginary numbers (see Guide: Introduction to complex numbers) gives y minus 5 equals plus or minus 4 i Therefore y equals 5 plus 4 i and y equals 5 minus 4 i are the two complex solutions of y squared minus 10 y plus 41 equals 0.
-
-Tip
-
-You can complete the square on the general quadratic equation a x squared plus b x plus c equals 0 to get the quadratic formula, which gives solutions to any quadratic equation: see Guide: Using the quadratic formula for more, and Proof: The quadratic formula for how it is done.
+As you have seen, multiplying together diagonal matrices is computationally far easier than multiplying together general matrices; compare Example 2 to Example 7! In fact, this is one of the reasons behind the mathematical technique of diagonalizing a square matrix: see [Guide: Introduction to matrix diagonalization] for more.
 
 Quick check problems
 
-You are given four quadratic expressions below. Complete the square on each of them, by giving the constants. If your answer contains rational numbers, they should be written as fractions in their simplest form.
+Decide whether the following statements are true or false.
 
-x squared minus 6 x equals open paren x plus p close paren squared plus q, where p equals  and q equals  .
+If A is an n times n diagonal matrix, then A I sub n is a diagonal matrix. Answer: 
+TRUE
+FALSE
+ .
 
-x squared plus 8 x plus 1 equals open paren x plus p close paren squared plus q, where p equals  and q equals  .
+If A is an m times n matrix and double struck x is an m times 1 column vector, then A bold x is an n times 1 column vector. Answer: 
+TRUE
+FALSE
+ .
 
-x squared minus 5 x plus 8 equals open paren x plus p close paren squared plus q, where p equals  and q equals  .
+The product of an n times n upper-triangular matrix with an n times p zero matrix gives another upper-triangular matrix. Answer 
+TRUE
+FALSE
 
-2 x squared plus 8 x plus 15 equals a times open paren x plus p close paren squared plus q, where a equals  , p equals  and q equals  .
+Find the product bold A bold v where A equals the 2 by 2 matrix Row 1: 3 0 Row 2: 4 negative 2 and bold v equals the 2 by 1 column matrix 1 3 period
+
+Answer: The entry open bracket A bold v close bracket sub 11 equals  and open bracket A bold v close bracket sub 21 equals  .
+
+You are given the following equation the 3 by 3 matrix Row 1: 1 1 negative 1 Row 2: 0 2 0 Row 3: 0 0 1 times the 3 by 3 matrix Row 1: 3 1 0 Row 2: 0 1 negative 2 Row 3: 0 0 negative 1 equals the 3 by 3 matrix Row 1: 3 a negative 1 Row 2: b 2 negative 4 Row 3: c d e Find a comma b comma c comma d comma e.
+
+Answer: a equals  , b equals  , c equals  , d equals  , e equals
 
 Further reading
 
-For more questions on the subject, please go to Questions: Completing the square.
+For more questions on this topic, please go to Questions: Matrix multiplication with special matrices.
+
+For more about the definition of matrix multiplication, please go to Guide: Matrix multiplication.
 
 Version history
 
-v1.0: initial version created 09/24 by tdhc.
-
-v1.1: updated with Example 1 video 12/25 by Donald Campbell as part of a University of St Andrews VIP project.
+v1.0: initial version created 05/26 by tdhc.
 
 This work is licensed under CC BY-NC-SA 4.0.
 

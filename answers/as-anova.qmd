@@ -1,0 +1,143 @@
+---
+title: "Answers: The chain rule"
+author: "Jakub Brzozowski"
+abstract-title: Summary
+abstract: Answers to questions relating to the guide on ANOVA.
+draft: true
+---
+
+*These are the answers to [Questions: The chain rule](../questions/qs-anova.qmd).* 
+
+**Please attempt the questions before reading these answers!**
+
+---
+
+1.
+
+---
+
+1.1. One-way ANOVA checks for differences between a parameter (usually mean) between three (or more) groups of data.
+
+---
+
+1.2. The three key assumptions are:
+
+1. Normality: all the groups follow the normal distribution.
+2. Similar variance: all the groups have similar variance.
+3. Independence: every data point should be independent of each other.
+
+---
+
+1.3 Independence: it's crucial because otherwise the variance and can lead to wrong conclusions. 
+
+---
+
+1.4 If the data does not meet the assumptions, then non-parametric alternatives are available:
+
+- If the data is not normally distributed, but still has similar variance, then Kruskal-Wallis test can be used.
+- If the data does not have similar variance, but is nonetheless normally distributed, then Welch's ANOVA can be used.
+
+---
+
+---
+
+2.
+
+---
+
+2.1 $s^2_G$ is the sum of squares between the groups, it represents the variability between the group means.
+
+Similarly, $s^2_W$ is the sum of squares within the groups, it represents the variability within the groups themselves.
+
+---
+
+2.2 The $F$-test statistic ($f_0$) represents the ratio of the sum of squares between the groups to the one within the groups. 
+
+If it is small, you can suspect that the differences in group means are due to the variability within groups (large denominator, $s^2_W$), so you can expect to fail to reject the null hypothesis ($H_0$).
+
+If it is large, you can suspect that the differences in group mean are due to genuine variability between the groups (large numerator, $s^2_G$), so you can expect to reject the null hypothesis ($H_0$).
+
+---
+
+2.3 $f_0 \sim F_{0.975, df_1 = k-1, n-k}$
+
+---
+
+2.4 $f_0 = \frac{x}{y} = 6.4236$, the $F$-test statistic is much larger than the reference value from the $F$ distribution, so you reject the null hypothesis at 
+
+---
+
+---
+
+3.
+
+---
+
+3.1 Using ANOVA is best, as there are more than two groups and ANOVA is the test that allows you to check for differences between multiple group means without significantly increasing the losing Type I error rate.
+
+---
+
+3.2 $H_0$: all the group means are the same
+
+$H_1$: at least one group mean is different
+
+---
+
+3.3 You should select 15 groups and input the corresponding group means and standard deviation and click Calculate ANOVA.
+
+---
+
+3.4 The $F$-test statistic is:
+
+$$f_0 = 2.2398$$ 
+
+while the $p$-value is:
+
+$$p = 0.035982$$
+
+At $99\%$ confidence level you fail to reject the null hypothesis ($H_0$), because the $p$-value is higher than the error threshold ($\alpha = 0.01$). This indicates that the mean production-to-sale ratio is indeed equal across all the eight flavours **at** $99\%$ **confidence level**.
+
+---
+
+3.5 As you increase the confidence level to $95\%$ now your reference error rate is $\alpha = 0.05$, your $p$-value is lower than that ($0.05 > 0.035982$) so in this case you reject the null hypothesis and conclude that the mean production-to-sale ratio is different across all the eight flavours **at** $95\% **confidence level**. 
+
+This tells you that the conclusion drawn at $99\%$ confidence level is not as firm as you might want it to be, so you have to cautions in stating your conclusions not overreach in interpreting the outcome of the test.
+
+---
+
+3.6 If you use the standard testing method, then the test indicates that there are differences between the means of the production-to-sale ratios. 
+
+However, if you use a more strict testing method then there the test indicates that there is no difference between the means of the production-to-sale ratios.
+
+The conclusion you draw depends on how conservative you want to be in your testing.
+
+---
+
+---
+
+4.
+
+---
+
+4.2970.4210
+
+---
+
+4.2. The $F$-test statistic is $f_0 = 0.4649$ and the associated $p$ value is 0.000. 
+
+As a result, at $99\%$ confidence level you conclude that there is no meaningful difference between the group means.
+
+---
+
+4.3 There is one very low data point in group $3$, namely $2$. The mean of the group is still similar to the other groups, but the standard deviation visibly stands out and makes you question if the assumption of similar variance does indeed hold in this case.
+
+---
+
+---
+
+## Version history and licensing {-}
+
+v1.0: initial version created 04/26 by Jakub Brzozowski as part of a University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+

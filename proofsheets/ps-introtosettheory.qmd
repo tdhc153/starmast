@@ -1,0 +1,89 @@
+---
+title: "Proof: Cardinalities of Infinite Power Sets"
+author: "Holly Goldsmith"
+abstract-title: Summary
+abstract: This proof sheet demonstrates the relationship between the cardinalities of infinite sets and their power sets.
+draft: true
+---
+
+*Before reading this proof sheet, it is recommended that you read [Guide: Introduction to set theory](../studyguides/introtosettheory.qmd) and [Guide: Introduction to functions](../studyguides/introtofunctions.qmd), as bijections will feature heavily in this proof.*
+
+The cardinality of power sets of infinite sets is difficult to define. Rather than providing concrete values for common infinite power sets, this proof sheet seeks to establish a key relationship between infinite power sets and the sets they come from.
+
+### GOAL: For a set $A$, $|A| < |\mathcal{P}(A)|$
+
+::: {.callout-note appearance="simple"}
+## Reminder: The definition of a power set
+
+For any set $A$, the **power set** of $A$ is defined as
+
+$$
+\mathcal{P}(A) = \{X: X \subseteq A\}
+$$
+the set of all subsets of $A$.
+:::
+
+This proof can be done in two steps.
+
+#### **Step 1: $|A| \leq |\mathcal{P}(A)|$**
+
+This section establishes that the size of a power set cannot be **less than** the size of the set it was made from. This is proven by considering a specific function:
+
+Consider a function $g(x): a \rightarrow \{a\}$. This function takes an element $a$ and transforms it into the set containing only the element $a$.
+
+Now, consider two elements $a,b \in A$, and assume that $g(a) = g(b)$.
+
+This means that $\{a\} = \{b\}$. This is only true when $a = b$, since elements of a set must be different for the sets to be different.
+
+So $g(a) = g(b)$ means that $a = b$. This means that $g$ is a specific type of function called an **injection**. If a function is an injection, then it can't transform two different elements in its domain (in this case $A$) into the same element in its range (in this case $\mathcal{P}(A)$). This forces the range to be at least as big as the domain, because every element in the domain must transform into a different element in the range!
+
+As such, $|A| \leq |\mathcal{P}(A)|$.
+
+#### **Step 2: $|\mathcal{P}(A)| \neq |A|$**
+
+Now all that is left to do is prove that $A$ and $\mathcal{P}(A)$ do not have the same cardinality, since, if that is the case, the above step will force the power set to be strictly larger than the set it came from.
+
+Let's assume that $A$ and $\mathcal{P}(A)$ are the same size. That means that there is a bijection $f: A \rightarrow \mathcal{P}(A)$ that maps elements of $A$ to elements of $\mathcal{P}(A)$, which are sets.
+
+Consider another set, $B = \{x \in A: x \notin f(x)\}$. This is the set of elements $x$ that are in the set A, but the bijection $f(x)$ does not map any element in $A$ to $x$.
+
+::: {.callout-note}
+
+## A concrete example of an element in $B$
+
+To visualize this, consider a specific $x$. The bijection $f(x)$ will take the element $x$ and send it to an element of $\mathcal{P}(A)$. Elements of $\mathcal{P}(A)$ are sets, so $f(x)$ is a set.
+
+$x \in B$ if the set that $x$ is sent to doesn't contain $x$. If $x = 2$, and $f(x) = \{3, 4, 5\}$, then $2 \in B$, since $2$ isn't in the set that $x$ was mapped to.
+:::
+
+Since every element in $B$ is an element of $A$, $B \subseteq A$, so $B \in \mathcal{P}(A)$.
+
+Since $f$ is a bijection, $B = f(a)$ for some $a \in A$. This is because every element in the range of a bijection, in this case $\mathcal{P}(A)$, must have some element in the domain, in this case $A$, that maps to it.
+
+But from the definition of $B$, $a$ can only be in $B$ if $a$ is **not** in $f(a) = B$.
+
+$$
+a \in B \iff a \notin f(a) = B
+$$
+
+::: {.callout-tip}
+The arrow symbol above, $\iff$, is a mathematical symbol that means "if and only if". It means that the statement on each side of the arrow implies the other, so they can only be true if the other statement is also true.
+:::
+
+This is a contradiction, because $a$ is simultaneously both in and not in $B$.
+
+This means that there is no bijection between $A$ and $\mathcal{P}(A)$, so $|\mathcal{P}(A)| \neq |A|$.
+
+
+Then, since $|A| \leq|\mathcal{P}(A)|$ and $|A| \neq|\mathcal{P}(A)|$, that must mean that $|A| < |\mathcal{P}(A)|$.
+
+
+# Further reading
+
+[Click this link to go back to Guide: Introduction to set theory](../studyguides/introtosettheory.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 03/26 by Holly Goldsmith as part of a University of St Andrews VIP project.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

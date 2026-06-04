@@ -1,0 +1,191 @@
+---
+title: "Factsheet: Family-wise error"
+author: Jakub Brzozowski
+abstract-title: Summary
+abstract: An introduction to reducing Family-wise type I error rate using Bonferonni correction, Sidak correction, and Tukey's Honest Significant Difference (HSD).
+filters: 
+  - shinylive
+embed-resources: false
+categories:
+  - Statistics
+  - Probability
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+# Why do you want to be doing this?
+
+When taking multiple hypothesis tests (for example after ANOVA analysis, to identify which group means are different) your confidence level decreases with every consecutive test you perform. 
+
+This is because you typically intend to draw inferences using all of the tests' results. This applies, even if you only conclude that two groups means are different, then you still used all the other tests' outcome, to conclude that their means are not equal!
+
+::::{.callout-note appearance="simple"}
+
+## Example 1
+You have four groups $A$, $B$, $C$, $D$ and you want to check if there are any differences between their means. You decide to use a hypothesis test with associated $95$% confidence level.
+The tests you need to conduct are:
+
+- $A$ and $B$
+- $A$ and $C$
+- $A$ and $D$
+- $B$ and $C$
+- $B$ and $D$
+- $C$ and $D$
+
+so there are 6 hypothesis tests, each with a $95$% confidence level. If you use all of your results, then your cumulative confidence level is $95$%, but rather $1 - 6 * 0.05 = 0.7$, so only $70$%.
+You would like to therefore decrease the confidence level for each test, so that your cumulative (or family-wise) error rate is equal to $95$%.
+:::
+
+::::callout-tip
+To calculate the number of pairwise comparisons use:
+$$n_c = \binom{n}{2} = \frac{n!}{2!(n-2)!}$$
+where: 
+
+- $n_c$ is the number of comparisons.
+- $n_g$ is the number of groups of interest.
+
+
+To calculate the cumulative (family-wise) error rate use then:
+$$1 - \alpha n_c$$
+where: 
+
+- $\alpha$ is your [Type I error rate](f-type1type2error.qmd)
+- $n_c$ is the number of pair-wise comparisons.
+:::
+
+## Definition of the family-wise error rate
+
+:::callout-important
+## Definition of the family-wise error rate
+**Family-wise error rate** is the error rate associated with a group of tests from which inference is made collectively, rather than singularly. 
+In other words, if you need multiple tests to draw statistical conclusion, then you're dealing with **family-wise error rate**.
+:::
+
+# Bonferonni correction
+
+The best known method for Type I error rate correction is **Bonferonni correction**.
+To calculate it use:
+
+$$\alpha_{adj} = \frac{\alpha}{n_c}$$
+This method preserves the initial **Type I error** completely, but it comes at a cost of **Type II error**.
+
+::::{.callout-note appearance="simple"}
+## Example 2
+
+Knowing that you want to conduct $6$ tests ($n_c = 6$) and that your chosen Type I error rate is $\alpha = 0.05$ you can use the Bonferonni correction to calculate the family-wise error rate:
+
+$$\alpha_{adj} = \frac{\alpha}{n_c} = \frac{0.05}{6} = 0.008333(3)$$
+so now every hypothesis test in your family is conducted at the $0.8333(3)$% Type I error rate.
+:::
+
+# Sidak correction
+
+Another algebraic method for adjusting the rate of Type I error is **Sidak correction**.
+To calculate it use:
+
+$$\alpha_{adj} = 1 - (1-\alpha)^\frac{1}{n_c}$$
+
+::::{.callout-note appearance="simple"}
+## Example 3
+
+Alternatively to Bonferonni correction, you can use Sidak correction to decrease your family-wise Type I error rate.
+Knowing that you want to conduct $6$ tests ($n_c = 6$) and that your chosen Type I error rate is $\alpha = 0.05$ you calculate:
+
+$$\alpha_{adj} = 1 - (1-\alpha)^\frac{1}{n_c} = 1 - (1 - 0.05)^\frac{1}{6} = 1 - 0.9914876 = 0.0085124$$
+so now every hypothesis test in your family is conducted at the $0.85124$% Type I error rate.
+:::
+
+# Tukey's Honest Significant Difference (HSD)
+
+Another method of adjusting the family-wise error rate is Tukey's Honest Significant Difference. This method creates confidence intervals for means, but adjusts the standard error so that the confidence intervals are appropriately wider.
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+library(shiny)
+library(bslib)
+
+ui <- page_sidebar(
+  title = "Tukey HSD Calculator",
+  sidebar = sidebar(
+    numericInput("n_groups", "Number of Groups", value = 3, min = 2, max = 10),
+    hr(),
+    uiOutput("group_inputs"),
+    numericInput("alpha", "Significance Level (α)", value = 0.05, min = 0.001, max = 0.1, step = 0.01),
+    actionButton("calculate", "Calculate", class = "btn-primary")
+  ),
+  card(
+    card_header("Results"),
+    verbatimTextOutput("results")
+  )
+)
+
+server <- function(input, output, session) {
+  
+  output$group_inputs <- renderUI({
+    lapply(1:input$n_groups, function(i) {
+      tagList(
+        h5(paste("Group", i)),
+        numericInput(paste0("m", i), "Mean", 0),
+        numericInput(paste0("s", i), "Standard Deviation", 1, min = 0.001),
+        numericInput(paste0("n", i), "Sample Size (n)", 10, min = 2),
+        hr()
+      )
+    })
+  })
+  
+  observeEvent(input$calculate, {
+    output$results <- renderPrint({
+      # Get inputs
+      m <- sapply(1:input$n_groups, function(i) input[[paste0("m", i)]])
+      s <- sapply(1:input$n_groups, function(i) input[[paste0("s", i)]])
+      n <- sapply(1:input$n_groups, function(i) input[[paste0("n", i)]])
+      
+      # MSE and df
+      df <- sum(n - 1)
+      mse <- sum((n - 1) * s^2) / df
+      q_crit <- qtukey(1 - input$alpha, input$n_groups, df)
+      
+      cat("MSE:", round(mse, 4), "  df:", df, "  q-critical:", round(q_crit, 4), "\n\n")
+      
+      # Pairwise comparisons
+      for (i in 1:(input$n_groups - 1)) {
+        for (j in (i + 1):input$n_groups) {
+          diff <- m[i] - m[j]
+          se <- sqrt(mse * (1/n[i] + 1/n[j]))
+          q <- abs(diff) / se
+          ci <- c(diff - q_crit * se, diff + q_crit * se)
+          p <- ptukey(q, input$n_groups, df, lower.tail = FALSE)
+          
+          cat(sprintf("Group %d vs %d: diff=%.3f, SE=%.3f, q=%.3f, CI=[%.3f,%.3f], p=%.4f %s\n",
+                      i, j, diff, se, q, ci[1], ci[2], p, ifelse(p < input$alpha, "*", "")))
+        }
+      }
+    })
+  })
+}
+
+shinyApp(ui, server)
+```
+
+The $q$-critical statistic measures the threshold at which the test results become statistically significant (there is meaningful difference between the means). 
+
+If your $q$ value for any of the pairwise comparisons exceeds the reference critical statistic, this means that that mean is indeed different from the others.
+
+
+# Further reading {-}
+
+[To learn more about using reduced family wise error in post-ANOVA pair-wise tests, please go to Guide: Pairwise comparisons](../studyguides/pairwise-comparisons.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 04/26 by Jakub Brzozowski as a part of a University of St Andrews VIP project.
+
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

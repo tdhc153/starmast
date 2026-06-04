@@ -1,0 +1,189 @@
+---
+title: "Answers: Introduction to logic (maths)"
+author: "Jessica Taberner"
+abstract-title: Summary
+abstract: Answers to questions relating to the guide on introduction to logic (maths).
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+*These are the answers to [Questions: Introduction to logic (maths).](../questions/qs-introtologicmaths.qmd)*
+
+**Please attempt the questions before reading these answers!**
+
+## Q1 Propositions{-}
+
+**1.1.** "$3 < 5$" is a proposition.
+
+**1.2.** "$5 < 3$" is a proposition.
+
+**1.3.** “$x < 5$” is not a proposition.
+
+**1.4.** “$5$ is even” is a proposition.
+
+**1.5.** “$y$ is odd” is not a proposition.
+
+**1.6.** “$2 \cdot 3 =6$” is a proposition.
+
+**1.7.** “$4 \cdot 3 =10$” is a proposition.
+
+**1.8.** “$2 \cdot 3 < 5x$" is not a proposition.
+
+
+## Q2 Connectives{-}
+
+**2.1.** The logical structure of "If $x < 3$, then $y$ is even" is $P \rightarrow Q$.
+
+**2.2.** The logical structure of "$x$ is odd and positive" is $P \wedge Q$.
+
+**2.3.** The logical structure of "$z$ is not $-1$" is $\neg P$.
+
+**2.4.** The logical structure of "$y$ is even or odd" is $P \vee Q$.
+
+**2.5.** The logical structure of "$z$ is positive if and only if $y$ is negative" is $P \leftrightarrow Q$.
+
+**2.6.** The logical structure of "If $x<0$, then $y$ and $z$ are even" is $P \rightarrow (Q \wedge R)$.
+
+## Q3 Truth tables{-}
+
+**3.1.** $P \rightarrow Q$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T", "F", "F"),
+  `$Q$` = c("T", "F", "T", "F"),
+  `$P \\rightarrow Q$`= c("T", "F", "T", "T"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.2.** $\neg P$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "F"),
+  `$\\neg P$`= c("F", "T"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.3.** $(P \vee Q) \wedge \neg Q$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T", "F", "F"),
+  `$Q$` = c("T", "F", "T", "F"),
+  `$(P \\vee Q) \\wedge \\neg Q$`= c("F", "T", "F", "F"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.4.** $\neg (P \leftrightarrow Q)$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T", "F", "F"),
+  `$Q$` = c("T", "F", "T", "F"),
+  `$\\neg (P \\leftrightarrow Q)$`= c("F", "T", "T", "F"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+ 
+**3.5.** $\neg (P\wedge Q)$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T", "F", "F"),
+  `$Q$` = c("T", "F", "T", "F"),
+  `$\\neg (P \\wedge Q)$`= c("F", "T", "T", "T"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.6.** $(P \rightarrow Q) \rightarrow R$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T","T", "T", "F", "F","F", "F"),
+  `$Q$` = c("T", "F", "T", "F","T", "F", "T", "F"),
+  `$R$` = c("T", "T", "F", "F", "T", "T", "F", "F"),
+  `$(P \\rightarrow Q)\\rightarrow R$`= c("T", "T", "F", "T", "T","T", "F", "F"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.7.** $\neg (P \vee (Q \vee R))$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T","T", "T", "F", "F","F", "F"),
+  `$Q$` = c("T", "F", "T", "F","T", "F", "T", "F"),
+  `$R$` = c("T", "T", "F", "F", "T", "T", "F", "F"),
+  `$\\neg (P \\vee (Q \\vee R))$`= c("F", "F", "F", "F","F", "F", "F", "T"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+**3.8.** $(P \leftrightarrow Q) \vee (\neg R)$
+
+```{r, echo=FALSE}
+library(knitr)
+
+df <- data.frame(
+  `$P$` = c("T", "T","T", "T", "F", "F","F", "F"),
+  `$Q$` = c("T", "F", "T", "F","T", "F", "T", "F"),
+  `$R$` = c("T", "T", "F", "F", "T", "T", "F", "F"),
+  `$(P \\leftrightarrow Q) \\vee (\\neg R)$`= c("T", "F", "T", "T","F", "T", "T", "T"),
+  check.names = FALSE
+)
+
+kable(df, format = "markdown", escape = FALSE)
+```
+
+## Q4 Equivalence{-}
+
+
+**4.1.** $\neg (P \wedge Q)$ and $(\neg P) \vee (\neg Q)$ are logically equivalent. This identity is known as **De Morgan's Law**.
+
+**4.2.** $P \rightarrow Q$ and $Q \rightarrow P$ are not logically equivalent.
+
+**4.3.** $P \rightarrow Q$ and $(\neg P) \vee Q$ are logically equivalent.
+
+**4.4.** $P \rightarrow Q$ and $\neg (P \vee Q)$ are not logically equivalent.
+
+## Version history and licensing {-}
+
+v1.0: initial version created 03/26 by Jessica Taberner as part of a University of St Andrews VIP project.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

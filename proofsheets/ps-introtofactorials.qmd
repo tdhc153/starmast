@@ -1,0 +1,103 @@
+---
+title: "Proof: Binomial identities"
+author: "Jessica Taberner"
+abstract-title: Summary
+abstract: Proof of binomial identities.
+categories:
+  - Probability
+draft: true
+---
+
+Before reading this proofsheet, it is recommended that you read [Guide: Introduction to factorials, permutations, and combinations](../studyguides/introtofactorials.qmd).
+
+# Proof
+
+Remember from [Guide: Introduction to factorials, permutations, and combinations](../studyguides/introtofactorials.qmd) that a **binomial coefficient** computes the number of ways of selecting $k$ things from a collection of $n$ things, **where order doesn't matter**.
+
+::: {.callout-note icon="true"}
+## Definition of combinations
+
+The **combination formula** or **binomial coefficient formula** calculates the number of ways to do this, you can write this in two ways:
+
+$$C(n,k)=\binom{n}{k}=\frac{n!}{(n-k)!k!}$$
+$$C(n,k)=\binom{n}{k}=\frac{n\cdot(n-1)\cdot\cdot\cdot(n-k+1)}{k\cdot(k-1)\cdot\cdot\cdot2\cdot1}$$
+You would read this as "$n$ choose $k$". 
+
+To use this formula $n$ and $k$ must be integers, with $k \leq n$. If $k > n$ then there is no way to select $k$ things from a collection of $n$ things, so $\binom{n}{k}=0$.
+
+If $n=k$ or $k=0$ then $\binom{n}{k}=1$ as there is only one way to pick nothing or everything from a collection of things.
+:::
+
+# Symmetry identity {-}
+
+::: {.callout-note}
+
+## Symmetry identity
+
+$$\binom{n}{k}=\binom{n}{n-k}$$
+:::
+
+You could prove this identity many ways. You'll see $2$ different ways to approach this in this sheet, both of which are interesting and valid ways of approaching the proof.
+
+## Algebraic method
+
+First, an algebraic method: begin by using the above formula to rewrite the left hand side.
+
+$$\binom{n}{k}=\frac{n!}{(n-k)!k!}$$
+Then you can notice that $k=n-(n-k)$, hence:
+$$\frac{n!}{(n-k)!k!}=\frac{n!}{(n-k)!(n-(n-k))!}=\binom{n}{n-k}$$
+
+So $\binom{n}{k}=\binom{n}{n-k}$ as required!
+
+
+## Counting method
+
+Another way of approaching this is by a counting argument. 
+
+$\binom{n}{k}$ is the number of ways of selecting $k$ things from a collection of $n$ things. This is equivalent to the number of ways of not selecting the remaining $n-k$ things.
+
+Imagine having $2$ boxes, a 'pick' box and a 'don't pick' box. For every way you can put $k$ things in the 'pick' box, there's a way to put $n-k$ things in the 'don't pick' box. If you imagine relabeling these boxes you can see that $\binom{n}{k}$ must equal $\binom{n}{n-k}$.
+
+# Pascal's identity{-}
+
+::: {.callout-note}
+
+## Pascal's identity
+
+$$\binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k}$$
+
+:::
+
+Again, you could prove this identity many ways. You'll see $2$ different ways to approach this in this sheet.
+
+## Algebraic method
+
+First, an algebraic method: begin by using the formula to rewrite the right hand side.
+
+$$\binom{n-1}{k-1}+\binom{n-1}{k}=\frac{(n-1)!}{(n-k)!(k-1)!}+\frac{(n-1)!}{(n-k-1)!k!}$$
+
+In order to make the denominators equal, you can multiply the left fraction by $k$ and the right fraction by $n-k$.
+
+$$\frac{k(n-1)!}{(n-k)!k!}+\frac{(n-k)(n-1)!}{(n-k)!k!}=\frac{(k+n-k)(n-1)!}{(n-k)!k!}$$
+
+Simplifying and rewriting the right hand side you can get $\binom{n}{k}$ as required.
+$$\frac{(k+n-k)(n-1)!}{(n-k)!k!}=\frac{n(n-1)!}{(n-k)!k!}=\frac{n!}{(n-k)!k!}=\binom{n}{k}$$
+
+
+## Counting method
+
+Alternatively, you could also approach this with a counting argument.
+
+Imagine having a collection with $n$ items, and picking one. Let's call this 'star'. If you want to pick $k$ elements from the collection, it either includes 'star' or it doesn't. If it does include 'star' then you need to pick $k-1$ elements from $n-1$ elements, there are $\binom{n-1}{k-1}$ ways to do this. If it does not include 'star' then you need to pick $k$ elements from $n-1$ elements, there are $\binom{n-1}{k}$ ways to do this. Adding these together gives the result.
+
+$$\binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k}$$
+
+# Further reading
+
+For more on this topic, please go to [Guide: Introduction to factorials, permutations, and combinations](../studyguides/introtofactorials.qmd).
+
+## Version history {-}
+
+v1.0: initial version created 03/26 by Jessica Taberner as part of a University of St Andrews VIP project.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

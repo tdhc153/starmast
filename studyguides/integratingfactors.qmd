@@ -1,0 +1,485 @@
+---
+title: Solving first-order linear ODEs using integrating factors
+author: Maddi Koenig
+abstract-title: Summary
+abstract: First-order linear differential equations are a class of differential equations that involve a function and its first derivative. They are solved using a method involving an integrating factor, which is a function that simplifies the equation in order for it to be integrated. These equations are widely used to model real-world problems in physics, biology, and other sciences. 
+categories:
+  - Differential equations
+  - Calculus
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+*Before reading this guide, it is recommended that you read [Guide: Introduction to ordinary differential equations, Guide: Integration by substitution, Guide: Integrating by parts].*
+
+*While not directly required to understand this guide, this topic is closely related to [Guide: Introduction separable differential equations].*
+
+# What is a first-order linear ODE? {-}
+
+A first-order linear ODE is an equation that can be arranged to be in the form $$\frac{\mathrm{d}y}{\mathrm{d}x} +P(x)y = Q(x)$$ Where $P(x)$ and $Q(x)$ are continuous functions of $x$. Previously you may have solved differential equations using separation of variables which, involves moving all the dependent variables to one side of the equation and all independent variables to the other side and integrating. However, some equations cannot be solved in this way because it is not possible to split the two variables up into their own sides. It is also possible that some equations can be solved using both techniques and in that case you have the choice of whether to solve using integrating factors or separation of variables. Equations of this form are common to see in physics, biology, and other science models. An example being Newton’s Law of Cooling: $\frac{\mathrm{d}T}{\mathrm{d}t} = -k(T - T_a)$, so having the ability to solve for exact solutions can be beneficial to gain understanding of the model.
+
+## What makes an ODE first-order linear? {-}
+For an ODE to be linear, the dependent variable $y$ and its derivative $\frac {\mathrm{d}y}{\mathrm{d}x}$ must only appear to the first power and cannot be multiplied together. For example the equation $\frac{\mathrm{d}y}{\mathrm{d}x} = y + x^2$ would be considered linear, but $\frac{\mathrm{d}^2y}{\mathrm{d}x^2} = y + x^2$ and $\frac{\mathrm{d}y}{\mathrm{d}x} = y^3 + x^2$ would not be considered linear.
+
+# How to solve a first-order linear ODE for the general solution {-}
+Throughout this example, the general case will be solved alongside a worked example with specific numerical values to show how it applies in practice. The general case is $$\frac{\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$$ and the chosen example case is $$x\frac {\mathrm{d}y}{\mathrm{d}x} + y = 3x$$ No matter how you try to rearrange this equation, you are not able to separate the variables properly, meaning that this problem cannot be solved using the separation of variables technique. 
+
+## Step 1: Identify and rearrange {-}
+ODEs come in many forms and only if they can be arranged into the form $\frac{\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$, where $P(x)$ and $Q(x)$ are continuous functions of $x$, can they be solved using this technique. Therefore, the first step that you must take when given an ODE problem to solve, is decide what type or problem it is.
+Once you identify that the equation is a first-order linear ODE, you can then rearrange it into the form, $\frac{\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$ where $P(x)$ and $Q(x)$ are continuous functions of $x$. 
+
+The general case arranged into the proper form is:
+$$\frac{\mathrm{d}y}{\mathrm{d}x} +P(x)y = Q(x)$$ 
+Since the equation is in the proper form, you can see that in this case $P(x) = P(x)$ and $Q(x) = Q(x)$. 
+
+::: {.callout-note appearance="simple"}
+
+## Example 1
+
+You can rearrange the example case to be in the form $\frac{\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$ as so:
+$$x\frac {\mathrm{d}y}{\mathrm{d}x} + y = 3x$$
+$$\frac {\mathrm{d}y}{\mathrm{d}x} + \frac {1}{x}y = 3$$
+This equation is now in the form $\frac{\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$ so you can find that $P(x) = \frac {1}{x}$ and $Q(x) = 3$.
+
+:::
+
+
+
+## Step 2: Find the integrating factor {-}
+Once you have rearranged the problem into the form $\frac{\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$, the next step is to solve for a term called the integrating factor. This integrating factor becomes important later in the problem as it allows the left-hand side of the equation to be integrated. In this guide, the integrating factor will be called $\mu(x)$. 
+
+::: {.callout-note}
+
+## Definition of the integrating factor
+
+$$\mu(x) = e^{\int P(x) \,\mathrm{d}x}$$
+
+:::
+
+In the first step you have found that for the general case, $P(x) = P(x)$ so the integrating factor for the general case is,
+$$\mu(x) = e^{\int P(x) \,\mathrm{d}x}$$ 
+
+::: {.callout-note appearance="simple"}
+
+## Example 1 continued
+
+Remember from above you found that $P(x) = \frac {1}{x}$, so using the definition of the integrating factor you find that,
+$$\mu(x) = e^{\int(\frac {1}{x})\,\mathrm{d}x}$$
+and solving the integral you get,
+$$\mu(x) = x$$
+as the integrating factor.
+
+:::
+
+::: {.callout-note}
+
+When you solve for the integrating factor, you can ignore the $+C$ that would typically be added from the integration. This is because the integrating factor is only a tool used to make the ODE easier to integrate and it has no bearing on the final answer. 
+
+:::
+
+## Step 3: Introduce the integrating factor into the equation {-}
+So far, the integrating factor has only been found. Now you must introduce it into the differential equation, so that the ODE you are solving can eventually be integrated. Once you find the integrating factor, the next step is to multiply the whole ODE through by the integrating factor. In the general case this would look like: $$\mu(x) \cdot \frac{\mathrm{d}y}{\mathrm{d}x} + \mu(x) \cdot P(x)y = \mu(x) \cdot Q(x)$$ this is the form that will be worked with throughout this example. If $\mu(x) = e^{\int P(x) \,\mathrm{d}x}$ were to be plugged in, the general case would become: 
+$$e^{\int P(x)\, \mathrm{d}x} \cdot \frac{\mathrm{d}y}{\mathrm{d}x} + e^{\int P(x)\, \mathrm{d}x} \cdot P(x)y = e^{\int P(x)\, \mathrm{d}x} \cdot Q(x)$$ 
+
+::: {.callout-note appearance="simple"}
+
+## Example 1 continued
+
+In the last step, you found that the integrating factor is $\mu(x) = x$. Multiplying $\mu(x)$ through the ODE would give:
+$$\frac {\mathrm{d}y}{\mathrm{d}x} \cdot \mu(x) + \mu(x) \cdot\frac {1}{x}y = \mu(x) \cdot 3$$ 
+and plugging in $\mu(x) = x$ would give: 
+$$\frac {\mathrm{d}y}{\mathrm{d}x} \cdot x + x \cdot\frac {1}{x}y = x \cdot 3$$
+And when you simplify:
+$$x \cdot \frac {\mathrm{d}y}{\mathrm{d}x} + y = 3x$$
+
+:::
+
+## Step 4: Simplify the left-hand side of the ODE {-}
+Now that you have multiplied the ODE through by the integrating factor, the left hand side of the ODE is able to be simplified. At first glance the left side of the equation looks quite complicated. However, the integrating factor allows this side of the equation to be reduced to the derivative of a product. By using the integrating factor the left side of the equation always becomes the derivative of $\mu(x) \cdot y$. This is because the integrating factor turns the left-hand side of the ODE into the form of the product rule. 
+
+::: {.callout-important}
+
+Remember from [Guide: The product rule](/studyguides/productrule.qmd) that the product rule is: $\frac{\mathrm{d}}{\mathrm{d}x}(f(x) \cdot g(x)) = f(x) \cdot g'(x) + f'(x) \cdot g(x)$
+
+:::
+
+The left hand side of the general case is $\mu(x)\frac{\mathrm{d}y}{\mathrm{d}x} + P(x) \mu(x) \cdot y$. You may notice that this is in the form of the right-hand side of the product rule, written in the above example. You can match up the parts to find that: 
+$$f(x) = \mu(x), \quad g'(x) = \frac{\mathrm{d}y}{\mathrm{d}x}, \quad f'(x) = P(x) \mu(x), \quad g(x) = y$$ 
+Knowing this you can use the product rule to find that $f(x) = \mu(x)$ and $g(x) = y$ which means the left-hand side of the ODE can be written as: $$\frac {\mathrm{d}}{\mathrm{d}x} (\mu(x) \cdot y)$$
+You can now write the ODE as: $$\frac {\mathrm{d}}{\mathrm{d}x} (\mu(x) \cdot y) = \mu(x) \cdot Q(x)$$
+
+::: {.callout-note appearance="simple"}
+
+## Example 1 continued
+
+The left hand side of the example equation is $x \cdot \frac {\mathrm{d}y}{\mathrm{d}x} + y$.
+
+Matching up the left-hand side of the ODE to the right hand side of the product rule, you get that:
+
+$$f(x) = x , \quad g'(x) = \frac{\mathrm{d}}{\mathrm{d}x}, \quad f'(x) = 1, \quad g(x) = y$$
+You can now find that $f(x) = x$ and $g(x) = y$ through the product rule and use the right hand side of the product rule to find that the left-hand side of the ODE can be written as: $$\frac {\mathrm{d}}{\mathrm{d}x}\left(xy\right)$$
+So you can now write the ODE as: $$\frac {\mathrm{d}}{\mathrm{d}x} (xy) = 3x$$
+
+:::
+
+## Step 5: Integrate both sides of the ODE {-}
+
+Your next step is to integrate both sides of the equation with respect to the independent variable which in the general case is $x$. Remember in step 4 you found that the general case can be written as $\frac {\mathrm{d}}{\mathrm{d}x} (\mu(x) \cdot y) = \mu(x) \cdot Q(x)$. You can now set up the integration for the ODE:
+$$\int\left(\frac {\mathrm{d}}{\mathrm{d}x} (\mu(x) \cdot y)\right)\,\mathrm{d}x = \int(\mu(x) \cdot Q(x))\,\mathrm{d}x$$
+First thinking about the left-hand side of the equation, remember the fundamental theorem of calculus from [Guide: Introduction to integration](/studyguides/introtointegration.qmd). It states that integration reverses differentiation. Using this theorem you can solve the left hand side of the equation to be $\mu(x) \cdot y + C_1$ this means that the full equation is:
+$$
+\mu(x) \cdot y  + C_1 = \int (\mu(x)Q(x))\, \mathrm{d}x
+$$
+In the general case, you can leave the integral as it is because it depends on the specific function $Q(x)$. This is because the form of the integration depends on the ODE that you are given to solve, so the answer will be on a case-by-case basis. You can continue this example without directly solving for the integral of the right-hand side, but when given an example with numbers remember to integrate the right hand side. You can now move $C_1$ to the right hand side of the equation.
+$$
+\mu(x) \cdot y = \int (\mu(x)Q(x))\, \mathrm{d}x - C_1
+$$
+Let $-C_1 = C$, so:
+
+$$
+\mu(x) \cdot y = \int (\mu(x)Q(x))\, \mathrm{d}x + C
+$$
+
+::: {.callout-note appearance="simple"}
+
+## Example 1 continued
+
+Remember from step 4 you found that the ODE can be simplified to the form: $\frac {\mathrm{d}}{\mathrm{d}x} (xy) = 3x$. Now you can integrate both sides of the equation with respect to the independent variable $x$. 
+$$\int\left(\frac {\mathrm{d}}{\mathrm{d}x} (xy)\right)\,\mathrm{d}x = \int(3x)\,\mathrm{d}x$$
+Starting with the left-hand side, you can use the fundamental theorem of calculus, as stated above in the general case example, to solve the integral:
+$$xy + C_1 = \int(3x)\mathrm\,{d}x$$
+Integrating the right-hand side you find that:
+$$xy + C_1 = \frac {3}{2} x^2 + C_2$$
+Now you can move the constants together:
+$$xy = \frac {3}{2} x^2 + C_2 - C_1$$
+Let $C_2 - C_1 = C$, so: 
+
+$$xy = \frac {3}{2} x^2 + C$$
+
+:::
+
+::: {.callout-important}
+
+Given that you are integrating both sides of the equation, the constant of integration (typically $C$) only needs to be added to one side (most conventionally the right side). This is because at the end of the integration step all of the constants can be moved to one side and added to make a single constant. 
+
+:::
+
+## Step 6: Algebraically solve for y {-}
+
+For the general case, the algebraic steps to solve for $y$ are as follows:
+
+Divide through by $\mu(x)$ giving:
+
+::: {.callout-note title="General Solution for the General Case"}
+
+$$
+y = \frac{1}{\mu(x)} \cdot \int (\mu(x)Q(x))\, \mathrm{d}x + \frac{C}{\mu(x)}
+$$
+There is no need to remember this answer. It is only here to show the steps taken to solve a first-order linear ODE which are what you should focus on. 
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 1 continued
+
+For the example case, the algebraic steps to solve for $y$ are as follows:
+
+Divide through by $x$ giving the general solution for example 1:
+
+$$y = \frac {3}{2} x + \frac {C}{x}$$
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 2 {-}
+What is the general solution to the equation $\frac{\mathrm{d}y}{\mathrm{d}x} = -2y + 1$? 
+
+This equation can also be solved by separation of variables, see [Guide: Separation of variables]. When solving differential equations you may come across equations that are able to be solved using multiple different techniques. If the technique you should use is not directly specified in the question, it is up to you to pick a technique to solve the question. 
+
+**Step 1: Identify and rearrange**
+
+Your very first step should be to look at the equation and decide if it can be rearranged into the form $\frac{\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$. This ODE can be arranged in this form, so your next step should be to arrange it in this form. Starting with: 
+$$\frac{\mathrm{d}y}{\mathrm{d}x} = -2y + 1$$
+Divide through by $x$:
+$$\frac{\mathrm{d}y}{\mathrm{d}x} + 2y = 1$$
+Now, since the ODE is in the proper form you can see that $P(x) = 2$ and $Q(x) = 1$.
+
+**Step 2: Find the integrating factor**
+
+Remember from the above examples that the integrating factor is equal to $\mu(x) = e^{\int(P(x))\,\mathrm{d}x}$. Using $P(x) = 2$, which you found by rearranging the ODE, the integrating factor is equal to $$\mu(x) = e^{\int 2 \,\mathrm{d}x} = e^{2x}$$. Remember from the first examples that when integrating $P(x)$ there is no need to add the $+C$. 
+
+**Step 3: Introduce the integrating factor into the equation**
+
+Now you can multiply the ODE by the integrating factor which gives: 
+$$\mu(x) \cdot \frac{\mathrm{d}y}{\mathrm{d}x} + \mu(x) \cdot 2y = \mu(x) \cdot 1$$
+Now plugging in $\mu(x) = e^{2x}$, you get: 
+$$e^{2x} \cdot \frac{\mathrm{d}y}{\mathrm{d}x} + e^{2x} \cdot 2y = e^{2x} \cdot 1$$
+
+**Step 4: Simplify the left-hand side of the ODE**
+
+Matching up the left-hand side of the ODE, you get that:
+$$f(x) = e^{2x}, \quad g'(x) = \frac{\mathrm{d}y}{\mathrm{d}x}, \quad f'(x) = 2e^{2x}, \quad g(x) = y$$ 
+Using this you can simplify the left-hand side of the ODE by matching the terms up with the right-hand side of the product rule to find:
+$$\frac{\mathrm{d}}{\mathrm{d}x}(e^{2x} \cdot y)$$
+So you can now write the ODE as $$\frac{\mathrm{d}}{\mathrm{d}x}(e^{2x} \cdot y) = e^{2x}$$
+
+**Step 5: Integrate both sides of the ODE**
+
+Now you can integrate both sides of the equation with respect the the independent variable, which in this case is $x$.
+$$\int\left(\frac{\mathrm{d}}{\mathrm{d}x}(e^{2x} \cdot y)\right)\,\mathrm{d}x = \int(e^{2x} \cdot 1)\,\mathrm{d}x$$
+Remembering that the integral of a derivative of an equation is the equation the left hand side simplifies to:
+$$e^{2x}y + C_1 = \int(e^{2x} \cdot 1)\,\mathrm{d}x$$
+Now you can integrate the right hand side of the equation:
+$$
+e^{2x}y + C_1 = \frac {1}{2} e^{2x} + C_2
+$$
+
+Now bring the constant $C_1$ to the right-hand side:
+$$
+e^{2x}y= \frac {1}{2} e^{2x} + C_2 - C_1
+$$
+
+Let $C = C_2 - C_1$:
+$$
+e^{2x}y= \frac {1}{2} e^{2x} + C
+$$
+
+When you integrate both sides, you can skip adding $C_1$ and $C_2$ to each side and go straight to the step where $C$ is the only constant and it is on the right-hand side of the equation. 
+
+**Step 6: Algebraically solve for y**
+
+Solve the equation for $y$ to find that the general solution is: 
+$$
+y = \frac {1}{2} + Ce^{-2x}
+$$
+
+
+:::
+
+# Solving first-order linear ODEs given an initial condition {-}
+
+When you solve a first-order linear ODE, you first get a general solution, which is essentially like a whole family of possible answers. It includes a constant because there is not enough information to find one exact solution. An initial condition is the final piece of information you need in order to go from the general solution to the exact solution. The initial condition is a point that your solution must go through, and using that condition you can find the value for the constant in the general solution, which in this guide is $C$. This solution using an initial condition is called the exact solution. 
+
+## Solve the example case given an initial condition
+
+In example 2 you found that the general solution to the equation $\frac{\mathrm{d}y}{\mathrm{d}x} = -2y + 1$ is: 
+$$
+y = \frac {1}{2} + Ce^{-2x}
+$$
+Since $C$ can be any real number, the general solution can have many different answers. Now given the initial condition $y(0) = 1$, solve for $C$ to find the exact solution:
+
+## Step 1: Plug in the initial condition
+
+The initial condition, $y(0) = 1$, means that when $x = 0$, $y = 1$. Plugging that into the general solution, you get:
+$$
+1 = \frac {1}{2} + Ce^{-2 \cdot 0}
+$$
+
+## Step 2: Simplify and solve for $C$
+
+$e^{0} = 1$ so:
+$$
+1 = \frac {1}{2} + C
+$$
+Then subtract $\frac {1}{2}$ from both sides to find $C$
+$$
+\frac {1}{2} = C
+$$
+
+## Step 3: Plug C back into the general solution
+
+::: {.callout-note appearance="simple" title="Exact Solution for the intial condition y(0) = 1"}
+
+$$
+y = \frac {1}{2} + \frac {1}{2}e^{-2x}
+$$
+
+:::
+
+# Further Examples {-}
+
+Up until now you have solved first-order linear ODEs in a very structured way. These next examples model a more relaxed way to solve these problems; following all the proper steps but not specifically labeling them.
+
+::: {.callout-note appearance="simple"}
+
+## Example 3 {-}
+
+What is the general solution to the equation $6xy = -\dfrac{\mathrm{d}y}{\mathrm{d}x} + 8$?
+
+The first step is to identify that the equation can be rearranged into the form $\frac {\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$ and then rearrange the equation into:
+$$\frac {\mathrm{d}y}{\mathrm{d}x} + 6xy = 8x$$
+In this case $P(x) = 6x$ and $Q(x) = 8$. So the integrating factor is $\mu(x) = e^{\int {6x\, \mathrm{d}x}} = e^{3x^{2}}$. Then multiplying through by the integrating factor gives: 
+$$\frac {\mathrm{d}y}{\mathrm{d}x} \cdot e^{3x^{2}} + 6xe^{3x^{2}} \cdot y = 8xe^{3x^{2}}$$
+Noticing the product rule similarity, the left side of the equation then becomes: 
+$$\frac {\mathrm{d}}{\mathrm{d}x}(e^{3x^{2}} \cdot y) = 8xe^{3x^{2}}$$
+Integrating both sides with respect to $x$ then gives:
+$$\int\left(\frac {\mathrm{d}}{\mathrm{d}x}(e^{3x^{2}} \cdot y)\right)\,\mathrm{d}x = \int (8xe^{3x^{2}})\,\mathrm{d}x$$
+$$e^{3x^{2}} \cdot y = \frac {4}{3} e^{3x^{2}} + C$$
+Finally solve for $y$
+the general solution is: $y = \frac {4}{3} + C e^{-3x^{2}}$
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 4 {-}
+
+What is the exact solution to the equation $-\frac {\mathrm{d}y}{\mathrm{d}x} = \frac {1}{1+x} \cdot y + 1$ with initial condition $y(2) = 4$?
+
+The first step is to identify that the equation can be rearranged into the form $\frac {\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$ and then rearrange the equation into:
+$$\frac {\mathrm{d}y}{\mathrm{d}x} + \frac {1}{1+x}\cdot y = -1$$
+In this case $P(x) = \frac {1}{1+x}$ and $Q(x) = -1$. So the integrating factor is $\mu(x) = e^{\int {\frac {1}{1+x}\, \mathrm{d}x}} = e^{\ln(1+x)} = 1+x$. Then multiplying through by the integrating factor gives: 
+$$\frac {\mathrm{d}y}{\mathrm{d}x} \cdot (1+x) + \frac {1}{1+x} \cdot (1+x)\cdot y = -1 \cdot (1 + x)$$
+Simplifying to:
+$$\frac {\mathrm{d}y}{\mathrm{d}x} \cdot (1+x) + y = -1 - x$$
+Noticing the product rule similarity, the left side of the equation then becomes: 
+$$\frac {\mathrm{d}}{\mathrm{d}x}((1+x) \cdot y) = -1 - x$$
+Integrating both sides with respect to $x$ then gives:
+$$\int\left(\frac {\mathrm{d}}{\mathrm{d}x}((1+x) \cdot y)\right)\,\mathrm{d}x = \int (-1-x)\,\mathrm{d}x$$
+$$(1 + x) \cdot y = -x - \frac {1}{2} x^2 + C$$
+Now find the general solution by solving for $y$:
+$$y = \frac {-x - \frac {1}{2} x^2 + C}{1 + x}$$
+Now, since you were given the initial condition $y(2) = 4$ you can plug it into the general solution to find to solve for $C$ and find the exact solution. 
+$$4 = \frac {-2 - \frac {1}{2} 2^2 + C}{1 + 2} = \frac {-4 + C}{3}$$ 
+Solving algebraically:
+$$4 =\frac {-4 + C}{3}$$
+So:
+$$16 = C$$
+
+Finally plug $C = 16$ back into the general solution to find that the exact solution is:
+$$y = \frac {-x - \frac {1}{2} x^2 + 16}{1 + x}$$
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 5 {-}
+
+What is the exact solution to the equation $2\cos(2x) \cdot y = -\frac {\mathrm{d}y}{\mathrm{d}x} + \frac {1}{4}\cos(2x)$ with the initial condition $y(0) = \pi$?
+
+The first step is to identify that the equation can be rearranged into the form $\frac {\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$ and then rearrange the equation into:
+$$\frac {\mathrm{d}y}{\mathrm{d}x} + 2\cos(2x) \cdot y = \frac {1}{4}\cos(2x)$$
+In this case $P(x) = 2\cos(2x)$ and $Q(x) = \frac{1}{4}\cos(2x)$. So the integrating factor is $\mu(x) = e^{\int {2\cos(2x)\, \mathrm{d}x}} = e^{\sin(2x)}$. Then multiplying through by the integrating factor gives: 
+$$\frac {\mathrm{d}y}{\mathrm{d}x} \cdot e^{\sin(2x)} + \cos(2x) \cdot e^{\sin(2x)} \cdot y = \frac {1}{4}\cos(2x) \cdot e^{\sin(2x)}$$
+Noticing the product rule similarity, the left side of the equation then becomes: 
+$$\frac {\mathrm{d}}{\mathrm{d}x}(e^{\sin(2x)} \cdot y) = \frac {1}{4} \cos(2x) \cdot e^{ \sin(2x)}$$
+Integrating both sides with respect to $x$ then gives:
+$$\int\left(\frac {\mathrm{d}}{\mathrm{d}x}(e^{\sin(2x)} \cdot y)\right)\,\mathrm{d}x = \int \left(\frac {1}{4}\cos(2x) \cdot e^{\sin(2x)}\right)\,\mathrm{d}x$$
+:::
+
+::: {.callout-important}
+
+## Important
+
+You could use use integration by substitution to integrate the right-hand side of this equation. To do this first let $u = \sin(2x)$. Differentiating this then gives you that $\frac{\mathrm{d}u}{\mathrm{d}x} = 2\cos(2x)$. Substituting back into the integral you then get $$\int (\frac {1}{4} \cdot e^{u})\,\mathrm{d}u$$ which you can then integrate to be $$\frac {1}{4} \cdot e^{u} + C$$ Then substituting $u = \sin(2x)$ back into your answer you get the left hand side of the integral is $$\frac {1}{4} \cdot e^{\sin(2x)} + C$$
+
+For more about this, see [Guide: Integration by substitution].
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 5 continued {-}
+
+$$e^{\sin(2x)} \cdot y = \frac {1}{4} e^{\sin(2x)} + C$$
+Now solve for $y$ giving general solution: $y = \frac {1}{4} + C \cdot  e^{-\sin(2x)}$
+
+Now, since you were given the initial condition $y(0) = \pi$ you can plug it into the general solution to find to solve for $C$ and find the exact solution. 
+$$\pi = \frac {1}{4} + C \cdot  e^{-\sin(2\cdot 0)} = \frac {1}{4} + C$$ 
+Solving algebraically:
+$$\pi - \frac {1}{4} = C$$
+Finally plug $C = \pi - \frac {1}{4}$ back into the general solution to find the exact solution:
+$$y = \frac {1}{4} + (\pi - \frac {1}{4}) \cdot  e^{-\sin(2x)}$$
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 6 {-}
+
+What is the exact solution to the equation $-xe^{x} + y = -\frac {\mathrm{d}y}{\mathrm{d}x}$ with the initial condition $y(0) = 0$?
+
+The first step is to identify that the equation can be rearranged into the form $\frac {\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$ and then rearrange the equation into:
+$$\frac {\mathrm{d}y}{\mathrm{d}x} + y = xe^{x}$$
+In this case $P(x) = 1$ and $Q(x) = xe^{x}$. So the integrating factor is $\mu(x) = e^{\int {1 \,\mathrm{d}x}} = e^{x}$. Then multiplying through by the integrating factor gives: 
+$$\frac {\mathrm{d}y}{\mathrm{d}x} \cdot e^{x} + e^{x} \cdot y = xe^{2x}$$
+Noticing the product rule similarity, the left side of the equation then becomes: 
+$$\frac {\mathrm{d}}{\mathrm{d}x}(e^{x} \cdot y) = xe^{2x}$$
+Integrating both sides with respect to $x$ then gives:
+$$\int(\frac {\mathrm{d}}{\mathrm{d}x}(e^{x} \cdot y))\,\mathrm{d}x = \int (xe^{2x})\,\mathrm{d}x$$
+
+:::
+
+::: {.callout-important}
+
+## Important
+
+In order to integrate the left hand side of this equation it is easiest to use integration by parts. To do this first let $u = x$ and differentiate giving $\frac{\mathrm{d}u}{\mathrm{d}x} = 1$. Next let $\frac{\mathrm{d}v}{\mathrm{d}x} = e^{2x}$ and integrate giving $v = \frac {1}{2} e^{2x}$. Then plugging these values into the formula for integration by parts: $$\int(u)\,\mathrm{d}v = uv - \int(v)\,\mathrm{d}u$$ to get: $$\int(xe^{2x})\,\mathrm{d}x = x \cdot \frac {1}{2} e^{2x} - \int\left(\frac {1}{2} e^{2x}\right)\,\mathrm{d}x$$ which when simplified is: $$\int(xe^{2x})\,\mathrm{d}x = \frac {x}{2} e^{2x} - \frac {1}{4} e^{2x} + C$$
+
+For more about this, see [Guide: Integration by parts].
+
+:::
+
+::: {.callout-note appearance="simple"}
+
+## Example 6 continued {-}
+
+$$e^{x} \cdot y = \frac {x}{2} e^{2x} - \frac {1}{4} e^{2x} + C$$
+Now solve for $y$ giving general solution: $y = \frac {x}{2} e^{x} - \frac {1}{4} e^{x} + C \cdot e^{-x}$
+
+Now, since you were given the initial condition $y(0) = 0$ you can plug it into the general solution to find to solve for $C$ and find the exact solution. 
+$$0 = \frac {0}{2} e^{0} - \frac {1}{4} e^{0} + C \cdot e^{0} = -\frac {1}{4} + C$$ 
+Which when you solve for $C$ you get:
+$$\frac {1}{4} = C$$
+Finally plug $C = \frac {1}{4}$ back into the general solution to find the exact solution:
+$$y = \frac {x}{2} e^{x} - \frac {1}{4} e^{x} + \frac {1}{4} \cdot e^{-x}$$
+
+:::
+
+# Quick check problems {-}
+
+::: {.content-visible when-format="html"}
+
+::: {.webex-check .webex-box data-topic="TQF1"}
+
+1 Is the equation $\frac {\mathrm{d}y}{\mathrm{d}x} + y^2 = x$ linear?  `r fitb("no")`.
+
+&emsp;&emsp;&emsp;a)&nbsp;yes
+  
+&emsp;&emsp;&emsp;b)&nbsp;no
+
+2) The equation $0 = \frac {\mathrm{d}y}{\mathrm{d}x} + 7y + 4$ in the form $\frac {\mathrm{d}y}{\mathrm{d}x} + P(x)y = Q(x)$ has $P(x)=$ `r fitb(7)` and $Q(x)=$ `r fitb(-4)`.
+
+3) Find the integrating factor, $\mu(x)$ for $P(x) = x^2$. Answer: `r fitb("2x")`.
+
+&emsp;&emsp;&emsp;a)&nbsp;$e^{4x}$
+  
+&emsp;&emsp;&emsp;b)&nbsp;$2x$
+  
+&emsp;&emsp;&emsp;c)&nbsp;$e^{2x}$
+  
+&emsp;&emsp;&emsp;d)&nbsp;$2$
+
+4) Find the general solution of the equation $\frac {\mathrm{d}y}{\mathrm{d}x} = -\frac {1}{x} y + 4$ answer using capital $C$ as the constant. $y=$ `r fitb("2x + C/x")`.
+
+5) Given the initial value $y(2) = 8$, find the value of $C$ from the general solution of problem 4. $C=$ `r fitb(8)`.
+
+:::
+
+:::
+
+# Further reading {-}
+
+[For more questions on the subject, please go to Questions: Introduction to solving first-order linear ODEs using integrating factors](../questions/q-integratingfactors.qmd).
+
+
+## Version history and licensing {-}
+
+v1.0: initial version created 03/12 by mak.
+
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

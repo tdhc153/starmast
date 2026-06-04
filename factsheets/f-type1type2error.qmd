@@ -1,0 +1,273 @@
+---
+title: "Factsheet: Type I and Type II Error"
+author: Jakub Brzozowski
+abstract-title: Summary
+abstract: An introduction to Type I and Type II error rates used in hypothesis testing.
+filters: 
+  - shinylive
+embed-resources: false
+categories:
+  - Statistics
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+When conducting hypothesis tests we first assign a $\alpha$ error rate (otherwise known as significance level). $1 - \alpha$ is your confidence level, so how statistically certain are you of the outcome of your hypothesis test.
+
+For example, at $\alpha = 0.05$ you have a 5% probability of rejecting your null hypothesis ($H_0$) when it is in fact true. This is otherwise known as the **Type I error**.
+
+Conversely, if you're failing to reject the null hypothesis where it is false, this is called **Type II error**.
+
+Commonly it is the **Type I error** that is first fixed and only then is the **Type II error** rate calculated.
+
+::::{.callout-note appearance="simple"}
+
+## Example 1
+Cantor's Confectionery checks if their trademark biscuits are always of radius 4 centimeters, as advertised. To that end, he decides to use a $t$-test. Wanting to have high certainty, but at the same time to pin down where the true might lie (associated confidence intervals), he decides to fix the **Type I error** level at $\alpha = 0.05$ ($5$%), and thus making his confidence level equal to $1 - \alpha = 1 - 0.05 = 0.95$ ($95$%)
+:::
+
+
+
+::: callout-note
+## Definition of Type I and II error.
+- **Type I error (false negative)**: the probability of rejecting the null hypothesis ($H_0$) when it is true.
+- **Type II error (false positive)**: the probability of failing to reject the null hypothesis ($H_0$) when it is false.
+:::
+
+
+Summarized in a table:
+
+|            | $H_0$ is true   | $H_0$ is false      |
+|:---------------------|:-----------------------------------------:|:------------------------------------:|
+|   Reject $H_0$       |           Type I error ($\alpha$)         | Correct decision ($1 -\beta$) |
+| Fail to reject $H_0$ |      Correct decision ($1 - \alpha$)      | Type II error ($\beta$) |
+
+
+::::callout-tip
+**Statistical power** is a measure of the ability to detect differences (between parameters) / effects (in the case of regression), given that they actually exist. 
+
+In other words, it is the measure of correctly failing to reject the null hypothesis ($H_0$) when it is in fact true, so in mathematical notation - your statistical power is: $1 - \beta$. 
+
+You can also think of it as the probability of **NOT** making a Type II error.
+
+Conventionally, statistical power equal to $0.8$ is thought to be an acceptable power threshold. This is because of practical reasons: increasing statistical power requires substantial expansion of sample sizes, while the resulting reduced Type II error rate is usually thought of as not compensating the costs associated with increasing sampling.
+:::
+
+Calculating Type II error requires more work and you should not attempt to do it by hand. Therefore, below you can find a Type II error calculator for four most common hypothesis tests ($Z$-test, $t$-test, ANOVA, and $\chi^2$ test):
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 800
+library(shiny)
+library(bslib)
+
+ui <- page_sidebar(
+  title = "Type II Error Calculator",
+  sidebar = sidebar(
+    selectInput("test_type", "Select Test:",
+                choices = c("Z Test" = "z",
+                           "t Test" = "t",
+                           "ANOVA" = "anova",
+                           "Chi-Squared" = "chisq")),
+    
+    numericInput("alpha", "Significance Level (α):", 0.05, min = 0.001, max = 0.5),
+    
+    conditionalPanel(
+      condition = "input.test_type == 'z' || input.test_type == 't'",
+      numericInput("n", "Sample Size:", 30, min = 2),
+      numericInput("mu0", "Null Mean (μ₀):", 0),
+      numericInput("mu1", "True Mean (μ₁):", 0.5),
+      numericInput("sigma", "Std Dev (σ):", 1, min = 0.01)
+    ),
+    
+    conditionalPanel(
+      condition = "input.test_type == 'anova'",
+      numericInput("k", "Number of Groups:", 3, min = 2),
+      numericInput("n_per_group", "Sample per Group:", 20, min = 2),
+      textInput("group_means", "Group Means:", "0, 0.3, 0.6"),
+      numericInput("sigma_anova", "Std Dev (σ):", 1, min = 0.01)
+    ),
+    
+    conditionalPanel(
+      condition = "input.test_type == 'chisq'",
+      numericInput("total_n", "Sample Size:", 100, min = 10),
+      numericInput("df", "Degrees of Freedom:", 2, min = 1),
+      textInput("null_probs", "Null Probs:", "0.33, 0.33, 0.34"),
+      textInput("true_probs", "True Probs:", "0.25, 0.35, 0.40")
+    )
+  ),
+  
+  card(
+    card_header("Decision Table"),
+    uiOutput("decision_table")
+  ),
+  
+  card(
+    card_header("Results"),
+    verbatimTextOutput("results")
+  )
+)
+
+server <- function(input, output) {
+  
+  calc <- reactive({
+    res <- list(beta = NA, power = NA, error = NULL)
+    
+    if (input$test_type == "z") {
+      se <- input$sigma / sqrt(input$n)
+      z_crit <- qnorm(1 - input$alpha/2)
+      crit_upper <- input$mu0 + z_crit * se
+      crit_lower <- input$mu0 - z_crit * se
+      
+      res$beta <- pnorm(crit_upper, input$mu1, se) - pnorm(crit_lower, input$mu1, se)
+      res$power <- 1 - res$beta
+      
+    } else if (input$test_type == "t") {
+      pw <- power.t.test(n = input$n, 
+                         delta = input$mu1 - input$mu0, 
+                         sd = input$sigma, 
+                         sig.level = input$alpha,
+                         type = "one.sample")
+      res$power <- pw$power
+      res$beta <- 1 - res$power
+      
+    } else if (input$test_type == "anova") {
+      means <- as.numeric(strsplit(input$group_means, ",")[[1]])
+      
+      if (length(means) != input$k) {
+        res$error <- "Group means count must match k"
+        return(res)
+      }
+      
+      grand_mean <- mean(means)
+      f <- sqrt(sum((means - grand_mean)^2) / input$k) / input$sigma_anova
+      
+      df1 <- input$k - 1
+      df2 <- input$k * (input$n_per_group - 1)
+      lambda <- input$n_per_group * input$k * f^2
+      
+      f_crit <- qf(1 - input$alpha, df1, df2)
+      res$power <- 1 - pf(f_crit, df1, df2, ncp = lambda)
+      res$beta <- 1 - res$power
+      
+    } else if (input$test_type == "chisq") {
+      null_p <- as.numeric(strsplit(input$null_probs, ",")[[1]])
+      true_p <- as.numeric(strsplit(input$true_probs, ",")[[1]])
+      
+      if (abs(sum(null_p) - 1) > 0.01 || abs(sum(true_p) - 1) > 0.01) {
+        res$error <- "Probabilities must sum to 1"
+        return(res)
+      }
+      
+      w <- sqrt(sum((true_p - null_p)^2 / null_p))
+      lambda <- input$total_n * w^2
+      
+      chi_crit <- qchisq(1 - input$alpha, input$df)
+      res$power <- 1 - pchisq(chi_crit, input$df, ncp = lambda)
+      res$beta <- 1 - res$power
+    }
+    
+    res
+  })
+  
+  output$decision_table <- renderUI({
+    res <- calc()
+    
+    if (!is.null(res$error)) {
+      return(p(strong("ERROR: "), res$error))
+    }
+    
+    tagList(
+      tags$table(
+        class = "table table-bordered",
+        style = "width: 100%; text-align: center;",
+        tags$thead(
+          tags$tr(
+            tags$th(""),
+            tags$th(HTML("H<sub>0</sub> is true")),
+            tags$th(HTML("H<sub>0</sub> is false"))
+          )
+        ),
+        tags$tbody(
+          tags$tr(
+            tags$td(HTML("Reject H<sub>0</sub>")),
+            tags$td(HTML(paste0("Type I error (α)<br>", round(input$alpha, 4)))),
+            tags$td(HTML(paste0("Correct decision (1 - β)<br>", round(res$power, 4))))
+          ),
+          tags$tr(
+            tags$td(HTML("Fail to reject H<sub>0</sub>")),
+            tags$td(HTML(paste0("Correct decision (1 - α)<br>", round(1 - input$alpha, 4)))),
+            tags$td(HTML(paste0("Type II error (β)<br>", round(res$beta, 4))))
+          )
+        )
+      )
+    )
+  })
+  
+  output$results <- renderPrint({
+    res <- calc()
+    
+    if (!is.null(res$error)) {
+      cat("ERROR:", res$error)
+      return()
+    }
+    
+    cat("Type II Error (β):", round(res$beta, 4), "\n")
+    cat("Power (1 - β):", round(res$power, 4), "\n\n")
+    cat("Interpretation:\n")
+    cat(round(res$beta * 100, 1), "% chance of missing a real effect\n")
+    cat(round(res$power * 100, 1), "% chance of detecting a real effect")
+  })
+}
+
+shinyApp(ui, server)
+```                          
+
+
+::::{.callout-note appearance="simple"}
+
+## Example 2
+Cantor's Confectionery is conducting a $t$-test to check if their famous chocolate bars are indeed always 75 grams in weight, as Mr. Cantor suspects that his machine might be malfunctioning. 
+
+The null and alternative hypotheses are:
+
+-  $H_0 = 75$
+-  $H_1 ≠ 75$
+
+Mr. Cantor employs a statistician who decides to test at $95\%$ confidence level, therefore allowing for a Type I error rate of 
+
+Additionally, he learns from Mr. Cantor that the sample sizes of the chocolate bars will be 25 and there will be two batches to compare. Therefore the statistician decides to adopt a $t$-test.
+
+After obtaining the raw data, the statistician calculates the mean and the standard deviation: 
+
+$$\bar{x} = 75.019$$
+$$\sigma = 1.0259$$
+
+Now, he can use the Type II error calculator to complete the table of Type I and Type II errors: 
+
+
+|            | $H_0$ is true   | $H_0$ is false      |
+|:---------------------|:-----------------------------------------:|:------------------------------------:|
+|   Reject $H_0$       |           Type I error ($\alpha = 0.05$)         | Correct decision ($1 -\beta = 1 - 0.0307 = 0.9693$) |
+| Fail to reject $H_0$ |      Correct decision ($1 - 0.05 = 0.95$)      | Type II error ($\beta = 0.0307$) |
+
+:::
+
+# Further reading {-}
+
+[For more information on hypothesis test, please go to Guide: Hypothesis testing](../studyguides/hypothesistesting.qmd)
+[For more information on t-test, please go to Guide: T-testing](../studyguides/t-testing.qmd)
+[For information on ANOVA, please go to Guide: ANOVA](../studyguides/anova.qmd)
+
+## Version history {-}
+
+v1.0: initial version created 04/26 by Jakub Brzozowski as a part of a University of St Andrews VIP project.
+
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

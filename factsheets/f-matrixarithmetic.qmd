@@ -1,0 +1,1132 @@
+---
+title: "Matrix multiplication"
+author: "Jessica Taberner"
+abstract-title: Summary
+abstract: Matrices are rectangular arrays of mathematical objects with entries arranged in rows and columns. Matrices are a very useful concept within mathematics and statistics. You'll see them used for solving simultaneous equations, modelling data in several variables, and much more this guide will explain what they are and how to perform arithmetic with matrices.
+categories:
+  - Key skills
+  - Algebra
+draft: true
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+# What is a matrix? {.unnumbered}
+
+A matrix is a rectangular array or table, with entries in rows and columns. Understanding matrices can make solving equations more efficient and can open the door to learning much more mathematics.
+
+::: callout-note
+## Definition of a matrix
+
+A $m \times n$ **matrix** is a rectangular array of $mn$ entries set out in $m$ **rows** and $n$ **columns**. You can write it like so:
+
+$$
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{bmatrix}
+$$
+
+This matrix has **dimension** $m \times n$.
+:::
+
+The entries in a matrix are usually numbers, but they can be other mathematical objects. Any type of number may be an entry in your matrix, positive or negative, rational or irrational, real or complex. Note here that while entries can be other mathematical objects, for this study guide you will use entries within the real numbers.
+
+<!-- If complex numbers are unfamiliar to you, you can read more about them at [Guide: Introduction to complex numbers]. -->
+
+If you have read [Guide: Introduction to solving simultaneous equations] then one way of thinking of matrices is as an array encoding the coefficients of the variables of your simultaneous equations.
+
+Matrices are a fundamental tool within linear algebra, and they have a wide range of real-life applications. They are used in computer graphics, data analysis, search engine optimization, cryptography, economics, robotics, genetics, quantum mechanics, and many more places. Matrices are used anywhere where information in multiple variables needs to be analyzed and calculated efficiently. 
+
+A key skill in matrix arithmetic is **matrix multiplication**. This is different from the scalar multiplication that you saw in [Guide: Introduction to matrices](introtomatrices.qmd), in that instead of multiplying a matrix by a constant, you are multiplying a matrix by **another matrix**. In this guide, you will see how and when you can multiply together two matrices, as well as interactions of matrix multiplication with special matrices from [Guide: Introduction to matrices](introtomatrices.qmd).
+
+# Matrix multiplication {.unnumbered}
+
+Now you can look at how and when you can two multiply matrices together.
+
+## Initial example: $2\times 2$ matrices
+
+First, let's see how you can multiply two $2 \times 2$ matrices via an example. Let $A$ and $B$ be $2 \times 2$ matrices with entries given below:
+
+$$A =
+\begin{bmatrix} 
+1 & -1 \\ 
+2 & 1
+\end{bmatrix} \quad B =\begin{bmatrix} 
+3 & 0 \\ 
+1 & -1 
+\end{bmatrix}$$
+
+How can you find their product $AB$? Since a matrix is defined by its entries, you could think about  working out each entry. The idea for the $(i,j)$th entry is to find a 'product' of the $i$th row of $A$ by the $j$th column of $B$.
+
+For the $(1,1)$th entry of $AB$, you can match the $1$st row of $A$ to the $1$st column of $B$, multiply the matched entries together, and add up all the entries. The first row of $A$ is $\begin{matrix}1 & -1\end{matrix}$, and the first column of $B$ is $\begin{matrix}3 & 1\end{matrix}$. Here, $1$ (from $A$) and $3$ (from $B$) are matched, and $-1$ (from $A$) and $1$ (from $B$) are matched. Multiplying these together and adding gives $$[AB]_{1,1} = 1\cdot 3 + (-1)\cdot 1 = 3 - 1 = 2$$
+
+This process is illustrated in the following equation, with the appropriate row and column highlighted in bold: 
+
+$$AB =
+\begin{bmatrix} 
+\mathbf{1} & \mathbf{-1} \\ 
+2 & 1 
+\end{bmatrix}\begin{bmatrix} 
+\mathbf{3} & 0 \\ 
+\mathbf{1} & -1 
+\end{bmatrix} = \begin{bmatrix}1\cdot 3 + (-1)\cdot 1 & \\ & \end{bmatrix} = \begin{bmatrix}2 & \\ & \end{bmatrix}$$
+
+You can now repeat this process to find the other entries. For the $(1,2)$th entry of $AB$, you can match the $1$st row of $A$ to the $2$nd column of $B$, multiply the matched entries together, and add up all the entries. Doing this in the matrix with the appropriate values highlighted in bold gives 
+
+$$AB =
+\begin{bmatrix} 
+\mathbf{1} & \mathbf{-1} \\ 
+2 & 1 
+\end{bmatrix}\begin{bmatrix} 
+3 & \mathbf{0} \\ 
+1 & \mathbf{-1} 
+\end{bmatrix} = \begin{bmatrix}2 & 1\cdot 0 + (-1)\cdot (-1)\\ & \end{bmatrix} = \begin{bmatrix}2 & 1\\ & \end{bmatrix}$$
+
+For the $(2,1)$th entry of $AB$, you can match the $2$nd row of $A$ to the $1$st column of $B$. Doing this in the matrix with the appropriate values highlighted in bold gives 
+
+$$AB =
+\begin{bmatrix} 
+1 & -1 \\ 
+\mathbf{2} & \mathbf{1} 
+\end{bmatrix}\begin{bmatrix} 
+\mathbf{3} & 0 \\ 
+\mathbf{1} & -1 
+\end{bmatrix} = \begin{bmatrix}2 & 1\\ 2\cdot 3 + 1\cdot 1& \end{bmatrix} = \begin{bmatrix}2 & 1\\ 7 & \end{bmatrix}$$
+
+Finally, for the $(2,2)$th entry of $AB$, you can match the $2$nd row of $A$ to the $2$nd column of $B$. Doing this in the matrix with the appropriate values highlighted in bold gives 
+
+$$AB =
+\begin{bmatrix} 
+1 & -1 \\ 
+\mathbf{2} & \mathbf{1} 
+\end{bmatrix}\begin{bmatrix} 
+3 & \mathbf{0} \\ 
+1 & \mathbf{-1} 
+\end{bmatrix} = \begin{bmatrix}2 & 1\\ 7 & 2\cdot 0 + 1\cdot (-1)\end{bmatrix} = \begin{bmatrix}2 & 1\\ 7 & -1\end{bmatrix}$$
+
+and this is your final answer!
+
+This process can be generalised to any two $2\times 2$ matrices.
+
+:::{.callout-note}
+
+## Multiplying $2\times 2$ matrices
+
+Suppose that 
+$$A =
+\begin{bmatrix} 
+a & b \\ 
+c & d 
+\end{bmatrix} \quad\textsf{ and }\quad B =\begin{bmatrix} 
+e & f \\ 
+g & h 
+\end{bmatrix}$$
+are two $2\times 2$ matrices. Then their product $AB$ is the matrix $$AB = \begin{bmatrix} 
+a & b \\ 
+c & d 
+\end{bmatrix}\begin{bmatrix} 
+e & f \\ 
+g & h 
+\end{bmatrix} = 
+\begin{bmatrix}ae + bg & af + 
+bh \\ ce + dg & cf + dh \end{bmatrix}$$
+
+:::
+
+:::{.callout-important}
+
+Going ahead, it's more important to **learn the process** of how this formula is found, rather than learn the formula itself. This is because this process can be extended to work out general matrix multiplication, and not every matrix is a $2\times 2$ matrix!
+
+:::
+
+:::{.callout-tip}
+
+The 'product' of the $i$th row of $A$ and the $j$th column of $B$ to form the $(i,j)$th entry of $AB$ can be recognised as the **scalar product** of the vectors given by $i$th row of $A$ and the $j$th column of $B$. For more on the scalar product, please see [Guide: The scalar product](scalarproduct.qmd).
+
+:::
+
+<!-- Here you can see that in order to calculate the first entry of $C$ you multiply the corresponding elements from the first row of $A$ by the elements from the first column of $B$, and sum together the results. -->
+
+::: {.callout-note appearance="simple"}
+## Example 1
+
+Let $A$ and $B$ be two $2\times 2$ matrices.
+$$A =\begin{bmatrix} 
+1 & 2 \\ 
+3 & 4 
+\end{bmatrix} \quad\textsf{ and }\quad B =
+\begin{bmatrix} 
+0 & 5 \\ 
+6 & 7 
+\end{bmatrix}$$
+
+You can follow the process illustrated above to write
+
+$$AB = \begin{bmatrix} 
+1 & 2 \\ 
+3 & 4 
+\end{bmatrix}\begin{bmatrix} 
+0 & 5 \\ 
+6 & 7 
+\end{bmatrix} =
+\begin{bmatrix} 
+1 \cdot 0 + 2 \cdot 6 & 1 \cdot 5 + 2 \cdot 7 \\ 
+3 \cdot 0 + 4 \cdot 6 & 3 \cdot 5 + 4 \cdot 7 
+\end{bmatrix}$$
+
+By carrying out these calculations you will have,
+$$AB=\begin{bmatrix} 
+0 + 12 & 5 + 14 \\ 
+0 + 24 & 15 + 28 
+\end{bmatrix}=\begin{bmatrix} 
+12 & 19 \\ 
+24 & 43 
+\end{bmatrix}$$
+:::
+
+Unlike for numbers, the **order** of multiplication matters in matrix multiplication. This is because you take the rows from the left matrix in the product, and columns from the right matrix; these could be different if the order swaps between the left and right matrices! You can see this in the following example. 
+
+::: {.callout-note appearance="simple"}
+## Example 2
+
+Using the $A$ and $B$ from Example 1, you can compute $BA$:
+
+$$BA = \begin{bmatrix} 
+0 & 5 \\ 
+6 & 7 
+\end{bmatrix}\begin{bmatrix} 
+1 & 2 \\ 
+3 & 4 
+\end{bmatrix} =
+\begin{bmatrix} 
+0 \cdot 1 + 5 \cdot 3 & 0 \cdot 2 + 5 \cdot 4 \\ 
+6 \cdot 1 + 7 \cdot 3 & 6 \cdot 2 + 7 \cdot 4 
+\end{bmatrix}$$
+By carrying out these calculations you will have,
+$$BA=\begin{bmatrix} 
+0 + 15 & 0 + 20 \\ 
+6 + 21 & 12 + 28 
+\end{bmatrix}=BA=\begin{bmatrix} 
+15 & 20 \\ 
+27 & 40 
+\end{bmatrix}$$
+
+You can compare $AB$ and $BA$.
+
+$$AB =\begin{bmatrix} 
+12 & 19 \\ 
+24 & 43 
+\end{bmatrix}, \quad BA =
+\begin{bmatrix} 
+15 & 20 \\ 
+27 & 40 
+\end{bmatrix}$$
+and here, **none** of the entries match! Since $AB \neq BA$, this example confirms that **matrix multiplication is not commutative** in general.
+
+:::
+
+## Generalising this process
+
+Not all matrices are $2\times 2$ matrices. How would you multiply two $3\times 3$ matrices? Or two $40\times 40$ matrices? 
+
+The idea in multiplying $2\times 2$ matrices was the following: 
+
+> The idea for the $(i,j)$th entry is to find a 'product' of the $i$th row of $A$ by the $j$th column of $B$. This is done by matching entries in the $i$th row of $A$ to entries in the $j$th column of $B$, multiplying the matched entries, and adding them all together.
+
+This applies to matrices $A$ and $B$ of any dimensions, **provided that there is a match for all the entries in the $i$th row of $A$ to the $j$th column of $B$**. What this means is that two matrices $A$ and $B$ can be multiplied together *if and only if* **the number of columns of $A$ equals the number of rows of $B$**. This is because the number of entries in the $i$th row of $A$ is the same as the number of columns of $A$, and the number of entries in the $j$th column of $B$ is the same as the number of rows of $B$.
+
+Here is a definition of matrix multiplication for more general matrices.
+
+::: callout-note
+## Definition of matrix multiplication
+
+Let $A$ be an $m \times n$ matrix and $B$ be an $n \times p$ matrix:
+
+$$A = \begin{bmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ 
+a_{21} & a_{22} & \cdots & a_{2n} \\ 
+\vdots & \vdots & \ddots & \vdots \\ 
+a_{m1} & a_{m2} & \cdots & a_{mn} 
+\end{bmatrix} \quad B = \begin{bmatrix} b_{11} & b_{12} & \cdots & b_{1p} \\ 
+b_{21} & b_{22} & \cdots & b_{2p} \\ 
+\vdots & \vdots & \ddots & \vdots \\ 
+b_{n1} & b_{n2} & \cdots & b_{np} 
+\end{bmatrix}$$
+
+The product $C = AB$ is an $m \times p$ matrix, where each entry $c_{ij}$ of $C$ is given by the following summation formula:
+
+$$
+\begin{aligned}
+c_{ij} &= a_{i1}b_{1j} + a_{i2}b_{2j} + \ldots + a_{in}b_{nj}\\[0.5em]
+&= \sum_{k=1}^{n} a_{ik} b_{kj}
+\end{aligned}
+$$
+In the context of vectors, this is the scalar product of the $i$th row of $A$ with the $j$th column of $B$. You can read more about this at [Guide: The scalar product](scalarproduct.qmd).
+
+:::
+
+For more about the sigma notation in this definition, you can read more about it in [Guide: Introduction to sigma notation](sigmanotation.qmd). It's important to remember:
+
+::: callout-warning
+You can only multiply matrices $A$ and $B$ if $A$ has the same number of columns as $B$ has rows, otherwise this operation is **undefined**.
+:::
+
+::: callout-warning 
+As seen in Example 2, matrix multiplication is **non-commutative**. This means that it is not always true for matrices that $AB = BA$. In fact, in some cases, $AB$ may be defined when $BA$ is not defined.
+:::
+
+::: {.content-visible when-format="html"}
+
+To take a better look at this unusual property, you can now see some examples of this in action. You can use the interactive figure below to investigate multiplying a $2\times 3$ matrix by a $3\times 2$ matrix (and the other way around). You are able to change the numbers inside the matrices $A,B,C,D$ by clicking on the entry you want to change. 
+
+```{=html}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Accessible Matrix Multiplication</title>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+
+  .matrix-figure {
+    background-color: white;
+    color: black;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .matrix-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+  }
+
+  .matrix-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .matrix-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .matrix {
+    position: relative;
+    display: inline-block;
+  }
+
+  .matrix table {
+    border-collapse: collapse;
+  }
+
+  .matrix td {
+    padding: 0;
+    min-width: 30px;
+    text-align: center;
+  }
+
+  .matrix input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 4px;
+  }
+
+  #matrixAB td {
+    min-width: 35px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .matrix::before,
+  .matrix::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 10px;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+  }
+
+  .matrix::before {
+    left: -10px;
+    border-left: 2px solid black;
+  }
+
+  .matrix::after {
+    right: -10px;
+    border-right: 2px solid black;
+  }
+
+  .equals-sign {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .result-cell {
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+  }
+
+  /* Focus style for keyboard users */
+  .result-cell:focus {
+    outline: 3px solid #4a90e2;
+    background-color: #e6f0ff;
+  }
+
+  .highlight-row input,
+  .highlight-col input {
+    background-color: #c0d6ff !important;
+  }
+
+  .explanation {
+    margin-bottom: 20px;
+  }
+</style>
+
+</head>
+
+<body>
+
+<div class="matrix-figure">
+  <div class="explanation">
+    Click or use keyboard (Tab + Enter) on result cells to see how values are calculated.
+  </div>
+
+  <!-- AB -->
+
+  <div class="matrix-row">
+    <div class="matrix-wrapper">
+      <div class="matrix-label">Matrix A (2×3)</div>
+      <div class="matrix">
+        <table id="matrixA">
+          <tr><td><input value="1"></td><td><input value="2"></td><td><input value="3"></td></tr>
+          <tr><td><input value="4"></td><td><input value="5"></td><td><input value="6"></td></tr>
+        </table>
+      </div>
+    </div>
+
+<div class="matrix-wrapper">
+  <div class="matrix-label">Matrix B (3×2)</div>
+  <div class="matrix">
+    <table id="matrixB">
+      <tr><td><input value="7"></td><td><input value="8"></td></tr>
+      <tr><td><input value="9"></td><td><input value="10"></td></tr>
+      <tr><td><input value="11"></td><td><input value="12"></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="equals-sign">=</div>
+
+<div class="matrix-wrapper">
+  <div class="matrix-label">AB (2×2)</div>
+  <div class="matrix">
+    <table id="matrixAB" role="grid">
+      <tr>
+        <td class="result-cell" tabindex="0" data-row="0" data-col="0" aria-label="AB row 1 column 1">58</td>
+        <td class="result-cell" tabindex="0" data-row="0" data-col="1" aria-label="AB row 1 column 2">64</td>
+      </tr>
+      <tr>
+        <td class="result-cell" tabindex="0" data-row="1" data-col="0" aria-label="AB row 2 column 1">139</td>
+        <td class="result-cell" tabindex="0" data-row="1" data-col="1" aria-label="AB row 2 column 2">154</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+  </div>
+
+  <!-- DC -->
+
+  <div class="matrix-row">
+    <div class="matrix-wrapper">
+      <div class="matrix-label">Matrix D (3×2)</div>
+      <div class="matrix">
+        <table id="matrixD">
+          <tr><td><input value="7"></td><td><input value="8"></td></tr>
+          <tr><td><input value="9"></td><td><input value="10"></td></tr>
+          <tr><td><input value="11"></td><td><input value="12"></td></tr>
+        </table>
+      </div>
+    </div>
+
+<div class="matrix-wrapper">
+  <div class="matrix-label">Matrix C (2×3)</div>
+  <div class="matrix">
+    <table id="matrixC">
+      <tr><td><input value="1"></td><td><input value="2"></td><td><input value="3"></td></tr>
+      <tr><td><input value="4"></td><td><input value="5"></td><td><input value="6"></td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="equals-sign">=</div>
+
+<div class="matrix-wrapper">
+  <div class="matrix-label">DC (3×3)</div>
+  <div class="matrix">
+    <table id="matrixDC" role="grid">
+      <tr>
+        <td class="result-cell" tabindex="0" data-row="0" data-col="0">39</td>
+        <td class="result-cell" tabindex="0" data-row="0" data-col="1">54</td>
+        <td class="result-cell" tabindex="0" data-row="0" data-col="2">69</td>
+      </tr>
+      <tr>
+        <td class="result-cell" tabindex="0" data-row="1" data-col="0">49</td>
+        <td class="result-cell" tabindex="0" data-row="1" data-col="1">68</td>
+        <td class="result-cell" tabindex="0" data-row="1" data-col="2">87</td>
+      </tr>
+      <tr>
+        <td class="result-cell" tabindex="0" data-row="2" data-col="0">59</td>
+        <td class="result-cell" tabindex="0" data-row="2" data-col="1">82</td>
+        <td class="result-cell" tabindex="0" data-row="2" data-col="2">105</td>
+      </tr>
+    </table>
+  </div>
+</div>
+  </div>
+
+  <div id="explanation"></div>
+</div>
+
+<script>
+function parseMatrix(table) {
+  return Array.from(table.rows).map(row =>
+    Array.from(row.cells).map(cell =>
+      parseFloat(cell.querySelector("input")?.value || 0)
+    )
+  );
+}
+
+function updateProduct(A, B, outId) {
+  const resultTable = document.getElementById(outId);
+  for (let i = 0; i < A.length; i++) {
+    for (let j = 0; j < B[0].length; j++) {
+      let sum = 0;
+      for (let k = 0; k < B.length; k++) {
+        sum += A[i][k] * B[k][j];
+      }
+      resultTable.rows[i].cells[j].textContent = sum;
+    }
+  }
+}
+
+function highlight(row, col, leftId, rightId) {
+  clearHighlights();
+  const left = document.getElementById(leftId).rows;
+  const right = document.getElementById(rightId).rows;
+
+  for (let i = 0; i < left[row].cells.length; i++) {
+    left[row].cells[i].classList.add("highlight-row");
+  }
+
+  for (let i = 0; i < right.length; i++) {
+    right[i].cells[col].classList.add("highlight-col");
+  }
+}
+
+function clearHighlights() {
+  document.querySelectorAll("td").forEach(td =>
+    td.classList.remove("highlight-row", "highlight-col")
+  );
+}
+
+function explain(name, A, B, row, col) {
+  const rowVals = A[row];
+  const colVals = B.map(r => r[col]);
+  const terms = rowVals.map((a, i) => `(${a})(${colVals[i]})`);
+  const result = rowVals.reduce((acc, a, i) => acc + a * colVals[i], 0);
+
+  document.getElementById("explanation").innerHTML =
+    `\\[${name}_{${row+1},${col+1}} = ${terms.join(" + ")} = ${result}\\]`;
+
+  MathJax.typesetPromise();
+}
+
+function activate(cell, leftId, rightId, name, A, B) {
+  const row = +cell.dataset.row;
+  const col = +cell.dataset.col;
+  highlight(row, col, leftId, rightId);
+  explain(name, A, B, row, col);
+}
+
+function handleKeys(e, cell, tableId, callback) {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    callback();
+  }
+
+  const row = +cell.dataset.row;
+  const col = +cell.dataset.col;
+  const table = document.getElementById(tableId);
+
+  let r = row, c = col;
+
+  if (e.key === "ArrowRight") c++;
+  if (e.key === "ArrowLeft") c--;
+  if (e.key === "ArrowDown") r++;
+  if (e.key === "ArrowUp") r--;
+
+  if (table.rows[r] && table.rows[r].cells[c]) {
+    e.preventDefault();
+    table.rows[r].cells[c].focus();
+  }
+}
+
+function init() {
+  const updateAll = () => {
+    const A = parseMatrix(matrixA);
+    const B = parseMatrix(matrixB);
+    const C = parseMatrix(matrixC);
+    const D = parseMatrix(matrixD);
+
+    updateProduct(A, B, "matrixAB");
+    updateProduct(D, C, "matrixDC");
+  };
+
+  document.querySelectorAll("input").forEach(i =>
+    i.addEventListener("input", () => {
+      clearHighlights();
+      explanation.innerHTML = "";
+      updateAll();
+    })
+  );
+
+  document.querySelectorAll("#matrixAB .result-cell").forEach(cell => {
+    cell.addEventListener("click", () => {
+      activate(cell, "matrixA", "matrixB", "AB",
+        parseMatrix(matrixA), parseMatrix(matrixB));
+    });
+
+    cell.addEventListener("keydown", e => {
+      handleKeys(e, cell, "matrixAB", () =>
+        activate(cell, "matrixA", "matrixB", "AB",
+          parseMatrix(matrixA), parseMatrix(matrixB))
+      );
+    });
+  });
+
+  document.querySelectorAll("#matrixDC .result-cell").forEach(cell => {
+    cell.addEventListener("click", () => {
+      activate(cell, "matrixD", "matrixC", "DC",
+        parseMatrix(matrixD), parseMatrix(matrixC));
+    });
+
+    cell.addEventListener("keydown", e => {
+      handleKeys(e, cell, "matrixDC", () =>
+        activate(cell, "matrixD", "matrixC", "DC",
+          parseMatrix(matrixD), parseMatrix(matrixC))
+      );
+    });
+  });
+
+  updateAll();
+}
+
+init();
+</script>
+
+</body>
+</html>
+
+
+```
+
+:::
+
+:::{.callout-note appearance="simple"}
+## Example 3
+Let $A$ be a $2 \times 3$ matrix and $B$ be a $3 \times 2$ matrix.
+
+$$A = \begin{bmatrix} 
+-2 & 1 & 3 \\ 
+4 & -5 & 2
+\end{bmatrix} \quad\textsf{ and }\quad B =\begin{bmatrix} 
+3 & -1 \\ 
+-2 & 5 \\ 
+1 & -2
+\end{bmatrix}$$
+
+You can work out the product $AB$. Since $A$ is $2 \times 3$ and $B$ is $3 \times 2$, the product $AB$ is a $2 \times 2$ matrix. You can work out each entry of $AB$ by following the row and column matching as described above.
+
+$$AB =
+\begin{bmatrix} 
+\mathbf{-2} & \mathbf{1} & \mathbf{3} \\ 
+4 & -5 & 2
+\end{bmatrix}\begin{bmatrix} 
+\mathbf{3} & -1 \\ 
+\mathbf{-2} & 5 \\ 
+\mathbf{1} & -2
+\end{bmatrix} = \begin{bmatrix}(-2)\cdot 3 + 1\cdot(-2) + 3\cdot 1 & \\ & \end{bmatrix} = \begin{bmatrix}-5 & \\ & \end{bmatrix}$$
+
+For the $(1,2)$th entry of $AB$, use the first row of $A$ and the second column of $B$. 
+
+$$AB =
+\begin{bmatrix} 
+\mathbf{-2} & \mathbf{1} & \mathbf{3} \\ 
+4 & -5 & 2
+\end{bmatrix}\begin{bmatrix} 
+3 & \mathbf{-1} \\ 
+-2 & \mathbf{5} \\ 
+1 & \mathbf{-2}
+\end{bmatrix} = \begin{bmatrix}-5 & (-2)\cdot (-1) + 1\cdot 5 + 3\cdot (-2) \\ & \end{bmatrix} = \begin{bmatrix}-5 & 1\\ & \end{bmatrix}$$
+
+For the $(2,1)$th entry of $AB$, you can match the $2$nd row of $A$ to the $1$st column of $B$. 
+
+$$AB =
+\begin{bmatrix} 
+-2 & 1 & 3 \\ 
+\mathbf{4} & \mathbf{-5} & \mathbf{2}
+\end{bmatrix}\begin{bmatrix} 
+\mathbf{3} & -1 \\ 
+\mathbf{-2} & 5 \\ 
+\mathbf{1} & -2
+\end{bmatrix} = \begin{bmatrix}-5 & 1\\ 4\cdot 3 + (-5)\cdot (-2) + 2\cdot 1 & \end{bmatrix} = \begin{bmatrix}-5 & 1\\ 24 & \end{bmatrix}$$
+
+Finally, for the $(2,2)$th entry of $AB$, you can match the $2$nd row of $A$ to the $2$nd column of $B$.
+
+$$AB =
+\begin{bmatrix} 
+-2 & 1 & 3 \\ 
+\mathbf{4} & \mathbf{-5} & \mathbf{2}
+\end{bmatrix}\begin{bmatrix} 
+3 & \mathbf{-1} \\ 
+-2 & \mathbf{5} \\ 
+1 & \mathbf{-2}
+\end{bmatrix} = \begin{bmatrix}-5 & 1\\ 24 & 4\cdot (-1) + (-5)\cdot 5 + 2\cdot (-2) \end{bmatrix} = \begin{bmatrix}-5 & 1\\ 24 & -33\end{bmatrix}$$
+
+and this is your final answer! You don't have to write all of this out, you could write instead
+
+$$AB = \begin{bmatrix} 
+(-2) \cdot 3 + 1 \cdot (-2) + 3 \cdot 1 & (-2) \cdot (-1) + 1 \cdot 5 + 3 \cdot (-2) \\ 
+4 \cdot 3 + (-5) \cdot (-2) + 2 \cdot 1 & 4 \cdot (-1) + (-5) \cdot 5 + 2 \cdot (-2) 
+\end{bmatrix} =\begin{bmatrix} 
+-5 & 1\\ 
+24 & -33
+\end{bmatrix}$$
+
+Now you can work out $BA$. Since $B$ is $3 \times 2$ and $A$ is $2 \times 3$, the product $BA$ is a $3 \times 3$ matrix:
+
+$$BA = \begin{bmatrix} 
+3 \cdot (-2) + (-1) \cdot 4 & 3 \cdot 1 + (-1) \cdot (-5) & 3 \cdot 3 + (-1) \cdot 2 \\ 
+(-2) \cdot (-2) + 5 \cdot 4 & (-2) \cdot 1 + 5 \cdot (-5) & (-2) \cdot 3 + 5 \cdot 2 \\ 
+1 \cdot (-2) + (-2) \cdot 4 & 1 \cdot 1 + (-2) \cdot (-5) & 1 \cdot 3 + (-2) \cdot 2 
+\end{bmatrix}$$
+By carrying out these multiplications and adding you will have,
+$$BA=\begin{bmatrix} 
+-6 - 4 & 3 + 5 & 9 - 2 \\ 
+4 + 20 & -2 - 25 & -6 + 10 \\ 
+-2 - 8 & 1 + 10 & 3 - 4
+\end{bmatrix} =\begin{bmatrix} 
+-10 & 8 & 7 \\ 
+24 & -27 & 4 \\ 
+-10 & 11 & -1 
+\end{bmatrix}$$
+
+Here you can see that not only are the entries in $AB$ not equal to those in $BA$, but the matrix $AB$ is of different dimension to $BA$. They are definitely not equal!
+:::
+
+Here's an example where one product of matrices $AB$ is defined, but where the product $BA$ isn't defined:
+
+:::{.callout-note appearance="simple"}
+## Example 4
+
+Now, you can try multiplying a $2 \times 3$ matrix and a $3 \times 1$ matrix.
+
+$$A =\begin{bmatrix} 
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix}\quad\textsf{and}\quad B =\begin{bmatrix} 
+1\\
+-2\\
+0
+\end{bmatrix}$$
+
+You can compute $AB$ since, in order to multiply matrices, you require the first matrix to have the same number of columns as our second matrix has rows. Here $A$ has 3 columns, and $B$ has 3 rows.
+Let's calculate $AB$,
+
+$$AB = \begin{bmatrix}
+0 \cdot 1 + 2 \cdot (-2) + (-1) \cdot 0 \\
+4 \cdot 1 + 0 \cdot (-2) + 3 \cdot 0 
+\end{bmatrix}$$
+Simplifying gives
+
+$$AB = \begin{bmatrix}
+0 + -4 + 0 \\
+4 + 0 + 0 
+\end{bmatrix} = \begin{bmatrix}
+-4 \\
+4
+\end{bmatrix}$$
+
+So here $AB$ is the $2 \times 1$ matrix given above. 
+
+However, in this example, $BA$ is undefined. This is because you require the first matrix to have the same number of columns as the second matrix has rows, $B$ here only has 1 column, whereas $A$ has 2 rows.
+
+::: 
+
+
+# Matrix multiplication with special matrices
+
+## Matrix multiplication with vectors
+
+As you saw in [Guide: Introduction to matrices](introtomatrices.qmd), a matrix with exactly **one** column and any number of rows is called a **column vector**, which is often shortened to **vector**. Vectors are important because they represent positions in co-ordinate systems; they are usually given by lowercase letters in bold fonts $\mathbf{v}$ (when typed), or underlined $\underline{v}$ (when using a pen and paper). See [Guide: Introduction to vectors](introtovectors.qmd) for more. 
+
+Example 4 above shows that a $2\times 3$ matrix multiplied by a a $3\times 1$ vector gives a $2\times 1$ vector. This behaviour is true in general:
+
+:::{.callout-note}
+
+## Product of matrix and a vector
+
+The product of an $m\times n$ matrix $A$ with an $n\times 1$ vector $\mathbf{x}$ is an $m\times 1$ vector $\mathbf{b}$.
+
+:::
+
+:::{.callout-tip}
+
+What this means is that a $m\times n$ matrix maps a point in $n$-dimensional space to a point in $m$-dimensional space. You can see this in Example 4; the $2\times 3$ matrix $A$ took a point in $3$-dimensional space to a point in $2$-dimensional space. This is the idea of a matrix acting as a **linear transformation**; see [Guide: Matrices as linear transformations] for more. 
+
+:::
+
+One important application of matrix multiplication of a matrix with a vector is in solving simultaneous equations. This involves multiplying a multiplying a matrix by a vector, $\mathbf{v}$, where the entries are variables.
+
+:::{.callout-note appearance="simple"}
+## Example 5
+
+Lets explore the equation $A\mathbf{x}=\mathbf{b}$ for
+
+$$A =\begin{bmatrix} 
+1 & 2\\ 
+3 & 3 \\ 
+\end{bmatrix},\quad \mathbf{x}=\begin{bmatrix} 
+x\\ 
+y \end{bmatrix}, \quad \mathbf{b} =\begin{bmatrix} 
+5\\ 
+6 \end{bmatrix}$$ 
+You can look at the product of $A$ and $\mathbf{x}$ here. Doing this gives 
+$$A\mathbf{x}= \begin{bmatrix}
+1 \cdot x + 2 \cdot y\\
+3 \cdot x + 3 \cdot y \\
+\end{bmatrix} = \begin{bmatrix}
+x + 2y\\
+3x + 3y
+\end {bmatrix}$$
+So the equation $A\mathbf{x} = \mathbf{b}$ becomes
+$$\begin{bmatrix}
+x + 2y\\
+3x + 3y
+\end {bmatrix} = \begin{bmatrix} 
+5\\ 
+6 \end{bmatrix}$$
+
+As two vectors are equal if and only if their entries are equal, the equation $A\mathbf{x}=\mathbf{b}$ is equivalent to the following set of simultaneous equations:
+$$
+\begin{aligned}
+x+2y&=5\\
+3x+3y&=6
+\end{aligned}
+$$
+You can solve for $x$ and $y$ in $A\mathbf{x}=\mathbf{b}$, using tools you can learn in [Guide: Introduction to solving simultaneous equations](introtosimeqs.qmd). You'll see this solved in Example 1 of that guide.
+
+:::
+
+:::{.callout-tip}
+
+In fact, you can use matrices multiplied by vectors to help find solutions (if they exist) to any number of linear equations in any number of variables. This technique of solving simultaneous equations is based on a set of matrix operations known as **row reduction** and you can find out more about it in [Guide: Introduction to row reduction].
+
+:::
+
+## Matrix multiplication with zero and identity matrices
+
+You saw in [Guide: Introduction to matrices](introtomatrices.qmd) that two other special kinds of matrices are 
+
+- **$m\times n$ zero matrices $0_{m\times n}$** where all the entries in an $m\times n$ matrix are $0$, and 
+- **$n\times n$ identity matrices $I_n$** where the entries in an $n\times n$ matrix are $1$'s down the main diagonal and $0$'s everywhere else.
+
+These matrices play the same role respectively that the numbers $0$ and $1$ do in multiplication of numbers. **Where the multiplication is defined**, you'd expect any matrix multiplied by a zero matrix to equal another zero matrix, and any matrix multiplied by an identity matrix to not change at all. This is the exact behaviour that happens:
+
+:::{.callout-note}
+
+## Matrix multiplication with zero and identity matrices
+
+Let $A$ be any $m\times n$ matrix. 
+
+(a) If $0_{p\times m}$ is the $p\times m$ zero matrix, then $0_{p\times m}A = 0_{p\times n}$ is the $p\times n$ zero matrix. 
+  Similarly, if $0_{n\times q}$ is the $n\times q$ zero matrix, then $A0_{n\times q}A = 0_{m\times q}$ is the $m\times q$ zero matrix.
+  
+(b) If $I_m$ is the $m\times m$ identity matrix, then $I_mA = A$. 
+  Similarly, if $I_n$ is the $n\times n$ identity matrix, then $AI_n = A$. 
+  
+:::
+
+For explanations as to why these results are true, please see [Proof sheet: Properties of matrix arithmetic].
+
+:::{.callout-warning}
+
+Although it is true that the product of any matrix with a zero matrix is a zero matrix, it's **not** true that if the product of two matrices is a zero matrix, then at least one of the matrices is a zero matrix. See Example 7 for more on this. 
+
+:::
+
+:::{.callout-note appearance="simple"}
+## Example 6
+
+Let $A$ be the $2\times 3$ matrix from Example 4. $$A =\begin{bmatrix} 
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix}$$
+
+It follows that if $0_{4\times 2}$ is the $4\times 2$ zero matrix, then 
+$$
+\begin{aligned}
+0_{4\times 2}A &= \begin{bmatrix}0&0\\0&0\\0&0\\0&0\end{bmatrix}\begin{bmatrix}
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix}\\[0.5em] 
+&= \begin{bmatrix}{\small 0\cdot 0 + 0\cdot 4} & {\small 0\cdot 2 + 0\cdot 0} & {\small 0\cdot (-1) + 0\cdot 3} \\ {\small 0\cdot 0 + 0\cdot 4} & {\small 0\cdot 2 + 0\cdot 0} & {\small 0\cdot (-1) + 0\cdot 3} \\ {\small 0\cdot 0 + 0\cdot 4} & {\small 0\cdot 2 + 0\cdot 0} & {\small 0\cdot (-1) + 0\cdot 3}
+\\ {\small 0\cdot 0 + 0\cdot 4} & {\small 0\cdot 2 + 0\cdot 0} & {\small 0\cdot (-1) + 0\cdot 3}\end{bmatrix}\\[0.5em]
+&= \begin{bmatrix} 
+0 & 0 & 0\\ 
+0 & 0 & 0 \\
+0 & 0 & 0 \\ 
+0 & 0 & 0
+\end{bmatrix} = 0_{4\times 3}
+\end{aligned}
+$$
+
+But you absolutely don't have to write out all of the working for this! It is enough to write something like $$A0_{3\times 8} = 0_{2\times 8}$$ which saves you from writing out at least 42 zeroes - and more if you show working!
+
+If $I_3$ is the $3\times 3$ identity matrix, then 
+
+$$
+\begin{aligned}
+AI_3 &= \begin{bmatrix}
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix}
+\begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix}\\[0.5em]
+&=
+\begin{bmatrix} 
+0 \cdot 1 + 2 \cdot 0 + (-1) \cdot 0 & 0 \cdot 0 + 2 \cdot 1 + (-1) \cdot 0 & 0 \cdot 0 + 2 \cdot 0 + (-1) \cdot 1 \\ 
+4 \cdot 1 + 0 \cdot 0 + 3 \cdot 0 & 4 \cdot 0 + 0 \cdot 1 + 3 \cdot 0 & 4 \cdot 0 + 0 \cdot 0 + 3 \cdot 1\end{bmatrix}\\[0.5em]
+&=\begin{bmatrix}
+0 & 2 & -1\\ 
+4 & 0 & 3 \\ 
+\end{bmatrix} = A
+\end{aligned}
+$$
+
+:::
+
+## Matrix multiplication with other special matrices
+
+The other kinds of special matrices that you saw in [Guide: Introduction to matrices](introtomatrices.qmd) were **square matrices**, **upper triangular and lower triangular matrices**, and **diagonal matrices**. 
+
+These are special because all of these types of matrices are said to be **closed** under matrix multiplication. Unlike general matrix multiplication, which could have matrices of three different dimensions involved in a product, because all of these types of matrices are square this is not a problem. 
+
+Here's the lowdown.
+
+:::{.callout-note}
+
+## Matrix multiplication with other special matrices
+
+Let $A,B$ be any two $n\times n$ square matrices.
+
+(a) The products $AB$ and $BA$ are defined, and both $AB$ and $BA$ are $n\times n$ square matrices.
+  
+(b) If both $A,B$ are upper triangular matrices, then both $AB$ and $BA$ are upper triangular matrices.
+
+(c) If both $A,B$ are lower triangular matrices, then both $AB$ and $BA$ are lower triangular matrices.
+
+(d) If both $A,B$ are diagonal matrices, then both $AB$ and $BA$ are diagonal matrices. 
+  
+:::
+
+This next example shows part (d) of this statement in detail. 
+
+:::{.callout-note appearance="simple"}
+## Example 7
+
+Let $A,B,C$ be the following $3\times 3$ diagonal matrices: $$A = \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix},\quad B = \begin{bmatrix}1&0&0\\0&2&0\\0&0&3\end{bmatrix}\quad\textsf{and}\quad B = \begin{bmatrix}5&0&0\\0&0&0\\0&0&0\end{bmatrix}$$
+
+Then 
+
+$$
+\begin{aligned}
+AB &= \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix}\begin{bmatrix}1&0&0\\0&2&0\\0&0&3\end{bmatrix}\\[0.5em] 
+&= \begin{bmatrix}{\small 0\cdot 1 + 0\cdot 0 + 0\cdot 0} & {\small 0\cdot 0 + 0\cdot 2 + 0\cdot 0} & {\small 0\cdot 1 + 0\cdot 0 + 0\cdot 3} \\ {\small 0\cdot 1 + (-1)\cdot 0 + 0\cdot 0} & {\small 0\cdot 0 + (-1)\cdot 2 + 0\cdot 0} & {\small 0\cdot 0 + (-1)\cdot 0 + 0\cdot 3} \\ {\small 0\cdot 1 + 0\cdot 0 + (-1)\cdot 0} & {\small 0\cdot 0 + 0\cdot 2 + (-1)\cdot 0} & {\small 0\cdot 0 + 0\cdot 0 + (-1)\cdot 3}\end{bmatrix}\\[0.5em]
+&= \begin{bmatrix} 
+0\cdot 1 & 0 & 0\\ 
+0 & (-1)\cdot 2 & 0 \\
+0 & 0 & (-1)\cdot 3
+\end{bmatrix} = \begin{bmatrix} 
+0 & 0 & 0\\ 
+0 & -2 & 0 \\
+0 & 0 & -3
+\end{bmatrix}
+\end{aligned}
+$$
+Here, you can notice the product of $AB$ is the diagonal matrix where each main diagonal entry in $AB$ is the product of the corresponding diagonal entries from $A$ and $B$. In fact, this is true in general, for any two $n\times n$ diagonal matrices.
+
+You can apply this to find out the product of matrices $AC$:
+
+$$
+AC = \begin{bmatrix}0&0&0\\0&-1&0\\0&0&-1\end{bmatrix}\begin{bmatrix}5&0&0\\0&0&0\\0&0&0\end{bmatrix} = \begin{bmatrix} 
+0\cdot 5 & 0 & 0\\ 
+0 & (-1)\cdot 0 & 0 \\
+0 & 0 & (-1)\cdot 0
+\end{bmatrix} = \begin{bmatrix} 
+0 & 0 & 0\\ 
+0 & 0 & 0 \\
+0 & 0 & 0
+\end{bmatrix}
+$$
+
+This shows that there are two non-zero matrices that multiply together to make a zero matrix!
+
+:::
+
+:::{.callout-note}
+
+## Multiplying diagonal matrices
+
+Let $A,B$ be two $n\times n$ diagonal matrices with $\textsf{diag}(A) = ({a_{11},a_{22},\ldots,a_{nn}})$ and $\textsf{diag}(B) = ({b_{11},b_{22},\ldots,b_{nn}})$. Then $AB$ is an $n\times n$ diagonal matrix with $\textsf{diag}(AB) = ({a_{11}b_{11},a_{22}b_{22},\ldots,a_{nn}b_{nn}})$.
+
+:::
+
+:::{.callout-warning}
+
+If two matrices $AB$ multiply together to make some zero matrix, this does **not** guarantee that either of $A$ or $B$ is a zero matrix!
+
+:::
+
+# Quick check problems {-}
+
+<!-- add facility for webexercises to work on html -->
+
+::: {.content-visible when-format="html"}
+
+<!-- add facility to check answers at end rather than one at a time -->
+
+::: {.webex-check .webex-box}
+
+1. Give the dimensions of the following matrices:
+
+$$A = \begin{bmatrix} 
+3 \\ 
+7 
+\end{bmatrix} \quad\textsf{ and }\quad B =
+\begin{bmatrix} 
+0 & 4 & -2 \\ 
+1/3 & -5 & 6 \\ 
+8 & -3/7 & 2 
+\end{bmatrix} \quad\textsf{ and }\quad C =
+\begin{bmatrix} 
+1 & -6 \\ 
+-4 & 2/3 \\ 
+0 & 5 \\ 
+7/8 & -9 \\
+0 & -2
+\end{bmatrix}$$
+
+Answers: 
+
+The dimension of $A =$ `r fitb(2)`$\times$ `r fitb(1)`.
+
+The dimension of $B =$ `r fitb(3)`$\times$ `r fitb(3)`.
+
+The dimension of $C =$ `r fitb(5)`$\times$ `r fitb(2)`.
+
+
+2. You are given three statements below. Decide whether they are true or false.
+
+(a) If $A$ is a $2 \times 3$ matrix, and $B$ is a $3 \times 2$ matrix, then $AB$ is a $3 \times 3$ matrix. Answer: `r torf(FALSE)`.
+
+(b) For the matrix $B$ in Q$1$, the entry $b_{12} = 1/3$. Answer: `r torf(TRUE)`.
+
+(c) You can only add or subtract matrices that share the same dimensions. Answer: `r torf(TRUE)`.
+
+3. Multiply the following matrices, $$D = \begin{bmatrix} 
+3 & 0 \\ 
+4 & -2
+\end{bmatrix} \quad\textsf{ and }\quad E =
+\begin{bmatrix} 
+1 \\
+1/3\end{bmatrix}.$$ Give the first entry, $de_{11}$, of the product $DE$.
+
+Answer: The entry $de_{11} =$ `r fitb(3)`.
+
+:::
+
+:::
+
+::: {.content-hidden when-format="html"}
+
+1. Give the dimensions of the following matrices:
+
+$$A = \begin{bmatrix} 
+3 \\ 
+7 
+\end{bmatrix} \quad\textsf{ and }\quad B =
+\begin{bmatrix} 
+0 & 4 & -2 \\ 
+1/3 & -5 & 6 \\ 
+8 & -3/7 & 2 
+\end{bmatrix} \quad\textsf{ and }\quad C =
+\begin{bmatrix} 
+1 & -6 \\ 
+-4 & 2/3 \\ 
+0 & 5 \\ 
+7/8 & -9 \\
+0 & -2
+\end{bmatrix}$$
+
+2. You are given three statements below. Decide whether they are true or false.
+
+(a) If $A$ is a $2 \times 3$ matrix, and $B$ is a $3 \times 2$ matrix, then $AB$ is a $3 \times 3$ matrix.
+
+(b) For the matrix $B$ in Q$1$, the entry $b_{12} = 1/3$.
+
+(c) You can only add or subtract matrices that share the same dimensions.
+
+3. Multiply the following matrices, $$D = \begin{bmatrix} 
+3 & 0 \\ 
+4 & -2
+\end{bmatrix} \quad\textsf{ and }\quad E =
+\begin{bmatrix} 
+1 \\
+1/3\end{bmatrix}.$$ Give the first entry, $de_{11}$, of the product $DE$.
+:::
+
+# Further reading
+
+For more questions on this topic, please go to [Questions: Introduction to matrices].
+
+For more on this topic, please go to [Guide: Introduction to Gaussian elimination].
+
+## Version history {-}
+
+v1.0: initial version created 04/25 by Jessica Taberner as part of a University of St Andrews VIP project.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
