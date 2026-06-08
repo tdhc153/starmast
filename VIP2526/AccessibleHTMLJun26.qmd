@@ -17,7 +17,7 @@ format:
 
 - passion for creating good resources / very shallow technical background
 
-- currently using Quarto to produce **publicly available free-to-use, accessible and inclusive** maths and stats **support resources**
+- currently using Quarto to produce **publicly available free-to-use, accessible and inclusive** maths and stats support resources
 
 - **co-create these resources with students** as part of a Vertically Integrated Project module at St Andrews
 
@@ -29,15 +29,15 @@ wide range of topics necessitate wide range of methods for best results
 
 - Quarto's synergy with R encourages **R Shiny apps**, particularly good for statistics
 
-    - works best with a dedicated R Shiny server
+    - works best with a dedicated R Shiny server (money)
     
-    - but can use R Shiny Live to run these apps without a server (at the cost of longer loading times)
+    - but can use R Shiny Live to run these apps without a server (free, at the cost of longer loading times)
 
 - **Desmos** is best for graphs / recognisable brand for students / accessibility features built-in
 
-    - students helped organise agreement to use Desmos API environment
+    - can use Desmos API environment for full editability (money)
     
-    - can embed directly from site without this (at the cost of uneditable figures at point of use)
+    - can embed directly from Desmos without API (free, restricted features)
 
 - raw **html** provides natural flexibility for everything else (calculators, animations...)
 
@@ -48,6 +48,8 @@ wide range of topics necessitate wide range of methods for best results
 - **R Shiny Assistant** (for R Shiny) / **Copilot** (for html) / **ChatGPT** (for html/Desmos API environment)
 
 - teachable moments for students in using generative AI responsibly
+
+- have to ask specifically for accessibility features (standard genAI)
 
 **use conditional content tags if using multiple outputs**
 
@@ -85,7 +87,7 @@ format:
     - text: <script src="desmos_API_key_link"></script>
 ```
 
-then use [Desmos' documentation to start building](https://www.desmos.com/api/v1.12/docs/index.html) (step 1 covered by above)
+then use [Desmos' documentation to start building (clickable)](https://www.desmos.com/api/v1.12/docs/index.html) (step 1 covered by above)
 
 **without API key** 
 
@@ -101,7 +103,11 @@ Desmos iframe
 
 ### R Shiny
 
-in _quarto.yml file
+**for Shinylive, no server**
+
+- install shinylive quarto extension [link to github](https://github.com/quarto-ext/shinylive)
+
+- in _quarto.yml file (or put filter on each relevant .qmd file)
 
 ```{.quarto}
 format:
@@ -112,7 +118,7 @@ format:
     - shinylive
 ```
 
-(or add filter page by page), then in .qmd file
+- in .qmd file
 
 ```{.quarto}
 [three ticks]{shinylive-r}
@@ -125,7 +131,7 @@ R Shiny app here
 
 ### webexercises
 
-- install [webexercises package](https://psyteachr.github.io/webexercises/index.html) from CRAN or otherwise
+- install the `webexercises` package [(link to package with documentation)](https://psyteachr.github.io/webexercises/index.html)
 
 - add files to same folder as the Quarto project as instructed
 
@@ -141,29 +147,29 @@ library("webexercises")
 
 :::
 
-## Examples {data-background-image="slides-bg.png" .smaller}
+## Examples (all images links) {data-background-image="slides-bg.png" .smaller}
 
 :::{.panel-tabset}
 
 ### Desmos
 
-[![Desmos figure from Guide: Introduction to partial differentiation, written by a fourth-year student](temse-5.png){width=60%}](../studyguides/introtopartialdifferentiation.qmd)
+[![Desmos figure from Guide: Introduction to partial differentiation, written by a fourth-year student](temse-5.png){width=60% fig-alt="Desmos figure from Guide: Introduction to partial differentiation, written by a fourth-year student. It demonstrates a surface with a slider moving back and forth, and the curve beneath responds to the slider."}](../studyguides/introtopartialdifferentiation.qmd)
 
 ### R Shiny 1
 
-[![R Shiny figure from Factsheet: Normal distribution, written by a first-year student](temse-6.png){width=50%}](../factsheets/f-normaldist.qmd)
+[![R Shiny figure from Factsheet: Normal distribution, written by a first-year student](temse-6.png){width=50% fig-alt="R Shiny figure from Factsheet: Normal distribution, written by a first-year student. It is a picture of an interactive normal distribution figure, with sliders to modify the mean and the standard deviation."}](../factsheets/f-normaldist.qmd)
 
 ### R Shiny 2
 
-[![R Shiny interactive figure from Guide: Introduction to hypothesis testing, written by a fourth-year student](temse-7.png)](../studyguides/hypothesistesting.qmd)
+[![R Shiny interactive figure from Guide: Introduction to hypothesis testing, written by a fourth-year student](temse-7.png){fig-alt="R Shiny interactive figure from Guide: Introduction to hypothesis testing, written by a fourth-year student. It is a picture of the front page of interactive hypothesis testing flowchart, with buttons to decide on certain directions."}](../studyguides/hypothesistesting.qmd)
   
 ### html 1
 
-[![html interactive figure from Guide: Matrix multiplication, written by a fourth-year student](html1.png){width=60%}](../studyguides/matrixmultiplication.qmd)
+[![html interactive figure from Guide: Matrix multiplication, written by a fourth-year student](html1.png){width=60% fig-alt="html interactive figure from Guide: Matrix multiplication, written by a fourth-year student. It is a picture of the demonstration of the multiplication of a 2x3 and 3x2 matrix, with one cell highlighted."}](../studyguides/matrixmultiplication.qmd)
 
 ### html 2
 
-[![html interactive figure from Calculator: HCF and LCM](html2.png){width=50%}](../apps/calculators/c-hcflcm.qmd)
+[![html interactive figure from Calculator: HCF and LCM](html2.png){width=50% fig-alt="html interactive figure from Calculator: HCF and LCM. It is a picture of the calculator, with an example of 16 and 25. Buttons ask you to calculate HCF, LCM, or both."}](../apps/calculators/c-hcflcm.qmd)
 
 ### webexercises
 
@@ -173,12 +179,16 @@ library("webexercises")
 
 ## Want more? {data-background-image="slides-bg.png"}
 
-- **loads more examples at [starmast.org](https://starmast.org) :)** 
+- **get started with quarto**
 
-- **source code for interactive figures** at the [starmast github repository](https://github.com/tdhc153/starmast)
+     - [link to my template from the SMSN network](https://tdhc153.github.io/smsn-quarto-workshop/)
+     
+     - [link to the source code is here](https://github.com/tdhc153/smsn-quarto-workshop)
+
+- **loads more examples at <https://starmast.org> :)** 
+
+- [link to starmast github repository](https://github.com/tdhc153/starmast) for all **source code**
 
 - contact me at **tdhc@st-andrews.ac.uk**: any ideas, feedback, comments, most welcome :)
-
- 
 
 **thank you for listening!**

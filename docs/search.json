@@ -4330,7 +4330,7 @@
     "href": "index.html#other",
     "title": "STARMAST",
     "section": "Other",
-    "text": "Other\nTo see our about page, please click here.\nIf you are on a VIP, then please click here to see the VIP materials.\nTo see our licensing information, please click here.\nTo see our cookie policy, please click here."
+    "text": "Other\nLink to our about page\nLink to our VIP page, containing all VIP resources\nLink to our licensing information\nLink to our cookie policy"
   },
   {
     "objectID": "index.html#partners",
@@ -5765,35 +5765,35 @@
     "href": "VIP2526/AccessibleHTMLJun26.html#methods-12",
     "title": "Embedding interactive elements in Quarto",
     "section": "Methods (1/2)",
-    "text": "Methods (1/2)\nwide range of topics necessitate wide range of methods for best results\n\nR package webexercises for ‘quick-check’ questions (true or false, multiple choice…)\nQuarto’s synergy with R encourages R Shiny apps, particularly good for statistics\n\nworks best with a dedicated R Shiny server\nbut can use R Shiny Live to run these apps without a server (at the cost of longer loading times)\n\nDesmos is best for graphs / recognisable brand for students / accessibility features built-in\n\nstudents helped organise agreement to use Desmos API environment\ncan embed directly from site without this (at the cost of uneditable figures at point of use)\n\nraw html provides natural flexibility for everything else (calculators, animations…)"
+    "text": "Methods (1/2)\nwide range of topics necessitate wide range of methods for best results\n\nR package webexercises for ‘quick-check’ questions (true or false, multiple choice…)\nQuarto’s synergy with R encourages R Shiny apps, particularly good for statistics\n\nworks best with a dedicated R Shiny server (money)\nbut can use R Shiny Live to run these apps without a server (free, at the cost of longer loading times)\n\nDesmos is best for graphs / recognisable brand for students / accessibility features built-in\n\ncan use Desmos API environment for full editability (money)\ncan embed directly from Desmos without API (free, restricted features)\n\nraw html provides natural flexibility for everything else (calculators, animations…)"
   },
   {
     "objectID": "VIP2526/AccessibleHTMLJun26.html#methods-22",
     "href": "VIP2526/AccessibleHTMLJun26.html#methods-22",
     "title": "Embedding interactive elements in Quarto",
     "section": "Methods (2/2)",
-    "text": "Methods (2/2)\ngenerative AI provides starting points for use of these tools\n\nR Shiny Assistant (for R Shiny) / Copilot (for html) / ChatGPT (for html/Desmos API environment)\nteachable moments for students in using generative AI responsibly\n\nuse conditional content tags if using multiple outputs\n::: {.content-visible when-format=\"html\"}\ninteractive content\n:::\n\n::: {.content-hidden when-format=\"html\"}\nnon-interactive content for printable versions\n:::"
+    "text": "Methods (2/2)\ngenerative AI provides starting points for use of these tools\n\nR Shiny Assistant (for R Shiny) / Copilot (for html) / ChatGPT (for html/Desmos API environment)\nteachable moments for students in using generative AI responsibly\nhave to ask specifically for accessibility features (standard genAI)\n\nuse conditional content tags if using multiple outputs\n::: {.content-visible when-format=\"html\"}\ninteractive content\n:::\n\n::: {.content-hidden when-format=\"html\"}\nnon-interactive content for printable versions\n:::"
   },
   {
     "objectID": "VIP2526/AccessibleHTMLJun26.html#how-to-embed",
     "href": "VIP2526/AccessibleHTMLJun26.html#how-to-embed",
     "title": "Embedding interactive elements in Quarto",
     "section": "How to embed",
-    "text": "How to embed\n\nhtmlDesmosR Shinywebexercises\n\n\n(three ticks){=html}\nembeddable content\n(three ticks)\n\n\nwith API key\nformat:\n  html:\n    include-in-header: \n    - text: &lt;script src=\"desmos_API_key_link\"&gt;&lt;/script&gt;\nthen use Desmos’ documentation to start building (step 1 covered by above)\nwithout API key\n\ndraw graph using Desmos graphical calculator\nshare button / ‘embed snapshot’\npaste iframe code into html tags in Quarto\n\n(three ticks){=html}\nDesmos iframe\n(three ticks)\n\n\nin _quarto.yml file\nformat:\n  html:\n    include-in-header: \n    - text: &lt;script src=\"https://esm.sh/shinylive-r\"&gt;&lt;/script&gt;\n    filters:\n    - shinylive\n(or add filter page by page), then in .qmd file\n[three ticks]{shinylive-r}\n#| standalone: true\n#| viewerHeight: 500\n\nR Shiny app here\n[three ticks]\n\n\n\ninstall webexercises package from CRAN or otherwise\nadd files to same folder as the Quarto project as instructed\nload library in each .qmd file\n\n[three ticks]{r, setup, include = FALSE}\nlibrary(\"webexercises\")\n[three ticks]\n\nfollow documentation to create webex-boxes where you want questions in your text"
+    "text": "How to embed\n\nhtmlDesmosR Shinywebexercises\n\n\n(three ticks){=html}\nembeddable content\n(three ticks)\n\n\nwith API key\nformat:\n  html:\n    include-in-header: \n    - text: &lt;script src=\"desmos_API_key_link\"&gt;&lt;/script&gt;\nthen use Desmos’ documentation to start building (clickable) (step 1 covered by above)\nwithout API key\n\ndraw graph using Desmos graphical calculator\nshare button / ‘embed snapshot’\npaste iframe code into html tags in Quarto\n\n(three ticks){=html}\nDesmos iframe\n(three ticks)\n\n\nfor Shinylive, no server\n\ninstall shinylive quarto extension link to github\nin _quarto.yml file (or put filter on each relevant .qmd file)\n\nformat:\n  html:\n    include-in-header: \n    - text: &lt;script src=\"https://esm.sh/shinylive-r\"&gt;&lt;/script&gt;\n    filters:\n    - shinylive\n\nin .qmd file\n\n[three ticks]{shinylive-r}\n#| standalone: true\n#| viewerHeight: 500\n\nR Shiny app here\n[three ticks]\n\n\n\ninstall the webexercises package (link to package with documentation)\nadd files to same folder as the Quarto project as instructed\nload library in each .qmd file\n\n[three ticks]{r, setup, include = FALSE}\nlibrary(\"webexercises\")\n[three ticks]\n\nfollow documentation to create webex-boxes where you want questions in your text"
   },
   {
-    "objectID": "VIP2526/AccessibleHTMLJun26.html#examples",
-    "href": "VIP2526/AccessibleHTMLJun26.html#examples",
+    "objectID": "VIP2526/AccessibleHTMLJun26.html#examples-all-images-links",
+    "href": "VIP2526/AccessibleHTMLJun26.html#examples-all-images-links",
     "title": "Embedding interactive elements in Quarto",
-    "section": "Examples",
-    "text": "Examples\n\nDesmosR Shiny 1R Shiny 2html 1html 2webexercises\n\n\n\n\n\nDesmos figure from Guide: Introduction to partial differentiation, written by a fourth-year student\n\n\n\n\n\n\n\nR Shiny figure from Factsheet: Normal distribution, written by a first-year student\n\n\n\n\n\n\n\nR Shiny interactive figure from Guide: Introduction to hypothesis testing, written by a fourth-year student\n\n\n\n\n\n\n\nhtml interactive figure from Guide: Matrix multiplication, written by a fourth-year student\n\n\n\n\n\n\n\nhtml interactive figure from Calculator: HCF and LCM\n\n\n\n\n\n\n\nwebexercises from Guide: Rationalizing the denominator, written by a second-year student"
+    "section": "Examples (all images links)",
+    "text": "Examples (all images links)\n\nDesmosR Shiny 1R Shiny 2html 1html 2webexercises\n\n\n\n\n\nDesmos figure from Guide: Introduction to partial differentiation, written by a fourth-year student\n\n\n\n\n\n\n\nR Shiny figure from Factsheet: Normal distribution, written by a first-year student\n\n\n\n\n\n\n\nR Shiny interactive figure from Guide: Introduction to hypothesis testing, written by a fourth-year student\n\n\n\n\n\n\n\nhtml interactive figure from Guide: Matrix multiplication, written by a fourth-year student\n\n\n\n\n\n\n\nhtml interactive figure from Calculator: HCF and LCM\n\n\n\n\n\n\n\nwebexercises from Guide: Rationalizing the denominator, written by a second-year student"
   },
   {
     "objectID": "VIP2526/AccessibleHTMLJun26.html#want-more",
     "href": "VIP2526/AccessibleHTMLJun26.html#want-more",
     "title": "Embedding interactive elements in Quarto",
     "section": "Want more?",
-    "text": "Want more?\n\nloads more examples at starmast.org :)\nsource code for interactive figures at the starmast github repository\ncontact me at tdhc@st-andrews.ac.uk: any ideas, feedback, comments, most welcome :)\n\n \nthank you for listening!"
+    "text": "Want more?\n\nget started with quarto\n\nlink to my template from the SMSN network\nlink to the source code is here\n\nloads more examples at https://starmast.org :)\nlink to starmast github repository for all source code\ncontact me at tdhc@st-andrews.ac.uk: any ideas, feedback, comments, most welcome :)\n\nthank you for listening!"
   },
   {
     "objectID": "fullindex.html",

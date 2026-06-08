@@ -243,7 +243,7 @@ Tom Coleman
 <ul>
 <li><p>Lecturer (Education Focused) in mathematics</p></li>
 <li><p>passion for creating good resources / very shallow technical background</p></li>
-<li><p>currently using Quarto to produce <strong>publicly available free-to-use, accessible and inclusive</strong> maths and stats <strong>support resources</strong></p></li>
+<li><p>currently using Quarto to produce <strong>publicly available free-to-use, accessible and inclusive</strong> maths and stats support resources</p></li>
 <li><p><strong>co-create these resources with students</strong> as part of a Vertically Integrated Project module at St Andrews</p></li>
 </ul>
 </section>
@@ -254,13 +254,13 @@ Tom Coleman
 <li><p>R package <strong>webexercises</strong> for ‘quick-check’ questions (true or false, multiple choice…)</p></li>
 <li><p>Quarto’s synergy with R encourages <strong>R Shiny apps</strong>, particularly good for statistics</p>
 <ul>
-<li><p>works best with a dedicated R Shiny server</p></li>
-<li><p>but can use R Shiny Live to run these apps without a server (at the cost of longer loading times)</p></li>
+<li><p>works best with a dedicated R Shiny server (money)</p></li>
+<li><p>but can use R Shiny Live to run these apps without a server (free, at the cost of longer loading times)</p></li>
 </ul></li>
 <li><p><strong>Desmos</strong> is best for graphs / recognisable brand for students / accessibility features built-in</p>
 <ul>
-<li><p>students helped organise agreement to use Desmos API environment</p></li>
-<li><p>can embed directly from site without this (at the cost of uneditable figures at point of use)</p></li>
+<li><p>can use Desmos API environment for full editability (money)</p></li>
+<li><p>can embed directly from Desmos without API (free, restricted features)</p></li>
 </ul></li>
 <li><p>raw <strong>html</strong> provides natural flexibility for everything else (calculators, animations…)</p></li>
 </ul>
@@ -271,6 +271,7 @@ Tom Coleman
 <ul>
 <li><p><strong>R Shiny Assistant</strong> (for R Shiny) / <strong>Copilot</strong> (for html) / <strong>ChatGPT</strong> (for html/Desmos API environment)</p></li>
 <li><p>teachable moments for students in using generative AI responsibly</p></li>
+<li><p>have to ask specifically for accessibility features (standard genAI)</p></li>
 </ul>
 <p><strong>use conditional content tags if using multiple outputs</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource quarto number-lines code-with-copy"><code class="sourceCode"><span id="cb1-1"><a></a>::: {.content-visible when-format="html"}</span>
@@ -297,7 +298,7 @@ Tom Coleman
 <span id="cb3-2"><a></a>  html:</span>
 <span id="cb3-3"><a></a>    include-in-header: </span>
 <span id="cb3-4"><a></a>    - text: &lt;script src="desmos_API_key_link"&gt;&lt;/script&gt;</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>then use <a href="https://www.desmos.com/api/v1.12/docs/index.html">Desmos’ documentation to start building</a> (step 1 covered by above)</p>
+<p>then use <a href="https://www.desmos.com/api/v1.12/docs/index.html">Desmos’ documentation to start building (clickable)</a> (step 1 covered by above)</p>
 <p><strong>without API key</strong></p>
 <ul>
 <li>draw graph using Desmos graphical calculator</li>
@@ -309,14 +310,20 @@ Tom Coleman
 <span id="cb4-3"><a></a>(three ticks)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div id="tabset-1-3">
-<p>in _quarto.yml file</p>
+<p><strong>for Shinylive, no server</strong></p>
+<ul>
+<li><p>install shinylive quarto extension <a href="https://github.com/quarto-ext/shinylive">link to github</a></p></li>
+<li><p>in _quarto.yml file (or put filter on each relevant .qmd file)</p></li>
+</ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource quarto number-lines code-with-copy"><code class="sourceCode"><span id="cb5-1"><a></a>format:</span>
 <span id="cb5-2"><a></a>  html:</span>
 <span id="cb5-3"><a></a>    include-in-header: </span>
 <span id="cb5-4"><a></a>    - text: &lt;script src="https://esm.sh/shinylive-r"&gt;&lt;/script&gt;</span>
 <span id="cb5-5"><a></a>    filters:</span>
 <span id="cb5-6"><a></a>    - shinylive</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>(or add filter page by page), then in .qmd file</p>
+<ul>
+<li>in .qmd file</li>
+</ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource quarto number-lines code-with-copy"><code class="sourceCode"><span id="cb6-1"><a></a>[three ticks]{shinylive-r}</span>
 <span id="cb6-2"><a></a>#| standalone: true</span>
 <span id="cb6-3"><a></a>#| viewerHeight: 500</span>
@@ -326,7 +333,7 @@ Tom Coleman
 </div>
 <div id="tabset-1-4">
 <ul>
-<li><p>install <a href="https://psyteachr.github.io/webexercises/index.html">webexercises package</a> from CRAN or otherwise</p></li>
+<li><p>install the <code>webexercises</code> package <a href="https://psyteachr.github.io/webexercises/index.html">(link to package with documentation)</a></p></li>
 <li><p>add files to same folder as the Quarto project as instructed</p></li>
 <li><p>load library in each .qmd file</p></li>
 </ul>
@@ -340,15 +347,15 @@ Tom Coleman
 </div>
 </div>
 </section>
-<section id="examples" class="slide level2 smaller" data-background-image="slides-bg.png">
-<h2>Examples</h2>
+<section id="examples-all-images-links" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Examples (all images links)</h2>
 <div class="panel-tabset">
 <ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Desmos</a></li><li><a href="#tabset-2-2">R Shiny 1</a></li><li><a href="#tabset-2-3">R Shiny 2</a></li><li><a href="#tabset-2-4">html 1</a></li><li><a href="#tabset-2-5">html 2</a></li><li><a href="#tabset-2-6">webexercises</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><a href="../studyguides/introtopartialdifferentiation.html"><img data-src="temse-5.png" style="width:60.0%"></a></p>
+<p><a href="../studyguides/introtopartialdifferentiation.html"><img data-src="temse-5.png" style="width:60.0%" alt="Desmos figure from Guide: Introduction to partial differentiation, written by a fourth-year student. It demonstrates a surface with a slider moving back and forth, and the curve beneath responds to the slider."></a></p>
 <figcaption>Desmos figure from Guide: Introduction to partial differentiation, written by a fourth-year student</figcaption>
 </figure>
 </div>
@@ -356,7 +363,7 @@ Tom Coleman
 <div id="tabset-2-2">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><a href="../factsheets/f-normaldist.html"><img data-src="temse-6.png" style="width:50.0%"></a></p>
+<p><a href="../factsheets/f-normaldist.html"><img data-src="temse-6.png" style="width:50.0%" alt="R Shiny figure from Factsheet: Normal distribution, written by a first-year student. It is a picture of an interactive normal distribution figure, with sliders to modify the mean and the standard deviation."></a></p>
 <figcaption>R Shiny figure from Factsheet: Normal distribution, written by a first-year student</figcaption>
 </figure>
 </div>
@@ -364,7 +371,7 @@ Tom Coleman
 <div id="tabset-2-3">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><a href="../studyguides/hypothesistesting.html"><img data-src="temse-7.png"></a></p>
+<p><a href="../studyguides/hypothesistesting.html"><img data-src="temse-7.png" alt="R Shiny interactive figure from Guide: Introduction to hypothesis testing, written by a fourth-year student. It is a picture of the front page of interactive hypothesis testing flowchart, with buttons to decide on certain directions."></a></p>
 <figcaption>R Shiny interactive figure from Guide: Introduction to hypothesis testing, written by a fourth-year student</figcaption>
 </figure>
 </div>
@@ -372,7 +379,7 @@ Tom Coleman
 <div id="tabset-2-4">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><a href="../studyguides/matrixmultiplication.html"><img data-src="html1.png" style="width:60.0%"></a></p>
+<p><a href="../studyguides/matrixmultiplication.html"><img data-src="html1.png" style="width:60.0%" alt="html interactive figure from Guide: Matrix multiplication, written by a fourth-year student. It is a picture of the demonstration of the multiplication of a 2x3 and 3x2 matrix, with one cell highlighted."></a></p>
 <figcaption>html interactive figure from Guide: Matrix multiplication, written by a fourth-year student</figcaption>
 </figure>
 </div>
@@ -380,7 +387,7 @@ Tom Coleman
 <div id="tabset-2-5">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><a href="../apps/calculators/c-hcflcm.html"><img data-src="html2.png" style="width:50.0%"></a></p>
+<p><a href="../apps/calculators/c-hcflcm.html"><img data-src="html2.png" style="width:50.0%" alt="html interactive figure from Calculator: HCF and LCM. It is a picture of the calculator, with an example of 16 and 25. Buttons ask you to calculate HCF, LCM, or both."></a></p>
 <figcaption>html interactive figure from Calculator: HCF and LCM</figcaption>
 </figure>
 </div>
@@ -399,11 +406,15 @@ Tom Coleman
 <section id="want-more" class="slide level2" data-background-image="slides-bg.png">
 <h2>Want more?</h2>
 <ul>
-<li><p><strong>loads more examples at <a href="https://starmast.org">starmast.org</a> :)</strong></p></li>
-<li><p><strong>source code for interactive figures</strong> at the <a href="https://github.com/tdhc153/starmast">starmast github repository</a></p></li>
+<li><p><strong>get started with quarto</strong></p>
+<ul>
+<li><p><a href="https://tdhc153.github.io/smsn-quarto-workshop/">link to my template from the SMSN network</a></p></li>
+<li><p><a href="https://github.com/tdhc153/smsn-quarto-workshop">link to the source code is here</a></p></li>
+</ul></li>
+<li><p><strong>loads more examples at <a href="https://starmast.org" class="uri">https://starmast.org</a> :)</strong></p></li>
+<li><p><a href="https://github.com/tdhc153/starmast">link to starmast github repository</a> for all <strong>source code</strong></p></li>
 <li><p>contact me at <strong>tdhc@st-andrews.ac.uk</strong>: any ideas, feedback, comments, most welcome :)</p></li>
 </ul>
-<p>&nbsp;</p>
 <p><strong>thank you for listening!</strong></p>
 
 
