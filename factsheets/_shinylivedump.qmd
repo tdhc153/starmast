@@ -1,0 +1,713 @@
+---
+title: "shinylive dump"
+format: html
+---
+
+
+## Beta distributions
+
+<!-- # ```{shinylive-r} -->
+<!-- # #| standalone: true -->
+<!-- # #| viewerHeight: 730 -->
+<!-- #  -->
+<!-- # library(shiny) -->
+<!-- # library(bslib) -->
+<!-- # library(ggplot2) -->
+<!-- #  -->
+<!-- # ui <- page_fluid( -->
+<!-- #   title = "Beta distribution calculator", -->
+<!-- #    -->
+<!-- #   layout_columns( -->
+<!-- #     col_widths = c(4, 8), -->
+<!-- #      -->
+<!-- #     # Left column - Inputs -->
+<!-- #     card( -->
+<!-- #       card_header("Parameters"), -->
+<!-- #       card_body( -->
+<!-- #         numericInput("shape1", "Shape parameter α:", value = 2, min = 0.01, step = 0.1), -->
+<!-- #         numericInput("shape2", "Shape parameter β:", value = 2, min = 0.01, step = 0.1), -->
+<!-- #         hr(), -->
+<!-- #         radioButtons("prob_type", "Probability to calculate:", -->
+<!-- #                     choices = list("P(X ≤ x)" = "less",  -->
+<!-- #                                   "P(X ≥ x)" = "greater",  -->
+<!-- #                                   "P(x ≤ X ≤ y)" = "between"), -->
+<!-- #                     selected = "less"), -->
+<!-- #         conditionalPanel( -->
+<!-- #           condition = "input.prob_type == 'less'", -->
+<!-- #           sliderInput("x_less", "x value:", min = 0, max = 1, value = 0.5, step = 0.01) -->
+<!-- #         ), -->
+<!-- #         conditionalPanel( -->
+<!-- #           condition = "input.prob_type == 'greater'", -->
+<!-- #           sliderInput("x_greater", "x value:", min = 0, max = 1, value = 0.5, step = 0.01) -->
+<!-- #         ), -->
+<!-- #         conditionalPanel( -->
+<!-- #           condition = "input.prob_type == 'between'", -->
+<!-- #           sliderInput("x_lower", "Lower bound (x):", min = 0, max = 1, value = 0.25, step = 0.01), -->
+<!-- #           sliderInput("x_upper", "Upper bound (y):", min = 0, max = 1, value = 0.75, step = 0.01) -->
+<!-- #         ) -->
+<!-- #       ) -->
+<!-- #     ), -->
+<!-- #      -->
+<!-- #     # Right column - Plot -->
+<!-- #     card( -->
+<!-- #       card_header("Beta distribution plot"), -->
+<!-- #       card_body( -->
+<!-- #         uiOutput("plot_title"), -->
+<!-- #         plotOutput("distPlot", height = "300px") -->
+<!-- #       ) -->
+<!-- #     ) -->
+<!-- #   ), -->
+<!-- #    -->
+<!-- #   # Bottom row - Results -->
+<!-- #   card( -->
+<!-- #     card_header("Results"), -->
+<!-- #     card_body( -->
+<!-- #       textOutput("explanation") -->
+<!-- #     ) -->
+<!-- #   ) -->
+<!-- # ) -->
+<!-- #  -->
+<!-- # server <- function(input, output, session) { -->
+<!-- #    -->
+<!-- #   # Ensure that x_upper is always greater than or equal to x_lower -->
+<!-- #   observe({ -->
+<!-- #     req(input$x_upper, input$x_lower) -->
+<!-- #     if (input$x_upper < input$x_lower) { -->
+<!-- #       updateSliderInput(session, "x_upper", value = input$x_lower) -->
+<!-- #     } -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   # Display the plot title with distribution parameters -->
+<!-- #   output$plot_title <- renderUI({ -->
+<!-- #     title <- sprintf("Beta(α = %.2f, β = %.2f)", input$shape1, input$shape2) -->
+<!-- #     tags$h4(title, style = "text-align: center; margin-bottom: 15px;") -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   # Calculate the probability based on user selection -->
+<!-- #   probability <- reactive({ -->
+<!-- #     req(input$shape1, input$shape2) -->
+<!-- #      -->
+<!-- #     if (input$prob_type == "less") { -->
+<!-- #       req(input$x_less) -->
+<!-- #       prob <- pbeta(input$x_less, shape1 = input$shape1, shape2 = input$shape2) -->
+<!-- #       explanation <- sprintf("P(X ≤ %.2f) = %.6f or %.4f%%",  -->
+<!-- #                            input$x_less, prob, prob * 100) -->
+<!-- #       return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less)) -->
+<!-- #        -->
+<!-- #     } else if (input$prob_type == "greater") { -->
+<!-- #       req(input$x_greater) -->
+<!-- #       prob <- 1 - pbeta(input$x_greater, shape1 = input$shape1, shape2 = input$shape2) -->
+<!-- #       explanation <- sprintf("P(X ≥ %.2f) = %.6f or %.4f%%",  -->
+<!-- #                            input$x_greater, prob, prob * 100) -->
+<!-- #       return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater)) -->
+<!-- #        -->
+<!-- #     } else if (input$prob_type == "between") { -->
+<!-- #       req(input$x_lower, input$x_upper) -->
+<!-- #       if (input$x_lower == input$x_upper) { -->
+<!-- #         # For continuous distributions, P(X = a) = 0 -->
+<!-- #         prob <- 0 -->
+<!-- #       } else { -->
+<!-- #         upper_prob <- pbeta(input$x_upper, shape1 = input$shape1, shape2 = input$shape2) -->
+<!-- #         lower_prob <- pbeta(input$x_lower, shape1 = input$shape1, shape2 = input$shape2) -->
+<!-- #         prob <- upper_prob - lower_prob -->
+<!-- #       } -->
+<!-- #       explanation <- sprintf("P(%.2f ≤ X ≤ %.2f) = %.6f or %.4f%%",  -->
+<!-- #                            input$x_lower, input$x_upper, prob, prob * 100) -->
+<!-- #       return(list(prob = prob, explanation = explanation, type = "between",  -->
+<!-- #                  lower = input$x_lower, upper = input$x_upper)) -->
+<!-- #     } -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   # Display an explanation of the calculation -->
+<!-- #   output$explanation <- renderText({ -->
+<!-- #     res <- probability() -->
+<!-- #     return(res$explanation) -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   # Generate the beta distribution plot -->
+<!-- #   output$distPlot <- renderPlot({ -->
+<!-- #     # Get parameters -->
+<!-- #     shape1 <- input$shape1 -->
+<!-- #     shape2 <- input$shape2 -->
+<!-- #      -->
+<!-- #     req(shape1, shape2) -->
+<!-- #      -->
+<!-- #     # Create data frame for plotting -->
+<!-- #     # Beta distribution is defined on the interval [0, 1] -->
+<!-- #     x_values <- seq(0, 1, length.out = 500) -->
+<!-- #     density_values <- dbeta(x_values, shape1 = shape1, shape2 = shape2) -->
+<!-- #     plot_df <- data.frame(x = x_values, density = density_values) -->
+<!-- #      -->
+<!-- #     # Create base plot -->
+<!-- #     p <- ggplot(plot_df, aes(x = x, y = density)) + -->
+<!-- #       geom_line(linewidth = 1, color = "darkgray") + -->
+<!-- #       labs(x = "X", y = "probability density function") + -->
+<!-- #       theme_minimal() + -->
+<!-- #       theme(panel.grid.minor = element_blank()) + -->
+<!-- #       xlim(0, 1) + -->
+<!-- #       # Adjust y-limit based on maximum density to handle tall peaks -->
+<!-- #       ylim(0, max(density_values) * 1.05) -->
+<!-- #      -->
+<!-- #     # Add shaded area based on selected probability type -->
+<!-- #     res <- probability() -->
+<!-- #      -->
+<!-- #     if (res$type == "less") { -->
+<!-- #       # Create data for the filled area -->
+<!-- #       fill_x <- seq(0, res$x, length.out = 200) -->
+<!-- #       fill_y <- dbeta(fill_x, shape1 = shape1, shape2 = shape2) -->
+<!-- #       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+<!-- #        -->
+<!-- #       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!-- #                         fill = "#3F6BB6", alpha = 0.6) -->
+<!-- #        -->
+<!-- #     } else if (res$type == "greater") { -->
+<!-- #       # Create data for the filled area -->
+<!-- #       fill_x <- seq(res$x, 1, length.out = 200) -->
+<!-- #       fill_y <- dbeta(fill_x, shape1 = shape1, shape2 = shape2) -->
+<!-- #       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+<!-- #        -->
+<!-- #       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!-- #                         fill = "#3F6BB6", alpha = 0.6) -->
+<!-- #        -->
+<!-- #     } else if (res$type == "between") { -->
+<!-- #       # Create data for the filled area -->
+<!-- #       fill_x <- seq(res$lower, res$upper, length.out = 200) -->
+<!-- #       fill_y <- dbeta(fill_x, shape1 = shape1, shape2 = shape2) -->
+<!-- #       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+<!-- #        -->
+<!-- #       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!-- #                         fill = "#3F6BB6", alpha = 0.6) -->
+<!-- #     } -->
+<!-- #      -->
+<!-- #     return(p) -->
+<!-- #   }) -->
+<!-- # } -->
+<!-- #  -->
+<!-- # shinyApp(ui = ui, server = server) -->
+<!-- # ``` -->
+
+## Normal distribution
+
+<!-- # ```{shinylive-r} -->
+<!-- # #| standalone: true -->
+<!-- # #| viewerHeight: 700 -->
+<!-- #  -->
+<!-- # library(shiny) -->
+<!-- # library(bslib) -->
+<!-- # library(ggplot2) -->
+<!-- #  -->
+<!-- # ui <- page_fluid( -->
+<!-- #   title = "Normal distribution calculator", -->
+<!-- #    -->
+<!-- #   layout_columns( -->
+<!-- #     col_widths = c(4, 8), -->
+<!-- #      -->
+<!-- #     # Left column - Inputs -->
+<!-- #     card( -->
+<!-- #       card_header("Parameters"), -->
+<!-- #       card_body( -->
+<!-- #         numericInput("mean", "Mean (μ):", value = 0), -->
+<!-- #         numericInput("sd", "Standard deviation (σ):", value = 1, min = 0.01), -->
+<!-- #         hr(), -->
+<!-- #         radioButtons("prob_type", "Probability to calculate:", -->
+<!-- #                     choices = list("P(X ≤ x)" = "less",  -->
+<!-- #                                   "P(X ≥ x)" = "greater",  -->
+<!-- #                                   "P(x ≤ X ≤ y)" = "between"), -->
+<!-- #                     selected = "less"), -->
+<!-- #         conditionalPanel( -->
+<!-- #           condition = "input.prob_type == 'less' || input.prob_type == 'greater'", -->
+<!-- #           numericInput("x_value", "x value:", value = 0) -->
+<!-- #         ), -->
+<!-- #         conditionalPanel( -->
+<!-- #           condition = "input.prob_type == 'between'", -->
+<!-- #           numericInput("x_lower", "Lower bound (x):", value = -1), -->
+<!-- #           numericInput("x_upper", "Upper bound (y):", value = 1) -->
+<!-- #         ) -->
+<!-- #       ) -->
+<!-- #     ), -->
+<!-- #      -->
+<!-- #     # Right column - Plot -->
+<!-- #     card( -->
+<!-- #       card_header("Normal distribution plot"), -->
+<!-- #       card_body( -->
+<!-- #         uiOutput("plot_title"), -->
+<!-- #         plotOutput("distPlot", height = "300px") -->
+<!-- #       ) -->
+<!-- #     ) -->
+<!-- #   ), -->
+<!-- #    -->
+<!-- #   # Bottom row - Results -->
+<!-- #   card( -->
+<!-- #     card_header("Results"), -->
+<!-- #     card_body( -->
+<!-- #       # Removed the LaTeX formula display -->
+<!-- #       textOutput("explanation") -->
+<!-- #     ) -->
+<!-- #   ) -->
+<!-- # ) -->
+<!-- #  -->
+<!-- # server <- function(input, output, session) { -->
+<!-- #    -->
+<!-- #   # Display the plot title with distribution parameters -->
+<!-- #   output$plot_title <- renderUI({ -->
+<!-- #     title <- sprintf("N(μ = %.2f, σ = %.2f)", input$mean, input$sd) -->
+<!-- #     tags$h4(title, style = "text-align: center; margin-bottom: 15px;") -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   # Calculate the probability based on user selection -->
+<!-- #   probability <- reactive({ -->
+<!-- #     if (input$prob_type == "less") { -->
+<!-- #       prob <- pnorm(input$x_value, mean = input$mean, sd = input$sd) -->
+<!-- #       explanation <- sprintf("P(X ≤ %.2f) = %.4f or %.2f%%",  -->
+<!-- #                             input$x_value, prob, prob * 100) -->
+<!-- #       return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value)) -->
+<!-- #        -->
+<!-- #     } else if (input$prob_type == "greater") { -->
+<!-- #       prob <- 1 - pnorm(input$x_value, mean = input$mean, sd = input$sd) -->
+<!-- #       explanation <- sprintf("P(X ≥ %.2f) = %.4f or %.2f%%",  -->
+<!-- #                             input$x_value, prob, prob * 100) -->
+<!-- #       return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value)) -->
+<!-- #        -->
+<!-- #     } else if (input$prob_type == "between") { -->
+<!-- #       lower_prob <- pnorm(input$x_lower, mean = input$mean, sd = input$sd) -->
+<!-- #       upper_prob <- pnorm(input$x_upper, mean = input$mean, sd = input$sd) -->
+<!-- #       prob <- upper_prob - lower_prob -->
+<!-- #       explanation <- sprintf("P(%.2f ≤ X ≤ %.2f) = %.4f or %.2f%%",  -->
+<!-- #                             input$x_lower, input$x_upper, prob, prob * 100) -->
+<!-- #       return(list(prob = prob, explanation = explanation, type = "between",  -->
+<!-- #                  lower = input$x_lower, upper = input$x_upper)) -->
+<!-- #     } -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   # Display an explanation of the calculation -->
+<!-- #   output$explanation <- renderText({ -->
+<!-- #     res <- probability() -->
+<!-- #     return(res$explanation) -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   # Generate the normal distribution plot -->
+<!-- #   output$distPlot <- renderPlot({ -->
+<!-- #     # Calculate range for x-axis (covering 99.7% of the distribution) -->
+<!-- #     x_min <- input$mean - 3.5 * input$sd -->
+<!-- #     x_max <- input$mean + 3.5 * input$sd -->
+<!-- #      -->
+<!-- #     # Create data frame for plotting -->
+<!-- #     x <- seq(x_min, x_max, length.out = 500) -->
+<!-- #     y <- dnorm(x, mean = input$mean, sd = input$sd) -->
+<!-- #     df <- data.frame(x = x, y = y) -->
+<!-- #      -->
+<!-- #     # Create base plot -->
+<!-- #     p <- ggplot(df, aes(x = x, y = y)) + -->
+<!-- #       geom_line() + -->
+<!-- #       labs(x = "X", y = "Density") + -->
+<!-- #       theme_minimal() + -->
+<!-- #       theme(panel.grid.minor = element_blank()) -->
+<!-- #      -->
+<!-- #     # Add bold line at X = 0 -->
+<!-- #     p <- p + geom_vline(xintercept = 0, linetype = "solid", color = "black", linewidth = 0.8) -->
+<!-- #      -->
+<!-- #     # Add shaded area based on selected probability type -->
+<!-- #     res <- probability() -->
+<!-- #      -->
+<!-- #     if (res$type == "less") { -->
+<!-- #       shade_x <- seq(x_min, res$x, length.out = 200) -->
+<!-- #       shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd) -->
+<!-- #       shade_df <- data.frame(x = shade_x, y = shade_y) -->
+<!-- #        -->
+<!-- #       p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) + -->
+<!-- #         geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315") -->
+<!-- #        -->
+<!-- #     } else if (res$type == "greater") { -->
+<!-- #       shade_x <- seq(res$x, x_max, length.out = 200) -->
+<!-- #       shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd) -->
+<!-- #       shade_df <- data.frame(x = shade_x, y = shade_y) -->
+<!-- #        -->
+<!-- #       p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) + -->
+<!-- #         geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315") -->
+<!-- #        -->
+<!-- #     } else if (res$type == "between") { -->
+<!-- #       shade_x <- seq(res$lower, res$upper, length.out = 200) -->
+<!-- #       shade_y <- dnorm(shade_x, mean = input$mean, sd = input$sd) -->
+<!-- #       shade_df <- data.frame(x = shade_x, y = shade_y) -->
+<!-- #        -->
+<!-- #       p <- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) + -->
+<!-- #         geom_vline(xintercept = res$lower, linetype = "dashed", color = "#db4315") + -->
+<!-- #         geom_vline(xintercept = res$upper, linetype = "dashed", color = "#db4315") -->
+<!-- #     } -->
+<!-- #      -->
+<!-- #     return(p) -->
+<!-- #   }) -->
+<!-- # } -->
+<!-- #  -->
+<!-- # shinyApp(ui = ui, server = server) -->
+<!-- # ``` -->
+
+## t-test calculator
+
+<!-- # ```{shinylive-r} -->
+<!-- # #| standalone: true -->
+<!-- # #| viewerHeight: 820 -->
+<!-- #  -->
+<!-- # library(shiny) -->
+<!-- # library(bslib) -->
+<!-- #  -->
+<!-- # ui <- page_fluid( -->
+<!-- #   title = "t-statistic Calculator", -->
+<!-- #    -->
+<!-- #   # Navigation buttons -->
+<!-- #   layout_columns( -->
+<!-- #     col_widths = 12, -->
+<!-- #     card( -->
+<!-- #       card_body( -->
+<!-- #         div( -->
+<!-- #           style = "text-align: center; margin-bottom: 20px;", -->
+<!-- #           actionButton("show_one_sample", "One sample t-test",  -->
+<!-- #                        class = "btn-primary", style = "margin-right: 10px;"), -->
+<!-- #           actionButton("show_two_sample", "Two-sample t-test",  -->
+<!-- #                        class = "btn-outline-primary") -->
+<!-- #         ) -->
+<!-- #       ) -->
+<!-- #     ) -->
+<!-- #   ), -->
+<!-- #    -->
+<!-- #   # One-sample t-test panel -->
+<!-- #   conditionalPanel( -->
+<!-- #     condition = "input.current_tab == 'one_sample'", -->
+<!-- #     layout_columns( -->
+<!-- #       col_widths = c(6, 6), -->
+<!-- #       card( -->
+<!-- #         card_header("Sample Data"), -->
+<!-- #         card_body( -->
+<!-- #           numericInput("n1", "Sample size (n)", value = 30, min = 1, step = 1), -->
+<!-- #           numericInput("xbar1", "Sample mean", value = 50, step = 0.01), -->
+<!-- #           numericInput("s1", "Sample standard deviation", value = 10, min = 0.001, step = 0.01), -->
+<!-- #           numericInput("mu0", "Population mean (μ₀)", value = 45, step = 0.01), -->
+<!-- #           hr(), -->
+<!-- #           helpText("Calculate t-statistic for testing whether sample mean differs from population mean.") -->
+<!-- #         ) -->
+<!-- #       ), -->
+<!-- #       card( -->
+<!-- #         card_header("Results"), -->
+<!-- #         card_body( -->
+<!-- #           verbatimTextOutput("one_sample_results") -->
+<!-- #         ) -->
+<!-- #       ) -->
+<!-- #     ) -->
+<!-- #   ), -->
+<!-- #    -->
+<!-- #   # Two-sample t-test panel -->
+<!-- #   conditionalPanel( -->
+<!-- #     condition = "input.current_tab == 'two_sample'", -->
+<!-- #     layout_columns( -->
+<!-- #       col_widths = c(4, 4, 4), -->
+<!-- #       card( -->
+<!-- #         card_header("Sample 1"), -->
+<!-- #         card_body( -->
+<!-- #           numericInput("n1_two", "Sample Size (n₁)", value = 25, min = 1, step = 1), -->
+<!-- #           numericInput("xbar1_two", "Sample Mean (x̄₁)", value = 52, step = 0.01), -->
+<!-- #           numericInput("s1_two", "Sample Standard Deviation (s₁)", value = 8, min = 0.001, step = 0.01) -->
+<!-- #         ) -->
+<!-- #       ), -->
+<!-- #       card( -->
+<!-- #         card_header("Sample 2"), -->
+<!-- #         card_body( -->
+<!-- #           numericInput("n2_two", "Sample Size (n₂)", value = 30, min = 1, step = 1), -->
+<!-- #           numericInput("xbar2_two", "Sample Mean (x̄₂)", value = 48, step = 0.01), -->
+<!-- #           numericInput("s2_two", "Sample Standard Deviation (s₂)", value = 10, min = 0.001, step = 0.01) -->
+<!-- #         ) -->
+<!-- #       ), -->
+<!-- #       card( -->
+<!-- #         card_header("Test Settings"), -->
+<!-- #         card_body( -->
+<!-- #           radioButtons("test_type", "Test type:", -->
+<!-- #                        choices = list("Independent Samples (Equal variances)" = "independent", -->
+<!-- #                                       "Independent Samples (Welch's t-test)" = "welch", -->
+<!-- #                                       "Paired Samples" = "paired"), -->
+<!-- #                        selected = "independent"), -->
+<!-- #           hr(), -->
+<!-- #           helpText("Choose between pooled t-test, Welch's t-test, or paired samples t-test.") -->
+<!-- #         ) -->
+<!-- #       ) -->
+<!-- #     ), -->
+<!-- #     layout_columns( -->
+<!-- #       col_widths = 12, -->
+<!-- #       card( -->
+<!-- #         card_header("Results"), -->
+<!-- #         card_body( -->
+<!-- #           verbatimTextOutput("two_sample_results") -->
+<!-- #         ) -->
+<!-- #       ) -->
+<!-- #     ) -->
+<!-- #   ), -->
+<!-- #    -->
+<!-- #   # Hidden input to track current tab -->
+<!-- #   textInput("current_tab", "", value = "one_sample", width = "0px"), -->
+<!-- #   tags$style("#current_tab { display: none; }"), -->
+<!-- #   uiOutput("button_css") -->
+<!-- # ) -->
+<!-- #  -->
+<!-- # server <- function(input, output, session) { -->
+<!-- #    -->
+<!-- #   # Switch tab logic -->
+<!-- #   observeEvent(input$show_one_sample, { -->
+<!-- #     updateTextInput(session, "current_tab", value = "one_sample") -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   observeEvent(input$show_two_sample, { -->
+<!-- #     updateTextInput(session, "current_tab", value = "two_sample") -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   # Dynamic CSS -->
+<!-- #   output$button_css <- renderUI({ -->
+<!-- #     if (input$current_tab == "one_sample") { -->
+<!-- #       tags$style(" -->
+<!-- #         #show_one_sample {  -->
+<!-- #           background-color: #3F6BB6 !important;  -->
+<!-- #           border-color: #3F6BB6 !important;  -->
+<!-- #           color: white !important;  -->
+<!-- #         } -->
+<!-- #         #show_two_sample {  -->
+<!-- #           background-color: transparent !important;  -->
+<!-- #           border-color: #3F6BB6 !important;  -->
+<!-- #           color: #3F6BB6 !important;  -->
+<!-- #         } -->
+<!-- #       ") -->
+<!-- #     } else { -->
+<!-- #       tags$style(" -->
+<!-- #         #show_one_sample {  -->
+<!-- #           background-color: transparent !important;  -->
+<!-- #           border-color: #3F6BB6 !important;  -->
+<!-- #           color: #3F6BB6 !important;  -->
+<!-- #         } -->
+<!-- #         #show_two_sample {  -->
+<!-- #           background-color: #3F6BB6 !important;  -->
+<!-- #           border-color: #3F6BB6 !important;  -->
+<!-- #           color: white !important;  -->
+<!-- #         } -->
+<!-- #       ") -->
+<!-- #     } -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   # One-sample t-test logic -->
+<!-- #   output$one_sample_results <- renderText({ -->
+<!-- #     n <- input$n1 -->
+<!-- #     xbar <- input$xbar1 -->
+<!-- #     s <- input$s1 -->
+<!-- #     mu0 <- input$mu0 -->
+<!-- #      -->
+<!-- #     t_stat <- (xbar - mu0) / (s / sqrt(n)) -->
+<!-- #     df <- n - 1 -->
+<!-- #     se <- s / sqrt(n) -->
+<!-- #      -->
+<!-- #     paste0( -->
+<!-- #       "T-statistic: ", round(t_stat, 6), "\n", -->
+<!-- #       "Degrees of freedom: ", df, "\n", -->
+<!-- #       "Standard error: ", round(se, 6), "\n\n", -->
+<!-- #       "Formula: t = (x̄ - μ₀) / (s / √n)\n", -->
+<!-- #       "x̄ = ", xbar, ", μ₀ = ", mu0, ", s = ", s, ", n = ", n -->
+<!-- #     ) -->
+<!-- #   }) -->
+<!-- #    -->
+<!-- #   # Two-sample t-test logic -->
+<!-- #   output$two_sample_results <- renderText({ -->
+<!-- #     n1 <- input$n1_two -->
+<!-- #     xbar1 <- input$xbar1_two -->
+<!-- #     s1 <- input$s1_two -->
+<!-- #     n2 <- input$n2_two -->
+<!-- #     xbar2 <- input$xbar2_two -->
+<!-- #     s2 <- input$s2_two -->
+<!-- #     test_type <- input$test_type -->
+<!-- #      -->
+<!-- #     if (test_type == "independent") { -->
+<!-- #       # Pooled t-test -->
+<!-- #       sp <- sqrt(((n1 - 1) * s1^2 + (n2 - 1) * s2^2) / (n1 + n2 - 2)) -->
+<!-- #       se <- sp * sqrt(1/n1 + 1/n2) -->
+<!-- #       t_stat <- (xbar1 - xbar2) / se -->
+<!-- #       df <- n1 + n2 - 2 -->
+<!-- #        -->
+<!-- #       result <- paste0( -->
+<!-- #         "Independent samples t-test (Equal variances assumed)\n", -->
+<!-- #         "T-statistic: ", round(t_stat, 6), "\n", -->
+<!-- #         "Degrees of freedom: ", df, "\n", -->
+<!-- #         "Pooled standard deviation: ", round(sp, 6), "\n", -->
+<!-- #         "Standard error: ", round(se, 6), "\n\n", -->
+<!-- #         "Formula: t = (x̄₁ - x̄₂) / (sp × √(1/n₁ + 1/n₂))" -->
+<!-- #       ) -->
+<!-- #        -->
+<!-- #     } else if (test_type == "welch") { -->
+<!-- #       # Welch's t-test -->
+<!-- #       se <- sqrt((s1^2 / n1) + (s2^2 / n2)) -->
+<!-- #       t_stat <- (xbar1 - xbar2) / se -->
+<!-- #       df_num <- (s1^2 / n1 + s2^2 / n2)^2 -->
+<!-- #       df_den <- ((s1^2 / n1)^2 / (n1 - 1)) + ((s2^2 / n2)^2 / (n2 - 1)) -->
+<!-- #       df <- df_num / df_den -->
+<!-- #        -->
+<!-- #       result <- paste0( -->
+<!-- #         "Welch's t-test (Unequal variances)\n", -->
+<!-- #         "T-statistic: ", round(t_stat, 6), "\n", -->
+<!-- #         "Degrees of freedom (Welch): ", round(df, 2), "\n", -->
+<!-- #         "Standard error: ", round(se, 6), "\n\n", -->
+<!-- #         "Formula: t = (x̄₁ - x̄₂) / √(s₁²/n₁ + s₂²/n₂)\n", -->
+<!-- #         "df = [(s₁²/n₁ + s₂²/n₂)²] / [ (s₁²/n₁)²/(n₁−1) + (s₂²/n₂)²/(n₂−1) ]" -->
+<!-- #       ) -->
+<!-- #        -->
+<!-- #     } else { -->
+<!-- #       # Paired t-test approximation -->
+<!-- #       n <- min(n1, n2) -->
+<!-- #       s_diff <- sqrt(s1^2 + s2^2) -->
+<!-- #       se <- s_diff / sqrt(n) -->
+<!-- #       t_stat <- (xbar1 - xbar2) / se -->
+<!-- #       df <- n - 1 -->
+<!-- #        -->
+<!-- #       result <- paste0( -->
+<!-- #         "Paired samples t-test (approximation)\n", -->
+<!-- #         "T-statistic: ", round(t_stat, 6), "\n", -->
+<!-- #         "Degrees of freedom: ", df, "\n", -->
+<!-- #         "Standard error of differences: ", round(se, 6), "\n\n", -->
+<!-- #         "Formula: t = (x̄₁ - x̄₂) / (s_diff / √n)\n", -->
+<!-- #         "s_diff ≈ √(s₁² + s₂²) = ", round(s_diff, 6) -->
+<!-- #       ) -->
+<!-- #     } -->
+<!-- #      -->
+<!-- #     return(result) -->
+<!-- #   }) -->
+<!-- # } -->
+<!-- #  -->
+<!-- # shinyApp(ui, server) -->
+<!-- #  -->
+<!-- #  -->
+<!-- # ``` -->
+
+## $p$-value calculator 
+
+
+<!-- ```{shinylive-r} -->
+<!-- #| standalone: true -->
+<!-- #| viewerHeight: 730 -->
+
+<!-- library(shiny) -->
+<!-- library(bslib) -->
+<!-- library(ggplot2) -->
+
+<!-- ui <- page_fluid( -->
+<!--   title = "T-test calculator", -->
+
+<!--   layout_columns( -->
+<!--     col_widths = c(4, 8), -->
+
+<!--     # Left column - Input parameters -->
+<!--     card( -->
+<!--       card_header("Input parameters"), -->
+<!--       card_body( -->
+<!--         numericInput("tscore", "T-statistic", value = 2.0, step = 0.01), -->
+<!--         numericInput("df", "Degrees of freedom", value = 20, min = 1, step = 1), -->
+<!--         radioButtons("test_type", "Test type", -->
+<!--                     choices = list("Two-tailed" = "two", -->
+<!--                                   "One-tailed (upper)" = "upper", -->
+<!--                                   "One-tailed (lower)" = "lower"), -->
+<!--                     selected = "two"), -->
+<!--         hr(), -->
+<!--         helpText("This app calculates p-values for t-tests based on the t-distribution with specified degrees of freedom.") -->
+<!--       ) -->
+<!--     ), -->
+
+<!--     # Right column - Graphical representation -->
+<!--     card( -->
+<!--       card_header("Graphical representation"), -->
+<!--       card_body( -->
+<!--         plotOutput("density_plot", height = "300px") -->
+<!--       ) -->
+<!--     ) -->
+<!--   ), -->
+
+<!--   # Results at the bottom -->
+<!--   card( -->
+<!--     card_header("T-test results"), -->
+<!--     card_body( -->
+<!--       verbatimTextOutput("pvalue_result") -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+
+<!-- server <- function(input, output, session) { -->
+
+<!--   # Calculate p-value based on test type -->
+<!--   p_value <- reactive({ -->
+<!--     t <- input$tscore -->
+<!--     df <- input$df -->
+<!--     test <- input$test_type -->
+
+<!--     if (test == "two") { -->
+<!--       p <- 2 * pt(-abs(t), df = df) -->
+<!--       result <- paste0("Two-tailed p-value: ", round(p, 4)) -->
+<!--     } else if (test == "upper") { -->
+<!--       p <- pt(t, df = df, lower.tail = FALSE) -->
+<!--       result <- paste0("Upper-tailed p-value: ", round(p, 4)) -->
+<!--     } else if (test == "lower") { -->
+<!--       p <- pt(t, df = df, lower.tail = TRUE) -->
+<!--       result <- paste0("Lower-tailed p-value: ", round(p, 4)) -->
+<!--     } -->
+
+<!--     return(list(p = p, result = result, test = test)) -->
+<!--   }) -->
+
+<!--   # Display p-value -->
+<!--   output$pvalue_result <- renderText({ -->
+<!--     p_value()$result -->
+<!--   }) -->
+
+<!--   # Create density plot -->
+<!--   output$density_plot <- renderPlot({ -->
+<!--     t <- input$tscore -->
+<!--     df <- input$df -->
+<!--     test <- p_value()$test -->
+
+<!--     # Generate x values for t-distribution -->
+<!--     x <- seq(-4, 4, length.out = 1000) -->
+<!--     y <- dt(x, df = df) -->
+<!--     df_data <- data.frame(x = x, y = y) -->
+
+<!--     # Base plot -->
+<!--     p <- ggplot(df_data, aes(x = x, y = y)) + -->
+<!--       geom_line() + -->
+<!--       labs(x = "T-statistic", y = "Density",  -->
+<!--            title = paste("T-distribution (df =", df, ")")) + -->
+<!--       theme_minimal() + -->
+<!--       theme(panel.grid.minor = element_blank()) + -->
+<!--       geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5) -->
+
+<!--     # Add shaded area based on test type, using #3F6BB6 as the color -->
+<!--     if (test == "two") { -->
+<!--       # Two-tailed test: shade both tails -->
+<!--       if (t > 0) { -->
+<!--         p <- p +  -->
+<!--           geom_area(data = subset(df_data, x >= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) + -->
+<!--           geom_area(data = subset(df_data, x <= -t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) + -->
+<!--           geom_vline(xintercept = t, color = "#3F6BB6") + -->
+<!--           geom_vline(xintercept = -t, color = "#3F6BB6") -->
+<!--       } else { -->
+<!--         p <- p +  -->
+<!--           geom_area(data = subset(df_data, x <= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) + -->
+<!--           geom_area(data = subset(df_data, x >= -t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) + -->
+<!--           geom_vline(xintercept = t, color = "#3F6BB6") + -->
+<!--           geom_vline(xintercept = -t, color = "#3F6BB6") -->
+<!--       } -->
+<!--     } else if (test == "upper") { -->
+<!--       # Upper-tailed test: shade area above t -->
+<!--       p <- p +  -->
+<!--         geom_area(data = subset(df_data, x >= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) + -->
+<!--         geom_vline(xintercept = t, color = "#3F6BB6") -->
+<!--     } else if (test == "lower") { -->
+<!--       # Lower-tailed test: shade area below t -->
+<!--       p <- p +  -->
+<!--         geom_area(data = subset(df_data, x <= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) + -->
+<!--         geom_vline(xintercept = t, color = "#3F6BB6") -->
+<!--     } -->
+
+<!--     return(p) -->
+<!--   }) -->
+<!-- } -->
+
+<!-- shinyApp(ui, server) -->
+
+<!-- ``` -->

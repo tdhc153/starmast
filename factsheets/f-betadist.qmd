@@ -3,9 +3,6 @@ title: "Factsheet: Beta distribution"
 author: Michelle Arnetta and Tom Coleman
 abstract-title: Summary
 abstract: A factsheet about the beta distribution.
-filters: 
-  - shinylive
-embed-resources: false
 categories: 
   - Statistics
 ---
@@ -17,176 +14,471 @@ library("webexercises")
 
 ::: {.content-visible when-format="html"}
 
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 730
+```{=html}
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jstat@1.9.6/dist/jstat.min.js"></script>
 
-library(shiny)
-library(bslib)
-library(ggplot2)
-
-ui <- page_fluid(
-  title = "Beta distribution calculator",
-  
-  layout_columns(
-    col_widths = c(4, 8),
-    
-    # Left column - Inputs
-    card(
-      card_header("Parameters"),
-      card_body(
-        numericInput("shape1", "Shape parameter α:", value = 2, min = 0.01, step = 0.1),
-        numericInput("shape2", "Shape parameter β:", value = 2, min = 0.01, step = 0.1),
-        hr(),
-        radioButtons("prob_type", "Probability to calculate:",
-                    choices = list("P(X ≤ x)" = "less", 
-                                  "P(X ≥ x)" = "greater", 
-                                  "P(x ≤ X ≤ y)" = "between"),
-                    selected = "less"),
-        conditionalPanel(
-          condition = "input.prob_type == 'less'",
-          sliderInput("x_less", "x value:", min = 0, max = 1, value = 0.5, step = 0.01)
-        ),
-        conditionalPanel(
-          condition = "input.prob_type == 'greater'",
-          sliderInput("x_greater", "x value:", min = 0, max = 1, value = 0.5, step = 0.01)
-        ),
-        conditionalPanel(
-          condition = "input.prob_type == 'between'",
-          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 1, value = 0.25, step = 0.01),
-          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 1, value = 0.75, step = 0.01)
-        )
-      )
-    ),
-    
-    # Right column - Plot
-    card(
-      card_header("Beta distribution plot"),
-      card_body(
-        uiOutput("plot_title"),
-        plotOutput("distPlot", height = "300px")
-      )
-    )
-  ),
-  
-  # Bottom row - Results
-  card(
-    card_header("Results"),
-    card_body(
-      textOutput("explanation")
-    )
-  )
-)
-
-server <- function(input, output, session) {
-  
-  # Ensure that x_upper is always greater than or equal to x_lower
-  observe({
-    if (input$x_upper < input$x_lower) {
-      updateSliderInput(session, "x_upper", value = input$x_lower)
-    }
-  })
-  
-  # Display the plot title with distribution parameters
-  output$plot_title <- renderUI({
-    title <- sprintf("Beta(α = %.2f, β = %.2f)", input$shape1, input$shape2)
-    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
-  })
-  
-  # Calculate the probability based on user selection
-  probability <- reactive({
-    if (input$prob_type == "less") {
-      prob <- pbeta(input$x_less, shape1 = input$shape1, shape2 = input$shape2)
-      explanation <- sprintf("P(X ≤ %.2f) = %.6f or %.4f%%", 
-                           input$x_less, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
-      
-    } else if (input$prob_type == "greater") {
-      prob <- 1 - pbeta(input$x_greater, shape1 = input$shape1, shape2 = input$shape2)
-      explanation <- sprintf("P(X ≥ %.2f) = %.6f or %.4f%%", 
-                           input$x_greater, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
-      
-    } else if (input$prob_type == "between") {
-      if (input$x_lower == input$x_upper) {
-        # For continuous distributions, P(X = a) = 0
-        prob <- 0
-      } else {
-        upper_prob <- pbeta(input$x_upper, shape1 = input$shape1, shape2 = input$shape2)
-        lower_prob <- pbeta(input$x_lower, shape1 = input$shape1, shape2 = input$shape2)
-        prob <- upper_prob - lower_prob
-      }
-      explanation <- sprintf("P(%.2f ≤ X ≤ %.2f) = %.6f or %.4f%%", 
-                           input$x_lower, input$x_upper, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "between", 
-                 lower = input$x_lower, upper = input$x_upper))
-    }
-  })
-  
-  # Display an explanation of the calculation
-  output$explanation <- renderText({
-    res <- probability()
-    return(res$explanation)
-  })
-  
-  # Generate the beta distribution plot
-  output$distPlot <- renderPlot({
-    # Get parameters
-    shape1 <- input$shape1
-    shape2 <- input$shape2
-    
-    # Create data frame for plotting
-    # Beta distribution is defined on the interval [0, 1]
-    x_values <- seq(0, 1, length.out = 500)
-    density_values <- dbeta(x_values, shape1 = shape1, shape2 = shape2)
-    plot_df <- data.frame(x = x_values, density = density_values)
-    
-    # Create base plot
-    p <- ggplot(plot_df, aes(x = x, y = density)) +
-      geom_line(size = 1, color = "darkgray") +
-      labs(x = "X", y = "probability density function") +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank()) +
-      xlim(0, 1) +
-      # Adjust y-limit based on maximum density to handle tall peaks
-      ylim(0, max(density_values) * 1.05)
-    
-    # Add shaded area based on selected probability type
-    res <- probability()
-    
-    if (res$type == "less") {
-      # Create data for the filled area
-      fill_x <- seq(0, res$x, length.out = 200)
-      fill_y <- dbeta(fill_x, shape1 = shape1, shape2 = shape2)
-      fill_df <- data.frame(x = fill_x, density = fill_y)
-      
-      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
-                        fill = "#3F6BB6", alpha = 0.6)
-      
-    } else if (res$type == "greater") {
-      # Create data for the filled area
-      fill_x <- seq(res$x, 1, length.out = 200)
-      fill_y <- dbeta(fill_x, shape1 = shape1, shape2 = shape2)
-      fill_df <- data.frame(x = fill_x, density = fill_y)
-      
-      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
-                        fill = "#3F6BB6", alpha = 0.6)
-      
-    } else if (res$type == "between") {
-      # Create data for the filled area
-      fill_x <- seq(res$lower, res$upper, length.out = 200)
-      fill_y <- dbeta(fill_x, shape1 = shape1, shape2 = shape2)
-      fill_df <- data.frame(x = fill_x, density = fill_y)
-      
-      p <- p + geom_area(data = fill_df, aes(x = x, y = density), 
-                        fill = "#3F6BB6", alpha = 0.6)
-    }
-    
-    return(p)
-  })
+<style>
+.beta-card-header {
+  background-color: #3F68B6;
+  color: white;
+  font-weight: 600;
 }
 
-shinyApp(ui = ui, server = server)
+.beta-result {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.form-check-label {
+  margin-left: 0.25rem;
+}
+
+.beta-container {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.calculator-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+}
+
+@media (max-width: 992px) {
+  .calculator-row {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="container-fluid beta-container">
+
+  <div class="calculator-row">
+
+    <div class="calculator-left">
+
+      <div class="card mb-3">
+        <div class="card-header beta-card-header">
+          Parameters
+        </div>
+
+        <div class="card-body">
+
+          <label class="form-label">
+            Shape parameter α
+          </label>
+
+          <input
+            id="shape1"
+            type="number"
+            class="form-control"
+            value="2"
+            min="0.01"
+            step="0.1"
+          >
+
+          <br>
+
+          <label class="form-label">
+            Shape parameter β
+          </label>
+
+          <input
+            id="shape2"
+            type="number"
+            class="form-control"
+            value="2"
+            min="0.01"
+            step="0.1"
+          >
+
+          <hr>
+
+          <label class="form-label">
+            Probability to calculate
+          </label>
+
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="ptype"
+              value="less"
+              id="ptype_less"
+              checked
+            >
+            <label class="form-check-label" for="ptype_less">
+              P(X ≤ x)
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="ptype"
+              value="greater"
+              id="ptype_greater"
+            >
+            <label class="form-check-label" for="ptype_greater">
+              P(X ≥ x)
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="ptype"
+              value="between"
+              id="ptype_between"
+            >
+            <label class="form-check-label" for="ptype_between">
+              P(x ≤ X ≤ y)
+            </label>
+          </div>
+
+          <br>
+
+          <div id="lessControls">
+
+            <label class="form-label">
+              x value:
+              <span id="lessValue">0.50</span>
+            </label>
+
+            <input
+              id="x_less"
+              type="range"
+              class="form-range"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+            >
+
+          </div>
+
+          <div id="greaterControls" style="display:none;">
+
+            <label class="form-label">
+              x value:
+              <span id="greaterValue">0.50</span>
+            </label>
+
+            <input
+              id="x_greater"
+              type="range"
+              class="form-range"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+            >
+
+          </div>
+
+          <div id="betweenControls" style="display:none;">
+
+            <label class="form-label">
+              Lower bound x:
+              <span id="lowerValue">0.25</span>
+            </label>
+
+            <input
+              id="x_lower"
+              type="range"
+              class="form-range"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.25"
+            >
+
+            <label class="form-label">
+              Upper bound y:
+              <span id="upperValue">0.75</span>
+            </label>
+
+            <input
+              id="x_upper"
+              type="range"
+              class="form-range"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.75"
+            >
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="calculator-right">
+
+      <div class="card mb-3">
+
+        <div class="card-header beta-card-header">
+          Beta distribution plot
+        </div>
+
+        <div class="card-body">
+
+          <h4
+            id="plotTitle"
+            style="text-align:center;margin-bottom:15px;"
+          ></h4>
+
+         <div
+           id="betaPlot"
+           style="height:450px;"
+           aria-label="Beta distribution plot"
+         ></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="card-header beta-card-header">
+      Results
+    </div>
+
+    <div class="card-body">
+
+      <div
+        id="resultText"
+        class="beta-result"
+        aria-live="polite"
+      ></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+function getProbType() {
+  return document.querySelector(
+    'input[name="ptype"]:checked'
+  ).value;
+}
+
+function betaPdf(x, a, b) {
+  return jStat.beta.pdf(x, a, b);
+}
+
+function betaCdf(x, a, b) {
+  return jStat.beta.cdf(x, a, b);
+}
+
+function updateVisibility() {
+
+  document.getElementById("lessControls").style.display = "none";
+  document.getElementById("greaterControls").style.display = "none";
+  document.getElementById("betweenControls").style.display = "none";
+
+  const ptype = getProbType();
+
+  if (ptype === "less") {
+    document.getElementById("lessControls").style.display = "block";
+  }
+
+  if (ptype === "greater") {
+    document.getElementById("greaterControls").style.display = "block";
+  }
+
+  if (ptype === "between") {
+    document.getElementById("betweenControls").style.display = "block";
+  }
+}
+
+function updateSliderLabels() {
+
+  document.getElementById("lessValue").textContent =
+    Number(document.getElementById("x_less").value).toFixed(2);
+
+  document.getElementById("greaterValue").textContent =
+    Number(document.getElementById("x_greater").value).toFixed(2);
+
+  document.getElementById("lowerValue").textContent =
+    Number(document.getElementById("x_lower").value).toFixed(2);
+
+  document.getElementById("upperValue").textContent =
+    Number(document.getElementById("x_upper").value).toFixed(2);
+}
+
+function redraw() {
+
+  updateVisibility();
+  updateSliderLabels();
+
+  const a =
+    parseFloat(document.getElementById("shape1").value);
+
+  const b =
+    parseFloat(document.getElementById("shape2").value);
+
+  document.getElementById("plotTitle").innerHTML =
+    `Beta(α = ${a.toFixed(2)}, β = ${b.toFixed(2)})`;
+
+  const x = [];
+  const y = [];
+
+  for (let i = 0; i <= 500; i++) {
+
+    const xx = i / 500;
+
+    x.push(xx);
+    y.push(betaPdf(xx, a, b));
+  }
+
+  const ptype = getProbType();
+
+  let shadeX = [];
+  let shadeY = [];
+
+  let result = "";
+
+  if (ptype === "less") {
+
+    const xv =
+      parseFloat(document.getElementById("x_less").value);
+
+    for (let i = 0; i <= 200; i++) {
+
+      const xx = xv * i / 200;
+
+      shadeX.push(xx);
+      shadeY.push(betaPdf(xx, a, b));
+    }
+
+    const prob = betaCdf(xv, a, b);
+
+    result =
+      `P(X ≤ ${xv.toFixed(2)}) = ${prob.toFixed(6)} (${(100*prob).toFixed(4)}%)`;
+  }
+
+  if (ptype === "greater") {
+
+    const xv =
+      parseFloat(document.getElementById("x_greater").value);
+
+    for (let i = 0; i <= 200; i++) {
+
+      const xx = xv + (1 - xv) * i / 200;
+
+      shadeX.push(xx);
+      shadeY.push(betaPdf(xx, a, b));
+    }
+
+    const prob = 1 - betaCdf(xv, a, b);
+
+    result =
+      `P(X ≥ ${xv.toFixed(2)}) = ${prob.toFixed(6)} (${(100*prob).toFixed(4)}%)`;
+  }
+
+  if (ptype === "between") {
+
+    let lo =
+      parseFloat(document.getElementById("x_lower").value);
+
+    let hi =
+      parseFloat(document.getElementById("x_upper").value);
+
+    if (hi < lo) {
+
+      hi = lo;
+
+      document.getElementById("x_upper").value = lo;
+    }
+
+    for (let i = 0; i <= 200; i++) {
+
+      const xx =
+        lo + (hi - lo) * i / 200;
+
+      shadeX.push(xx);
+      shadeY.push(betaPdf(xx, a, b));
+    }
+
+    const prob =
+      betaCdf(hi, a, b) -
+      betaCdf(lo, a, b);
+
+    result =
+      `P(${lo.toFixed(2)} ≤ X ≤ ${hi.toFixed(2)}) = ${prob.toFixed(6)} (${(100*prob).toFixed(4)}%)`;
+  }
+
+  document.getElementById("resultText").textContent =
+    result;
+
+  Plotly.react(
+    "betaPlot",
+    [
+      {
+        x: x,
+        y: y,
+        mode: "lines",
+        showlegend: false,
+        line: {
+          color: "darkgray",
+          width: 3
+        },
+        hoverinfo: "skip"
+      },
+      {
+        x: shadeX,
+        y: shadeY,
+        fill: "tozeroy",
+        mode: "lines",
+        showlegend: false,
+        fillcolor: "rgba(63,104,182,0.60)",
+        line: {
+          width: 0
+        },
+        hoverinfo: "skip"
+      }
+    ],
+    {
+      margin: {t:10},
+      showlegend: false,
+      xaxis: {
+        title: "X",
+        range: [0,1]
+      },
+      yaxis: {
+        title: "Probability density function"
+      }
+    },
+    {
+      responsive: true,
+      displayModeBar: false
+    }
+  );
+}
+
+document
+  .querySelectorAll("input")
+  .forEach(el => {
+    el.addEventListener("input", redraw);
+    el.addEventListener("change", redraw);
+  });
+
+window.addEventListener("load", redraw);
+
+</script>
 ```
 
 :::
@@ -230,6 +522,8 @@ Then the distribution of the probabilities of a customer purchasing from Cantor�
 v1.0: initial version created 04/25 by tdhc and Michelle Arnetta as part of a University of St Andrews VIP project.
 
   - v1.1: moved to factsheet form and populated with material from [Overview: Probability distributions](../overviews/o-distributions.qmd) by tdhc.
+  
+  - v1.2: graph transferred from R Shinylive to html by tdhc in 06/26.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

@@ -1,179 +1,122 @@
 library(shiny)
 library(bslib)
-library(ggplot2)
-library(plotly)
 
 ui <- page_sidebar(
-  title = "Confidence interval calculator",
-  
-  # Add custom CSS to hide numeric input arrows
-  tags$head(
-    tags$style(HTML("
-      input[type=number]::-webkit-inner-spin-button,
-      input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-      input[type=number] {
-        -moz-appearance: textfield;
-      }
-    "))
-  ),
-  
+  title = "Sample data statistics calculator",
   sidebar = sidebar(
-    sliderInput("alpha",
-                "significance level (α):",
-                min = 0.01,
-                max = 0.20,
-                value = 0.05,
-                step = 0.01),
-    
-    hr(),
-    
-    numericInput("x_bar",
-                 "sample mean (x̄)",
-                 value = 75,
-                 min = 50,
-                 max = 100,
-                 step = 0.1),
-    
-    numericInput("sigma",
-                 "sample standard deviation (s):",
-                 value = 10,
-                 min = 1,
-                 max = 20,
-                 step = 0.1),
-    
-    numericInput("n",
-                 "sample size (n):",
-                 value = 100,
-                 min = 10,
-                 max = 500,
-                 step = 1)
-  ),
-  
-  card(
-    card_header("Normal distribution and confidence interval"),
-    plotlyOutput("normal_plot", height = "600px")
-  ),
-  
-  card(
-    card_header("Confidence interval summary"),
-    div(
-      style = "font-size: 16px; padding: 10px;",
-      uiOutput("ci_summary")
+    textAreaInput(
+      "data_input",
+      "Enter sample data (separated by spaces, commas, tabs, or line breaks):",
+      placeholder = "for example, 1 2 3 4 5\nor 1,2,3,4,5",
+      rows = 12
     ),
-    height = "250px"
+    actionButton(
+      "calculate",
+      "Calculate Statistics",
+      class = "btn-primary w-100",
+      style = "background-color: #3f68b6; border-color: #3f68b6;"
+    )
+  ),
+  card(
+    card_header("Sample statistics"),
+    tableOutput("stats_table")
   )
 )
 
 server <- function(input, output, session) {
   
-  # Reactive calculations
-  confidence_level <- reactive({
-    (1 - input$alpha) * 100
-  })
-  
-  alpha_half <- reactive({
-    input$alpha / 2
-  })
-  
-  z_critical <- reactive({
-    qnorm(1 - alpha_half())
-  })
-  
-  standard_error <- reactive({
-    input$sigma / sqrt(input$n)
-  })
-  
-  margin_of_error <- reactive({
-    z_critical() * standard_error()
-  })
-  
-  ci_lower <- reactive({
-    input$x_bar - margin_of_error()
-  })
-  
-  ci_upper <- reactive({
-    input$x_bar + margin_of_error()
-  })
-  
-  # Main plot
-  output$normal_plot <- renderPlotly({
+  # Parse the input data
+  parsed_data <- eventReactive(input$calculate, {
+    req(input$data_input)
     
-    # Create data for the normal distribution
-    x_seq <- seq(-4, 4, length.out = 1000)
-    y_seq <- dnorm(x_seq)
+    # Replace commas, tabs, and newlines with spaces, then split
+    text <- gsub("[,\t\n]+", " ", input$data_input)
+    values <- strsplit(text, "\\s+")[[1]]
+    values <- values[values != ""]  # Remove empty strings
     
-    # Create the base plot
-    p <- ggplot(data.frame(x = x_seq, y = y_seq), aes(x = x, y = y)) +
-      geom_line(linewidth = 1.2, color = "#3f68b6") +
-      
-      # Shade the rejection regions
-      geom_area(data = data.frame(x = x_seq[x_seq <= -z_critical()], 
-                                  y = y_seq[x_seq <= -z_critical()]),
-                aes(x = x, y = y), fill = "#db4315", alpha = 0.3) +
-      geom_area(data = data.frame(x = x_seq[x_seq >= z_critical()], 
-                                  y = y_seq[x_seq >= z_critical()]),
-                aes(x = x, y = y), fill = "#db4315", alpha = 0.3) +
-      
-      # Shade the confidence region
-      geom_area(data = data.frame(x = x_seq[x_seq >= -z_critical() & x_seq <= z_critical()], 
-                                  y = y_seq[x_seq >= -z_critical() & x_seq <= z_critical()]),
-                aes(x = x, y = y), fill = "#3f68b6", alpha = 0.2) +
-      
-      # Add vertical lines for critical values
-      geom_vline(xintercept = c(-z_critical(), z_critical()), 
-                 linetype = "dashed", color = "#db4315", linewidth = 1) +
-      geom_vline(xintercept = 0, linetype = "solid", color = "black", linewidth = 1) +
-      
-      # Add labels
-      annotate("text", x = -z_critical(), y = 0.1, 
-               label = paste("-Z =", round(-z_critical(), 3)), 
-               hjust = 1.1, color = "#db4315", size = 4) +
-      annotate("text", x = z_critical(), y = 0.1, 
-               label = paste("Z =", round(z_critical(), 3)), 
-               hjust = -0.1, color = "#db4315", size = 4) +
-      annotate("text", x = 0, y = 0.45, 
-               label = paste(confidence_level(), "% confidence"), 
-               hjust = 0.5, color = "#3f68b6", size = 5, fontface = "bold") +
-      annotate("text", x = -3, y = 0.05, 
-               label = paste("α/2 =", round(alpha_half(), 4)), 
-               hjust = 0.5, color = "#db4315", size = 4) +
-      annotate("text", x = 3, y = 0.05, 
-               label = paste("α/2 =", round(alpha_half(), 4)), 
-               hjust = 0.5, color = "#db4315", size = 4) +
-      
-      labs(
-        title = "Standard normal distribution for confidence interval",
-        x = "Z-score",
-        y = "Probability density",
-        subtitle = paste("Confidence interval for μ: [", round(ci_lower(), 2), "g,", round(ci_upper(), 2), "g]")
-      ) +
-      theme_minimal() +
-      theme(
-        plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
-        plot.subtitle = element_text(hjust = 0.5, size = 12),
-        axis.title = element_text(size = 12),
-        axis.text = element_text(size = 10)
-      ) +
-      xlim(-4, 4) +
-      ylim(0, 0.5)
+    # Convert to numeric
+    numeric_values <- suppressWarnings(as.numeric(values))
     
-    ggplotly(p) %>%
-      config(displayModeBar = FALSE)
+    # Remove NAs (invalid entries)
+    numeric_values <- numeric_values[!is.na(numeric_values)]
+    
+    if (length(numeric_values) == 0) {
+      return(NULL)
+    }
+    
+    numeric_values
   })
   
-  # Confidence interval summary
-  output$ci_summary <- renderUI({
-    tagList(
-      p(strong("Confidence level:"), paste0(sprintf("%.1f", confidence_level()), "%")),
-      p(strong("Confidence interval:"), 
-        paste0("[", sprintf("%.3f", ci_lower()), " g , ", sprintf("%.3f", ci_upper()), " g]")),
-      p(strong("Margin of error (ME):"), paste0(sprintf("%.3f", margin_of_error()), " g")),
-      p(strong("Standard error (SE):"), paste0(sprintf("%.3f", standard_error()), " g"))
+  # Calculate statistics
+  output$stats_table <- renderTable({
+    data <- parsed_data()
+    
+    if (is.null(data)) {
+      return(data.frame(
+        Statistic = "Error",
+        Value = "No valid numeric data found"
+      ))
+    }
+    
+    # Calculate mode (most frequent value)
+    get_mode <- function(x) {
+      ux <- unique(x)
+      tab <- tabulate(match(x, ux))
+      mode_val <- ux[tab == max(tab)]
+      if (length(mode_val) == length(ux)) {
+        return("No mode")
+      } else {
+        return(paste(mode_val, collapse = ", "))
+      }
+    }
+    
+    # Calculate all statistics
+    n <- length(data)
+    min_val <- min(data)
+    max_val <- max(data)
+    mean_val <- mean(data)
+    mode_val <- get_mode(data)
+    median_val <- median(data)
+    range_val <- max_val - min_val
+    q1 <- quantile(data, 0.25, names = FALSE)
+    q3 <- quantile(data, 0.75, names = FALSE)
+    iqr_val <- IQR(data)
+    var_val <- var(data)
+    sd_val <- sd(data)
+    
+    # Create results data frame
+    data.frame(
+      Statistic = c(
+        "Sample size",
+        "Minimum",
+        "Maximum",
+        "Mean",
+        "Mode",
+        "Median",
+        "Range",
+        "Lower quartile (Q1)",
+        "Upper quartile (Q3)",
+        "Interquartile range (IQR)",
+        "Sample variance",
+        "Sample standard deviation"
+      ),
+      Value = c(
+        as.character(n),
+        format(min_val, digits = 6),
+        format(max_val, digits = 6),
+        format(mean_val, digits = 6),
+        mode_val,
+        format(median_val, digits = 6),
+        format(range_val, digits = 6),
+        format(q1, digits = 6),
+        format(q3, digits = 6),
+        format(iqr_val, digits = 6),
+        format(var_val, digits = 6),
+        format(sd_val, digits = 6)
+      ),
+      stringsAsFactors = FALSE
     )
-  })
+  }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%")
 }
 
 shinyApp(ui = ui, server = server)

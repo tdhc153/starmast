@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -10,6 +10,9 @@
 
 <title>Calculator: t-testing – STARMAST</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -36,24 +39,18 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-6e2e239d2d956955dcfdbe464db2c858.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-5f5484d7ec656626cab3b40347c418b2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-6e2e239d2d956955dcfdbe464db2c858.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content="../..">
-<script src="../../site_libs/quarto-contrib/shinylive-0.10.8/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="../../site_libs/quarto-contrib/shinylive-0.10.8/shinylive/run-python-blocks.js" type="module"></script>
-<link href="../../site_libs/quarto-contrib/shinylive-0.10.8/shinylive/shinylive.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-4bc6d62a8f631abbc9a163be30471117.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-9b9ee040fd52a61b26fb17fad03ba886.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-4bc6d62a8f631abbc9a163be30471117.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -119,7 +116,7 @@ cookieconsent.run({
 <script src="https://esm.sh/shinylive-r"></script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -370,8 +367,8 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <div id="quarto-announcement" data-announcement-id="f17d92aa8ccc9d3fe69c3462857943c3" class="alert alert-danger hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
-<p><strong>Latest content:</strong> Two new guides on matrix multiplication available now! (04/06/26)</p>
+  <div id="quarto-announcement" data-announcement-id="0722b2b9ded0d5f62524be1a2b90bbbe" class="alert alert-danger hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest news:</strong> Enforced update of R Shinylive figures in stats factsheets now underway! (11/06/26)</p>
 </div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 </header>
 <!-- content -->
@@ -383,8 +380,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#t-statistic-and-degrees-of-freedom-calculator" id="toc-t-statistic-and-degrees-of-freedom-calculator" class="nav-link active" data-scroll-target="#t-statistic-and-degrees-of-freedom-calculator"><span class="math inline">\(t\)</span>-statistic and degrees of freedom calculator</a></li>
-  <li><a href="#p-value-calculator" id="toc-p-value-calculator" class="nav-link" data-scroll-target="#p-value-calculator"><span class="math inline">\(p\)</span>-value calculator</a></li>
+  <li><a href="#t-testing-calculator" id="toc-t-testing-calculator" class="nav-link active" data-scroll-target="#t-testing-calculator"><span class="math inline">\(t\)</span>-testing calculator</a></li>
   <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
   </ul>
 </nav>
@@ -424,381 +420,990 @@ window.Quarto = {
 </header>
 
 
-<section id="t-statistic-and-degrees-of-freedom-calculator" class="level2">
-<h2 class="anchored" data-anchor-id="t-statistic-and-degrees-of-freedom-calculator"><span class="math inline">\(t\)</span>-statistic and degrees of freedom calculator</h2>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| viewerHeight: 820
+<section id="t-testing-calculator" class="level2">
+<h2 class="anchored" data-anchor-id="t-testing-calculator"><span class="math inline">\(t\)</span>-testing calculator</h2>
+<script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+<style>
 
-library(shiny)
-library(bslib)
-
-ui &lt;- page_fluid(
-  title = "t-statistic Calculator",
-  
-  # Navigation buttons
-  layout_columns(
-    col_widths = 12,
-    card(
-      card_body(
-        div(
-          style = "text-align: center; margin-bottom: 20px;",
-          actionButton("show_one_sample", "One sample t-test", 
-                       class = "btn-primary", style = "margin-right: 10px;"),
-          actionButton("show_two_sample", "Two-sample t-test", 
-                       class = "btn-outline-primary")
-        )
-      )
-    )
-  ),
-  
-  # One-sample t-test panel
-  conditionalPanel(
-    condition = "input.current_tab == 'one_sample'",
-    layout_columns(
-      col_widths = c(6, 6),
-      card(
-        card_header("Sample Data"),
-        card_body(
-          numericInput("n1", "Sample size (n)", value = 30, min = 1, step = 1),
-          numericInput("xbar1", "Sample mean", value = 50, step = 0.01),
-          numericInput("s1", "Sample standard deviation", value = 10, min = 0.001, step = 0.01),
-          numericInput("mu0", "Population mean (μ₀)", value = 45, step = 0.01),
-          hr(),
-          helpText("Calculate t-statistic for testing whether sample mean differs from population mean.")
-        )
-      ),
-      card(
-        card_header("Results"),
-        card_body(
-          verbatimTextOutput("one_sample_results")
-        )
-      )
-    )
-  ),
-  
-  # Two-sample t-test panel
-  conditionalPanel(
-    condition = "input.current_tab == 'two_sample'",
-    layout_columns(
-      col_widths = c(4, 4, 4),
-      card(
-        card_header("Sample 1"),
-        card_body(
-          numericInput("n1_two", "Sample Size (n₁)", value = 25, min = 1, step = 1),
-          numericInput("xbar1_two", "Sample Mean (x̄₁)", value = 52, step = 0.01),
-          numericInput("s1_two", "Sample Standard Deviation (s₁)", value = 8, min = 0.001, step = 0.01)
-        )
-      ),
-      card(
-        card_header("Sample 2"),
-        card_body(
-          numericInput("n2_two", "Sample Size (n₂)", value = 30, min = 1, step = 1),
-          numericInput("xbar2_two", "Sample Mean (x̄₂)", value = 48, step = 0.01),
-          numericInput("s2_two", "Sample Standard Deviation (s₂)", value = 10, min = 0.001, step = 0.01)
-        )
-      ),
-      card(
-        card_header("Test Settings"),
-        card_body(
-          radioButtons("test_type", "Test type:",
-                       choices = list("Independent Samples (Equal variances)" = "independent",
-                                      "Independent Samples (Welch's t-test)" = "welch",
-                                      "Paired Samples" = "paired"),
-                       selected = "independent"),
-          hr(),
-          helpText("Choose between pooled t-test, Welch's t-test, or paired samples t-test.")
-        )
-      )
-    ),
-    layout_columns(
-      col_widths = 12,
-      card(
-        card_header("Results"),
-        card_body(
-          verbatimTextOutput("two_sample_results")
-        )
-      )
-    )
-  ),
-  
-  # Hidden input to track current tab
-  textInput("current_tab", "", value = "one_sample", width = "0px"),
-  tags$style("#current_tab { display: none; }"),
-  uiOutput("button_css")
-)
-
-server &lt;- function(input, output, session) {
-  
-  # Switch tab logic
-  observeEvent(input$show_one_sample, {
-    updateTextInput(session, "current_tab", value = "one_sample")
-  })
-  
-  observeEvent(input$show_two_sample, {
-    updateTextInput(session, "current_tab", value = "two_sample")
-  })
-  
-  # Dynamic CSS
-  output$button_css &lt;- renderUI({
-    if (input$current_tab == "one_sample") {
-      tags$style("
-        #show_one_sample { 
-          background-color: #3F6BB6 !important; 
-          border-color: #3F6BB6 !important; 
-          color: white !important; 
-        }
-        #show_two_sample { 
-          background-color: transparent !important; 
-          border-color: #3F6BB6 !important; 
-          color: #3F6BB6 !important; 
-        }
-      ")
-    } else {
-      tags$style("
-        #show_one_sample { 
-          background-color: transparent !important; 
-          border-color: #3F6BB6 !important; 
-          color: #3F6BB6 !important; 
-        }
-        #show_two_sample { 
-          background-color: #3F6BB6 !important; 
-          border-color: #3F6BB6 !important; 
-          color: white !important; 
-        }
-      ")
-    }
-  })
-  
-  # One-sample t-test logic
-  output$one_sample_results &lt;- renderText({
-    n &lt;- input$n1
-    xbar &lt;- input$xbar1
-    s &lt;- input$s1
-    mu0 &lt;- input$mu0
-    
-    t_stat &lt;- (xbar - mu0) / (s / sqrt(n))
-    df &lt;- n - 1
-    se &lt;- s / sqrt(n)
-    
-    paste0(
-      "T-statistic: ", round(t_stat, 6), "\n",
-      "Degrees of freedom: ", df, "\n",
-      "Standard error: ", round(se, 6), "\n\n",
-      "Formula: t = (x̄ - μ₀) / (s / √n)\n",
-      "x̄ = ", xbar, ", μ₀ = ", mu0, ", s = ", s, ", n = ", n
-    )
-  })
-  
-  # Two-sample t-test logic
-  output$two_sample_results &lt;- renderText({
-    n1 &lt;- input$n1_two
-    xbar1 &lt;- input$xbar1_two
-    s1 &lt;- input$s1_two
-    n2 &lt;- input$n2_two
-    xbar2 &lt;- input$xbar2_two
-    s2 &lt;- input$s2_two
-    test_type &lt;- input$test_type
-    
-    if (test_type == "independent") {
-      # Pooled t-test
-      sp &lt;- sqrt(((n1 - 1) * s1^2 + (n2 - 1) * s2^2) / (n1 + n2 - 2))
-      se &lt;- sp * sqrt(1/n1 + 1/n2)
-      t_stat &lt;- (xbar1 - xbar2) / se
-      df &lt;- n1 + n2 - 2
-      
-      result &lt;- paste0(
-        "Independent samples t-test (Equal variances assumed)\n",
-        "T-statistic: ", round(t_stat, 6), "\n",
-        "Degrees of freedom: ", df, "\n",
-        "Pooled standard deviation: ", round(sp, 6), "\n",
-        "Standard error: ", round(se, 6), "\n\n",
-        "Formula: t = (x̄₁ - x̄₂) / (sp × √(1/n₁ + 1/n₂))"
-      )
-      
-    } else if (test_type == "welch") {
-      # Welch's t-test
-      se &lt;- sqrt((s1^2 / n1) + (s2^2 / n2))
-      t_stat &lt;- (xbar1 - xbar2) / se
-      df_num &lt;- (s1^2 / n1 + s2^2 / n2)^2
-      df_den &lt;- ((s1^2 / n1)^2 / (n1 - 1)) + ((s2^2 / n2)^2 / (n2 - 1))
-      df &lt;- df_num / df_den
-      
-      result &lt;- paste0(
-        "Welch's t-test (Unequal variances)\n",
-        "T-statistic: ", round(t_stat, 6), "\n",
-        "Degrees of freedom (Welch): ", round(df, 2), "\n",
-        "Standard error: ", round(se, 6), "\n\n",
-        "Formula: t = (x̄₁ - x̄₂) / √(s₁²/n₁ + s₂²/n₂)\n",
-        "df = [(s₁²/n₁ + s₂²/n₂)²] / [ (s₁²/n₁)²/(n₁−1) + (s₂²/n₂)²/(n₂−1) ]"
-      )
-      
-    } else {
-      # Paired t-test approximation
-      n &lt;- min(n1, n2)
-      s_diff &lt;- sqrt(s1^2 + s2^2)
-      se &lt;- s_diff / sqrt(n)
-      t_stat &lt;- (xbar1 - xbar2) / se
-      df &lt;- n - 1
-      
-      result &lt;- paste0(
-        "Paired samples t-test (approximation)\n",
-        "T-statistic: ", round(t_stat, 6), "\n",
-        "Degrees of freedom: ", df, "\n",
-        "Standard error of differences: ", round(se, 6), "\n\n",
-        "Formula: t = (x̄₁ - x̄₂) / (s_diff / √n)\n",
-        "s_diff ≈ √(s₁² + s₂²) = ", round(s_diff, 6)
-      )
-    }
-    
-    return(result)
-  })
+.tcalc-container {
+  margin: 1rem 0;
 }
 
-shinyApp(ui, server)
+.tcalc-row {
+  display: grid;
+  gap: 1rem;
+}
 
-</code></pre>
-</section>
-<section id="p-value-calculator" class="level2">
-<h2 class="anchored" data-anchor-id="p-value-calculator"><span class="math inline">\(p\)</span>-value calculator</h2>
-<p>Using your <span class="math inline">\(t\)</span>-statistic and degrees of freedom from the above calculator, use the below calculator to work out your <span class="math inline">\(p\)</span>-value.</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| viewerHeight: 730
+.tcalc-row-2 {
+  grid-template-columns: 1fr 1fr;
+}
 
-library(shiny)
-library(bslib)
-library(ggplot2)
+.tcalc-row-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
 
-ui &lt;- page_fluid(
-  title = "T-test calculator",
-  
-  layout_columns(
-    col_widths = c(4, 8),
+@media (max-width: 992px) {
+
+  .tcalc-row-2,
+  .tcalc-row-3 {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+.tcalc-card {
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  background: white;
+}
+
+.tcalc-header {
+  background: #3F68B6;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+}
+
+.tcalc-body {
+  padding: 1rem;
+}
+
+.tcalc-results {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.tcalc-btn {
+  border: 1px solid #3F68B6;
+  background: white;
+  color: #3F68B6;
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  min-width: 220px;
+}
+
+.tcalc-btn.active {
+  background: #3F68B6;
+  color: white;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.form-control,
+.form-select {
+  width: 100%;
+  padding: 0.4rem;
+}
+
+</style>
+
+<div class="tcalc-container">
+
+  <div style="text-align:center;margin-bottom:1rem;">
+
+    <button id="btnOne" class="tcalc-btn active" type="button">
+      One-sample t-test
+    </button>
+
+    <button id="btnTwo" class="tcalc-btn" type="button">
+      Two-sample t-test
+    </button>
+
+  </div>
+
+  <!-- ONE SAMPLE -->
+
+  <div id="onePanel">
+
+      <div class="tcalc-card">
+
+        <div class="tcalc-header">
+          Parameters
+        </div>
+
+        <div class="tcalc-body">
+
+          <label class="form-label">
+            Sample size (n)
+          </label>
+
+          <input id="n1" class="form-control" type="number" value="30" min="1">
+
+          <br>
+
+          <label class="form-label">
+            Sample mean
+          </label>
+
+          <input id="xbar1" class="form-control" type="number" value="50" step="0.01">
+
+          <br>
+
+          <label class="form-label">
+            Sample standard deviation
+          </label>
+
+          <input id="s1" class="form-control" type="number" value="10" min="0.001" step="0.01">
+
+          <br>
+
+          <label class="form-label">
+            Population mean (μ₀)
+          </label>
+
+          <input id="mu0" class="form-control" type="number" value="45" step="0.01">
+
+          <hr>
+
+          Calculate the t-statistic for testing whether a sample mean differs from a population mean.
+
+        </div>
+
+      </div>
+
+    <br>
     
-    # Left column - Input parameters
-    card(
-      card_header("Input parameters"),
-      card_body(
-        numericInput("tscore", "T-statistic", value = 2.0, step = 0.01),
-        numericInput("df", "Degrees of freedom", value = 20, min = 1, step = 1),
-        radioButtons("test_type", "Test type",
-                    choices = list("Two-tailed" = "two",
-                                  "One-tailed (upper)" = "upper",
-                                  "One-tailed (lower)" = "lower"),
-                    selected = "two"),
-        hr(),
-        helpText("This app calculates p-values for t-tests based on the t-distribution with specified degrees of freedom.")
+    <div class="tcalc-card">
+
+        <div class="tcalc-header">
+          Formula
+        </div>
+
+        <div class="tcalc-body">
+
+          \[
+          t =
+          \frac{\bar{x}-\mu_0}
+          {s/\sqrt{n}}
+          \]
+
+        </div>
+
+    </div>
+
+    <div class="tcalc-card">
+
+      <div class="tcalc-header">
+        Results
+      </div>
+
+      <div id="oneResults" class="tcalc-body tcalc-results">
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- TWO SAMPLE -->
+
+  <div id="twoPanel" style="display:none;">
+
+    <div class="tcalc-row tcalc-row-2">
+
+      <div class="tcalc-card">
+
+        <div class="tcalc-header">
+          Sample 1
+        </div>
+
+        <div class="tcalc-body">
+
+          <label>Sample Size (n₁)</label>
+          <input id="n1_two" class="form-control" type="number" value="25">
+
+          <br>
+
+          <label>Sample Mean (x̄₁)</label>
+          <input id="xbar1_two" class="form-control" type="number" value="52">
+
+          <br>
+
+          <label>Sample SD (s₁)</label>
+          <input id="s1_two" class="form-control" type="number" value="8">
+
+        </div>
+
+      </div>
+
+      <div class="tcalc-card">
+
+        <div class="tcalc-header">
+          Sample 2
+        </div>
+
+        <div class="tcalc-body">
+
+          <label>Sample Size (n₂)</label>
+          <input id="n2_two" class="form-control" type="number" value="30">
+
+          <br>
+
+          <label>Sample Mean (x̄₂)</label>
+          <input id="xbar2_two" class="form-control" type="number" value="48">
+
+          <br>
+
+          <label>Sample SD (s₂)</label>
+          <input id="s2_two" class="form-control" type="number" value="10">
+
+        </div>
+
+      </div>
+
+    </div>
+    
+    <br>
+    
+     <div class="tcalc-card">
+
+        <div class="tcalc-header">
+          Test Settings
+        </div>
+
+        <div class="tcalc-body">
+
+          <select id="testType" class="form-select">
+
+            <option value="independent">
+              Independent Samples (Equal variances)
+            </option>
+
+            <option value="welch">
+              Independent Samples (Welch's t-test)
+            </option>
+
+            <option value="paired">
+              Paired Samples
+            </option>
+
+          </select>
+          
+          <br>
+      
+      Choose between pooled t-test,
+    Welch's t-test, or a paired-samples
+    approximation.
+
+        </div>
+
+      </div>
+
+    <br>
+
+    <div class="tcalc-card">
+
+  <div class="tcalc-header">
+    Formula
+  </div>
+
+  <div id="twoFormula" class="tcalc-body">
+  </div>
+
+</div>
+
+<br>
+
+<div class="tcalc-card">
+
+  <div class="tcalc-header">
+    Results
+  </div>
+
+  <div id="twoResults" class="tcalc-body tcalc-results">
+  </div>
+
+</div>
+
+  </div>
+
+</div>
+
+<div class="tcalc-card">
+
+  <div class="tcalc-header">
+    p-value and tail selection
+  </div>
+
+  <div class="tcalc-body">
+
+    <label>
+      <input type="radio" name="tailType" value="two" checked="">
+      Two-tailed
+    </label>
+
+    <br>
+
+    <label>
+      <input type="radio" name="tailType" value="upper">
+      One-tailed (upper)
+    </label>
+
+    <br>
+
+    <label>
+      <input type="radio" name="tailType" value="lower">
+      One-tailed (lower)
+    </label>
+
+    <hr>
+
+    <div id="pValueOutput"></div>
+
+  </div>
+
+</div>
+
+<div class="tcalc-card">
+
+  <div class="tcalc-header">
+    T Distribution Plot
+  </div>
+
+  <div class="tcalc-body">
+
+    <div id="tDistributionPlot" style="height:350px;">
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+let currentT = null;
+let currentDF = null;
+
+const onePanel = document.getElementById("onePanel");
+const twoPanel = document.getElementById("twoPanel");
+
+document.getElementById("btnOne").onclick = () => {
+
+  onePanel.style.display = "block";
+  twoPanel.style.display = "none";
+
+  btnOne.classList.add("active");
+  btnTwo.classList.remove("active");
+
+  updateOneSample();
+
+};
+
+document.getElementById("btnTwo").onclick = () => {
+
+  onePanel.style.display = "none";
+  twoPanel.style.display = "block";
+
+  btnTwo.classList.add("active");
+  btnOne.classList.remove("active");
+
+  updateTwoSample();
+
+};
+
+function updateOneSample() {
+
+  const n =
+    Number(document.getElementById("n1").value);
+
+  const xbar =
+    Number(document.getElementById("xbar1").value);
+
+  const s =
+    Number(document.getElementById("s1").value);
+
+  const mu0 =
+    Number(document.getElementById("mu0").value);
+
+  const se = s / Math.sqrt(n);
+
+  const t =
+    (xbar - mu0) / se;
+    
+  currentT = t;
+  currentDF = n - 1;
+  
+  updatePValueCard();
+  updateTDistributionPlot();
+
+  document.getElementById("oneResults").innerHTML = `
+    <strong>T-statistic:</strong> ${t.toFixed(6)}<br>
+    <strong>Degrees of freedom:</strong> ${n - 1}<br>
+    <strong>Standard error:</strong> ${se.toFixed(6)}
+  `;
+}
+
+function updateTwoSample() {
+
+  const n1 =
+    Number(document.getElementById("n1_two").value);
+
+  const x1 =
+    Number(document.getElementById("xbar1_two").value);
+
+  const s1 =
+    Number(document.getElementById("s1_two").value);
+
+  const n2 =
+    Number(document.getElementById("n2_two").value);
+
+  const x2 =
+    Number(document.getElementById("xbar2_two").value);
+
+  const s2 =
+    Number(document.getElementById("s2_two").value);
+
+  const type =
+    document.getElementById("testType").value;
+
+  let html = "";
+
+  if(type === "independent") {
+
+    const sp =
+      Math.sqrt(
+        (((n1-1)*s1*s1)+((n2-1)*s2*s2))
+        /(n1+n2-2)
+      );
+
+    const se =
+      sp*Math.sqrt(1/n1 + 1/n2);
+
+    const t =
+      (x1-x2)/se;
+      
+      currentT = t;
+currentDF = n1 + n2 - 2;
+      
+      updatePValueCard();
+updateTDistributionPlot();
+      
+    document.getElementById("twoFormula").innerHTML = `
+\\[
+t=
+\\frac{\\bar{x}_1-\\bar{x}_2}
+{s_p\\sqrt{1/n_1+1/n_2}}
+\\]
+
+\\[
+s_p=
+\\sqrt{
+\\frac{
+(n_1-1)s_1^2+
+(n_2-1)s_2^2
+}
+{
+n_1+n_2-2
+}
+}
+\\]
+`;
+
+if(window.MathJax){
+  MathJax.typesetPromise();
+}
+
+    html = `
+      <strong>Independent samples t-test (Equal variances)</strong><br><br>
+      T-statistic: ${t.toFixed(6)}<br>
+      Degrees of freedom: ${n1+n2-2}<br>
+      Pooled SD: ${sp.toFixed(6)}<br>
+      Standard error: ${se.toFixed(6)}
+    `;
+  }
+
+  else if(type === "welch") {
+
+    const se =
+      Math.sqrt(
+        (s1*s1/n1)+(s2*s2/n2)
+      );
+
+    const t =
+      (x1-x2)/se;
+
+    const num =
+      Math.pow(
+        (s1*s1/n1)+(s2*s2/n2),
+        2
+      );
+
+    const den =
+      Math.pow(s1*s1/n1,2)/(n1-1) +
+      Math.pow(s2*s2/n2,2)/(n2-1);
+
+    const df = num/den;
+    
+    currentT = t;
+    currentDF = df;
+    
+    updatePValueCard();
+updateTDistributionPlot();
+    
+    document.getElementById("twoFormula").innerHTML = `
+\\[
+t=
+\\frac{\\bar{x}_1-\\bar{x}_2}
+{
+\\sqrt{
+s_1^2/n_1+s_2^2/n_2
+}
+}
+\\]
+
+\\[
+df=
+\\frac{
+(s_1^2/n_1+s_2^2/n_2)^2
+}
+{
+\\frac{(s_1^2/n_1)^2}{n_1-1}
++
+\\frac{(s_2^2/n_2)^2}{n_2-1}
+}
+\\]
+`;
+
+if(window.MathJax){
+  MathJax.typesetPromise();
+}
+
+    html = `
+      <strong>Welch's t-test</strong><br><br>
+      T-statistic: ${t.toFixed(6)}<br>
+      Degrees of freedom: ${df.toFixed(2)}<br>
+      Standard error: ${se.toFixed(6)}
+    `;
+  }
+
+  else {
+
+    const n =
+      Math.min(n1,n2);
+
+    const sdiff =
+      Math.sqrt(s1*s1 + s2*s2);
+
+    const se =
+      sdiff/Math.sqrt(n);
+
+    const t =
+      (x1-x2)/se;
+      
+    currentT = t;
+currentDF = n - 1;
+
+updatePValueCard();
+updateTDistributionPlot();
+      
+      document.getElementById("twoFormula").innerHTML = `
+\\[
+t=
+\\frac{
+\\bar{x}_1-\\bar{x}_2
+}
+{
+s_{\\text{diff}}/\\sqrt{n}
+}
+\\]
+
+\\[
+s_{\\text{diff}}
+\\approx
+\\sqrt{
+s_1^2+s_2^2
+}
+\\]
+`;
+
+if(window.MathJax){
+  MathJax.typesetPromise();
+}
+
+    html = `
+      <strong>Paired samples t-test (approximation)</strong><br><br>
+      T-statistic: ${t.toFixed(6)}<br>
+      Degrees of freedom: ${n-1}<br>
+      Standard error of differences: ${se.toFixed(6)}<br>
+      s<sub>diff</sub> ≈ ${sdiff.toFixed(6)}
+    `;
+  }
+
+  document.getElementById("twoResults").innerHTML =
+    html;
+}
+
+function updatePValueCard() {
+
+  if(currentT === null || currentDF === null) {
+    return;
+  }
+
+  const tail =
+    document.querySelector(
+      'input[name="tailType"]:checked'
+    ).value;
+
+  let p;
+  let label;
+
+  if(tail === "two") {
+
+    p =
+      2 * (
+        1 -
+        jStat.studentt.cdf(
+          Math.abs(currentT),
+          currentDF
+        )
+      );
+
+    label = "Two-tailed p-value";
+
+  }
+
+  else if(tail === "upper") {
+
+    p =
+      1 -
+      jStat.studentt.cdf(
+        currentT,
+        currentDF
+      );
+
+    label = "Upper-tailed p-value";
+
+  }
+
+  else {
+
+    p =
+      jStat.studentt.cdf(
+        currentT,
+        currentDF
+      );
+
+    label = "Lower-tailed p-value";
+
+  }
+
+  document.getElementById(
+    "pValueOutput"
+  ).innerHTML = `
+    <strong>${label}:</strong>
+    ${p.toFixed(6)}
+  `;
+
+}
+
+function updateTDistributionPlot() {
+
+  if(currentT === null || currentDF === null) {
+    return;
+  }
+
+  const tail =
+    document.querySelector(
+      'input[name="tailType"]:checked'
+    ).value;
+
+  const xmax =
+    Math.max(
+      4,
+      Math.abs(currentT) * 1.5
+    );
+
+  const xmin = -xmax;
+
+  const x = [];
+  const y = [];
+
+  for(let i = 0; i <= 1000; i++) {
+
+    const xi =
+      xmin +
+      (xmax - xmin) * i / 1000;
+
+    x.push(xi);
+
+    y.push(
+      jStat.studentt.pdf(
+        xi,
+        currentDF
       )
-    ),
-    
-    # Right column - Graphical representation
-    card(
-      card_header("Graphical representation"),
-      card_body(
-        plotOutput("density_plot", height = "300px")
-      )
-    )
-  ),
-  
-  # Results at the bottom
-  card(
-    card_header("T-test results"),
-    card_body(
-      verbatimTextOutput("pvalue_result")
-    )
-  )
-)
+    );
 
-server &lt;- function(input, output, session) {
-  
-  # Calculate p-value based on test type
-  p_value &lt;- reactive({
-    t &lt;- input$tscore
-    df &lt;- input$df
-    test &lt;- input$test_type
-    
-    if (test == "two") {
-      p &lt;- 2 * pt(-abs(t), df = df)
-      result &lt;- paste0("Two-tailed p-value: ", round(p, 4))
-    } else if (test == "upper") {
-      p &lt;- pt(t, df = df, lower.tail = FALSE)
-      result &lt;- paste0("Upper-tailed p-value: ", round(p, 4))
-    } else if (test == "lower") {
-      p &lt;- pt(t, df = df, lower.tail = TRUE)
-      result &lt;- paste0("Lower-tailed p-value: ", round(p, 4))
-    }
-    
-    return(list(p = p, result = result, test = test))
-  })
-  
-  # Display p-value
-  output$pvalue_result &lt;- renderText({
-    p_value()$result
-  })
-  
-  # Create density plot
-  output$density_plot &lt;- renderPlot({
-    t &lt;- input$tscore
-    df &lt;- input$df
-    test &lt;- p_value()$test
-    
-    # Generate x values for t-distribution
-    x &lt;- seq(-4, 4, length.out = 1000)
-    y &lt;- dt(x, df = df)
-    df_data &lt;- data.frame(x = x, y = y)
-    
-    # Base plot
-    p &lt;- ggplot(df_data, aes(x = x, y = y)) +
-      geom_line() +
-      labs(x = "T-statistic", y = "Density", 
-           title = paste("T-distribution (df =", df, ")")) +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank()) +
-      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5)
-    
-    # Add shaded area based on test type, using #3F6BB6 as the color
-    if (test == "two") {
-      # Two-tailed test: shade both tails
-      if (t &gt; 0) {
-        p &lt;- p + 
-          geom_area(data = subset(df_data, x &gt;= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_area(data = subset(df_data, x &lt;= -t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_vline(xintercept = t, color = "#3F6BB6") +
-          geom_vline(xintercept = -t, color = "#3F6BB6")
-      } else {
-        p &lt;- p + 
-          geom_area(data = subset(df_data, x &lt;= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_area(data = subset(df_data, x &gt;= -t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_vline(xintercept = t, color = "#3F6BB6") +
-          geom_vline(xintercept = -t, color = "#3F6BB6")
+  }
+
+  const curve = {
+
+    x,
+    y,
+
+    mode: "lines",
+
+    line: {
+      color: "darkgray",
+      width: 3
+    },
+
+    hoverinfo: "skip",
+
+    name: ""
+
+  };
+
+  const traces = [curve];
+
+  const addTail = (xs) => {
+
+    const ys =
+      xs.map(
+        v =>
+          jStat.studentt.pdf(
+            v,
+            currentDF
+          )
+      );
+
+    traces.push({
+
+      x: [...xs, xs[xs.length-1], xs[0]],
+
+      y: [...ys, 0, 0],
+
+      fill: "toself",
+
+      fillcolor:
+        "rgba(63,104,182,0.6)",
+
+      line: {
+        width: 0
+      },
+
+      hoverinfo: "skip",
+
+      showlegend: false
+
+    });
+
+  };
+
+  if(tail === "two") {
+
+    addTail(
+      x.filter(
+        v => v >= Math.abs(currentT)
+      )
+    );
+
+    addTail(
+      x.filter(
+        v => v <= -Math.abs(currentT)
+      )
+    );
+
+  }
+
+  else if(tail === "upper") {
+
+    addTail(
+      x.filter(
+        v => v >= currentT
+      )
+    );
+
+  }
+
+  else {
+
+    addTail(
+      x.filter(
+        v => v <= currentT
+      )
+    );
+
+  }
+
+  const layout = {
+
+    margin: {
+      l: 50,
+      r: 20,
+      t: 20,
+      b: 50
+    },
+
+    xaxis: {
+      title: "t-statistic"
+    },
+
+    yaxis: {
+      title: "density"
+    },
+
+    shapes: [
+
+      {
+        type: "line",
+
+        x0: 0,
+        x1: 0,
+
+        y0: 0,
+        y1: Math.max(...y),
+
+        line: {
+          color: "black",
+          dash: "dot"
+        }
+      },
+
+      {
+        type: "line",
+
+        x0: currentT,
+        x1: currentT,
+
+        y0: 0,
+        y1: Math.max(...y),
+
+        line: {
+          color: "#db4315",
+          dash: "dash",
+          width: 2
+        }
       }
-    } else if (test == "upper") {
-      # Upper-tailed test: shade area above t
-      p &lt;- p + 
-        geom_area(data = subset(df_data, x &gt;= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-        geom_vline(xintercept = t, color = "#3F6BB6")
-    } else if (test == "lower") {
-      # Lower-tailed test: shade area below t
-      p &lt;- p + 
-        geom_area(data = subset(df_data, x &lt;= t), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-        geom_vline(xintercept = t, color = "#3F6BB6")
+
+    ]
+
+  };
+
+  if(tail === "two") {
+
+    layout.shapes.push({
+
+      type: "line",
+
+      x0: -Math.abs(currentT),
+      x1: -Math.abs(currentT),
+
+      y0: 0,
+      y1: Math.max(...y),
+
+      line: {
+        color: "#db4315",
+        dash: "dash",
+        width: 2
+      }
+
+    });
+
+  }
+
+  Plotly.react(
+    "tDistributionPlot",
+    traces,
+    layout,
+    {
+      responsive: true,
+      displayModeBar: false
     }
-    
-    return(p)
-  })
+  );
+
 }
 
-shinyApp(ui, server)
-</code></pre>
+function refreshCurrentCalculator() {
+
+  if(onePanel.style.display !== "none") {
+
+    updateOneSample();
+
+  } else {
+
+    updateTwoSample();
+
+  }
+
+}
+
+[
+  "n1",
+  "xbar1",
+  "s1",
+  "mu0"
+].forEach(id => {
+
+  document
+    .getElementById(id)
+    .addEventListener(
+      "input",
+      refreshCurrentCalculator
+    );
+
+});
+
+[
+  "n1_two",
+  "xbar1_two",
+  "s1_two",
+  "n2_two",
+  "xbar2_two",
+  "s2_two"
+].forEach(id => {
+
+  document
+    .getElementById(id)
+    .addEventListener(
+      "input",
+      refreshCurrentCalculator
+    );
+
+});
+
+document
+  .getElementById("testType")
+  .addEventListener(
+    "change",
+    refreshCurrentCalculator
+  );
+
+  
+document
+  .querySelectorAll(
+    'input[name="tailType"]'
+  )
+  .forEach(el => {
+
+    el.addEventListener(
+      "change",
+      () => {
+
+        updatePValueCard();
+        updateTDistributionPlot();
+
+      }
+    );
+
+  });
+
+updateOneSample();
+
+
+</script>
 </section>
 <section id="version-history" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
 <p>v1.0: created by tdhc 08/25.</p>
+<ul>
+<li>v1.1: facilities transferred from R Shinylive to html by tdhc in 06/26.</li>
+</ul>
 <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
 
 
