@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
+
+  <meta name="author" content="Tom Coleman">
+  <meta name="dcterms.date" content="2026-07-07">
+  <title>STARMAST – How to win at cards - combinations and permutations</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-f1ca5c31b40973e373bc5bf8b7f7d235.css">
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+  <script type="text/plain" cookie-consent="tracking">
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+  </script>
+  
+  <script type="text/javascript" charset="UTF-8">
+  document.addEventListener('DOMContentLoaded', function () {
+  cookieconsent.run({
+    "notice_banner_type":"simple",
+    "consent_type":"express",
+    "palette":"light",
+    "language":"en",
+    "page_load_consent_levels":["strictly-necessary"],
+    "notice_banner_reject_button_hide":false,
+    "preferences_center_close_button_hide":false,
+    "website_name":"",
+  "website_privacy_policy_url":"cookies.qmd"
+    ,
+  "language":"en"
+    });
+  });
+  </script> 
+    
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="slides-bg-withlogo.png" class="quarto-title-block center">
+  <h1 class="title">How to win at cards - combinations and permutations</h1>
+  <p class="subtitle">Sutton Trust Summer School 2026 (2/4)</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Tom Coleman 
+</div>
+</div>
+</div>
+
+  <p class="date">2026-07-07</p>
+</section>
+<section id="a-reminder" class="slide level2" data-background-image="slides-bg.png">
+<h2>A reminder</h2>
+<ul>
+<li><p>Any questions, please feel free to ask at any point</p>
+<ul>
+<li><strong>there’s no such thing as a silly question!</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="accessing-these-resources-and-shameless-self-promotion" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Accessing these resources (and shameless self-promotion)</h2>
+<p>Materials for this week can be found at:</p>
+<p><a href="https://starmast.org/suttontrust2026.html" class="uri">https://starmast.org/suttontrust2026.html</a></p>
+<p>(to be updated throughout the week)</p>
+<div class="fragment">
+<p>These are hosted on my maths resource website STARMAST, <strong>a free-to-use, high-quality bank of inclusive and technically accessible learning resources in mathematics and statistics, suitable for everyone</strong>, made by University of St Andrews staff and students for any student of mathematics or statistics.</p>
+<p><a href="https://starmast.org" class="uri">https://starmast.org</a></p>
+<p>New this week is a topic search for whatever school curriculum you may be on. :)</p>
+</div>
+</section>
+<section>
+<section id="the-agony-of-choice" class="title-slide slide level1 center">
+<h1>The agony of choice</h1>
+
+</section>
+<section id="whats-going-on" class="slide level2" data-background-image="slides-bg.png">
+<h2>What’s going on?</h2>
+<p>So far, you have seen that Pascal’s triangle has produced many infinite sequences that govern the way that humanity thinks about computing.</p>
+<p>However, you have not yet seen exactly what the numbers in Pascal’s triangle <strong>mean</strong> - do they have any use in the real world?</p>
+<p>It turns out that these <strong>count</strong> the number of ways you can choose some objects from a larger set of objects. Let’s investigate.</p>
+</section>
+<section id="sets-and-subsets-12" class="slide level2" data-background-image="slides-bg.png">
+<h2>Sets and subsets (1/2)</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Sets and subsets</strong></p>
+</div>
+<div class="callout-content">
+<p>A <strong>set</strong> is a collection of different objects, called <strong>elements</strong>.</p>
+<p>Elements of sets are typically mathematical objects such as numbers, symbols, shapes or even other sets, but in reality they can be anything at all. Two sets are equal if and only if they have the same elements. If <span class="math inline">\(x\)</span> is an element of a set <span class="math inline">\(X\)</span>, then you can write <span class="math inline">\(x\in X\)</span>; if <span class="math inline">\(y\)</span> is not an element of <span class="math inline">\(X\)</span>, you can write <span class="math inline">\(y\notin X\)</span>.</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>For instance, the following are all sets: <span class="math display">\[A = \{1,2,3,4,5,6\} \qquad B = \{a,b,c,♣️,💫\}\qquad C = \{\textsf{archer}, \textsf{fisher},\textsf{baker}\}\]</span> and the following are all true: <span class="math display">\[2\in A,\quad b\in B,\quad \textsf{fisher}\in C,\quad 💫\notin A.\]</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="sets-and-subsets-22" class="slide level2" data-background-image="slides-bg.png">
+<h2>Sets and subsets (2/2)</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Sets and subsets</strong></p>
+</div>
+<div class="callout-content">
+<p>Although sets can contain anything, they must follow a couple of key principles:</p>
+<ul>
+<li><strong>Distinct elements</strong>: every element in a set must be different.</li>
+<li><strong>Unordered</strong>: the order that elements are written in a set does not matter.</li>
+</ul>
+<p>If a set <span class="math inline">\(X\)</span> has <span class="math inline">\(n\)</span> elements in it, then you can write <span class="math inline">\(|X| = n\)</span> and say that the <strong>cardinality</strong> of <span class="math inline">\(X\)</span> is <span class="math inline">\(n\)</span>.</p>
+<p>A <strong>subset</strong> of a set <span class="math inline">\(X\)</span> is a set <span class="math inline">\(Y\)</span> such that every element of <span class="math inline">\(Y\)</span> is also an element of <span class="math inline">\(X\)</span>. For instance, the set <span class="math inline">\(D = \{1,2,3,4\}\)</span> is a subset of the set <span class="math inline">\(A = \{1,2,3,4,5,6\}\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="counting-subsets" class="slide level2" data-background-image="slides-bg.png">
+<h2>Counting subsets</h2>
+<p>You can find the total number of subsets of a set.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Number of subsets of a set</strong></p>
+</div>
+<div class="callout-content">
+<p>The total number of subsets of the set <span class="math inline">\(X = \{1,2,3,\ldots,n\}\)</span> is <span class="math inline">\(2^n\)</span>.</p>
+</div>
+</div>
+</div>
+<p>This is a great way to see the mathematical idea of <strong>choice</strong> first hand. When you are choosing things, it’s really important to outline <strong>what you are choosing</strong> and whether or not each choice depends on the last choice or not.</p>
+<aside class="notes">
+<p>You are given that <span class="math inline">\(X = \{1,2,3,\ldots,n\}\)</span>. Now, assume that <span class="math inline">\(Y\)</span> is a subset of <span class="math inline">\(X\)</span>; so the elements of <span class="math inline">\(Y\)</span> must all be elements of <span class="math inline">\(X\)</span> - but not every element of <span class="math inline">\(X\)</span> is necessarily an element of <span class="math inline">\(Y\)</span>.</p>
+<p>So, you can ask yourself - is <span class="math inline">\(1\)</span> an element of <span class="math inline">\(Y\)</span>? There are two <strong>choices</strong>; either <span class="math inline">\(1\)</span> is an element of <span class="math inline">\(Y\)</span>, or <span class="math inline">\(1\)</span> isn’t an element of <span class="math inline">\(Y\)</span>.</p>
+<p>Next, you can ask - is <span class="math inline">\(2\)</span> an element of <span class="math inline">\(Y\)</span>? Again, there are two choices; either <span class="math inline">\(2\)</span> is an element of <span class="math inline">\(Y\)</span>, or <span class="math inline">\(2\)</span> isn’t an element of <span class="math inline">\(Y\)</span>. You can notice here that the choice of whether or not <span class="math inline">\(2\)</span> is in <span class="math inline">\(Y\)</span> is completely independent of the choice that <span class="math inline">\(1\)</span> is in <span class="math inline">\(Y\)</span>. The total number of potential scenarios so far is <span class="math display">\[1,2\in Y,\qquad 1\in Y, 2\notin Y,\qquad 1\notin Y, 2\in Y,\qquad 1,2\notin Y\]</span> which is <span class="math inline">\(2\cdot 2 = 4\)</span>.</p>
+<p>Now, you can ask is <span class="math inline">\(3\)</span> an element of <span class="math inline">\(Y\)</span>? There are four possible choices where it is (the four scenarios above plus <span class="math inline">\(3\in Y\)</span>), and four possible choices where it isn’t (the four scenarios above plus <span class="math inline">\(3\notin Y\)</span>). Therefore, at this stage, there are <span class="math inline">\(8 = 2\cdot 2 \cdot 2\)</span>.</p>
+<p>You can carry on in this way for all the elements of <span class="math inline">\(X\)</span>. With two choices for each element, and all of the choices being independent of each other, this leads to <span class="math display">\[\underbrace{2}_{\textsf{is }1\in Y?}\cdot \underbrace{2}_{\textsf{is }2\in Y?}\cdot \underbrace{2}_{\textsf{is }3\in Y?} \cdot \ldots \cdot \underbrace{2}_{\textsf{is }n\in Y?} = 2^n\]</span> many choices for the elements of <span class="math inline">\(Y\)</span>. Therefore, there are <span class="math inline">\(2^n\)</span> possible subsets.</p>
+<p>The takeaway is that you can multiply together the numbers of choices at each stage to get the total number of choices overall.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="order-order" class="slide level2" data-background-image="slides-bg.png">
+<h2>Order! Order!</h2>
+<p>In the case above, the choice was whether to include an element in a subset or not. Next, you can ask - how many ways are there of choosing a subset of a <strong>given size</strong>? Here, including elements or not won’t help, you are choosing something else. Let’s explore.</p>
+</section>
+<section id="scenario-1-gumballs-12" class="slide level2" data-background-image="slides-bg.png">
+<h2>Scenario 1: gumballs (1/2)</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Scenario 1</strong></p>
+</div>
+<div class="callout-content">
+<p>Cantor’s Confectionery are the leading fictional makers of sweets, chocolates, and all things desserty. They claim in their new food truck that from their famous five varieties of gumballs (apple, banana, cherry, date, edamame bean), there are <span class="math inline">\(60\)</span> ways in which you can pick three of them to take away and eat in any order.</p>
+<p>You decide to investigate this fanciful claim.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="scenario-1-gumballs" class="slide level2" data-background-image="slides-bg.png">
+<h2>Scenario 1: gumballs</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Scenario 1 continued</strong></p>
+</div>
+<div class="callout-content">
+<p>Shortening each of the delicious flavours to the first letter of their word (so <span class="math inline">\(\textsf{apple}\)</span> becomes <span class="math inline">\(a\)</span> and so on), you can model this as a mathematical problem. This translates into the fact that you are picking three things from a set of five things <span class="math inline">\(D = \{a,b,c,d,e\}\)</span>.</p>
+<ul>
+<li><p>There are <strong>five choices</strong> for the first thing, which could be any of <span class="math inline">\(a,b,c,d,e\)</span>. Let’s say you pick <span class="math inline">\(a\)</span>.</p></li>
+<li><p>For the second thing, there are now <strong>four choices</strong>, as you can’t pick <span class="math inline">\(a\)</span> twice. So pick one of <span class="math inline">\(b,c,d,e\)</span> - let’s say <span class="math inline">\(c\)</span>.</p></li>
+<li><p>For the third thing, there are now <strong>three choices</strong>, as you can’t pick <span class="math inline">\(a,c\)</span> again. So pick one of <span class="math inline">\(b,d,e\)</span> - let’s say <span class="math inline">\(e\)</span>.</p></li>
+</ul>
+<p>So there are <span class="math inline">\(5\cdot 4\cdot 3 = 60\)</span> ways to pick three things from a set of five.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="try-it-yourself-1" class="slide level2" data-background-image="slides-bg.png">
+<h2>Try it yourself 1</h2>
+<p>This seems a lot of ways - almost too many ways - to pick a subset of three things from a set of five things. Here, it <strong>is</strong> too much.</p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 1</strong></p>
+</div>
+<div class="callout-content">
+<p>Why is it too much?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="answer-to-try-it-yourself-1" class="slide level2" data-background-image="slides-bg.png">
+<h2>Answer to try it yourself 1</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Answer to try it yourself 1 (1/2)</strong></p>
+</div>
+<div class="callout-content">
+<p>This is because there is an <strong>extra</strong> condition on what you are choosing.</p>
+<p>You know from above that sets are <strong>unordered</strong>; the order in which the elements are written doesn’t matter. This corresponds to the claim that you can eat the gumballs in any order.</p>
+<p>However, the way that the elements <span class="math inline">\(\{a,c,e\}\)</span> were picked above was <strong>in a strict order</strong>; first <span class="math inline">\(a\)</span>, then <span class="math inline">\(c\)</span>, then <span class="math inline">\(e\)</span>.</p>
+<p>But you could have got the same subset of elements <span class="math inline">\(\{a,c,e\}\)</span> by picking <span class="math inline">\(c\)</span> first, then <span class="math inline">\(a\)</span>, then <span class="math inline">\(e\)</span>. Or by picking <span class="math inline">\(e\)</span> first, then <span class="math inline">\(c\)</span>, then <span class="math inline">\(a\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="answer-to-try-it-yourself-1-22" class="slide level2" data-background-image="slides-bg.png">
+<h2>Answer to try it yourself 1 (2/2)</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Answer to try it yourself 1 continued</strong></p>
+</div>
+<div class="callout-content">
+<p>There are in fact <span class="math inline">\(6\)</span> different orders for picking the elements: <span class="math display">\[(a,c,e),(a,e,c),(c,a,e),(c,e,a),(e,a,c),(e,c,a)\]</span> and these haven’t been accounted for in the counting.</p>
+<p>To account for this, you need to <strong>divide</strong> the total number of ways you can pick in order by the total number of orderings.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="scenario-1-continued-1" class="slide level2" data-background-image="slides-bg.png">
+<h2>Scenario 1 continued</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Scenario 1 continued</strong></p>
+</div>
+<div class="callout-content">
+<p>You have seen that Cantor’s Confectionery are overselling their claim by a factor of six. Incensed, you go up to the food truck with your workings-out and say that actually, there are <span class="math inline">\(60/6 = 10\)</span> ways you can pick a subset of three things from a set of five things.</p>
+</div>
+</div>
+</div>
+<p>And also you tell them that, really, no-one wants to eat a gumball that tastes like edamame beans.</p>
+</section>
+<section id="try-it-yourself-2" class="slide level2" data-background-image="slides-bg.png">
+<h2>Try it yourself 2</h2>
+<p>This then gets you thinking. How can you apply these results to <strong>other</strong> dubious food truck marketing ploys (as well as other things)?</p>
+<p>To work this out, you need to work out the number of possible ways to <strong>order</strong> a set of <span class="math inline">\(n\)</span> elements.</p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 2: ways to order a set</strong></p>
+</div>
+<div class="callout-content">
+<p>Using the ideas of choice given above, show that the total number of ways to order the set <span class="math inline">\(X = \{1,2,3,\ldots,n\}\)</span> elements is <span class="math display">\[n\cdot (n-1)\cdot (n-2) \cdot \ldots \cdot 3\cdot 2 \cdot 1 = n!\]</span> which you can recognise from yesterday (<a href="../../explorations/exploration-slides/e-s-pascalstriangleandgrowth.html">Exploration slides: The hidden sequences of Pascal’s triangle</a>) as <span class="math inline">\(n\)</span> <strong>factorial</strong>.</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Suppose that <span class="math inline">\(A\)</span> is an ordering of the set <span class="math inline">\(X\)</span>.</p>
+<p>There are <span class="math inline">\(n\)</span> choices for the first element of the ordering.</p>
+<p>Since the second element of the ordering can’t be the same as the first, there are <span class="math inline">\(n-1\)</span> choices for this.</p>
+<p>Since the third element of the ordering can’t be the same as the first two elements, there are <span class="math inline">\(n-2\)</span> choices for this.</p>
+<p>You can continue in this way until at the <span class="math inline">\(n\)</span>th element, there is exactly one choice left. So the total number of orderings is <span class="math display">\[\underbrace{n}_{\textsf{first}}\cdot \underbrace{(n-1)}_{\textsf{second}}\cdot \underbrace{(n-2)}_{\textsf{third}} \cdot \ldots \cdot \underbrace{3}_{(n-2)\textsf{th}} \cdot \underbrace{2}_{(n-1)\textsf{th}} \cdot \underbrace{1}_{n\textsf{th}} = n!\]</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="formalising-the-maths-13" class="slide level2" data-background-image="slides-bg.png">
+<h2>Formalising the maths (1/3)</h2>
+<p>To properly express the ways that you can pick <span class="math inline">\(k\)</span> things from <span class="math inline">\(n\)</span> things, you can introduce some new notation.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Falling factorial</strong></p>
+</div>
+<div class="callout-content">
+<p>For a number <span class="math inline">\(n\)</span> and a positive whole number <span class="math inline">\(k\)</span>, the number <span class="math inline">\((n)_k\)</span>, called the <strong><span class="math inline">\(k\)</span>th falling factorial of <span class="math inline">\(n\)</span></strong>, is defined to be <span class="math display">\[(n)_k = n\cdot(n-1)\cdot(n-2)\cdot\ldots\cdot(n-k+1)\]</span> which is a product of <span class="math inline">\(k\)</span> many terms.</p>
+</div>
+</div>
+</div>
+<p>Now, you have enough to provide general formulas for picking <span class="math inline">\(k\)</span> things from a set of <span class="math inline">\(n\)</span> things, whether the order matters or not.</p>
+</section>
+<section id="formalising-the-maths-23" class="slide level2" data-background-image="slides-bg.png">
+<h2>Formalising the maths (2/3)</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Permutations</strong></p>
+</div>
+<div class="callout-content">
+<p>Picking <span class="math inline">\(k\)</span> elements from a set of <span class="math inline">\(n\)</span> elements <strong>where the order matters</strong> is called a <strong>permutation</strong>. The amount of permutations of <span class="math inline">\(k\)</span> elements from an <span class="math inline">\(n\)</span> element set is sometimes written as <span class="math inline">\(n\textsf{P}k\)</span>, which is read as “<span class="math inline">\(n\)</span> permute <span class="math inline">\(k\)</span>”.</p>
+<p>You can work out that <span class="math display">\[n\textsf{P}k = (n)_k,\]</span> the <span class="math inline">\(k\)</span>th falling factorial of <span class="math inline">\(n\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="formalising-the-maths-33" class="slide level2" data-background-image="slides-bg.png">
+<h2>Formalising the maths (3/3)</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Combinations</strong></p>
+</div>
+<div class="callout-content">
+<p>Picking <span class="math inline">\(k\)</span> elements from a set of <span class="math inline">\(n\)</span> elements <strong>where the order doesn’t matter</strong> is called a <strong>combination</strong>.</p>
+<p>The amount of combinations of <span class="math inline">\(k\)</span> elements from an <span class="math inline">\(n\)</span> element set is called the <strong>binomial coefficient</strong>, which is written as <span class="math display">\[\binom{n}{k}\]</span> (read as “<span class="math inline">\(n\)</span> choose <span class="math inline">\(k\)</span>”). It’s also sometimes written as <span class="math inline">\(n\textsf{C}k\)</span>.</p>
+<p>You can work out that <span class="math display">\[n\textsf{C}k = \binom{n}{k} = \frac{(n)_k}{k!}.\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="try-it-yourself-3" class="slide level2" data-background-image="slides-bg.png">
+<h2>Try it yourself 3</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 3</strong></p>
+</div>
+<div class="callout-content">
+<p>Find <span class="math inline">\(n\mathsf{P}k\)</span> and <span class="math inline">\(n\mathsf{C}k\)</span> where</p>
+<ol type="a">
+<li><p><span class="math inline">\(n = 7\)</span>, <span class="math inline">\(k = 4\)</span>, and</p></li>
+<li><p><span class="math inline">\(n = 10\)</span>, <span class="math inline">\(k = 3\)</span>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Answer to try it yourself 3</strong></p>
+</div>
+<div class="callout-content">
+<ol type="a">
+<li><p>Here, <span class="math inline">\(7\mathsf{P}4 = 840\)</span> and <span class="math inline">\(7\mathsf{C}4 =35\)</span>.</p></li>
+<li><p>Here, <span class="math inline">\(10\mathsf{P}3 = 720\)</span> and <span class="math inline">\(10\mathsf{C}3 = 120\)</span>.</p></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="the-binomial-coefficient" class="title-slide slide level1 center">
+<h1>The binomial coefficient</h1>
+
+</section>
+<section id="more-on-the-binomial-coefficients" class="slide level2" data-background-image="slides-bg.png">
+<h2>More on the binomial coefficients</h2>
+<p>The binomial coefficient, which is the number of ways you can pick <span class="math inline">\(k\)</span> elements from an <span class="math inline">\(n\)</span>-element set, is one of <strong>the most ubiquitous and useful concepts in mathematics</strong> (but I might be biased…)</p>
+<p>It has uses in algebra, calculus, and probability theory (as you will see later).</p>
+<p>In order to harness the power of the binomial coefficient, and its role in counting, you will need to investigate its properties.</p>
+</section>
+<section id="a-new-formula" class="slide level2" data-background-image="slides-bg.png">
+<h2>A new formula</h2>
+<p>First of all, you can express the binomial coefficient in a different way to above:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The binomial coefficient 1</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[\binom{n}{k} = \frac{(n)_k}{k!} = \frac{n!}{k!\cdot(n-k)!}.\]</span></p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Do on board…</p>
+<p>To show this, you can multiply top and bottom of the existing fraction <span class="math inline">\((n)_k/k!\)</span> by <span class="math inline">\((n-k)!\)</span>; this is the same as multiplying by <span class="math inline">\(1\)</span> to create an equivalent fraction. Doing this gives <span class="math display">\[\binom{n}{k} = \frac{(n)_k}{k!} = \frac{(n)_k(n-k)!}{k!(n-k)!}.\]</span> Now if <span class="math inline">\((n)_k(n-k)!\)</span> is equal to <span class="math inline">\(n\)</span> factorial, then you are done as the fraction will be exactly what you’re looking for. Indeed, you can write out <span class="math inline">\(n!\)</span> in full to see that for any <span class="math inline">\(k\)</span>, <span class="math display">\[
+n! = \underbrace{n\cdot (n-1) \cdot \ldots (n-k+1)}_{(n)_k}\cdot \underbrace{(n-k)\cdot (n-k-1) \cdot \ldots \cdot 2\cdot 1}_{(n-k)!} = (n)_k \cdot (n-k)!
+\]</span> and so <span class="math display">\[\binom{n}{k} = \frac{(n)_k}{k!} = \frac{(n)_k(n-k)!}{k!(n-k)!} = \frac{n}{k!(n-k)!}\]</span> as required.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="try-it-yourself-4" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Try it yourself 4</h2>
+<p>Because of the way that binomial coefficients are defined to count subsets of a set with <span class="math inline">\(n\)</span> elements, you can investigate properties of the binomial coefficients by investigating counting, rather than attempting to manipulate the formula.</p>
+<p>In mathematics, it’s often best to investigate general behaviour by looking at examples with actual numbers. Here’s one you can try yourself that will reveal more hidden secrets of binomial coefficients.</p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 4</strong></p>
+</div>
+<div class="callout-content">
+<p>Using the formula or principles from counting, work out all the binomial coefficients <span class="math display">\[\binom{5}{0} ,\; \binom{5}{1},\; \binom{5}{2},\;  \binom{5}{3},\;  \binom{5}{4} ,\;  \binom{5}{5}\]</span></p>
+<p>You can remind yourself of the fact that <span class="math inline">\(0! = 1\)</span> and <span class="math inline">\(1! = 1\)</span>.</p>
+<p>What do you notice about the answers? What do they add up to? Where have you seen them before?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="answer-to-try-it-yourself-4" class="slide level2" data-background-image="slides-bg.png">
+<h2>Answer to try it yourself 4</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Answer to try it yourself 4</strong></p>
+</div>
+<div class="callout-content">
+<p>Here <span class="math display">\[\binom{5}{0} = 1 ,\; \binom{5}{1} = 5,\; \binom{5}{2} = 10,\;  \binom{5}{3} = 10,\;  \binom{5}{4} = 5,\;  \binom{5}{5} = 1.\]</span></p>
+<p>You can notice that this is exactly row <span class="math inline">\(5\)</span> of Pascal’s triangle! You know from <a href="../../explorations/exploration-slides/e-s-pascalstriangleandgrowth.html">Exploration slides: The hidden sequences of Pascal’s triangle</a> that adding a row of Pascal’s triangle gives a power of <span class="math inline">\(2\)</span>; so adding them all together gives <span class="math inline">\(2^5 = 32\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="consequences" class="slide level2" data-background-image="slides-bg.png">
+<h2>Consequences!</h2>
+<p>It is true that adding together all the binomial coefficients <span class="math inline">\(\displaystyle\binom{n}{k}\)</span> for <span class="math inline">\(k=0,1,\ldots,n\)</span> gives <span class="math inline">\(2^n\)</span>. There are two ways you can explain this - either you can do lots of tedious algebra using the formula, or you can think about what you are counting.</p>
+<p>You know from the above that the number of subsets of a set <span class="math inline">\(X\)</span> with <span class="math inline">\(n\)</span> elements is <span class="math inline">\(2^n\)</span>. The binomial coefficient counts all of the subsets of <span class="math inline">\(X\)</span> of size <span class="math inline">\(k\)</span> for some <span class="math inline">\(k\)</span> between <span class="math inline">\(0,1,\ldots,n\)</span> - so adding all of these up naturally gives the number of all the subsets of <span class="math inline">\(X\)</span>!</p>
+</section>
+<section id="consequences-again" class="slide level2" data-background-image="slides-bg.png">
+<h2>Consequences, again!</h2>
+<p>You also saw that <span class="math display">\[\binom{5}{0} = 1\quad\textsf{ and }\quad\binom{5}{5} = 1.\]</span> In fact, this is true for all <span class="math inline">\(n\)</span>: <span class="math display">\[\binom{n}{0} = 1\quad\textsf{ and }\quad\binom{n}{n} = 1.\]</span> This is because there is exactly one way to pick <span class="math inline">\(0\)</span> elements, and one way to pick <span class="math inline">\(n\)</span> elements, from a set of size <span class="math inline">\(n\)</span>.</p>
+</section>
+<section id="consequences-again-again" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Consequences, again! (again)</h2>
+<p>Next, you can notice that <span class="math display">\[\binom{5}{0} = 1 = \binom{5}{5},\qquad \binom{5}{1} = 5 = \binom{5}{4},\qquad \binom{5}{2} = 10 = \binom{5}{3}\]</span> This means that binomial coefficients are <em>symmetric</em>, that is <span class="math display">\[\binom{n}{k} = \binom{n}{n-k}\]</span> for all <span class="math inline">\(n \geq k \geq 0\)</span>. You can see this by swapping the order of multiplication in the denominator of the formula: <span class="math display">\[\binom{n}{k} = \frac{n!}{k!\cdot (n-k)!} = \frac{n!}{(n-k)!\cdot k!} = \binom{n}{n-k}\]</span> or by noticing that when you choose a set of <span class="math inline">\(k\)</span> elements of a set, this is the same as <strong>not choosing</strong> <span class="math inline">\(n-k\)</span> elements!</p>
+</section>
+<section id="connection-with-pascals-triangle-12" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Connection with Pascal’s triangle (1/2)</h2>
+<p>The other striking consequence of the binomial coefficients is that they are <strong>exactly the entries of Pascal’s triangle</strong>. In fact, you can say that <span class="math inline">\(\displaystyle\binom{n}{k}\)</span> is the <span class="math inline">\(k\)</span>th entry in the <span class="math inline">\(n\)</span>th row of Pascal’s triangle, where <span class="math inline">\(n \geq k \geq 0\)</span> are whole numbers.</p>
+
+<img data-src="../FiguresPNG/pascal-figrep1.png" style="width:75.0%" class="r-stretch quarto-figure-center"><p class="caption">A figure demonstrating the first 10 rows of Pascal’s triangle, with row numbers in black and to the left.</p></section>
+<section id="connection-with-pascals-triangle-22" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Connection with Pascal’s triangle (2/2)</h2>
+<p>To show that this is true, it’s enough to show that binomial coefficients satisfy the defining property of Pascal’s triangle; that is, you can obtain an entry by adding those above it. This corresponds to the mathematical statement:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Binomial coefficients and Pascal’s triangle</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[\binom{n}{k-1} + \binom{n}{k} = \binom{n+1}{k}\]</span></p>
+</div>
+</div>
+</div>
+<p>You can explain this in two different ways. The first involves counting of sets with some nice conditions - the second involves some principles of algebra.</p>
+<aside class="notes">
+<p>(Double counting.)</p>
+<p>Suppose that you are running a maths exploration session and you have <span class="math inline">\(n+1\)</span> students in your class <span class="math inline">\(X\)</span>. Pick a subset <span class="math inline">\(A\)</span> of <span class="math inline">\(k\)</span> students from this class - notice that there are <span class="math inline">\(\displaystyle \binom{n+1}{k}\)</span> ways of doing this, giving the right-hand side of the equation.</p>
+<p>Now let’s choose <span class="math inline">\(k\)</span> students from <span class="math inline">\(n+1\)</span> students in a different way, by identifying a student in the class (Alex) and choosing around them. Either the subset <span class="math inline">\(A\)</span> with <span class="math inline">\(k\)</span> students of the <span class="math inline">\(n+1\)</span> students in the class involves Alex, or it doesn’t.</p>
+<ul>
+<li><p>If Alex is in the set <span class="math inline">\(A\)</span>, then you can make up the numbers by choosing <span class="math inline">\(k-1\)</span> students from the remaining <span class="math inline">\(n\)</span>. There are <span class="math inline">\(\displaystyle\binom{n}{k-1}\)</span> ways of picking <span class="math inline">\(A\)</span> if Alex is in <span class="math inline">\(A\)</span>.</p></li>
+<li><p>If Alex is not in the set <span class="math inline">\(A\)</span>, then to make up the numbers in <span class="math inline">\(A\)</span> you need to pick <span class="math inline">\(k\)</span> students from <span class="math inline">\(n\)</span> students. There are <span class="math inline">\(\displaystyle\binom{n}{k}\)</span> ways of picking <span class="math inline">\(A\)</span> is Alex is not in <span class="math inline">\(A\)</span>.</p></li>
+</ul>
+<p>Adding these together gives the left hand side of the equation.</p>
+<p>(Algebra explanation)</p>
+<p>Here’s the algebraic explanation. Begin by using the formula for the binomial coefficient to rewrite the right hand side.</p>
+<p><span class="math display">\[\binom{n}{k-1}+\binom{n}{k}=\frac{n!}{(n-(k-1))!(k-1)!}+\frac{n!}{k!(n-k)!}\]</span></p>
+<p>In order to make the denominators equal, you can multiply top and bottom of the left fraction by <span class="math inline">\(k\)</span> and the top and bottom of the right fraction by <span class="math inline">\(n-(k-1)\)</span>. Doing this and combining the numerators via factorization gives</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{n!}{(n-(k-1))!\cdot (k-1)!}+\frac{n!}{k!(n-k)!} &amp;=\frac{k\cdot n!}{(n-(k-1))!\cdot k!}+\frac{(n-(k-1))\cdot n!}{(n-(k-1))!\cdot k!}\\[0.5em]
+&amp;=\frac{(k+n-(k-1))\cdot n!}{k!\cdot (n-(k-1))!}
+\end{aligned}
+\]</span></p>
+<p>Now, you can use the fact that <span class="math inline">\(n-(k-1) = (n+1) - k\)</span> to write that Simplifying and rewriting the right hand side you can get <span class="math inline">\(\binom{n}{k}\)</span> as required. <span class="math display">\[\frac{(k+n-k+1)\cdot n!}{k!\cdot (n-(k-1))!} =\frac{(n+1)\cdot n!}{k!\cdot ((n+1) - k)!}=\frac{(n+1)!}{k!\cdot (n+1)-k)!}=\binom{n+1}{k}\]</span> as required.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="picking-things-with-repetition" class="slide level2" data-background-image="slides-bg.png">
+<h2>Picking things with repetition</h2>
+<p>As you have seen, subsets do not allow for repeated elements. So how can you choose a collection of things with <strong>repetitions</strong>? This is particularly useful if you want to go doughnut shopping…</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Scenario 2</strong></p>
+</div>
+<div class="callout-content">
+<p>Impressed with your knowledge of binomial coefficients, Cantor’s Confectionery want to find out how many ways you could buy a box of ten doughnuts from its five flavours, allowing for the fact that you can buy multiple ways of each flavour.</p>
+<p>How can you do it?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="stars-and-bars-12" class="slide level2" data-background-image="slides-bg.png">
+<h2>Stars and bars! (1/2)</h2>
+<p>Here, the idea is to count the ways in which you can have <strong>repeats</strong>, rather than trying to count the elements. This can be done using a <strong>stars-and-bars</strong> argument, where the <strong>stars</strong> represent the <span class="math inline">\(r\)</span> things you are picking, and the <span class="math inline">\(n-1\)</span> <strong>bars</strong> separate repeats of the <span class="math inline">\(r\)</span> things into <span class="math inline">\(n\)</span> blocks.</p>
+<div class="fragment">
+<p>Each position of ‘stars-and-bars’ corresponds to a different way of picking <span class="math inline">\(r\)</span> things with repetitions from a set of <span class="math inline">\(n\)</span> things.</p>
+</div>
+</section>
+<section id="stars-and-bars-22" class="slide level2" data-background-image="slides-bg.png">
+<h2>Stars and bars! (2/2)</h2>
+<p>Since there are <span class="math inline">\(n-1\)</span> ways to place the bars in the <span class="math inline">\(n+r-1\)</span> many boxes, it follows that:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Choosing things with repetition</strong></p>
+</div>
+<div class="callout-content">
+<p>The amount of ways to pick <span class="math inline">\(r\)</span> many things from a set of <span class="math inline">\(n\)</span> things with repetition allowed is <span class="math display">\[\binom{n+r-1}{n-1} = \binom{n+r-1}{r}.\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="scenario-2-answer" class="slide level2" data-background-image="slides-bg.png">
+<h2>Scenario 2 answer</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Scenario 2 continued</strong></p>
+</div>
+<div class="callout-content">
+<p>You confidently report that from a set of <span class="math inline">\(n = 5\)</span> flavours of doughnut to choose from, you can pick a total of <span class="math inline">\(r = 10\)</span> doughnuts with repetition in <span class="math display">\[\binom{5+10-1}{10} = \binom{14}{10} = 1001\]</span> different ways.</p>
+<p>Cantor’s Confectionery are overwhelmed with gratitude.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="why-binomial-coefficients" class="slide level2" data-background-image="slides-bg.png">
+<h2>Why ‘binomial coefficients’?</h2>
+<p>This comes from the famous <strong>binomial theorem</strong>, which deals with expanding brackets multiple times:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>The binomial theorem</strong></p>
+</div>
+<div class="callout-content">
+<p>For any non-negative <span class="math inline">\(n\in\mathbb{Z}\)</span>: <span class="math display">\[(x+y)^n = \sum_{k=0}^n\binom{n}{k}x^{n-k}y^k.\]</span></p>
+<p>where the <span class="math inline">\(\sum_{k=0}^n\)</span> means ‘the sum from <span class="math inline">\(k = 0\)</span> to <span class="math inline">\(k = n\)</span>’.</p>
+<p>For more about this notation (called <strong>sigma notation</strong>) please see <a href="../../studyguides/sigmanotation.html">Guide: Sigma notation</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-binomial-theorem-12" class="slide level2" data-background-image="slides-bg.png">
+<h2>The binomial theorem (1/2)</h2>
+<p>Proving this (incredibly important) theorem once again relies on counting - and thankfully <em>not</em> on actually expanding an unspecified amount of brackets.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Explanation of the binomial theorem</strong></p>
+</div>
+<div class="callout-content">
+<p>Consider <span class="math inline">\((x+y)^n\)</span>. Expanding these gives a sum of terms where each term is a product of a power of <span class="math inline">\(x\)</span> and a power of <span class="math inline">\(y\)</span>.</p>
+<p>For each <span class="math inline">\(k\)</span> between <span class="math inline">\(0\)</span> and <span class="math inline">\(n\)</span>, the term <span class="math inline">\(x^{n-k}y^k\)</span> arises from choosing <span class="math inline">\(y\)</span> from <span class="math inline">\(k\)</span> many brackets in <span class="math inline">\((x+y)^n\)</span> and <span class="math inline">\(x\)</span> from the rest.</p>
+<p>There are <span class="math inline">\(\displaystyle\binom{n}{k}\)</span> ways to choose the <span class="math inline">\(y\)</span>’s from the brackets, so the result follows.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="the-binomial-theorem-22" class="slide level2" data-background-image="slides-bg.png">
+<h2>The binomial theorem (2/2)</h2>
+<p>You can see this in the following figure.</p>
+
+<img data-src="../FiguresPNG/binomial1.png" style="width:120.0%" data-fig.alt="A system of equations. On the left is $(x+y)^n$ up to $n=4$. On the right are their expanded forms." class="r-stretch quarto-figure-center"><p class="caption">Expansions of <span class="math inline">\((x+y)^n\)</span> up to <span class="math inline">\(n=4\)</span>, with the binomial coefficients highlighted in red</p></section>
+<section id="history-time" class="slide level2" data-background-image="slides-bg.png">
+<h2>History time</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>A history of binomial coefficients</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>The case for <span class="math inline">\((x+y)^2\)</span> is covered in the ancient Greek mathematical texts written by <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Euclid/">Euclid</a> and <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Diophantus/">Diophantus</a></p></li>
+<li><p>However, it was in India that the theory was expanded to both higher algebra and the theory of combinations.</p></li>
+<li><p>The connections to Pascal’s triangle were illustrated by our old friends <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Khayyam/">Omar Khayyam</a> and <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Yang_Hui/">Yang Hui</a>.</p></li>
+<li><p>The first statement of the binomial theorem, and the name ‘binomial coefficient’, is often ascribed to <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Stifel/">Stifel</a>, with <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Pascal/">Pascal</a> himself providing a complete proof of the formula.</p></li>
+<li><p><a href="https://mathshistory.st-andrews.ac.uk/Biographies/Newton/">Newton</a> proved a <strong>generalised binomial theorem</strong></p>
+<ul>
+<li>expanded by <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Gregory/">James Gregory</a>, famous for being the first Regius Professor of Mathematics at the University of St Andrews.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>The case for <span class="math inline">\((x+y)^2\)</span> is covered in the ancient Greek mathematical texts written by <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Euclid/">Euclid</a>, and using cubic terms was covered in work of <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Diophantus/">Diophantus</a> (sometimes known as the ‘father of algebra’).</p>
+<p>However, it was in India that the theory was expanded to both higher algebra and the theory of combinations. <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Aryabhata_I/">Aryabhata I</a> described the expansion of <span class="math inline">\((x+y)^3\)</span> in a summary of Hindu mathematics up to the 6th century. By the 9th century at latest, Indian mathematics had formulated both using binomial coefficients as methods of counting combinations, and writing them as a product of fractions; this is evidenced by work of <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Sridhara/">Śrīdhara</a>, <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Mahavira/">Mahāvīra</a> and <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Bhaskara_II/">Bhāksara II</a>.</p>
+<p>The connections to Pascal’s triangle were illustrated by our old friends <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Khayyam/">Omar Khayyam</a> and <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Yang_Hui/">Yang Hui</a>.</p>
+<p>The first statement of the binomial theorem, and the name ‘binomial coefficient’, is often ascribed to <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Stifel/">Stifel</a>, with <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Pascal/">Pascal</a> himself providing a complete proof of the formula.</p>
+<p><a href="https://mathshistory.st-andrews.ac.uk/Biographies/Newton/">Newton</a> proved a <strong>generalised binomial theorem</strong> (working in power series rather than sums), and this was later expanded by <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Gregory/">James Gregory</a>, famous for being the first Regius Professor of Mathematics at the University of St Andrews.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="how-to-win-at-cards" class="title-slide slide level1 center">
+<h1>How to win at cards</h1>
+
+</section>
+<section id="texas-hold-em-poker" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Texas hold-em poker</h2>
+<p><a href="https://en.wikipedia.org/wiki/Texas_hold_'em">Texas hold-em poker</a> is one of the most popular card games in the world. Here’s how it works.</p>
+<ul>
+<li class="fragment">Each player is dealt <strong>two cards</strong> - called <strong>the hole</strong> - and some friendly wagering occurs.</li>
+<li class="fragment">Once the betting is over, <strong>three cards</strong> are then dealt - called <strong>the flop</strong> - and another round of betting occurs.</li>
+<li class="fragment">Next, <strong>one card</strong> is dealt - called <strong>the turn</strong> - and another round of betting occurs.</li>
+<li class="fragment">Next, <strong>one final card</strong> is dealt - called <strong>the river</strong> - and a final round of betting occurs.</li>
+<li class="fragment">The winner of the hand is determined by picking the <strong>best five cards</strong> from the <strong>seven usable cards</strong> available to each player (the hole cards, the flop, the turn, and the river).</li>
+</ul>
+</section>
+<section id="hand-rankings" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Hand rankings</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 50%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Hand</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Example</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>High card</td>
+<td>None of the below</td>
+<td>A❤️ 10❤️ 9♣️ 4♠️ 2♦️</td>
+</tr>
+<tr class="even">
+<td>Pair</td>
+<td>One pair of cards of the same value</td>
+<td>A❤️ 10❤️ 10♣️ 4♠️ 2♦️</td>
+</tr>
+<tr class="odd">
+<td>Two pair</td>
+<td>Two pairs of cards of different values</td>
+<td>A❤️ 10❤️ 10♣️ 4♠️ 4♦️</td>
+</tr>
+<tr class="even">
+<td>Three of a kind</td>
+<td>Three cards with the same value</td>
+<td>A❤️ 10❤️ 4♣️ 4♠️ 4♦️</td>
+</tr>
+<tr class="odd">
+<td>Straight</td>
+<td>Sequence of 5 cards in increasing value, not all of same suit</td>
+<td>J❤️ 10❤️ 9♣️ 8♠️ 7♦️</td>
+</tr>
+<tr class="even">
+<td>Flush</td>
+<td>5 cards of the same suit, not a straight</td>
+<td>A❤️ 10❤️ 9❤️ 4❤️ 2❤️</td>
+</tr>
+<tr class="odd">
+<td>Full house</td>
+<td>Three of a kind and a pair</td>
+<td>9♦️ 9❤️ 9♣️ 4♠️ 4♦️</td>
+</tr>
+<tr class="even">
+<td>Four of a kind</td>
+<td>Four cards of the same value</td>
+<td>9♦️ 9❤️ 9♣️ 9♠️ 4♦️</td>
+</tr>
+<tr class="odd">
+<td>Straight flush</td>
+<td>Straight and flush together</td>
+<td>J❤️ 10❤️ 9❤️ 8❤️ 7❤️</td>
+</tr>
+<tr class="even">
+<td>Royal flush</td>
+<td>A K Q J 10 all of same suit</td>
+<td>A❤️ K❤️ Q❤️ J❤️ 10❤️</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="things-to-note" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Things to note</h2>
+<p>It’s worth noting that players can opt out at any time (<strong>folding</strong>), and that players can bet with hands that are typically not likely to win, in order to pressure other players into betting along (<strong>bluffing</strong>). This is then a game that is played psychologically amongst the players, as well as on the cards.</p>
+<div class="fragment">
+<p>To maximise the chances of winning, poker players have an incredible knowledge of what cards are likely to appear at what times, and the probability that their hands have a chance of winning outright.</p>
+</div>
+<div class="fragment">
+<p>However, to do that, the likelihood of certain hands appearing have to be calculated. This is where the binomial coefficients come in.</p>
+</div>
+</section>
+<section id="odds-and-ends-12" class="slide level2" data-background-image="slides-bg.png">
+<h2>Odds (and ends) (1/2)</h2>
+<p>To begin, its worth knowing that odds of these hands can be calculated by the following formula: <span class="math display">\[\mathbb{P}(\textsf{hand of type X}) = \frac{\textsf{total number of hands of type X}}{\textsf{total number of possible hands}}\]</span> where <span class="math inline">\(P\)</span> means ‘the <strong>probability</strong> of’.</p>
+</section>
+<section id="odds-and-ends-22" class="slide level2" data-background-image="slides-bg.png">
+<h2>Odds (and ends) (2/2)</h2>
+<p>One thing that will be constant is the total number of hands. Since Texas hold ’em involves <strong>seven card</strong> hands, the total number of hands will be the amount of ways that you can pick <span class="math inline">\(7\)</span> cards from a standard deck of <span class="math inline">\(52\)</span> cards.</p>
+<div class="fragment">
+<p>This is <span class="math display">\[\binom{52}{7} = \frac{52!}{7!\cdot 45!} = 133784560\]</span> (which was not worked out by hand - but by <a href="../../apps/calculators/c-ncrnpr.html">Calculator: Combinations and permutations</a>.)</p>
+<p>So this is the total number of hands.</p>
+</div>
+</section>
+<section id="royal-flush-12" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Royal flush (1/2)</h2>
+<p>What are your chances of getting a royal flush? You can work this out by looking at the choices involved.</p>
+<ul>
+<li class="fragment"><p>The <strong>values</strong> of the five cards you need are predetermined, so there is only <strong>one choice</strong> for the five card values you need. You can write this as <span class="math inline">\(1\)</span>.</p></li>
+<li class="fragment"><p>The <strong>suit</strong> of the five cards you need could be any one of the four suits {❤️,♦️,♠️,♣️} and so you have <strong>four choices</strong> for the suit, which is written as <span class="math inline">\(\displaystyle\binom{4}{1}\)</span>.</p></li>
+<li class="fragment"><p>There are two cards that could be anything. Since there are <span class="math inline">\(47\)</span> cards left to choose and you could have two of them, you have <span class="math inline">\(\displaystyle\binom{47}{2}\)</span> choices for these.</p></li>
+</ul>
+</section>
+<section id="royal-flush-22" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Royal flush (2/2)</h2>
+<p>Since these choices of these are independent, you can multiply these all together to get <span class="math display">\[\textsf{number of hands with a royal flush} = 1\cdot \binom{4}{1}\cdot \binom{47}{2} = 4\cdot 1081 = 4324\]</span></p>
+<div class="fragment">
+<p>Which means that the probability of a royal flush in Texas hold ’em is <span class="math display">\[\mathbb{P}(\textsf{royal flush}) = \frac{4324}{133784560} \approx  0.0032\%.\]</span></p>
+</div>
+</section>
+<section id="try-it-yourself-5" class="slide level2" data-background-image="slides-bg.png">
+<h2>Try it yourself 5</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 5</strong></p>
+</div>
+<div class="callout-content">
+<p>Work out the probability of getting <strong>four of a kind</strong> in Texas hold ’em poker.</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>You can apply the same logic to this kind of hand.</p>
+<ul>
+<li>The <strong>values</strong> of the four cards could be any one of the thirteen different values, so there are <strong>thirteen choices</strong>, one for each value. You can write this as <span class="math inline">\(\displaystyle\binom{13}{1}\)</span> as you are choosing one of the thirteen values.</li>
+<li>There are three other cards that could be anything. Since there are <span class="math inline">\(48\)</span> cards left to choose and you need any three of them, you have <span class="math inline">\(\displaystyle\binom{48}{3}\)</span> choices for these.</li>
+</ul>
+<p>Since these choices of these are independent, you can multiply these together to get <span class="math display">\[\textsf{number of hands with four of a kind} = \binom{13}{1}\cdot \binom{48}{3} = 13\cdot 17296 = 224848\]</span></p>
+<p>Which means that the probability of four of a kind in Texas hold ’em is <span class="math display">\[\mathbb{P}(\textsf{four of a kind}) = \frac{224848}{133784560} \approx    0.168\%.\]</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="counting-cards" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Counting cards</h2>
+<p>However, as hands get less specific, the calculations involved get a little… rougher. For instance, the amount of three of a kind hands is <span class="math display">\[\left[\binom{13}{5} - 10\right]\binom{5}{1}\binom{4}{1}\left[\binom{4}{1}^4 - 3\right] = 6461620\]</span></p>
+<div class="fragment">
+<p>and the number of full houses is <span class="math display">\[\begin{aligned}
+\left[\binom{13}{2}\binom{4}{3}^2\binom{44}{1} \right]
++ &amp; \left[\binom{13}{1}\binom{12}{2}\binom{4}{3}\binom{4}{2}^2 \right] \\
++ &amp; \left[\binom{13}{1}\binom{12}{1}\binom{11}{2}\binom{4}{3}\binom{4}{2}\binom{4}{1}^2\right]
+\end{aligned}\]</span></p>
+</div>
+</section>
+<section id="poker-face" class="slide level2" data-background-image="slides-bg.png">
+<h2>Poker face</h2>
+<p>The astonishing thing about poker players is that all the probability they do is in their head <strong>in the middle of play</strong> and <strong>with incomplete information</strong>; players know what’s in the flop, turn, and river, but they <strong>don’t</strong> know what cards other players have! This is known as <strong>conditional probability</strong> and is an incredibly detailed area of mathematics and statistics.</p>
+</section>
+<section id="end" class="slide level2" data-background-image="slides-bg.png">
+<h2>End</h2>
+<p>See you tomorrow :)</p>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../../logo-big.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

@@ -1,0 +1,1648 @@
+---
+title: "Interactive: Function investigator"
+author: Tom Coleman
+format: html
+abstract-title: Summary
+abstract: An interactive function investigator.
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+```{=html}
+<script src="https://cdn.jsdelivr.net/npm/mathjs@latest/lib/browser/math.min.js"></script>
+<style>
+
+:root{
+  --blue:#3F68B6;
+  --orange:#DB4315;
+  --yellow:#FFCB00;
+  --green:#2E8B57;
+  --red:#C0392B;
+  --border:#DDDDDD;
+  --background:#F5F5F5;
+  --column-separation:50%;
+}
+body{
+
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--background);
+
+}
+
+.calc-container{
+
+  max-width:1200px;
+  margin:auto;
+
+}
+
+.calc-row{
+
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+
+}
+
+.params-card{
+
+  flex:1;
+  min-width:300px;
+
+}
+
+.function-card{
+
+  flex:2;
+  min-width:600px;
+
+}
+
+.calc-card{
+
+  background:white;
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:1rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+
+}
+
+.calc-header{
+
+  background:var(--blue);
+  color:white;
+  font-weight:bold;
+  padding:.8rem 1rem;
+
+}
+
+.calc-body{
+
+  padding:1rem;
+
+}
+
+input[type=range]{
+
+  width:100%;
+
+}
+
+.button-row{
+
+  display:flex;
+  gap:.75rem;
+  margin-top:1rem;
+
+}
+
+button{
+
+  border:none;
+  border-radius:6px;
+  padding:.55rem 1rem;
+  font-size:15px;
+  cursor:pointer;
+  transition:.2s;
+
+}
+
+button:hover{
+
+  transform:translateY(-1px);
+
+}
+
+.undo-button{
+
+  background:var(--blue);
+  color:white;
+
+}
+
+.reset-button{
+
+  background:var(--orange);
+  color:white;
+
+}
+
+/*************************************************/
+/* FUNCTION DESIGNER                             */
+/*************************************************/
+
+#designer{
+
+  position:relative;
+  height:480px;
+
+}
+
+#arrowLayer{
+
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+
+}
+
+.column{
+
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:60px; 
+  
+  padding:10px 0;
+
+}
+
+#domainColumn{
+
+    left:calc(50% - var(--column-separation)/2);
+    transform:translate(-15%,-50%);
+
+
+}
+
+#codomainColumn{
+
+    left:calc(50% + var(--column-separation)/2);
+    transform:translate(-15%,-50%);
+
+
+}
+
+.node{
+
+  width:78px;
+  height:54px;
+  margin:4px 0; 
+
+  border-radius:10px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-weight:bold;
+  font-size:18px;
+
+  cursor:pointer;
+
+  transition:.25s;
+
+  user-select:none;
+
+}
+
+.domain{
+
+  background:var(--blue);
+  color:white;
+
+}
+
+.codomain{
+
+  background:var(--orange);
+  color:white;
+
+}
+
+.node:hover{
+
+  transform:scale(1.05);
+
+}
+
+.node.selected{
+
+  background:var(--yellow);
+  color:black;
+  box-shadow:0 0 12px rgba(255,203,0,.8);
+
+}
+
+.node.error{
+
+  background:var(--red);
+  color:white;
+
+}
+
+.node.unused{
+
+  opacity:.35;
+
+}
+
+.badge{
+
+  display:inline-block;
+  padding:.3rem .8rem;
+  border-radius:20px;
+  color:white;
+  font-size:14px;
+  margin:.2rem;
+
+}
+
+.good{
+
+  background:var(--green);
+
+}
+
+.bad{
+
+  background:var(--red);
+
+}
+
+.neutral{
+
+  background:#888;
+
+}
+
+.metric{
+
+  margin-bottom:16px;
+
+}
+
+.metric-label{
+
+  font-weight:bold;
+  color:#666;
+
+}
+
+.metric-value{
+
+  margin-top:4px;
+  font-size:1.1rem;
+
+}
+
+/*************************************************/
+/* SVG ARROWS                                    */
+/*************************************************/
+
+.arrow{
+
+  stroke:var(--blue);
+  stroke-width:2;
+  fill:none;
+
+  marker-end:url(#arrowhead);
+
+  transition:.3s;
+
+}
+
+.arrow.invalid{
+
+  stroke:var(--red);
+
+}
+
+.arrow.selected{
+
+  stroke:var(--yellow);
+  stroke-width:5;
+
+}
+
+/*************************************************/
+/* MOBILE                                        */
+/*************************************************/
+
+@media(max-width:900px){
+
+  .calc-row{
+
+      flex-direction:column;
+
+  }
+
+  .function-card{
+
+      min-width:auto;
+
+  }
+
+  #designer{
+
+      height:520px;
+
+  }
+
+  .node{
+
+      width:78px;
+      height:54px;
+      font-size:16px;
+      margin:4px 0; 
+
+  }
+
+  #domainColumn{
+
+    left:calc(50% - var(--column-separation)/2);
+    transform:translate(-15%,-50%);
+
+
+  }
+
+  #codomainColumn{
+
+    left:calc(50% + var(--column-separation)/2);
+    transform:translate(-15%,-50%);
+
+  }
+
+}
+
+</style>
+
+<div class="calc-container">
+
+  <div class="calc-row">
+
+    <!-- ================= PARAMETERS ================= -->
+
+    <div class="calc-card params-card">
+
+      <div class="calc-header">
+        Parameters
+      </div>
+
+      <div class="calc-body">
+
+        <label for="domainSize">
+          Size of domain (|X|)
+        </label>
+
+        <input
+          id="domainSize"
+          type="range"
+          min="1"
+          max="8"
+          value="5">
+
+        <div id="domainValue">
+          5 elements
+        </div>
+
+        <br>
+
+        <label for="codomainSize">
+          Size of dodomain (|Y|)
+        </label>
+
+        <input
+          id="codomainSize"
+          type="range"
+          min="1"
+          max="8"
+          value="5">
+
+        <div id="codomainValue">
+          5 elements
+        </div>
+
+        <div class="button-row">
+        
+          Click a domain element,
+          then a codomain element
+          to create a mapping.
+
+          <button
+            id="undoButton"
+            class="undo-button">
+
+            Undo
+
+          </button>
+
+          <button
+            id="resetButton"
+            class="reset-button">
+
+            Reset
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= FUNCTION DESIGNER ================= -->
+
+    <div class="calc-card function-card">
+
+      <div class="calc-header">
+        Function Designer
+      </div>
+
+      <div class="calc-body">
+
+        <div id="designer">
+
+          <!-- SVG arrow layer -->
+
+          <svg id="arrowLayer">
+
+            <defs>
+
+            <marker
+                id="arrowhead"
+                markerWidth="5"
+                markerHeight="4"
+                refX="4.8"
+                refY="2"
+                orient="auto"
+                markerUnits="strokeWidth">
+            
+                <polygon
+                    points="0 0, 5 2, 0 4"
+                    fill="#3F68B6">
+                </polygon>
+
+                </marker>
+
+            </defs>
+
+          </svg>
+
+          <!-- Domain -->
+
+          <div
+            id="domainColumn"
+            class="column">
+
+          </div>
+
+          <!-- Codomain -->
+
+          <div
+            id="codomainColumn"
+            class="column">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= INFORMATION ================= -->
+
+  <div class="calc-card">
+
+    <div class="calc-header">
+      Information
+    </div>
+
+    <div
+      id="informationPanel"
+      class="calc-body">
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Function status
+
+        </div>
+
+        <div
+          id="functionStatus"
+          class="metric-value">
+
+          Click a domain element,
+          then a codomain element
+          to create a mapping.
+
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Properties
+
+        </div>
+
+        <div id="propertyBadges">
+
+          <span
+            class="badge neutral">
+
+            Not yet defined
+
+          </span>
+
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Domain
+
+        </div>
+
+        <div
+          id="domainDisplay"
+          class="metric-value">
+
+        </div>
+
+      </div>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Codomain
+
+        </div>
+
+        <div
+          id="codomainDisplay"
+          class="metric-value">
+
+        </div>
+
+      </div>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Image
+
+        </div>
+
+        <div
+          id="imageDisplay"
+          class="metric-value">
+
+        </div>
+
+      </div>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Mapping
+
+        </div>
+
+        <div
+          id="mappingDisplay"
+          class="metric-value">
+
+          None
+
+        </div>
+
+      </div>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Explanation
+
+        </div>
+
+        <div
+          id="explanation"
+          class="metric-value">
+
+          Every element of the domain
+          must map to exactly one element
+          of the codomain.
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/*********************************************************************/
+/* GLOBAL DATA                                                       */
+/*********************************************************************/
+
+// Labels for the domain (X)
+const DOMAIN_LABELS = [
+  "A","B","C","D","E","F","G","H"
+];
+
+// Labels for the codomain (Y)
+const CODOMAIN_LABELS = [
+  "1","2","3","4","5","6","7","8"
+];
+
+/*********************************************************************/
+/* CURRENT STATE                                                     */
+/*********************************************************************/
+
+// Current slider values
+let domainSize = 5;
+let codomainSize = 5;
+
+// Currently selected domain element
+// (null means nothing selected)
+let selectedDomain = null;
+
+// History stack for Undo
+let undoStack = [];
+
+/*
+Mappings are stored as:
+
+Map(
+
+  "A" -> ["2"],
+
+  "B" -> ["5"],
+
+  "C" -> ["1","4"]   <-- illegal one-to-many
+
+)
+
+We deliberately allow multiple outputs because
+we want students to be able to create an invalid
+function and receive feedback.
+*/
+
+let mappings = new Map();
+
+/*********************************************************************/
+/* INITIALISATION                                                    */
+/*********************************************************************/
+
+function initialiseData(){
+
+    mappings.clear();
+
+    undoStack = [];
+
+    selectedDomain = null;
+
+    domainSize =
+        parseInt(
+            document.getElementById(
+                "domainSize"
+            ).value
+        );
+
+    codomainSize =
+        parseInt(
+            document.getElementById(
+                "codomainSize"
+            ).value
+        );
+
+    // Every domain element begins
+    // with zero outputs.
+
+    for(let i=0;i<domainSize;i++){
+
+        mappings.set(
+            DOMAIN_LABELS[i],
+            []
+        );
+
+    }
+
+}
+
+/*********************************************************************/
+/* SAVE STATE FOR UNDO                                               */
+/*********************************************************************/
+
+function saveState(){
+
+    // Deep copy of mappings
+
+    const copy =
+        new Map();
+
+    mappings.forEach(
+        (value,key)=>{
+
+            copy.set(
+                key,
+                [...value]
+            );
+
+        }
+    );
+
+    undoStack.push({
+
+        mappings:copy,
+
+        selected:selectedDomain
+
+    });
+
+}
+
+/*********************************************************************/
+/* UNDO                                                              */
+/*********************************************************************/
+
+function undo(){
+
+    if(
+        undoStack.length===0
+    ){
+        return;
+    }
+
+    const state =
+        undoStack.pop();
+
+    mappings =
+        state.mappings;
+
+    selectedDomain =
+        state.selected;
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* RESET                                                             */
+/*********************************************************************/
+
+function resetMappings(){
+
+    initialiseData();
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* SELECT DOMAIN ELEMENT                                              */
+/*********************************************************************/
+
+function selectDomain(label){
+
+    selectedDomain = label;
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* ADD MAPPING                                                       */
+/*********************************************************************/
+
+function addMapping(codomainLabel){
+
+    if(
+        selectedDomain===null
+    ){
+        return;
+    }
+
+    saveState();
+
+    const outputs =
+        mappings.get(
+            selectedDomain
+        );
+
+    outputs.push(
+        codomainLabel
+    );
+
+    selectedDomain = null;
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* REMOVE A SPECIFIC MAPPING                                         */
+/*********************************************************************/
+
+function removeMapping(
+
+    domainLabel,
+
+    codomainLabel
+
+){
+
+    saveState();
+
+    const outputs =
+        mappings.get(
+            domainLabel
+        );
+
+    const filtered =
+        outputs.filter(
+
+            x=>x!==codomainLabel
+
+        );
+
+    mappings.set(
+
+        domainLabel,
+
+        filtered
+
+    );
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* REPLACE OUTPUT                                                    */
+/*********************************************************************/
+
+/*
+Useful later if you decide that
+clicking an already-defined domain
+should replace its output rather than
+creating an illegal function.
+
+Currently unused.
+*/
+
+function setSingleOutput(
+
+    domainLabel,
+
+    codomainLabel
+
+){
+
+    saveState();
+
+    mappings.set(
+
+        domainLabel,
+
+        [codomainLabel]
+
+    );
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* ACCESSORS                                                         */
+/*********************************************************************/
+
+function getDomain(){
+
+    return DOMAIN_LABELS.slice(
+        0,
+        domainSize
+    );
+
+}
+
+function getCodomain(){
+
+    return CODOMAIN_LABELS.slice(
+        0,
+        codomainSize
+    );
+
+}
+
+function getImage(){
+
+    const image =
+        new Set();
+
+    mappings.forEach(
+
+        outputs=>{
+
+            outputs.forEach(
+
+                y=>image.add(y)
+
+            );
+
+        }
+
+    );
+
+    return [...image];
+
+}
+
+/*********************************************************************/
+/* HELPER                                                            */
+/*********************************************************************/
+
+function hasOutput(domainLabel){
+
+    return (
+        mappings.get(
+            domainLabel
+        ).length>0
+    );
+
+}
+
+function outputCount(domainLabel){
+
+    return mappings.get(
+        domainLabel
+    ).length;
+
+}
+
+function outputs(domainLabel){
+
+    return mappings.get(
+        domainLabel
+    );
+
+}
+
+/*********************************************************************/
+/* REDRAW EVERYTHING                                                 */
+/*********************************************************************/
+
+function redraw(){
+
+    //----------------------------------------------------------
+    // Get containers
+    //----------------------------------------------------------
+
+    const domainColumn =
+        document.getElementById(
+            "domainColumn"
+        );
+
+    const codomainColumn =
+        document.getElementById(
+            "codomainColumn"
+        );
+
+    const svg =
+        document.getElementById(
+            "arrowLayer"
+        );
+
+    //----------------------------------------------------------
+    // Clear previous contents
+    //----------------------------------------------------------
+
+    domainColumn.innerHTML = "";
+
+    codomainColumn.innerHTML = "";
+
+    // Keep the <defs> section
+
+    const defs =
+        svg.querySelector("defs");
+
+    svg.innerHTML = "";
+
+    svg.appendChild(defs);
+
+    //----------------------------------------------------------
+    // Build domain
+    //----------------------------------------------------------
+
+    getDomain().forEach(label=>{
+
+        const box =
+            document.createElement("div");
+
+        box.className =
+            "node domain";
+
+        if(label===selectedDomain){
+
+            box.classList.add(
+                "selected"
+            );
+
+        }
+
+        box.textContent =
+            label;
+
+        box.dataset.label =
+            label;
+
+        box.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                selectDomain(
+                    label
+                );
+
+            }
+
+        );
+
+        domainColumn.appendChild(
+            box
+        );
+
+    });
+
+    //----------------------------------------------------------
+    // Build codomain
+    //----------------------------------------------------------
+
+    getCodomain().forEach(label=>{
+
+        const box =
+            document.createElement("div");
+
+        box.className =
+            "node codomain";
+
+        box.textContent =
+            label;
+
+        box.dataset.label =
+            label;
+
+        box.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                addMapping(
+                    label
+                );
+
+            }
+
+        );
+
+        codomainColumn.appendChild(
+            box
+        );
+
+    });
+
+    //----------------------------------------------------------
+    // Draw arrows
+    //----------------------------------------------------------
+
+    drawArrows();
+
+    //----------------------------------------------------------
+    // Update information panel
+    //----------------------------------------------------------
+
+    updateInformation();
+
+}
+
+/*********************************************************************/
+/* DRAW SVG ARROWS                                                   */
+/*********************************************************************/
+
+function drawArrows(){
+
+    const svg =
+        document.getElementById(
+            "arrowLayer"
+        );
+
+    mappings.forEach(
+
+        (outputs,domain)=>{
+
+            outputs.forEach(
+
+                (codomain,index)=>{
+
+                    const from =
+                        document.querySelector(
+                            '#domainColumn .node[data-label="'+domain+'"]'
+                        );
+
+                    const to =
+                        document.querySelector(
+                            '#codomainColumn .node[data-label="'+codomain+'"]'
+                        );
+
+                    if(!from || !to)
+                        return;
+
+                    const p1 =
+                        centreOf(from,svg);
+
+                    const p2 =
+                        centreOf(to,svg);
+
+                    //--------------------------------------------------
+
+                    const startX = p1.x + 39;   // half of 78px
+                    const endX   = p2.x - 39;
+                    
+                    const dx = (endX - startX)/2;
+                    
+                    const curve =
+                        30*(index-(outputs.length-1)/2);
+
+                    //--------------------------------------------------
+
+                    const path =
+                        document.createElementNS(
+
+                            "http://www.w3.org/2000/svg",
+
+                            "path"
+
+                        );
+
+                    path.setAttribute(
+
+                        "class",
+
+                        "arrow"
+
+                    );
+
+                    path.setAttribute(
+                        "d",
+                        `M ${startX} ${p1.y}
+                         C ${startX+dx} ${p1.y+curve},
+                           ${endX-dx} ${p2.y+curve},
+                           ${endX} ${p2.y}`
+                    );
+
+                    svg.appendChild(
+                        path
+                    );
+
+                }
+
+            );
+
+        }
+
+    );
+
+}
+
+/*********************************************************************/
+/* CENTRE OF NODE                                                    */
+/*********************************************************************/
+
+function centreOf(node,svg){
+
+    const r=node.getBoundingClientRect();
+    const s=svg.getBoundingClientRect();
+
+    return{
+
+        x:r.left-s.left+r.width/2,
+
+        y:r.top-s.top+r.height/2
+
+    };
+
+}
+
+/*********************************************************************/
+/* UPDATE INFORMATION PANEL                                          */
+/*********************************************************************/
+
+function updateInformation(){
+
+    const domain = getDomain();
+    const codomain = getCodomain();
+
+    //----------------------------------------------------------
+    // Analyse mapping
+    //----------------------------------------------------------
+
+    let missing = [];
+    let oneToMany = [];
+    let image = new Set();
+
+    let isFunction = true;
+
+    mappings.forEach((outputs,x)=>{
+
+        if(outputs.length===0){
+
+            missing.push(x);
+            isFunction = false;
+
+        }
+
+        if(outputs.length>1){
+
+            oneToMany.push(x);
+            isFunction = false;
+
+        }
+
+        outputs.forEach(y=>image.add(y));
+
+    });
+
+    //----------------------------------------------------------
+    // Injective?
+    //----------------------------------------------------------
+
+    let injective = false;
+
+    if(isFunction){
+
+        injective = true;
+
+        const seen = new Set();
+
+        for(const x of domain){
+
+            const y = mappings.get(x)[0];
+
+            if(seen.has(y)){
+
+                injective = false;
+                break;
+
+            }
+
+            seen.add(y);
+
+        }
+
+    }
+
+    //----------------------------------------------------------
+    // Surjective?
+    //----------------------------------------------------------
+
+    let surjective = false;
+
+    if(isFunction){
+
+        surjective = true;
+
+        codomain.forEach(y=>{
+
+            if(!image.has(y))
+                surjective = false;
+
+        });
+
+    }
+
+    //----------------------------------------------------------
+    // Bijective?
+    //----------------------------------------------------------
+
+    const bijective =
+        isFunction &&
+        injective &&
+        surjective;
+
+    //----------------------------------------------------------
+    // Status message
+    //----------------------------------------------------------
+
+    let status;
+    let explanation;
+
+    if(isFunction){
+
+        status =
+            "<span class='badge good'>✓ Function</span>";
+
+        explanation =
+            "Every element of the domain has exactly one output.";
+
+    }
+    else if(oneToMany.length){
+
+        status =
+            "<span class='badge bad'>✗ Not a Function</span>";
+
+        explanation =
+            oneToMany.join(", ")
+            + " map to more than one value.";
+
+    }
+    else{
+
+        status =
+            "<span class='badge bad'>✗ Not a Function</span>";
+
+        explanation =
+            "No output has been chosen for "
+            + missing.join(", ") + ".";
+
+    }
+
+    //----------------------------------------------------------
+    // Property badges
+    //----------------------------------------------------------
+
+    let badges = "";
+
+    badges +=
+        injective
+        ? "<span class='badge good'>Injective</span>"
+        : "<span class='badge bad'>Not Injective</span>";
+
+    badges +=
+        surjective
+        ? "<span class='badge good'>Surjective</span>"
+        : "<span class='badge bad'>Not Surjective</span>";
+
+    badges +=
+        bijective
+        ? "<span class='badge good'>Bijective</span>"
+        : "<span class='badge bad'>Not Bijective</span>";
+
+    //----------------------------------------------------------
+    // Mapping text
+    //----------------------------------------------------------
+
+    let mappingHTML = "";
+
+    domain.forEach(x=>{
+
+        const outputs = mappings.get(x);
+
+        if(outputs.length===0){
+
+            mappingHTML +=
+                `${x} ↦ ?<br>`;
+
+        }
+        else{
+
+            mappingHTML +=
+                `${x} ↦ ${outputs.join(", ")}<br>`;
+
+        }
+
+    });
+
+    //----------------------------------------------------------
+    // Image
+    //----------------------------------------------------------
+
+    const imageText =
+        image.size
+        ? "{"+[...image].join(", ")+"}"
+        : "∅";
+
+    //----------------------------------------------------------
+    // Update page
+    //----------------------------------------------------------
+
+    document.getElementById(
+        "functionStatus"
+    ).innerHTML = status;
+
+    document.getElementById(
+        "propertyBadges"
+    ).innerHTML = badges;
+
+    document.getElementById(
+        "domainDisplay"
+    ).innerHTML =
+        "{"+domain.join(", ")+"}";
+
+    document.getElementById(
+        "codomainDisplay"
+    ).innerHTML =
+        "{"+codomain.join(", ")+"}";
+
+    document.getElementById(
+        "imageDisplay"
+    ).innerHTML =
+        imageText;
+
+    document.getElementById(
+        "mappingDisplay"
+    ).innerHTML =
+        mappingHTML;
+
+    document.getElementById(
+        "explanation"
+    ).innerHTML =
+        explanation;
+
+}
+
+/*********************************************************************/
+/* EVENT LISTENERS                                                   */
+/*********************************************************************/
+
+//----------------------------------------------------------
+// Domain size slider
+//----------------------------------------------------------
+
+document.getElementById(
+    "domainSize"
+).addEventListener(
+    "input",
+    function(){
+
+        domainSize =
+            parseInt(this.value);
+
+        document.getElementById(
+            "domainValue"
+        ).textContent =
+            domainSize +
+            " element" +
+            (domainSize===1 ? "" : "s");
+
+        initialiseData();
+
+        redraw();
+
+    }
+);
+
+//----------------------------------------------------------
+// Codomain size slider
+//----------------------------------------------------------
+
+document.getElementById(
+    "codomainSize"
+).addEventListener(
+    "input",
+    function(){
+
+        codomainSize =
+            parseInt(this.value);
+
+        document.getElementById(
+            "codomainValue"
+        ).textContent =
+            codomainSize +
+            " element" +
+            (codomainSize===1 ? "" : "s");
+
+        initialiseData();
+
+        redraw();
+
+    }
+);
+
+//----------------------------------------------------------
+// Undo button
+//----------------------------------------------------------
+
+document.getElementById(
+    "undoButton"
+).addEventListener(
+    "click",
+    undo
+);
+
+//----------------------------------------------------------
+// Reset button
+//----------------------------------------------------------
+
+document.getElementById(
+    "resetButton"
+).addEventListener(
+    "click",
+    resetMappings
+);
+
+//----------------------------------------------------------
+// Window resize
+//----------------------------------------------------------
+
+window.addEventListener(
+    "resize",
+    redraw
+);
+
+//----------------------------------------------------------
+// Keyboard shortcuts
+//----------------------------------------------------------
+
+document.addEventListener(
+
+    "keydown",
+
+    function(e){
+
+        //--------------------------------------------------
+        // Ctrl+Z
+        //--------------------------------------------------
+
+        if(
+            (e.ctrlKey || e.metaKey) &&
+            e.key.toLowerCase()==="z"
+        ){
+
+            e.preventDefault();
+
+            undo();
+
+        }
+
+        //--------------------------------------------------
+        // Escape clears selection
+        //--------------------------------------------------
+
+        if(
+            e.key==="Escape"
+        ){
+
+            selectedDomain = null;
+
+            redraw();
+
+        }
+
+    }
+
+);
+
+//----------------------------------------------------------
+// Initial page load
+//----------------------------------------------------------
+
+initialiseData();
+
+document.getElementById(
+    "domainValue"
+).textContent =
+domainSize + " elements";
+
+document.getElementById(
+    "codomainValue"
+).textContent =
+codomainSize + " elements";
+
+redraw();
+
+</script>
+```
+
+## Version history {-}
+
+v1.0: initial version created 07/26 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

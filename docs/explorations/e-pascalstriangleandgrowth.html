@@ -1,2 +1,3071 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tom Coleman">
+
+<title>The hidden sequences of Pascal’s triangle – STARMAST</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4bc6d62a8f631abbc9a163be30471117.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-9b9ee040fd52a61b26fb17fad03ba886.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-4bc6d62a8f631abbc9a163be30471117.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, alongside enabling our non-identifiable QuickCheck problem tracking. These are the sole purposes of enabling cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<script src="https://esm.sh/shinylive-r"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../logo-big.png" alt="" class="navbar-logo light-content">
+    <img src="../logo-big.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html"> 
+<span class="menu-text">Full index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../faqs.html"> 
+<span class="menu-text">FAQs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../search/topicsearch.html"> 
+<span class="menu-text">School topic search</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="0722b2b9ded0d5f62524be1a2b90bbbe" class="alert alert-danger hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest news:</strong> Enforced update of R Shinylive figures in stats factsheets now underway! (11/06/26)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#pascals-triangle" id="toc-pascals-triangle" class="nav-link active" data-scroll-target="#pascals-triangle">Pascal’s triangle</a></li>
+  <li><a href="#sequences-hidden-in-pascals-triangle" id="toc-sequences-hidden-in-pascals-triangle" class="nav-link" data-scroll-target="#sequences-hidden-in-pascals-triangle">Sequences hidden in Pascal’s triangle</a>
+  <ul class="collapse">
+  <li><a href="#whats-the-point" id="toc-whats-the-point" class="nav-link" data-scroll-target="#whats-the-point">What’s the point?</a></li>
+  <li><a href="#triangular-numbers" id="toc-triangular-numbers" class="nav-link" data-scroll-target="#triangular-numbers">Triangular numbers</a>
+  <ul class="collapse">
+  <li><a href="#formula" id="toc-formula" class="nav-link" data-scroll-target="#formula">Formula</a></li>
+  <li><a href="#square-numbers" id="toc-square-numbers" class="nav-link" data-scroll-target="#square-numbers">Square numbers</a></li>
+  <li><a href="#whats-the-point-1" id="toc-whats-the-point-1" class="nav-link" data-scroll-target="#whats-the-point-1">What’s the point?</a></li>
+  </ul></li>
+  <li><a href="#interlude-tetrahedral-numbers" id="toc-interlude-tetrahedral-numbers" class="nav-link" data-scroll-target="#interlude-tetrahedral-numbers">Interlude: Tetrahedral numbers</a></li>
+  <li><a href="#interlude-fibonacci-numbers" id="toc-interlude-fibonacci-numbers" class="nav-link" data-scroll-target="#interlude-fibonacci-numbers">Interlude: Fibonacci numbers</a></li>
+  <li><a href="#powers-of-2" id="toc-powers-of-2" class="nav-link" data-scroll-target="#powers-of-2">Powers of 2</a>
+  <ul class="collapse">
+  <li><a href="#whats-the-point-2" id="toc-whats-the-point-2" class="nav-link" data-scroll-target="#whats-the-point-2">What’s the point?</a></li>
+  </ul></li>
+  <li><a href="#factorials" id="toc-factorials" class="nav-link" data-scroll-target="#factorials">Factorials</a></li>
+  </ul></li>
+  <li><a href="#growth-of-sequences" id="toc-growth-of-sequences" class="nav-link" data-scroll-target="#growth-of-sequences">Growth of sequences</a>
+  <ul class="collapse">
+  <li><a href="#whats-the-point-3" id="toc-whats-the-point-3" class="nav-link" data-scroll-target="#whats-the-point-3">What’s the point?</a>
+  <ul class="collapse">
+  <li><a href="#computational-complexity" id="toc-computational-complexity" class="nav-link" data-scroll-target="#computational-complexity">Computational complexity</a></li>
+  <li><a href="#p-versus-np" id="toc-p-versus-np" class="nav-link" data-scroll-target="#p-versus-np">P versus NP</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="e-pascalstriangleandgrowth.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="e-pascalstriangleandgrowth.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The hidden sequences of Pascal’s triangle</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tom Coleman </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    In the first of four linked presentations, this session looks at Pascal’s triangle and the various number sequences contained within. Some of these sequences are on the surface, and some of the sequences are incredibly hidden! Once these sequences are found, they will be examined and compared against each other, where their role in one of the most famous/infamous open problems in theoretical computer science will be revealed.
+  </div>
+</div>
+
+
+</header>
+
+
+<section id="pascals-triangle" class="level1">
+<h1>Pascal’s triangle</h1>
+<p>Central to many different and disparate areas of mathematics, one of the most interesting objects in the subject is <strong>Pascal’s triangle</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>How to construct Pascal’s triangle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Start with 1 at the top point of a triangle.</p>
+<p>Write 1’s down the sides of the triangle.</p>
+<p>To fill in the rest of the entries, add two numbers next to each other in a row, and write the answer below and between both of them.</p>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/mathjs@latest/lib/browser/math.min.js"></script>
+<style>
+.calc-container{
+  max-width:1200px;
+  margin:auto;
+}
+
+.calc-row{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.params-card{
+  flex:1;
+  min-width:280px;
+}
+
+.plot-card{
+  flex:2;
+  min-width:500px;
+}
+
+.calc-card{
+  background:white;
+  border:1px solid #ddd;
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:1rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+.calc-header{
+  background:#3F68B6;
+  color:white;
+  padding:.75rem 1rem;
+  font-weight:700;
+}
+
+.calc-body{
+  padding:1rem;
+}
+
+#rows{
+  width:100%;
+}
+
+#rowsValue{
+  margin-top:.5rem;
+  font-weight:600;
+}
+
+#triangle{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.triangle-row{
+  display:flex;
+  margin-top:-13px;
+}
+
+.hex{
+  width:60px;
+  height:52px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:white;
+  font-weight:bold;
+
+  background:#3F68B6;
+
+  clip-path:polygon(
+    50% 0%,
+    93% 25%,
+    93% 75%,
+    50% 100%,
+    7% 75%,
+    7% 25%
+  );
+
+  margin:0 0.5px;
+
+  transition:.1s;
+}
+
+.hex.selected{
+  background:#db4315;
+  transform:scale(1.05);
+}
+
+.hex.parent{
+  background:#ffcb00;
+  color:black;
+}
+
+.row-label{
+  width:30px;
+  text-align:right;
+  font-weight:bold;
+  margin-right:8px;
+}
+
+.row-wrapper{
+  display:flex;
+  align-items:center;
+}
+
+.align-toggle{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  margin-top:1rem;
+  padding:.25rem .5rem;
+  border-radius:6px;
+}
+
+
+
+@media(max-width:768px){
+
+  .calc-row{
+    flex-direction:column;
+  }
+
+  .plot-card{
+    min-width:auto;
+  }
+
+  .hex{
+    width:42px;
+    height:36px;
+    font-size:12px;
+  }
+
+}
+</style>
+
+<div class="calc-container">
+
+  <div class="calc-row">
+
+    <div class="calc-card params-card">
+
+      <div class="calc-header">
+        Parameters
+      </div>
+
+      <div class="calc-body">
+
+        <label for="rows">
+          Number of rows
+        </label>
+
+        <input type="range" id="rows" min="1" max="10" value="5">
+
+        <div id="rowsValue">
+          5 rows
+        </div>
+
+      </div>
+      
+<label class="align-toggle">
+
+  <input type="checkbox" id="leftAlign">
+
+  Left-align triangle
+
+</label>
+
+    </div>
+
+    <div class="calc-card plot-card">
+
+      <div class="calc-header">
+        Pascal's triangle
+      </div>
+
+      <div class="calc-body">
+
+        <div id="triangle"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const triangleDiv =
+  document.getElementById("triangle");
+
+let currentValues = [];
+let currentParents = [];
+
+function updateInfoPanel(
+  value,
+  row,
+  position,
+  parentText
+){
+
+  document.getElementById(
+    "selectionInfo"
+  ).innerHTML = `
+
+    <div class="metric">
+      <div class="metric-label">
+        Value
+      </div>
+      <div class="metric-value">
+        ${value}
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        Row
+      </div>
+      <div class="metric-value">
+        ${row}
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        Position
+      </div>
+      <div class="metric-value">
+        ${position}
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        Binomial Coefficient
+      </div>
+      <div class="metric-value">
+        C(${row},${position})
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        Parents
+      </div>
+      <div class="metric-value">
+        ${parentText}
+      </div>
+    </div>
+
+  `;
+}
+
+function clearSelection(){
+
+  document
+    .querySelectorAll(".hex")
+    .forEach(el=>{
+
+      el.classList.remove(
+        "selected"
+      );
+
+      el.classList.remove(
+        "parent"
+      );
+
+    });
+
+}
+
+function selectHex(i,j){
+
+  clearSelection();
+
+  const hex =
+    document.getElementById(
+      `hex-${i}-${j}`
+    );
+
+  if(!hex) return;
+
+  hex.classList.add(
+    "selected"
+  );
+
+  const parentIds =
+    currentParents[i][j];
+
+  let parentText = "None";
+
+  if(parentIds.length === 2){
+
+    const p1 =
+      document.getElementById(
+        parentIds[0]
+      );
+
+    const p2 =
+      document.getElementById(
+        parentIds[1]
+      );
+
+    if(p1 && p2){
+
+      p1.classList.add(
+        "parent"
+      );
+
+      p2.classList.add(
+        "parent"
+      );
+
+      parentText =
+        `${p1.textContent} + ${p2.textContent}`;
+
+    }
+
+  }
+
+  updateInfoPanel(
+    currentValues[i][j],
+    i,
+    j,
+    parentText
+  );
+
+}
+
+function buildTriangle(rows){
+
+  triangleDiv.innerHTML = "";
+
+  currentValues = [];
+  currentParents = [];
+
+  for(let i=0;i<rows;i++){
+
+    currentValues[i] = [];
+    currentParents[i] = [];
+
+    for(let j=0;j<=i;j++){
+
+      if(j===0 || j===i){
+
+        currentValues[i][j] = 1;
+        currentParents[i][j] = [];
+
+      }
+      else{
+
+        currentValues[i][j] =
+          currentValues[i-1][j-1] +
+          currentValues[i-1][j];
+
+        currentParents[i][j] = [
+          `hex-${i-1}-${j-1}`,
+          `hex-${i-1}-${j}`
+        ];
+
+      }
+
+    }
+
+  }
+
+  for(let i=0;i<rows;i++){
+
+    const wrapper =
+      document.createElement("div");
+
+    wrapper.className =
+      "row-wrapper";
+
+    const label =
+      document.createElement("div");
+
+    label.className =
+      "row-label";
+
+    label.textContent = i;
+
+    wrapper.appendChild(label);
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "triangle-row";
+
+    for(let j=0;j<=i;j++){
+
+      const hex =
+        document.createElement("div");
+
+      hex.className =
+        "hex";
+
+      hex.id =
+        `hex-${i}-${j}`;
+
+      hex.textContent =
+        currentValues[i][j];
+
+      hex.addEventListener(
+        "click",
+        ()=>selectHex(i,j)
+      );
+
+      row.appendChild(hex);
+
+    }
+
+    wrapper.appendChild(row);
+
+    triangleDiv.appendChild(
+      wrapper
+    );
+
+  }
+
+  selectHex(0,0);
+
+}
+
+document
+  .getElementById("rows")
+  .addEventListener(
+    "input",
+    function(){
+
+      document.getElementById(
+        "rowsValue"
+      ).textContent =
+        this.value + " rows";
+
+      buildTriangle(
+        parseInt(this.value)
+      );
+
+    }
+  );
+
+document
+  .getElementById("leftAlign")
+  .addEventListener(
+    "change",
+    function(){
+
+      triangleDiv.style.alignItems =
+        this.checked
+          ? "flex-start"
+          : "center";
+
+    }
+  );
+
+buildTriangle(5);
+
+</script>
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Why Pascal’s triangle? A brief history
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While this is known as Pascal’s triangle in most of Western civilization, the idea of generating numbers in a triangle by adding the above two entries predates <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Pascal/">Pascal the mathematician</a> by several hundred years. In fact, the history of the triangle lives on in the name given to it by other countries:</p>
+<ul>
+<li><p>In Iran, it’s called <strong>Khayyam’s triangle</strong> after the Persian mathematician <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Khayyam/">Omar Khayyam</a>, who used the construction in the 11th century to find <span class="math inline">\(n\)</span>th roots of numbers and describe bracket expansions.. In fact, they were not the first Persian to discuss the triangle: this was <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Al-Karaji/">al-Karaji</a>.</p></li>
+<li><p>In China, it’s called <strong>Yang Hui’s triangle</strong> after the Chinese mathematician <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Yang_Hui/">Yang Hui</a>, using it to find the sum of triangular numbers (more on that later…). They also wrote many more mathematical texts on subjects from algebra to magic squares.</p></li>
+<li><p>In Italy, it’s called <strong>Tartaglia’s triangle</strong> after the Italian mathematician <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Tartaglia/">Niccolò Tartaglia</a>, who (amongst other things) helped to solve equations involving cubic terms <span class="math inline">\(x^3\)</span>. <a href="https://mathshistory.st-andrews.ac.uk/HistTopics/Tartaglia_v_Cardan/">Notably, they participated in what can only be described as the 16th century Italian version of a rap battle.</a></p></li>
+</ul>
+<p>Pascal himself did expose the deep connections between the triangle and probability theory, and so the common name Pascal’s triangle is not without merit!</p>
+</div>
+</div>
+<p>Here’s something you can figure out.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Try it yourself 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the defining relation and the figure above, work out the eleventh row of Pascal’s triangle. Write down any observations you have about the triangle so far.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer to try it yourself 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The next row should be <span class="math display">\[1\;\; 10\;\; 45\;\; 120 \;\; 210 \;\; 252 \;\; 210 \;\; 120 \;\; 45 \;\; 10 \; \;1\]</span> where each term is obtained by adding the two terms directly above it.</p>
+<p>You can notice that</p>
+<ul>
+<li><p>every row is symmetric down the middle (and therefore so is the triangle)</p></li>
+<li><p>every even numbered row has a unique number in the centre</p></li>
+<li><p>every odd numbered row has two numbers the same in the middle.</p></li>
+<li><p>there is <span class="math inline">\(1,2,3,4,5,6,\ldots\)</span> down the diagonals in numerical order.</p></li>
+</ul>
+<p>You will see more on these properties in the next exploration, which can be found at <a href="../explorations/e-combinationspermutations.html">Exploration: How to win at cards - combinations and permutations</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sequences-hidden-in-pascals-triangle" class="level1">
+<h1>Sequences hidden in Pascal’s triangle</h1>
+<p>A <strong>sequence</strong> is any finite or infinite list of numbers. Any number in a sequence is called a <strong>term</strong>. The term in position <span class="math inline">\(n\)</span> of the sequence is called the <strong><span class="math inline">\(n\)</span>th term</strong> of the sequence.</p>
+<p>Here are some sequences of numbers:</p>
+<p><span class="math display">\[
+\begin{aligned}
+(1) &amp;\qquad 1,1,1,1,1\\[0.5em]
+(2) &amp;\qquad 1,1,1,1,1,\ldots\\[0.5em]
+(3) &amp;\qquad 1,2,3,4,99,\ldots\\[0.5em]
+(4) &amp;\qquad 1,99,2,3,4,\ldots\\[0.5em]
+(5) &amp;\qquad 1,4,6,9,16,\ldots\\[0.5em]
+(6) &amp;\qquad 1,1,2,3,5,\ldots
+\end{aligned}
+\]</span> Here, <span class="math inline">\((1)\)</span> is a finite sequence with five terms; all of the others <span class="math inline">\((2)-(6)\)</span> are infinite sequences - which you can see by the three dots <span class="math inline">\(\ldots\)</span> at the end of each.</p>
+<p>As evidenced by <span class="math inline">\((2)\)</span>, every term in the sequence can be the same; such a sequence is called a <strong>constant sequence</strong>.</p>
+<p>Sequence <span class="math inline">\((3)\)</span> shows that a sequence doesn’t have to follow a prescriptive pattern; they really can be any list of numbers. The <span class="math inline">\(5\)</span>th term of the sequence is <span class="math inline">\(99\)</span>.</p>
+<p>Sequences <span class="math inline">\((3)\)</span> and <span class="math inline">\((4)\)</span> show that the order of the terms in the sequence matters; these are not the same sequence.</p>
+<p>Sequence <span class="math inline">\((5)\)</span> is an example of a sequence where the <span class="math inline">\(n\)</span>th term is given by a formula involving <span class="math inline">\(n\)</span>. In this case, the <span class="math inline">\(n\)</span>th term of the sequence is given by <span class="math inline">\(n^2\)</span>.</p>
+<p>Sequence <span class="math inline">\((6)\)</span> is an example of a sequence where the <span class="math inline">\(n\)</span>th term is given by some combination of previous terms. It can be defined by setting the first and second term to be <span class="math inline">\(1\)</span>, and then every subsequent term is the sum of the previous two terms. (This is the famous <strong>Fibonacci sequence</strong>.)</p>
+<section id="whats-the-point" class="level3">
+<h3 class="anchored" data-anchor-id="whats-the-point">What’s the point?</h3>
+<p>Sequences of numbers help to measure <strong>growth</strong> of things. Knowing which sequences grow faster than others is a critical skill in measuring the speed of computer algorithms, as well as behaviour of some mathematical objects as they approach infinity.</p>
+</section>
+<section id="triangular-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="triangular-numbers">Triangular numbers</h2>
+<p>Looking down the diagonals of Pascal’s triangle (in either direction) gives infinite sequences of numbers.</p>
+<ul>
+<li><p>The diagonal starting at row <span class="math inline">\(0\)</span> (the side of the triangle) gives an infinite sequence of <span class="math inline">\(1\)</span>’s, which is pretty boring.</p></li>
+<li><p>The diagonal starting at row <span class="math inline">\(1\)</span> gives the sequence of positive whole numbers <span class="math inline">\(1,2,3,4,5,\ldots\)</span>, which is more interesting.</p></li>
+<li><p>The diagonal starting at row <span class="math inline">\(2\)</span> gives the sequence <span class="math display">\[1,3,6,10,15,\ldots\]</span> Because of the way that Pascal’s triangle is created, you can get the terms of the sequence from the two entries above it: <span class="math display">\[\begin{aligned} 1&amp;=1\\[0.5em] 3 &amp;= 1 + 2\\[0.5em] 6 &amp;= 3 + 3 \\[0.5em] 10 &amp;= 6 + 4\\[0.5em] 15 &amp;= 10 + 5\\[0.5em] \vdots &amp; \qquad \vdots\end{aligned}\]</span> But you can notice that the first terms of these sums are the sequence on the left, allowing you to write <span class="math display">\[\begin{aligned} 1&amp;=1\\[0.5em] 3 &amp;= 1 + 2\\[0.5em] 6 &amp;= 1 + 2 + 3 \\[0.5em] 10 &amp;= 1 + 2 + 3 + 4\\[0.5em] 15 &amp;= 1 + 2 + 3 + 4 + 5\end{aligned}\]</span></p></li>
+</ul>
+<p>You can visualize these numbers by <strong>triangles</strong>, where each term of the sum is the number of dots in a subsequent row. This sequence of numbers is therefore called the <strong>triangular numbers</strong>. The <span class="math inline">\(n\)</span>th term of a triangular number is written as <span class="math inline">\(T_n\)</span>, so you could write <span class="math display">\[T_1 = 1,\; T_2 = 3,\; T_3 = 6,\; T_4 = 10,\; T_5 = 15,\;\ldots\]</span></p>
+<p>You can explore triangular numbers up to <span class="math inline">\(T_{15}\)</span> by using the following interactive figure.</p>
+<script src="https://cdn.jsdelivr.net/npm/mathjs@latest/lib/browser/math.min.js"></script>
+<style>
+
+:root{
+  --primary:#3F68B6;
+  --accent:#db4315;
+  --trihighlight:#ffcb00;
+}
+
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  background:#f5f5f5;
+  margin:0;
+  padding:20px;
+}
+
+.calc-container{
+  max-width:1200px;
+  margin:auto;
+}
+
+.calc-row{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.params-card{
+  flex:1;
+  min-width:280px;
+}
+
+.plot-card{
+  flex:2;
+  min-width:600px;
+}
+
+.calc-card{
+  background:white;
+  border:1px solid #ddd;
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:1rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+.calc-header{
+  background:#3F68B6;
+  color:white;
+  padding:.75rem 1rem;
+  font-weight:700;
+}
+
+.calc-body{
+  padding:1rem;
+}
+
+#rows{
+  width:100%;
+}
+
+#rowsValue{
+  margin-top:.5rem;
+  font-weight:600;
+}
+
+.toggle{
+  display:flex;
+  gap:.5rem;
+  align-items:center;
+  margin-top:.75rem;
+  padding-left:.35rem;
+}
+
+.visual-container{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2rem;
+}
+
+.triangle-display{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.tri-triangle-row{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+.dot{
+  width:clamp(10px, 2vw, 20px);
+  height:clamp(10px, 2vw, 20px);
+  margin:2px 0;
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+.blue{
+  background:var(--primary);
+}
+
+.orange{
+  background:var(--accent);
+}
+
+.yellow{
+  background:var(--trihighlight);
+}
+
+.proof-section{
+  width:100%;
+  text-align:center;
+}
+
+.proof-title{
+  font-weight:700;
+  margin-bottom:.75rem;
+}
+
+.hidden{
+  display:none;
+}
+
+.metric{
+  margin-bottom:1rem;
+}
+
+.metric-label{
+  font-size:.85rem;
+  color:#666;
+}
+
+.metric-value{
+  font-weight:700;
+}
+
+.formula{
+  font-family:Georgia, serif;
+}
+
+@media(max-width:768px){
+
+  .calc-row{
+    flex-direction:column;
+  }
+
+  .plot-card{
+    min-width:auto;
+  }
+
+  .dot{
+    width:18px;
+    height:18px;
+    margin:1px;
+  }
+
+}
+
+</style>
+
+
+
+<div class="calc-container">
+
+  <div class="calc-row">
+
+    <div class="calc-card params-card">
+
+      <div class="calc-header">
+        Parameters
+      </div>
+
+      <div class="calc-body">
+
+        <label for="rows">
+          Slider for n th triangular number
+        </label>
+
+        <input type="range" id="trirows" min="1" max="15" value="5">
+
+        <div id="trirowsValue">
+          Triangular number T5
+        </div>
+
+        <label class="toggle">
+          <input type="checkbox" id="trishowDouble">
+          Show double-triangle proof
+        </label>
+
+        <label class="toggle">
+          <input type="checkbox" id="trishowSquare">
+          Show square-number proof
+        </label>
+
+      </div>
+
+    </div>
+
+    <div class="calc-card plot-card">
+
+      <div class="calc-header">
+        Triangular numbers
+      </div>
+
+      <div class="calc-body">
+
+        <div id="trivisualContainer" class="visual-container">
+
+          <div id="tritriangleView" class="triangle-display">
+          </div>
+
+          <div id="tridoubleProof" class="proof-section hidden">
+          </div>
+
+          <div id="trisquareProof" class="proof-section hidden">
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="calc-card">
+
+    <div class="calc-header">
+      Information
+    </div>
+
+    <div class="calc-body">
+
+      <div id="triInfoPanel"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+function T(n){
+  return n*(n+1)/2;
+}
+
+function tribuildTriangle(n){
+
+  const container =
+    document.getElementById(
+      "tritriangleView"
+    );
+
+  container.innerHTML = "";
+
+  for(let r=1;r<=n;r++){
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "tri-triangle-row";
+
+    for(let c=0;c<r;c++){
+
+      const dot =
+        document.createElement("div");
+
+      dot.className =
+        "dot blue";
+
+      row.appendChild(dot);
+
+    }
+
+    container.appendChild(row);
+
+  }
+
+}
+
+function tribuildDoubleProof(n){
+
+  const div =
+    document.getElementById(
+      "tridoubleProof"
+    );
+
+  if(
+    !document.getElementById(
+      "trishowDouble"
+    ).checked
+  ){
+    div.classList.add(
+      "hidden"
+    );
+    return;
+  }
+
+  div.classList.remove(
+    "hidden"
+  );
+
+  let html =
+    '<div class="proof-title">Double triangle proof</div>';
+
+  for(let r=0;r<n;r++){
+
+    html +=
+      '<div class="tri-triangle-row">';
+
+    for(let c=0;c<n-r;c++){
+      html +=
+        '<div class="dot blue"></div>';
+    }
+
+    for(let c=0;c<r+1;c++){
+      html +=
+        '<div class="dot orange"></div>';
+    }
+
+    html +=
+      '</div>';
+  }
+
+  html += `
+    <p>
+      Number of dots in rectangle:
+      ${n} × ${n+1}
+      =
+      ${n*(n+1)}
+    </p>
+    <p>
+      Therefore:
+      T<sub>${n}</sub>
+      =
+      ${n*(n+1)/2}
+    </p>
+  `;
+
+  div.innerHTML = html;
+
+}
+
+function tribuildSquareProof(n){
+
+  const div =
+    document.getElementById(
+      "trisquareProof"
+    );
+
+  if(
+    !document.getElementById(
+      "trishowSquare"
+    ).checked
+  ){
+    div.classList.add(
+      "hidden"
+    );
+    return;
+  }
+
+  div.classList.remove(
+    "hidden"
+  );
+
+  let html =
+    '<div class="proof-title">Square number proof</div>';
+
+  for(let r=0;r<n;r++){
+
+    html +=
+      '<div class="tri-triangle-row">';
+
+    for(let c=0;c<n;c++){
+
+      if(c<=r){
+
+        html +=
+          '<div class="dot blue"></div>';
+
+      }else{
+
+        html +=
+          '<div class="dot orange"></div>';
+
+      }
+
+    }
+
+    html +=
+      '</div>';
+  }
+
+  html += `
+    <p>
+      T<sub>${n}</sub>
+      +
+      T<sub>${n-1}</sub>
+      =
+      ${T(n)}
+      +
+      ${T(n-1)}
+      =
+      ${n*n}
+    </p>
+  `;
+
+  div.innerHTML = html;
+
+}
+
+function triUpdateInfo(n){
+
+  document.getElementById(
+    "triInfoPanel"
+  ).innerHTML = `
+
+    <div class="metric">
+      <div class="metric-label">
+        Triangular Number
+      </div>
+      <div class="metric-value">
+        T<sub>${n}</sub> = ${T(n)}
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        Sum representation
+      </div>
+      <div class="metric-value">
+        ${Array.from(
+          {length:n},
+          (_,i)=>i+1
+        ).join(" + ")}
+        =
+        ${T(n)}
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        Closed form formula
+      </div>
+      <div class="metric-value formula">
+        Tₙ = n(n+1)/2
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        Double triangle identity
+      </div>
+      <div class="metric-value">
+        T<sub>${n}</sub>
+        =
+        (${n}×${n+1})/2
+        =
+        ${n*(n+1)/2}
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        Square dentity
+      </div>
+      <div class="metric-value">
+        T<sub>${n}</sub>
+        +
+        T<sub>${n-1}</sub>
+        =
+        ${T(n)}
+        +
+        ${T(n-1)}
+        =
+        ${n*n}
+      </div>
+    </div>
+
+  `;
+}
+
+function triRedraw(){
+
+  const n =
+    parseInt(
+      document.getElementById(
+        "trirows"
+      ).value
+    );
+
+  tribuildTriangle(n);
+  tribuildDoubleProof(n);
+  tribuildSquareProof(n);
+  triUpdateInfo(n);
+
+}
+
+document
+  .getElementById("trirows")
+  .addEventListener(
+    "input",
+    function(){
+
+      document.getElementById(
+        "trirowsValue"
+      ).textContent =
+        "Triangular number T" + this.value;
+
+      tribuildTriangle(
+        parseInt(this.value)
+      );
+      
+      triUpdateInfo(
+        parseInt(this.value)
+      );
+
+    }
+  );
+
+document
+  .getElementById("trishowDouble")
+  .addEventListener(
+    "change",
+    triRedraw
+  );
+
+document
+  .getElementById("trishowSquare")
+  .addEventListener(
+    "change",
+    triRedraw
+  );
+  
+document
+  .getElementById("triInfoPanel")
+  .addEventListener(
+    "change",
+    triRedraw
+  );
+
+triRedraw();
+
+</script>
+
+<section id="formula" class="level3">
+<h3 class="anchored" data-anchor-id="formula">Formula</h3>
+<p>You have already seen that you can get the <span class="math inline">\(n\)</span>th triangular number <span class="math inline">\(T_n\)</span> by adding <span class="math inline">\(n\)</span> to the previous triangular number <span class="math inline">\(T_{n-1}\)</span>; so <span class="math display">\[T_n = T_{n-1} + n.\]</span></p>
+<p>However, mathematicians (yourself included) shouldn’t be satisfied with this. Using this formula, to work out the <span class="math inline">\(100\)</span>th triangular number, you need to work out the previous <span class="math inline">\(99\)</span>. Is there a way to work out the <span class="math inline">\(n\)</span>th term of the sequence <strong>without</strong> working out all of the previous <span class="math inline">\(n-1\)</span> terms? This is the same question as asking - is there a formula for the <span class="math inline">\(n\)</span>th triangular number? The answer is yes:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Formula for <span class="math inline">\(n\)</span>th triangular number
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The formula for the <span class="math inline">\(n\)</span>th triangular number is given by <span class="math display">\[T_n = \frac{n(n+1)}{2}.\]</span></p>
+</div>
+</div>
+<p>Next, you need to <strong>prove</strong> that this is true. It’s all well and good saying that something is true, but you need to be able to back that claim up. In maths, this is done by starting with an assumption, following a series of logical steps until you get to a conclusion. Here, the assumption is that <span class="math inline">\(T_n = 1 + 2 + 3 + \ldots + n\)</span> and the conclusion is that <span class="math inline">\(T_n = \frac{n(n+1)}{2}\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Proof of the formula for <span class="math inline">\(T_n\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To show that this is true, you can use some geometry. The idea is to count the number of dots in the triangle, which can be found from the fact that <span class="math inline">\(T_n = 1 + 2 + 3 + \ldots + n\)</span>.</p>
+<p>You can left-align the triangle to create a right angled triangle with the same number of dots. Next, do this again. Put the two right-angled triangles together to get a rectangle, as shown in the picture.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./FiguresPNG/pascal1.png" class="img-fluid figure-img" style="width:33.0%" data-fig.alt="An array of 56 dots, split into two diagonally, with 28 blue dots in the top left half and 28 red dots in the bottom right half."></p>
+<figcaption>A pictorial proof of the formula for <span class="math inline">\(T_n\)</span>.</figcaption>
+</figure>
+</div>
+<p>The rectangle then has <span class="math inline">\(n\)</span> dots along the vertical side and <span class="math inline">\(n+1\)</span> dots along the horizontal side. This means that there are <span class="math inline">\(n(n+1)\)</span> dots in the rectangle. But the number you are looking for is the number of dots in triangle, which is exactly half of the rectangle. So <span class="math display">\[T_n = \frac{n(n+1)}{2}.\]</span></p>
+</div>
+</div>
+<p>You can see this in detail by clicking the ‘show double-triangle proof’ on the interactive element above.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>History time: Gauss and his teacher
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>According to history, this problem was solved by Carl Friedrich Gauss at the age of <strong>seven years old</strong> when he realized that you can work out <span class="math inline">\(1 + 2 + 3 + \ldots + n\)</span> by reversing the order of the sum to get <span class="math inline">\(n + (n-1) + \ldots + 2 + 1\)</span> and adding to get <span class="math inline">\(n\)</span> lots of <span class="math inline">\((n+1)\)</span>:</p>
+<p><span class="math display">\[\begin{array}{cccccccccccc}&amp; T_n &amp; = &amp; 1 &amp; + &amp; 2 &amp; + &amp; 3 &amp; + &amp; \ldots &amp; + &amp; n \\[0.5em] + &amp; T_n &amp; = &amp; n &amp; + &amp; (n-1) &amp; + &amp; (n-2) &amp; + &amp; \ldots &amp; + &amp; 1\\[0.5em]\hline &amp; 2T_n &amp; = &amp; (n+1) &amp; + &amp; (n+1) &amp; + &amp; (n+1) &amp; + &amp; \ldots &amp; + &amp; (n+1)\end{array}\]</span></p>
+<p>You can then rearrange to get <span class="math inline">\(T_n = n(n+1)/2\)</span> as you have already seen.</p>
+<p>To do this at the age of seven gave a small hint of the genius to follow!</p>
+</div>
+</div>
+</section>
+<section id="square-numbers" class="level3">
+<h3 class="anchored" data-anchor-id="square-numbers">Square numbers</h3>
+<p>It’s all well and good to place two triangular numbers together to make a rectangle - can you get squares instead? The number of dots in the squares are called</p>
+<p>As it turns out, you can. You need to add the <span class="math inline">\((n-1)\)</span>th triangular number to the <span class="math inline">\(n\)</span>th to get a square shape, so you can reasonably deduce that:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Formula for <span class="math inline">\(n\)</span>th square number
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[n^2 = T_n + T_{n-1}\]</span></p>
+</div>
+</div>
+<p>Once again, you need to back up this statement with a proof. You can approach this proof in two ways. You could use a geometric argument as above (you can view this on the webpage by clicking ‘show square-number proof’ on the interactive figure).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./FiguresPNG/pascal2.png" class="img-fluid figure-img" style="width:33.0%" data-fig.alt="An array of 49 dots, split into two diagonally, with 28 blue dots in the bottom left half and 21 red dots in the top right half."></p>
+<figcaption>A pictorial proof of the formula for <span class="math inline">\(n^2\)</span> in terms of triangular numbers.</figcaption>
+</figure>
+</div>
+<p>Or you could do some algebra. You know already that <span class="math inline">\(T_n = n(n+1)/2\)</span>, and <span class="math inline">\(T_{n-1} = (n-1)n/2\)</span>. Adding these together and factorizing gives <span class="math display">\[
+\begin{aligned}
+T_n + T_{n-1} &amp;= \frac{n(n+1)}{2} + \frac{(n-1)n}{2}\\[0.5em]
+&amp;= \frac{n}{2}\left( (n+1) + (n-1) \right)\\[0.5em]
+&amp;= \frac{n}{2}(2n) = \frac{2n^2}{2} = n^2
+\end{aligned}
+\]</span></p>
+<p>In fact, this formula does a lot more than this. This tells you explicitly that square numbers are always larger than triangular numbers for <span class="math inline">\(n&gt;1\)</span>:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Try it yourself 2: formula comparing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Show that <span class="math inline">\(n^2 &gt; T_n\)</span> for <span class="math inline">\(n &gt; 1\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer to try it yourself 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You know that <span class="math inline">\(n &gt; 1\)</span> and so <span class="math inline">\(n\geq 2\)</span>. This means that <span class="math inline">\(n - 1 \geq 1\)</span> and so <span class="math inline">\(T_{n-1}\)</span> is a positive integer. It follows from there that <span class="math inline">\(n^2 - T_{n-1} &lt; n^2\)</span>. Since <span class="math inline">\(T_{n} = n^2 - T_{n-1}\)</span> from above, it follows that <span class="math display">\[T_n = n^2 - T_{n-1} &lt; n^2\]</span> and the result follows.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="whats-the-point-1" class="level3">
+<h3 class="anchored" data-anchor-id="whats-the-point-1">What’s the point?</h3>
+<p>Triangular numbers are used in two quite disparate areas:</p>
+<ul>
+<li><p>If you are running a sports/gaming league with <span class="math inline">\(n\)</span> teams/players/things in it, the amount of matches required so that every competitor plays every other competitor exactly once is <span class="math inline">\(T_{n-1}\)</span>.</p></li>
+<li><p>Triangular numbers are used in accounting to calculate the depreciation of assets over a period of years.</p></li>
+</ul>
+<p>Square numbers <span class="math inline">\(n^2\)</span> are the start of investigation of <strong>polynomial growth</strong>. A sequence has polynomial growth if the <span class="math inline">\(n\)</span>th term of the sequence can be expressed as some polynomial expression with largest term <span class="math inline">\(n^k\)</span>. Since the sequence of triangular numbers can be expressed by <span class="math inline">\((n^2 + n)/2\)</span>, this sequence has polynomial growth.</p>
+</section>
+</section>
+<section id="interlude-tetrahedral-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="interlude-tetrahedral-numbers">Interlude: Tetrahedral numbers</h2>
+<p>You can continue working your way down the diagonals of Pascal’s triangle. What if you start your diagonal at row <span class="math inline">\(3\)</span>? You get the sequence of numbers: <span class="math display">\[1,\; 4,\; 10,\; 20,\; 35,\; \ldots\]</span> In the same way as the triangular numbers, using the defining property of Pascal’s triangle you can write each of these as <span class="math display">\[\begin{aligned} 1&amp;=1\\[0.5em] 4 &amp;= 1 + 3\\[0.5em] 10 &amp;= 4 + 6 \\[0.5em] 20 &amp;= 10 + 10\\[0.5em] 35 &amp;= 20 + 15\\[0.5em] \vdots &amp; \qquad \vdots\end{aligned}\]</span> But you can notice that the first terms of these sums are the sequence on the left, allowing you to write <span class="math display">\[\begin{aligned} 1&amp;=1\\[0.5em] 4 &amp;= 1 + 3\\[0.5em] 10 &amp;= 1 + 3 + 6 \\[0.5em] 20 &amp;= 1 + 3 + 6 + 10\\[0.5em] 35 &amp;= 1 + 3 + 6 + 10 + 15\end{aligned}\]</span> These are consecutive triangular numbers added together! In fact, much in the same way you can organise triangular numbers into triangles, you can organise these into stacks of triangles - <strong>tetrahedrons</strong>. So these are called <strong>tetrahedral numbers <span class="math inline">\(Te_n\)</span></strong>, and are defined by the formula <span class="math display">\[Te_n = Te_{n-1} + T_n.\]</span> There is also a closed form formula which you <em>can</em> prove geometrically (but suggest you don’t), given by <span class="math display">\[Te_n = \frac{n(n+1)(n+2)}{6}.\]</span> Notice that there is an <span class="math inline">\(n^3\)</span> term in here - this signifies a shift to three dimensions, and also that tetrahedral numbers grow faster than both triangular and square numbers, but still have polynomial growth.</p>
+</section>
+<section id="interlude-fibonacci-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="interlude-fibonacci-numbers">Interlude: Fibonacci numbers</h2>
+<p>Here’s a neat thing hiding in Pascal’s triangle.</p>
+<ul>
+<li><p>Left-align Pascal’s triangle using the tool above (or in <a href="../apps/interactive/i-pascalstriangle.html">Interactive: Pascal’s triangle</a>).</p></li>
+<li><p>Starting in the left-most column of <span class="math inline">\(1\)</span>’s, add up entries in diagonals in the northeast direction.</p></li>
+<li><p>You should get the sequence <span class="math inline">\(1,1,2,3,5,8,13,21,\ldots\)</span>, which is the famous <strong>Fibonacci sequence</strong>.</p></li>
+</ul>
+<p>The Fibonacci sequence <span class="math inline">\(F_n\)</span> is defined by the following relation: <span class="math display">\[F_0 = 1,\quad F_1 = 1,\quad F_n = F_{n-1} + F_{n-2}\]</span> and it is <strong>everywhere</strong> in mathematics and nature:</p>
+<ul>
+<li><p>The Fibonacci sequence is closely related to the <strong>golden ratio</strong> <span class="math inline">\(\varphi = (1 + \sqrt{5})/2 = 1.618\ldots\)</span>, which appears in art as the proportion of the golden rectangle</p></li>
+<li><p>In biology, flowers tend to grow a Fibonacci number of petals as opposed to any other type of number</p></li>
+<li><p>In genetics, the number of possible ancestors on an X chromosome line is a Fibonacci number</p></li>
+<li><p>In computer science, Fibonacci numbers provide ‘worst case scenarios’ for the Euclidean algorithm and working out continued fractions.</p></li>
+</ul>
+<p>How fast does the Fibonacci sequence grow? Well, a closed form formula for the Fibonacci numbers is <span class="math display">\[F_n = \frac{\left(\frac{\sqrt{5} + 1}{2}\right)^n + \left(\frac{\sqrt{5}-1}{2}\right)^n}{\sqrt{5}}\]</span> and so this is actually <em>not</em> polynomial growth, as it’s to a power of <span class="math inline">\(n\)</span> rather than <span class="math inline">\(n\)</span> to the power of something.</p>
+</section>
+<section id="powers-of-2" class="level2">
+<h2 class="anchored" data-anchor-id="powers-of-2">Powers of 2</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Try it yourself 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Add up each row of Pascal’s triangle in turn, and write up your answers. What do you get?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer to try it yourself 3
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Here’s a table of the answers.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Row number</th>
+<th style="text-align: center;"><span class="math inline">\(0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(4\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(5\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(6\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(7\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(8\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(9\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Sum of numbers in row</td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(16\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(32\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(128\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(256\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(512\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Here, the sum of numbers in row <span class="math inline">\(n\)</span> is twice the sum of numbers in row <span class="math inline">\(n-1\)</span>. Since row <span class="math inline">\(0\)</span> sums to <span class="math inline">\(1\)</span>, it follows that the sequence of sums of numbers in rows are precisely the <strong>powers of two</strong>.</p>
+</div>
+</div>
+</div>
+<p>A proof of this try it yourself will be seen in the next exploration, as it involves choice: <a href="../explorations/e-combinationspermutations.html">Exploration: How to win at cards - combinations and permutations</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Powers of two, powers of <span class="math inline">\(c\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The sequence of numbers given by <span class="math display">\[p_0 = 1,\quad p_n = 2\cdot p_{n-1}\]</span> are the <strong>powers of two</strong>, with <span class="math inline">\(n\)</span>th term given by <span class="math inline">\(p_n = 2^{n}\)</span>. Here, the notation <span class="math inline">\(2^n\)</span> means <span class="math display">\[2^n = \underbrace{2\cdot 2\cdot 2\cdot\ldots\cdot 2}_{n\textsf{ times}}\]</span></p>
+<p>More generally, if <span class="math inline">\(c\)</span> is any positive number, then the sequence of numbers given by <span class="math display">\[c_0 = 1,\quad c_n = c\cdot p_{n-1}\]</span> are the <strong>powers of <span class="math inline">\(c\)</span></strong>, with <span class="math inline">\(n\)</span>th term given by <span class="math inline">\(c_n = c^{n}\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Here, the convention is to start the sequence at <span class="math inline">\(0\)</span> rather than <span class="math inline">\(1\)</span>, as the first term is obtained by adding the numbers in row <span class="math inline">\(0\)</span> of Pascal’s triangle.</p>
+<p>For more about powers of numbers, see <a href="../studyguides/lawsofindices.html">Guide: Laws of indices</a>.</p>
+</div>
+</div>
+<p>How do the powers of two compare to the square numbers? Are they bigger, or smaller? Well, comparing the two seems to suggest that powers of two are smaller than square numbers to begin with (for <span class="math inline">\(n = 1,2,3\)</span>), are equal at <span class="math inline">\(n = 4\)</span>, but quickly overtake for larger <span class="math inline">\(n\)</span>. In fact, you can make the statement:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Sequence comparing 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(2^n &gt; n^2\)</span> for <span class="math inline">\(n &gt; 4\)</span>.</p>
+</div>
+</div>
+<p>How could you show this? The idea is to take the <strong>ratio of the two sequences</strong>, using the mathematical principle that is <span class="math inline">\(a,b\)</span> are positive numbers with <span class="math inline">\(a &lt; b\)</span>, then <span class="math inline">\(a/b &lt; 1\)</span>. Then, by investigating how the ratio changes as <span class="math inline">\(n\)</span> changes, you’re able to determine the behaviour of the sequences.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Sequence comparing 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Showing that <span class="math inline">\(2^n &gt; n^2\)</span> for <span class="math inline">\(n &gt; 4\)</span> is the same as showing that <span class="math inline">\(n^2/2^n &lt; 1\)</span> for <span class="math inline">\(n &gt; 4\)</span>. Write <span class="math inline">\(a_n = n^2/2^n\)</span>; you can notice that if <span class="math inline">\(n = 4\)</span>, then <span class="math inline">\(a_n = 1\)</span>. Therefore, if <span class="math inline">\(a_n &lt; 1\)</span> for <span class="math inline">\(n &gt; 4\)</span>, you’re done.</p>
+<p>So how does <span class="math inline">\(a_{n+1}\)</span> relate to <span class="math inline">\(a_n\)</span>? You can actually work this out. Start with <span class="math display">\[a_{n+1} = \frac{(n+1)^2}{2^{n+1}}.\]</span> Next, you want to manufacture <span class="math inline">\(a_n\)</span> in this expression. You can do this by taking a factor of <span class="math inline">\(n^2\)</span> out of the numerator and <span class="math inline">\(2^n\)</span> out of the denominator (for more about factorization, see <a href="../studyguides/factorization.html">Guide: Factorization</a>). Doing this gives, by the laws of ind <span class="math display">\[a_{n+1} = \frac{n^2}{2^n}\cdot\frac{\left(1 + \frac{1}{n}\right)^2}{2} = a_n\cdot\frac{\left(1 + \frac{1}{n}\right)^2}{2}\]</span> You want <span class="math inline">\(a_{n+1}\)</span> to be smaller than <span class="math inline">\(a_n\)</span>, as the whole object of the argument is to show that <span class="math inline">\(a_n &lt; 1\)</span> for <span class="math inline">\(n &gt; 4\)</span>. So how big <span class="math inline">\(a_{n+1}\)</span> is compared to <span class="math inline">\(a_n\)</span> entirely depends on if <span class="math inline">\(\frac{\left(1 + \frac{1}{n}\right)^2}{2}\)</span> is bigger than or smaller than <span class="math inline">\(1\)</span>.</p>
+<p>As it turns out, <span class="math inline">\((1 + 1/n)^2/2 &lt; 1\)</span> whenever <span class="math inline">\(n &gt; 2\)</span>; this means that <span class="math inline">\((1 + 1/n)^2/2 &lt; 1\)</span> whenever <span class="math inline">\(n &gt; 4\)</span> as well. This means that <span class="math inline">\(a_{n+1} &lt; a_n\)</span> whenever <span class="math inline">\(n &gt; 4\)</span> - which means that <span class="math inline">\(n^2/2^n &lt; 1\)</span> for <span class="math inline">\(n &gt; 4\)</span>, proving the result.</p>
+</div>
+</div>
+<p>In fact, for any positive number <span class="math inline">\(k\)</span>, there is a large enough number <span class="math inline">\(m\)</span> such that <span class="math inline">\(2^n &gt; n^k\)</span> for all <span class="math inline">\(n &gt; m\)</span>. This means that <strong>exponential growth is always eventually faster than polynomial growth</strong>.</p>
+<section id="whats-the-point-2" class="level3">
+<h3 class="anchored" data-anchor-id="whats-the-point-2">What’s the point?</h3>
+<p>The sequence of powers <span class="math inline">\(c^n\)</span> of any number <span class="math inline">\(c &gt; 1\)</span> can be used to describe <strong>exponential growth</strong>. For instance, bacteria that split in half every <span class="math inline">\(24\)</span> hours are an example of exponential growth.</p>
+<p>Conversely, the sequence of powers <span class="math inline">\(c^n\)</span> of any number <span class="math inline">\(0 &lt; c &lt; 1\)</span> can be used to described <strong>exponential decay</strong> - which is particularly useful when it comes to management of nuclear waste.</p>
+</section>
+</section>
+<section id="factorials" class="level2">
+<h2 class="anchored" data-anchor-id="factorials">Factorials</h2>
+<p>As you saw earlier, adding up the first <span class="math inline">\(n\)</span> numbers gives you the <span class="math inline">\(n\)</span>th triangular number <span class="math inline">\(T_n\)</span>. What happens when you <strong>multiply</strong> the first <span class="math inline">\(n\)</span> numbers together?</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Factorials
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a positive whole number <span class="math inline">\(n\)</span>, the number <span class="math inline">\(n!\)</span>, called <strong><span class="math inline">\(n\)</span> factorial</strong>, is defined to be <span class="math display">\[n! = 1\cdot 2 \cdot 3\cdot \ldots \cdot (n-1)\cdot n\]</span> which is the first <span class="math inline">\(n\)</span> whole numbers multiplied together.</p>
+<p>You can define a sequence of factorials by <span class="math display">\[f_0 = 1,\quad f_n = f_{n-1}\cdot n\]</span> So it follows that <span class="math display">\[(n+1)! = (n+1)\cdot n!\]</span> for all natural numbers</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Try it yourself 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Starting at <span class="math inline">\(n = 0\)</span>, work out the first <span class="math inline">\(7\)</span> factorials up to <span class="math inline">\(6!\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer to try it yourself 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Here’s a table of the answers.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">number <span class="math inline">\(n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(4\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(5\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(6\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(n\)</span> factorial <span class="math inline">\((n!)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(24\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(120\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(720\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>You can notice that <span class="math inline">\(n!\)</span> starts to grow extremely quickly. How quickly? The answer is: <em>quicker than exponential growth</em>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Sequence comparing 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(n! &gt; 2^n\)</span> for <span class="math inline">\(n &gt; 3\)</span>.</p>
+</div>
+</div>
+<p>Again, the idea is to take the <strong>ratio of the two sequences</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Sequence comparing 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Showing that <span class="math inline">\(n! &gt; 2^n\)</span> for <span class="math inline">\(n &gt; 3\)</span> is the same as showing that <span class="math inline">\(n!/2^n &lt; 1\)</span> for <span class="math inline">\(n &gt; 3\)</span>. Write <span class="math inline">\(b_n = 2^n/n!\)</span>; you can notice that if <span class="math inline">\(n = 3\)</span>, then <span class="math inline">\(b_n = 8/6 &gt; 1\)</span>. Therefore, if <span class="math inline">\(b_n &lt; 1\)</span> for <span class="math inline">\(n &gt; 3\)</span>, you’re done.</p>
+<p>So how does <span class="math inline">\(a_{n+1}\)</span> relate to <span class="math inline">\(a_n\)</span>? You can actually work this out. Start with <span class="math display">\[a_{n+1} = \frac{2^{n+1}}{(n+1)!}.\]</span> Next, you want to manufacture <span class="math inline">\(a_n\)</span> in this expression. You can do this by taking a factor of <span class="math inline">\(2^n\)</span> out of the numerator and <span class="math inline">\(n!\)</span> out of the denominator. Doing this gives <span class="math display">\[a_{n+1} = \frac{2^n}{n!}\cdot\frac{2}{n+1} = a_n\cdot\frac{2}{n+1}\]</span> You want <span class="math inline">\(a_{n+1}\)</span> to be smaller than <span class="math inline">\(a_n\)</span>, as the whole object of the argument is to show that <span class="math inline">\(a_n &lt; 1\)</span> for <span class="math inline">\(n &gt; 3\)</span>. So how big <span class="math inline">\(a_{n+1}\)</span> is compared to <span class="math inline">\(a_n\)</span> entirely depends on if <span class="math inline">\(\frac{2}{n+1}\)</span> is bigger than or smaller than <span class="math inline">\(1\)</span>.</p>
+<p>As it turns out, <span class="math inline">\(2/(n+1) &lt; 1/2 &lt; 1\)</span> whenever <span class="math inline">\(n &gt; 3\)</span>. This means that <span class="math inline">\(a_{n+1} &lt; a_n\)</span> whenever <span class="math inline">\(n &gt; 3\)</span>. Since <span class="math inline">\(a_4 = 16/24 &lt; 1\)</span>, the result follows.</p>
+</div>
+</div>
+<p>In fact, you can show that for any positive number <span class="math inline">\(c\)</span>, there is a large enough number <span class="math inline">\(m\)</span> such that <span class="math inline">\(n! &gt; c^n\)</span> for all <span class="math inline">\(n &gt; m\)</span>. This means that <strong>factorial growth is always eventually faster than exponential growth</strong>. The exact <span class="math inline">\(m\)</span> can be obtained using something called <strong>Stirling’s approximation</strong>.</p>
+</section>
+</section>
+<section id="growth-of-sequences" class="level1">
+<h1>Growth of sequences</h1>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Try it yourself 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fill in the following table of sequences to give a full comparison of their properties. For fun, there is also a column for the <strong>super-exponential</strong> sequence <span class="math inline">\(n^n\)</span>.</p>
+<div class="webex-check webex-box">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 18%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(T_n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(n^2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(F_n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(2^n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(n!\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(n^n\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;0&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+<td style="text-align: center;">undef</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;1&quot;]"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;2&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;4&quot;]"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(3\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;6&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;9&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;3&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;8&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;6&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;27&quot;]"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(4\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;10&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;16&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;5&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;16&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;24&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;256&quot;]"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(5\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;15&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;25&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="1" data-answer="[&quot;8&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;32&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;120&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;3125&quot;]"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(6\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;21&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;36&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;13&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;64&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;720&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;46556&quot;]"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(7\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;28&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;49&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;21&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;128&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;5040&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="6" data-answer="[&quot;823543&quot;]"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;36&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;64&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;34&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;256&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="5" data-answer="[&quot;40320&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="8" data-answer="[&quot;16777216&quot;]"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(9\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;45&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;81&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;55&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;512&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="6" data-answer="[&quot;362880&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="9" data-answer="[&quot;387420489&quot;]"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;55&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="3" data-answer="[&quot;100&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="2" data-answer="[&quot;89&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="4" data-answer="[&quot;1024&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="7" data-answer="[&quot;3628800&quot;]"></td>
+<td style="text-align: center;"><input class="webex-solveme nospaces" size="11" data-answer="[&quot;10000000000&quot;]"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Try it yourself 5
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Explain why <span class="math inline">\(n^n &gt; n!\)</span> for all <span class="math inline">\(n &gt; 1\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer to try it yourself 5
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You can see that <span class="math inline">\(n &gt; k\)</span> for all <span class="math inline">\(k = 1,2,\ldots,n-1\)</span>. Therefore, since <span class="math inline">\(ac &lt; bc\)</span> for all positive numbers <span class="math inline">\(a,b,c\)</span> with <span class="math inline">\(a&lt;b\)</span>, it follows that <span class="math display">\[
+\begin{aligned}
+n! &amp;= 1\cdot 2 \cdot 3 \cdot \ldots \cdot (n-1) \cdot n\\[0.5em]
+&amp;&lt; n\cdot n \cdot n \cdot \ldots \cdot n \cdot n\\[0.5em]
+&amp;= n^n
+\end{aligned}
+\]</span></p>
+<p>and this is enough.</p>
+</div>
+</div>
+</div>
+<p>You can also investigate the growth via graphing: you can turn each of the graphs on and off as required by clicking on the colour boxes on the left-hand side of the expressions.</p>
+<div id="calculator" style="width: 100%; height: 600px;">
+
+</div>
+<script>
+  var elt = document.getElementById('calculator');
+  var calculator = Desmos.GraphingCalculator(elt);
+  calculator.setMathBounds({ left: -0.1, right: 10, bottom: -0.1, top: 10});
+  calculator.setExpression({ id: 'line1', latex: 'y=x', color: '#000000' });
+  calculator.setExpression({ id: 'line2', latex: 'y=(x^2 + x)/2', color: '#FF9677' });
+  calculator.setExpression({ id: 'line3', latex: 'y=x^2', color: '#C0D6FF' });
+  calculator.setExpression({ id: 'line5', latex: 'y=2^x', color: '#DB4315' });
+  calculator.setExpression({ id: 'line6', latex: 'y=x!', color: '#3F68B6' });
+  calculator.setExpression({ id: 'line7', latex: 'y=x^x', color: '#FFCB00' });
+</script>
+<!-- Here's a table of the answers. -->
+<!-- |  $n$ | $T_n$ | $n^2$ | $F_n$ |  $2^n$ |    $n!$   |     $n^n$     | -->
+<!-- |:----:|:-----:|:-----:|:-----:|:------:|:---------:|:-------------:| -->
+<!-- |  $0$ |  $0$  |  $0$  |  $1$  |   $1$  |    $1$    |     undef     | -->
+<!-- |  $1$ |  $1$  |  $1$  |  $1$  |   $2$  |    $1$    |      $1$      | -->
+<!-- |  $2$ |  $3$  |  $4$  |  $2$  |   $4$  |    $2$    |      $4$      | -->
+<!-- |  $3$ |  $6$  |  $9$  |  $3$  |   $8$  |    $6$    |      $27$     | -->
+<!-- |  $4$ |  $10$ |  $16$ |  $5$  |  $16$  |    $24$   |     $256$     | -->
+<!-- |  $5$ |  $15$ |  $25$ |  $8$  |  $32$  |   $120$   |     $3125$    | -->
+<!-- |  $6$ |  $21$ |  $36$ |  $13$ |  $64$  |   $720$   |    $46556$    | -->
+<!-- |  $7$ |  $28$ |  $49$ |  $21$ |  $128$ |   $5040$  |    $823543$   | -->
+<!-- |  $8$ |  $36$ |  $64$ |  $34$ |  $256$ |  $40320$  |   $16777216$  | -->
+<!-- |  $9$ |  $45$ |  $81$ |  $55$ |  $512$ |  $362880$ |  $387420489$  | -->
+<!-- | $10$ | $55$  | $100$ | $89$  | $1024$ | $3628800$ | $10000000000$ | -->
+<!-- ::: -->
+<section id="whats-the-point-3" class="level2">
+<h2 class="anchored" data-anchor-id="whats-the-point-3">What’s the point?</h2>
+<p>So far, you have seen for all <span class="math inline">\(n &gt; 4\)</span> (at least) <span class="math display">\[T_n &lt; n^2 &lt; 2^n &lt; n! &lt; n^n\]</span> In fact, some of these sequences are the cornerstone of <strong>computational complexity</strong>, which is the study of <strong>how fast computer programs run</strong>.</p>
+<section id="computational-complexity" class="level3">
+<h3 class="anchored" data-anchor-id="computational-complexity">Computational complexity</h3>
+<p>Nowadays, computer programs underpin every facet of our lives. From shopping online, to gaming, to the financial markets, to transporting goods up and down the country, they really are everywhere.</p>
+<p>The mathematical basis for computer programs is the study of <strong>algorithms</strong>. An algorithm takes in an input or inputs, performs a series of computational steps, and gives an output. It’s critical to know exactly how long an algorithm takes, as this will affect how long a computer program takes to run. In real life, you would want algorithms that run the fastest and consumes the least resources. Typically, this is measured in the number of computational operations inside the algorithm, and amount of these computational operations tend to scale with the size of the input. In other words, the number of computational operations is a <strong>sequence</strong> in which you are trying to <strong>minimize the growth rate</strong>.</p>
+<p>Measuring the amount of these computational operations is typically written in something called <strong>big-O notation</strong>, and this notation measures the <strong>computational complexity</strong> of the algorithm. For instance, if an algorithm has input of size <span class="math inline">\(n\)</span> and needs (roughly) <span class="math inline">\(n^2\)</span> many computational operations to complete, you would say that the complexity of the algorithm is <span class="math inline">\(O(n^2)\)</span>.</p>
+<p>The smaller the growth rate of the sequence, the better the algorithm’s performance. Typically, you would want an algorithm to complete in <strong>polynomial time</strong>; that is <span class="math inline">\(O(n^k)\)</span> for some positive number <span class="math inline">\(k\)</span>. However, there are some algorithms (like the famous <strong>travelling salesman problem</strong>) that require at least <strong>exponential time</strong> <span class="math inline">\(O(c^n)\)</span> (for some <span class="math inline">\(c &gt; 1\)</span>) to complete.</p>
+</section>
+<section id="p-versus-np" class="level3">
+<h3 class="anchored" data-anchor-id="p-versus-np">P versus NP</h3>
+<p>Suppose that you are given a puzzle to solve, like a Sudoku. An algorithm could help you with this problem in one of two ways:</p>
+<ul>
+<li>given an attempt at a solution as an input, it could <strong>check your solution</strong> for you, or</li>
+<li>given the empty puzzle as an input, it could <strong>solve the puzzle</strong> for you.</li>
+</ul>
+<p>Of these, the algorithm to check the solution should be far quicker than the algorithm to solve the problem - it has to do less work to check an answer than to find one itself. It could be that both algorithms have the same computational complexity, or they have different computational complexities.</p>
+<ul>
+<li>Problems with algorithms that <strong>solve that problem</strong> in polynomial time are said to be in the computational complexity class <strong>P</strong>.</li>
+<li>Problems with algorithms that can <strong>check a solution</strong> in polynomial time are said to be in the computational complexity class <strong>NP</strong>.</li>
+</ul>
+<p>Here are some examples of problems in each complexity class:</p>
+<section id="p" class="level4">
+<h4 class="anchored" data-anchor-id="p">P</h4>
+<ul>
+<li>Testing to see if a given number is prime or not</li>
+<li>Calculating the highest common factor of any two integers</li>
+<li>Sorting a set of inputs into an ordered list</li>
+<li>Wikipedia racing; going from one Wikipedia page to another in the fewest amount of clicks</li>
+</ul>
+</section>
+<section id="np" class="level4">
+<h4 class="anchored" data-anchor-id="np">NP</h4>
+<ul>
+<li>Finding all prime factors of a given integer</li>
+<li>The travelling salesman problem</li>
+<li>Finding a group of people on Facebook who are all friends with each other</li>
+<li>Games and puzzles including Sudoku, Battleships, Tetris, and Super Mario Bros</li>
+<li>Creating a perfect Bitcoin block</li>
+</ul>
+<p>However, because humanity hasn’t yet found algorithms that solve the problems in <strong>NP</strong> in polynomial time, it <strong>doesn’t mean they don’t exist</strong>. (You can compare this to the existence of extra-terrestrial life, or of the Loch Ness monster.) This is one of the most significant open problems in theoretical computer science, the <strong>P vs NP</strong> problem:</p>
+<blockquote class="blockquote">
+<p>If the solution to a problem can be checked in polynomial time, must the problem be solvable in polynomial time?</p>
+</blockquote>
+<p>If the answer is <strong>yes</strong> (implying that <strong>P = NP</strong>), then humanity will have some significant issues to overcome. For instance, internet security relies on the fact that ‘finding all prime factors’ is <strong>not</strong> in <strong>P</strong> - so if it is, then a whole new security protocol will need to be invented. If the answer is <strong>no</strong>, then there will always be hard bounds on what computers can achieve.</p>
+<p>A solution either way will net you a cool million dollars and make you famous for ever.</p>
+<p>[Note: All of this framework is for <strong>regular computers</strong> - however, due to the fundamentally different nature of <strong>quantum computers</strong>, this problem might even be moot in a few years time…]</p>
+</section>
+</section>
+</section>
+</section>
+<section id="version-history" class="level1 unnumbered">
+<h1 class="unnumbered">Version history</h1>
+<p>v1.0: initial version created 06/26 by tdhc, originally for presentation 1 of 4 for Sutton Trust Summer School 2026.</p>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+  let allCorrect = false;
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) 
+  {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
+  }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Checks";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Check Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if (this.dataset.tol > 0)
+  {
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Check Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* check each question to see whether it was answered correctly */
+  update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
+}
+
+</script>
+<!--------------------  Email Forms -----------------------------------
+        Compiled into each .html page by Quarto.
+        Website hosted and form handled by Netlify now
+        Mailing list provided by mailerlite
+        Input verified by reCaptcha2 
+        
+        Authors (recent to latest): 
+           Tristin Doherty (Trido)
+           Mohit Agarwal (Mohit-Agarwa1)
+--------------------------------------------------------------------->
+<script>
+  // Adds an extra layer of validation to aid user input,
+  // some of these are covered by basic html form validations as well, but netlify handles everything else
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[name='feedback']"); 
+    
+    form.addEventListener("submit", function(event) {
+        const nameInput = document.querySelector("input[name='name']")?.value.trim();
+        const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+        const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+
+        if (!nameInput)    { alert("Please enter a name."); return; }
+        if (!emailInput)   { alert("Please enter an email."); return; }
+        if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+        
+        event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+        const subjectInput = document.querySelector("input[name='subject']");
+                
+        // sanitise inputs
+        const sanitizedName = sanitizeInput(nameInput); 
+        const sanitizedEmail = sanitizeEmail(emailInput);
+        const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+        // validate email
+        if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+        subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+        form.submit();
+    });
+});
+
+// Removes leading and trailing whitespace for formatting, and replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+function sanitizeInput(input) {
+  input = input.trim();                                      
+  input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return input;
+}
+
+// remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+function sanitizeEmail(email) {
+  email = email.trim(); 
+  email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+  return email;
+}
+
+// This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+function validateEmail(email) {
+  const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+  return re.test(email);
+}
+
+</script>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here, <br>
+but please be specific with any issues you encounter so we can help to resolve them <br>
+(for example, what page it occured on, what you tried, and so on). </p>
+
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+  <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+  <input type="hidden" name="subject" value="Feedback from unknown">
+
+  <label for="name">Name: </label>
+  <br>
+  <input type="text" name="name" required="">
+  <br><br>
+  
+  <label for="email">E-mail: </label>
+  <br>
+  <input type="email" name="email" required="">
+  <br><br>
+  
+  <label for="feedback">Feedback: </label>
+  <br>
+  <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+  <br><br>
+
+  <!-- Google reCAPTCHA Widget -->
+  <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+  <br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.VERTICAL },
+      'google_translate_element'
+    );
+  }
+</script>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    const targetSidebar = document.getElementById('quarto-margin-sidebar');
+    if (!targetSidebar) return;
+
+    const translateWrapper = document.createElement('div');
+    translateWrapper.className = 'sidebar-section';
+    translateWrapper.style.marginTop = '2em';
+
+    const title = document.createElement('h5');
+    title.innerText = 'Translate';
+
+    const translatorDiv = document.createElement('div');
+    translatorDiv.id = 'google_translate_element';
+
+    translateWrapper.appendChild(title);
+    translateWrapper.appendChild(translatorDiv);
+    targetSidebar.appendChild(translateWrapper);
+
+    const googleScript = document.createElement('script');
+    googleScript.type = 'text/javascript';
+    googleScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(googleScript);
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>STARMAST © 2026 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

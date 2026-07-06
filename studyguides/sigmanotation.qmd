@@ -12,6 +12,17 @@ image: FiguresPNG/sigmanotation-image.png
 
 ```{r, setup, include = FALSE}
 library("webexercises")
+# To allow injection of aria-labels
+in_labelled_fitb <- function(answer, label_text, ...) {
+  html <- webexercises::fitb(answer, ...)
+  # Insert aria-label into the <input ...> tag
+  html <- sub(
+    "<input ",
+    paste0("<input aria-label=\"", label_text, "\" "),
+    html
+  )
+  html
+}
 ```
 
 ::: {.content-visible when-format="html"}

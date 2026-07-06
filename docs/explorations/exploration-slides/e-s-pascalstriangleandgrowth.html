@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
+
+  <meta name="author" content="Tom Coleman">
+  <meta name="dcterms.date" content="2026-07-06">
+  <title>STARMAST – The hidden sequences of Pascal’s triangle</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-f1ca5c31b40973e373bc5bf8b7f7d235.css">
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+  <script type="text/plain" cookie-consent="tracking">
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+  </script>
+  
+  <script type="text/javascript" charset="UTF-8">
+  document.addEventListener('DOMContentLoaded', function () {
+  cookieconsent.run({
+    "notice_banner_type":"simple",
+    "consent_type":"express",
+    "palette":"light",
+    "language":"en",
+    "page_load_consent_levels":["strictly-necessary"],
+    "notice_banner_reject_button_hide":false,
+    "preferences_center_close_button_hide":false,
+    "website_name":"",
+  "website_privacy_policy_url":"cookies.qmd"
+    ,
+  "language":"en"
+    });
+  });
+  </script> 
+    
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="slides-bg-withlogo.png" class="quarto-title-block center">
+  <h1 class="title">The hidden sequences of Pascal’s triangle</h1>
+  <p class="subtitle">Sutton Trust Summer School 2026 (1/4)</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Tom Coleman 
+</div>
+</div>
+</div>
+
+  <p class="date">2026-07-06</p>
+</section>
+<section id="about-me" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>About me</h2>
+<ul>
+<li><p>Hello! I’m <strong>Tom</strong> and I’m a lecturer in maths and stats at the University of St Andrews.</p></li>
+<li><p>I’m the first in my family to go to university, and liked it so much I ended up staying forever.</p></li>
+<li><p>My area of maths is called <strong>combinatorics</strong> (counting stuff, networks, symmetries), and I particularly like infinite things.</p></li>
+<li><p>I also like coffee, cricket, cryptic crosswords, and Pokémon.</p></li>
+<li><p>Any questions, please feel free to ask at any point</p>
+<ul>
+<li><strong>there’s no such thing as a silly question!</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="accessing-these-resources-and-shameless-self-promotion" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Accessing these resources (and shameless self-promotion)</h2>
+<p>Materials for this week can be found at:</p>
+<p><a href="https://starmast.org/suttontrust2026.html" class="uri">https://starmast.org/suttontrust2026.html</a></p>
+<p>(to be updated throughout the week)</p>
+<div class="fragment">
+<p>These are hosted on my maths resource website STARMAST, <strong>a free-to-use, high-quality bank of inclusive and technically accessible learning resources in mathematics and statistics, suitable for everyone</strong>, made by University of St Andrews staff and students for any student of mathematics or statistics.</p>
+<p><a href="https://starmast.org" class="uri">https://starmast.org</a></p>
+<p>New this week is a topic search for whatever school curriculum you may be on. :)</p>
+</div>
+</section>
+<section>
+<section id="pascals-triangle" class="title-slide slide level1 center">
+<h1>Pascal’s triangle(?)</h1>
+
+</section>
+<section id="pascals-triangle-12" class="slide level2" data-background-image="slides-bg.png">
+<h2>Pascal’s triangle (1/2)</h2>
+<p>Central to many different and disparate areas of mathematics, one of the most interesting objects in the subject is <strong>Pascal’s triangle</strong>.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>How to construct Pascal’s triangle</strong></p>
+</div>
+<div class="callout-content">
+<p>Start with 1 at the top point of a triangle.</p>
+<p>Write 1’s down the sides of the triangle.</p>
+<p>To fill in the rest of the entries, add two numbers next to each other in a row, and write the answer below and between both of them.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="pascals-triangle-22" class="slide level2" data-background-image="slides-bg.png">
+<h2>Pascal’s triangle (2/2)</h2>
+
+<img data-src="../FiguresPNG/pascal-figrep1.png" style="width:75.0%" class="r-stretch quarto-figure-center"><p class="caption">A figure demonstrating the first 10 rows of Pascal’s triangle, with row numbers in black and to the left.</p></section>
+<section id="why-pascals-triangle" class="slide level2" data-background-image="slides-bg.png">
+<h2>Why Pascal’s triangle?</h2>
+<ul>
+<li><p><strong>Pascal’s triangle</strong> in (most) of the West, but</p></li>
+<li><p>In Iran, it’s called <strong>Khayyam’s triangle</strong> after the Persian mathematician <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Khayyam/">Omar Khayyam</a></p></li>
+<li><p>In China, it’s called <strong>Yang Hui’s triangle</strong> after the Chinese mathematician <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Yang_Hui/">Yang Hui</a></p></li>
+<li><p>In Italy, it’s called <strong>Tartaglia’s triangle</strong> after the Italian mathematician <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Tartaglia/">Niccolò Tartaglia</a></p></li>
+</ul>
+<aside class="notes">
+<p>While this is known as Pascal’s triangle in most of Western civilization, the idea of generating numbers in a triangle by adding the above two entries predates <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Pascal/">Pascal the mathematician</a> by several hundred years. In fact, the history of the triangle lives on in the name given to it by other countries:</p>
+<ul>
+<li><p>In Iran, it’s called <strong>Khayyam’s triangle</strong> after the Persian mathematician <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Khayyam/">Omar Khayyam</a>, who used the construction in the 11th century to find <span class="math inline">\(n\)</span>th roots of numbers and describe bracket expansions.. In fact, they were not the first Persian to discuss the triangle: this was <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Al-Karaji/">al-Karaji</a>.</p></li>
+<li><p>In China, it’s called <strong>Yang Hui’s triangle</strong> after the Chinese mathematician <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Yang_Hui/">Yang Hui</a>, using it to find the sum of triangular numbers (more on that later…). They also wrote many more mathematical texts on subjects from algebra to magic squares.</p></li>
+<li><p>In Italy, it’s called <strong>Tartaglia’s triangle</strong> after the Italian mathematician <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Tartaglia/">Niccolò Tartaglia</a>, who (amongst other things) helped to solve equations involving cubic terms <span class="math inline">\(x^3\)</span>. <a href="https://mathshistory.st-andrews.ac.uk/HistTopics/Tartaglia_v_Cardan/">Notably, they participated in what can only be described as the 16th century Italian version of a rap battle.</a></p></li>
+</ul>
+<p>Pascal himself did expose the deep connections between the triangle and probability theory, and so the common name Pascal’s triangle is not without merit!</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="try-it-yourself-1" class="slide level2" data-background-image="slides-bg.png">
+<h2>Try it yourself 1</h2>
+<p>Here’s something you can figure out.</p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 1</strong></p>
+</div>
+<div class="callout-content">
+<p>Using the defining relation and the figure above, work out the eleventh row of Pascal’s triangle. Write down any observations you have about the triangle so far.</p>
+</div>
+</div>
+</div>
+
+<img data-src="../FiguresPNG/pascal-figrep1.png" style="width:75.0%" class="r-stretch quarto-figure-center"><p class="caption">A figure demonstrating the first 10 rows of Pascal’s triangle, with row numbers in black and to the left.</p></section>
+<section id="answer-to-try-it-yourself-1" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Answer to try it yourself 1</h2>
+<p>The next row should be <span class="math display">\[1\;\; 10\;\; 45\;\; 120 \;\; 210 \;\; 252 \;\; 210 \;\; 120 \;\; 45 \;\; 10 \; \;1\]</span> where each term is obtained by adding the two terms directly above it.</p>
+<div class="fragment">
+<p>You can also notice that</p>
+<ul>
+<li class="fragment"><p>every row is symmetric down the middle (and therefore so is the triangle)</p></li>
+<li class="fragment"><p>every even numbered row has a unique number in the centre</p></li>
+<li class="fragment"><p>every odd numbered row has two numbers the same in the middle.</p></li>
+<li class="fragment"><p>there is <span class="math inline">\(1,2,3,4,5,6,\ldots\)</span> down the diagonals in numerical order.</p></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="sequences-hidden-in-pascals-triangle" class="title-slide slide level1 center">
+<h1>Sequences hidden in Pascal’s triangle</h1>
+
+</section>
+<section id="whats-a-sequence" class="slide level2" data-background-image="slides-bg.png">
+<h2>What’s a sequence?</h2>
+<p>A <strong>sequence</strong> is any finite or infinite list of numbers.</p>
+<p>Any number in a sequence is called a <strong>term</strong>.</p>
+<p>The term in position <span class="math inline">\(n\)</span> of the sequence is called the <strong><span class="math inline">\(n\)</span>th term</strong> of the sequence.</p>
+<p>What could some examples of sequences be?</p>
+<aside class="notes">
+<p><span class="math display">\[
+\begin{aligned}
+(1) &amp;\qquad 1,1,1,1,1\\[0.5em]
+(2) &amp;\qquad 1,1,1,1,1,\ldots\\[0.5em]
+(3) &amp;\qquad 1,2,3,4,99,\ldots\\[0.5em]
+(4) &amp;\qquad 1,99,2,3,4,\ldots\\[0.5em]
+(5) &amp;\qquad 1,4,6,9,16,\ldots\\[0.5em]
+(6) &amp;\qquad 1,1,2,3,5,\ldots
+\end{aligned}
+\]</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="properties-of-sequences" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Properties of sequences</h2>
+<ul>
+<li class="fragment"><p>Here, <span class="math inline">\((1)\)</span> is a finite sequence with five terms; all of the others <span class="math inline">\((2)-(6)\)</span> are infinite sequences - which you can see by the three dots <span class="math inline">\(\ldots\)</span> at the end of each.</p></li>
+<li class="fragment"><p>As evidenced by <span class="math inline">\((2)\)</span>, every term in the sequence can be the same; such a sequence is called a <strong>constant sequence</strong>.</p></li>
+<li class="fragment"><p>Sequence <span class="math inline">\((3)\)</span> shows that a sequence doesn’t have to follow a prescriptive pattern; they really can be any list of numbers.</p></li>
+<li class="fragment"><p>Sequences <span class="math inline">\((3)\)</span> and <span class="math inline">\((4)\)</span> show that the order of the terms in the sequence matters; these are not the same sequence.</p></li>
+<li class="fragment"><p>Sequence <span class="math inline">\((5)\)</span> is an example of a sequence where the <span class="math inline">\(n\)</span>th term is given by a formula involving <span class="math inline">\(n\)</span>.</p></li>
+<li class="fragment"><p>Sequence <span class="math inline">\((6)\)</span> is an example of a sequence where the <span class="math inline">\(n\)</span>th term is given by some combination of previous terms. It can be defined by setting the first and second term to be <span class="math inline">\(1\)</span>, and then every subsequent term is the sum of the previous two terms. (This is the famous <strong>Fibonacci sequence</strong>.)</p></li>
+</ul>
+</section>
+<section id="whats-the-point" class="slide level2" data-background-image="slides-bg.png">
+<h2>What’s the point?</h2>
+<p>Sequences of numbers help to measure <strong>growth</strong> of things. Knowing which sequences grow faster than others is a critical skill in measuring the speed of computer algorithms, as well as behaviour of some mathematical objects approach infinity.</p>
+</section>
+<section id="triangular-numbers-13" class="slide level2" data-background-image="slides-bg.png">
+<h2>Triangular numbers (1/3)</h2>
+<p>Looking down the diagonals of Pascal’s triangle (in either direction) gives infinite sequences of numbers.</p>
+<ul>
+<li><p>The diagonal starting at row <span class="math inline">\(0\)</span> (the side of the triangle) gives an infinite sequence of <span class="math inline">\(1\)</span>’s, which is pretty boring.</p></li>
+<li><p>The diagonal starting at row <span class="math inline">\(1\)</span> gives the sequence of positive whole numbers <span class="math inline">\(1,2,3,4,5,\ldots\)</span>, which is more interesting.</p></li>
+<li><p>The diagonal starting at row <span class="math inline">\(2\)</span> gives the sequence <span class="math display">\[1,3,6,10,15,\ldots\]</span></p></li>
+</ul>
+</section>
+<section id="triangular-numbers-23" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Triangular numbers (2/3)</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p>Because of the way that Pascal’s triangle is created, you can get the terms of the sequence from the two entries above it: <span class="math display">\[\begin{aligned} 1&amp;=1\\[0.5em] 3 &amp;= 1 + 2\\[0.5em] 6 &amp;= 3 + 3 \\[0.5em] 10 &amp;= 6 + 4\\[0.5em] 15 &amp;= 10 + 5\\[0.5em] \vdots &amp; \qquad \vdots\end{aligned}\]</span></p>
+</div><div class="column" style="width:45%;">
+<p>But you can notice that the first terms of these sums are the sequence on the left, allowing you to write <span class="math display">\[\begin{aligned} 1&amp;=1\\[0.5em] 3 &amp;= 1 + 2\\[0.5em] 6 &amp;= 1 + 2 + 3 \\[0.5em] 10 &amp;= 1 + 2 + 3 + 4\\[0.5em] 15 &amp;= 1 + 2 + 3 + 4 + 5\end{aligned}\]</span></p>
+</div></div>
+</section>
+<section id="triangular-numbers-33" class="slide level2" data-background-image="slides-bg.png">
+<h2>Triangular numbers (3/3)</h2>
+<p>You can visualize these numbers by <strong>triangles</strong>, where each term of the sum is the number of dots in a subsequent row.</p>
+<div class="fragment">
+<p>This sequence of numbers is therefore called the <strong>triangular numbers</strong>.</p>
+</div>
+<div class="fragment">
+<p>The <span class="math inline">\(n\)</span>th term of a triangular number is written as <span class="math inline">\(T_n\)</span>, so you could write <span class="math display">\[T_1 = 1,\; T_2 = 3,\; T_3 = 6,\; T_4 = 10,\; T_5 = 15,\;\ldots\]</span></p>
+</div>
+</section>
+<section id="formulas" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Formulas</h2>
+<p>You have already seen that you can get the <span class="math inline">\(n\)</span>th triangular number <span class="math inline">\(T_n\)</span> by adding <span class="math inline">\(n\)</span> to the previous triangular number <span class="math inline">\(T_{n-1}\)</span>; so <span class="math display">\[T_n = T_{n-1} + n.\]</span></p>
+<div class="fragment">
+<p>However, mathematicians (yourself included) shouldn’t be satisfied with this. Using this formula, to work out the <span class="math inline">\(100\)</span>th triangular number, you need to work out the previous <span class="math inline">\(99\)</span>.</p>
+</div>
+<div class="fragment">
+<p>Is there a way to work out the <span class="math inline">\(n\)</span>th term of the sequence <strong>without</strong> working out all of the previous <span class="math inline">\(n-1\)</span> terms? This is the same question as asking - is there a formula for the <span class="math inline">\(n\)</span>th triangular number?</p>
+</div>
+</section>
+<section id="formula-for-nth-triangular-number" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Formula for <span class="math inline">\(n\)</span>th triangular number</h2>
+<p>The answer is yes:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Formula for <span class="math inline">\(n\)</span>th triangular number</strong></p>
+</div>
+<div class="callout-content">
+<p>The formula for the <span class="math inline">\(n\)</span>th triangular number is given by <span class="math display">\[T_n = \frac{n(n+1)}{2}.\]</span></p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Next, you need to <strong>prove</strong> that this is true. It’s all well and good saying that something is true, but you need to be able to back that claim up.</p>
+<p>In maths, this is done by starting with an assumption, following a series of logical steps until you get to a conclusion. Here, the assumption is that <span class="math inline">\(T_n = 1 + 2 + 3 + \ldots + n\)</span> and the conclusion is that <span class="math inline">\(T_n = \frac{n(n+1)}{2}\)</span>.</p>
+</div>
+</section>
+<section id="history-time-gauss-and-his-teacher" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>History time: Gauss and his teacher</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>According to history, this problem was solved by Carl Friedrich Gauss at the age of <strong>seven years old</strong> when he realized that you can work out <span class="math inline">\(1 + 2 + 3 + \ldots + n\)</span> by reversing the order of the sum to get <span class="math inline">\(n + (n-1) + \ldots + 2 + 1\)</span> and adding to get <span class="math inline">\(n\)</span> lots of <span class="math inline">\((n+1)\)</span>:</p>
+<p><span class="math display">\[\begin{array}{cccccccccccc}&amp; T_n &amp; = &amp; 1 &amp; + &amp; 2 &amp; + &amp; 3 &amp; + &amp; \ldots &amp; + &amp; n \\[0.5em] + &amp; T_n &amp; = &amp; n &amp; + &amp; (n-1) &amp; + &amp; (n-2) &amp; + &amp; \ldots &amp; + &amp; 1\\[0.5em]\hline &amp; 2T_n &amp; = &amp; (n+1) &amp; + &amp; (n+1) &amp; + &amp; (n+1) &amp; + &amp; \ldots &amp; + &amp; (n+1)\end{array}\]</span></p>
+<p>You can then rearrange to get <span class="math inline">\(T_n = n(n+1)/2\)</span> as you have already seen.</p>
+<p>To do this at the age of seven gave a small hint of the genius to follow!</p>
+</div>
+</div>
+</div>
+</section>
+<section id="square-numbers" class="slide level2" data-background-image="slides-bg.png">
+<h2>Square numbers</h2>
+<p>It’s all well and good to place two triangular numbers together to make a rectangle - can you get squares instead?</p>
+<p>As it turns out, you can. You need to add the <span class="math inline">\((n-1)\)</span>th triangular number to the <span class="math inline">\(n\)</span>th to get a square shape, so you can reasonably deduce that:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Formula for <span class="math inline">\(n\)</span>th square number</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[n^2 = T_n + T_{n-1}\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="proof-of-formula-for-nth-square-number" class="slide level2" data-background-image="slides-bg.png">
+<h2>Proof of formula for <span class="math inline">\(n\)</span>th square number</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Formula for <span class="math inline">\(n\)</span>th square number</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math display">\[n^2 = T_n + T_{n-1}\]</span></p>
+</div>
+</div>
+</div>
+<p>Once again, you need to back up this statement with a proof.</p>
+<p>You can approach this proof in two ways. You could use a <strong>geometric argument</strong> or you could do some <strong>algebra</strong>.</p>
+<aside class="notes">
+<p>You know already that <span class="math inline">\(T_n = n(n+1)/2\)</span>, and <span class="math inline">\(T_{n-1} = (n-1)n/2\)</span>. Adding these together and factorizing gives <span class="math display">\[
+\begin{aligned}
+T_n + T_{n-1} &amp;= \frac{n(n+1)}{2} + \frac{(n-1)n}{2}\\[0.5em]
+&amp;= \frac{n}{2}\left( (n+1) + (n-1) \right)\\[0.5em]
+&amp;= \frac{n}{2}(2n) = \frac{2n^2}{2} = n^2
+\end{aligned}
+\]</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="try-it-yourself-2" class="slide level2" data-background-image="slides-bg.png">
+<h2>Try it yourself 2</h2>
+<p>In fact, this formula does a lot more than connect squares and triangles. This tells you explicitly that square numbers are always larger than triangular numbers for <span class="math inline">\(n&gt;1\)</span>:</p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 2: formula comparing</strong></p>
+</div>
+<div class="callout-content">
+<p>Show that <span class="math inline">\(n^2 &gt; T_n\)</span> for <span class="math inline">\(n &gt; 1\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="answer-to-try-it-yourself-2" class="slide level2" data-background-image="slides-bg.png">
+<h2>Answer to try it yourself 2</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Answer to try it yourself 2</strong></p>
+</div>
+<div class="callout-content">
+<p>You know that <span class="math inline">\(n &gt; 1\)</span> and so <span class="math inline">\(n\geq 2\)</span>. This means that <span class="math inline">\(n - 1 \geq 1\)</span> and so <span class="math inline">\(T_{n-1}\)</span> is a positive integer. It follows from there that <span class="math inline">\(n^2 - T_{n-1} &lt; n^2\)</span>. Since <span class="math inline">\(T_{n} = n^2 - T_{n-1}\)</span> from above, it follows that <span class="math display">\[T_n = n^2 - T_{n-1} &lt; n^2\]</span> and the result follows.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="whats-the-point-1" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>What’s the point?</h2>
+<p>Triangular numbers are used in two quite disparate areas:</p>
+<ul>
+<li><p>If you are running a sports/gaming league with <span class="math inline">\(n\)</span> teams/players/things in it, the amount of matches required so that every competitor plays every other competitor exactly once is <span class="math inline">\(T_{n-1}\)</span>.</p></li>
+<li><p>Triangular numbers are used in accounting to calculate the depreciation of assets over a period of years.</p></li>
+</ul>
+<div class="fragment">
+<p>Square numbers <span class="math inline">\(n^2\)</span> are the start of investigation of <strong>polynomial growth</strong>. A sequence has polynomial growth if the <span class="math inline">\(n\)</span>th term of the sequence can be expressed as some polynomial expression with largest term <span class="math inline">\(n^k\)</span>. Since the sequence of triangular numbers can be expressed by <span class="math inline">\((n^2 + n)/2\)</span>, this sequence has polynomial growth.</p>
+</div>
+</section>
+<section id="tetrahedral-numbers-13" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Tetrahedral numbers (1/3)</h2>
+<p>You can continue working your way down the diagonals of Pascal’s triangle. What if you start your diagonal at row <span class="math inline">\(3\)</span>? You get the sequence of numbers: <span class="math display">\[1,\; 4,\; 10,\; 20,\; 35,\; \ldots\]</span> In the same way as the triangular numbers, using the defining property of Pascal’s triangle you can write each of these as <span class="math display">\[\begin{aligned} 1&amp;=1\\[0.5em] 4 &amp;= 1 + 3\\[0.5em] 10 &amp;= 4 + 6 \\[0.5em] 20 &amp;= 10 + 10\\[0.5em] 35 &amp;= 20 + 15\\[0.5em] \vdots &amp; \qquad \vdots\end{aligned}\]</span></p>
+<p>&nbsp;</p>
+</section>
+<section id="tetrahedral-numbers-23" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Tetrahedral numbers (2/3)</h2>
+<p>But you can notice that the first terms of these sums are the sequence on the left, allowing you to write <span class="math display">\[\begin{aligned} 1&amp;=1\\[0.5em] 4 &amp;= 1 + 3\\[0.5em] 10 &amp;= 1 + 3 + 6 \\[0.5em] 20 &amp;= 1 + 3 + 6 + 10\\[0.5em] 35 &amp;= 1 + 3 + 6 + 10 + 15\end{aligned}\]</span> These are consecutive triangular numbers added together! In fact, much in the same way you can organise triangular numbers into triangles, you can organise these into stacks of triangles - <strong>tetrahedrons</strong>. So these are called <strong>tetrahedral numbers <span class="math inline">\(Te_n\)</span></strong>, and are defined by the formula <span class="math display">\[Te_n = Te_{n-1} + T_n.\]</span></p>
+</section>
+<section id="tetrahedral-numbers-33" class="slide level2" data-background-image="slides-bg.png">
+<h2>Tetrahedral numbers (3/3)</h2>
+<p>There is also a closed form formula which you <em>can</em> prove geometrically (but suggest you don’t), given by <span class="math display">\[Te_n = \frac{n(n+1)(n+2)}{6}.\]</span></p>
+<div class="fragment">
+<p>Notice that there is an <span class="math inline">\(n^3\)</span> term in here - this signifies a shift to three dimensions, and also that tetrahedral numbers grow faster than both triangular and square numbers, but still have polynomial growth.</p>
+</div>
+</section>
+<section id="interlude-fibonacci-numbers-13" class="slide level2" data-background-image="slides-bg.png">
+<h2>Interlude: Fibonacci numbers (1/3)</h2>
+<p>Here’s a neat thing hiding in Pascal’s triangle.</p>
+<ul>
+<li><p>Left-align Pascal’s triangle.</p></li>
+<li><p>Starting in the left-most column of <span class="math inline">\(1\)</span>’s, add up entries in diagonals in the northeast direction.</p></li>
+<li><p>You should get the sequence <span class="math inline">\(1,1,2,3,5,8,13,21,\ldots\)</span>, which is the famous <strong>Fibonacci sequence</strong>.</p></li>
+</ul>
+<p>The Fibonacci sequence <span class="math inline">\(F_n\)</span> is defined by the following relation: <span class="math display">\[F_0 = 1,\quad F_1 = 1,\quad F_n = F_{n-1} + F_{n-2}.\]</span></p>
+</section>
+<section id="interlude-fibonacci-numbers-23" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Interlude: Fibonacci numbers (2/3)</h2>
+<p>The Fibonacci sequence is <strong>everywhere</strong> in mathematics and nature:</p>
+<ul>
+<li><p>The Fibonacci sequence is closely related to the <strong>golden ratio</strong> <span class="math inline">\(\varphi = (1 + \sqrt{5})/2 = 1.618\ldots\)</span>, which appears in art as the proportion of the golden rectangle</p></li>
+<li><p>In biology, flowers tend to grow a Fibonacci number of petals as opposed to any other type of number</p></li>
+<li><p>In genetics, the number of possible ancestors on an X chromosome line is a Fibonacci number</p></li>
+<li><p>In computer science, Fibonacci numbers provide ‘worst case scenarios’ for the Euclidean algorithm and working out continued fractions.</p></li>
+</ul>
+</section>
+<section id="interlude-fibonacci-numbers-33" class="slide level2" data-background-image="slides-bg.png">
+<h2>Interlude: Fibonacci numbers (3/3)</h2>
+<p>How fast does the Fibonacci sequence grow? Well, a closed form formula for the Fibonacci numbers is <span class="math display">\[F_n = \frac{\left(\frac{\sqrt{5} + 1}{2}\right)^n + \left(\frac{\sqrt{5}-1}{2}\right)^n}{\sqrt{5}}\]</span> and so this is actually <em>not</em> polynomial growth, as it’s to a power of <span class="math inline">\(n\)</span> rather than <span class="math inline">\(n\)</span> to the power of something.</p>
+</section>
+<section id="try-it-yourself-3" class="slide level2" data-background-image="slides-bg.png">
+<h2>Try it yourself 3</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 3</strong></p>
+</div>
+<div class="callout-content">
+<p>Add up each row of Pascal’s triangle in turn, and write up your answers. What do you get?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="answer-to-try-it-yourself-3" class="slide level2" data-background-image="slides-bg.png">
+<h2>Answer to try it yourself 3</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>Here’s a table of the answers.</p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Row number</th>
+<th style="text-align: center;"><span class="math inline">\(0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(4\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(5\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(6\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(7\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(8\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(9\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Sum of numbers in row</td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(16\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(32\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(128\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(256\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(512\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Here, the sum of numbers in row <span class="math inline">\(n\)</span> is twice the sum of numbers in row <span class="math inline">\(n-1\)</span>. Since row <span class="math inline">\(0\)</span> sums to <span class="math inline">\(1\)</span>, it follows that the sequence of sums of numbers in rows are precisely the <strong>powers of two</strong>.</p>
+</div>
+</div>
+</div>
+<p>A proof of this try it yourself will be seen in the next presentation…</p>
+</section>
+<section id="powers-of-2" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Powers of 2</h2>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Powers of two, powers of <span class="math inline">\(c\)</span></strong></p>
+</div>
+<div class="callout-content">
+<p>The sequence of numbers given by <span class="math inline">\(p_0 = 1,\quad p_n = 2\cdot p_{n-1}\)</span> are the <strong>powers of two</strong>, with <span class="math inline">\(n\)</span>th term given by <span class="math inline">\(p_n = 2^{n}\)</span>. Here, the notation <span class="math inline">\(2^n\)</span> means <span class="math display">\[2^n = 2\cdot 2\cdot 2\cdot\ldots\cdot 2\]</span> where the product on the right consists of <span class="math inline">\(n\)</span> many <span class="math inline">\(2\)</span>s.</p>
+<p>More generally, if <span class="math inline">\(c\)</span> is any positive number, then the sequence of numbers given by <span class="math display">\[c_0 = 1,\quad c_n = c\cdot p_{n-1}\]</span> are the <strong>powers of <span class="math inline">\(c\)</span></strong>, with <span class="math inline">\(n\)</span>th term given by <span class="math inline">\(c_n = c^{n}\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Here, the convention is to start the sequence at <span class="math inline">\(0\)</span> rather than <span class="math inline">\(1\)</span>, as the first term is obtained by adding the numbers in row <span class="math inline">\(0\)</span> of Pascal’s triangle.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="comparing" class="slide level2" data-background-image="slides-bg.png">
+<h2>Comparing</h2>
+<p>How do the powers of two compare to the square numbers? Are they bigger, or smaller? Well, comparing the two seems to suggest that powers of two are smaller than square numbers to begin with (for <span class="math inline">\(n = 1,2,3\)</span>), are equal at <span class="math inline">\(n = 4\)</span>, but quickly overtake for larger <span class="math inline">\(n\)</span>. In fact, you can make the statement:</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Sequence comparing 1</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math inline">\(2^n &gt; n^2\)</span> for <span class="math inline">\(n &gt; 4\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="prove-it" class="slide level2" data-background-image="slides-bg.png">
+<h2>Prove it!</h2>
+<p>How could you show this? The idea is to take the <strong>ratio of the two sequences</strong>, using the mathematical principle that is <span class="math inline">\(a,b\)</span> are positive numbers with <span class="math inline">\(a &lt; b\)</span>, then <span class="math inline">\(a/b &lt; 1\)</span>. Then, by investigating how the ratio changes as <span class="math inline">\(n\)</span> changes, you’re able to determine the behaviour of the sequences.</p>
+<aside class="notes">
+<p>Showing that <span class="math inline">\(2^n &gt; n^2\)</span> for <span class="math inline">\(n &gt; 4\)</span> is the same as showing that <span class="math inline">\(n^2/2^n &lt; 1\)</span> for <span class="math inline">\(n &gt; 4\)</span>. Write <span class="math inline">\(a_n = n^2/2^n\)</span>; you can notice that if <span class="math inline">\(n = 4\)</span>, then <span class="math inline">\(a_n = 1\)</span>. Therefore, if <span class="math inline">\(a_n &lt; 1\)</span> for <span class="math inline">\(n &gt; 4\)</span>, you’re done.</p>
+<p>So how does <span class="math inline">\(a_{n+1}\)</span> relate to <span class="math inline">\(a_n\)</span>? You can actually work this out. Start with <span class="math display">\[a_{n+1} = \frac{(n+1)^2}{2^{n+1}}.\]</span> Next, you want to manufacture <span class="math inline">\(a_n\)</span> in this expression. You can do this by taking a factor of <span class="math inline">\(n^2\)</span> out of the numerator and <span class="math inline">\(2^n\)</span> out of the denominator (for more about factorization, see <a href="../../studyguides/factorization.html">Guide: Factorization</a>). Doing this gives, by the laws of ind <span class="math display">\[a_{n+1} = \frac{n^2}{2^n}\cdot\frac{\left(1 + \frac{1}{n}\right)^2}{2} = a_n\cdot\frac{\left(1 + \frac{1}{n}\right)^2}{2}\]</span> You want <span class="math inline">\(a_{n+1}\)</span> to be smaller than <span class="math inline">\(a_n\)</span>, as the whole object of the argument is to show that <span class="math inline">\(a_n &lt; 1\)</span> for <span class="math inline">\(n &gt; 4\)</span>. So how big <span class="math inline">\(a_{n+1}\)</span> is compared to <span class="math inline">\(a_n\)</span> entirely depends on if <span class="math inline">\(\frac{\left(1 + \frac{1}{n}\right)^2}{2}\)</span> is bigger than or smaller than <span class="math inline">\(1\)</span>.</p>
+<p>As it turns out, <span class="math inline">\((1 + 1/n)^2/2 &lt; 1\)</span> whenever <span class="math inline">\(n &gt; 2\)</span>; this means that <span class="math inline">\((1 + 1/n)^2/2 &lt; 1\)</span> whenever <span class="math inline">\(n &gt; 4\)</span> as well. This means that <span class="math inline">\(a_{n+1} &lt; a_n\)</span> whenever <span class="math inline">\(n &gt; 4\)</span> - which means that <span class="math inline">\(n^2/2^n &lt; 1\)</span> for <span class="math inline">\(n &gt; 4\)</span>, proving the result.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="whats-the-point-2" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>What’s the point?</h2>
+<p>The sequence of powers <span class="math inline">\(c^n\)</span> of any number <span class="math inline">\(c &gt; 1\)</span> can be used to describe <strong>exponential growth</strong>. For instance, bacteria that split in half every <span class="math inline">\(24\)</span> hours are an example of exponential growth.</p>
+<div class="fragment">
+<p>Conversely, the sequence of powers <span class="math inline">\(c^n\)</span> of any number <span class="math inline">\(0 &lt; c &lt; 1\)</span> can be used to described <strong>exponential decay</strong> - which is particularly useful when it comes to management of nuclear waste.</p>
+</div>
+<div class="fragment">
+<p>In fact, for any positive number <span class="math inline">\(k\)</span>, there is a large enough number <span class="math inline">\(m\)</span> such that <span class="math inline">\(2^n &gt; n^k\)</span> for all <span class="math inline">\(n &gt; m\)</span>. This means that <strong>exponential growth is always eventually faster than polynomial growth</strong>.</p>
+</div>
+</section>
+<section id="factorials" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Factorials</h2>
+<p>As you saw earlier, adding up the first <span class="math inline">\(n\)</span> numbers gives you the <span class="math inline">\(n\)</span>th triangular number <span class="math inline">\(T_n\)</span>. What happens when you <strong>multiply</strong> the first <span class="math inline">\(n\)</span> numbers together?</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Factorials</strong></p>
+</div>
+<div class="callout-content">
+<p>For a positive whole number <span class="math inline">\(n\)</span>, the number <span class="math inline">\(n!\)</span>, called <strong><span class="math inline">\(n\)</span> factorial</strong>, is defined to be <span class="math display">\[n! = 1\cdot 2 \cdot 3\cdot \ldots \cdot (n-1)\cdot n\]</span> which is the first <span class="math inline">\(n\)</span> whole numbers multiplied together.</p>
+<p>You can define a sequence of factorials by <span class="math display">\[f_0 = 1,\quad f_n = f_{n-1}\cdot n\]</span> So it follows that <span class="math display">\[(n+1)! = (n+1)\cdot n!\]</span> for all natural numbers</p>
+</div>
+</div>
+</div>
+</section>
+<section id="try-it-yourself-4" class="slide level2" data-background-image="slides-bg.png">
+<h2>Try it yourself 4</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 4</strong></p>
+</div>
+<div class="callout-content">
+<p>Starting at <span class="math inline">\(n = 0\)</span>, work out the first <span class="math inline">\(7\)</span> factorials up to <span class="math inline">\(6!\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Answer to try it yourself 4</strong></p>
+</div>
+<div class="callout-content">
+<p>Here’s a table of the answers.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">number <span class="math inline">\(n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(0\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(4\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(5\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(6\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(n\)</span> factorial <span class="math inline">\((n!)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(24\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(120\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(720\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>You can notice that <span class="math inline">\(n!\)</span> starts to grow extremely quickly.</p>
+</div>
+</section>
+<section id="factorial-growth" class="slide level2" data-background-image="slides-bg.png">
+<h2>Factorial growth</h2>
+<p>How quickly? The answer is: <em>quicker than exponential growth</em>.</p>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Sequence comparing 2</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="math inline">\(n! &gt; 2^n\)</span> for <span class="math inline">\(n &gt; 3\)</span>.</p>
+</div>
+</div>
+</div>
+<p>Again, the idea is to take the <strong>ratio of the two sequences</strong>.</p>
+<aside class="notes">
+<p>Showing that <span class="math inline">\(n! &gt; 2^n\)</span> for <span class="math inline">\(n &gt; 3\)</span> is the same as showing that <span class="math inline">\(n!/2^n &lt; 1\)</span> for <span class="math inline">\(n &gt; 3\)</span>. Write <span class="math inline">\(b_n = 2^n/n!\)</span>; you can notice that if <span class="math inline">\(n = 3\)</span>, then <span class="math inline">\(b_n = 8/6 &gt; 1\)</span>. Therefore, if <span class="math inline">\(b_n &lt; 1\)</span> for <span class="math inline">\(n &gt; 3\)</span>, you’re done.</p>
+<p>So how does <span class="math inline">\(a_{n+1}\)</span> relate to <span class="math inline">\(a_n\)</span>? You can actually work this out. Start with <span class="math display">\[a_{n+1} = \frac{2^{n+1}}{(n+1)!}.\]</span> Next, you want to manufacture <span class="math inline">\(a_n\)</span> in this expression. You can do this by taking a factor of <span class="math inline">\(2^n\)</span> out of the numerator and <span class="math inline">\(n!\)</span> out of the denominator. Doing this gives <span class="math display">\[a_{n+1} = \frac{2^n}{n!}\cdot\frac{2}{n+1} = a_n\cdot\frac{2}{n+1}\]</span> You want <span class="math inline">\(a_{n+1}\)</span> to be smaller than <span class="math inline">\(a_n\)</span>, as the whole object of the argument is to show that <span class="math inline">\(a_n &lt; 1\)</span> for <span class="math inline">\(n &gt; 3\)</span>. So how big <span class="math inline">\(a_{n+1}\)</span> is compared to <span class="math inline">\(a_n\)</span> entirely depends on if <span class="math inline">\(\frac{2}{n+1}\)</span> is bigger than or smaller than <span class="math inline">\(1\)</span>.</p>
+<p>As it turns out, <span class="math inline">\(2/(n+1) &lt; 1/2 &lt; 1\)</span> whenever <span class="math inline">\(n &gt; 3\)</span>. This means that <span class="math inline">\(a_{n+1} &lt; a_n\)</span> whenever <span class="math inline">\(n &gt; 3\)</span>. Since <span class="math inline">\(a_4 = 16/24 &lt; 1\)</span>, the result follows.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="growth-again" class="slide level2" data-background-image="slides-bg.png">
+<h2>Growth again</h2>
+<p>In fact, you can show that for any positive number <span class="math inline">\(c\)</span>, there is a large enough number <span class="math inline">\(m\)</span> such that <span class="math inline">\(n! &gt; c^n\)</span> for all <span class="math inline">\(n &gt; m\)</span>. This means that <strong>factorial growth is always eventually faster than exponential growth</strong>. The exact <span class="math inline">\(m\)</span> can be obtained using something called <strong>Stirling’s approximation</strong>.</p>
+</section></section>
+<section>
+<section id="growth-of-sequences" class="title-slide slide level1 center">
+<h1>Growth of sequences</h1>
+
+</section>
+<section id="try-it-yourself-4-2" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Try it yourself 4</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 4</strong></p>
+</div>
+<div class="callout-content">
+<p>Fill in the following table of sequences to give a full comparison of their properties. For fun, there is also a column for the <strong>super-exponential</strong> sequence <span class="math inline">\(n^n\)</span>.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(T_n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(n^2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(F_n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(2^n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(n!\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(n^n\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>0</strong></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">undef</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="answer-to-try-it-yourself-4-1" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Answer to try it yourself 4</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(T_n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(n^2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(F_n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(2^n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(n!\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(n^n\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>0</strong></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;">undef</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: center;"><span class="math inline">\(3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(4\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: center;"><span class="math inline">\(6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(9\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(6\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(27\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: center;"><span class="math inline">\(10\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(16\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(16\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(24\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(256\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: center;"><span class="math inline">\(15\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(25\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(32\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(120\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3125\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>6</strong></td>
+<td style="text-align: center;"><span class="math inline">\(21\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(36\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(13\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(720\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(46556\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>7</strong></td>
+<td style="text-align: center;"><span class="math inline">\(28\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(49\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(21\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(128\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(5040\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(823543\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>8</strong></td>
+<td style="text-align: center;"><span class="math inline">\(36\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(34\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(256\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(40320\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(16777216\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>9</strong></td>
+<td style="text-align: center;"><span class="math inline">\(45\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(81\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(55\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(512\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(362880\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(387420489\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: center;"><span class="math inline">\(55\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(100\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(89\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1024\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3628800\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(10000000000\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="try-it-yourself-5" class="slide level2" data-background-image="slides-bg.png">
+<h2>Try it yourself 5</h2>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Try it yourself 5</strong></p>
+</div>
+<div class="callout-content">
+<p>Explain why <span class="math inline">\(n^n &gt; n!\)</span> for all <span class="math inline">\(n &gt; 1\)</span>.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Answer to try it yourself 5</strong></p>
+</div>
+<div class="callout-content">
+<p>You can see that <span class="math inline">\(n &gt; k\)</span> for all <span class="math inline">\(k = 1,2,\ldots,n-1\)</span>. Therefore, since <span class="math inline">\(ac &lt; bc\)</span> for all positive numbers <span class="math inline">\(a,b,c\)</span> with <span class="math inline">\(a&lt;b\)</span>, it follows that</p>
+<p><span class="math display">\[
+\begin{aligned}
+n! &amp;= 1\cdot 2 \cdot 3 \cdot \ldots \cdot (n-1) \cdot n\\[0.5em]
+&amp;&lt; n\cdot n \cdot n \cdot \ldots \cdot n \cdot n\\[0.5em]
+&amp;= n^n
+\end{aligned}
+\]</span></p>
+<p>and this is enough.</p>
+</div>
+</div>
+</div>
+</div>
+</section></section>
+<section id="desmos-time" class="title-slide slide level1 center">
+<h1>Desmos time</h1>
+
+</section>
+
+<section>
+<section id="computational-complexity" class="title-slide slide level1 center">
+<h1>Computational complexity</h1>
+
+</section>
+<section id="whats-the-point-3" class="slide level2" data-background-image="slides-bg.png">
+<h2>What’s the point?</h2>
+<p>So far, you have seen for all <span class="math inline">\(n &gt; 4\)</span> (at least) <span class="math display">\[T_n &lt; n^2 &lt; 2^n &lt; n! &lt; n^n\]</span> In fact, some of these sequences are the cornerstone of <strong>computational complexity</strong>, which is the study of <strong>how fast computer programs run</strong>.</p>
+</section>
+<section id="computational-complexity-13" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>Computational complexity (1/3)</h2>
+<p>Nowadays, computer programs underpin every facet of our lives. From shopping online, to gaming, to the financial markets, to transporting goods up and down the country, they really are everywhere.</p>
+<p>The mathematical basis for computer programs is the study of <strong>algorithms</strong>. An algorithm takes in an input or inputs, performs a series of computational steps, and gives an output. The speed of an algorithm is measured in the number of computational operations inside the algorithm, and amount of these computational operations tend to scale with the size of the input. In other words, the number of computational operations is a <strong>sequence</strong> in which you are trying to <strong>minimize the growth rate</strong>.</p>
+</section>
+<section id="computational-complexity-23" class="slide level2" data-background-image="slides-bg.png">
+<h2>Computational complexity (2/3)</h2>
+<p>Measuring the amount of these computational operations is typically written in something called <strong>big-O notation</strong>, and this notation measures the <strong>computational complexity</strong> of the algorithm.</p>
+<p>For instance, if an algorithm has input of size <span class="math inline">\(n\)</span> and needs (roughly) <span class="math inline">\(n^2\)</span> many computational operations to complete, you would say that the complexity of the algorithm is <span class="math inline">\(O(n^2)\)</span>.</p>
+</section>
+<section id="computational-complexity-33" class="slide level2" data-background-image="slides-bg.png">
+<h2>Computational complexity (3/3)</h2>
+<p>The smaller the growth rate of the sequence, the better the algorithm’s performance. Typically, you would want an algorithm to complete in <strong>polynomial time</strong>; that is <span class="math inline">\(O(n^k)\)</span> for some positive number <span class="math inline">\(k\)</span>.</p>
+<p>However, there are some algorithms (like the famous <strong>travelling salesman problem</strong>) that require at least <strong>exponential time</strong> <span class="math inline">\(O(c^n)\)</span> (for some <span class="math inline">\(c &gt; 1\)</span>) to complete.</p>
+</section>
+<section id="p-versus-np-14" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>P versus NP (1/4)</h2>
+<p>Suppose that you are given a puzzle to solve, like a Sudoku. An algorithm could help you with this problem in one of two ways:</p>
+<ul>
+<li>given an attempt at a solution as an input, it could <strong>check your solution</strong> for you, or</li>
+<li>given the empty puzzle as an input, it could <strong>solve the puzzle</strong> for you.</li>
+</ul>
+<p>You can categorise this in the following way:</p>
+<ul>
+<li>Problems with algorithms that <strong>solve that problem</strong> in polynomial time are said to be in the computational complexity class <strong>P</strong>.</li>
+<li>Problems with algorithms that can <strong>check a solution</strong> in polynomial time are said to be in the computational complexity class <strong>NP</strong>.</li>
+</ul>
+</section>
+<section id="p-versus-np-24" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>P versus NP (2/4)</h2>
+<p>Here are some examples of problems in each complexity class:</p>
+<div class="column" style="width:45%;">
+<h4 id="p">P</h4>
+<ul>
+<li class="fragment">Testing to see if a given number is prime or not</li>
+<li class="fragment">Calculating the highest common factor of any two integers</li>
+<li class="fragment">Sorting a set of inputs into an ordered list</li>
+<li class="fragment">Wikipedia racing; going from one Wikipedia page to another in the fewest amount of clicks</li>
+</ul>
+</div><div class="column" style="width:45%;">
+<h4 id="np">NP</h4>
+<ul>
+<li class="fragment">Finding all prime factors of a given integer</li>
+<li class="fragment">The travelling salesman problem</li>
+<li class="fragment">Finding a group of people on Facebook who are all friends with each other</li>
+<li class="fragment">Games and puzzles including Sudoku, Battleships, Tetris, and Super Mario Bros</li>
+<li class="fragment">Creating a perfect Bitcoin block</li>
+</ul>
+</div></section>
+<section id="p-versus-np-34" class="slide level2" data-background-image="slides-bg.png">
+<h2>P versus NP (3/4)</h2>
+<p>However, because humanity hasn’t yet found algorithms that solve the problems in <strong>NP</strong> in polynomial time, it <strong>doesn’t mean they don’t exist</strong>. (You can compare this to the existence of extra-terrestrial life, or of the Loch Ness monster.) This is one of the most significant open problems in theoretical computer science, the <strong>P vs NP</strong> problem:</p>
+<blockquote>
+<p>If the solution to a problem can be checked in polynomial time, must the problem be solvable in polynomial time?</p>
+</blockquote>
+</section>
+<section id="p-versus-np-44" class="slide level2 smaller" data-background-image="slides-bg.png">
+<h2>P versus NP (4/4)</h2>
+<blockquote>
+<p>If the solution to a problem can be checked in polynomial time, must the problem be solvable in polynomial time?</p>
+</blockquote>
+<p>If the answer is <strong>yes</strong> (implying that <strong>P = NP</strong>), then humanity will have some significant issues to overcome. For instance, internet security relies on the fact that ‘finding all prime factors’ is <strong>not</strong> in <strong>P</strong> - so if it is, then a whole new security protocol will need to be invented. If the answer is <strong>no</strong>, then there will always be hard bounds on what computers can achieve.</p>
+<p>A solution either way will net you a cool million dollars and make you famous for ever.</p>
+<p>[Note: All of this framework is for <strong>regular computers</strong> - however, due to the fundamentally different nature of <strong>quantum computers</strong>, this problem might even be moot in a few years time…]</p>
+</section>
+<section id="end" class="slide level2" data-background-image="slides-bg.png">
+<h2>End</h2>
+<p>See you tomorrow :)</p>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../../logo-big.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

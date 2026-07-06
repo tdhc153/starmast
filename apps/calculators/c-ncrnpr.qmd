@@ -1,0 +1,315 @@
+---
+title: "Calculator: Combinations and permutations"
+author: Tom Coleman
+format: html
+abstract-title: Summary
+abstract: A calculator to provide the number of combinations and permutations for two integers.
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+```{=html}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>nCk / nPk Calculator</title>
+
+  <style>
+    :root {
+      --btn-color: #3f68b6;
+      --btn-hover: #345597;
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --error: #b63f3f;
+      --focus: #74a0ff;
+    }
+
+    body {
+      margin:0;
+      padding:2rem;
+      background:var(--bg);
+      font-family:system-ui;
+      color:var(--text);
+    }
+
+    .container {
+      max-width:560px;
+      margin:0 auto;
+      background:var(--card);
+      padding:1.75rem;
+      border-radius:12px;
+      box-shadow:0 10px 30px rgba(16,24,40,.08);
+    }
+
+    h1 {
+      margin:0 0 1rem;
+      font-size:1.4rem;
+    }
+
+    p.helper {
+      color:var(--muted);
+      margin-bottom:1.25rem;
+    }
+
+    /* ✅ SIDE-BY-SIDE INPUTS */
+    .grid {
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:1rem;
+    }
+
+    @media (min-width: 520px){
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    label {
+      font-weight:600;
+      display:block;
+      margin-bottom:.4rem;
+    }
+
+    input {
+      width:100%;
+      padding:.75rem;
+      border-radius:8px;
+      border:1px solid #e5e7eb;
+      font-size:1rem;
+      outline:none;
+    }
+
+    input:focus{
+      border-color:var(--focus);
+      box-shadow:0 0 0 3px rgba(116,160,255,.25);
+    }
+
+    .error {
+      color:var(--error);
+      font-size:.9rem;
+      min-height:1.1rem;
+    }
+
+    /* ✅ BUTTON ROW LIKE YOUR OTHER CALCS */
+    .buttons {
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:.75rem;
+      margin-top:1.25rem;
+    }
+
+    .buttons-bottom {
+      margin-top:.75rem;
+    }
+
+    button {
+      padding:.75rem;
+      border:none;
+      border-radius:8px;
+      background:var(--btn-color);
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+    }
+
+    button:hover {
+      background:var(--btn-hover);
+    }
+
+
+    .clearBtn {
+      background: #94a3b8;
+      grid-column: span 2;
+    }
+
+    .output {
+      margin-top:1.25rem;
+      padding:1rem;
+      background:#eef3ff;
+      border-radius:8px;
+      min-height:3rem;
+      line-height:1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Combinations and permutations calculator</h1>
+    <p class="helper">
+      Enter n and k to calculate combinations (nCk) or permutations (nPk).
+    </p>
+
+    <!-- ✅ SIDE-BY-SIDE INPUTS -->
+    <div class="grid">
+      <div>
+        <label for="n">n (for example: 5)</label>
+        <input id="n" type="text">
+        <div id="errN" class="error"></div>
+      </div>
+
+      <div>
+        <label for="r">k (for example: 2)</label>
+        <input id="r" type="text">
+        <div id="errR" class="error"></div>
+      </div>
+    </div>
+
+
+    <div class="buttons">
+      <button id="btnCr">Calculate nCk</button>
+      <button id="btnPr">Calculate nPk</button>
+      <button class="clearBtn" id="btnClear">Clear All</button>
+    </div>
+
+
+    <!-- OUTPUT -->
+    <div class="output" id="outputBox"></div>
+
+  </main>
+
+<script>
+const nIn = document.getElementById("n");
+const rIn = document.getElementById("r");
+
+const errN = document.getElementById("errN");
+const errR = document.getElementById("errR");
+
+const out = document.getElementById("outputBox");
+
+function clearErrors(){
+  errN.textContent="";
+  errR.textContent="";
+}
+
+function clearOut(){
+  out.textContent="";
+}
+
+function isInt(value){
+  return /^\d+$/.test(value);
+}
+
+/* Efficient functions */
+function nCr(n, r){
+  r = Math.min(r, n - r);
+  let result = 1;
+  for(let i = 1; i <= r; i++){
+    result = result * (n - r + i) / i;
+  }
+  return Math.round(result);
+}
+
+function nPr(n, r){
+  let result = 1;
+  for(let i = 0; i < r; i++){
+    result *= (n - i);
+  }
+  return result;
+}
+
+function validateInputs(){
+  clearErrors();
+  clearOut();
+
+  const nVal = nIn.value.trim();
+  const rVal = rIn.value.trim();
+
+  let valid = true;
+
+  if(!isInt(nVal)){
+    errN.textContent = "Enter a non-negative integer.";
+    valid = false;
+  }
+
+  if(!isInt(rVal)){
+    errR.textContent = "Enter a non-negative integer.";
+    valid = false;
+  }
+
+  if(!valid) return null;
+
+  const n = Number(nVal);
+  const r = Number(rVal);
+
+  if(r > n){
+    errR.textContent = "k cannot be greater than n.";
+    return null;
+  }
+
+  return { n, r };
+}
+
+/* ✅ nCr */
+document.getElementById("btnCr").onclick = () => {
+  const data = validateInputs();
+  if(!data) return;
+
+  const { n, r } = data;
+  const result = nCr(n, r);
+
+  out.innerHTML = `
+    <strong>nCk = n! / (k!(n − k)!)</strong><br>
+    ${n} C ${r} = ${result}
+  `;
+};
+
+/* ✅ nPr */
+document.getElementById("btnPr").onclick = () => {
+  const data = validateInputs();
+  if(!data) return;
+
+  const { n, r } = data;
+  const result = nPr(n, r);
+
+  out.innerHTML = `
+    <strong>nPk = n! / (n − k)!</strong><br>
+    ${n} P ${r} = ${result}
+  `;
+};
+
+/* ✅ CLEAR */
+document.getElementById("btnClear").onclick = () => {
+  nIn.value="";
+  rIn.value="";
+  clearErrors();
+  clearOut();
+  nIn.focus();
+};
+
+/* ✅ KEYBOARD SUPPORT */
+[nIn, rIn].forEach((el, index)=>{
+  el.addEventListener("keydown", (e)=>{
+    if(e.key === "Enter"){
+      document.getElementById("btnCr").click();
+    }
+    if(e.key === "Escape"){
+      document.getElementById("btnClear").click();
+    }
+  });
+});
+</script>
+
+</body>
+</html>
+
+```
+
+ 
+
+## Version history {-}
+
+v1.0: initial version created 06/26 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+

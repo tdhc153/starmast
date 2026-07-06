@@ -1,0 +1,514 @@
+---
+title: "Interactive: Pascal's triangle"
+author: Tom Coleman
+format: html
+abstract-title: Summary
+abstract: An interactive Pascal's triangle. 
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+```{=html}
+<script src="https://cdn.jsdelivr.net/npm/mathjs@latest/lib/browser/math.min.js"></script>
+<style>
+.calc-container{
+  max-width:1200px;
+  margin:auto;
+}
+
+.calc-row{
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.params-card{
+  flex:1;
+  min-width:280px;
+}
+
+.plot-card{
+  flex:1;
+  min-width:500px;
+}
+
+.calc-card{
+  background:white;
+  border:1px solid #ddd;
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:1rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+}
+
+.calc-header{
+  background:#3F68B6;
+  color:white;
+  padding:.75rem 1rem;
+  font-weight:700;
+}
+
+.calc-body{
+  padding:1rem;
+}
+
+#rows{
+  width:100%;
+}
+
+#rowsValue{
+  margin-top:.5rem;
+  font-weight:600;
+}
+
+#triangle{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.triangle-row{
+  display:flex;
+  margin-top:-8px;
+}
+
+.hex{
+  width:45px;
+  height:39px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:white;
+  font-weight:bold;
+
+  background:#3F68B6;
+
+  clip-path:polygon(
+    50% 0%,
+    93% 25%,
+    93% 75%,
+    50% 100%,
+    7% 75%,
+    7% 25%
+  );
+
+  margin:0 2px;
+
+  transition:.1s;
+}
+
+.hex.selected{
+  background:#db4315;
+  transform:scale(1.05);
+}
+
+.hex.parent{
+  background:#ffcb00;
+  color:black;
+}
+
+.row-label{
+  width:30px;
+  text-align:right;
+  font-weight:bold;
+  margin-right:8px;
+}
+
+.row-wrapper{
+  display:flex;
+  align-items:center;
+}
+
+.align-toggle{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  margin-top:1rem;
+  padding:.25rem .5rem;
+  border-radius:6px;
+}
+
+
+
+@media(max-width:768px){
+
+  .calc-row{
+    flex-direction:column;
+  }
+
+  .plot-card{
+    min-width:auto;
+  }
+
+  .hex{
+    width:42px;
+    height:36px;
+    font-size:12px;
+  }
+
+}
+</style>
+
+<div class="calc-container">
+
+  <div class="calc-row">
+
+    <div class="calc-card params-card">
+
+      <div class="calc-header">
+        Parameters
+      </div>
+
+      <div class="calc-body">
+
+        <label for="rows">
+          Number of rows
+        </label>
+
+        <input
+          type="range"
+          id="rows"
+          min="1"
+          max="12"
+          value="5">
+
+        <div id="rowsValue">
+          5 rows
+        </div>
+
+      </div>
+      
+<label class="align-toggle">
+
+  <input
+    type="checkbox"
+    id="leftAlign">
+
+  Left-align triangle
+
+</label>
+
+    </div>
+
+    <div class="calc-card plot-card">
+
+      <div class="calc-header">
+        Pascal's triangle
+      </div>
+
+      <div class="calc-body">
+
+        <div id="triangle"></div>
+
+      </div>
+
+    </div>
+    
+  <div class="calc-card params-card">
+
+  <div class="calc-header">
+    Information
+  </div>
+
+  <div class="calc-body">
+
+    <div id="selectionInfo"></div>
+
+  </div>
+
+</div>
+
+  </div>
+
+</div>
+
+<script>
+
+const triangleDiv =
+  document.getElementById("triangle");
+
+let currentValues = [];
+let currentParents = [];
+
+function updateInfoPanel(
+  value,
+  row,
+  position,
+  parentText
+){
+
+  document.getElementById(
+    "selectionInfo"
+  ).innerHTML = `
+
+    <div class="metric">
+      <div class="metric-label">
+        <b>Value</b>
+      </div>
+      <div class="metric-value">
+        ${value}
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        <b>Row</b>
+      </div>
+      <div class="metric-value">
+        ${row}
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        <b>Position</b>
+      </div>
+      <div class="metric-value">
+        ${position}
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        <b>Binomial coefficient</b>
+      </div>
+      <div class="metric-value">
+        ${row}C${position} = ${value}
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-label">
+        <b>Parents</b>
+      </div>
+      <div class="metric-value">
+        ${parentText}
+      </div>
+    </div>
+
+  `;
+}
+
+function clearSelection(){
+
+  document
+    .querySelectorAll(".hex")
+    .forEach(el=>{
+
+      el.classList.remove(
+        "selected"
+      );
+
+      el.classList.remove(
+        "parent"
+      );
+
+    });
+
+}
+
+function selectHex(i,j){
+
+  clearSelection();
+
+  const hex =
+    document.getElementById(
+      `hex-${i}-${j}`
+    );
+
+  if(!hex) return;
+
+  hex.classList.add(
+    "selected"
+  );
+
+  const parentIds =
+    currentParents[i][j];
+
+  let parentText = "None";
+
+  if(parentIds.length === 2){
+
+    const p1 =
+      document.getElementById(
+        parentIds[0]
+      );
+
+    const p2 =
+      document.getElementById(
+        parentIds[1]
+      );
+
+    if(p1 && p2){
+
+      p1.classList.add(
+        "parent"
+      );
+
+      p2.classList.add(
+        "parent"
+      );
+
+      parentText =
+        `${p1.textContent} + ${p2.textContent}`;
+
+    }
+
+  }
+
+  updateInfoPanel(
+    currentValues[i][j],
+    i,
+    j,
+    parentText
+  );
+
+}
+
+function buildTriangle(rows){
+
+  triangleDiv.innerHTML = "";
+
+  currentValues = [];
+  currentParents = [];
+
+  for(let i=0;i<rows;i++){
+
+    currentValues[i] = [];
+    currentParents[i] = [];
+
+    for(let j=0;j<=i;j++){
+
+      if(j===0 || j===i){
+
+        currentValues[i][j] = 1;
+        currentParents[i][j] = [];
+
+      }
+      else{
+
+        currentValues[i][j] =
+          currentValues[i-1][j-1] +
+          currentValues[i-1][j];
+
+        currentParents[i][j] = [
+          `hex-${i-1}-${j-1}`,
+          `hex-${i-1}-${j}`
+        ];
+
+      }
+
+    }
+
+  }
+
+  for(let i=0;i<rows;i++){
+
+    const wrapper =
+      document.createElement("div");
+
+    wrapper.className =
+      "row-wrapper";
+
+    const label =
+      document.createElement("div");
+
+    label.className =
+      "row-label";
+
+    label.textContent = i;
+
+    wrapper.appendChild(label);
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "triangle-row";
+
+    for(let j=0;j<=i;j++){
+
+      const hex =
+        document.createElement("div");
+
+      hex.className =
+        "hex";
+
+      hex.id =
+        `hex-${i}-${j}`;
+
+      hex.textContent =
+        currentValues[i][j];
+
+      hex.addEventListener(
+        "click",
+        ()=>selectHex(i,j)
+      );
+
+      row.appendChild(hex);
+
+    }
+
+    wrapper.appendChild(row);
+
+    triangleDiv.appendChild(
+      wrapper
+    );
+
+  }
+
+  selectHex(0,0);
+
+}
+
+document
+  .getElementById("rows")
+  .addEventListener(
+    "input",
+    function(){
+
+      document.getElementById(
+        "rowsValue"
+      ).textContent =
+        this.value + " rows";
+
+      buildTriangle(
+        parseInt(this.value)
+      );
+
+    }
+  );
+
+document
+  .getElementById("leftAlign")
+  .addEventListener(
+    "change",
+    function(){
+
+      triangleDiv.style.alignItems =
+        this.checked
+          ? "flex-start"
+          : "center";
+
+    }
+  );
+
+buildTriangle(5);
+
+</script>
+
+```
+
+## Version history {-}
+
+v1.0: initial version created 07/26 by tdhc.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+
