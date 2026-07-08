@@ -3,10 +3,11 @@ title: "Making it count: an introduction to the theory of functions"
 author: Tom Coleman
 abstract-title: Summary
 abstract: In the third of four linked presentations, this session takes the material covered in the previous two sessions and looks at it from a more general perspective by introducing the theory of functions. Along the way, you'll learn why and how you use functions in everyday life, how every sequence of numbers is a function in disguise, and why pigeons are so important in mathematics.
-draft: true
 ---
 
 # The function junction
+
+:::{.content-visible when-format="html"}
 
 :::{.callout-important}
 ## Try it yourself 1
@@ -20,11 +21,30 @@ How many elements are in this set? $$X = \{a,c,♦️,d,♠️,️♣️,❤️,
 There are $14$, but that's not important. Read on...
 :::
 
+:::
+
+:::{.content-hidden when-format="html"}
+
+:::{.callout-important}
+## Try it yourself 1
+
+How many elements are in this set? $$X = \{a,1,2,3,b,5,193,14555,c,p,23,L,Q,W,A\}$$
+:::
+
+:::{.callout-note collapse="true"}
+## Answer to try it yourself 1
+
+There are $14$, but that's not important. Read on...
+:::
+
+:::
+
 The important thing was **how** you counted it. If you counted out loud, you probably said $1,2,3,4,\ldots$ all the way up to $14$, pointing at each element in turn. This is how you are first taught to count things.
 
 In fact, what you are doing is taking an input from $X$ and assigning it an output from the set of all positive whole numbers. This linking of an input to an output is the idea of a mathematical **function**.
 
-::: callout-note
+:::{.callout-note}
+
 ## Function, domain, range
 
 Let $X,Y$ be two sets.
@@ -1674,6 +1694,20 @@ redraw();
 
 :::
 
+:::{.content-hidden when-format="html"}
+
+Here are some examples of functions.
+
+![This is an example of a function. You can notice each element of the domain $\{A,B,C\}$ on the left is mapped to exactly one element in the codomain $\{1,2,3,4,5\}$ on the right. $A$ is mapped to $1$, $B$ is mapped to $2$, and $C$ is mapped to $5$.](./FiguresPNG/function1.png){width="75%"}
+
+![This is an example of something that isn't a function, because it shows 'one-to-many' behaviour. The element $B$ can only be mapped to one element in a function, but here it is mapped to three elements $2,3,4$.](./FiguresPNG/function2.png){width="75%"}
+
+![This is an example of a function showing 'many-to-one' behaviour. You can notice each element of the domain $\{A,B,C\}$ on the left is mapped to exactly one element in the codomain $\{1,2,3,4,5\}$ on the right. All elements of the domain are mapped to $3$.](./FiguresPNG/function3.png){width="75%"}
+
+![This is an example of something that isn't a function. Not every element of the domain $\{A,B,C\}$ is mapped to an element of the codomain. To turn this into a function, you will need to decide where $B$ is mapped to.](./FiguresPNG/function4.png){width="75%"}
+
+:::
+
 ## Sequences
 
 In mathematics, the reason why functions are incredibly powerful is because they allow for **comparison** between sets. Any time you want to compare two sets - a function is almost always used. Any time you want to look at growth, or rates of change, or to decide behaviour in the future: you will use a function. 
@@ -1688,7 +1722,7 @@ In fact, every sequence is a function in disguise. To help illustrate this, here
 
 Write $[n]$ to be the set $\{1,2,3,\ldots,n\}$ of all positive whole numbers from $1$ up to $n$ included. So $[4] = \{1,2,3,4\}$ and $[k] = \{1,2,3,\ldots,k\}$. You can notice that the number of elements of $[n]$ is $n$
 
-For the (infinite) set of all positive whole numbers, write $$\mathbb{N} = \{1,2,3,\ldots\}$$ as the set of **natural numbers**. 
+For the (infinite) set of all positive whole numbers, write $$\mathbb{N} = \{1,2,3,\ldots\}$$ as the set of **natural numbers**. You can write $$\mathbb{N}_0 = \{0,1,2,3,\ldots\}$$ to be the set of **natural numbers with zero**.
 
 For the (infinite) set of all possible numbers - whole, fractions and decimals, positive and negative - write $\mathbb{R}$ to be the set of these numbers (called **real numbers**). 
 
@@ -1714,19 +1748,34 @@ This makes it a lot easier to phrase the following important consideration:
 ## Try it yourself 2
 
 Why are (a) and (b) true? As an initial pointer, think about where the set $[n]$ will appear in your consideration.
+
 :::
 
 :::{.callout-note collapse="true"}
+
 ## Answer to try it yourself 2
 
 For (a), suppose that you have a sequence of length $n$ of elements from $[k]$; you could say that this is $$a_1,a_2,\ldots,a_n.$$ You can see that for every number $i$ between $1$ and $n$, there is an element $a_i$ of $[k]$ at position $i$ in the list. You can then define a function $f:[n] \to [k]$ by the assignment $$f(i) = a_i$$ which sends $i\in [n]$ to $a_i$. This then determines the sequence $a_1,a_2,\ldots,a_n$.
 
 For (b), suppose you have a function $f:[n]\to [k]$. You can now view this as a sequence of length $n$ in $[k]$ by writing out all of the outputs in order: $$f(1),f(2),\ldots,f(n)$$ which defines a finite sequence of length $n$ with elements in $[k]$. 
+
 ::: 
 
 Parts (c) and (d) follow from similar reasoning. 
 
-This means that finite/infinite sequences can be studied through the realms of functions. Here's an excellent result that follows from this.
+This means that finite/infinite sequences can be studied through functions.
+
+:::{.callout-note}
+
+## Examples of sequences as functions
+
+If a sequence has a **closed form formula**, then it can be represented concisely as a function. For instance, the sequence of cube numbers can be written as $f_1:\mathbb{N}\to\mathbb{N}$ with $f(n) = n^3$, or the powers of two as $f_2:\mathbb{N}_0\to\mathbb{N}$ with $f_2(n) = 2^n$. Even constant sequences can be written as functions: write $f_3:\mathbb{N}\to\{153\}$ to be $f_3(n) = 153$ for all $n\in\mathbb{N}$.
+
+The binomial coefficients can also be written as a function, but the domain needs to be all **pairs** of all whole numbers with $0$. Write $$\mathbb{N}_0\times \mathbb{N}_0\ = \{(n,k)\; : \; n,k\in \mathbb{N}_0\}.$$ Then the binomial coefficient can be written as a function $b:\mathbb{N}_0\times \mathbb{N}_0\times \mathbb{N}$ with $$b(n,k) = \binom{n}{k}.$$
+
+:::
+
+Here's an excellent result that follows from this.
 
 :::{.callout-note}
 
@@ -1738,7 +1787,7 @@ The total number of possible functions $f:[n]\to[k]$ is $k^n$.
 
 :::{.callout-note}
 
-## Proof of the formula for number of subsets
+## Proof of the formula of the number of functions
 
 You are given that $[n] = \{1,2,3,\ldots,n\}$, and there is a function $f:[n]\to[k]$. Write $f$ as a finite sequence of length $n$ with elements from $k$ to get $$f(1),f(2),f(3),\ldots,f(n)$$
 
@@ -1762,20 +1811,250 @@ Does this seem familiar?
 
 This is an almost a word-for-word recreation of the proof in [Exploration: How to win at cards - combinations and permutations](e-combinationspermutations.qmd) that there were $2^n$ many subsets of a set $\{1,2,3,\ldots,n\}$!
 
-So what's happening here? Well, the idea of deciding whether or not each element of $[n] = \{1,2,3,\ldots,n\}$ is in some subset of $[n]$ can be modelled as a function $f:[n]\to[2]$, where $f(i) = 1$ says that $i$ is not in the subset, and $f(i) = 2$ says that $i$ is in the subset. Therefore, every function $f:[n]\to[2]$ corresponds to a subset of $[n]$, and every subset of $[n]$ corresponds to a function $f:[n]\to[2]$.
+So what's happening here? Well, the idea of deciding whether or not each element of $[n] = \{1,2,3,\ldots,n\}$ is in some subset of $[n]$ can be modelled as a function $f:[n]\to[2]$, where $f(i) = 1$ says that $i$ is not in the subset, and $f(i) = 2$ says that $i$ is in the subset. Therefore, every function $f:[n]\to[2]$ corresponds to a subset of $[n]$, and every subset of $[n]$ corresponds to a function $f:[n]\to[2]$. This function is called an **indicator function** for the subset of $[n]$.
 
 :::
 
-# One-to-one and onto
+# Injective, surjective, bijective
 
-The set $$f(x) = \{f(x)\textsf{ where } x\in X\} \subseteq Y$$ is called the **image** of $f$. It follows from this that the image of $f$ is a subset of the codomain $Y$ of $f$.
+Now, much like numbers can be odd, even, prime, not prime, and so on, functions have different properties as well. To do this, you'll need to examine **exactly** where the function sends its elements.
 
-# Where and how?
+:::{.callout-note}
 
-## Pigeons and counting
+## Image of a function
+
+The set $$f(X) = \{f(x)\textsf{ where } x\in X\} \subseteq Y$$ is called the **image** of $f$. It follows from this that the image of $f$ is a subset of the codomain $Y$ of $f$.
+
+:::
+
+:::{.content-visible when-format="html"}
+
+You can use the above interactive figure to investigate the image of the function - it is included in the information below the figure. You can see that the image of your chosen function is the set of whatever outputs you pick in the codomain.
+
+:::
+
+:::{.content-hidden when-format="html"}
+
+:::{.content-hidden when-format="html"}
+
+Here are some examples of images of functions.
+
+![In this function $A$ is mapped to $1$, $B$ is mapped to $2$, and $C$ is mapped to $5$, so the image of this function is $\{1,2,5\}$.](./FiguresPNG/function1.png){width="75%"}
+
+![As everything in the domain $\{A,B,C\}$ is mapped to $3$, the image of this function is the set $\{3\}$, which is a subset of the codomain $\{1,2,3,4,5\}$.](./FiguresPNG/function3.png){width="75%"}
+
+:::
+
+:::
+
+How functions map into the image is important, and how much of the codomain is covered in the image is important. Together, these properties underpin the very idea of counting.
+
+:::{.callout-note}
+
+## Injective, surjective, and bijective
+
+Suppose that $f:X\to Y$ is a function from $X$ to $Y$.
+
+(a) Say that $f$ is **injective** (or **one-to-one**, or even **one-one**) if $x_1\neq x_2$ means that $f(x_1)\neq f(x_2)$ for all $x_1,x_2\in X$. Equivalently, $f$ is injective if $f(x_1) = f(x_2)$ implies that $x_1 = x_2$ for all $x_1,x_2\in X$.
+
+(b) Say that $f$ is **surjective** (or **onto**) if for all $y\in Y$ there exists $x\in X$ such that $f(x) = y$. Equivalently, $f$ is surjective if the image $f(X)$ of $f$ is equal to the codomain $Y$ of $f$.
+
+(c) Say that $f$ is **bijective** if $f$ is both injective and surjective.
+
+:::
+
+Intuitively, you could say that 
+
+- $f$ is injective if different elements in $A$ always map to different elements in $B$.
+
+- $f$ is surjective if every element of $B$ has an element of $A$ that maps to it.
+
+- $f$ is bijective if every element of $B$ has a **unique** element of $A$ that maps to it.
+
+It's important that in mathematics, you have both the **precise definition** and the **intuition behind it** - it's like the spirit and letter of the law, they have to line up in order to be effective.
+
+:::{.callout-important}
+
+## Try it yourself 4
+
+Using the interactive function investigator above, find examples of injective, surjective and bijective functions, and write down their images. What do you notice about the sizes of the sets involved?
+
+:::
+
+:::{.content-visible when-format="html"}
+
+:::{.callout-note collapse="true"}
+
+## Answer to try it yourself 4
+
+You can check these for yourself in [Interactive: Function investigator](../apps/interactive/i-functions.qmd)!
+
+Here's an example of an injective function $f:\{A,B,C\}\to\{1,2,3,4,5\}$: $$f(A) = 1,\quad f(B) = 2,\quad f(C) = 5$$ with image $\{1,2,5\}$. You can notice that each of the domain elements $\{A,B,C\}$ is sent to a different element of the codomain, demonstrating that the function is injective.
+
+Here's an example of a surjective function $g:\{A,B,C,D,E\}\to\{1,2,3\}$: $$g(A) = 1,\quad g(B) = 2,\quad g(C) = 3,\quad g(D) = 1,\quad g(E) = 2$$ with image $\{1,2,3\}$. Since the image $\{1,2,3\}$ is the same as the codomain, it follows that this function is surjective. 
+
+Here's an example of a bijective function $h:\{A,B,C\}\to\{1,2,3\}$: $$h(A) = 1,\quad h(B) = 2,\quad h(C) = 3$$ with image $\{1,2,3\}$. You can notice that each of the domain elements $\{A,B,C\}$ is sent to a different element of the codomain, demonstrating that the function is injective - in addition, the image $\{1,2,3\}$ is the same as the codomain, so the function is also surjective. This means that $h$ is bijective.
+
+:::
+
+:::
+
+:::{.content-hidden when-format="html"}
+
+:::{.callout-note collapse="true"}
+
+## Answer to try it yourself 4
+
+Here's an example of an injective function $f:\{A,B,C\}\to\{1,2,3,4,5\}$: $$f(A) = 1,\quad f(B) = 2,\quad f(C) = 5$$ with image $\{1,2,5\}$. You can notice that each of the domain elements $\{A,B,C\}$ is sent to a different element of the codomain, demonstrating that the function is injective.
+
+![A picture of the injective function in the answer to Try it yourself 4.](./FiguresPNG/function1.png){width="75%"}
+
+Here's an example of a surjective function $g:\{A,B,C,D,E\}\to\{1,2,3\}$: $$g(A) = 1,\quad g(B) = 2,\quad g(C) = 3,\quad g(D) = 1,\quad g(E) = 2$$ with image $\{1,2,3\}$. Since the image $\{1,2,3\}$ is the same as the codomain, it follows that this function is surjective. 
+
+![A picture of the surjective function in the answer to Try it yourself 4.](./FiguresPNG/function5.png){width="75%"}
+
+Here's an example of a bijective function $h:\{A,B,C\}\to\{1,2,3\}$: $$h(A) = 1,\quad h(B) = 2,\quad h(C) = 3$$ with image $\{1,2,3\}$. You can notice that each of the domain elements $\{A,B,C\}$ is sent to a different element of the codomain, demonstrating that the function is injective - in addition, the image $\{1,2,3\}$ is the same as the codomain, so the function is also surjective. This means that $h$ is bijective.
+
+![A picture of the bijective function in the answer to Try it yourself 4.](./FiguresPNG/function6.png){width="75%"}
+
+:::
+
+:::
+
+What about the functions before?
+
+:::{.callout-note collapse="true"}
+
+## Previous examples
+
+- The function $f_1:\mathbb{N}\to\mathbb{N}$ with $f_1(n) = n^3$ is injective but not surjective. For injective, you need to take two potential equal ouputs and show they come from the same input. So if $f_1(x) = f_1(y)$ then $x^3 = y^3$, and so $x = y$ - therefore, $f_1$ is injective. To show that $f_1$ is not surjective, it's enough to show that there is an element of the codomain that isn't in the image; since there is no natural number that cubes to make $2$, it follows that $2$ is not in the image. So $f_1$ is not surjective. 
+
+- Similarly, $f_2:\mathbb{N}_0\to\mathbb{N}$ with $f_2(n) = 2^n$ is injective but not surjective. 
+
+- The function $f_3:\mathbb{N}\to\{153\}$ with $f_3(n) = 153$ for all $n\in\mathbb{N}$ is surjective but not injective. Here, the image of $f_3$ is $\{153\}$ which is the same as the codomain, so $f_3$ is surjective. To show that it's not injective, you can notice that $f_3$ sends both $1$ and $2$ to $153$ and since $1\neq 2$, different elements aren't always mapped to different elements and the function is not injective.
+
+- The binomial coefficient written as a function $b:\mathbb{N}_0\times \mathbb{N}_0\times \mathbb{N}$ with $$b(n,k) = \binom{n}{k}$$ is surjective but not injective. For surjective, suppose that $m$ is in $\mathbb{N}$; you need to find a pair $(n,k)$ such that $b(n,k) = m$. Since $\binom{m}{1} = m$ for all $m$ in $\mathbb{N}$, it follows that taking $n = m$ and $k = 1$ shows that every $m\in\mathbb{N}$ is in the image of $b$. So $b$ is surjective. However, $b$ is not injective as $$b(3,1) = \binom{3}{1} = 3 = \binom{3}{2} = b(3,2)$$ but the inputs $(3,1)$ and $(3,2)$ are not the same. 
+
+:::
+
+
+You can also notice that 
+
+- if a function is surjective, then the cardinality of the domain $X$ is greater than or equal to the cardinality of the codomain $Y$, so $|X| \geq |Y|$.
+
+- if a function is injective, then the cardinality of the codomain $Y$ is greater than or equal to the cardinality of the domain $Y$, so $|Y| \geq |X|$.
+
+- if a function is bijective, then the cardinality of the domain $X$ is equal to the cardinality of the domain $Y$, so $|X| = |Y|$.
+
+These observations can be reversed using a mathematical principle called the **contrapositive**. This allows you to change the logical perspective of a statement 'if $A$ then $B$' to 'if not $B$ then not $A$'.
+
+Doing this to the observations above give the following statements about any function $f:X\to Y$:
+
+- if the cardinality of the domain $X$ is **less than** the cardinality of the codomain $Y$, then $f$ is never surjective.
+
+- if the cardinality of the codomain $Y$ is **less than** the cardinality of the domain $X$, then $f$ is never injective.
+
+- if the cardinalities of the domain $X$ and the codomain $Y$ are **not equal**, then $f$ is never bijective. 
+
+## Pigeons
+
+The second of these statements is equivalent to an important principle in combinatorics.
+
+:::{.callout-note}
+
+## The pigeonhole principle
+
+Suppose that $n > m$. If you have $n$ items and $m$ boxes in which to put them, then at least one box contains more than one item. 
+
+:::
+
+:::{.callout-note}
+
+## Proof of the pigeonhole principle
+
+Give numbers to your list of items $\{1,2,3,\ldots,n\}$. Put item $1$ in box $1$, item $2$ in box $2$, and so on until you put item $m$ in box $m$. Since $n> m$, it follows that $n - m \geq 1$ and so you have at least one item to put in a box. It follows that at least one box contains more than one item.
+
+:::
+
+:::{.callout-note}
+
+## Scenario 1
+
+Cantor's Confectionery is one of the best places to work in the fictional world. It has the habit of throwing a birthday party for every one of its employees on their birthday, which is truly exceptional for morale. They have appointed you, its HR representative, to try and investigate cost-cutting measures for this expensive endeavour. The best way to achieve this is to have a shared party between two or more employees.  
+
+What is the number $n$ of employees required to have 
+
+(a) a $50\%$ chance that two employees share the same birthday?
+
+(b) a $100\%$ chance that two employees share the same birthday?
+
+:::
+
+The first of these is probability, and relies on techniques seen in [Explorations: How to win at cards - combinations and permutations](e-combinationspermutations.qmd). The second uses the pigeonhole principle!
+
+:::{.callout-note}
+
+## Answer to Scenario 1
+
+For convenience, assume that there are $365$ days in the year, as there are in most years. 
+
+(a) Here, it's easier to work out the probability of this **not** happening - you can then subtract this from $1$ to work out the probability of this happening.
+
+  Write a list of your employees. Suppose that the first employee has a birthday on any day of the year. The chances that a second employee has a different birthday than the first is $364/365$. The chances that a third employee has a different birthday than the first two is $363/365$. You can continue in this way to show that the probability that $n$ employees all have different birthdays is 
+$$
+\begin{aligned}
+\mathbb{P}(\textsf{different birthdays}) &= \frac{365}{365}\cdot \frac{364}{365}\cdot \frac{363}{365}\cdot\ldots\cdot\frac{(365-n)}{365}\\[0.5em]
+&= \frac{(365)_n}{365^n}
+\end{aligned}
+$$
+where $(365)_n$ is the **falling factorial** from [Explorations: How to win at cards - combinations and permutations](e-combinationspermutations.qmd). 
+
+  As it turns out, the number $n$ that tips this number below $50\%$ - and so the chances that two employees share a birthday is **above** $50\%$ - is $n = 23$. So for a company with $23$ employees, there is a greater than $50\%$ chance that two employees share a birthday!
+
+(b) Here, the **worst-case scenario** is that everybody has a different birthday. Since there are $365$ possible birthdays, the worst case scenario is that the company has $365$ employees, each with different birthdays. 
+
+  So if there are $366$ employees in Cantor's Confectionery, then it's guaranteed that at least two people share a single birthday. So the answer is $n = 366$. 
+
+:::
+
+The pigeonhole principle also guarantees that in Scotland, at least two people have the same numbers of hairs on their head!
+
+# Counting blessings
+
+So what does all of this have to do with counting?
+
+If you count the set in Try it yourself 1 by pointing at each element and saying each number, you created a bijection between the set and the set of number $\{1,2,\ldots,14\}$. By putting sets in bijections with other sets, or not, you can directly compare them to each other by their sizes. This is infact the definition of counting:
+
+:::{.callout-note}
+
+## Definition of cardinality
+
+Let $X$ be a set, and $[n] = \{1,2,3,\ldots,n\}$. If there exists a bijection $f:X\to[n]$, then write $|X| = n$. 
+
+:::
+
+So finding bijections between sets of things and sets of natural numbers is the very **idea** of mathematically defining how to count things. It is the injective part that identifies each element of $X$ with a unique natural number, and the surjective part ensures that all the numbers in $\{1,2,3,\ldots,n\}$ are covered. 
+
+If the surjective part doesn't exist, then you have **inequalities** rather than equality. Thankfully, because of the way surjective functions are defined, you can 'shrink' the codomain of your function to the image to create a bijective function. 
+
+So if there exists an injective function $g:X\to [n]$, then this tells you that there is a bijection $g:X\to [m]$ where $m < n$. So not only do bijective functions tell you about the cardinality of sets, injective functions tell you which sets are bigger than others. The following are strengthenings of the above observations.
+
+:::{.callout-note}
+
+## Injections
+
+(a) If there exists an injection $f:X\to Y$, then $|X| \leq |Y|$.
+
+(b) If there exists an injection $g:Y\to X$, then $|Y| \leq |X|$.
+
+(c) (**Cantor-Schröder-Bernstein theorem**) If there exists injections $f:X\to Y$ and $g:Y\to X$, then $|X| = |Y|$.
+
+:::
+
+Notice here that none of the sets here were specifically stated to be **finite.** So this idea of comparing sets using injective and bijective functions extend to where the sets are **infinite** - and this will have even more surprising results in the next exploration...
 
 # Version history {.unnumbered}
 
-v1.0: initial version created 04/26 by Holly Goldsmith as part of a University of St Andrews VIP project.
+v1.0: initial version created 07/26 by tdhc, originally for presentation 3 of 4 for Sutton Trust Summer School 2026.
 
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)

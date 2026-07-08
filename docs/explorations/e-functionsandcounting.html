@@ -1,2 +1,3276 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tom Coleman">
+
+<title>Making it count: an introduction to the theory of functions – STARMAST</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-4bc6d62a8f631abbc9a163be30471117.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-9b9ee040fd52a61b26fb17fad03ba886.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-4bc6d62a8f631abbc9a163be30471117.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-L30GVCTC8L"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-L30GVCTC8L', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":"",
+"website_privacy_policy_url":"cookies.qmd"
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
+<script>
+  window.addEventListener('load', function() {
+    document.getElementById("cc-nb-title").innerHTML = "Your privacy is important to us";
+    document.getElementById("cc-nb-text").innerHTML = "This website uses Google Analytics to measure traffic to and from the site, and to learn where our users come from. We use cookies to enable this service, alongside enabling our non-identifiable QuickCheck problem tracking. These are the sole purposes of enabling cookies on this website.";
+  });
+</script>
+
+<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=2949896c7db64d4a8a380b1e11254b5f"></script>
+<script src="https://esm.sh/shinylive-r"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../webexfiles/webex.css">
+</head>
+
+<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../logo-big.png" alt="" class="navbar-logo light-content">
+    <img src="../logo-big.png" alt="" class="navbar-logo dark-content">
+    </a>
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">STARMAST</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../newsindex.html"> 
+<span class="menu-text">News</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html"> 
+<span class="menu-text">Full index</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../faqs.html"> 
+<span class="menu-text">FAQs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../search/topicsearch.html"> 
+<span class="menu-text">School topic search</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../contact.html"> 
+<span class="menu-text">Contact</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <div id="quarto-announcement" data-announcement-id="0722b2b9ded0d5f62524be1a2b90bbbe" class="alert alert-danger hidden"><i class="bi bi-database-add quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p><strong>Latest news:</strong> Enforced update of R Shinylive figures in stats factsheets now underway! (11/06/26)</p>
+</div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-function-junction" id="toc-the-function-junction" class="nav-link active" data-scroll-target="#the-function-junction">The function junction</a>
+  <ul class="collapse">
+  <li><a href="#sequences" id="toc-sequences" class="nav-link" data-scroll-target="#sequences">Sequences</a></li>
+  </ul></li>
+  <li><a href="#injective-surjective-bijective" id="toc-injective-surjective-bijective" class="nav-link" data-scroll-target="#injective-surjective-bijective">Injective, surjective, bijective</a>
+  <ul class="collapse">
+  <li><a href="#pigeons" id="toc-pigeons" class="nav-link" data-scroll-target="#pigeons">Pigeons</a></li>
+  </ul></li>
+  <li><a href="#counting-blessings" id="toc-counting-blessings" class="nav-link" data-scroll-target="#counting-blessings">Counting blessings</a></li>
+  <li><a href="#version-history" id="toc-version-history" class="nav-link" data-scroll-target="#version-history">Version history</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="e-functionsandcounting.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="e-functionsandcounting.docx"><i class="bi bi-file-word"></i>MS Word</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Making it count: an introduction to the theory of functions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tom Coleman </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Summary</div>
+    In the third of four linked presentations, this session takes the material covered in the previous two sessions and looks at it from a more general perspective by introducing the theory of functions. Along the way, you’ll learn why and how you use functions in everyday life, how every sequence of numbers is a function in disguise, and why pigeons are so important in mathematics.
+  </div>
+</div>
+
+
+</header>
+
+
+<section id="the-function-junction" class="level1">
+<h1>The function junction</h1>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Try it yourself 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>How many elements are in this set? <span class="math display">\[X = \{a,c,♦️,d,♠️,️♣️,❤️,💫,b,🍏,🏏,e,f,🗿\}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer to try it yourself 1
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There are <span class="math inline">\(14\)</span>, but that’s not important. Read on…</p>
+</div>
+</div>
+</div>
+<p>The important thing was <strong>how</strong> you counted it. If you counted out loud, you probably said <span class="math inline">\(1,2,3,4,\ldots\)</span> all the way up to <span class="math inline">\(14\)</span>, pointing at each element in turn. This is how you are first taught to count things.</p>
+<p>In fact, what you are doing is taking an input from <span class="math inline">\(X\)</span> and assigning it an output from the set of all positive whole numbers. This linking of an input to an output is the idea of a mathematical <strong>function</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Function, domain, range
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(X,Y\)</span> be two sets.</p>
+<p>A <strong>function</strong> <span class="math inline">\(f\)</span> from the set <span class="math inline">\(X\)</span> to the set <span class="math inline">\(Y\)</span> is an assignment that maps each element of <span class="math inline">\(X\)</span> to <strong>exactly one</strong> output in <span class="math inline">\(Y\)</span>. It is written as <span class="math inline">\(f:X\to Y\)</span>, and the notation <span class="math inline">\(f(x) = y\)</span> means ’<span class="math inline">\(f\)</span> maps <span class="math inline">\(x\in X\)</span> to <span class="math inline">\(y\in Y\)</span>.</p>
+<p>Here, the set <span class="math inline">\(X\)</span> is called the <strong>domain</strong> of <span class="math inline">\(f\)</span> and the set <span class="math inline">\(Y\)</span> is called the <strong>codomain</strong> of <span class="math inline">\(f\)</span>.</p>
+<p>Two functions <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> are equal if and only if they have the same domain <span class="math inline">\(X\)</span>, codomain <span class="math inline">\(Y\)</span>, and <span class="math inline">\(f(x) = g(x)\)</span> for all <span class="math inline">\(x\in X\)</span>.</p>
+</div>
+</div>
+<p>The important thing is that for some <span class="math inline">\(x\in X\)</span>, there is exactly one <span class="math inline">\(y\in Y\)</span> such that <span class="math inline">\(f(x) = y\)</span> - so <strong>one</strong> element of <span class="math inline">\(X\)</span> can’t map to <strong>many</strong> elements of <span class="math inline">\(Y\)</span>. The converse is not true; <strong>many</strong> elements of <span class="math inline">\(X\)</span> are allowed to <strong>one</strong> element of <span class="math inline">\(Y\)</span>.</p>
+<p>You can use the interactive figure below to explore functions from a set <span class="math inline">\(X\)</span> of letters to a set <span class="math inline">\(Y\)</span> of numbers. It’s important to see that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> don’t have to be the same set, or even the same size!</p>
+<script src="https://cdn.jsdelivr.net/npm/mathjs@latest/lib/browser/math.min.js"></script>
+<style>
+
+:root{
+  --blue:#3F68B6;
+  --orange:#DB4315;
+  --yellow:#FFCB00;
+  --green:#2E8B57;
+  --red:#C0392B;
+  --border:#DDDDDD;
+  --background:#F5F5F5;
+  --column-separation:50%;
+}
+body{
+
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--background);
+
+}
+
+.calc-container{
+
+  max-width:1200px;
+  margin:auto;
+
+}
+
+.calc-row{
+
+  display:flex;
+  gap:1rem;
+  flex-wrap:wrap;
+
+}
+
+.params-card{
+
+  flex:1;
+  min-width:300px;
+
+}
+
+.function-card{
+
+  flex:2;
+  min-width:600px;
+
+}
+
+.calc-card{
+
+  background:white;
+  border:1px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:1rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+
+}
+
+.calc-header{
+
+  background:var(--blue);
+  color:white;
+  font-weight:bold;
+  padding:.8rem 1rem;
+
+}
+
+.calc-body{
+
+  padding:1rem;
+
+}
+
+input[type=range]{
+
+  width:100%;
+
+}
+
+.button-row{
+
+  display:flex;
+  gap:.75rem;
+  margin-top:1rem;
+
+}
+
+button{
+
+  border:none;
+  border-radius:6px;
+  padding:.55rem 1rem;
+  font-size:15px;
+  cursor:pointer;
+  transition:.2s;
+
+}
+
+button:hover{
+
+  transform:translateY(-1px);
+
+}
+
+.undo-button{
+
+  background:var(--blue);
+  color:white;
+
+}
+
+.reset-button{
+
+  background:var(--orange);
+  color:white;
+
+}
+
+/*************************************************/
+/* FUNCTION DESIGNER                             */
+/*************************************************/
+
+#designer{
+
+  position:relative;
+  height:480px;
+
+}
+
+#arrowLayer{
+
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+
+}
+
+.column{
+
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:60px; 
+  
+  padding:10px 0;
+
+}
+
+#domainColumn{
+
+    left:calc(50% - var(--column-separation)/2);
+    transform:translate(-15%,-50%);
+
+
+}
+
+#codomainColumn{
+
+    left:calc(50% + var(--column-separation)/2);
+    transform:translate(-15%,-50%);
+
+
+}
+
+.node{
+
+  width:78px;
+  height:54px;
+  margin:4px 0; 
+
+  border-radius:10px;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-weight:bold;
+  font-size:18px;
+
+  cursor:pointer;
+
+  transition:.25s;
+
+  user-select:none;
+
+}
+
+.domain{
+
+  background:var(--blue);
+  color:white;
+
+}
+
+.codomain{
+
+  background:var(--orange);
+  color:white;
+
+}
+
+.node:hover{
+
+  transform:scale(1.05);
+
+}
+
+.node.selected{
+
+  background:var(--yellow);
+  color:black;
+  box-shadow:0 0 12px rgba(255,203,0,.8);
+
+}
+
+.node.error{
+
+  background:var(--red);
+  color:white;
+
+}
+
+.node.unused{
+
+  opacity:.35;
+
+}
+
+.badge{
+
+  display:inline-block;
+  padding:.3rem .8rem;
+  border-radius:20px;
+  color:white;
+  font-size:14px;
+  margin:.2rem;
+
+}
+
+.good{
+
+  background:var(--green);
+
+}
+
+.bad{
+
+  background:var(--red);
+
+}
+
+.neutral{
+
+  background:#888;
+
+}
+
+.metric{
+
+  margin-bottom:16px;
+
+}
+
+.metric-label{
+
+  font-weight:bold;
+  color:#666;
+
+}
+
+.metric-value{
+
+  margin-top:4px;
+  font-size:1.1rem;
+
+}
+
+/*************************************************/
+/* SVG ARROWS                                    */
+/*************************************************/
+
+.arrow{
+
+  stroke:var(--blue);
+  stroke-width:2;
+  fill:none;
+
+  marker-end:url(#arrowhead);
+
+  transition:.3s;
+
+}
+
+.arrow.invalid{
+
+  stroke:var(--red);
+
+}
+
+.arrow.selected{
+
+  stroke:var(--yellow);
+  stroke-width:5;
+
+}
+
+/*************************************************/
+/* MOBILE                                        */
+/*************************************************/
+
+@media(max-width:900px){
+
+  .calc-row{
+
+      flex-direction:column;
+
+  }
+
+  .function-card{
+
+      min-width:auto;
+
+  }
+
+  #designer{
+
+      height:520px;
+
+  }
+
+  .node{
+
+      width:78px;
+      height:54px;
+      font-size:16px;
+      margin:4px 0; 
+
+  }
+
+  #domainColumn{
+
+    left:calc(50% - var(--column-separation)/2);
+    transform:translate(-15%,-50%);
+
+
+  }
+
+  #codomainColumn{
+
+    left:calc(50% + var(--column-separation)/2);
+    transform:translate(-15%,-50%);
+
+  }
+
+}
+
+</style>
+
+<div class="calc-container">
+
+  <div class="calc-row">
+
+    <!-- ================= PARAMETERS ================= -->
+
+    <div class="calc-card params-card">
+
+      <div class="calc-header">
+        Parameters
+      </div>
+
+      <div class="calc-body">
+
+        <label for="domainSize">
+          Size of domain (|X|)
+        </label>
+
+        <input id="domainSize" type="range" min="1" max="8" value="5">
+
+        <div id="domainValue">
+          5 elements
+        </div>
+
+        <br>
+
+        <label for="codomainSize">
+          Size of codomain (|Y|)
+        </label>
+
+        <input id="codomainSize" type="range" min="1" max="8" value="5">
+
+        <div id="codomainValue">
+          5 elements
+        </div>
+
+        <div class="button-row">
+
+          Click a domain element,
+          then a codomain element,
+          to create a mapping.
+
+          <button id="undoButton" class="undo-button">
+
+            Undo
+
+          </button>
+
+          <button id="resetButton" class="reset-button">
+
+            Reset
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ================= FUNCTION DESIGNER ================= -->
+
+    <div class="calc-card function-card">
+
+      <div class="calc-header">
+        Function Designer
+      </div>
+
+      <div class="calc-body">
+
+        <div id="designer">
+
+          <!-- SVG arrow layer -->
+
+          <svg id="arrowLayer">
+
+            <defs>
+
+            <marker id="arrowhead" markerwidth="5" markerheight="4" refx="4.8" refy="2" orient="auto" markerunits="strokeWidth">
+            
+                <polygon points="0 0, 5 2, 0 4" fill="#3F68B6">
+                </polygon>
+
+                </marker>
+
+            </defs>
+
+          </svg>
+
+          <!-- Domain -->
+
+          <div id="domainColumn" class="column">
+
+          </div>
+
+          <!-- Codomain -->
+
+          <div id="codomainColumn" class="column">
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= INFORMATION ================= -->
+
+  <div class="calc-card">
+
+    <div class="calc-header">
+      Information
+    </div>
+
+    <div id="informationPanel" class="calc-body">
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Function Status
+
+        </div>
+
+        <div id="functionStatus" class="metric-value">
+
+          Click a domain element,
+          then a codomain element
+          to create a mapping.
+
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Properties
+
+        </div>
+
+        <div id="propertyBadges">
+
+          <span class="badge neutral">
+
+            Not yet defined
+
+          </span>
+
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Domain
+
+        </div>
+
+        <div id="domainDisplay" class="metric-value">
+
+        </div>
+
+      </div>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Codomain
+
+        </div>
+
+        <div id="codomainDisplay" class="metric-value">
+
+        </div>
+
+      </div>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Image
+
+        </div>
+
+        <div id="imageDisplay" class="metric-value">
+
+        </div>
+
+      </div>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Mapping
+
+        </div>
+
+        <div id="mappingDisplay" class="metric-value">
+
+          None
+
+        </div>
+
+      </div>
+
+      <div class="metric">
+
+        <div class="metric-label">
+
+          Explanation
+
+        </div>
+
+        <div id="explanation" class="metric-value">
+
+          Every element of the domain
+          must map to exactly one element
+          of the codomain.
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+/*********************************************************************/
+/* GLOBAL DATA                                                       */
+/*********************************************************************/
+
+// Labels for the domain (X)
+const DOMAIN_LABELS = [
+  "A","B","C","D","E","F","G","H"
+];
+
+// Labels for the codomain (Y)
+const CODOMAIN_LABELS = [
+  "1","2","3","4","5","6","7","8"
+];
+
+/*********************************************************************/
+/* CURRENT STATE                                                     */
+/*********************************************************************/
+
+// Current slider values
+let domainSize = 5;
+let codomainSize = 5;
+
+// Currently selected domain element
+// (null means nothing selected)
+let selectedDomain = null;
+
+// History stack for Undo
+let undoStack = [];
+
+/*
+Mappings are stored as:
+
+Map(
+
+  "A" -> ["2"],
+
+  "B" -> ["5"],
+
+  "C" -> ["1","4"]   <-- illegal one-to-many
+
+)
+
+Deliberately allow multiple outputs because
+students to be able to create an invalid
+function and receive feedback.
+*/
+
+let mappings = new Map();
+
+/*********************************************************************/
+/* INITIALISATION                                                    */
+/*********************************************************************/
+
+function initialiseData(){
+
+    mappings.clear();
+
+    undoStack = [];
+
+    selectedDomain = null;
+
+    domainSize =
+        parseInt(
+            document.getElementById(
+                "domainSize"
+            ).value
+        );
+
+    codomainSize =
+        parseInt(
+            document.getElementById(
+                "codomainSize"
+            ).value
+        );
+
+    // Every domain element begins
+    // with zero outputs.
+
+    for(let i=0;i<domainSize;i++){
+
+        mappings.set(
+            DOMAIN_LABELS[i],
+            []
+        );
+
+    }
+
+}
+
+/*********************************************************************/
+/* SAVE STATE FOR UNDO                                               */
+/*********************************************************************/
+
+function saveState(){
+
+    // Deep copy of mappings
+
+    const copy =
+        new Map();
+
+    mappings.forEach(
+        (value,key)=>{
+
+            copy.set(
+                key,
+                [...value]
+            );
+
+        }
+    );
+
+    undoStack.push({
+
+        mappings:copy,
+
+        selected:selectedDomain
+
+    });
+
+}
+
+/*********************************************************************/
+/* UNDO                                                              */
+/*********************************************************************/
+
+function undo(){
+
+    if(
+        undoStack.length===0
+    ){
+        return;
+    }
+
+    const state =
+        undoStack.pop();
+
+    mappings =
+        state.mappings;
+
+    selectedDomain =
+        state.selected;
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* RESET                                                             */
+/*********************************************************************/
+
+function resetMappings(){
+
+    initialiseData();
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* SELECT DOMAIN ELEMENT                                              */
+/*********************************************************************/
+
+function selectDomain(label){
+
+    selectedDomain = label;
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* ADD MAPPING                                                       */
+/*********************************************************************/
+
+function addMapping(codomainLabel){
+
+    if(
+        selectedDomain===null
+    ){
+        return;
+    }
+
+    saveState();
+
+    const outputs =
+        mappings.get(
+            selectedDomain
+        );
+
+    outputs.push(
+        codomainLabel
+    );
+
+    selectedDomain = null;
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* REMOVE A SPECIFIC MAPPING                                         */
+/*********************************************************************/
+
+function removeMapping(
+
+    domainLabel,
+
+    codomainLabel
+
+){
+
+    saveState();
+
+    const outputs =
+        mappings.get(
+            domainLabel
+        );
+
+    const filtered =
+        outputs.filter(
+
+            x=>x!==codomainLabel
+
+        );
+
+    mappings.set(
+
+        domainLabel,
+
+        filtered
+
+    );
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* REPLACE OUTPUT                                                    */
+/*********************************************************************/
+
+/*
+Useful later if you decide that
+clicking an already-defined domain
+should replace its output rather than
+creating an illegal function.
+
+Currently unused.
+*/
+
+function setSingleOutput(
+
+    domainLabel,
+
+    codomainLabel
+
+){
+
+    saveState();
+
+    mappings.set(
+
+        domainLabel,
+
+        [codomainLabel]
+
+    );
+
+    redraw();
+
+}
+
+/*********************************************************************/
+/* ACCESSORS                                                         */
+/*********************************************************************/
+
+function getDomain(){
+
+    return DOMAIN_LABELS.slice(
+        0,
+        domainSize
+    );
+
+}
+
+function getCodomain(){
+
+    return CODOMAIN_LABELS.slice(
+        0,
+        codomainSize
+    );
+
+}
+
+function getImage(){
+
+    const image =
+        new Set();
+
+    mappings.forEach(
+
+        outputs=>{
+
+            outputs.forEach(
+
+                y=>image.add(y)
+
+            );
+
+        }
+
+    );
+
+    return [...image];
+
+}
+
+/*********************************************************************/
+/* HELPER                                                            */
+/*********************************************************************/
+
+function hasOutput(domainLabel){
+
+    return (
+        mappings.get(
+            domainLabel
+        ).length>0
+    );
+
+}
+
+function outputCount(domainLabel){
+
+    return mappings.get(
+        domainLabel
+    ).length;
+
+}
+
+function outputs(domainLabel){
+
+    return mappings.get(
+        domainLabel
+    );
+
+}
+
+/*********************************************************************/
+/* REDRAW EVERYTHING                                                 */
+/*********************************************************************/
+
+function redraw(){
+
+    //----------------------------------------------------------
+    // Get containers
+    //----------------------------------------------------------
+
+    const domainColumn =
+        document.getElementById(
+            "domainColumn"
+        );
+
+    const codomainColumn =
+        document.getElementById(
+            "codomainColumn"
+        );
+
+    const svg =
+        document.getElementById(
+            "arrowLayer"
+        );
+
+    //----------------------------------------------------------
+    // Clear previous contents
+    //----------------------------------------------------------
+
+    domainColumn.innerHTML = "";
+
+    codomainColumn.innerHTML = "";
+
+    // Keep the <defs> section
+
+    const defs =
+        svg.querySelector("defs");
+
+    svg.innerHTML = "";
+
+    svg.appendChild(defs);
+
+    //----------------------------------------------------------
+    // Build domain
+    //----------------------------------------------------------
+
+    getDomain().forEach(label=>{
+
+        const box =
+            document.createElement("div");
+
+        box.className =
+            "node domain";
+
+        if(label===selectedDomain){
+
+            box.classList.add(
+                "selected"
+            );
+
+        }
+
+        box.textContent =
+            label;
+
+        box.dataset.label =
+            label;
+
+        box.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                selectDomain(
+                    label
+                );
+
+            }
+
+        );
+
+        domainColumn.appendChild(
+            box
+        );
+
+    });
+
+    //----------------------------------------------------------
+    // Build codomain
+    //----------------------------------------------------------
+
+    getCodomain().forEach(label=>{
+
+        const box =
+            document.createElement("div");
+
+        box.className =
+            "node codomain";
+
+        box.textContent =
+            label;
+
+        box.dataset.label =
+            label;
+
+        box.addEventListener(
+
+            "click",
+
+            ()=>{
+
+                addMapping(
+                    label
+                );
+
+            }
+
+        );
+
+        codomainColumn.appendChild(
+            box
+        );
+
+    });
+
+    //----------------------------------------------------------
+    // Draw arrows
+    //----------------------------------------------------------
+
+    drawArrows();
+
+    //----------------------------------------------------------
+    // Update information panel
+    //----------------------------------------------------------
+
+    updateInformation();
+
+}
+
+/*********************************************************************/
+/* DRAW SVG ARROWS                                                   */
+/*********************************************************************/
+
+function drawArrows(){
+
+    const svg =
+        document.getElementById(
+            "arrowLayer"
+        );
+
+    mappings.forEach(
+
+        (outputs,domain)=>{
+
+            outputs.forEach(
+
+                (codomain,index)=>{
+
+                    const from =
+                        document.querySelector(
+                            '#domainColumn .node[data-label="'+domain+'"]'
+                        );
+
+                    const to =
+                        document.querySelector(
+                            '#codomainColumn .node[data-label="'+codomain+'"]'
+                        );
+
+                    if(!from || !to)
+                        return;
+
+                    const p1 =
+                        centreOf(from,svg);
+
+                    const p2 =
+                        centreOf(to,svg);
+
+                    //--------------------------------------------------
+
+                    const startX = p1.x + 39;   // half of 78px
+                    const endX   = p2.x - 39;
+                    
+                    const dx = (endX - startX)/2;
+                    
+                    const curve =
+                        30*(index-(outputs.length-1)/2);
+
+                    //--------------------------------------------------
+
+                    const path =
+                        document.createElementNS(
+
+                            "http://www.w3.org/2000/svg",
+
+                            "path"
+
+                        );
+
+                    path.setAttribute(
+
+                        "class",
+
+                        "arrow"
+
+                    );
+
+                    path.setAttribute(
+                        "d",
+                        `M ${startX} ${p1.y}
+                         C ${startX+dx} ${p1.y+curve},
+                           ${endX-dx} ${p2.y+curve},
+                           ${endX} ${p2.y}`
+                    );
+
+                    svg.appendChild(
+                        path
+                    );
+
+                }
+
+            );
+
+        }
+
+    );
+
+}
+
+/*********************************************************************/
+/* CENTRE OF NODE                                                    */
+/*********************************************************************/
+
+function centreOf(node,svg){
+
+    const r=node.getBoundingClientRect();
+    const s=svg.getBoundingClientRect();
+
+    return{
+
+        x:r.left-s.left+r.width/2,
+
+        y:r.top-s.top+r.height/2
+
+    };
+
+}
+
+/*********************************************************************/
+/* UPDATE INFORMATION PANEL                                          */
+/*********************************************************************/
+
+function updateInformation(){
+
+    const domain = getDomain();
+    const codomain = getCodomain();
+
+    //----------------------------------------------------------
+    // Analyse mapping
+    //----------------------------------------------------------
+
+    let missing = [];
+    let oneToMany = [];
+    let image = new Set();
+
+    let isFunction = true;
+
+    mappings.forEach((outputs,x)=>{
+
+        if(outputs.length===0){
+
+            missing.push(x);
+            isFunction = false;
+
+        }
+
+        if(outputs.length>1){
+
+            oneToMany.push(x);
+            isFunction = false;
+
+        }
+
+        outputs.forEach(y=>image.add(y));
+
+    });
+
+    //----------------------------------------------------------
+    // Injective?
+    //----------------------------------------------------------
+
+    let injective = false;
+
+    if(isFunction){
+
+        injective = true;
+
+        const seen = new Set();
+
+        for(const x of domain){
+
+            const y = mappings.get(x)[0];
+
+            if(seen.has(y)){
+
+                injective = false;
+                break;
+
+            }
+
+            seen.add(y);
+
+        }
+
+    }
+
+    //----------------------------------------------------------
+    // Surjective?
+    //----------------------------------------------------------
+
+    let surjective = false;
+
+    if(isFunction){
+
+        surjective = true;
+
+        codomain.forEach(y=>{
+
+            if(!image.has(y))
+                surjective = false;
+
+        });
+
+    }
+
+    //----------------------------------------------------------
+    // Bijective?
+    //----------------------------------------------------------
+
+    const bijective =
+        isFunction &&
+        injective &&
+        surjective;
+
+    //----------------------------------------------------------
+    // Status message
+    //----------------------------------------------------------
+
+    let status;
+    let explanation;
+
+    if(isFunction){
+
+        status =
+            "<span class='badge good'>✓ Function</span>";
+
+        explanation =
+            "Every element of the domain has exactly one output.";
+
+    }
+    else if(oneToMany.length){
+
+        status =
+            "<span class='badge bad'>✗ Not a Function</span>";
+
+        explanation =
+            oneToMany.join(", ")
+            + " map to more than one value.";
+
+    }
+    else{
+
+        status =
+            "<span class='badge bad'>✗ Not a Function</span>";
+
+        explanation =
+            "No output has been chosen for "
+            + missing.join(", ") + ".";
+
+    }
+
+    //----------------------------------------------------------
+    // Property badges
+    //----------------------------------------------------------
+
+    let badges = "";
+
+    badges +=
+        injective
+        ? "<span class='badge good'>Injective</span>"
+        : "<span class='badge bad'>Not Injective</span>";
+
+    badges +=
+        surjective
+        ? "<span class='badge good'>Surjective</span>"
+        : "<span class='badge bad'>Not Surjective</span>";
+
+    badges +=
+        bijective
+        ? "<span class='badge good'>Bijective</span>"
+        : "<span class='badge bad'>Not Bijective</span>";
+
+    //----------------------------------------------------------
+    // Mapping text
+    //----------------------------------------------------------
+
+    let mappingHTML = "";
+
+    domain.forEach(x=>{
+
+        const outputs = mappings.get(x);
+
+        if(outputs.length===0){
+
+            mappingHTML +=
+                `${x} ↦ ?<br>`;
+
+        }
+        else{
+
+            mappingHTML +=
+                `${x} ↦ ${outputs.join(", ")}<br>`;
+
+        }
+
+    });
+
+    //----------------------------------------------------------
+    // Image
+    //----------------------------------------------------------
+
+    const imageText =
+        image.size
+        ? "{"+[...image].join(", ")+"}"
+        : "∅";
+
+    //----------------------------------------------------------
+    // Update page
+    //----------------------------------------------------------
+
+    document.getElementById(
+        "functionStatus"
+    ).innerHTML = status;
+
+    document.getElementById(
+        "propertyBadges"
+    ).innerHTML = badges;
+
+    document.getElementById(
+        "domainDisplay"
+    ).innerHTML =
+        "{"+domain.join(", ")+"}";
+
+    document.getElementById(
+        "codomainDisplay"
+    ).innerHTML =
+        "{"+codomain.join(", ")+"}";
+
+    document.getElementById(
+        "imageDisplay"
+    ).innerHTML =
+        imageText;
+
+    document.getElementById(
+        "mappingDisplay"
+    ).innerHTML =
+        mappingHTML;
+
+    document.getElementById(
+        "explanation"
+    ).innerHTML =
+        explanation;
+
+}
+
+/*********************************************************************/
+/* EVENT LISTENERS                                                   */
+/*********************************************************************/
+
+//----------------------------------------------------------
+// Domain size slider
+//----------------------------------------------------------
+
+document.getElementById(
+    "domainSize"
+).addEventListener(
+    "input",
+    function(){
+
+        domainSize =
+            parseInt(this.value);
+
+        document.getElementById(
+            "domainValue"
+        ).textContent =
+            domainSize +
+            " element" +
+            (domainSize===1 ? "" : "s");
+
+        initialiseData();
+
+        redraw();
+
+    }
+);
+
+//----------------------------------------------------------
+// Codomain size slider
+//----------------------------------------------------------
+
+document.getElementById(
+    "codomainSize"
+).addEventListener(
+    "input",
+    function(){
+
+        codomainSize =
+            parseInt(this.value);
+
+        document.getElementById(
+            "codomainValue"
+        ).textContent =
+            codomainSize +
+            " element" +
+            (codomainSize===1 ? "" : "s");
+
+        initialiseData();
+
+        redraw();
+
+    }
+);
+
+//----------------------------------------------------------
+// Undo button
+//----------------------------------------------------------
+
+document.getElementById(
+    "undoButton"
+).addEventListener(
+    "click",
+    undo
+);
+
+//----------------------------------------------------------
+// Reset button
+//----------------------------------------------------------
+
+document.getElementById(
+    "resetButton"
+).addEventListener(
+    "click",
+    resetMappings
+);
+
+//----------------------------------------------------------
+// Window resize
+//----------------------------------------------------------
+
+window.addEventListener(
+    "resize",
+    redraw
+);
+
+//----------------------------------------------------------
+// Keyboard shortcuts
+//----------------------------------------------------------
+
+document.addEventListener(
+
+    "keydown",
+
+    function(e){
+
+        //--------------------------------------------------
+        // Ctrl+Z
+        //--------------------------------------------------
+
+        if(
+            (e.ctrlKey || e.metaKey) &&
+            e.key.toLowerCase()==="z"
+        ){
+
+            e.preventDefault();
+
+            undo();
+
+        }
+
+        //--------------------------------------------------
+        // Escape clears selection
+        //--------------------------------------------------
+
+        if(
+            e.key==="Escape"
+        ){
+
+            selectedDomain = null;
+
+            redraw();
+
+        }
+
+    }
+
+);
+
+//----------------------------------------------------------
+// Initial page load
+//----------------------------------------------------------
+
+initialiseData();
+
+document.getElementById(
+    "domainValue"
+).textContent =
+domainSize + " elements";
+
+document.getElementById(
+    "codomainValue"
+).textContent =
+codomainSize + " elements";
+
+redraw();
+
+</script>
+
+<section id="sequences" class="level2">
+<h2 class="anchored" data-anchor-id="sequences">Sequences</h2>
+<p>In mathematics, the reason why functions are incredibly powerful is because they allow for <strong>comparison</strong> between sets. Any time you want to compare two sets - a function is almost always used. Any time you want to look at growth, or rates of change, or to decide behaviour in the future: you will use a function.</p>
+<p>One of the ways that functions are studied in mathematics is the idea of a <strong>sequence</strong>. You saw all about sequences in <a href="../explorations/e-pascalstriangleandgrowth.html">Exploration: The hidden sequences of Pascal’s triangle</a>; how they can be either finite or infinite, how they could have formulas or not.</p>
+<p>In fact, every sequence is a function in disguise. To help illustrate this, here is some new mathematical notation; this is a common thing to do in mathematics to help explain certain concepts.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Special notation for sets
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Write <span class="math inline">\([n]\)</span> to be the set <span class="math inline">\(\{1,2,3,\ldots,n\}\)</span> of all positive whole numbers from <span class="math inline">\(1\)</span> up to <span class="math inline">\(n\)</span> included. So <span class="math inline">\([4] = \{1,2,3,4\}\)</span> and <span class="math inline">\([k] = \{1,2,3,\ldots,k\}\)</span>. You can notice that the number of elements of <span class="math inline">\([n]\)</span> is <span class="math inline">\(n\)</span></p>
+<p>For the (infinite) set of all positive whole numbers, write <span class="math display">\[\mathbb{N} = \{1,2,3,\ldots\}\]</span> as the set of <strong>natural numbers</strong>. You can write <span class="math display">\[\mathbb{N}_0 = \{0,1,2,3,\ldots\}\]</span> to be the set of <strong>natural numbers with zero</strong>.</p>
+<p>For the (infinite) set of all possible numbers - whole, fractions and decimals, positive and negative - write <span class="math inline">\(\mathbb{R}\)</span> to be the set of these numbers (called <strong>real numbers</strong>).</p>
+</div>
+</div>
+<p>This makes it a lot easier to phrase the following important consideration:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Sequences and functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Any finite sequence of length <span class="math inline">\(n\)</span> of symbols from the set <span class="math inline">\([k]\)</span> can be viewed as a function <span class="math inline">\(f:[n]\to [k]\)</span>.</p></li>
+<li><p>In the reverse direction, any function <span class="math inline">\(f:[n]\to [k]\)</span> is a finite sequence of length <span class="math inline">\(n\)</span> of symbols from the set <span class="math inline">\([k]\)</span></p></li>
+<li><p>Any finite sequence of numbers of length <span class="math inline">\(n\)</span> can be viewed as a function <span class="math inline">\(f:[n]\to \mathbb{R}\)</span>.</p></li>
+<li><p>Any infinite sequence of numbers can be viewed as a function <span class="math inline">\(f:\mathbb{N}\to\mathbb{R}\)</span>, and any function <span class="math inline">\(f:\mathbb{N}\to \mathbb{R}\)</span> can be written as an infinite sequence.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Try it yourself 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Why are (a) and (b) true? As an initial pointer, think about where the set <span class="math inline">\([n]\)</span> will appear in your consideration.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer to try it yourself 2
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For (a), suppose that you have a sequence of length <span class="math inline">\(n\)</span> of elements from <span class="math inline">\([k]\)</span>; you could say that this is <span class="math display">\[a_1,a_2,\ldots,a_n.\]</span> You can see that for every number <span class="math inline">\(i\)</span> between <span class="math inline">\(1\)</span> and <span class="math inline">\(n\)</span>, there is an element <span class="math inline">\(a_i\)</span> of <span class="math inline">\([k]\)</span> at position <span class="math inline">\(i\)</span> in the list. You can then define a function <span class="math inline">\(f:[n] \to [k]\)</span> by the assignment <span class="math display">\[f(i) = a_i\]</span> which sends <span class="math inline">\(i\in [n]\)</span> to <span class="math inline">\(a_i\)</span>. This then determines the sequence <span class="math inline">\(a_1,a_2,\ldots,a_n\)</span>.</p>
+<p>For (b), suppose you have a function <span class="math inline">\(f:[n]\to [k]\)</span>. You can now view this as a sequence of length <span class="math inline">\(n\)</span> in <span class="math inline">\([k]\)</span> by writing out all of the outputs in order: <span class="math display">\[f(1),f(2),\ldots,f(n)\]</span> which defines a finite sequence of length <span class="math inline">\(n\)</span> with elements in <span class="math inline">\([k]\)</span>.</p>
+</div>
+</div>
+</div>
+<p>Parts (c) and (d) follow from similar reasoning.</p>
+<p>This means that finite/infinite sequences can be studied through functions.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Examples of sequences as functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If a sequence has a <strong>closed form formula</strong>, then it can be represented concisely as a function. For instance, the sequence of cube numbers can be written as <span class="math inline">\(f_1:\mathbb{N}\to\mathbb{N}\)</span> with <span class="math inline">\(f(n) = n^3\)</span>, or the powers of two as <span class="math inline">\(f_2:\mathbb{N}_0\to\mathbb{N}\)</span> with <span class="math inline">\(f_2(n) = 2^n\)</span>. Even constant sequences can be written as functions: write <span class="math inline">\(f_3:\mathbb{N}\to\{153\}\)</span> to be <span class="math inline">\(f_3(n) = 153\)</span> for all <span class="math inline">\(n\in\mathbb{N}\)</span>.</p>
+<p>The binomial coefficients can also be written as a function, but the domain needs to be all <strong>pairs</strong> of all whole numbers with <span class="math inline">\(0\)</span>. Write <span class="math display">\[\mathbb{N}_0\times \mathbb{N}_0\ = \{(n,k)\; : \; n,k\in \mathbb{N}_0\}.\]</span> Then the binomial coefficient can be written as a function <span class="math inline">\(b:\mathbb{N}_0\times \mathbb{N}_0\times \mathbb{N}\)</span> with <span class="math display">\[b(n,k) = \binom{n}{k}.\]</span></p>
+</div>
+</div>
+<p>Here’s an excellent result that follows from this.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Counting number of functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The total number of possible functions <span class="math inline">\(f:[n]\to[k]\)</span> is <span class="math inline">\(k^n\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Proof of the formula of the number of functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You are given that <span class="math inline">\([n] = \{1,2,3,\ldots,n\}\)</span>, and there is a function <span class="math inline">\(f:[n]\to[k]\)</span>. Write <span class="math inline">\(f\)</span> as a finite sequence of length <span class="math inline">\(n\)</span> with elements from <span class="math inline">\(k\)</span> to get <span class="math display">\[f(1),f(2),f(3),\ldots,f(n)\]</span></p>
+<p>So, you can ask yourself - what is <span class="math inline">\(f(1)\)</span>? Well, you don’t know, as you aren’t given the information. However, there are <span class="math inline">\(k\)</span> many <strong>choices</strong> for the value of <span class="math inline">\(f(1)\)</span>, because it has to be exactly one element of the set <span class="math inline">\([k] = \{1,2,3,\ldots,k\}\)</span>. Since it can be any of them, this gives <span class="math inline">\(k\)</span> choices.</p>
+<p>Next, you can ask - what is <span class="math inline">\(f(2)\)</span>? Again, there are <span class="math inline">\(k\)</span> many choices. You can notice here that the choice of the value of <span class="math inline">\(f(2)\)</span> is completely independent of the choice for the value of <span class="math inline">\(f(1)\)</span>. Similarly, there are <span class="math inline">\(k\)</span> many choices for the value of <span class="math inline">\(f(3)\)</span> and this choice is independent of the values of <span class="math inline">\(f(1)\)</span> and <span class="math inline">\(f(2)\)</span>.</p>
+<p>You can carry on in this way for all the elements of <span class="math inline">\([n]\)</span>. With <span class="math inline">\(k\)</span> choices for each element, and all of the choices being independent of each other, this leads to <span class="math display">\[\underbrace{k}_{\textsf{what is }f(1)?}\cdot \underbrace{k}_{\textsf{what is }f(2)?}\cdot \underbrace{k}_{\textsf{what is }f(3)?} \cdot \ldots \cdot \underbrace{k}_{\textsf{what is }f(n)?} = k^n\]</span> many choices for the sequence <span class="math inline">\(f(1),f(2),f(3),\ldots,f(k)\)</span>. Therefore, there are <span class="math inline">\(k^n\)</span> possible functions <span class="math inline">\(f:[n]\to [k]\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Try it yourself 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Does this seem familiar?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This is an almost a word-for-word recreation of the proof in <a href="../explorations/e-combinationspermutations.html">Exploration: How to win at cards - combinations and permutations</a> that there were <span class="math inline">\(2^n\)</span> many subsets of a set <span class="math inline">\(\{1,2,3,\ldots,n\}\)</span>!</p>
+<p>So what’s happening here? Well, the idea of deciding whether or not each element of <span class="math inline">\([n] = \{1,2,3,\ldots,n\}\)</span> is in some subset of <span class="math inline">\([n]\)</span> can be modelled as a function <span class="math inline">\(f:[n]\to[2]\)</span>, where <span class="math inline">\(f(i) = 1\)</span> says that <span class="math inline">\(i\)</span> is not in the subset, and <span class="math inline">\(f(i) = 2\)</span> says that <span class="math inline">\(i\)</span> is in the subset. Therefore, every function <span class="math inline">\(f:[n]\to[2]\)</span> corresponds to a subset of <span class="math inline">\([n]\)</span>, and every subset of <span class="math inline">\([n]\)</span> corresponds to a function <span class="math inline">\(f:[n]\to[2]\)</span>. This function is called an <strong>indicator function</strong> for the subset of <span class="math inline">\([n]\)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="injective-surjective-bijective" class="level1">
+<h1>Injective, surjective, bijective</h1>
+<p>Now, much like numbers can be odd, even, prime, not prime, and so on, functions have different properties as well. To do this, you’ll need to examine <strong>exactly</strong> where the function sends its elements.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Image of a function
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The set <span class="math display">\[f(X) = \{f(x)\textsf{ where } x\in X\} \subseteq Y\]</span> is called the <strong>image</strong> of <span class="math inline">\(f\)</span>. It follows from this that the image of <span class="math inline">\(f\)</span> is a subset of the codomain <span class="math inline">\(Y\)</span> of <span class="math inline">\(f\)</span>.</p>
+</div>
+</div>
+<p>You can use the above interactive figure to investigate the image of the function - it is included in the information below the figure. You can see that the image of your chosen function is the set of whatever outputs you pick in the codomain.</p>
+<p>How functions map into the image is important, and how much of the codomain is covered in the image is important. Together, these properties underpin the very idea of counting.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Injective, surjective, and bijective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(f:X\to Y\)</span> is a function from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>.</p>
+<ol type="a">
+<li><p>Say that <span class="math inline">\(f\)</span> is <strong>injective</strong> (or <strong>one-to-one</strong>, or even <strong>one-one</strong>) if <span class="math inline">\(x_1\neq x_2\)</span> means that <span class="math inline">\(f(x_1)\neq f(x_2)\)</span> for all <span class="math inline">\(x_1,x_2\in X\)</span>. Equivalently, <span class="math inline">\(f\)</span> is injective if <span class="math inline">\(f(x_1) = f(x_2)\)</span> implies that <span class="math inline">\(x_1 = x_2\)</span> for all <span class="math inline">\(x_1,x_2\in X\)</span>.</p></li>
+<li><p>Say that <span class="math inline">\(f\)</span> is <strong>surjective</strong> (or <strong>onto</strong>) if for all <span class="math inline">\(y\in Y\)</span> there exists <span class="math inline">\(x\in X\)</span> such that <span class="math inline">\(f(x) = y\)</span>. Equivalently, <span class="math inline">\(f\)</span> is surjective if the image <span class="math inline">\(f(X)\)</span> of <span class="math inline">\(f\)</span> is equal to the codomain <span class="math inline">\(Y\)</span> of <span class="math inline">\(f\)</span>.</p></li>
+<li><p>Say that <span class="math inline">\(f\)</span> is <strong>bijective</strong> if <span class="math inline">\(f\)</span> is both injective and surjective.</p></li>
+</ol>
+</div>
+</div>
+<p>Intuitively, you could say that</p>
+<ul>
+<li><p><span class="math inline">\(f\)</span> is injective if different elements in <span class="math inline">\(A\)</span> always map to different elements in <span class="math inline">\(B\)</span>.</p></li>
+<li><p><span class="math inline">\(f\)</span> is surjective if every element of <span class="math inline">\(B\)</span> has an element of <span class="math inline">\(A\)</span> that maps to it.</p></li>
+<li><p><span class="math inline">\(f\)</span> is bijective if every element of <span class="math inline">\(B\)</span> has a <strong>unique</strong> element of <span class="math inline">\(A\)</span> that maps to it.</p></li>
+</ul>
+<p>It’s important that in mathematics, you have both the <strong>precise definition</strong> and the <strong>intuition behind it</strong> - it’s like the spirit and letter of the law, they have to line up in order to be effective.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Try it yourself 4
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using the interactive function investigator above, find examples of injective, surjective and bijective functions, and write down their images. What do you notice about the sizes of the sets involved?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer to try it yourself 4
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You can check these for yourself in <a href="../apps/interactive/i-functions.html">Interactive: Function investigator</a>!</p>
+<p>Here’s an example of an injective function <span class="math inline">\(f:\{A,B,C\}\to\{1,2,3,4,5\}\)</span>: <span class="math display">\[f(A) = 1,\quad f(B) = 2,\quad f(C) = 5\]</span> with image <span class="math inline">\(\{1,2,5\}\)</span>. You can notice that each of the domain elements <span class="math inline">\(\{A,B,C\}\)</span> is sent to a different element of the codomain, demonstrating that the function is injective.</p>
+<p>Here’s an example of a surjective function <span class="math inline">\(g:\{A,B,C,D,E\}\to\{1,2,3\}\)</span>: <span class="math display">\[g(A) = 1,\quad g(B) = 2,\quad g(C) = 3,\quad g(D) = 1,\quad g(E) = 2\]</span> with image <span class="math inline">\(\{1,2,3\}\)</span>. Since the image <span class="math inline">\(\{1,2,3\}\)</span> is the same as the codomain, it follows that this function is surjective.</p>
+<p>Here’s an example of a bijective function <span class="math inline">\(h:\{A,B,C\}\to\{1,2,3\}\)</span>: <span class="math display">\[h(A) = 1,\quad h(B) = 2,\quad h(C) = 3\]</span> with image <span class="math inline">\(\{1,2,3\}\)</span>. You can notice that each of the domain elements <span class="math inline">\(\{A,B,C\}\)</span> is sent to a different element of the codomain, demonstrating that the function is injective - in addition, the image <span class="math inline">\(\{1,2,3\}\)</span> is the same as the codomain, so the function is also surjective. This means that <span class="math inline">\(h\)</span> is bijective.</p>
+</div>
+</div>
+</div>
+<p>What about the functions before?</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Previous examples
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>The function <span class="math inline">\(f_1:\mathbb{N}\to\mathbb{N}\)</span> with <span class="math inline">\(f_1(n) = n^3\)</span> is injective but not surjective. For injective, you need to take two potential equal ouputs and show they come from the same input. So if <span class="math inline">\(f_1(x) = f_1(y)\)</span> then <span class="math inline">\(x^3 = y^3\)</span>, and so <span class="math inline">\(x = y\)</span> - therefore, <span class="math inline">\(f_1\)</span> is injective. To show that <span class="math inline">\(f_1\)</span> is not surjective, it’s enough to show that there is an element of the codomain that isn’t in the image; since there is no natural number that cubes to make <span class="math inline">\(2\)</span>, it follows that <span class="math inline">\(2\)</span> is not in the image. So <span class="math inline">\(f_1\)</span> is not surjective.</p></li>
+<li><p>Similarly, <span class="math inline">\(f_2:\mathbb{N}_0\to\mathbb{N}\)</span> with <span class="math inline">\(f_2(n) = 2^n\)</span> is injective but not surjective.</p></li>
+<li><p>The function <span class="math inline">\(f_3:\mathbb{N}\to\{153\}\)</span> with <span class="math inline">\(f_3(n) = 153\)</span> for all <span class="math inline">\(n\in\mathbb{N}\)</span> is surjective but not injective. Here, the image of <span class="math inline">\(f_3\)</span> is <span class="math inline">\(\{153\}\)</span> which is the same as the codomain, so <span class="math inline">\(f_3\)</span> is surjective. To show that it’s not injective, you can notice that <span class="math inline">\(f_3\)</span> sends both <span class="math inline">\(1\)</span> and <span class="math inline">\(2\)</span> to <span class="math inline">\(153\)</span> and since <span class="math inline">\(1\neq 2\)</span>, different elements aren’t always mapped to different elements and the function is not injective.</p></li>
+<li><p>The binomial coefficient written as a function <span class="math inline">\(b:\mathbb{N}_0\times \mathbb{N}_0\times \mathbb{N}\)</span> with <span class="math display">\[b(n,k) = \binom{n}{k}\]</span> is surjective but not injective. For surjective, suppose that <span class="math inline">\(m\)</span> is in <span class="math inline">\(\mathbb{N}\)</span>; you need to find a pair <span class="math inline">\((n,k)\)</span> such that <span class="math inline">\(b(n,k) = m\)</span>. Since <span class="math inline">\(\binom{m}{1} = m\)</span> for all <span class="math inline">\(m\)</span> in <span class="math inline">\(\mathbb{N}\)</span>, it follows that taking <span class="math inline">\(n = m\)</span> and <span class="math inline">\(k = 1\)</span> shows that every <span class="math inline">\(m\in\mathbb{N}\)</span> is in the image of <span class="math inline">\(b\)</span>. So <span class="math inline">\(b\)</span> is surjective. However, <span class="math inline">\(b\)</span> is not injective as <span class="math display">\[b(3,1) = \binom{3}{1} = 3 = \binom{3}{2} = b(3,2)\]</span> but the inputs <span class="math inline">\((3,1)\)</span> and <span class="math inline">\((3,2)\)</span> are not the same.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<p>You can also notice that</p>
+<ul>
+<li><p>if a function is surjective, then the cardinality of the domain <span class="math inline">\(X\)</span> is greater than or equal to the cardinality of the codomain <span class="math inline">\(Y\)</span>, so <span class="math inline">\(|X| \geq |Y|\)</span>.</p></li>
+<li><p>if a function is injective, then the cardinality of the codomain <span class="math inline">\(Y\)</span> is greater than or equal to the cardinality of the domain <span class="math inline">\(Y\)</span>, so <span class="math inline">\(|Y| \geq |X|\)</span>.</p></li>
+<li><p>if a function is bijective, then the cardinality of the domain <span class="math inline">\(X\)</span> is equal to the cardinality of the domain <span class="math inline">\(Y\)</span>, so <span class="math inline">\(|X| = |Y|\)</span>.</p></li>
+</ul>
+<p>These observations can be reversed using a mathematical principle called the <strong>contrapositive</strong>. This allows you to change the logical perspective of a statement ‘if <span class="math inline">\(A\)</span> then <span class="math inline">\(B\)</span>’ to ‘if not <span class="math inline">\(B\)</span> then not <span class="math inline">\(A\)</span>’.</p>
+<p>Doing this to the observations above give the following statements about any function <span class="math inline">\(f:X\to Y\)</span>:</p>
+<ul>
+<li><p>if the cardinality of the domain <span class="math inline">\(X\)</span> is <strong>less than</strong> the cardinality of the codomain <span class="math inline">\(Y\)</span>, then <span class="math inline">\(f\)</span> is never surjective.</p></li>
+<li><p>if the cardinality of the codomain <span class="math inline">\(Y\)</span> is <strong>less than</strong> the cardinality of the domain <span class="math inline">\(X\)</span>, then <span class="math inline">\(f\)</span> is never injective.</p></li>
+<li><p>if the cardinalities of the domain <span class="math inline">\(X\)</span> and the codomain <span class="math inline">\(Y\)</span> are <strong>not equal</strong>, then <span class="math inline">\(f\)</span> is never bijective.</p></li>
+</ul>
+<section id="pigeons" class="level2">
+<h2 class="anchored" data-anchor-id="pigeons">Pigeons</h2>
+<p>The second of these statements is equivalent to an important principle in combinatorics.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The pigeonhole principle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose that <span class="math inline">\(n &gt; m\)</span>. If you have <span class="math inline">\(n\)</span> items and <span class="math inline">\(m\)</span> boxes in which to put them, then at least one box contains more than one item.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Proof of the pigeonhole principle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Give numbers to your list of items <span class="math inline">\(\{1,2,3,\ldots,n\}\)</span>. Put item <span class="math inline">\(1\)</span> in box <span class="math inline">\(1\)</span>, item <span class="math inline">\(2\)</span> in box <span class="math inline">\(2\)</span>, and so on until you put item <span class="math inline">\(m\)</span> in box <span class="math inline">\(m\)</span>. Since <span class="math inline">\(n&gt; m\)</span>, it follows that <span class="math inline">\(n - m \geq 1\)</span> and so you have at least one item to put in a box. It follows that at least one box contains more than one item.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Scenario 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cantor’s Confectionery is one of the best places to work in the fictional world. It has the habit of throwing a birthday party for every one of its employees on their birthday, which is truly exceptional for morale. They have appointed you, its HR representative, to try and investigate cost-cutting measures for this expensive endeavour. The best way to achieve this is to have a shared party between two or more employees.</p>
+<p>What is the number <span class="math inline">\(n\)</span> of employees required to have</p>
+<ol type="a">
+<li><p>a <span class="math inline">\(50\%\)</span> chance that two employees share the same birthday?</p></li>
+<li><p>a <span class="math inline">\(100\%\)</span> chance that two employees share the same birthday?</p></li>
+</ol>
+</div>
+</div>
+<p>The first of these is probability, and relies on techniques seen in <a href="../explorations/e-combinationspermutations.html">Explorations: How to win at cards - combinations and permutations</a>. The second uses the pigeonhole principle!</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Answer to Scenario 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For convenience, assume that there are <span class="math inline">\(365\)</span> days in the year, as there are in most years.</p>
+<ol type="a">
+<li>Here, it’s easier to work out the probability of this <strong>not</strong> happening - you can then subtract this from <span class="math inline">\(1\)</span> to work out the probability of this happening.</li>
+</ol>
+<p>Write a list of your employees. Suppose that the first employee has a birthday on any day of the year. The chances that a second employee has a different birthday than the first is <span class="math inline">\(364/365\)</span>. The chances that a third employee has a different birthday than the first two is <span class="math inline">\(363/365\)</span>. You can continue in this way to show that the probability that <span class="math inline">\(n\)</span> employees all have different birthdays is <span class="math display">\[
+\begin{aligned}
+\mathbb{P}(\textsf{different birthdays}) &amp;= \frac{365}{365}\cdot \frac{364}{365}\cdot \frac{363}{365}\cdot\ldots\cdot\frac{(365-n)}{365}\\[0.5em]
+&amp;= \frac{(365)_n}{365^n}
+\end{aligned}
+\]</span> where <span class="math inline">\((365)_n\)</span> is the <strong>falling factorial</strong> from <a href="../explorations/e-combinationspermutations.html">Explorations: How to win at cards - combinations and permutations</a>.</p>
+<p>As it turns out, the number <span class="math inline">\(n\)</span> that tips this number below <span class="math inline">\(50\%\)</span> - and so the chances that two employees share a birthday is <strong>above</strong> <span class="math inline">\(50\%\)</span> - is <span class="math inline">\(n = 23\)</span>. So for a company with <span class="math inline">\(23\)</span> employees, there is a greater than <span class="math inline">\(50\%\)</span> chance that two employees share a birthday!</p>
+<ol start="2" type="a">
+<li>Here, the <strong>worst-case scenario</strong> is that everybody has a different birthday. Since there are <span class="math inline">\(365\)</span> possible birthdays, the worst case scenario is that the company has <span class="math inline">\(365\)</span> employees, each with different birthdays.</li>
+</ol>
+<p>So if there are <span class="math inline">\(366\)</span> employees in Cantor’s Confectionery, then it’s guaranteed that at least two people share a single birthday. So the answer is <span class="math inline">\(n = 366\)</span>.</p>
+</div>
+</div>
+<p>The pigeonhole principle also guarantees that in Scotland, at least two people have the same numbers of hairs on their head!</p>
+</section>
+</section>
+<section id="counting-blessings" class="level1">
+<h1>Counting blessings</h1>
+<p>So what does all of this have to do with counting?</p>
+<p>If you count the set in Try it yourself 1 by pointing at each element and saying each number, you created a bijection between the set and the set of number <span class="math inline">\(\{1,2,\ldots,14\}\)</span>. By putting sets in bijections with other sets, or not, you can directly compare them to each other by their sizes. This is infact the definition of counting:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definition of cardinality
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(X\)</span> be a set, and <span class="math inline">\([n] = \{1,2,3,\ldots,n\}\)</span>. If there exists a bijection <span class="math inline">\(f:X\to[n]\)</span>, then write <span class="math inline">\(|X| = n\)</span>.</p>
+</div>
+</div>
+<p>So finding bijections between sets of things and sets of natural numbers is the very <strong>idea</strong> of mathematically defining how to count things. It is the injective part that identifies each element of <span class="math inline">\(X\)</span> with a unique natural number, and the surjective part ensures that all the numbers in <span class="math inline">\(\{1,2,3,\ldots,n\}\)</span> are covered.</p>
+<p>If the surjective part doesn’t exist, then you have <strong>inequalities</strong> rather than equality. Thankfully, because of the way surjective functions are defined, you can ‘shrink’ the codomain of your function to the image to create a bijective function.</p>
+<p>So if there exists an injective function <span class="math inline">\(g:X\to [n]\)</span>, then this tells you that there is a bijection <span class="math inline">\(g:X\to [m]\)</span> where <span class="math inline">\(m &lt; n\)</span>. So not only do bijective functions tell you about the cardinality of sets, injective functions tell you which sets are bigger than others. The following are strengthenings of the above observations.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Injections
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>If there exists an injection <span class="math inline">\(f:X\to Y\)</span>, then <span class="math inline">\(|X| \leq |Y|\)</span>.</p></li>
+<li><p>If there exists an injection <span class="math inline">\(g:Y\to X\)</span>, then <span class="math inline">\(|Y| \leq |X|\)</span>.</p></li>
+<li><p>(<strong>Cantor-Schröder-Bernstein theorem</strong>) If there exists injections <span class="math inline">\(f:X\to Y\)</span> and <span class="math inline">\(g:Y\to X\)</span>, then <span class="math inline">\(|X| = |Y|\)</span>.</p></li>
+</ol>
+</div>
+</div>
+<p>Notice here that none of the sets here were specifically stated to be <strong>finite.</strong> So this idea of comparing sets using injective and bijective functions extend to where the sets are <strong>infinite</strong> - and this will have even more surprising results in the next exploration…</p>
+</section>
+<section id="version-history" class="level1 unnumbered">
+<h1 class="unnumbered">Version history</h1>
+<p>v1.0: initial version created 07/26 by tdhc, originally for presentation 3 of 4 for Sutton Trust Summer School 2026.</p>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+
+/* once a quickcheck is completed, we pass in the topic id and concatenate it into a quickcheck (qc) id
+   and store that in local storage to persist across webpages so we know which topics have been completed */
+function markTopicCompleted(topicId) {
+  if (!topicId || typeof topicId !== 'string') { console.error('Invalid topicId:', topicId); return; }
+  
+  const storageKey = 'qc-completed-' + topicId;
+  localStorage.setItem(storageKey, 'true');
+  console.log(`Marked ${topicId} as completed (key: ${storageKey})`);
+  
+  updateTopicStatus(topicId); 
+}
+
+/* select all elements related to a certain topic, then check by fetching from local storage 
+   whether the corresponding qc-id is marked as true for completed, or false for uncompleted 
+   if so, add the "completed" css class id, for webex.css to update from a red cross to a green tick */
+function updateTopicStatus(topicId) {
+  const elements = document.querySelectorAll(`[data-topic="${topicId}"]`);
+  const isCompleted = localStorage.getItem(`qc-completed-${topicId}`) === 'true';
+  
+  elements.forEach(el => {
+    if (isCompleted) el.classList.add("completed");
+    else el.classList.remove("completed");
+  })
+
+  console.log(`Updated UI for ${topicId}:`, isCompleted);
+}
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+  let allCorrect = false;
+
+  var t = document.getElementsByClassName("webex-total_correct");
+  for (var i = 0; i < t.length; i++) 
+  {
+    p = t[i].parentElement;
+    var correct = p.getElementsByClassName("webex-correct").length;
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+    var selects = p.getElementsByClassName("webex-select").length;
+
+    t[i].innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+    if (correct === (solvemes + radiogroups + selects) && correct > 0) allCorrect = true;
+  }
+
+  if (allCorrect) // get the data-topic id for guide that just had its quick check problem fully completed and pass into chain of functions
+  {
+    const quickCheck = document.querySelector(".webex-check");
+    const topicId = quickCheck?.getAttribute("data-topic");
+    if (topicId) markTopicCompleted(topicId);
+  }
+}
+
+/* used to identify each data topic element (on fullindex.html and each guide) and update the red cross to a green tick
+   based on whether the corresponding quickcheck problem(s) have been completed for each respective guide */
+function initializeAllTopics() {
+  document.querySelectorAll('[data-topic]').forEach(el => {
+    const topicId = el.getAttribute('data-topic');
+    updateTopicStatus(topicId);
+  });
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) cl.remove("open");
+  else cl.add("open");
+}
+
+/* check answers */
+check_func = function() {
+  console.log("webex: check answers");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('unchecked')) {
+    cl.remove("unchecked");
+    this.innerHTML = "Hide Checks";
+  } else {
+    cl.add("unchecked");
+    this.innerHTML = "Check Answers";
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) my_answer = my_answer.toLowerCase();
+  if (cl.contains("nospaces")) my_answer = my_answer.replace(/ /g, "");
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if (this.dataset.tol > 0)
+  {
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) cl.add("webex-correct");
+    else cl.remove("webex-correct");
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) cl.add("webex-correct");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") cl.add("webex-correct");
+  else if (this.value != "blank") cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") cl.add("webex-correct");
+  else cl.add("webex-incorrect");
+
+  update_total_correct();
+}
+
+window.onload = function() {
+  console.log("webex onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++)
+    if (buttons[i].parentElement.classList.contains('webex-solution')) buttons[i].onclick = b_func;
+
+  var check_sections = document.getElementsByClassName("webex-check");
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+    check_sections[i].classList.add("unchecked");
+
+    let btn = document.createElement("button");
+    btn.innerHTML = "Check Answers";
+    btn.classList.add("webex-check-button");
+    btn.onclick = check_func;
+    check_sections[i].appendChild(btn);
+
+    let spn = document.createElement("span");
+    spn.classList.add("webex-total_correct");
+    check_sections[i].appendChild(spn);
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) real_answer = real_answer.toLowerCase();
+    if (cl.contains("nospaces")) real_answer = real_answer.replace(/ /g, "");
+  
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) radiogroups[i].onchange = radiogroups_func;
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+  }
+
+  /* check each question to see whether it was answered correctly */
+  update_total_correct();
+
+  /* check each data-topic element and update from cross to tick if 
+    corresponding quick check problem has been fully completed */
+  initializeAllTopics();
+
+  /* listens for storage updates, extracts topic id from qc-id, and updates UI through topic id  */
+  window.addEventListener('storage', (changeDetails) => {
+    if (changeDetails.key?.startsWith('qc-completed-')) 
+    {
+      const topicId = changeDetails.key.replace('qc-completed-', '');
+      updateTopicStatus(topicId);
+    }
+  });
+}
+
+</script>
+<!--------------------  Email Forms -----------------------------------
+        Compiled into each .html page by Quarto.
+        Website hosted and form handled by Netlify now
+        Mailing list provided by mailerlite
+        Input verified by reCaptcha2 
+        
+        Authors (recent to latest): 
+           Tristin Doherty (Trido)
+           Mohit Agarwal (Mohit-Agarwa1)
+--------------------------------------------------------------------->
+<script>
+  // Adds an extra layer of validation to aid user input,
+  // some of these are covered by basic html form validations as well, but netlify handles everything else
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("form[name='feedback']"); 
+    
+    form.addEventListener("submit", function(event) {
+        const nameInput = document.querySelector("input[name='name']")?.value.trim();
+        const emailInput = document.querySelector("input[name='email']")?.value.trim(); 
+        const feedbackInput = document.querySelector("textarea[name='feedback']")?.value.trim();
+
+        if (!nameInput)    { alert("Please enter a name."); return; }
+        if (!emailInput)   { alert("Please enter an email."); return; }
+        if (!feedbackInput) { alert("Please fill out the feedback field."); return; }
+        
+        event.preventDefault(); //allows javascript to handle submitting form details instead of HTML
+        const subjectInput = document.querySelector("input[name='subject']");
+                
+        // sanitise inputs
+        const sanitizedName = sanitizeInput(nameInput); 
+        const sanitizedEmail = sanitizeEmail(emailInput);
+        const sanitizedFeedback = sanitizeInput(feedbackInput);
+
+        // validate email
+        if (!validateEmail(sanitizedEmail)) { alert("Please enter a valid email address."); return; }
+        subjectInput.value = "Feedback from " + sanitizedEmail; // Updates subject line with sanitised email
+
+        form.submit();
+    });
+});
+
+// Removes leading and trailing whitespace for formatting, and replaces potentially harmful characters like "<" & ">", replaces them with HTML encodings
+function sanitizeInput(input) {
+  input = input.trim();                                      
+  input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return input;
+}
+
+// remove harmful characters from email being sent to subject line, by only permitting the characters specified in .replace()
+function sanitizeEmail(email) {
+  email = email.trim(); 
+  email = email.replace(/[^a-zA-Z0-9@._-]/g, "");
+  return email;
+}
+
+// This looks incredibly complicated, but its just regex taken from here to filter for emails that follow these formatting guidelines https://regex101.com/r/3uvtNl/1
+function validateEmail(email) {
+  const re = /^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)"|"(?=$|\.|@)|(?<=".*)[ .](?=.*")|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$/gm; 
+  return re.test(email);
+}
+
+</script>
+
+<h1>Feedback</h1>
+<p>Your feedback is appreciated and useful. Feel free to leave a comment here, <br>
+but please be specific with any issues you encounter so we can help to resolve them <br>
+(for example, what page it occured on, what you tried, and so on). </p>
+
+<form name="feedback" method="POST" netlify="" netlify-honeypot="bot-field">
+  <p style="display: none;"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
+  <input type="hidden" name="subject" value="Feedback from unknown">
+
+  <label for="name">Name: </label>
+  <br>
+  <input type="text" name="name" required="">
+  <br><br>
+  
+  <label for="email">E-mail: </label>
+  <br>
+  <input type="email" name="email" required="">
+  <br><br>
+  
+  <label for="feedback">Feedback: </label>
+  <br>
+  <textarea rows="5" cols="50" placeholder="Your feedback" name="feedback" required=""></textarea>
+  <br><br>
+
+  <!-- Google reCAPTCHA Widget -->
+  <div class="g-recaptcha" data-sitekey="6LeiTt4qAAAAAGaEQOUljIc9e3iqDz6eH9Te_lQr"></div>
+  <br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js" async="" defer=""></script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.VERTICAL },
+      'google_translate_element'
+    );
+  }
+</script>
+
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    const targetSidebar = document.getElementById('quarto-margin-sidebar');
+    if (!targetSidebar) return;
+
+    const translateWrapper = document.createElement('div');
+    translateWrapper.className = 'sidebar-section';
+    translateWrapper.style.marginTop = '2em';
+
+    const title = document.createElement('h5');
+    title.innerText = 'Translate';
+
+    const translatorDiv = document.createElement('div');
+    translatorDiv.id = 'google_translate_element';
+
+    translateWrapper.appendChild(title);
+    translateWrapper.appendChild(translatorDiv);
+    targetSidebar.appendChild(translateWrapper);
+
+    const googleScript = document.createElement('script');
+    googleScript.type = 'text/javascript';
+    googleScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(googleScript);
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../about.html">
+<p>About</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../fullindex.html">
+<p>Index</p>
+</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../cookies.html">
+<p>Cookie policy</p>
+</a>
+  </li>  
+</ul>
+    <div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../license.html">
+<p>STARMAST © 2026 is licensed under CC BY-NC-SA 4.0.</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

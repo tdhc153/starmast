@@ -1,0 +1,449 @@
+---
+title: "Making it count: an introduction to the theory of functions"
+author: Tom Coleman
+date: 2026-07-08
+format: 
+  revealjs:
+    theme: [default, starmast-presentation-blue.scss]
+    title-slide-attributes: 
+      data-background-image: slides-bg-withlogo.png
+---
+
+## A reminder {data-background-image="slides-bg.png"}
+
+- Any questions, please feel free to ask at any point
+
+  - **there's no such thing as a silly question!**
+  
+## Accessing these resources (and shameless self-promotion) {data-background-image="slides-bg.png" .smaller}
+
+Materials for this week can be found at:
+
+<https://starmast.org/suttontrust2026.html>
+
+(to be updated throughout the week)
+
+. . .
+
+These are hosted on my maths resource website STARMAST, **a free-to-use, high-quality bank of inclusive and technically accessible learning resources in mathematics and statistics, suitable for everyone**, made by University of St Andrews staff and students for any student of mathematics or statistics.
+
+<https://starmast.org>
+
+New this week is a topic search for whatever school curriculum you may be on. :)
+
+# The function junction
+
+## Try it yourself 1 {data-background-image="slides-bg.png"}
+
+:::{.callout-important}
+## Try it yourself 1
+
+How many elements are in this set? $$X = \{a,c,♦️,d,♠️,️♣️,❤️,💫,b,🍏,🏏,e,f,🗿\}$$
+:::
+
+. . .
+
+:::{.callout-note collapse="true"}
+## Answer to try it yourself 1
+
+There are $14$, but that's not important. Read on...
+:::
+
+## Functions {data-background-image="slides-bg.png"}
+
+The important thing was **how** you counted it. If you counted out loud, you probably said $1,2,3,4,\ldots$ all the way up to $14$, pointing at each element in turn. This is how you are first taught to count things.
+
+. . .
+
+In fact, what you are doing is taking an input from $X$ and assigning it an output from the set of all positive whole numbers. This linking of an input to an output is the idea of a mathematical **function**.
+
+## Functions in detail {data-background-image="slides-bg.png"}
+
+:::{.callout-note}
+
+## Function, domain, range
+
+Let $X,Y$ be two sets.
+
+A **function** $f$ from the set $X$ to the set $Y$ is an assignment that maps each element of $X$ to **exactly one** output in $Y$. It is written as $f:X\to Y$, and the notation $f(x) = y$ means '$f$ maps $x\in X$ to $y\in Y$.
+
+Here, the set $X$ is called the **domain** of $f$ and the set $Y$ is called the **codomain** of $f$. 
+
+Two functions $f$ and $g$ are equal if and only if they have the same domain $X$, codomain $Y$, and $f(x) = g(x)$ for all $x\in X$. 
+
+:::
+
+## The function in detail {data-background-image="slides-bg.png"}
+
+The important thing is that for some $x\in X$, there is exactly one $y\in Y$ such that $f(x) = y$ - so **one** element of $X$ can't map to **many** elements of $Y$. The converse is not true; **many** elements of $X$ are allowed to **one** element of $Y$.
+
+Here are some examples and non-examples.
+
+## What's the point? {data-background-image="slides-bg.png"}
+
+In mathematics, the reason why functions are incredibly powerful is because they allow for **comparison** between sets. Any time you want to compare two sets - a function is almost always used. Any time you want to look at growth, or rates of change, or to decide behaviour in the future: you will use a function. 
+
+## Functions and sequences (1/3) {data-background-image="slides-bg.png"}
+
+One of the ways that functions are studied in mathematics is the idea of a **sequence**. You saw all about sequences in [Exploration slides: The hidden sequences of Pascal's triangle](e-s-pascalstriangleandgrowth.qmd); how they can be either finite or infinite, how they could have formulas or not.
+
+In fact, every sequence is a function in disguise. To help illustrate this, here is some new mathematical notation; this is a common thing to do in mathematics to help explain certain concepts.
+
+## Functions and sequences (2/3) {data-background-image="slides-bg.png" .smaller}
+
+:::{.callout-note}
+
+## Special notation for sets
+
+Write $[n]$ to be the set $\{1,2,3,\ldots,n\}$ of all positive whole numbers from $1$ up to $n$ included. So $[4] = \{1,2,3,4\}$ and $[k] = \{1,2,3,\ldots,k\}$. You can notice that the number of elements of $[n]$ is $n$
+
+For the (infinite) set of all positive whole numbers, write $$\mathbb{N} = \{1,2,3,\ldots\}$$ as the set of **natural numbers**. You can write $$\mathbb{N}_0 = \{0,1,2,3,\ldots\}$$ to be the set of **natural numbers with zero**.
+
+For the (infinite) set of all possible numbers - whole, fractions and decimals, positive and negative - write $\mathbb{R}$ to be the set of these numbers (called **real numbers**). 
+
+:::
+
+## Functions and sequences (3/3) {data-background-image="slides-bg.png"}
+
+This makes it a lot easier to phrase the following important consideration:
+
+:::{.callout-note}
+
+## Sequences and functions
+
+(a) Any finite sequence of length $n$ of symbols from the set $[k]$ can be viewed as a function $f:[n]\to [k]$.
+
+(b) In the reverse direction, any function $f:[n]\to [k]$ is a finite sequence of length $n$ of symbols from the set $[k]$
+
+(c) Any finite sequence of numbers of length $n$ can be viewed as a function $f:[n]\to \mathbb{R}$.
+
+(d) Any infinite sequence of numbers can be viewed as a function $f:\mathbb{N}\to\mathbb{R}$, and any function $f:\mathbb{N}\to \mathbb{R}$ can be written as an infinite sequence.
+
+:::
+
+## Try it yourself 2 {data-background-image="slides-bg.png"}
+
+:::{.callout-note}
+
+(a) Any finite sequence of length $n$ of symbols from the set $[k]$ can be viewed as a function $f:[n]\to [k]$.
+
+(b) In the reverse direction, any function $f:[n]\to [k]$ is a finite sequence of length $n$ of symbols from the set $[k]$
+
+:::
+
+
+:::{.callout-important}
+
+## Try it yourself 2
+
+Why are (a) and (b) true? As an initial pointer, think about where the set $[n]$ will appear in your consideration.
+
+:::
+
+## Answer to try it yourself 2 {data-background-image="slides-bg.png" .smaller}
+
+:::{.callout-note}
+
+## Answer to try it yourself 2
+
+For (a), suppose that you have a sequence of length $n$ of elements from $[k]$; you could say that this is $$a_1,a_2,\ldots,a_n.$$ You can see that for every number $i$ between $1$ and $n$, there is an element $a_i$ of $[k]$ at position $i$ in the list. You can then define a function $f:[n] \to [k]$ by the assignment $$f(i) = a_i$$ which sends $i\in [n]$ to $a_i$. This then determines the sequence $a_1,a_2,\ldots,a_n$.
+
+For (b), suppose you have a function $f:[n]\to [k]$. You can now view this as a sequence of length $n$ in $[k]$ by writing out all of the outputs in order: $$f(1),f(2),\ldots,f(n)$$ which defines a finite sequence of length $n$ with elements in $[k]$. 
+
+::: 
+
+Parts (c) and (d) follow from similar reasoning. 
+
+This means that finite/infinite sequences can be studied through functions.
+
+## More examples of functions {data-background-image="slides-bg.png" .smaller}
+
+:::{.incremental}
+
+- $f_1:\mathbb{N}\to\mathbb{N}$ with $f(n) = n^3$
+- $f_2:\mathbb{N}_0\to\mathbb{N}$ with $f_2(n) = 2^n$. 
+- $f_3:\mathbb{N}\to\{153\}$ to be $f_3(n) = 153$ for all $n\in\mathbb{N}$.
+- Write $$\mathbb{N}_0\times \mathbb{N}_0\ = \{(n,k)\; : \; n,k\in \mathbb{N}_0\}.$$ Then the binomial coefficient can be written as a function $b:\mathbb{N}_0\times \mathbb{N}_0\times \mathbb{N}$ with $$b(n,k) = \binom{n}{k}.$$
+
+:::
+
+## Counting the number of functions {data-background-image="slides-bg.png"}
+
+Here's an excellent result that follows from this.
+
+:::{.callout-note}
+
+## Counting number of functions
+
+The total number of possible functions $f:[n]\to[k]$ is $k^n$.
+
+:::
+
+## Proof of the formula for number of functions (1/2) {data-background-image="slides-bg.png"}
+
+You are given that $[n] = \{1,2,3,\ldots,n\}$, and there is a function $f:[n]\to[k]$. Write $f$ as a finite sequence of length $n$ with elements from $k$ to get $$f(1),f(2),f(3),\ldots,f(n)$$
+
+So, you can ask yourself - what is $f(1)$? Well, you don't know, as you aren't given the information. However, there are $k$ many **choices** for the value of $f(1)$, because it has to be exactly one element of the set $[k] = \{1,2,3,\ldots,k\}$. Since it can be any of them, this gives $k$ choices.
+
+## Proof of the formula for number of functions (2/2) {data-background-image="slides-bg.png" .smaller}
+
+Next, you can ask -  what is $f(2)$? Again, there are $k$ many choices. You can notice here that the choice of the value of $f(2)$ is completely independent of the choice for the value of $f(1)$. Similarly, there are $k$ many choices for the value of $f(3)$ and this choice is independent of the values of $f(1)$ and $f(2)$. 
+
+You can carry on in this way for all the elements of $[n]$. With $k$ choices for each element, and all of the choices being independent of each other, this leads to $k^n$ many choices for the sequence $f(1),f(2),f(3),\ldots,f(k)$. Therefore, there are $k^n$ possible functions $f:[n]\to [k]$.
+
+## Try it yourself 3 {data-background-image="slides-bg.png"}
+
+:::{.callout-important}
+
+## Try it yourself 3
+
+Does this seem familiar? 
+
+:::
+
+. . .
+
+:::{.callout-note}
+
+This is an almost a word-for-word recreation of the proof in [Exploration slides: How to win at cards - combinations and permutations](e-s-combinationspermutations.qmd) that there were $2^n$ many subsets of a set $\{1,2,3,\ldots,n\}$!
+
+:::
+
+## Indicator functions {data-background-image="slides-bg.png"}
+
+So what's happening here? 
+
+. . .
+
+Well, the idea of deciding whether or not each element of $[n] = \{1,2,3,\ldots,n\}$ is in some subset of $[n]$ can be modelled as a function $f:[n]\to[2]$, where $f(i) = 1$ says that $i$ is not in the subset, and $f(i) = 2$ says that $i$ is in the subset. 
+
+. . .
+
+Therefore, every function $f:[n]\to[2]$ corresponds to a subset of $[n]$, and every subset of $[n]$ corresponds to a function $f:[n]\to[2]$. This function is called an **indicator function** for the subset of $[n]$. 
+
+
+# Injective, surjective, bijective
+
+## Images {data-background-image="slides-bg.png" .smaller}
+
+Now, much like numbers can be odd, even, prime, not prime, and so on, functions have different properties as well. To do this, you'll need to examine **exactly** where the function sends its elements.
+
+:::{.callout-note}
+
+## Image of a function 
+
+The set $$f(X) = \{f(x)\textsf{ where } x\in X\} \subseteq Y$$ is called the **image** of $f$. It follows from this that the image of $f$ is a subset of the codomain $Y$ of $f$.
+
+:::
+
+How functions map into the image is important, and how much of the codomain is covered in the image is important. Together, these properties underpin the very idea of counting.
+
+## **Injective**, surjective, bijective {data-background-image="slides-bg.png"}
+
+:::{.callout-note}
+
+## Injective
+
+Say that $f:X\to Y$ is **injective** (or **one-to-one**, or even **one-one**) if $x_1\neq x_2$ means that $f(x_1)\neq f(x_2)$ for all $x_1,x_2\in X$. Equivalently, $f$ is injective if $f(x_1) = f(x_2)$ implies that $x_1 = x_2$ for all $x_1,x_2\in X$.
+
+Intuitively, you could say that $f$ is injective if different elements in $X$ always map to different elements in $Y$.
+
+:::
+
+## Injective, **surjective**, bijective {data-background-image="slides-bg.png"}
+
+:::{.callout-note}
+
+## Surjective
+
+Say that $f:X\to Y$ is **surjective** (or **onto**) if for all $y\in Y$ there exists $x\in X$ such that $f(x) = y$. Equivalently, $f$ is surjective if the image $f(X)$ of $f$ is equal to the codomain $Y$ of $f$.
+
+Intuitively, you could say that $f$ is surjective if every element of $Y$ has an element of $X$ that maps to it.
+
+:::
+
+## Injective, surjective, **bijective** {data-background-image="slides-bg.png"}
+
+:::{.callout-note}
+
+## Bijective
+
+Say that $f:X\to Y$ is **bijective** if $f$ is both injective and surjective.
+
+Intuitively $f$ is bijective if every element of $Y$ has a **unique** element of $X$ that maps to it.
+
+:::
+
+It's important that in mathematics, you have both the **precise definition** and the **intuition behind it** - it's like the spirit and letter of the law, they have to line up in order to be effective.
+
+## Try it yourself 4 {data-background-image="slides-bg.png"}
+
+:::{.callout-important}
+
+## Try it yourself 4
+
+Find examples of injective, surjective and bijective functions, and write down their images. What do you notice about the sizes of the sets involved?
+
+:::
+
+## Answer to try it yourself 4 {data-background-image="slides-bg.png" .smaller}
+
+Here's an example of an injective function $f:\{A,B,C\}\to\{1,2,3,4,5\}$: $$f(A) = 1,\quad f(B) = 5,\quad f(C) = 3$$ with image $\{1,3,5\}$.
+
+. . .
+
+Here's an example of a surjective function $g:\{A,B,C,D,E\}\to\{1,2,3\}$: $$g(A) = 1,\quad g(B) = 2,\quad g(C) = 3,\quad g(D) = 1,\quad g(E) = 2$$ with image $\{1,2,3\}$.
+
+. . .
+
+Here's an example of a bijective function $h:\{A,B,C\}\to\{1,2,3\}$: $$h(A) = 1,\quad h(B) = 2,\quad h(C) = 3$$ with image $\{1,2,3\}$.
+
+:::
+
+What about the functions before?
+
+## Previous examples {data-background-image="slides-bg.png"}
+
+- The function $f_1:\mathbb{N}\to\mathbb{N}$ with $f_1(n) = n^3$ is injective but not surjective. 
+
+- Similarly, $f_2:\mathbb{N}_0\to\mathbb{N}$ with $f_2(n) = 2^n$ is injective but not surjective. 
+
+- The function $f_3:\mathbb{N}\to\{153\}$ with $f_3(n) = 153$ for all $n\in\mathbb{N}$ is surjective but not injective.
+
+- The binomial coefficient written as a function $b:\mathbb{N}_0\times \mathbb{N}_0\times \mathbb{N}$ with $$b(n,k) = \binom{n}{k}$$ is surjective but not injective.
+
+:::
+
+## Observations (1/2) {data-background-image="slides-bg.png"}
+
+You can also notice that for a function $f:X\to Y$:
+
+- if a function is surjective, then the cardinality of the domain $X$ is greater than or equal to the cardinality of the codomain $Y$, so $|X| \geq |Y|$.
+
+- if a function is injective, then the cardinality of the codomain $Y$ is greater than or equal to the cardinality of the domain $Y$, so $|Y| \geq |X|$.
+
+- if a function is bijective, then the cardinality of the domain $X$ is equal to the cardinality of the domain $Y$, so $|X| = |Y|$.
+
+## Observations (2/2) {data-background-image="slides-bg.png" .smaller}
+
+These observations can be reversed using a mathematical principle called the **contrapositive**. This allows you to change the logical perspective of a statement 'if $A$ then $B$' to 'if not $B$ then not $A$'.
+
+Doing this to the observations above give the following statements about any function $f:X\to Y$:
+
+- if the cardinality of the domain $X$ is **less than** the cardinality of the codomain $Y$, then $f$ is never surjective.
+
+- if the cardinality of the codomain $Y$ is **less than** the cardinality of the domain $X$, then $f$ is never injective.
+
+- if the cardinalities of the domain $X$ and the codomain $Y$ are **not equal**, then $f$ is never bijective. 
+
+## Pigeons {data-background-image="slides-bg.png"}
+
+The second of these statements is equivalent to an important principle in combinatorics.
+
+:::{.callout-note}
+
+## The pigeonhole principle
+
+Suppose that $n > m$. If you have $n$ items and $m$ boxes in which to put them, then at least one box contains more than one item. 
+
+:::
+
+
+## Proof of the pigeonhole principle {data-background-image="slides-bg.png"}
+
+Give numbers to your list of items $\{1,2,3,\ldots,n\}$. Put item $1$ in box $1$, item $2$ in box $2$, and so on until you put item $m$ in box $m$. Since $n> m$, it follows that $n - m \geq 1$ and so you have at least one item to put in a box. It follows that at least one box contains more than one item.
+
+## Scenario 1 {data-background-image="slides-bg.png"}
+
+:::{.callout-note}
+
+## Scenario 1
+
+Cantor's Confectionery is one of the best places to work in the fictional world. It has the habit of throwing a birthday party for every one of its employees on their birthday, which is truly exceptional for morale. They have appointed you, its HR representative, to try and investigate cost-cutting measures for this expensive endeavour. The best way to achieve this is to have a shared party between two or more employees.  
+
+What is the number $n$ of employees required to have 
+
+(a) a $50\%$ chance that two employees share the same birthday?
+
+(b) a $100\%$ chance that two employees share the same birthday?
+
+:::
+
+## Answer to Scenario 1(a) (1/2) {data-background-image="slides-bg.png"}
+
+For convenience, assume that there are $365$ days in the year, as there are in most years. 
+
+Here, it's easier to work out the probability of this **not** happening - you can then subtract this from $1$ to work out the probability of this happening.
+
+Write a list of your employees. Suppose that the first employee has a birthday on any day of the year. The chances that a second employee has a different birthday than the first is $364/365$. The chances that a third employee has a different birthday than the first two is $363/365$. 
+
+## Answer to Scenario 1(a) (2/2) {data-background-image="slides-bg.png" .smaller}
+
+You can continue in this way to show that the probability that $n$ employees all have different birthdays is 
+$$
+\begin{aligned}
+\mathbb{P}(\textsf{different birthdays}) &= \frac{365}{365}\cdot \frac{364}{365}\cdot \frac{363}{365}\cdot\ldots\cdot\frac{(365-n)}{365}\\[0.5em]
+&= \frac{(365)_n}{365^n}
+\end{aligned}
+$$
+where $(365)_n$ is the **falling factorial**.
+
+  As it turns out, the number $n$ that tips this number below $50\%$ - and so the chances that two employees share a birthday is **above** $50\%$ - is $n = 23$. So for a company with $23$ employees, there is a greater than $50\%$ chance that two employees share a birthday!
+
+## Answer to Scenario 1(b) {data-background-image="slides-bg.png"}
+
+Here, the **worst-case scenario** is that everybody has a different birthday. Since there are $365$ possible birthdays, the worst case scenario is that the company has $365$ employees, each with different birthdays. 
+
+So if there are $366$ employees in Cantor's Confectionery, then it's guaranteed that at least two people share a single birthday. So the answer is $n = 366$. 
+
+. . .
+
+The pigeonhole principle also guarantees that in Scotland, at least two people have the same numbers of hairs on their head!
+
+# Counting blessings
+
+## What's the point? {data-background-image="slides-bg.png"}
+
+So what does all of this have to do with counting?
+
+If you count the set in 'Try it yourself 1' by pointing at each element and saying each number, you created a bijection between the set and the set of number $\{1,2,\ldots,14\}$. By putting sets in bijections with other sets, or not, you can directly compare them to each other by their sizes. This is infact the definition of counting:
+
+:::{.callout-note}
+
+## Definition of cardinality
+
+Let $X$ be a set, and $[n] = \{1,2,3,\ldots,n\}$. If there exists a bijection $f:X\to[n]$, then write $|X| = n$. 
+
+:::
+
+## Cardinalities (1/3) {data-background-image="slides-bg.png"}
+
+So finding bijections between sets of things and sets of natural numbers is the very **idea** of mathematically defining how to count things. It is the injective part that identifies each element of $X$ with a unique natural number, and the surjective part ensures that all the numbers in $\{1,2,3,\ldots,n\}$ are covered. 
+
+## Cardinalities (2/3) {data-background-image="slides-bg.png"}
+
+If the surjective part doesn't exist, then you have **inequalities** rather than equality. Thankfully, because of the way surjective functions are defined, you can 'shrink' the codomain of your function to the image to create a bijective function. 
+
+So if there exists an injective function $g:X\to [n]$, then this tells you that there is a bijection $g:X\to [m]$ where $m < n$. So not only do bijective functions tell you about the cardinality of sets, injective functions tell you which sets are bigger than others.
+
+## Cardinalities (3/3) {data-background-image="slides-bg.png"}
+
+The following are strengthenings of the above observations.
+
+:::{.callout-note}
+
+## Injections
+
+(a) If there exists an injection $f:X\to Y$, then $|X| \leq |Y|$.
+
+(b) If there exists an injection $g:Y\to X$, then $|Y| \leq |X|$.
+
+(c) (**Cantor-Schröder-Bernstein theorem**) If there exists injections $f:X\to Y$ and $g:Y\to X$, then $|X| = |Y|$.
+
+:::
+
+Notice here that none of the sets here were specifically stated to be **finite.** So this idea of comparing sets using injective and bijective functions extend to where the sets are **infinite** - and this will have even more surprising results in the next presentation...
+
+## End {data-background-image="slides-bg.png"}
+
+See you tomorrow :)
