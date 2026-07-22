@@ -3,661 +3,486 @@ title: "Hilbert's hotel: an introduction to infinity"
 author: Tom Coleman
 abstract-title: Summary
 abstract: In the final of four linked presentations, this session takes the material covered in the previous three sessions and jumps into the infinite. Following the course of a busy day at the Hilbert Hotel, this session will look at the many roles that infinity plays in mathematics. Along the way, you'll learn how to squeeze infinitely many guests into a fully booked hotel, pour infinitely many glasses of wine without going bankrupt, and how best to decorate the lobby using infinitely-defined shapes.
-
-filters:
-  - shinylive
-draft: true
 ---
 
 
-# Pascal's triangle
+# Into the infinite
 
+## What is infinity?
 
+Where might you have seen infinity before? Perhaps in numbers:
 
-::: callout-note
-## Definition of a Latin square
+- Infinite amount of positive whole numbers $1,2,3,4,\ldots$
+- $\frac{1}{3} = 0.333333\ldots$
+- $\pi = 3.1415926535\ldots$
 
-For a positive, whole number $n$, an order $n$ Latin square is an $n \times n$ grid filled with $n$ different symbols, where each symbol appears exactly once in each row and column.
+In fact, you can think of it as a **concept** - the idea of going on forever and ever, rather than as a fixed number. Roughly speaking, something is infinite if it 'goes on forever'. The symbol $\infty$ that you may be familiar with is a shorthand for 'unbounded'
+
+In mathematics, infinity comes up in three common themes.
+
+- You could try and **count** infinitely many things, similar to what you have been looking at in the previous explorations
+
+- You could try and **do** infinitely many operations (adding is the most common).
+
+- You could **look** at what happens as sequences of things go towards infinity.
+
+# Part 1: Counting
+
+:::{.callout-note}
+
+## The natural numbers
+
+Remember from [Exploration: Making it count - an introduction to the theory of functions](e-functionsandcounting.qmd) that the set of positive whole numbers is written as $$\mathbb{N} = \{1,2,3\ldots\}$$ 
+
 :::
 
-An example of a $3 \times 3$ Latin square is shown in @fig-1.
+Because you can 'count' the elements, and the set is infinite, you can say that $\mathbb{N}$ is a **countably infinite set**. 
 
-::: {.content-visible when-format="html"}
-![A $3 \times 3$ Latin Square, with symbols A, B and C.](./FiguresPNG/latinsquares_sudoku-fig1.png){#fig-1 width="55%" fig-alt="A grid made up of 9 individual cells arranged in a 3 by 3 layout. Reading row-wise, the cell entries are A, B C, then C, A, B, then B, C, A."}
+So if you have a set $X$, how could you show that $X$ is countably infinite? First of all, you need to show that $X$ is not finite - so must be at least as big as the natural numbers. What you can do is use the idea of an **injective function** from [Exploration: Making it count - an introduction to the theory of functions](e-functionsandcounting.qmd), where you saw the following statement
+
+:::{.callout-note}
+
+## Injections
+
+(a) If there exists an injection $f:X\to Y$, then $|X| \leq |Y|$.
+
+(b) If there exists an injection $g:Y\to X$, then $|Y| \leq |X|$.
+
+(c) (**Cantor-Schröder-Bernstein theorem**) If there exists injections $f:X\to Y$ and $g:Y\to X$, then $|X| = |Y|$.
+
 :::
 
-::: {.content-hidden when-format="html"}
-![A $3 \times 3$ Latin square, with symbols A, B and C.](./FiguresPNG/latinsquares_sudoku-fig1.png){width="55%" fig-alt="A grid made up of 9 individual cells arranged in a 3 by 3 layout. Reading row-wise, the cell entries are A, B C, then C, A, B, then B, C, A."}
+So what does this mean for showing that $X$ is a countably infinite set? 
+
+:::{.callout-note}
+
+## Statements about cardinality
+
+(a) If there exists an injective function $f:X\to\mathbb{N}$, then $X$ is either finite or it is countably infinite.
+
+(b) If there exists an injective function $g:\mathbb{N}\to X$, then $X$ is infinite.
+
+(c) (from the **Cantor-Schröder-Bernstein theorem**) If there exists injections $f:X\to \mathbb{N}$ and $g:\mathbb{N}\to X$, then $|X| = |\mathbb{N}|$ and $X$ is countably infinite. 
+
+(d) If there exists a bijection $f:X\to Y$, then $|X| = |Y|$ which means they have the same number of elements. 
+
 :::
 
-::: callout-tip
-While the symbols present in a Latin square can be anything, this article will mostly stick to a set of numbers $\{1,\dots, n\}$ from here on out. (This will make it easier when considering Sudoku puzzles further down the line!).
+## Hotels
+
+Most hotels in the world have a finite number of rooms. This means that if the hotel is fully booked, then you cannot fit any more guests in. This is exactly the **pigeonhole principle** from [Exploration: Making it count - an introduction to the theory of functions](e-functionsandcounting.qmd) - if you have $n$ guests and $m$ rooms, where $n > m$, then there must be one room with more than one guest in it! So if someone comes and asks for a room, you have to send them away!
+
+However, on these pages, real life can be twisted and stretched until you have infinitely many rooms in your hotel.
+
+:::{.callout-note}
+
+## Scenario 1
+
+You are the manager of the prestigious Hilbert Hotel. The Hilbert Hotel is special in having a **countably infinite** number of rooms. Each room is labelled with a positive whole number from the set $\mathbb{N} = \{1,2,3,\ldots\}$. For the first time ever, every room is currently occupied.
+
+While at the front desk, you spot a person with a suitcase walking towards you. The person asks you if you have a room available for this evening. Smiling politely, you begin to explain to them that you are terribly sorry, but all the rooms are full... until you have a brainwave. You then say to that person; 'Yes, we do have a room available'.
+
+
+**How? And how can you be sure that every current guest still has a room?**
+
 :::
 
-Latin squares see a lot of use in the realm of organization—specifically, when a person is trying to organize something **fairly**. The positions of symbols that they enforce make perfect templates for creating schedules and match-ups that take every scenario into account while avoiding any duplicates!
+:::{.callout-note}
 
-::: callout-note
-## Example 1
+## Answer to Scenario 1
 
-Suppose that a workplace has three employees that need to rotate through three tasks over the course of three days. Each employee needs to do every task once, and each day's assignments need to be balanced.
+The idea is to move every current guest to a new room.
 
-If you assign each row of a $3 \times 3$ Latin square to be a day and each column of the Latin square to be the rota of an employee, then each task can be one of the three symbols, and the Latin square ensures that each task is seen exactly once by each employee, and each employee sees a different task each day.
+![Solution to Scenario 1 - move current guest in room $n$ to room $n+1$. Then room $1$ is free for the new guest.](./FiguresPNG/intotheinfinite-1.png){fig.alt="A schematic of the infinitely many rooms of Hilbert hotel, both before and after moving all guests in room n to room n+1, with arrows demonstrating the move. The new guest, labelled G, is then put in the empty space given by room 1 with an arrow demonstrating this."}
 
-One example of how a Latin square could organize this is shown in @fig-2.
+Why does this work? By sending the guest in room $n$ to room $n+1$, you ensure that room $1$ is unoccupied (as there is no room $0$), leaving a space for our new guest.  
+
 :::
 
-::: {.content-visible when-format="html"}
-![One possible way to organize the scenario in Example 1.](./FiguresPNG/latinsquares_sudoku-fig2.png){#fig-2 width="70%" fig-alt="An order 3 Latin square with symbols 1, 2 and 3. To the left of each row, in descending order, there are labels reading Day 1, Day 2 and Day 3. Above each column, reading left to right, there are labels reading Employee 1, Employee 2 and Employee 3. The Latin Square is organized so that each row and each column contains the symbols 1, 2 and 3 exactly once."}
+So what you have done is 'paired' every element $n$ in the hotel $\mathbb{N} = \{1,2,3,\ldots\}$ with a unique element $n + 1$ of the set $S = \{2,3,4,\ldots\}$. This is a **bijection** between the set $\mathbb{N}$ and the set $H$. As you know from above, since $\mathbb{N}$ is countably infinite, so is $S$. As $S$ is infinite, everyone in the hotel to begin with has a new room, leaving room $1$ for the new guest.
+
+You can formulate this into a new hotel policy:
+
+:::{.callout-important}
+
+## Try it yourself 1
+
+You quickly realise that this gives you a way to deal with **any** whole number $m$ of new guests. The question is: how would you do it?
+
 :::
 
-::: {.content-hidden when-format="html"}
-![One possible way to organize the scenario in Example 1.](./FiguresPNG/latinsquares_sudoku-fig2.png){width="70%" fig-alt="An order 3 Latin square with symbols 1, 2 and 3. To the left of each row, in descending order, there are labels reading Day 1, Day 2 and Day 3. Above each column, reading left to right, there are labels reading Employee 1, Employee 2 and Employee 3. The Latin Square is organized so that each row and each column contains the symbols 1, 2 and 3 exactly once."}
+:::{.callout-note collapse="true"}
+
+## Answer to Try it yourself 1
+
+You can do this by moving the person in room $n$ to room $n+m$ for every room number $n$. This is then a bijection from $\mathbb{N}$ to $S_m = \{m+1,m+2,\ldots\}$, leaving rooms $1$ to $m$ for your $m$ new guests.
+
 :::
 
-::: callout-note
-## Example 2
+This is a process known as **generalisation** - once you have figured out how to do one thing, you can extend this as much as possible. But before you can, another problem is going to rear its ugly head. 
 
-Imagine you are running a small experiment testing different teaching styles and their effectiveness. You have three methods and three groups of students. You want to avoid any groups getting the same method twice, and you don't want any method to be over-represented in a specific time slot.
+:::{.callout-note}
 
-In this scenario, a $3 \times 3$ Latin square gives you a neat schedule to apply, where each method appears exactly once in each row, which represents the time slot, and column, which represents the group.
+## Scenario 2
 
-One example of how a Latin square could organize this is shown in @fig-3.
+After sorting out the previous issue, you spot a single InfiniCo bus parked outside. Intrigued, you go out and speak to the rather flustered bus driver, who explains that the bus has a **countably infinite** amount of people on board all looking for a room. The bus seats are numbered $B = \{1,2,3,\ldots\}$.
+
+This is a different problem to the finite group of people; as there is no number $m$ large enough to add to room numbers that will make sure everybody on the bus has a room!
+
+However, you turn to the bus driver and say 'Tell everyone to get off the bus, I'll have rooms for everyone in no time'.
+
+**How do you do it?**
+
 :::
 
-::: {.content-visible when-format="html"}
-![One possible way to organize the scenario in Example 2.](./FiguresPNG/latinsquares_sudoku-fig3.png){#fig-3 width="70%" fig-alt="An order 3 Latin square with symbols 1, 2 and 3. To the left of each row, in descending order, there are labels reading Time 1, Time 2 and Time 3. Above each column, reading left to right, there are labels reading Group 1, Group 2 and Group 3. The Latin Square is organized so that each row and each column contains the symbols 1, 2 and 3 exactly once."}
+:::{.callout-note}
+
+## Answer to Scenario 2
+
+The idea is to move every current guest to a new room again!
+
+![Solution to Scenario 2 - move current guest in room $n$ to room $2n$. Then the odd-numbered rooms are free for the countably infinite number of new guests.](./FiguresPNG/intotheinfinite-2.png){fig.alt="A schematic of the infinitely many rooms of Hilbert hotel, both before and after moving all guests in room n to room 2n, with arrows demonstrating the move. The set of new guests, labelled B, is then directed by arrows into the empty spaces in odd numbered rooms."}
+
+Why does this work? Sending the guest in room $n$ to room $2n$ makes sure that all the odd numbered rooms are empty. You can assign each seat on the bus to a unique odd-numbered room.  
+
 :::
 
-::: {.content-hidden when-format="html"}
-![One possible way to organize the scenario in Example 2.](./FiguresPNG/latinsquares_sudoku-fig3.png){width="70%" fig-alt="An order 3 Latin square with symbols 1, 2 and 3. To the left of each row, in descending order, there are labels reading Time 1, Time 2 and Time 3. Above each column, reading left to right, there are labels reading Group 1, Group 2 and Group 3. The Latin Square is organized so that each row and each column contains the symbols 1, 2 and 3 exactly once."}
+Mathematically, what you have done is `paired' every element $n$ in the hotel $\mathbb{N} = \{1,2,3,\ldots\}$ with a unique element $2n$ of the set $E = \{2,4,6,\ldots\}$, giving a bijection between $E$ and $\mathbb{N}$. This means that every current guest has a new room. 
+
+The empty rooms are odd numbers $O = \{1,3,5,\ldots\}$. There are infinitely many odd numbers. You can then define a bijection between every element $m$ in the bus $B = \{1,2,3,\ldots\}$ with a unique element $2m - 1$ of the set $O = \{1,3,5,\ldots\}$; so every passenger on the bus has a room.
+
+:::{.callout-important}
+
+## Try it yourself 2
+
+You realise that this gives you a way to deal with **any** number $m$ of buses, each with countably infinite number of passengers. The question is: how would you do it? 
+
+As a starting point, let $0\leq r \leq m$. Then there are infinitely many positive whole numbers with remainder $r$ when dividing by $m+1$.  
+
 :::
 
-In this sense, Latin squares are the backbone behind many everyday organizational problems. They make sure that there is no skew in data for statisticians, and ensure that there is no wasted resources in potential experiments or projects.
+:::{.callout-note collapse="true"}
 
-Both of the examples you've seen so far use a single Latin square to organize a single variable, be it employees or classes of children. Latin squares are capable of far more than single-variable organization, but to see this, you first need to take a quick detour into the concept of **orthogonality**.
+## Answer to Try it yourself 2
 
-## Orthogonality and Latin Squares
+You can do this by moving the person in room $n$ of the hotel to room $(m+1)\cdot n$ for every room number $n$. The passenger in seat $q$ on bus number $r$ goes into the room $(m+1)q + r$.
 
-Orthogonality is, in a sense, the concept of things being as different from each other as they possibly can be. When it comes to Latin squares, this is best defined by use of an example.
-
-Let's take a look at the first recorded problem motivating the definition of orthogonality, presented in the 1700s by French mathematician Jacques Ozanam.
-
-::: callout-note
-## Problem: Suits and Faces
-
-Arrange the 16 face cards of an ordinary pack of playing cards into a $4 \times 4$ square, in such a way that no row or column contains more than one card of each suit (Clubs ♣, Diamonds ♢, Hearts ♡, Spades ♠), and more than one card of each rank (Jack, Queen, King, Ace).
 :::
 
-If you separate out the suits and ranks, the question asks for two order 4 Latin squares, such that when they are superimposed (stacked on top of each other) each (suit, rank) pair occurs exactly once.
+Here's something completely different now - an interlude to showing that there are infinitely many primes. To do this, there are two things that you need to know:
 
-@fig-4 shows one possible solution to this problem:
+:::{.callout-tip}
 
-::: {.content-visible when-format="html"}
-![One possible solution to the question posed by Jacques Ozanam.](./FiguresPNG/latinsquares_sudoku-fig4.png){#fig-4 width="125%" fig-alt="Two order 4 Latin squares positioned side by side. The left square has symbols Clubs, Diamonds, Hearts and Spades and corresponds to the suits of the face cards. The right square has symbols J, Q, K, A, and corresponds to the ranks of the face cards. Reading left to right across rows, the left square has symbols Clubs, Diamonds, Hearts, Spades in the top row, then Diamonds, Clubs, Spades, Hearts in the second row, Hearts, Spades, Clubs, Diamonds in the third row and Spades, Hearts, Diamonds, Clubs in the fourth row. Reading in the same manner, the right square has symbols J, A, K, Q in the top row, then K, Q, J, A in the second row, Q, K, A, J in the third row and A, J, Q, K in thw fourth row."}
+## Two tips
+
+- To prove that a set is infinite, you can prove that it is **not finite** by assuming that it is finite, and deriving a logical impossibility. This is known as a **proof by contradiction**. 
+
+- Every natural number $n \geq 2$ can be written as a unique product of prime factors. This is a result known as the **Fundamental Theorem of Arithmetic**. 
+
 :::
 
-::: {.content-hidden when-format="html"}
-![One possible solution to the question posed by Jacques Ozanam.](./FiguresPNG/latinsquares_sudoku-fig4.png){width="125%" fig-alt="Two order 4 Latin squares positioned side by side. The left square has symbols Clubs, Diamonds, Hearts and Spades and corresponds to the suits of the face cards. The right square has symbols J, Q, K, A, and corresponds to the ranks of the face cards. Reading left to right across rows, the left square has symbols Clubs, Diamonds, Hearts, Spades in the top row, then Diamonds, Clubs, Spades, Hearts in the second row, Hearts, Spades, Clubs, Diamonds in the third row and Spades, Hearts, Diamonds, Clubs in the fourth row. Reading in the same manner, the right square has symbols J, A, K, Q in the top row, then K, Q, J, A in the second row, Q, K, A, J in the third row and A, J, Q, K in thw fourth row."}
+This is enough to help you sort through the next piece of hotel-based japery. 
+
+:::{.callout-note}
+
+## Scenario 3
+
+After sorting out the InfiniCo bus, you spot a single Euclid Express bus parked outside. There are infinitely many passengers on this bus. Before you can go out however, the Euclid Express bus driver barges in and demands that each of his passengers is accommodated in a **prime-numbered** room. You calmly explain to him that there is plenty of room for his bus, but he is so mad he doesn't listen. He wants you to prove to him that there are enough prime numbered rooms for the passengers on his bus.
+
+**How do you do it?**
+
+As a starting point, first assume that there are finitely many prime numbers $p_1,p_2,\ldots,p_n$ and this is all of them. Consider the number $x = p_1p_2\ldots p_n + 1$. What happens if $x$ is prime? What happens if $x$ is not prime?
+
+Your aim is to show that this assumption that there are finitely many prime numbers is incorrect!
+
 :::
 
-For example, the four pairs with ♣ in the first position occur along the main diagonal.
+This scenario asks you to prove that there are infinitely many prime numbers.
 
-::: callout-note
-## Definition: Orthogonality
+:::{.callout-note}
 
-Two Latin squares $A = (a_{ij})$ and $B = (b_{ij})$ of order $n$ are **orthogonal** if the set
+## Answer to Scenario 3
+
+Suppose there are only finitely many prime numbers $p_1,p_2,\ldots,p_n$; the aim is to show that this assumption is incorrect. This is known as a **proof by contradiction**. The starting block says $x = p_1p_2\ldots p_n +1$.
+
+Now EITHER
+
+- $x$ is a new prime number OR
+- $x$ is divided by a prime number $q\leq x$ (by the useful result). As $p_1,p_2,\ldots,p_n$ do not divide $x$, $q$ cannot be any of these.
+
+So there exists a prime number not on your original list $p_1,p_2,\ldots,p_n$. This is a contradiction. This works for any finite set of primes and so **the set of primes is infinite**.
+
+:::
+
+The idea of a unique factorization of a natural numbers into primes is the cornerstone of the next, even more mindbending problem. 
+
+:::{.callout-note}
+
+## Scenario 4
+
+Just when you thought your day was over, suddenly you hear a huge noise. In your countably infinitely many parking spaces there are countably infinitely many InfiniCo buses sitting idly. You are confronted by a countably infinite number of bus drivers, who each say that they have countably infinitely many guests on board all waiting for a room! Now this one **does** seem impossible... but you can do it! **How??**
+
+:::
+
+Here are some hints to help. 
+
+- First, write $(n,k)$ to represent the passenger in seat $n$ on bus $k$. The set of all passengers is called $B'$.
+- **Hint 1:** In this case, you don't have to make sure all the rooms are occupied - an injective function into $\mathbb{N}$ is enough!
+- **Hint 2:** There are infinitely many prime numbers. You can write $p_n$ is the $n$th prime number.
+- **Hint 3:** Put passenger $(n,k)$ into the room $p_n^k$. Why is this number unique?
+- **Hint 4:** Where can you put the guests who are already in the hotel? You know that $p_1p_2$ is free, as the bus passengers have occupied all the prime powers.
+ 
+:::{.callout-note}
+
+## Answer to Scenario 4
+
+You can write $(n,k)$ to represent the $k$th seat on the $n$th coach. You can pair $(n,k)$ in the buses $B'$ to the natural number $p_n^k$; by the useful result, this is a unique natural number. But what about the existing hotel guests? Send the guest in room $n$ to room number $p_1p_2\ldots p_np_{n+1}$; so the guest in room $1$ is sent to $p_1p_2 = 2\cdot3 = 6$.  Crucially, none of these rooms overlap with the rooms occupied by the bus passengers, as it's not a prime number! 
+
+This means every passenger is accommodated with infinitely many rooms to spare! For instance, no passenger is in room number $p_1^2p_2 = 2^2\cdot 3 = 12$. 
+
+This is an injective function from the set $\mathbb{N}\times\mathbb{N} = \{(n,k) \; :\; n,k\in\mathbb{N}\}$ into $\mathbb{N}$. Since there is also a natural injective map from $\mathbb{N}$ to $\mathbb{N}\times \mathbb{N}$ sending $n$ to $(n,1)$, it follows from the Cantor-Schröder-Bernstein theorem that $|\mathbb{N}| = |\mathbb{N}\times\mathbb{N}|$.
+
+:::
+
+You can ask yourselves - are there infinities that **don't fit** into the natural numbers? Actually, you've only scratched the surface...
+
+:::{.callout-note}
+
+## Scenario 5
+
+Cantor's Confectionery have hired the Continuum Coach service for their employee excursion this year, and they've all piled into the bus. Every employee has a unique employer ID which is a real number between $0$ and $1$.
+
+They all pile into the lobby of Hilbert's Hotel, all wanting a room. However, you **cannot accommodate** the employees from Cantor's Confectionery; **there simply aren't enough rooms**. 
+
+:::
+
+This argument is due to the real life [Cantor](https://mathshistory.st-andrews.ac.uk/Biographies/Cantor/)!
+
+:::{.callout-note}
+
+## Answer to Scenario 5: Cantor's diagonal argument
+
+Write $[0,1]$ to be the set of every decimal number between 0 and 1 inclusive. You can see that the function $f:\mathbb{N} \to [0,1]$ given by $$f(n) = \frac{1}{n}$$ is an injective function, so the cardinality of $[0,1]$ is at least the cardinality of $\mathbb{N}$.
+
+Now, if there was an injective function $g:[0,1]\to \mathbb{N}$, then the sets $[0,1]$ and $\mathbb{N}$ would have the same cardinality. The aim is to show that there is **no** one-to-one mapping from $[0,1]$ to $X$. To do this, assume that there **is** a one-to-one mapping from $[0,1]$ to $X$, and then reduce to a logical impossibility - a contradiction. 
+
+You can write every number inside $[0,1]$ as an infinite decimal $0.a_1^na_2^na_3^na_4^na_5^n...$ where every $a_i$ is one of $0,1,2,3,4,5,6,7,8,9$. (You can also assume that the infinite decimal doesn't end in all $0$'s. It's true that $0.\overline{9} = 1$.)
+
+Now, if there is a one-to-one mapping, then you can label each number inside $[0,1]$ by an element of $\mathbb{N}$. So for the $n$th number in $[0,1]$, write $0.a_1^na_2^na_3^na_4^na_5^n...$. Construct a list as shown in the following diagram.
+
+![Solution to Scenario 5 - list all the possible decimal numbers, and change the number in position $n$ of the $n$th number in the list,](./FiguresPNG/intotheinfinite-4.png){fig.alt="A diagram showing Cantor's diagonal argument. There is a vertically descending list of decimal numbers, with one box per decimal place. The numbers at the $n$th decimal place of the $n$th number are highlighted in red."}
+
+Now, the idea is to construct a new number in $[0,1]$ that is **not in this list**. Look at $a^1_1$; this is a number between 0 and 9. Pick $b_1$ such that $b_1 \neq a^1_1$. Repeat this for every natural number $n$; so pick a $b_n \neq a^n_n$ for every $n$.
+
+Look at the number $0.b_1b_2b_3...$. This number is different from every number in the list, as it differs in the $n$th decimal place for every $n$! 
+
+This is a contradiction as there is a number in $[0,1]$ not labelled by a number from $\mathbb{N}$. So there is no one-to-one mapping and therefore $[0,1]$ has more numbers than $\mathbb{N}$ does. 
+
+:::
+
+The set $[0,1]$ is therefore **uncountably infinite**; as it is infinite but there is no injective function to the set of natural numbers. Intuitively, it is because you cannot `count' them by associating a natural number to each element. 
+
+The branch of mathematics concerned with measuring the size of infinite sets is the modern day study of **set theory**. There are **varying sizes** of infinity, with some infinities bigger than others. You can show, using sets of subsets of sets, that there exist **infinitely many** different sizes of infinity. 
+
+
+# Doing
+
+## Arithmetic
+
+Doing infinitely many things takes an infinite amount of time. This is time which you do not have.
+
+What can you do? You can do two things and write down the result, then three things and write down the result, and so on. This creates a **sequence** of numbers which you can look at!
+
+- If your sequence is getting closer and closer to a number, then doing infinitely many of those things might give you that number.
+- If your sequence is getting larger and larger, then doing infinitely many of those things could give you infinity!
+- If your sequence is doing neither, then perhaps comparing it to another sequence (where you know what is going on) may help.
+
+:::{.callout-note}
+
+## Scenario 6
+
+All this running about after infinitely many hotel guests is tiring, so you pop into the hotel bar (Euler's) to check on the staff. Just as you are talking to the bartender, a countably infinite number of people walk in and form an orderly queue. The first person asks for half a bottle of Wiles Wine. The second person asks for a quarter of a bottle... and the $n$th person asks for $\frac{1}{2^n}$th of a bottle, and so on...
+
+The bartender looks utterly bemused. However, you've been in the hotel trade for a long time, and calmly walk behind the bar to sort out the order.
+
+**How many bottles of Wiles Wine do you need?**
+
+(As a hint: You have seen that the positive powers of two are 2, 4, 8, 16, 32, 64, 128, 256, 512, ...  You need to add up $\frac{1}{2} + \frac{1}{4} + \frac{1}{8} + \frac{1}{16} \ldots$.
+
+:::
+
+:::{.callout-note}
+
+## Answer to Scenario 6
+
+You need **only one** bottle of Wiles Wine - and the solution is best expressed in a picture!
+
+![Solution to Scenario 6 - filling one square by smaller and smaller fractions fractions](./FiguresPNG/intotheinfinite-5.png){fig.alt="A unit square, divided into smaller and smaller pieces. They are of size 1/2 (bottom half), 1/4 (top left), 1/8 (bottom half of top right), and they continue to decrease in powers of 1/2."}
+
+If you want to see exactly why this is true, please see [Guide: Geometric series].
+
+:::
+
+
+:::{.callout-note}
+
+## Scenario 7
+
+After you have finished pouring infinitely many glasses of wine from your single bottle, you feel like this day couldn't get any worse. However, another countably infinite number of people walk in and form an orderly queue.
+
+This time, the first person asks for a whole bottle of Wiles Wine. The second person asks for half a bottle, the third person asks for a third of a bottle... and the $n$th person asks for $\frac{1}{n}$th of a bottle, and so on... You frantically get the picture, and after a moment's thought, dispatch your confused colleague to the wine cellar.
+
+**How many bottles of Wiles Wine do you need this time?**
+
+(As a hint, you need to add up $$S = \frac{1}{1} + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8} + \ldots$$ Is this series bigger than another series? Think about grouping terms in halves...
+
+:::
+
+
+:::{.callout-note}
+
+## Answer to Scenario 7
+
+You need a **countably infinite** amount of bottles of Wiles Wine.
+
+Here's why...
 
 $$
-\{(a_{ij}, b_{ij}): 1 \leq i, j \leq n \}
-$$ 
-contains all possible pairs, where $a_{ij}$ represents the symbol in row $i$ and column $j$ in the Latin square $A$.
+\begin{aligned}
+S &= \frac{1}{1} + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \frac{1}{5} + \frac{1}{6} + \frac{1}{7} + \frac{1}{8} + \ldots \\[1em]
+&> \frac{1}{1} + \frac{1}{2} + \frac{1}{4} + \frac{1}{4} + \frac{1}{8} + \frac{1}{8} + \frac{1}{8} + \frac{1}{8} + \ldots \\[1em]
+&= \frac{1}{1} + \frac{1}{2} + \underbrace{\frac{1}{4} + \frac{1}{4}}_{1/2} + \underbrace{\frac{1}{8} + \frac{1}{8} + \frac{1}{8} + \frac{1}{8}}_{1/2} + \ldots \\[1em]
+&= \frac{1}{1} + \frac{1}{2} + \frac{1}{2} + \frac{1}{2} + \ldots = \infty
+\end{aligned}
+$$
+
 :::
 
-When looking through an experimental lens, two orthogonal Latin squares would allow a person to combine two variables with no repeats, and nothing missed!
+Scenarios $6$ and $7$ are examples of **infinite series**. The first one is called a **convergent** series (it has a finite answer), and the second is a **divergent** series (it has an infinite answer).
 
-::: callout-note
-## Example 3
+:::{.callout-important}
 
-Cantor's Confectionery is looking to experiment with ice-cream! It's recently brought in four flavours:
+## Try it yourself 3
 
--   Vanilla
--   Chocolate
--   Strawberry
--   Mint choc-chip
+Below are some more examples of infinite series. Can you guess whether they converge or diverge? You do not need to prove these.
 
-and four toppings:
+(a) Series 1 $$S_1 = \frac{1}{1^2} + \frac{1}{2^2} + \frac{1}{3^2} + \frac{1}{4^2} + \frac{1}{5^2} + \frac{1}{6^2} + \frac{1}{7^2} + \frac{1}{8^2} + \ldots$$
 
--   Sprinkles
--   Strawberry sauce
--   Chocolate flake
--   Mini sugar cubes
+(b) Series 2 $$S_2 = \frac{1}{2} + \frac{1}{3} + \frac{1}{5} + \frac{1}{7} + \frac{1}{11} + \frac{1}{13} + \frac{1}{17} + \frac{1}{19} + \ldots$$
 
-and it wants to figure out what combination of flavour and topping its customers like best. It needs to schedule some taste tests, so customers can rank the combinations, and it wants a fair representation, so they consider every option and they don't consider any option more than any other.
+(c) Series 3 $$S_3 = \frac{1}{1} - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \frac{1}{5} - \frac{1}{6} + \frac{1}{7} - \frac{1}{8} + \ldots$$
 
-To do this, it can use a pair of order 4 orthogonal Latin squares; when they're superimposed, every possible pair is included in exactly one slot, so this provides a template to combine the toppings and flavours with maximum efficiency! Since there's no repeats, no combination would be over-represented, and every possible combination is included.
-
-One possible way to do this is show in @fig-5.
 :::
 
-::: {.content-visible when-format="html"}
-![One possible way to organize the scenario in Example 3.](./FiguresPNG/latinsquares_sudoku-fig5.png){#fig-5 width="80%" fig-alt="Two order 4 Latin squares displayed side by side, and their superposition below them. The symbols for the Latin squares are the words Vanilla, Chocolate, Strawberry and Mint choc-chip for the left square, and Sprinkles, Strawberry Sauce, Chocolate Flake and Mini Sugar Cubes for the right square. Their superposition displays every possible pair of symbols in exactly one cell."}
+:::{.callout-note collapse="true"}
+
+## Answer to Try it yourself 3
+
+$S_1$ converges and is equal to $\frac{\pi^2}{6}$. $S_2$ diverges. $S_3$ converges and is equal to $\ln(2)$.
+
 :::
 
-::: {.content-hidden when-format="html"}
-![One possible way to organize the scenario in Example 3.](./FiguresPNG/latinsquares_sudoku-fig5.png){width="80%" fig-alt="Two order 4 Latin squares displayed side by side, and their superposition below them. The symbols for the Latin squares are the words Vanilla, Chocolate, Strawberry and Mint choc-chip for the left square, and Sprinkles, Strawberry Sauce, Chocolate Flake and Mini Sugar Cubes for the right square. Their superposition displays every possible pair of symbols in exactly one cell."}
+
+# Looking
+
+## Fractal geometry
+
+Here are some shapes.
+
+![Some shapes - a line, a square, a cube.](./FiguresPNG/intotheinfinite-6.png){fig.alt="Three shapes in a row - a black line, a red square, and a blue cube."}
+
+They have finite length, finite area/perimeter, finite volume/surface area. The dimensions are whole numbers.
+
+Shapes with a finite number of edges (lines, squares, cubes...) are quite boring. If you introduce infinity into the mix, you can get some incredibly strange results... The following shapes are all formed by writing down a ``base" mathematical equation and iterating infinitely - creating an area of mathematics known as **fractal geometry**.
+
+You can think of what follows as the lobby artwork for Hilbert's Hotel!
+
+### The Koch snowflakes
+
+A shape with a finite area and an infinite perimeter could be the **Koch snowflake curve**:
+
+![First four iterations of the Koch snowflake curve.](./FiguresPNG/kochflake.png){fig.alt="Four images in a square. Top left, an equilateral triangle. Top right: Equilateral triangle with three smaller equilateral triangles in the middle of the lines to create a six pointed star. Bottom left: Top right, but with even smaller equilateral triangles in the middle of each side. Bottom right: Bottom left, but with even even smaller equilateral triangles in the middle of each side."}
+
+![A portion of the Koch curve (image credit Fibonacci, Wikipedia, CC-BY-SA 3.0)](./FiguresPNG/kochcurve1.png){fig.alt="One side of many iterations of the Koch snowflake, formed by attaching smaller and smaller equilaterial triangles to the middle of lines, and repeating this process infinitely."}
+
+
+Iterated infinitely, this snowflake leads to a shape with finite area and **infinite** perimeter. The dimension of this curve is $\log_3{4} \approx 1.269$ - not a whole number!
+
+You can move this to three(?) dimensions by looking at the Koch surface:
+
+![A portion of the Koch surface (image credit Robert Dickau, Wikipedia, CC-BY-SA 3.0)](./FiguresPNG/kochsurface.png){fig.alt="One side of many iterations of the Koch surface, formed by attaching smaller and smaller tetrahedrons to the middle of a triangular face, and repeating this process infinitely." width="50%"}
+
+
+Iterated infinitely, this leads to a shape with finite volume and **infinite** surface area. The dimension of this surface is $1 + \log_2{3} \approx 2.5849$.
+
+## Lines that make squares or cubes
+
+Lines that wiggle enough fill a space - think of an airport queue, twisting and turning to fill all of the available space. These are **space filling curves**, and come in two varieties - the **Hilbert curve** and the **Peano curve**.
+
+![First three iterations of the Hilbert curve, in red, blue, and then black.](./FiguresPNG/hilbertcurve.png){fig.alt="The first three iterations of the Hilbert curve overlaid on top of each other. A red U shape. A series of smaller U shapes joined together in blue. A series of even smaller U shapes joined together in black. They gradually fill the space." width="50%"}
+
+![First four iterations of the Peano curve.](./FiguresPNG/peanocurve1.png){fig.alt="The first four iterations of the Peano curve arranged in a square. A rotated S shape in the top left. In the top right, a curve that starts in the bottom left and winds its way around the entire shape, ending in the top right. In the bottom left, a curve that is similar to the top right, but far more twisty and turny. Finally, in the bottom right, a curve that is so twisty and turny that it starts to look like a shaded square." width="75%"}
+
+
+Iterated infinitely, these curves **completely fill** the space in which they are defined. So this line has dimension $2$!
+
+## Taking infinitely many things away
+
+The following three figures are obtained by successively removing middle thirds from a line, a square, and a cube. These are known as **Cantor sets**.
+
+![Iterations of the Cantor set.](./FiguresPNG/cantorset.png){fig.alt="A column of seven lines. The first is a solid line stretching across the page. Each subsequent row in the column is obtained by removing the middle third from any solid line present in the previous row. The last row is then a sparse collection of lines."}
+
+
+Iterated infinitely, this collection of points has dimension $\log_3{2} \approx 0.6309$.
+
+![Some iteration of Cantor dust (image credit Alexis Monnerot-Dumaine, Wikipedia, CC-BY-SA 3.0)](./FiguresPNG/Carrecantor.png){fig.alt="A figure obtained by repeatedly removing the middle third sections of a square. There are 4 areas of 16 squares; one in the top left, one in the top right, one in the bottom left, one in the bottom right." width="50%"}
+
+Like the Cantor set, but on a square. This shape has dimension $\log_3{4}\approx 1.2619$.
+
+![Some iterations of floating Cantor dust (image credit Robert Dickau, Wikipedia, CC-BY-SA 3.0)](./FiguresPNG/Cantor3D3.png){fig.alt="Three figures in a row. The first is a cube with the middle thirds in each dimension removed, leaving 8 cubes arranged as the corners of a bigger cube. The second and third figures are obtained successively by removing inner thirds of any remaining cubes."}
+
+
+The next figure removes triangles from a larger triangle to create the famous **Sierpiński triangle**. This shape has dimension $\log_2{3} \approx 1.5849$.
+
+![Some iteration of the Sierpiński triangle.](./FiguresPNG/sierpinski.png){fig.alt="A triangle pointing upwards, with many other triangles pointing downwards inside. This is obtained by successively removing the middle downward pointing triangle from any remaining upward pointing triangles."}
+
+As a fun aside, the Sierpiński triangle can be found in Pascal's triangle! Shade all of the odd binomial coefficients, and leave all the even ones. This gives the Sierpiński triangle!
+
+![Some iteration of the Sierpiński triangle found by shading odd binomial coefficients.](./FiguresPNG/PascalsFractalTriangle-Answers.jpg){fig.alt="16 rows of Pascal's triangle with odd numbers shaded blue and even numbers left white. It is an approximation of the previous figure." width="50%"}
+
+You can also apply a similar operation to a square to get a **Sierpiński carpet**... (with dimension $\log_3{8}\approx 1.8928$)
+
+![Six iterations of the Sierpiński carpet.](./FiguresPNG/Sierpinskicarpet.png){fig.alt="A shape obtained by successively removing the central square of any square. The result is one large black square in the middle, surrounded by nine smaller squares. Each of the smaller squares are surrounded by nine even smaller squares, and so on." width="50%"}
+
+...a similar operation to a square-based pyramid to get a **fractal pyramid** (with dimension $\log_2{5} \approx 2.3219$)...
+
+![Several iterations of the fractal pyramid (image credit Profokiev, Wikipedia, CC-BY-SA 3.0)](./FiguresPNG/Fractalpyramid.jpg){fig.alt="A pyramid pointing upwards, with many other smaller pyramids pointing downwards inside removed. This is obtained by successively removing the middle downward pointing pyramid from any remaining upward pointing pyramids." width="50%"}
+
+...and a cube to get the **Menger sponge** (with dimension $\log_3{20} \approx 2.7268$).
+
+![Several iterations of the Menger sponge (image credit Baserinia, Wikipedia, CC-BY-SA 3.0)](./FiguresPNG/Menger.png){fig.alt="A shape obtained by successively removing the central cube of any cube. The result is a cube with many cube shaped holes in the middle, Each of the smaller squares are surrounded by nine even smaller squares, and so on."}
+
+## The Mandelbrot set
+
+
+Finally, here's one of the most famous fractals ever, the famous **Mandelbrot set**, defined by repeatedly iterating the function $$P_c(z) = z^2 + c$$ (where $z$ is a complex number) to get the set $$M = \{ c\in\mathbb{C}\; : \; \forall n\in\mathbb{N},\; |P_c^n(0)|\leq 2\}.$$ It looks like this:
+
+:::{.content-visible when-format="html"}
+
+{{< video https://www.youtube.com/watch?v=b005iHf8Z3g >}}
+
 :::
 
-You can extend this idea to more than two variables—though there isn't an answer available for every size of Latin square, mathematicians have proved that if you have $m$ **mutually orthogonal** Latin squares of order $n$, then $m \leq n - 1$, and $m = n - 1$ if $n$ is a **prime power**.
 
-::: callout-note
-## Mutual Orthogonality
 
-A group of Latin squares $A_1, \dots, A_k$ are mutually orthogonal if every $(A_i, A_j)$ pair are orthogonal.
+:::{.content-hidden when-format="html"}
+
+![The Mandelbrot set](./FiguresPNG/mandelbrotset.jpg)
+
 :::
-
-::: callout-note
-## Prime Power
-
-A prime power is a number $n = p^t$, where $p$ is a prime number and $t$ is a positive whole number.
-:::
-
-By now, you've seen how Latin squares organize symbols across a grid, and how orthogonality lets two such arrangements coexist neatly. Those ideas set the stage for a puzzle many people know very well. While it doesn't use orthogonality, it builds on the same instinct—keep the grid tidy and let structure guide the eye of the solver.
-
-Said puzzle is called **Sudoku**.
-
-# Sudoku and Latin Squares
-
-## The Rules
-
-The goal of Sudoku is to fill in a partially complete Latin square with symbols $1, \cdots, 9$. While already a difficult feat when considering order nine Latin squares, this endeavor is made more challenging by the inclusion of an additional constraint on the positioning of the symbols.
-
-::: callout-note
-## Sudoku Boards and Puzzles
-A Sudoku board is an order 9 Latin square with one additional property—the square is split into nine $3 \times 3$ 'blocks', and each block must behave in the same way as the rows and columns. That is, each block must contain the numbers 1 to 9 exactly once.
-
-A Sudoku puzzle, then, is a partially-filled in Sudoku board, that is filled in such a way that there is a **unique** solution—a person can only fill the puzzle in a single way to get the full board.
-
-An example of a Sudoku board and one of its corresponding puzzles is seen in @fig-6.
-:::
-
-::: {.content-visible when-format="html"}
-![A Sudoku puzzle with its corresponding board.](./FiguresPNG/latinsquares_sudoku-fig6.png){#fig-6 width="150%" fig-alt="A Sudoku puzzle and its corresponding filled board, displayed side by side. The puzzle has numbers missing from certain cells, and the board displays the missing numbers in purple."}
-:::
-
-::: {.content-hidden when-format="html"}
-![A Sudoku puzzle with its corresponding board.](./FiguresPNG/latinsquares_sudoku-fig6.png){width="150%" fig-alt="A Sudoku puzzle and its corresponding filled board, displayed side by side. The puzzle has numbers missing from certain cells, and the board displays the missing numbers in purple."}
-:::
-
-A Sudoku board is a specific type of Latin square is called a **Gerechte design**.
-
-::: callout-note
-## Gerechte Designs
-
-A Gerechte design of order $n$ is a Latin square of order $n$ that is further divided into $n$ distinct sections of size $n$. Each of these sections must also contain all of the $n$ symbols in the Latin square exactly once.
-
-While a Sudoku board is one type of order 9 Gerechte design, the regions of an order 9 Gerechte design can be any shape, and not all order 9 Gerechte designs are Sudoku boards.
-:::
-
-::: callout-tip
-All well-made Sudoku puzzles have a unique solution, but this doesn't mean that each board only has one puzzle—in fact, a single Sudoku board can have many possible puzzles, and multiple puzzles can solve to the same board.
-:::
-
-## The Mathematics of Sudoku
-
-There are a lot of questions that mathematicians can, and have, asked about Sudoku. Many of these questions are very complex, require brute-force computational methods to answer, or have no answer at all (yet)! You can, however, gain an intuition for how some of these questions are answered using a smaller type of puzzle called Shidoku.
-
-::: callout-note
-## Shidoku Boards and Puzzles
-
-A Shidoku board is a $4 \times 4$ Latin square that is further divided into four $2 \times 2$ blocks, where each block must contain the numbers 1 to 4 exactly once. You can think of it as a scaled-down Sudoku board, that only uses the numbers 1 to 4, instead of 1 to 9.
-
-Much like a Sudoku puzzle, a Shidoku puzzle is a partially filled-in Shidoku board, that is filled in such a way that there is a unique solution to the problem.
-
-An example of a Shidoku puzzle with its corresponding board is seen in @fig-7. [@LauraT]
-:::
-
-::: {.content-visible when-format="html"}
-![A Shidoku puzzle with its corresponding board.](./FiguresPNG/latinsquares_sudoku-fig7.png){#fig-7 width="100%" fig-alt="A Shidoku puzzle and its corresponding filled board, displayed side by side. The puzzle has numbers missing from certain cells, and the board displays the missing numbers in purple."}
-:::
-
-::: {.content-hidden when-format="html"}
-![A Shidoku puzzle with its corresponding board.](./FiguresPNG/latinsquares_sudoku-fig7.png){width="100%" fig-alt="A Shidoku puzzle and its corresponding filled board, displayed side by side. The puzzle has numbers missing from certain cells, and the board displays the missing numbers in purple."}
-:::
-
-Some of the first questions asked about Sudoku are posed below. While you won't see any direct proofs of the answers here, you can take a look at how they are answered in the case of Shidoku, which should provide some insight into the larger case of Sudoku.
-
-### Q1. How many Sudoku boards are there?
-
-In 2005, computer scientist Bertram Felgenhauer and mathematician Frazer Jarvis used a computer algorithm to conclude that there are 6,670,903,752,021,072,936,960 valid Sudoku boards [@BFFJ]. That is about 6.67 **sextillion** boards, which is an absolutely enormous number—more than the number of milliseconds that have passed since the Big Bang!
-
-Nobody has found a non-computational method to arrive at this number yet. In the case of Shidoku puzzles, however, it is possible to answer this question manually while using similar techniques to those used in the Sudoku case.
-
-#### **Counting Shidoku Boards**
-
-::: callout-important
-## When accounting for all possible combinations, there are 288 Shidoku boards.
-:::
-
-While it is possible to list each Shidoku board individually, it is difficult to keep track of all boards that have already been listed, especially once you have made your way through a lot of them. A different way to approach this problem is by using something called **ordered boards**.
-
-::: callout-note
-## Ordered Shidoku Boards
-
-An ordered Shidoku board is a Shidoku board whose first row and top-left block (reading row-wise) reads 1, 2, 3, 4 in order, and whose first column reads 1, 3, 2, 4 in order. This is demonstrated in @fig-8.
-:::
-
-::: {.content-visible when-format="html"}
-![The positions that the first row, column and block of a Shidoku board needs to be considered ordered.](./FiguresPNG/latinsquares_sudoku-fig8.png){#fig-8 width="55%" fig-alt="A partially filled in Shidoku board. Reading row-wise, the cells of the top-left block read 1, 2, 3, 4. The top row also reads 1, 2, 3, 4 from left to right, and the leftmost column reads 1, 3, 2, 4 from top to bottom."}
-:::
-
-::: {.content-hidden when-format="html"}
-![The positions that the first row, column and block of a Shidoku board needs to be considered ordered.](./FiguresPNG/latinsquares_sudoku-fig8.png){width="55%" fig-alt="A partially filled in Shidoku board. Reading row-wise, the cells of the top-left block read 1, 2, 3, 4. The top row also reads 1, 2, 3, 4 from left to right, and the leftmost column reads 1, 3, 2, 4 from top to bottom."}
-:::
-
-There are very few ordered Shidoku boards in existence. However, each ordered Shidoku board can represent a large number of unordered Shidoku boards, and if you can find this number, then you can figure out how many Shidoku boards exist in total.
-
-::: callout-note
-## Claim: Each ordered Shidoku board represents 96 different Shidoku boards.
-
-To demonstrate this, you can take a look at the ordered Shidoku board setup seen in @fig-8.
-
-Start with the top-left block. You can relabel the numbers in any Shidoku board to match the top-left block, and as long as you relabel the numbers in the rest of the board the same way, the Shidoku board will remain valid.
-
-There are $4! = 4 \cdot 3 \cdot 2 \cdot 1 = 24$ different ways that this could possibly occur—if you consider the corner cell, before relabeling it to 1, it could have been either 1, 2, 3 or 4. That's four different choices. Moving onto the second cell in the block, before relabeling it into becoming 2, it could have been three different numbers, since it can't have been the same number as the first square was. Likewise, the remaining two squares in the block would have two and one choice(s) for their numbers respectively, before they were relabeled to 3 and 4.
-
-This means that the first block from an ordered Shidoku board could have come from one of 24 different Shidoku blocks!
-
-Then, you can consider the first row and column. Once the first block has been properly labelled like above, there are two possible scenarios for the top row: it either reads 1, 2, 3, 4 or 1, 2, 4, 3. Then there are two possible cases; either you need to swap the last two columns to get the board into an ordered format, or the board is already 'correct', and you can leave it as it is.
-
-The scenario is identical for the first column; once the first block has been ordered, the column will either read 1, 3, 2, 4 or 1, 3, 4, 2. So you either need to swap the bottom two rows to order the board, or they are already in the 'correct' position and you can leave them alone.
-
-These shufflings account for a further $2 \cdot 2 = 4$ different scenarios. Bear in mind that these swaps are only done after the board has been relabeled so the first block is ordered. This means that, for each of the 24 scenarios that could have led to the first ordered Shidoku block, there are four possible boards that could occur.
-
-As such, each ordered Shidoku board represents a total of $4! \cdot 2 \cdot 2 = 96$ Shidoku boards in total.
-:::
-
-This is fantastic news, because it means that to count the total number of Shidoku boards, you only need to count the number of ordered Shidoku boards, and there are far less of them.
-
-To find an ordered Shidoku board, you can begin with the partial board shown in @fig-8, and "play" Shidoku by filling in the rest of the board and keeping track of the choices you make along the way. Doing this, you can find that there are only 3 ordered Shidoku boards in existence! These Shidoku boards are displayed in @fig-9.
-
-::: {.content-visible when-format="html"}
-![The three different ordered Shidoku boards.](./FiguresPNG/latinsquares_sudoku-fig9.png){#fig-9 width="150%" fig-alt="Three different Shidoku boards displayed side by side. Each Shidoku board has the cells of its top-left block, top row and leftmost column filled in such a manner that the board is considered ordered. Reading row-wise, the entries to the boards are as follows. Board one: 1, 2, 3, 4, then 3, 4, 1, 2, then 2, 1, 4, 3, then 4, 3, 2, 1. Board two: 1, 2, 3, 4, then 3, 4, 1, 2, then 2, 3, 4, 1, then 4, 1, 2, 3. Board 3: 1, 2, 3, 4, then 3, 4, 2, 1, then 2, 1, 4, 3, then 4, 3, 1, 2."}
-:::
-
-::: {.content-hidden when-format="html"}
-![The three different ordered Shidoku boards.](./FiguresPNG/latinsquares_sudoku-fig9.png){width="150%" fig-alt="Three different Shidoku boards displayed side by side. Each Shidoku board has the cells of its top-left block, top row and leftmost column filled in such a manner that the board is considered ordered. Reading row-wise, the entries to the boards are as follows. Board one: 1, 2, 3, 4, then 3, 4, 1, 2, then 2, 1, 4, 3, then 4, 3, 2, 1. Board two: 1, 2, 3, 4, then 3, 4, 1, 2, then 2, 3, 4, 1, then 4, 1, 2, 3. Board 3: 1, 2, 3, 4, then 3, 4, 2, 1, then 2, 1, 4, 3, then 4, 3, 1, 2."}
-:::
-
-Since every ordered Shidoku board represents 96 different Shidoku boards in general, there are a total of $3 \cdot 96 = 288$ Shidoku boards in existence.
-
-#### **Extending to Sudoku Boards**
-
-Felgenhauer and Jarvis used a similar strategy to the one demonstrated above—they used the concept of ordered boards to "fix" a section of the Sudoku board and greatly reduce the amount of calculations they would have to do. This method is significantly more complicated in the $9 \times 9$ case of a Sudoku board for a couple of reasons, the most prominent of which is the idea of an "ordered" Sudoku board.
-
-Let's revisit the ordered Shidoku board. Instead of thinking of the top row as reading 1, 2, 3, 4, instead imagine that you fixed the top-left block and you wanted the top row arranged so that it ends in one 2-digit increasing sequence of numbers—that is, the two numbers in the final block that contributes to the row must be ordered so that the second number is bigger than the first. In the case of a Shidoku board, there is only one way to do this: 3, 4. This means that you only need to consider this scenario when counting Shidoku boards. Likewise, there is only one possible way the first column can be ordered to fulfil this condition: 1, 3, 2, 4.
-
-An ordered Sudoku board is more complicated. Say you fix the top-left block of a Sudoku board so that it reads 1, 2, 3, 4, 5, 6, 7, 8, 9 row-wise, like the Shidoku board example. An ordered Sudoku board, then, has its first row and column ending in two 3-digit increasing sequences. For each of the two blocks that contribute to the top row, the three numbers in the top row must be arranged so that each number is bigger than the last. The first column of an ordered Sudoku board is ordered in the same way, only going down instead of across.
-
-::: callout-note
-## Ordered Sudoku Boards
-
-An ordered Sudoku board is a Sudoku board whose top-left block reads 1, 2, 3, 4, 5, 6, 7, 8, 9 row-wise, and whose first row and column end in two 3-digit increasing sequences of numbers.
-:::
-
-@fig-10 shows one potential ordering of a Sudoku board.
-
-::: {.content-visible when-format="html"}
-![One possible ordering of a Sudoku board](./FiguresPNG/latinsquares_sudoku-fig10.png){#fig-10 width="55%" fig-alt="A partially filled in Sudoku board. Reading row-wise, the cells of the top-left block have entries 1, 2, 3, then 4, 5, 6, then 7, 8, 9. Reading left to right, the top row reads 1, 2, 3, then 4, 5, 8, then 6, 7, 9. Reading top to bottom, the leftmost column reads, 1, 4, 7, then 2, 6, 8, then 3, 5, 9."}
-:::
-
-::: {.content-hidden when-format="html"}
-![One possible ordering of a Sudoku board.](./FiguresPNG/latinsquares_sudoku-fig10.png){width="55%" fig-alt="A partially filled in Sudoku board. Reading row-wise, the cells of the top-left block have entries 1, 2, 3, then 4, 5, 6, then 7, 8, 9. Reading left to right, the top row reads 1, 2, 3, then 4, 5, 8, then 6, 7, 9. Reading top to bottom, the leftmost column reads, 1, 4, 7, then 2, 6, 8, then 3, 5, 9."}
-:::
-
-As such, there are many different ways to order a Sudoku board. To count the total number of Sudoku boards out there using this method, you would need to count the total number of orderings a Sudoku board could have, and then count how many Sudoku boards could complete each of those orderings—this is the sort of thing that Felgenhauer and Jarvis did to "free up space" for their calculations, although they also used other methods to reduce the amount of counting they would need to do.
-
-### Q2. How many "essentially different" Sudoku boards are there?
-
-6.67 sextillion is an absolutely ludicrous number of boards, but most of those boards can be considered, in a sense, different versions of the same board. This is because Sudoku boards are full of **symmetry** and **structure**.
-
-You can relabel the numbers in a Sudoku board, and the resulting board will be technically different, but the underlying structure of the board will remain the same. Similarly, you could rotate a board, or reflect it, but this won't change the pattern that the board follows, just its orientation. This is the same idea behind the ordered Shidoku boards acting as representatives of other boards, but scaled up!
-
-The next question, then, is how many different Sudoku boards are there, once you take these board transformations into account? Before you answer this question, you need to decide what operations can be applied to a board to keep it essentially similar to a different board. That is, what can you do to a board while keeping it essentially the same?
-
-In 2006, mathematicians Ed Russel and Fraser Jarvis defined a set of these operations:
-
--   Relabel the numbers in the board
--   Shuffle the three stacks in the board
--   Shuffle the three bands in the board
--   Shuffle the three rows within a band
--   Shuffle the three columns within a stack
--   Any rotation or reflection of the board
-
-Where a **stack** is three of the blocks in a vertical line (stacked on top of each other) and a **band** is three of the blocks in a horizontal line (next to each other).
-
-When considering all of these operations, they found that there are 5,472,730,538 [@ERFJ] or about 5.5 billion essentially different Sudoku boards which, while still huge, is a much more manageable number. They arrived at this number by considering symmetries is a type of mathematical object called a **group**, which won't be expanded on here. If you're interested in groups, check out [Guide: Introduction to Groups](../studyguides/introtogroups.qmd) to learn more!
-
-### Q3. What is the minimum number of clues a Sudoku puzzle can have?
-
-This is a deceptively complicated question, owing to how a puzzle is defined—something is only considered a puzzle if it has a unique solution. A better way to phrase this question, then, is this: how few initial clues do you need to make sure the solution board is unique?
-
-In 2012 Gary McGuire, Bastian Tugemann and Gilles Civario proved that the answer to this question is **17**, through an exhaustive computer search based on a computational method called hit set enumeration [@McGBTGC]. This number is not the case for all Sudoku boards, and the majority of boards will need more than 17 initial clues to make sure it is the unique solution to the puzzle, but there is no unique solution to any Sudoku board which is provided with 16 or fewer clues.
-
-This question, much like the first, is far more doable in the $4 \times 4$ case. Let's return to the realm of Shidoku boards to have a look at the solution in a bit more detail.
-
-#### **Minimum-Clue Shidoku Puzzles**
-
-Before you investigate this problem in the context of Shidoku boards, it will be helpful to return to the concept of essentially different boards.
-
-In @fig-9, you can apply a series of transformations to the third board to turn it into the second. If you:
-
--   transpose the third board. This is an operation that flips the board across its main diagonal (top-left to bottom-right), so its top row becomes its leftmost column, its second row becomes its second column, and so on and so forth. Then,
--   relabel the numbers so the board is ordered,
-
-you get the second board! This means that, while there are three ordered Shidoku boards in existence, only two of them are essentially different. This will help your search for the minimum number of clues, since you only need to consider two boards instead of three. Let's call these type-1 and type-2 boards respectively, after the first and second boards in @fig-9.
-
-::: callout-important
-## The minimum number of clues that a Shidoku puzzle can have is 4.
-:::
-
-To prove this, you can first start with an example of a four-clue Shidoku puzzle. One of these, along with its unique board, was shown earlier in @fig-7.
-
-Since that puzzle exists, the only thing you need to do is show that Shidoku puzzles with less than four clues do **not** exist. You will do this for the type-1 case. The argument for the type-2 case is very similar—you can try it yourself as an exercise, if you want to!
-
-Take a look at the type-1 Shidoku board in @fig-11. [@LauraT]
-
-::: {.content-visible when-format="html"}
-![4 unavoidable sets on a type-1 Shidoku board.](./FiguresPNG/latinsquares_sudoku-fig11.png){#fig-11 width="70%" fig-alt="An ordered Shidoku board, with four partially filled in Shidoku boards below labelled Set 1, Set 2, Set 3 and Set 4 respectively. The entries of the full board are the same as the entries of the first board in Figure 9. Each of the four partially filled in boards below the full board have four filled in cells, split into two vertically stacked pairs, in two of the four blocks total. Labelling the blocks of the boards row-wise as block 1, 2, 3, 4 respectively, Set 1 and 2 have stacks in the blocks 1 and 2, in the left and right sections of the blcoks respectively, and Set 3 and 4 have stacks in blocks 3 and 4, again in the left and right sections respectively. Together, the four sets combine to form the full board displayed at the top of the image. The cells in Sets 1 and 4 contains only entries of 1 and 3, and the cells in Sets 2 and 3 contain only entries of 2 and 4."}
-:::
-
-::: {.content-hidden when-format="html"}
-![4 unavoidable sets on a type-1 Shidoku board.](./FiguresPNG/latinsquares_sudoku-fig11.png){width="70%" fig-alt="An ordered Shidoku board, with four partially filled in Shidoku boards below labelled Set 1, Set 2, Set 3 and Set 4 respectively. The entries of the full board are the same as the entries of the first board in Figure 9. Each of the four partially filled in boards below the full board have four filled in cells, split into two vertically stacked pairs, in two of the four blocks total. Labelling the blocks of the boards row-wise as block 1, 2, 3, 4 respectively, Set 1 and 2 have stacks in the blocks 1 and 2, in the left and right sections of the blcoks respectively, and Set 3 and 4 have stacks in blocks 3 and 4, again in the left and right sections respectively. Together, the four sets combine to form the full board displayed at the top of the image. The cells in Sets 1 and 4 contains only entries of 1 and 3, and the cells in Sets 2 and 3 contain only entries of 2 and 4."}
-:::
-
-Notice how the board has been divided into 4 different sections, each containing 4 cells. The cells in each of the 4 sections make up something you can call an **unavoidable set**.
-
-::: callout-note
-## Unavoidable sets
-
-An unavoidable set is a collection of cells on a Shidoku board where **every** puzzle for that board needs at least one clue inside the set.
-:::
-
-Consider Set 1, as an example. The cells in Set 1 make up an unavoidable set—you can fill in all 12 of the other cells on the board, but without a clue from the section making up Set 1 you could make 2 different valid Shidoku boards by filling in the blank spaces.
-
-That means that every Shidoku puzzle whose solution is the type-1 Shidoku board must have a clue in Set 1.
-
-In @fig-11, there are four different unavoidable sets, each displayed below the full board. These sets do not overlap on the full board, which means that any puzzle whose solution is the type-1 board, or one of the boards that the type-1 board represents, must have at least 4 clues.
-
-If you make a similar argument for the type-2 board, you will see that the same is true in that case. As such, the minimum possible number of clues that a Shidoku puzzle can have is 4.
-
-# In Conclusion
-
-One part of what makes Sudoku so charming is its simplicity. A $9 \times 9$ grid, split into nine blocks, that you need to fill in a specific manner to get to the solution. But, as you've seen, there's a rich tapestry of complexity lurking underneath that premise, one which continues to entrance people to this day.
-
-Whether your interest lies in untangling the questions behind the puzzles, or simply the puzzles themselves, there's a game for everyone in these neat little grids.
-
-
-If all this talk of Sudoku puzzles has you wanting to try solving one yourself, feel free to try the one below!
-
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 580
-
-library(shiny)
-
-# --- Puzzle and solution ---
-puzzle <- matrix(c(
-  5,3,0, 0,7,0, 0,0,0,
-  6,0,0, 1,9,5, 0,0,0,
-  0,9,8, 0,0,0, 0,6,0,
-
-  8,0,0, 0,6,0, 0,0,3,
-  4,0,0, 8,0,3, 0,0,1,
-  7,0,0, 0,2,0, 0,0,6,
-
-  0,6,0, 0,0,0, 2,8,0,
-  0,0,0, 4,1,9, 0,0,5,
-  0,0,0, 0,8,0, 0,7,9
-), 9, 9, byrow = TRUE)
-
-solution <- matrix(c(
-  5,3,4, 6,7,8, 9,1,2,
-  6,7,2, 1,9,5, 3,4,8,
-  1,9,8, 3,4,2, 5,6,7,
-
-  8,5,9, 7,6,1, 4,2,3,
-  4,2,6, 8,5,3, 7,9,1,
-  7,1,3, 9,2,4, 8,5,6,
-
-  9,6,1, 5,3,7, 2,8,4,
-  2,8,7, 4,1,9, 6,3,5,
-  3,4,5, 2,8,6, 1,7,9
-), 9, 9, byrow = TRUE)
-
-# --- UI ---
-ui <- fluidPage(
-
-  tags$h2("Try a Sudoku puzzle!"),
-  tags$p("Fill the grid with the numbers 1–9. Incorrect entries will show a small ✕ when checked."),
-
-  # --- CSS ---
-  tags$style(HTML("
-    /* Outer grid: 3×3 blocks */
-    .sudoku-grid {
-      display: grid;
-      grid-template-columns: repeat(3, auto);
-      grid-template-rows: repeat(3, auto);
-      gap: 0;
-      width: fit-content;
-
-      /* Outer square as outline so it doesn't affect layout */
-      border: none;
-      outline: 3px solid black;
-      outline-offset: -1px; /* tweak -1, 0, or -2 if needed */
-    }
-
-    /* Each 3×3 block */
-    .block {
-      display: grid;
-      grid-template-columns: repeat(3, 40px);
-      grid-template-rows: repeat(3, 40px);
-      border: 3px solid black;
-    }
-
-    .cell-wrapper {
-      position: relative;
-      width: 40px;
-      height: 40px;
-    }
-
-    .cell, .given {
-      width: 38px;
-      height: 38px;
-      font-size: 20px;
-      text-align: center;
-      border: 1px solid #999;
-      box-sizing: border-box;
-      line-height: 38px;
-      user-select: none;
-    }
-
-    .cell {
-      background: white;
-    }
-
-    .cell[contenteditable=\"true\"] {
-      cursor: text;
-    }
-
-    .given {
-      background: #eee;
-      font-weight: bold;
-    }
-
-    /* X overlay */
-    .xmark {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 38px;
-      height: 38px;
-      pointer-events: none;
-      display: none;
-    }
-
-    .xmark.visible {
-      display: block;
-    }
-
-    .xmark svg {
-      width: 100%;
-      height: 100%;
-    }
-  ")),
-
-  # --- JS: capture edits + toggle overlays ---
-  tags$script(HTML("
-    document.addEventListener('input', function(e) {
-      if (e.target.classList.contains('cell')) {
-
-        // Send updated value to Shiny
-        Shiny.setInputValue(e.target.id, e.target.innerText, {priority: 'event'});
-
-        // Auto-remove X overlay when user edits the cell
-        const xid = 'x_' + e.target.id;
-        const xel = document.getElementById(xid);
-        if (xel) xel.classList.remove('visible');
-      }
-    });
-
-    Shiny.addCustomMessageHandler('showX', function(msg) {
-      document.getElementById('x_' + msg.id).classList.add('visible');
-    });
-
-    Shiny.addCustomMessageHandler('hideX', function(msg) {
-      document.getElementById('x_' + msg.id).classList.remove('visible');
-    });
-  ")),
-
-  # --- FLEX WRAPPER FOR PERFECT CENTRING ---
-  tags$div(
-    style = "display:flex; justify-content:center; width:100%;",
-
-    # --- Sudoku Grid (3×3 blocks) ---
-    tags$div(
-      class = "sudoku-grid",
-
-      lapply(0:2, function(br) {
-        lapply(0:2, function(bc) {
-
-          tags$div(
-            class = "block",
-
-            lapply(1:3, function(r) {
-              lapply(1:3, function(c) {
-
-                gr <- br*3 + r
-                gc <- bc*3 + c
-                id <- paste0("cell_", gr, "_", gc)
-
-                tags$div(
-                  class = "cell-wrapper",
-
-                  if (puzzle[gr, gc] != 0) {
-                    tags$div(
-                      id = id,
-                      class = "given",
-                      puzzle[gr, gc]
-                    )
-                  } else {
-                    tags$div(
-                      id = id,
-                      class = "cell",
-                      contenteditable = "true"
-                    )
-                  },
-
-                  tags$div(
-                    id = paste0("x_", id),
-                    class = "xmark",
-                    tags$svg(
-                      xmlns = "http://www.w3.org/2000/svg",
-                      tags$line(x1="5", y1="5", x2="33", y2="33", stroke="red", `stroke-width`="4"),
-                      tags$line(x1="33", y1="5", x2="5", y2="33", stroke="red", `stroke-width`="4")
-                    )
-                  )
-                )
-              })
-            })
-          )
-        })
-      })
-    )
-  ),
-
-  br(),
-  actionButton("check", "Check My Board"),
-  br(), br(),
-  textOutput("status")
-)
-
-# --- Server ---
-server <- function(input, output, session) {
-
-  observeEvent(input$check, {
-
-    incorrect_any <- FALSE
-    empty_any <- FALSE
-
-    # Clear old overlays
-    for (r in 1:9) for (c in 1:9) {
-      id <- paste0("cell_", r, "_", c)
-      session$sendCustomMessage("hideX", list(id = id))
-    }
-
-    # Validate
-    for (r in 1:9) for (c in 1:9) {
-
-      if (puzzle[r, c] != 0) next
-
-      id <- paste0("cell_", r, "_", c)
-      val <- input[[id]]
-
-      if (is.null(val) || val == "") {
-        empty_any <- TRUE
-        next
-      }
-
-      if (suppressWarnings(as.numeric(val)) != solution[r, c]) {
-        incorrect_any <- TRUE
-        session$sendCustomMessage("showX", list(id = id))
-      }
-    }
-
-    output$status <- renderText({
-      if (incorrect_any) {
-        "There are incorrect cells."
-      } else if (empty_any) {
-        "So far so good!"
-      } else {
-        "Congratulations — you solved the puzzle!"
-      }
-    })
-  })
-}
-
-shinyApp(ui, server)
-
-```
-
 
 # Version history {.unnumbered}
 
-v1.0: initial version created 04/26 by Holly Goldsmith as part of a University of St Andrews VIP project.
+v1.0: initial version created 07/26 by tdhc, originally for presentation 4 of 4 for Sutton Trust Summer School 2026.
 
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
-
-#### References
-:::{#refs}
-
-:::
