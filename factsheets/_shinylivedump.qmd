@@ -711,3 +711,1294 @@ format: html
 <!-- shinyApp(ui, server) -->
 
 <!-- ``` -->
+
+<!-- #| standalone: true -->
+<!-- #| viewerHeight: 750 -->
+
+<!-- library(shiny) -->
+<!-- library(bslib) -->
+<!-- library(ggplot2) -->
+
+<!-- ui <- page_fluid( -->
+<!--   title = "Binomial distribution calculator", -->
+
+<!--   layout_columns( -->
+<!--     col_widths = c(4, 8), -->
+
+<!--     # Left column - Inputs -->
+<!--     card( -->
+<!--       card_header("Parameters"), -->
+<!--       card_body( -->
+<!--         numericInput("n", "Number of trials (n):", value = 10, min = 1, step = 1), -->
+<!--         sliderInput("p", "Probability of success (p):", min = 0, max = 1, value = 0.5, step = 0.01), -->
+<!--         hr(), -->
+<!--         radioButtons("prob_type", "Probability to Calculate:", -->
+<!--                     choices = list("P(X ≤ x)" = "less",  -->
+<!--                                   "P(X ≥ x)" = "greater",  -->
+<!--                                   "P(x ≤ X ≤ y)" = "between"), -->
+<!--                     selected = "less"), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'less' || input.prob_type == 'greater'", -->
+<!--           sliderInput("x_value", "x value:", min = 0, max = 10, value = 5, step = 1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'between'", -->
+<!--           sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 3, step = 1), -->
+<!--           sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 7, step = 1) -->
+<!--         ) -->
+<!--       ) -->
+<!--     ), -->
+
+<!--     # Right column - Plot -->
+<!--     card( -->
+<!--       card_header("Binomial distribution plot"), -->
+<!--       card_body( -->
+<!--         uiOutput("plot_title"), -->
+<!--         plotOutput("distPlot", height = "300px") -->
+<!--       ) -->
+<!--     ) -->
+<!--   ), -->
+
+<!--   # Bottom row - Results -->
+<!--   card( -->
+<!--     card_header("Results"), -->
+<!--     card_body( -->
+<!--       textOutput("explanation") -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+
+<!-- server <- function(input, output, session) { -->
+
+<!--   # Update the range of the sliders when n changes -->
+<!--   observe({ -->
+<!--     updateSliderInput(session, "x_value", max = input$n) -->
+<!--     updateSliderInput(session, "x_lower", max = input$n) -->
+<!--     updateSliderInput(session, "x_upper", max = input$n) -->
+<!--   }) -->
+
+<!--   # Ensure that x_upper is always greater than or equal to x_lower -->
+<!--   observe({ -->
+<!--     if (input$x_upper < input$x_lower) { -->
+<!--       updateSliderInput(session, "x_upper", value = input$x_lower) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display the plot title with distribution parameters -->
+<!--   output$plot_title <- renderUI({ -->
+<!--     title <- sprintf("Bin(n = %d, p = %.2f)", input$n, input$p) -->
+<!--     tags$h4(title, style = "text-align: center; margin-bottom: 15px;") -->
+<!--   }) -->
+
+<!--   # Calculate the probability based on user selection -->
+<!--   probability <- reactive({ -->
+<!--     if (input$prob_type == "less") { -->
+<!--       prob <- pbinom(input$x_value, size = input$n, prob = input$p) -->
+<!--       explanation <- sprintf("P(X ≤ %d) = %.4f or %.2f%%",  -->
+<!--                             input$x_value, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value)) -->
+
+<!--     } else if (input$prob_type == "greater") { -->
+<!--       # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1) -->
+<!--       if (input$x_value == 0) { -->
+<!--         prob <- 1  # P(X ≥ 0) is always 1 -->
+<!--       } else { -->
+<!--         prob <- 1 - pbinom(input$x_value - 1, size = input$n, prob = input$p) -->
+<!--       } -->
+<!--       explanation <- sprintf("P(X ≥ %d) = %.4f or %.2f%%",  -->
+<!--                             input$x_value, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value)) -->
+
+<!--     } else if (input$prob_type == "between") { -->
+<!--       if (input$x_lower == input$x_upper) { -->
+<!--         # Exact probability for a single value -->
+<!--         prob <- dbinom(input$x_lower, size = input$n, prob = input$p) -->
+<!--       } else { -->
+<!--         # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1) -->
+<!--         upper_prob <- pbinom(input$x_upper, size = input$n, prob = input$p) -->
+<!--         if (input$x_lower == 0) { -->
+<!--           lower_prob <- 0 -->
+<!--         } else { -->
+<!--           lower_prob <- pbinom(input$x_lower - 1, size = input$n, prob = input$p) -->
+<!--         } -->
+<!--         prob <- upper_prob - lower_prob -->
+<!--       } -->
+<!--       explanation <- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%",  -->
+<!--                             input$x_lower, input$x_upper, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "between",  -->
+<!--                  lower = input$x_lower, upper = input$x_upper)) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display an explanation of the calculation -->
+<!--   output$explanation <- renderText({ -->
+<!--     res <- probability() -->
+<!--     return(res$explanation) -->
+<!--   }) -->
+
+<!--   # Generate the binomial distribution plot -->
+<!--   output$distPlot <- renderPlot({ -->
+<!--     # Create data frame for plotting -->
+<!--     x_values <- 0:input$n -->
+<!--     prob_mass <- dbinom(x_values, size = input$n, prob = input$p) -->
+<!--     df <- data.frame(x = x_values, probability = prob_mass) -->
+
+<!--     # Create base plot -->
+<!--     p <- ggplot(df, aes(x = x, y = probability)) + -->
+<!--       geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) + -->
+<!--       labs(x = "number of successes (X)", y = "probability mass function") + -->
+<!--       theme_minimal() + -->
+<!--       theme(panel.grid.minor = element_blank()) + -->
+<!--       scale_x_continuous(breaks = x_values) -->
+
+<!--     # Add shaded area based on selected probability type -->
+<!--     res <- probability() -->
+
+<!--     if (res$type == "less") { -->
+<!--       highlight_x <- 0:res$x -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                        fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+
+<!--     } else if (res$type == "greater") { -->
+<!--       highlight_x <- res$x:input$n -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                        fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+
+<!--     } else if (res$type == "between") { -->
+<!--       highlight_x <- res$lower:res$upper -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                        fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+<!--     } -->
+
+<!--     return(p) -->
+<!--   }) -->
+<!-- } -->
+
+<!-- shinyApp(ui = ui, server = server) -->
+
+
+<!-- #| standalone: true -->
+<!-- #| viewerHeight: 640 -->
+
+<!-- library(shiny) -->
+<!-- library(bslib) -->
+<!-- library(ggplot2) -->
+
+<!-- ui <- page_fluid( -->
+<!--   title = "Chi-squared distribution calculator", -->
+
+<!--   layout_columns( -->
+<!--     col_widths = c(4, 8), -->
+
+<!--     # Left column - Inputs -->
+<!--     card( -->
+<!--       card_header("Parameters"), -->
+<!--       card_body( -->
+<!--         numericInput("df", "Degrees of freedom (k):", value = 3, min = 1, step = 1), -->
+<!--         hr(), -->
+<!--         radioButtons("prob_type", "Probability to calculate:", -->
+<!--                     choices = list("P(X ≤ x)" = "less",  -->
+<!--                                   "P(X ≥ x)" = "greater",  -->
+<!--                                   "P(x ≤ X ≤ y)" = "between"), -->
+<!--                     selected = "less"), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'less'", -->
+<!--           sliderInput("x_less", "x value:", min = 0, max = 20, value = 5, step = 0.1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'greater'", -->
+<!--           sliderInput("x_greater", "x value:", min = 0, max = 20, value = 5, step = 0.1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'between'", -->
+<!--           sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 2, step = 0.1), -->
+<!--           sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 7, step = 0.1) -->
+<!--         ) -->
+<!--       ) -->
+<!--     ), -->
+
+<!--     # Right column - Plot -->
+<!--     card( -->
+<!--       card_header("Chi-squared distribution plot"), -->
+<!--       card_body( -->
+<!--         uiOutput("plot_title"), -->
+<!--         plotOutput("distPlot", height = "300px") -->
+<!--       ) -->
+<!--     ) -->
+<!--   ), -->
+
+<!--   # Bottom row - Results -->
+<!--   card( -->
+<!--     card_header("Results"), -->
+<!--     card_body( -->
+<!--       textOutput("explanation") -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+
+<!-- server <- function(input, output, session) { -->
+
+<!--   # When degrees of freedom change, adjust the range of sliders -->
+<!--   observe({ -->
+<!--     # For chi-squared distribution, a reasonable upper limit for the x-axis depends on df -->
+<!--     # Higher df means larger values make more sense -->
+<!--     df <- input$df -->
+
+<!--     # Use a heuristic to determine a reasonable upper bound -->
+<!--     # This captures critical values at the 0.995 quantile -->
+<!--     max_x <- min(qchisq(0.995, df = df), 50) -->
+
+<!--     updateSliderInput(session, "x_less", max = max_x) -->
+<!--     updateSliderInput(session, "x_greater", max = max_x) -->
+<!--     updateSliderInput(session, "x_lower", max = max_x) -->
+<!--     updateSliderInput(session, "x_upper", max = max_x) -->
+<!--   }) -->
+
+<!--   # Ensure that x_upper is always greater than or equal to x_lower -->
+<!--   observe({ -->
+<!--     if (input$x_upper < input$x_lower) { -->
+<!--       updateSliderInput(session, "x_upper", value = input$x_lower) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display the plot title with distribution parameters -->
+<!--   output$plot_title <- renderUI({ -->
+<!--     title <- sprintf("Chi-Squared(k = %d)", input$df) -->
+<!--     tags$h4(title, style = "text-align: center; margin-bottom: 15px;") -->
+<!--   }) -->
+
+<!--   # Calculate the probability based on user selection -->
+<!--   probability <- reactive({ -->
+<!--     if (input$prob_type == "less") { -->
+<!--       prob <- pchisq(input$x_less, df = input$df) -->
+<!--       explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%",  -->
+<!--                            input$x_less, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less)) -->
+
+<!--     } else if (input$prob_type == "greater") { -->
+<!--       prob <- 1 - pchisq(input$x_greater, df = input$df) -->
+<!--       explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%",  -->
+<!--                            input$x_greater, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater)) -->
+
+<!--     } else if (input$prob_type == "between") { -->
+<!--       if (input$x_lower == input$x_upper) { -->
+<!--         # For continuous distributions, P(X = a) = 0 -->
+<!--         prob <- 0 -->
+<!--       } else { -->
+<!--         upper_prob <- pchisq(input$x_upper, df = input$df) -->
+<!--         lower_prob <- pchisq(input$x_lower, df = input$df) -->
+<!--         prob <- upper_prob - lower_prob -->
+<!--       } -->
+<!--       explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%",  -->
+<!--                            input$x_lower, input$x_upper, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "between",  -->
+<!--                  lower = input$x_lower, upper = input$x_upper)) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display an explanation of the calculation -->
+<!--   output$explanation <- renderText({ -->
+<!--     res <- probability() -->
+<!--     return(res$explanation) -->
+<!--   }) -->
+
+<!--   # Generate the chi-squared distribution plot -->
+<!--   output$distPlot <- renderPlot({ -->
+<!--     # Get parameters -->
+<!--     df_val <- input$df -->
+
+<!--     # Determine a reasonable max for x-axis based on df -->
+<!--     max_x <- min(qchisq(0.995, df = df_val), 50) -->
+
+<!--     # Create data frame for plotting - avoid x=0 when df=1 as density is infinite there -->
+<!--     x_min <- if(df_val == 1) 0.01 else 0 -->
+<!--     x_values <- seq(x_min, max_x, length.out = 500) -->
+<!--     density_values <- dchisq(x_values, df = df_val) -->
+<!--     plot_df <- data.frame(x = x_values, density = density_values) -->
+
+<!--     # Create base plot -->
+<!--     p <- ggplot(plot_df, aes(x = x, y = density)) + -->
+<!--       geom_line(size = 1, color = "darkgray") + -->
+<!--       labs(x = "X", y = "probability density function") + -->
+<!--       theme_minimal() + -->
+<!--       theme(panel.grid.minor = element_blank()) + -->
+<!--       xlim(0, max_x) -->
+
+<!--     # Add shaded area based on selected probability type -->
+<!--     res <- probability() -->
+
+<!--     if (res$type == "less") { -->
+<!--       # Create data for the filled area -->
+<!--       fill_x <- seq(x_min, res$x, length.out = 200) -->
+<!--       fill_y <- dchisq(fill_x, df = df_val) -->
+<!--       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+
+<!--       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!--                         fill = "#3F6BB6", alpha = 0.6) -->
+
+<!--     } else if (res$type == "greater") { -->
+<!--       # Create data for the filled area -->
+<!--       fill_x <- seq(res$x, max_x, length.out = 200) -->
+<!--       fill_y <- dchisq(fill_x, df = df_val) -->
+<!--       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+
+<!--       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!--                         fill = "#3F6BB6", alpha = 0.6) -->
+
+<!--     } else if (res$type == "between") { -->
+<!--       # Create data for the filled area -->
+<!--       fill_x <- seq(res$lower, res$upper, length.out = 200) -->
+<!--       fill_y <- dchisq(fill_x, df = df_val) -->
+<!--       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+
+<!--       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!--                         fill = "#3F6BB6", alpha = 0.6) -->
+<!--     } -->
+
+<!--     return(p) -->
+<!--   }) -->
+<!-- } -->
+
+<!-- shinyApp(ui = ui, server = server) -->
+
+<!-- #| standalone: true -->
+<!-- #| viewerHeight: 640 -->
+
+<!-- library(shiny) -->
+<!-- library(bslib) -->
+<!-- library(ggplot2) -->
+
+<!-- ui <- page_fluid( -->
+<!--   title = "Exponential distribution calculator", -->
+
+<!--   layout_columns( -->
+<!--     col_widths = c(4, 8), -->
+
+<!--     # Left column - Inputs -->
+<!--     card( -->
+<!--       card_header("Parameters"), -->
+<!--       card_body( -->
+<!--         numericInput("rate", "Rate parameter (λ):", value = 0.5, min = 0.01, step = 0.01), -->
+<!--         # Removed the helpText about mean and variance -->
+<!--         hr(), -->
+<!--         radioButtons("prob_type", "Probability to calculate:", -->
+<!--                     choices = list("P(X ≤ x)" = "less",  -->
+<!--                                   "P(X ≥ x)" = "greater",  -->
+<!--                                   "P(x ≤ X ≤ y)" = "between"), -->
+<!--                     selected = "less"), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'less'", -->
+<!--           sliderInput("x_less", "x value:", min = 0, max = 10, value = 2, step = 0.1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'greater'", -->
+<!--           sliderInput("x_greater", "x value:", min = 0, max = 10, value = 2, step = 0.1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'between'", -->
+<!--           sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 1, step = 0.1), -->
+<!--           sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 3, step = 0.1) -->
+<!--         ) -->
+<!--       ) -->
+<!--     ), -->
+
+<!--     # Right column - Plot -->
+<!--     card( -->
+<!--       card_header("Exponential distribution plot"), -->
+<!--       card_body( -->
+<!--         uiOutput("plot_title"), -->
+<!--         plotOutput("distPlot", height = "300px") -->
+<!--       ) -->
+<!--     ) -->
+<!--   ), -->
+
+<!--   # Bottom row - Results -->
+<!--   card( -->
+<!--     card_header("Results"), -->
+<!--     card_body( -->
+<!--       textOutput("explanation") -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+
+<!-- server <- function(input, output, session) { -->
+
+<!--   # When rate changes, adjust the range of sliders -->
+<!--   observe({ -->
+<!--     # For exponential distribution with parameter rate, the mean is 1/rate -->
+<!--     # Set a reasonable max value based on this -->
+<!--     max_x <- max(round(5 / input$rate, 1), 10) -->
+
+<!--     updateSliderInput(session, "x_less", max = max_x) -->
+<!--     updateSliderInput(session, "x_greater", max = max_x) -->
+<!--     updateSliderInput(session, "x_lower", max = max_x) -->
+<!--     updateSliderInput(session, "x_upper", max = max_x) -->
+<!--   }) -->
+
+<!--   # Ensure that x_upper is always greater than or equal to x_lower -->
+<!--   observe({ -->
+<!--     if (input$x_upper < input$x_lower) { -->
+<!--       updateSliderInput(session, "x_upper", value = input$x_lower) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display the plot title with distribution parameters -->
+<!--   output$plot_title <- renderUI({ -->
+<!--     title <- sprintf("Exponential(λ = %.2f)", input$rate) -->
+<!--     tags$h4(title, style = "text-align: center; margin-bottom: 15px;") -->
+<!--   }) -->
+
+<!--   # Calculate the probability based on user selection -->
+<!--   probability <- reactive({ -->
+<!--     if (input$prob_type == "less") { -->
+<!--       prob <- pexp(input$x_less, rate = input$rate) -->
+<!--       explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%",  -->
+<!--                            input$x_less, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less)) -->
+
+<!--     } else if (input$prob_type == "greater") { -->
+<!--       prob <- 1 - pexp(input$x_greater, rate = input$rate) -->
+<!--       explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%",  -->
+<!--                            input$x_greater, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater)) -->
+
+<!--     } else if (input$prob_type == "between") { -->
+<!--       if (input$x_lower == input$x_upper) { -->
+<!--         # For continuous distributions, P(X = a) = 0 -->
+<!--         prob <- 0 -->
+<!--       } else { -->
+<!--         upper_prob <- pexp(input$x_upper, rate = input$rate) -->
+<!--         lower_prob <- pexp(input$x_lower, rate = input$rate) -->
+<!--         prob <- upper_prob - lower_prob -->
+<!--       } -->
+<!--       explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%",  -->
+<!--                            input$x_lower, input$x_upper, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "between",  -->
+<!--                  lower = input$x_lower, upper = input$x_upper)) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display an explanation of the calculation -->
+<!--   output$explanation <- renderText({ -->
+<!--     res <- probability() -->
+<!--     return(res$explanation) -->
+<!--   }) -->
+
+<!--   # Generate the Exponential distribution plot -->
+<!--   output$distPlot <- renderPlot({ -->
+<!--     # Determine the range for the x-axis -->
+<!--     rate <- input$rate -->
+<!--     max_x <- max(round(5 / rate, 1), 10) -->
+
+<!--     # Create data frame for plotting -->
+<!--     x_values <- seq(0, max_x, length.out = 500) -->
+<!--     density_values <- dexp(x_values, rate = rate) -->
+<!--     df <- data.frame(x = x_values, density = density_values) -->
+
+<!--     # Create base plot -->
+<!--     p <- ggplot(df, aes(x = x, y = density)) + -->
+<!--       geom_line(size = 1, color = "darkgray") + -->
+<!--       labs(x = "Time (X)", y = "probability density function") + -->
+<!--       theme_minimal() + -->
+<!--       theme(panel.grid.minor = element_blank()) -->
+
+<!--     # Add shaded area based on selected probability type -->
+<!--     res <- probability() -->
+
+<!--     if (res$type == "less") { -->
+<!--       # Create data for the filled area -->
+<!--       fill_x <- seq(0, res$x, length.out = 200) -->
+<!--       fill_y <- dexp(fill_x, rate = rate) -->
+<!--       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+
+<!--       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!--                         fill = "#3F6BB6", alpha = 0.6) -->
+
+<!--     } else if (res$type == "greater") { -->
+<!--       # Create data for the filled area -->
+<!--       fill_x <- seq(res$x, max_x, length.out = 200) -->
+<!--       fill_y <- dexp(fill_x, rate = rate) -->
+<!--       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+
+<!--       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!--                         fill = "#3F6BB6", alpha = 0.6) -->
+
+<!--     } else if (res$type == "between") { -->
+<!--       # Create data for the filled area -->
+<!--       fill_x <- seq(res$lower, res$upper, length.out = 200) -->
+<!--       fill_y <- dexp(fill_x, rate = rate) -->
+<!--       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+
+<!--       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!--                         fill = "#3F6BB6", alpha = 0.6) -->
+<!--     } -->
+
+<!--     return(p) -->
+<!--   }) -->
+<!-- } -->
+
+<!-- shinyApp(ui = ui, server = server) -->
+
+<!-- #| standalone: true -->
+<!-- #| viewerHeight: 740 -->
+
+<!-- library(shiny) -->
+<!-- library(bslib) -->
+<!-- library(ggplot2) -->
+
+<!-- ui <- page_fluid( -->
+<!--   title = "Lognormal distribution calculator", -->
+
+<!--   layout_columns( -->
+<!--     col_widths = c(4, 8), -->
+
+<!--     # Left column - Inputs -->
+<!--     card( -->
+<!--       card_header("Parameters"), -->
+<!--       card_body( -->
+<!--         numericInput("meanlog", "Log mean (μ):", value = 0, step = 0.1), -->
+<!--         numericInput("sdlog", "Log standard deviation (σ):", value = 1, min = 0.01, step = 0.1), -->
+<!--         hr(), -->
+<!--         radioButtons("prob_type", "Probability to calculate:", -->
+<!--                     choices = list("P(X ≤ x)" = "less",  -->
+<!--                                   "P(X ≥ x)" = "greater",  -->
+<!--                                   "P(x ≤ X ≤ y)" = "between"), -->
+<!--                     selected = "less"), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'less'", -->
+<!--           sliderInput("x_less", "x value:", min = 0, max = 10, value = 1, step = 0.1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'greater'", -->
+<!--           sliderInput("x_greater", "x value:", min = 0, max = 10, value = 1, step = 0.1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'between'", -->
+<!--           sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 0.5, step = 0.1), -->
+<!--           sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 2, step = 0.1) -->
+<!--         ) -->
+<!--       ) -->
+<!--     ), -->
+
+<!--     # Right column - Plot -->
+<!--     card( -->
+<!--       card_header("Lognormal distribution plot"), -->
+<!--       card_body( -->
+<!--         uiOutput("plot_title"), -->
+<!--         plotOutput("distPlot", height = "300px") -->
+<!--       ) -->
+<!--     ) -->
+<!--   ), -->
+
+<!--   # Bottom row - Results -->
+<!--   card( -->
+<!--     card_header("Results"), -->
+<!--     card_body( -->
+<!--       textOutput("explanation") -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+
+<!-- server <- function(input, output, session) { -->
+
+<!--   # When parameters change, adjust the range of sliders -->
+<!--   observe({ -->
+<!--     # For lognormal distribution, adjust slider based on parameters -->
+<!--     meanlog <- input$meanlog -->
+<!--     sdlog <- input$sdlog -->
+
+<!--     # Use a heuristic to determine a reasonable upper bound -->
+<!--     # This captures most of the meaningful density -->
+<!--     max_x <- min(qlnorm(0.995, meanlog, sdlog), 100) -->
+
+<!--     updateSliderInput(session, "x_less", max = max_x) -->
+<!--     updateSliderInput(session, "x_greater", max = max_x) -->
+<!--     updateSliderInput(session, "x_lower", max = max_x) -->
+<!--     updateSliderInput(session, "x_upper", max = max_x) -->
+<!--   }) -->
+
+<!--   # Ensure that x_upper is always greater than or equal to x_lower -->
+<!--   observe({ -->
+<!--     if (input$x_upper < input$x_lower) { -->
+<!--       updateSliderInput(session, "x_upper", value = input$x_lower) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display the plot title with distribution parameters -->
+<!--   output$plot_title <- renderUI({ -->
+<!--     title <- sprintf("Lognormal(μ = %.2f, σ = %.2f)", input$meanlog, input$sdlog) -->
+<!--     tags$h4(title, style = "text-align: center; margin-bottom: 15px;") -->
+<!--   }) -->
+
+<!--   # Calculate the probability based on user selection -->
+<!--   probability <- reactive({ -->
+<!--     if (input$prob_type == "less") { -->
+<!--       prob <- plnorm(input$x_less, meanlog = input$meanlog, sdlog = input$sdlog) -->
+<!--       explanation <- sprintf("P(X ≤ %.1f) = %.6f or %.4f%%",  -->
+<!--                            input$x_less, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less)) -->
+
+<!--     } else if (input$prob_type == "greater") { -->
+<!--       prob <- 1 - plnorm(input$x_greater, meanlog = input$meanlog, sdlog = input$sdlog) -->
+<!--       explanation <- sprintf("P(X ≥ %.1f) = %.6f or %.4f%%",  -->
+<!--                            input$x_greater, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater)) -->
+
+<!--     } else if (input$prob_type == "between") { -->
+<!--       if (input$x_lower == input$x_upper) { -->
+<!--         # For continuous distributions, P(X = a) = 0 -->
+<!--         prob <- 0 -->
+<!--       } else { -->
+<!--         upper_prob <- plnorm(input$x_upper, meanlog = input$meanlog, sdlog = input$sdlog) -->
+<!--         lower_prob <- plnorm(input$x_lower, meanlog = input$meanlog, sdlog = input$sdlog) -->
+<!--         prob <- upper_prob - lower_prob -->
+<!--       } -->
+<!--       explanation <- sprintf("P(%.1f ≤ X ≤ %.1f) = %.6f or %.4f%%",  -->
+<!--                            input$x_lower, input$x_upper, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "between",  -->
+<!--                  lower = input$x_lower, upper = input$x_upper)) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display an explanation of the calculation -->
+<!--   output$explanation <- renderText({ -->
+<!--     res <- probability() -->
+<!--     return(res$explanation) -->
+<!--   }) -->
+
+<!--   # Generate the lognormal distribution plot -->
+<!--   output$distPlot <- renderPlot({ -->
+<!--     # Get parameters -->
+<!--     meanlog <- input$meanlog -->
+<!--     sdlog <- input$sdlog -->
+
+<!--     # Determine a reasonable max for x-axis based on parameters -->
+<!--     max_x <- min(qlnorm(0.995, meanlog, sdlog), 100) -->
+
+<!--     # Create data frame for plotting -->
+<!--     x_values <- seq(0.01, max_x, length.out = 500)  # Avoid x=0 -->
+<!--     density_values <- dlnorm(x_values, meanlog = meanlog, sdlog = sdlog) -->
+<!--     plot_df <- data.frame(x = x_values, density = density_values) -->
+
+<!--     # Create base plot -->
+<!--     p <- ggplot(plot_df, aes(x = x, y = density)) + -->
+<!--       geom_line(size = 1, color = "darkgray") + -->
+<!--       labs(x = "X", y = "probability density function") + -->
+<!--       theme_minimal() + -->
+<!--       theme(panel.grid.minor = element_blank()) + -->
+<!--       xlim(0, max_x) -->
+
+<!--     # Add shaded area based on selected probability type -->
+<!--     res <- probability() -->
+
+<!--     if (res$type == "less") { -->
+<!--       # Create data for the filled area -->
+<!--       fill_x <- seq(0.01, res$x, length.out = 200) -->
+<!--       fill_y <- dlnorm(fill_x, meanlog = meanlog, sdlog = sdlog) -->
+<!--       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+
+<!--       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!--                         fill = "#3F6BB6", alpha = 0.6) -->
+
+<!--     } else if (res$type == "greater") { -->
+<!--       # Create data for the filled area -->
+<!--       fill_x <- seq(res$x, max_x, length.out = 200) -->
+<!--       fill_y <- dlnorm(fill_x, meanlog = meanlog, sdlog = sdlog) -->
+<!--       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+
+<!--       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!--                         fill = "#3F6BB6", alpha = 0.6) -->
+
+<!--     } else if (res$type == "between") { -->
+<!--       # Create data for the filled area -->
+<!--       fill_x <- seq(res$lower, res$upper, length.out = 200) -->
+<!--       fill_y <- dlnorm(fill_x, meanlog = meanlog, sdlog = sdlog) -->
+<!--       fill_df <- data.frame(x = fill_x, density = fill_y) -->
+
+<!--       p <- p + geom_area(data = fill_df, aes(x = x, y = density),  -->
+<!--                         fill = "#3F6BB6", alpha = 0.6) -->
+<!--     } -->
+
+<!--     return(p) -->
+<!--   }) -->
+<!-- } -->
+
+<!-- shinyApp(ui = ui, server = server) -->
+
+
+<!-- #| standalone: true -->
+<!-- #| viewerHeight: 680 -->
+
+<!-- library(shiny) -->
+<!-- library(bslib) -->
+<!-- library(ggplot2) -->
+
+<!-- ui <- page_fluid( -->
+<!--   title = "Geometric cistribution calculator", -->
+
+<!--   layout_columns( -->
+<!--     col_widths = c(4, 8), -->
+
+<!--     # Left column - Inputs -->
+<!--     card( -->
+<!--       card_header("Parameters"), -->
+<!--       card_body( -->
+<!--         sliderInput("p", "Probability of success (p):", min = 0.01, max = 1, value = 0.3, step = 0.01), -->
+<!--         hr(), -->
+<!--         radioButtons("prob_type", "Probability to Calculate:", -->
+<!--                     choices = list("P(X = x)" = "exact",  -->
+<!--                                   "P(X ≤ x)" = "less",  -->
+<!--                                   "P(X ≥ x)" = "greater",  -->
+<!--                                   "P(x ≤ X ≤ y)" = "between"), -->
+<!--                     selected = "exact"), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'exact'", -->
+<!--           sliderInput("x_exact", "x value:", min = 0, max = 20, value = 3, step = 1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'less'", -->
+<!--           sliderInput("x_less", "x value:", min = 0, max = 20, value = 3, step = 1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'greater'", -->
+<!--           sliderInput("x_greater", "x value:", min = 0, max = 20, value = 3, step = 1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'between'", -->
+<!--           sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 2, step = 1), -->
+<!--           sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 5, step = 1) -->
+<!--         ) -->
+<!--       ) -->
+<!--     ), -->
+
+<!--     # Right column - Plot -->
+<!--     card( -->
+<!--       card_header("Geometric distribution plot"), -->
+<!--       card_body( -->
+<!--         uiOutput("plot_title"), -->
+<!--         plotOutput("distPlot", height = "300px") -->
+<!--       ) -->
+<!--     ) -->
+<!--   ), -->
+
+<!--   # Bottom row - Results (removed the hr and helpText) -->
+<!--   card( -->
+<!--     card_header("Results"), -->
+<!--     card_body( -->
+<!--       textOutput("explanation") -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+
+<!-- server <- function(input, output, session) { -->
+
+<!--   # When p changes, adjust the range of sliders -->
+<!--   observe({ -->
+<!--     # For geometric distribution with parameter p, the mean is (1-p)/p -->
+<!--     # Set a reasonable max value based on this -->
+<!--     max_x <- max(round(3 * (1 - input$p) / input$p), 20) -->
+
+<!--     updateSliderInput(session, "x_exact", max = max_x) -->
+<!--     updateSliderInput(session, "x_less", max = max_x) -->
+<!--     updateSliderInput(session, "x_greater", max = max_x) -->
+<!--     updateSliderInput(session, "x_lower", max = max_x) -->
+<!--     updateSliderInput(session, "x_upper", max = max_x) -->
+<!--   }) -->
+
+<!--   # Ensure that x_upper is always greater than or equal to x_lower -->
+<!--   observe({ -->
+<!--     if (input$x_upper < input$x_lower) { -->
+<!--       updateSliderInput(session, "x_upper", value = input$x_lower) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display the plot title with distribution parameters -->
+<!--   output$plot_title <- renderUI({ -->
+<!--     title <- sprintf("Geometric(p = %.2f)", input$p) -->
+<!--     tags$h4(title, style = "text-align: center; margin-bottom: 15px;") -->
+<!--   }) -->
+
+<!--   # Calculate the probability based on user selection -->
+<!--   probability <- reactive({ -->
+<!--     if (input$prob_type == "exact") { -->
+<!--       prob <- dgeom(input$x_exact, prob = input$p) -->
+<!--       explanation <- sprintf("P(X = %d) = %.6f or %.4f%%",  -->
+<!--                            input$x_exact, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "exact", x = input$x_exact)) -->
+
+<!--     } else if (input$prob_type == "less") { -->
+<!--       prob <- pgeom(input$x_less, prob = input$p) -->
+<!--       explanation <- sprintf("P(X ≤ %d) = %.6f or %.4f%%",  -->
+<!--                            input$x_less, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less)) -->
+
+<!--     } else if (input$prob_type == "greater") { -->
+<!--       # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1) -->
+<!--       if (input$x_greater == 0) { -->
+<!--         prob <- 1  # P(X ≥ 0) is always 1 -->
+<!--       } else { -->
+<!--         prob <- 1 - pgeom(input$x_greater - 1, prob = input$p) -->
+<!--       } -->
+<!--       explanation <- sprintf("P(X ≥ %d) = %.6f or %.4f%%",  -->
+<!--                            input$x_greater, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater)) -->
+
+<!--     } else if (input$prob_type == "between") { -->
+<!--       if (input$x_lower == input$x_upper) { -->
+<!--         # Exact probability for a single value -->
+<!--         prob <- dgeom(input$x_lower, prob = input$p) -->
+<!--       } else { -->
+<!--         # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1) -->
+<!--         upper_prob <- pgeom(input$x_upper, prob = input$p) -->
+<!--         if (input$x_lower == 0) { -->
+<!--           lower_prob <- 0 -->
+<!--         } else { -->
+<!--           lower_prob <- pgeom(input$x_lower - 1, prob = input$p) -->
+<!--         } -->
+<!--         prob <- upper_prob - lower_prob -->
+<!--       } -->
+<!--       explanation <- sprintf("P(%d ≤ X ≤ %d) = %.6f or %.4f%%",  -->
+<!--                            input$x_lower, input$x_upper, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "between",  -->
+<!--                  lower = input$x_lower, upper = input$x_upper)) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display an explanation of the calculation -->
+<!--   output$explanation <- renderText({ -->
+<!--     res <- probability() -->
+<!--     return(res$explanation) -->
+<!--   }) -->
+
+<!--   # Generate the Geometric distribution plot -->
+<!--   output$distPlot <- renderPlot({ -->
+<!--     # Determine the range for the x-axis -->
+<!--     p <- input$p -->
+<!--     max_x <- max(round(3 * (1 - p) / p), 20) -->
+
+<!--     # Create data frame for plotting -->
+<!--     x_values <- 0:max_x -->
+<!--     prob_mass <- dgeom(x_values, prob = p) -->
+<!--     df <- data.frame(x = x_values, probability = prob_mass) -->
+
+<!--     # Create base plot -->
+<!--     p <- ggplot(df, aes(x = x, y = probability)) + -->
+<!--       geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) + -->
+<!--       labs(x = "number of failures before first success (X)", y = "probability mass function") + -->
+<!--       theme_minimal() + -->
+<!--       theme(panel.grid.minor = element_blank()) + -->
+<!--       scale_x_continuous(breaks = seq(0, max_x, by = ifelse(max_x > 20, 2, 1))) -->
+
+<!--     # Add shaded area based on selected probability type -->
+<!--     res <- probability() -->
+
+<!--     if (res$type == "exact") { -->
+<!--       highlight_x <- res$x -->
+<!--       highlight_df <- df[df$x == highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+
+<!--     } else if (res$type == "less") { -->
+<!--       highlight_x <- 0:res$x -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+
+<!--     } else if (res$type == "greater") { -->
+<!--       highlight_x <- res$x:max_x -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+
+<!--     } else if (res$type == "between") { -->
+<!--       highlight_x <- res$lower:res$upper -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+<!--     } -->
+
+<!--     return(p) -->
+<!--   }) -->
+<!-- } -->
+
+<!-- #| standalone: true -->
+<!-- #| viewerHeight: 850 -->
+
+<!-- library(shiny) -->
+<!-- library(bslib) -->
+<!-- library(ggplot2) -->
+
+<!-- ui <- page_fluid( -->
+<!--   title = "Negative binomial distribution calculator", -->
+
+<!--   layout_columns( -->
+<!--     col_widths = c(4, 8), -->
+
+<!--     # Left column - Inputs -->
+<!--     card( -->
+<!--       card_header("Parameters"), -->
+<!--       card_body( -->
+<!--         numericInput("r", "Number of successes (r):", value = 5, min = 1, step = 1), -->
+<!--         sliderInput("p", "Probability of success (p):", min = 0.01, max = 0.99, value = 0.3, step = 0.01), -->
+<!--         numericInput("max_x", "Maximum x to display:", value = 20, min = 10, step = 5), -->
+<!--         hr(), -->
+<!--         radioButtons("prob_type", "Probability to calculate:", -->
+<!--                     choices = list("P(X ≤ x)" = "less",  -->
+<!--                                   "P(X ≥ x)" = "greater",  -->
+<!--                                   "P(x ≤ X ≤ y)" = "between"), -->
+<!--                     selected = "less"), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'less' || input.prob_type == 'greater'", -->
+<!--           sliderInput("x_value", "x value:", min = 0, max = 20, value = 8, step = 1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'between'", -->
+<!--           sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 5, step = 1), -->
+<!--           sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 12, step = 1) -->
+<!--         ) -->
+<!--       ) -->
+<!--     ), -->
+
+<!--     # Right column - Plot -->
+<!--     card( -->
+<!--       card_header("Negative binomial distribution plot"), -->
+<!--       card_body( -->
+<!--         uiOutput("plot_title"), -->
+<!--         plotOutput("distPlot", height = "300px") -->
+<!--       ) -->
+<!--     ) -->
+<!--   ), -->
+
+<!--   # Bottom row - Results -->
+<!--   card( -->
+<!--     card_header("Results"), -->
+<!--     card_body( -->
+<!--       textOutput("explanation") -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+
+<!-- server <- function(input, output, session) { -->
+
+<!--   # Update the range of the sliders when max_x changes -->
+<!--   observe({ -->
+<!--     updateSliderInput(session, "x_value", max = input$max_x) -->
+<!--     updateSliderInput(session, "x_lower", max = input$max_x) -->
+<!--     updateSliderInput(session, "x_upper", max = input$max_x) -->
+<!--   }) -->
+
+<!--   # Ensure that x_upper is always greater than or equal to x_lower -->
+<!--   observe({ -->
+<!--     if (input$x_upper < input$x_lower) { -->
+<!--       updateSliderInput(session, "x_upper", value = input$x_lower) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display the plot title with distribution parameters -->
+<!--   output$plot_title <- renderUI({ -->
+<!--     title <- sprintf("NegBin(r = %d, p = %.2f)", input$r, input$p) -->
+<!--     tags$h4(title, style = "text-align: center; margin-bottom: 15px;") -->
+<!--   }) -->
+
+<!--   # Calculate the probability based on user selection -->
+<!--   probability <- reactive({ -->
+<!--     if (input$prob_type == "less") { -->
+<!--       prob <- pnbinom(input$x_value, size = input$r, prob = input$p) -->
+<!--       explanation <- sprintf("P(X ≤ %d) = %.4f or %.2f%%",  -->
+<!--                             input$x_value, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value)) -->
+
+<!--     } else if (input$prob_type == "greater") { -->
+<!--       # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1) -->
+<!--       if (input$x_value == 0) { -->
+<!--         prob <- 1  # P(X ≥ 0) is always 1 -->
+<!--       } else { -->
+<!--         prob <- 1 - pnbinom(input$x_value - 1, size = input$r, prob = input$p) -->
+<!--       } -->
+<!--       explanation <- sprintf("P(X ≥ %d) = %.4f or %.2f%%",  -->
+<!--                             input$x_value, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value)) -->
+
+<!--     } else if (input$prob_type == "between") { -->
+<!--       if (input$x_lower == input$x_upper) { -->
+<!--         # Exact probability for a single value -->
+<!--         prob <- dnbinom(input$x_lower, size = input$r, prob = input$p) -->
+<!--       } else { -->
+<!--         # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1) -->
+<!--         upper_prob <- pnbinom(input$x_upper, size = input$r, prob = input$p) -->
+<!--         if (input$x_lower == 0) { -->
+<!--           lower_prob <- 0 -->
+<!--         } else { -->
+<!--           lower_prob <- pnbinom(input$x_lower - 1, size = input$r, prob = input$p) -->
+<!--         } -->
+<!--         prob <- upper_prob - lower_prob -->
+<!--       } -->
+<!--       explanation <- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%",  -->
+<!--                             input$x_lower, input$x_upper, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "between",  -->
+<!--                  lower = input$x_lower, upper = input$x_upper)) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display an explanation of the calculation -->
+<!--   output$explanation <- renderText({ -->
+<!--     res <- probability() -->
+<!--     return(res$explanation) -->
+<!--   }) -->
+
+<!--   # Generate the negative binomial distribution plot -->
+<!--   output$distPlot <- renderPlot({ -->
+<!--     # Create data frame for plotting -->
+<!--     x_values <- 0:input$max_x -->
+<!--     prob_mass <- dnbinom(x_values, size = input$r, prob = input$p) -->
+<!--     df <- data.frame(x = x_values, probability = prob_mass) -->
+
+<!--     # Create base plot -->
+<!--     p <- ggplot(df, aes(x = x, y = probability)) + -->
+<!--       geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) + -->
+<!--       labs(x = "number of failures (X)", y = "probability mass function") + -->
+<!--       theme_minimal() + -->
+<!--       theme(panel.grid.minor = element_blank()) + -->
+<!--       scale_x_continuous(breaks = pretty(x_values, n = 10)) -->
+
+<!--     # Add shaded area based on selected probability type -->
+<!--     res <- probability() -->
+
+<!--     if (res$type == "less") { -->
+<!--       highlight_x <- 0:min(res$x, input$max_x) -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                        fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+
+<!--     } else if (res$type == "greater") { -->
+<!--       highlight_x <- res$x:input$max_x -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                        fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+
+<!--     } else if (res$type == "between") { -->
+<!--       highlight_x <- res$lower:min(res$upper, input$max_x) -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                        fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+<!--     } -->
+
+<!--     return(p) -->
+<!--   }) -->
+<!-- } -->
+
+<!-- shinyApp(ui = ui, server = server) -->
+
+<!-- #| standalone: true -->
+<!-- #| viewerHeight: 670 -->
+
+<!-- library(shiny) -->
+<!-- library(bslib) -->
+<!-- library(ggplot2) -->
+
+<!-- ui <- page_fluid( -->
+<!--   title = "Poisson distribution calculator", -->
+
+<!--   layout_columns( -->
+<!--     col_widths = c(4, 8), -->
+
+<!--     # Left column - Inputs -->
+<!--     card( -->
+<!--       card_header("Parameters"), -->
+<!--       card_body( -->
+<!--         numericInput("lambda", "Rate parameter (λ):", value = 5, min = 0.1, step = 0.1), -->
+<!--         hr(), -->
+<!--         radioButtons("prob_type", "Probability to calculate:", -->
+<!--                     choices = list("P(X = x)" = "exact",  -->
+<!--                                   "P(X ≤ x)" = "less",  -->
+<!--                                   "P(X ≥ x)" = "greater",  -->
+<!--                                   "P(x ≤ X ≤ y)" = "between"), -->
+<!--                     selected = "exact"), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'exact'", -->
+<!--           sliderInput("x_exact", "x value:", min = 0, max = 20, value = 5, step = 1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'less'", -->
+<!--           sliderInput("x_less", "x value:", min = 0, max = 20, value = 5, step = 1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'greater'", -->
+<!--           sliderInput("x_greater", "x value:", min = 0, max = 20, value = 5, step = 1) -->
+<!--         ), -->
+<!--         conditionalPanel( -->
+<!--           condition = "input.prob_type == 'between'", -->
+<!--           sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 3, step = 1), -->
+<!--           sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 7, step = 1) -->
+<!--         ) -->
+<!--       ) -->
+<!--     ), -->
+
+<!--     # Right column - Plot -->
+<!--     card( -->
+<!--       card_header("Poisson distribution plot"), -->
+<!--       card_body( -->
+<!--         uiOutput("plot_title"), -->
+<!--         plotOutput("distPlot", height = "300px") -->
+<!--       ) -->
+<!--     ) -->
+<!--   ), -->
+
+<!--   # Bottom row - Results -->
+<!--   card( -->
+<!--     card_header("Results"), -->
+<!--     card_body( -->
+<!--       textOutput("explanation") -->
+<!--     ) -->
+<!--   ) -->
+<!-- ) -->
+
+<!-- server <- function(input, output, session) { -->
+
+<!--   # When lambda changes, adjust the range of sliders -->
+<!--   observe({ -->
+<!--     # Set a reasonable max value as 3*lambda or at least 10 -->
+<!--     max_x <- max(round(input$lambda * 3), 10) -->
+
+<!--     updateSliderInput(session, "x_exact", max = max_x) -->
+<!--     updateSliderInput(session, "x_less", max = max_x) -->
+<!--     updateSliderInput(session, "x_greater", max = max_x) -->
+<!--     updateSliderInput(session, "x_lower", max = max_x) -->
+<!--     updateSliderInput(session, "x_upper", max = max_x) -->
+<!--   }) -->
+
+<!--   # Ensure that x_upper is always greater than or equal to x_lower -->
+<!--   observe({ -->
+<!--     if (input$x_upper < input$x_lower) { -->
+<!--       updateSliderInput(session, "x_upper", value = input$x_lower) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display the plot title with distribution parameters -->
+<!--   output$plot_title <- renderUI({ -->
+<!--     title <- sprintf("Poisson(λ = %.1f)", input$lambda) -->
+<!--     tags$h4(title, style = "text-align: center; margin-bottom: 15px;") -->
+<!--   }) -->
+
+<!--   # Calculate the probability based on user selection -->
+<!--   probability <- reactive({ -->
+<!--     if (input$prob_type == "exact") { -->
+<!--       prob <- dpois(input$x_exact, lambda = input$lambda) -->
+<!--       explanation <- sprintf("P(X = %d) = %.6f or %.4f%%",  -->
+<!--                            input$x_exact, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "exact", x = input$x_exact)) -->
+
+<!--     } else if (input$prob_type == "less") { -->
+<!--       prob <- ppois(input$x_less, lambda = input$lambda) -->
+<!--       explanation <- sprintf("P(X ≤ %d) = %.6f or %.4f%%",  -->
+<!--                            input$x_less, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less)) -->
+
+<!--     } else if (input$prob_type == "greater") { -->
+<!--       # For P(X ≥ x), we need 1 - P(X < x) = 1 - P(X ≤ x-1) -->
+<!--       if (input$x_greater == 0) { -->
+<!--         prob <- 1  # P(X ≥ 0) is always 1 -->
+<!--       } else { -->
+<!--         prob <- 1 - ppois(input$x_greater - 1, lambda = input$lambda) -->
+<!--       } -->
+<!--       explanation <- sprintf("P(X ≥ %d) = %.6f or %.4f%%",  -->
+<!--                            input$x_greater, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater)) -->
+
+<!--     } else if (input$prob_type == "between") { -->
+<!--       if (input$x_lower == input$x_upper) { -->
+<!--         # Exact probability for a single value -->
+<!--         prob <- dpois(input$x_lower, lambda = input$lambda) -->
+<!--       } else { -->
+<!--         # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X < x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1) -->
+<!--         upper_prob <- ppois(input$x_upper, lambda = input$lambda) -->
+<!--         if (input$x_lower == 0) { -->
+<!--           lower_prob <- 0 -->
+<!--         } else { -->
+<!--           lower_prob <- ppois(input$x_lower - 1, lambda = input$lambda) -->
+<!--         } -->
+<!--         prob <- upper_prob - lower_prob -->
+<!--       } -->
+<!--       explanation <- sprintf("P(%d ≤ X ≤ %d) = %.6f or %.4f%%",  -->
+<!--                            input$x_lower, input$x_upper, prob, prob * 100) -->
+<!--       return(list(prob = prob, explanation = explanation, type = "between",  -->
+<!--                  lower = input$x_lower, upper = input$x_upper)) -->
+<!--     } -->
+<!--   }) -->
+
+<!--   # Display an explanation of the calculation -->
+<!--   output$explanation <- renderText({ -->
+<!--     res <- probability() -->
+<!--     return(res$explanation) -->
+<!--   }) -->
+
+<!--   # Generate the Poisson distribution plot -->
+<!--   output$distPlot <- renderPlot({ -->
+<!--     # Determine the range for the x-axis -->
+<!--     lambda <- input$lambda -->
+<!--     max_x <- max(round(lambda * 3), 10) -->
+
+<!--     # Create data frame for plotting -->
+<!--     x_values <- 0:max_x -->
+<!--     prob_mass <- dpois(x_values, lambda = lambda) -->
+<!--     df <- data.frame(x = x_values, probability = prob_mass) -->
+
+<!--     # Create base plot -->
+<!--     p <- ggplot(df, aes(x = x, y = probability)) + -->
+<!--       geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) + -->
+<!--       labs(x = "number of events (X)", y = "probability mass function") + -->
+<!--       theme_minimal() + -->
+<!--       theme(panel.grid.minor = element_blank()) + -->
+<!--       scale_x_continuous(breaks = seq(0, max_x, by = ifelse(max_x > 20, 2, 1))) -->
+
+<!--     # Add shaded area based on selected probability type -->
+<!--     res <- probability() -->
+
+<!--     if (res$type == "exact") { -->
+<!--       highlight_x <- res$x -->
+<!--       highlight_df <- df[df$x == highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+
+<!--     } else if (res$type == "less") { -->
+<!--       highlight_x <- 0:res$x -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+
+<!--     } else if (res$type == "greater") { -->
+<!--       highlight_x <- res$x:max_x -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+
+<!--     } else if (res$type == "between") { -->
+<!--       highlight_x <- res$lower:res$upper -->
+<!--       highlight_df <- df[df$x %in% highlight_x, ] -->
+
+<!--       p <- p + geom_col(data = highlight_df, aes(x = x, y = probability),  -->
+<!--                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8) -->
+<!--     } -->
+
+<!--     return(p) -->
+<!--   }) -->
+<!-- } -->
+
+<!-- shinyApp(ui = ui, server = server) -->

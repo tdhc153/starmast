@@ -43,14 +43,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-3b7d9c4ba168eb520ddf55bb25793bc7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-58cbebc2be5c2cfabe4ef1ccaf2cf5b0.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-3b7d9c4ba168eb520ddf55bb25793bc7.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-4bc6d62a8f631abbc9a163be30471117.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-9b9ee040fd52a61b26fb17fad03ba886.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-4bc6d62a8f631abbc9a163be30471117.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-365d6bab852ec9a235b2fcad5c9fe113.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <meta name="shinylive:serviceworker_dir" content="..">
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
 <script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
@@ -815,178 +815,1194 @@ shinyApp(ui = ui, server = server)</code></pre>
 <!-- **CDF:** $\mathbb{P}(X\leq x)=I_{q}(n-\lfloor x \rfloor,1+\lfloor x \rfloor)$ where $I_{x}(a,b)$ is the regularized incomplete beta function for $a$ and $b$ with $x$ being the upper bound for integration, and $\lfloor x \rfloor$ is the **floor function** applied to $x$, equal to the largest integer $z$ such that $z\leq x$. -->
 <p>&nbsp;</p>
 <p><strong>Figure</strong></p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| viewerHeight: 750
 
-library(shiny)
-library(bslib)
-library(ggplot2)
+<div class="distribution-calculator binomial-calculator">
 
-ui &lt;- page_fluid(
-  title = "Binomial distribution calculator",
-  
-  layout_columns(
-    col_widths = c(4, 8),
-    
-    # Left column - Inputs
-    card(
-      card_header("Parameters"),
-      card_body(
-        numericInput("n", "Number of trials (n):", value = 10, min = 1, step = 1),
-        sliderInput("p", "Probability of success (p):", min = 0, max = 1, value = 0.5, step = 0.01),
-        hr(),
-        radioButtons("prob_type", "Probability to Calculate:",
-                    choices = list("P(X ≤ x)" = "less", 
-                                  "P(X ≥ x)" = "greater", 
-                                  "P(x ≤ X ≤ y)" = "between"),
-                    selected = "less"),
-        conditionalPanel(
-          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
-          sliderInput("x_value", "x value:", min = 0, max = 10, value = 5, step = 1)
-        ),
-        conditionalPanel(
-          condition = "input.prob_type == 'between'",
-          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 3, step = 1),
-          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 7, step = 1)
-        )
-      )
-    ),
-    
-    # Right column - Plot
-    card(
-      card_header("Binomial distribution plot"),
-      card_body(
-        uiOutput("plot_title"),
-        plotOutput("distPlot", height = "300px")
-      )
-    )
-  ),
-  
-  # Bottom row - Results
-  card(
-    card_header("Results"),
-    card_body(
-      textOutput("explanation")
-    )
-  )
-)
+  <div class="calculator-row">
 
-server &lt;- function(input, output, session) {
-  
-  # Update the range of the sliders when n changes
-  observe({
-    updateSliderInput(session, "x_value", max = input$n)
-    updateSliderInput(session, "x_lower", max = input$n)
-    updateSliderInput(session, "x_upper", max = input$n)
-  })
-  
-  # Ensure that x_upper is always greater than or equal to x_lower
-  observe({
-    if (input$x_upper &lt; input$x_lower) {
-      updateSliderInput(session, "x_upper", value = input$x_lower)
-    }
-  })
-  
-  # Display the plot title with distribution parameters
-  output$plot_title &lt;- renderUI({
-    title &lt;- sprintf("Bin(n = %d, p = %.2f)", input$n, input$p)
-    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
-  })
-  
-  # Calculate the probability based on user selection
-  probability &lt;- reactive({
-    if (input$prob_type == "less") {
-      prob &lt;- pbinom(input$x_value, size = input$n, prob = input$p)
-      explanation &lt;- sprintf("P(X ≤ %d) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
-      
-    } else if (input$prob_type == "greater") {
-      # For P(X ≥ x), we need 1 - P(X &lt; x) = 1 - P(X ≤ x-1)
-      if (input$x_value == 0) {
-        prob &lt;- 1  # P(X ≥ 0) is always 1
-      } else {
-        prob &lt;- 1 - pbinom(input$x_value - 1, size = input$n, prob = input$p)
-      }
-      explanation &lt;- sprintf("P(X ≥ %d) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
-      
-    } else if (input$prob_type == "between") {
-      if (input$x_lower == input$x_upper) {
-        # Exact probability for a single value
-        prob &lt;- dbinom(input$x_lower, size = input$n, prob = input$p)
-      } else {
-        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X &lt; x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
-        upper_prob &lt;- pbinom(input$x_upper, size = input$n, prob = input$p)
-        if (input$x_lower == 0) {
-          lower_prob &lt;- 0
-        } else {
-          lower_prob &lt;- pbinom(input$x_lower - 1, size = input$n, prob = input$p)
-        }
-        prob &lt;- upper_prob - lower_prob
-      }
-      explanation &lt;- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%", 
-                            input$x_lower, input$x_upper, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "between", 
-                 lower = input$x_lower, upper = input$x_upper))
-    }
-  })
-  
-  # Display an explanation of the calculation
-  output$explanation &lt;- renderText({
-    res &lt;- probability()
-    return(res$explanation)
-  })
-  
-  # Generate the binomial distribution plot
-  output$distPlot &lt;- renderPlot({
-    # Create data frame for plotting
-    x_values &lt;- 0:input$n
-    prob_mass &lt;- dbinom(x_values, size = input$n, prob = input$p)
-    df &lt;- data.frame(x = x_values, probability = prob_mass)
-    
-    # Create base plot
-    p &lt;- ggplot(df, aes(x = x, y = probability)) +
-      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
-      labs(x = "number of successes (X)", y = "probability mass function") +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank()) +
-      scale_x_continuous(breaks = x_values)
-    
-    # Add shaded area based on selected probability type
-    res &lt;- probability()
-    
-    if (res$type == "less") {
-      highlight_x &lt;- 0:res$x
-      highlight_df &lt;- df[df$x %in% highlight_x, ]
-      
-      p &lt;- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-      
-    } else if (res$type == "greater") {
-      highlight_x &lt;- res$x:input$n
-      highlight_df &lt;- df[df$x %in% highlight_x, ]
-      
-      p &lt;- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-      
-    } else if (res$type == "between") {
-      highlight_x &lt;- res$lower:res$upper
-      highlight_df &lt;- df[df$x %in% highlight_x, ]
-      
-      p &lt;- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-    }
-    
-    return(p)
-  })
+    <!-- PARAMETERS CARD -->
+    <div class="calculator-card parameters-card">
+
+      <div class="calculator-card-header">
+        Parameters
+      </div>
+
+      <div class="calculator-card-body">
+
+        <div class="form-group">
+          <label for="binomial-n">
+            Number of trials (n):
+          </label>
+
+          <input type="number" id="binomial-n" value="10" min="1" step="1" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="binomial-p">
+            Probability of success (p):
+          </label>
+
+          <input type="range" id="binomial-p" min="0" max="1" value="0.5" step="0.01" class="distribution-slider">
+
+          <div class="slider-value" id="binomial-p-value">
+            0.50
+          </div>
+        </div>
+
+        <hr>
+
+        <fieldset class="probability-options">
+
+          <legend>
+            Probability to calculate:
+          </legend>
+
+          <label class="radio-option">
+            <input type="radio" name="binomial-prob-type" value="less" checked="">
+            <span>P(X ≤ x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="binomial-prob-type" value="greater">
+            <span>P(X ≥ x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="binomial-prob-type" value="between">
+            <span>P(x ≤ X ≤ y)</span>
+          </label>
+
+        </fieldset>
+
+        <!-- SINGLE X VALUE -->
+
+        <div id="binomial-x-container" class="conditional-input">
+
+          <label for="binomial-x">
+            x value:
+          </label>
+
+          <input type="range" id="binomial-x" min="0" max="10" value="5" step="1" class="distribution-slider">
+
+          <div class="slider-value" id="binomial-x-value">
+            5
+          </div>
+
+        </div>
+
+        <!-- LOWER / UPPER VALUES -->
+
+        <div id="binomial-between-container" class="conditional-input" hidden="">
+
+          <label for="binomial-lower">
+            Lower bound (x):
+          </label>
+
+          <input type="range" id="binomial-lower" min="0" max="10" value="3" step="1" class="distribution-slider">
+
+          <div class="slider-value" id="binomial-lower-value">
+            3
+          </div>
+
+          <label for="binomial-upper" class="upper-label">
+
+            Upper bound (y):
+
+          </label>
+
+          <input type="range" id="binomial-upper" min="0" max="10" value="7" step="1" class="distribution-slider">
+
+          <div class="slider-value" id="binomial-upper-value">
+            7
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- PLOT CARD -->
+
+    <div class="calculator-card plot-card">
+
+      <div class="calculator-card-header">
+        Binomial distribution plot
+      </div>
+
+      <div class="calculator-card-body">
+
+        <div id="binomial-plot-title" class="distribution-plot-title">
+
+          Bin(n = 10, p = 0.50)
+
+        </div>
+
+        <div class="binomial-chart-wrapper">
+
+          <canvas id="binomial-chart" tabindex="0" aria-label="Binomial distribution probability mass function">
+          </canvas>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- RESULTS CARD -->
+
+  <div class="calculator-card results-card">
+
+    <div class="calculator-card-header">
+      Results
+    </div>
+
+    <div class="calculator-card-body">
+
+      <div id="binomial-result" class="calculation-result" aria-live="polite">
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<style>
+
+/* =========================================================
+   BINOMIAL CALCULATOR
+   ========================================================= */
+
+.binomial-calculator {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-shinyApp(ui = ui, server = server)</code></pre>
+
+/* TOP ROW */
+
+.binomial-calculator .calculator-row {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+
+/* CARDS */
+
+.binomial-calculator .calculator-card {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+}
+
+
+/* CARD HEADERS */
+
+.binomial-calculator .calculator-card-header {
+  background: #3F6BB6;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+
+/* CARD BODY */
+
+.binomial-calculator .calculator-card-body {
+  padding: 1rem;
+}
+
+
+/* FORM ELEMENTS */
+
+.binomial-calculator .form-group {
+  margin-bottom: 1rem;
+}
+
+.binomial-calculator label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.binomial-calculator input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  background: #ffffff;
+  font-size: 1rem;
+}
+
+
+/* SLIDERS */
+
+.binomial-calculator .distribution-slider {
+  width: 100%;
+  margin: 0.5rem 0;
+  accent-color: #3F68B6;
+  cursor: pointer;
+}
+
+.binomial-calculator .slider-value {
+  text-align: center;
+  color: #3F68B6;
+  font-weight: 700;
+  margin-top: 0.1rem;
+}
+
+
+/* DIVIDER */
+
+.binomial-calculator hr {
+  border: 0;
+  border-top: 1px solid #dddddd;
+  margin: 1.2rem 0;
+}
+
+
+/* RADIO BUTTONS */
+
+.binomial-calculator .probability-options {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.binomial-calculator .probability-options legend {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.6rem;
+}
+
+.binomial-calculator .radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.binomial-calculator .radio-option input {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: #3F68B6;
+}
+
+
+/* CONDITIONAL INPUTS */
+
+.binomial-calculator .conditional-input {
+  margin-top: 1rem;
+}
+
+.binomial-calculator .conditional-input[hidden] {
+  display: none;
+}
+
+.binomial-calculator .upper-label {
+  margin-top: 1rem;
+}
+
+
+/* PLOT */
+
+.binomial-calculator .distribution-plot-title {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.binomial-calculator .binomial-chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+
+.binomial-calculator canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+/* RESULTS */
+
+.binomial-calculator .calculation-result {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+
+/* FOCUS */
+
+.binomial-calculator input:focus,
+.binomial-calculator canvas:focus {
+  outline: 3px solid rgba(63,104,182,0.3);
+  outline-offset: 2px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .binomial-calculator .calculator-row {
+    grid-template-columns: 1fr;
+  }
+
+  .binomial-calculator .plot-card {
+    min-width: 0;
+  }
+
+  .binomial-calculator .binomial-chart-wrapper {
+    height: 280px;
+  }
+
+}
+
+
+/* SMALL MOBILE */
+
+@media (max-width: 480px) {
+
+  .binomial-calculator .calculator-card-body {
+    padding: 0.9rem;
+  }
+
+  .binomial-calculator .binomial-chart-wrapper {
+    height: 250px;
+  }
+
+}
+
+</style>
+
+
+<script>
+
+/* =========================================================
+   BINOMIAL DISTRIBUTION CALCULATOR
+   ========================================================= */
+
+(function() {
+
+  const nInput =
+    document.getElementById("binomial-n");
+
+  const pInput =
+    document.getElementById("binomial-p");
+
+  const xInput =
+    document.getElementById("binomial-x");
+
+  const lowerInput =
+    document.getElementById("binomial-lower");
+
+  const upperInput =
+    document.getElementById("binomial-upper");
+
+  const pDisplay =
+    document.getElementById("binomial-p-value");
+
+  const xDisplay =
+    document.getElementById("binomial-x-value");
+
+  const lowerDisplay =
+    document.getElementById("binomial-lower-value");
+
+  const upperDisplay =
+    document.getElementById("binomial-upper-value");
+
+  const title =
+    document.getElementById("binomial-plot-title");
+
+  const result =
+    document.getElementById("binomial-result");
+
+  const xContainer =
+    document.getElementById("binomial-x-container");
+
+  const betweenContainer =
+    document.getElementById("binomial-between-container");
+
+  const canvas =
+    document.getElementById("binomial-chart");
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  /* -------------------------------------------------------
+     BINOMIAL PMF
+     ------------------------------------------------------- */
+
+  function logGamma(z) {
+
+    const coefficients = [
+      676.5203681218851,
+      -1259.1392167224028,
+      771.32342877765313,
+      -176.61502916214059,
+      12.507343278686905,
+      -0.13857109526572012,
+      9.9843695780195716e-6,
+      1.5056327351493116e-7
+    ];
+
+    if (z < 0.5) {
+      return Math.log(Math.PI)
+        - Math.log(Math.sin(Math.PI * z))
+        - logGamma(1 - z);
+    }
+
+    z -= 1;
+
+    let x = 0.99999999999980993;
+
+    for (let i = 0; i < coefficients.length; i++) {
+      x += coefficients[i] / (z + i + 1);
+    }
+
+    const t = z + coefficients.length - 0.5;
+
+    return (
+      0.5 * Math.log(2 * Math.PI) +
+      (z + 0.5) * Math.log(t) -
+      t +
+      Math.log(x)
+    );
+  }
+
+
+  function binomialPMF(k, n, p) {
+
+    if (k < 0 || k > n) {
+      return 0;
+    }
+
+    if (p === 0) {
+      return k === 0 ? 1 : 0;
+    }
+
+    if (p === 1) {
+      return k === n ? 1 : 0;
+    }
+
+    const logProbability =
+      logGamma(n + 1) -
+      logGamma(k + 1) -
+      logGamma(n - k + 1) +
+      k * Math.log(p) +
+      (n - k) * Math.log(1 - p);
+
+    return Math.exp(logProbability);
+  }
+
+
+  /* -------------------------------------------------------
+     CUMULATIVE PROBABILITY
+     ------------------------------------------------------- */
+
+  function cumulativeProbability(k, n, p) {
+
+    if (k < 0) return 0;
+
+    if (k >= n) return 1;
+
+    let total = 0;
+
+    for (let i = 0; i <= k; i++) {
+      total += binomialPMF(i, n, p);
+    }
+
+    return total;
+  }
+
+
+  /* -------------------------------------------------------
+     CURRENT TEST TYPE
+     ------------------------------------------------------- */
+
+  function getTestType() {
+
+    const selected =
+      document.querySelector(
+        'input[name="binomial-prob-type"]:checked'
+      );
+
+    return selected
+      ? selected.value
+      : "less";
+  }
+
+
+  /* -------------------------------------------------------
+     UPDATE SLIDER RANGES
+     ------------------------------------------------------- */
+
+  function updateRanges() {
+
+    let n =
+      parseInt(nInput.value, 10);
+
+    if (!Number.isFinite(n) || n < 1) {
+      n = 1;
+      nInput.value = 1;
+    }
+
+    xInput.max = n;
+    lowerInput.max = n;
+    upperInput.max = n;
+
+    if (parseInt(xInput.value,10) > n) {
+      xInput.value = n;
+    }
+
+    if (parseInt(lowerInput.value,10) > n) {
+      lowerInput.value = n;
+    }
+
+    if (parseInt(upperInput.value,10) > n) {
+      upperInput.value = n;
+    }
+
+    if (
+      parseInt(upperInput.value,10) <
+      parseInt(lowerInput.value,10)
+    ) {
+      upperInput.value =
+        lowerInput.value;
+    }
+
+  }
+
+
+  /* -------------------------------------------------------
+     UPDATE DISPLAY
+     ------------------------------------------------------- */
+
+  function updateDisplay() {
+
+    updateRanges();
+
+    const n =
+      parseInt(nInput.value,10);
+
+    const p =
+      parseFloat(pInput.value);
+
+    const x =
+      parseInt(xInput.value,10);
+
+    const lower =
+      parseInt(lowerInput.value,10);
+
+    const upper =
+      parseInt(upperInput.value,10);
+
+    pDisplay.textContent =
+      p.toFixed(2);
+
+    xDisplay.textContent =
+      x;
+
+    lowerDisplay.textContent =
+      lower;
+
+    upperDisplay.textContent =
+      upper;
+
+    title.textContent =
+      `Bin(n = ${n}, p = ${p.toFixed(2)})`;
+
+  }
+
+
+  /* -------------------------------------------------------
+     CALCULATE RESULT
+     ------------------------------------------------------- */
+
+  function calculateProbability() {
+
+    const n =
+      parseInt(nInput.value,10);
+
+    const p =
+      parseFloat(pInput.value);
+
+    const x =
+      parseInt(xInput.value,10);
+
+    let lower =
+      parseInt(lowerInput.value,10);
+
+    let upper =
+      parseInt(upperInput.value,10);
+
+    const type =
+      getTestType();
+
+
+    if (upper < lower) {
+
+      upper = lower;
+
+      upperInput.value =
+        upper;
+
+      upperDisplay.textContent =
+        upper;
+
+    }
+
+
+    let probability;
+
+
+    if (type === "less") {
+
+      probability =
+        cumulativeProbability(
+          x,
+          n,
+          p
+        );
+
+      result.textContent =
+        `P(X ≤ ${x}) = ` +
+        `${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+
+    }
+
+
+    else if (type === "greater") {
+
+      if (x === 0) {
+
+        probability = 1;
+
+      } else {
+
+        probability =
+          1 -
+          cumulativeProbability(
+            x - 1,
+            n,
+            p
+          );
+
+      }
+
+      result.textContent =
+        `P(X ≥ ${x}) = ` +
+        `${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+
+    }
+
+
+    else {
+
+      if (lower === upper) {
+
+        probability =
+          binomialPMF(
+            lower,
+            n,
+            p
+          );
+
+      } else {
+
+        const upperProbability =
+          cumulativeProbability(
+            upper,
+            n,
+            p
+          );
+
+        const lowerProbability =
+          lower === 0
+            ? 0
+            : cumulativeProbability(
+                lower - 1,
+                n,
+                p
+              );
+
+        probability =
+          upperProbability -
+          lowerProbability;
+
+      }
+
+      result.textContent =
+        `P(${lower} ≤ X ≤ ${upper}) = ` +
+        `${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+
+    }
+
+
+    return {
+      type,
+      x,
+      lower,
+      upper,
+      probability
+    };
+
+  }
+
+
+  /* -------------------------------------------------------
+     DRAW CHART
+     ------------------------------------------------------- */
+
+  function drawChart() {
+
+    const n =
+      parseInt(nInput.value,10);
+
+    const p =
+      parseFloat(pInput.value);
+
+    const res =
+      calculateProbability();
+
+
+    const rect =
+      canvas.getBoundingClientRect();
+
+    const dpr =
+      window.devicePixelRatio || 1;
+
+    canvas.width =
+      rect.width * dpr;
+
+    canvas.height =
+      rect.height * dpr;
+
+    ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+
+    const width =
+      rect.width;
+
+    const height =
+      rect.height;
+
+
+    ctx.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    const padding = {
+      left: 55,
+      right: 20,
+      top: 25,
+      bottom: 50
+    };
+
+
+    const chartWidth =
+      width -
+      padding.left -
+      padding.right;
+
+    const chartHeight =
+      height -
+      padding.top -
+      padding.bottom;
+
+
+    const probabilities = [];
+
+    for(let k=0;k<=n;k++) {
+
+      probabilities.push(
+        binomialPMF(k,n,p)
+      );
+
+    }
+
+
+    const maxProbability =
+      Math.max(...probabilities);
+
+
+    function xScale(k) {
+
+      if(n === 0) {
+        return padding.left;
+      }
+
+      return padding.left +
+        (k / n) *
+        chartWidth;
+
+    }
+
+
+    function yScale(value) {
+
+      return padding.top +
+        chartHeight -
+        (value / maxProbability) *
+        chartHeight *
+        0.9;
+
+    }
+
+
+    /* GRID */
+
+    ctx.strokeStyle =
+      "#e5e5e5";
+
+    ctx.lineWidth = 1;
+
+    for(let i=0;i<=4;i++) {
+
+      const y =
+        padding.top +
+        chartHeight -
+        (i/4) *
+        chartHeight;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        padding.left,
+        y
+      );
+
+      ctx.lineTo(
+        width - padding.right,
+        y
+      );
+
+      ctx.stroke();
+
+    }
+
+
+    /* AXIS */
+
+    ctx.strokeStyle =
+      "#777";
+
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      padding.left,
+      padding.top + chartHeight
+    );
+
+    ctx.lineTo(
+      width - padding.right,
+      padding.top + chartHeight
+    );
+
+    ctx.stroke();
+
+
+    /* BARS */
+
+    const barWidth =
+      Math.max(
+        2,
+        Math.min(
+          40,
+          chartWidth / (n + 1) * 0.72
+        )
+      );
+
+
+    for(let k=0;k<=n;k++) {
+
+      const probability =
+        probabilities[k];
+
+      const barHeight =
+        (probability / maxProbability) *
+        chartHeight *
+        0.9;
+
+      const x =
+        xScale(k) -
+        barWidth / 2;
+
+      const y =
+        padding.top +
+        chartHeight -
+        barHeight;
+
+
+      let highlighted = false;
+
+
+      if(res.type === "less") {
+
+        highlighted =
+          k <= res.x;
+
+      }
+
+      else if(res.type === "greater") {
+
+        highlighted =
+          k >= res.x;
+
+      }
+
+      else if(res.type === "between") {
+
+        highlighted =
+          k >= res.lower &&
+          k <= res.upper;
+
+      }
+
+
+      ctx.fillStyle =
+        highlighted
+          ? "#3F6BB6"
+          : "#d3d3d3";
+
+
+      ctx.fillRect(
+        x,
+        y,
+        barWidth,
+        barHeight
+      );
+
+
+      ctx.strokeStyle =
+        "#777";
+
+      ctx.strokeRect(
+        x,
+        y,
+        barWidth,
+        barHeight
+      );
+
+    }
+
+
+    /* X AXIS LABELS */
+
+    ctx.fillStyle =
+      "#333";
+
+    ctx.font =
+      "12px Arial";
+
+    ctx.textAlign =
+      "center";
+
+    for(let k=0;k<=n;k++) {
+
+      const x =
+        xScale(k);
+
+      ctx.fillText(
+        k,
+        x,
+        padding.top +
+        chartHeight +
+        20
+      );
+
+    }
+
+
+    /* X LABEL */
+
+    ctx.font =
+      "13px Arial";
+
+    ctx.fillText(
+      "number of successes (X)",
+      padding.left +
+      chartWidth/2,
+      height - 8
+    );
+
+
+    /* Y LABEL */
+
+    ctx.save();
+
+    ctx.translate(
+      15,
+      padding.top +
+      chartHeight/2
+    );
+
+    ctx.rotate(-Math.PI/2);
+
+    ctx.textAlign =
+      "center";
+
+    ctx.fillText(
+      "probability mass function",
+      0,
+      0
+    );
+
+    ctx.restore();
+
+  }
+
+
+  /* -------------------------------------------------------
+     VISIBILITY
+     ------------------------------------------------------- */
+
+  function updateVisibility() {
+
+    const type =
+      getTestType();
+
+    if(
+      type === "less" ||
+      type === "greater"
+    ) {
+
+      xContainer.hidden = false;
+
+      betweenContainer.hidden = true;
+
+    } else {
+
+      xContainer.hidden = true;
+
+      betweenContainer.hidden = false;
+
+    }
+
+  }
+
+
+  /* -------------------------------------------------------
+     MASTER UPDATE
+     ------------------------------------------------------- */
+
+  function update() {
+
+    updateVisibility();
+
+    updateDisplay();
+
+    drawChart();
+
+  }
+
+
+  /* -------------------------------------------------------
+     EVENT LISTENERS
+     ------------------------------------------------------- */
+
+  nInput.addEventListener(
+    "input",
+    update
+  );
+
+  pInput.addEventListener(
+    "input",
+    update
+  );
+
+  xInput.addEventListener(
+    "input",
+    update
+  );
+
+  lowerInput.addEventListener(
+    "input",
+    function() {
+
+      if(
+        parseInt(upperInput.value,10) <
+        parseInt(lowerInput.value,10)
+      ) {
+
+        upperInput.value =
+          lowerInput.value;
+
+      }
+
+      update();
+
+    }
+  );
+
+  upperInput.addEventListener(
+    "input",
+    update
+  );
+
+
+  document
+    .querySelectorAll(
+      'input[name="binomial-prob-type"]'
+    )
+    .forEach(
+      radio =>
+        radio.addEventListener(
+          "change",
+          update
+        )
+    );
+
+
+  window.addEventListener(
+    "resize",
+    drawChart
+  );
+
+
+  /* INITIALISE */
+
+  update();
+
+})();
+
+</script>
+
 <p><strong>Example:</strong> You flip a coin <span class="math inline">\(10\)</span> times, and the probability of getting ‘heads’ is <span class="math inline">\(0.5\)</span>. Taking ‘heads’ as a success, this can be expressed as <span class="math inline">\(X \sim B(10, 0.5)\)</span>, meaning <span class="math inline">\(10\)</span> trials are conducted, where the probability of success in each trial is <span class="math inline">\(0.5\)</span>.</p>
 </section>
 <section id="multinomial-distribution" class="level2 unnumbered">

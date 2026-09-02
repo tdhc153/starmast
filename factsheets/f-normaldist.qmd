@@ -14,530 +14,698 @@ library("webexercises")
 ::: {.content-visible when-format="html"}
 
 ```{=html}
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jstat@1.9.6/dist/jstat.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Normal Distribution Calculator</title>
 
-<style>
-.normal-card-header {
-  background-color: #3F68B6;
-  color: white;
-  font-weight: 600;
-}
+  <style>
+    * { box-sizing: border-box; }
 
-.form-check-label {
-  margin-left: 0.25rem;
-}
+    body {
+      margin: 0;
+      padding: 1rem;
+      background: #f5f6f8;
+      color: #222222;
+    }
 
-.normal-result {
-  font-size: 1.1rem;
-  font-weight: 500;
-}
+    /* =========================================================
+       NORMAL DISTRIBUTION CALCULATOR
+       ========================================================= */
 
-.normal-container {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
+    .normal-calculator {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-.calculator-row {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 1rem;
-}
+    .normal-calculator .calculator-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
 
-@media (max-width: 992px) {
-  .calculator-row {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
+    .normal-calculator .calculator-card {
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      margin-bottom: 1rem;
+    }
 
-<div class="container-fluid normal-container">
+    .normal-calculator .calculator-card-header {
+      background: #3F6BB6;
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .normal-calculator .calculator-card-body { padding: 1rem; }
+    .normal-calculator .form-group { margin-bottom: 1rem; }
+
+    .normal-calculator label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .normal-calculator input[type="number"] {
+      width: 100%;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      background: #ffffff;
+      font-size: 1rem;
+    }
+
+    .normal-calculator .distribution-slider {
+      width: 100%;
+      margin: 0.5rem 0;
+      accent-color: #3F68B6;
+      cursor: pointer;
+    }
+
+    .normal-calculator .slider-value {
+      text-align: center;
+      color: #3F68B6;
+      font-weight: 700;
+      margin-top: 0.1rem;
+    }
+
+    .normal-calculator hr {
+      border: 0;
+      border-top: 1px solid #dddddd;
+      margin: 1.2rem 0;
+    }
+
+    .normal-calculator .probability-options {
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .normal-calculator .probability-options legend {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+    }
+
+    .normal-calculator .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.55rem;
+      cursor: pointer;
+      font-weight: 400;
+    }
+
+    .normal-calculator .radio-option input {
+      margin: 0;
+      width: 16px;
+      height: 16px;
+      accent-color: #3F68B6;
+    }
+
+    .normal-calculator .conditional-input { margin-top: 1rem; }
+    .normal-calculator .conditional-input[hidden] { display: none; }
+    .normal-calculator .upper-label { margin-top: 1rem; }
+
+    .normal-calculator .distribution-plot-title {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .normal-calculator .normal-chart-wrapper {
+      position: relative;
+      width: 100%;
+      height: 320px;
+    }
+
+    .normal-calculator canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .normal-calculator .calculation-result {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .normal-calculator input:focus,
+    .normal-calculator canvas:focus {
+      outline: 3px solid rgba(63, 104, 182, 0.3);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .normal-calculator .calculator-row { grid-template-columns: 1fr; }
+      .normal-calculator .plot-card { min-width: 0; }
+      .normal-calculator .normal-chart-wrapper { height: 280px; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 0.5rem; }
+      .normal-calculator .calculator-card-body { padding: 0.9rem; }
+      .normal-calculator .normal-chart-wrapper { height: 250px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="distribution-calculator normal-calculator">
 
   <div class="calculator-row">
 
-    <div class="calculator-left">
+    <!-- PARAMETERS CARD -->
+    <div class="calculator-card parameters-card">
+      <div class="calculator-card-header">Parameters</div>
 
-      <div class="card mb-3">
+      <div class="calculator-card-body">
 
-        <div class="card-header normal-card-header">
-          Parameters
-        </div>
-
-        <div class="card-body">
-
-          <label class="form-label">
-            Mean (μ)
-          </label>
-
+        <div class="form-group">
+          <label for="normal-mean">Mean (&mu;):</label>
           <input
-            id="mean"
             type="number"
-            class="form-control"
+            id="normal-mean"
             value="0"
             step="0.1"
-          >
+            class="form-control">
+        </div>
 
-          <br>
-
-          <label class="form-label">
-            Standard deviation (σ)
-          </label>
-
+        <div class="form-group">
+          <label for="normal-sd">Standard deviation (&sigma;):</label>
           <input
-            id="sd"
             type="number"
-            class="form-control"
+            id="normal-sd"
             value="1"
-            min="0.01"
+            min="0.1"
             step="0.1"
-          >
+            class="form-control">
+        </div>
 
-          <hr>
+        <hr>
 
-          <label class="form-label">
-            Probability to calculate
+        <fieldset class="probability-options">
+          <legend>Probability to calculate:</legend>
+
+          <label class="radio-option">
+            <input type="radio" name="normal-prob-type" value="less" checked>
+            <span>P(X &le; x)</span>
           </label>
 
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="ptype"
-              value="less"
-              id="ptype_less"
-              checked
-            >
-            <label class="form-check-label" for="ptype_less">
-               P(X ≤ x)
-            </label>
-          </div>
+          <label class="radio-option">
+            <input type="radio" name="normal-prob-type" value="greater">
+            <span>P(X &ge; x)</span>
+          </label>
 
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="ptype"
-              value="greater"
-              id="ptype_greater"
-            >
-            <label class="form-check-label" for="ptype_greater">
-              P(X ≥ x)
-            </label>
-          </div>
+          <label class="radio-option">
+            <input type="radio" name="normal-prob-type" value="between">
+            <span>P(a &le; X &le; b)</span>
+          </label>
+        </fieldset>
 
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="ptype"
-              value="between"
-              id="ptype_between"
-            >
-            <label class="form-check-label" for="ptype_between">
-              P(x ≤ X ≤ y)
-            </label>
-          </div>
+        <!-- SINGLE X VALUE -->
+        <div id="normal-x-container" class="conditional-input">
+          <label for="normal-x">x value:</label>
+          <input
+            type="range"
+            id="normal-x"
+            min="-5"
+            max="5"
+            value="1"
+            step="0.1"
+            class="distribution-slider">
+          <div class="slider-value" id="normal-x-value">1.0</div>
+        </div>
 
-          <br>
+        <!-- LOWER / UPPER VALUES -->
+        <div id="normal-between-container" class="conditional-input" hidden>
+          <label for="normal-lower">Lower bound (a):</label>
+          <input
+            type="range"
+            id="normal-lower"
+            min="-5"
+            max="5"
+            value="-1"
+            step="0.1"
+            class="distribution-slider">
+          <div class="slider-value" id="normal-lower-value">-1.0</div>
 
-          <div id="singleControls">
-
-  <label class="form-label">
-    x value:
-    <span id="xValueLabel">0.00</span>
-  </label>
-
-  <input
-    id="x_value"
-    type="range"
-    class="form-range"
-    min="-3.5"
-    max="3.5"
-    step="0.01"
-    value="0"
-  >
-
-</div>
-
-          <div
-            id="betweenControls"
-            style="display:none;"
-          >
-
-            <label class="form-label">
-  Lower bound (x):
-  <span id="lowerLabel">-1.00</span>
-</label>
-
-<input
-  id="x_lower"
-  type="range"
-  class="form-range"
-  min="-3.5"
-  max="3.5"
-  step="0.01"
-  value="-1"
->
-
-<label class="form-label">
-  Upper bound (y):
-  <span id="upperLabel">1.00</span>
-</label>
-
-<input
-  id="x_upper"
-  type="range"
-  class="form-range"
-  min="-3.5"
-  max="3.5"
-  step="0.01"
-  value="1"
->
-
-          </div>
-
+          <label for="normal-upper" class="upper-label">Upper bound (b):</label>
+          <input
+            type="range"
+            id="normal-upper"
+            min="-5"
+            max="5"
+            value="1"
+            step="0.1"
+            class="distribution-slider">
+          <div class="slider-value" id="normal-upper-value">1.0</div>
         </div>
 
       </div>
-
     </div>
 
-     <div class="calculator-right">
+    <!-- PLOT CARD -->
+    <div class="calculator-card plot-card">
+      <div class="calculator-card-header">Normal distribution plot</div>
 
-      <div class="card mb-3">
-
-        <div class="card-header normal-card-header">
-          Normal distribution plot
+      <div class="calculator-card-body">
+        <div id="normal-plot-title" class="distribution-plot-title">
+          N(&mu; = 0.0, &sigma; = 1.0)
         </div>
 
-        <div class="card-body">
-
-          <h4
-            id="plotTitle"
-            style="text-align:center;margin-bottom:15px;"
-          ></h4>
-
-          <div
-            id="normalPlot"
-            style="height:450px;"
-            aria-label="Normal distribution plot"
-          ></div>
-
+        <div class="normal-chart-wrapper">
+          <canvas
+            id="normal-chart"
+            tabindex="0"
+            role="img"
+            aria-label="Normal distribution probability density function">
+          </canvas>
         </div>
-
       </div>
-
     </div>
 
   </div>
 
-  <div class="card">
-
-    <div class="card-header normal-card-header">
-      Results
+  <!-- RESULTS CARD -->
+  <div class="calculator-card results-card">
+    <div class="calculator-card-header">Results</div>
+    <div class="calculator-card-body">
+      <div id="normal-result" class="calculation-result" aria-live="polite"></div>
     </div>
-
-    <div class="card-body">
-
-      <div
-        id="resultText"
-        class="normal-result"
-        aria-live="polite"
-      ></div>
-
-    </div>
-
   </div>
 
 </div>
 
 <script>
+/* =========================================================
+   NORMAL DISTRIBUTION CALCULATOR
+   ========================================================= */
 
-function getProbType() {
-  return document.querySelector(
-    'input[name="ptype"]:checked'
-  ).value;
-}
+(function() {
+  "use strict";
 
-function updateVisibility() {
+  const root = document.querySelector(".normal-calculator");
+  if (!root) return;
 
-  const ptype = getProbType();
+  const meanInput = root.querySelector("#normal-mean");
+  const sdInput = root.querySelector("#normal-sd");
+  const xInput = root.querySelector("#normal-x");
+  const lowerInput = root.querySelector("#normal-lower");
+  const upperInput = root.querySelector("#normal-upper");
 
-  document.getElementById("singleControls").style.display =
-    (ptype === "between") ? "none" : "block";
+  const xDisplay = root.querySelector("#normal-x-value");
+  const lowerDisplay = root.querySelector("#normal-lower-value");
+  const upperDisplay = root.querySelector("#normal-upper-value");
 
-  document.getElementById("betweenControls").style.display =
-    (ptype === "between") ? "block" : "none";
-}
+  const title = root.querySelector("#normal-plot-title");
+  const result = root.querySelector("#normal-result");
+  const xContainer = root.querySelector("#normal-x-container");
+  const betweenContainer = root.querySelector("#normal-between-container");
+  const canvas = root.querySelector("#normal-chart");
+  const ctx = canvas.getContext("2d");
 
-function normalPdf(x, mu, sigma) {
-  return jStat.normal.pdf(x, mu, sigma);
-}
+  function erf(value) {
+    const sign = value < 0 ? -1 : 1;
+    const z = Math.abs(value);
+    const a1 = 0.254829592;
+    const a2 = -0.284496736;
+    const a3 = 1.421413741;
+    const a4 = -1.453152027;
+    const a5 = 1.061405429;
+    const p = 0.3275911;
+    const t = 1 / (1 + p * z);
 
-function normalCdf(x, mu, sigma) {
-  return jStat.normal.cdf(x, mu, sigma);
-}
+    const y = 1 -
+      (((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t) *
+      Math.exp(-z * z);
 
-function updateSliderLabels() {
-
-  document.getElementById("xValueLabel").textContent =
-    Number(document.getElementById("x_value").value).toFixed(2);
-
-  document.getElementById("lowerLabel").textContent =
-    Number(document.getElementById("x_lower").value).toFixed(2);
-
-  document.getElementById("upperLabel").textContent =
-    Number(document.getElementById("x_upper").value).toFixed(2);
-
-}
-
-function redraw() {
-
-  updateVisibility();
-  updateSliderLabels();
-
-  const mu =
-    parseFloat(document.getElementById("mean").value);
-
-  const sigma =
-    parseFloat(document.getElementById("sd").value);
-
-  if (sigma <= 0) return;
-
-  document.getElementById("plotTitle").innerHTML =
-    `N(μ = ${mu.toFixed(2)}, σ = ${sigma.toFixed(2)})`;
-
-  const xMin = mu - 3.5 * sigma;
-  const xMax = mu + 3.5 * sigma;
-  
-  ["x_value","x_lower","x_upper"].forEach(id => {
-
-  document.getElementById(id).min = xMin;
-  document.getElementById(id).max = xMax;
-
-});
-
-  const x = [];
-  const y = [];
-
-  for (let i = 0; i <= 500; i++) {
-
-    const xx =
-      xMin + (xMax - xMin) * i / 500;
-
-    x.push(xx);
-    y.push(normalPdf(xx, mu, sigma));
+    return sign * y;
   }
 
-  const ptype = getProbType();
+  function normalPDF(value, mean, sd) {
+    const z = (value - mean) / sd;
+    return Math.exp(-0.5 * z * z) / (sd * Math.sqrt(2 * Math.PI));
+  }
 
-  let shadeX = [];
-  let shadeY = [];
-  let result = "";
-  let cutLines = [];
+  function normalCDF(value, mean, sd) {
+    return 0.5 * (1 + erf((value - mean) / (sd * Math.sqrt(2))));
+  }
 
-  if (ptype === "less") {
+  function getProbabilityType() {
+    const selected = root.querySelector(
+      'input[name="normal-prob-type"]:checked'
+    );
+    return selected ? selected.value : "less";
+  }
 
-    const cutoff =
-      parseFloat(document.getElementById("x_value").value);
+  function validateParameters() {
+    let mean = parseFloat(meanInput.value);
+    let sd = parseFloat(sdInput.value);
 
-    for (let i = 0; i <= 200; i++) {
-
-      const xx =
-        xMin + (cutoff - xMin) * i / 200;
-
-      shadeX.push(xx);
-      shadeY.push(normalPdf(xx, mu, sigma));
+    if (!Number.isFinite(mean)) {
+      mean = 0;
+      meanInput.value = 0;
     }
 
-    const prob =
-      normalCdf(cutoff, mu, sigma);
-
-    result =
-      `P(X ≤ ${cutoff.toFixed(2)}) = ${prob.toFixed(4)} (${(100 * prob).toFixed(2)}%)`;
-
-    cutLines = [cutoff];
-  }
-
-  if (ptype === "greater") {
-
-    const cutoff =
-      parseFloat(document.getElementById("x_value").value);
-
-    for (let i = 0; i <= 200; i++) {
-
-      const xx =
-        cutoff + (xMax - cutoff) * i / 200;
-
-      shadeX.push(xx);
-      shadeY.push(normalPdf(xx, mu, sigma));
+    if (!Number.isFinite(sd) || sd <= 0) {
+      sd = 0.1;
+      sdInput.value = 0.1;
     }
 
-    const prob =
-      1 - normalCdf(cutoff, mu, sigma);
-
-    result =
-      `P(X ≥ ${cutoff.toFixed(2)}) = ${prob.toFixed(4)} (${(100 * prob).toFixed(2)}%)`;
-
-    cutLines = [cutoff];
+    return { mean, sd };
   }
 
-  if (ptype === "between") {
+  function updateSliderRanges(mean, sd) {
+    const minimum = mean - 5 * sd;
+    const maximum = mean + 5 * sd;
+    const step = Math.max(0.01, sd / 10);
 
-    let lower =
-      parseFloat(document.getElementById("x_lower").value);
+    [xInput, lowerInput, upperInput].forEach(function(input) {
+      input.min = minimum;
+      input.max = maximum;
+      input.step = step;
+    });
 
-    let upper =
-      parseFloat(document.getElementById("x_upper").value);
+    if (parseFloat(xInput.value) < minimum || parseFloat(xInput.value) > maximum) {
+      xInput.value = mean + sd;
+    }
+
+    if (parseFloat(lowerInput.value) < minimum || parseFloat(lowerInput.value) > maximum) {
+      lowerInput.value = mean - sd;
+    }
+
+    if (parseFloat(upperInput.value) < minimum || parseFloat(upperInput.value) > maximum) {
+      upperInput.value = mean + sd;
+    }
+  }
+
+  function formatValue(value) {
+    return Number(value).toFixed(2);
+  }
+
+  function updateDisplay() {
+    const parameters = validateParameters();
+    updateSliderRanges(parameters.mean, parameters.sd);
+
+    xDisplay.textContent = formatValue(xInput.value);
+    lowerDisplay.textContent = formatValue(lowerInput.value);
+    upperDisplay.textContent = formatValue(upperInput.value);
+
+    title.textContent =
+      `N(μ = ${parameters.mean.toFixed(2)}, σ = ${parameters.sd.toFixed(2)})`;
+  }
+
+  function calculateProbability() {
+    const parameters = validateParameters();
+    const mean = parameters.mean;
+    const sd = parameters.sd;
+    const x = parseFloat(xInput.value);
+    let lower = parseFloat(lowerInput.value);
+    let upper = parseFloat(upperInput.value);
+    const type = getProbabilityType();
 
     if (upper < lower) {
       upper = lower;
-      document.getElementById("x_upper").value = lower;
+      upperInput.value = upper;
+      upperDisplay.textContent = formatValue(upper);
     }
 
-    for (let i = 0; i <= 200; i++) {
+    let probability;
 
-      const xx =
-        lower + (upper - lower) * i / 200;
+    if (type === "less") {
+      probability = normalCDF(x, mean, sd);
+      result.textContent =
+        `P(X ≤ ${formatValue(x)}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    } else if (type === "greater") {
+      probability = 1 - normalCDF(x, mean, sd);
+      result.textContent =
+        `P(X ≥ ${formatValue(x)}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    } else {
+      probability =
+        normalCDF(upper, mean, sd) -
+        normalCDF(lower, mean, sd);
 
-      shadeX.push(xx);
-      shadeY.push(normalPdf(xx, mu, sigma));
+      result.textContent =
+        `P(${formatValue(lower)} ≤ X ≤ ${formatValue(upper)}) = ` +
+        `${probability.toFixed(4)} or ` +
+        `${(probability * 100).toFixed(2)}%`;
     }
 
-    const prob =
-      normalCdf(upper, mu, sigma) -
-      normalCdf(lower, mu, sigma);
+    probability = Math.max(0, Math.min(1, probability));
 
-    result =
-      `P(${lower.toFixed(2)} ≤ X ≤ ${upper.toFixed(2)}) = ${prob.toFixed(4)} (${(100 * prob).toFixed(2)}%)`;
-
-    cutLines = [lower, upper];
+    return { type, x, lower, upper, probability, mean, sd };
   }
 
-  document.getElementById("resultText").textContent =
-    result;
+  function drawChart() {
+    const selected = calculateProbability();
+    const mean = selected.mean;
+    const sd = selected.sd;
+    const rect = canvas.getBoundingClientRect();
 
-  const shapes = [
+    if (!rect.width || !rect.height) return;
 
-    {
-      type: "line",
-      x0: 0,
-      x1: 0,
-      y0: 0,
-      y1: Math.max(...y),
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      line: {
-        color: "black",
-        width: 2
-      }
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { left: 62, right: 22, top: 25, bottom: 52 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+    const minimumX = mean - 4 * sd;
+    const maximumX = mean + 4 * sd;
+    const maximumY = normalPDF(mean, mean, sd) * 1.12;
+    const pointCount = Math.max(600, Math.round(chartWidth * 1.7));
+
+    ctx.clearRect(0, 0, width, height);
+
+    function xScale(value) {
+      return padding.left +
+        ((value - minimumX) / (maximumX - minimumX)) * chartWidth;
     }
 
-  ];
+    function yScale(value) {
+      return padding.top + chartHeight -
+        (value / maximumY) * chartHeight;
+    }
 
-  cutLines.forEach(v => {
+    ctx.font = "12px Arial";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
 
-    shapes.push({
+    for (let i = 0; i <= 4; i++) {
+      const density = (i / 4) * maximumY;
+      const y = yScale(density);
 
-      type: "line",
+      ctx.strokeStyle = "#e5e5e5";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padding.left, y);
+      ctx.lineTo(width - padding.right, y);
+      ctx.stroke();
 
-      x0: v,
-      x1: v,
+      ctx.fillStyle = "#555555";
+      ctx.fillText(density.toFixed(2), padding.left - 8, y);
+    }
 
-      y0: 0,
-      y1: Math.max(...y),
+    function fillArea(start, end, colour) {
+      const boundedStart = Math.max(minimumX, Math.min(maximumX, start));
+      const boundedEnd = Math.max(minimumX, Math.min(maximumX, end));
 
-      line: {
-        color: "#db4315",
-        width: 2,
-        dash: "dash"
+      if (boundedEnd <= boundedStart) return;
+
+      const count = Math.max(
+        2,
+        Math.round(
+          pointCount * (boundedEnd - boundedStart) /
+          (maximumX - minimumX)
+        )
+      );
+
+      ctx.beginPath();
+      ctx.moveTo(xScale(boundedStart), yScale(0));
+
+      for (let i = 0; i <= count; i++) {
+        const value = boundedStart +
+          (i / count) * (boundedEnd - boundedStart);
+        ctx.lineTo(xScale(value), yScale(normalPDF(value, mean, sd)));
       }
 
-    });
+      ctx.lineTo(xScale(boundedEnd), yScale(0));
+      ctx.closePath();
+      ctx.fillStyle = colour;
+      ctx.fill();
+    }
 
+    fillArea(minimumX, maximumX, "rgba(211, 211, 211, 0.55)");
+
+    if (selected.type === "less") {
+      fillArea(minimumX, selected.x, "rgba(63, 107, 182, 0.58)");
+    } else if (selected.type === "greater") {
+      fillArea(selected.x, maximumX, "rgba(63, 107, 182, 0.58)");
+    } else {
+      fillArea(selected.lower, selected.upper, "rgba(63, 107, 182, 0.58)");
+    }
+
+    ctx.beginPath();
+
+    for (let i = 0; i <= pointCount; i++) {
+      const value = minimumX +
+        (i / pointCount) * (maximumX - minimumX);
+      const chartX = xScale(value);
+      const chartY = yScale(normalPDF(value, mean, sd));
+
+      if (i === 0) ctx.moveTo(chartX, chartY);
+      else ctx.lineTo(chartX, chartY);
+    }
+
+    ctx.strokeStyle = "#274f91";
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    function drawBoundary(value) {
+      if (value < minimumX || value > maximumX) return;
+
+      ctx.save();
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = "#274f91";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(xScale(value), yScale(0));
+      ctx.lineTo(xScale(value), yScale(normalPDF(value, mean, sd)));
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    if (selected.type === "between") {
+      drawBoundary(selected.lower);
+      drawBoundary(selected.upper);
+    } else {
+      drawBoundary(selected.x);
+    }
+
+    ctx.strokeStyle = "#777777";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, padding.top + chartHeight);
+    ctx.lineTo(width - padding.right, padding.top + chartHeight);
+    ctx.stroke();
+
+    ctx.save();
+    ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = "#aaaaaa";
+    ctx.beginPath();
+    ctx.moveTo(xScale(mean), padding.top);
+    ctx.lineTo(xScale(mean), padding.top + chartHeight);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = "#333333";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+
+    const tickCount = width < 500 ? 4 : 8;
+
+    for (let i = 0; i <= tickCount; i++) {
+      const value = minimumX +
+        (i / tickCount) * (maximumX - minimumX);
+      ctx.fillText(
+        formatValue(value),
+        xScale(value),
+        padding.top + chartHeight + 20
+      );
+    }
+
+    ctx.font = "13px Arial";
+    ctx.fillText(
+      "value of X",
+      padding.left + chartWidth / 2,
+      height - 8
+    );
+
+    ctx.save();
+    ctx.translate(15, padding.top + chartHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = "center";
+    ctx.fillText("probability density", 0, 0);
+    ctx.restore();
+
+    canvas.setAttribute(
+      "aria-label",
+      `Normal distribution plot with mean ${mean.toFixed(2)} and ` +
+      `standard deviation ${sd.toFixed(2)}. The selected probability is ` +
+      `${selected.probability.toFixed(4)}.`
+    );
+  }
+
+  function updateVisibility() {
+    const type = getProbabilityType();
+    xContainer.hidden = type === "between";
+    betweenContainer.hidden = type !== "between";
+  }
+
+  function update() {
+    updateVisibility();
+    updateDisplay();
+    drawChart();
+  }
+
+  meanInput.addEventListener("input", update);
+  sdInput.addEventListener("input", update);
+  meanInput.addEventListener("change", update);
+  sdInput.addEventListener("change", update);
+  xInput.addEventListener("input", update);
+
+  lowerInput.addEventListener("input", function() {
+    if (parseFloat(lowerInput.value) > parseFloat(upperInput.value)) {
+      upperInput.value = lowerInput.value;
+    }
+    update();
   });
 
-  Plotly.react(
-
-    "normalPlot",
-
-    [
-
-      {
-        x: x,
-        y: y,
-
-        mode: "lines",
-
-        showlegend: false,
-
-        line: {
-          color: "darkgray",
-          width: 3
-        },
-
-        hoverinfo: "skip"
-      },
-
-      {
-        x: shadeX,
-        y: shadeY,
-
-        fill: "tozeroy",
-
-        mode: "lines",
-
-        showlegend: false,
-
-        fillcolor: "rgba(63,104,182,0.60)",
-
-        line: {
-          width: 0
-        },
-
-        hoverinfo: "skip"
-      }
-
-    ],
-
-    {
-
-      showlegend: false,
-
-      margin: {t: 10},
-
-      shapes: shapes,
-
-      xaxis: {
-        title: "X"
-      },
-
-      yaxis: {
-        title: "Density"
-      }
-
-    },
-
-    {
-      responsive: true,
-      displayModeBar: false
+  upperInput.addEventListener("input", function() {
+    if (parseFloat(upperInput.value) < parseFloat(lowerInput.value)) {
+      lowerInput.value = upperInput.value;
     }
+    update();
+  });
 
+  root.querySelectorAll('input[name="normal-prob-type"]').forEach(
+    function(radio) {
+      radio.addEventListener("change", update);
+    }
   );
 
-}
+  let resizeTimer;
 
-document
-  .querySelectorAll("input")
-  .forEach(el => {
-
-    el.addEventListener("input", redraw);
-    el.addEventListener("change", redraw);
-
+  window.addEventListener("resize", function() {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(drawChart, 80);
   });
 
-window.addEventListener("load", redraw);
-
+  update();
+})();
 </script>
+
+</body>
+</html>
 ```
 
 :::

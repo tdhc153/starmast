@@ -43,19 +43,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-3b7d9c4ba168eb520ddf55bb25793bc7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-58cbebc2be5c2cfabe4ef1ccaf2cf5b0.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-3b7d9c4ba168eb520ddf55bb25793bc7.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-4bc6d62a8f631abbc9a163be30471117.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-9b9ee040fd52a61b26fb17fad03ba886.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-4bc6d62a8f631abbc9a163be30471117.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content="..">
-<script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
-<link href="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/shinylive.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-365d6bab852ec9a235b2fcad5c9fe113.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -434,208 +429,570 @@ window.Quarto = {
 </header>
 
 
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| viewerHeight: 670
 
-library(shiny)
-library(bslib)
-library(ggplot2)
 
-ui &lt;- page_fluid(
-  title = "Poisson distribution calculator",
-  
-  layout_columns(
-    col_widths = c(4, 8),
-    
-    # Left column - Inputs
-    card(
-      card_header("Parameters"),
-      card_body(
-        numericInput("lambda", "Rate parameter (λ):", value = 5, min = 0.1, step = 0.1),
-        hr(),
-        radioButtons("prob_type", "Probability to calculate:",
-                    choices = list("P(X = x)" = "exact", 
-                                  "P(X ≤ x)" = "less", 
-                                  "P(X ≥ x)" = "greater", 
-                                  "P(x ≤ X ≤ y)" = "between"),
-                    selected = "exact"),
-        conditionalPanel(
-          condition = "input.prob_type == 'exact'",
-          sliderInput("x_exact", "x value:", min = 0, max = 20, value = 5, step = 1)
-        ),
-        conditionalPanel(
-          condition = "input.prob_type == 'less'",
-          sliderInput("x_less", "x value:", min = 0, max = 20, value = 5, step = 1)
-        ),
-        conditionalPanel(
-          condition = "input.prob_type == 'greater'",
-          sliderInput("x_greater", "x value:", min = 0, max = 20, value = 5, step = 1)
-        ),
-        conditionalPanel(
-          condition = "input.prob_type == 'between'",
-          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 20, value = 3, step = 1),
-          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 20, value = 7, step = 1)
-        )
-      )
-    ),
-    
-    # Right column - Plot
-    card(
-      card_header("Poisson distribution plot"),
-      card_body(
-        uiOutput("plot_title"),
-        plotOutput("distPlot", height = "300px")
-      )
-    )
-  ),
-  
-  # Bottom row - Results
-  card(
-    card_header("Results"),
-    card_body(
-      textOutput("explanation")
-    )
-  )
-)
 
-server &lt;- function(input, output, session) {
-  
-  # When lambda changes, adjust the range of sliders
-  observe({
-    # Set a reasonable max value as 3*lambda or at least 10
-    max_x &lt;- max(round(input$lambda * 3), 10)
-    
-    updateSliderInput(session, "x_exact", max = max_x)
-    updateSliderInput(session, "x_less", max = max_x)
-    updateSliderInput(session, "x_greater", max = max_x)
-    updateSliderInput(session, "x_lower", max = max_x)
-    updateSliderInput(session, "x_upper", max = max_x)
-  })
-  
-  # Ensure that x_upper is always greater than or equal to x_lower
-  observe({
-    if (input$x_upper &lt; input$x_lower) {
-      updateSliderInput(session, "x_upper", value = input$x_lower)
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poisson Distribution Calculator</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 1rem;
+      background: #f5f6f8;
+      color: #222222;
     }
-  })
-  
-  # Display the plot title with distribution parameters
-  output$plot_title &lt;- renderUI({
-    title &lt;- sprintf("Poisson(λ = %.1f)", input$lambda)
-    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
-  })
-  
-  # Calculate the probability based on user selection
-  probability &lt;- reactive({
-    if (input$prob_type == "exact") {
-      prob &lt;- dpois(input$x_exact, lambda = input$lambda)
-      explanation &lt;- sprintf("P(X = %d) = %.6f or %.4f%%", 
-                           input$x_exact, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "exact", x = input$x_exact))
-      
-    } else if (input$prob_type == "less") {
-      prob &lt;- ppois(input$x_less, lambda = input$lambda)
-      explanation &lt;- sprintf("P(X ≤ %d) = %.6f or %.4f%%", 
-                           input$x_less, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_less))
-      
-    } else if (input$prob_type == "greater") {
-      # For P(X ≥ x), we need 1 - P(X &lt; x) = 1 - P(X ≤ x-1)
-      if (input$x_greater == 0) {
-        prob &lt;- 1  # P(X ≥ 0) is always 1
-      } else {
-        prob &lt;- 1 - ppois(input$x_greater - 1, lambda = input$lambda)
+
+    /* =========================================================
+       POISSON DISTRIBUTION CALCULATOR
+       ========================================================= */
+
+    .poisson-calculator {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .poisson-calculator .calculator-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .poisson-calculator .calculator-card {
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      margin-bottom: 1rem;
+    }
+
+    .poisson-calculator .calculator-card-header {
+      background: #3F6BB6;
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .poisson-calculator .calculator-card-body { padding: 1rem; }
+    .poisson-calculator .form-group { margin-bottom: 1rem; }
+
+    .poisson-calculator label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .poisson-calculator .distribution-slider {
+      width: 100%;
+      margin: 0.5rem 0;
+      accent-color: #3F68B6;
+      cursor: pointer;
+    }
+
+    .poisson-calculator .slider-value {
+      text-align: center;
+      color: #3F68B6;
+      font-weight: 700;
+      margin-top: 0.1rem;
+    }
+
+    .poisson-calculator hr {
+      border: 0;
+      border-top: 1px solid #dddddd;
+      margin: 1.2rem 0;
+    }
+
+    .poisson-calculator .probability-options {
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .poisson-calculator .probability-options legend {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+    }
+
+    .poisson-calculator .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.55rem;
+      cursor: pointer;
+      font-weight: 400;
+    }
+
+    .poisson-calculator .radio-option input {
+      margin: 0;
+      width: 16px;
+      height: 16px;
+      accent-color: #3F68B6;
+    }
+
+    .poisson-calculator .conditional-input { margin-top: 1rem; }
+    .poisson-calculator .conditional-input[hidden] { display: none; }
+    .poisson-calculator .upper-label { margin-top: 1rem; }
+
+    .poisson-calculator .distribution-plot-title {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .poisson-calculator .poisson-chart-wrapper {
+      position: relative;
+      width: 100%;
+      height: 320px;
+    }
+
+    .poisson-calculator canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .poisson-calculator .calculation-result {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .poisson-calculator input:focus,
+    .poisson-calculator canvas:focus {
+      outline: 3px solid rgba(63, 104, 182, 0.3);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .poisson-calculator .calculator-row { grid-template-columns: 1fr; }
+      .poisson-calculator .plot-card { min-width: 0; }
+      .poisson-calculator .poisson-chart-wrapper { height: 280px; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 0.5rem; }
+      .poisson-calculator .calculator-card-body { padding: 0.9rem; }
+      .poisson-calculator .poisson-chart-wrapper { height: 250px; }
+    }
+  </style>
+
+
+
+
+<div class="distribution-calculator poisson-calculator">
+
+  <div class="calculator-row">
+
+    <!-- PARAMETERS CARD -->
+    <div class="calculator-card parameters-card">
+      <div class="calculator-card-header">Parameters</div>
+
+      <div class="calculator-card-body">
+
+        <div class="form-group">
+          <label for="poisson-lambda">Mean event rate (λ):</label>
+          <input type="range" id="poisson-lambda" min="0.1" max="30" value="4" step="0.1" class="distribution-slider">
+          <div class="slider-value" id="poisson-lambda-value">4.0</div>
+        </div>
+
+        <hr>
+
+        <fieldset class="probability-options">
+          <legend>Probability to calculate:</legend>
+
+          <label class="radio-option">
+            <input type="radio" name="poisson-prob-type" value="less" checked="">
+            <span>P(X ≤ x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="poisson-prob-type" value="greater">
+            <span>P(X ≥ x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="poisson-prob-type" value="between">
+            <span>P(a ≤ X ≤ b)</span>
+          </label>
+        </fieldset>
+
+        <!-- SINGLE X VALUE -->
+        <div id="poisson-x-container" class="conditional-input">
+          <label for="poisson-x">x value:</label>
+          <input type="range" id="poisson-x" min="0" max="25" value="5" step="1" class="distribution-slider">
+          <div class="slider-value" id="poisson-x-value">5</div>
+        </div>
+
+        <!-- LOWER / UPPER VALUES -->
+        <div id="poisson-between-container" class="conditional-input" hidden="">
+          <label for="poisson-lower">Lower bound (a):</label>
+          <input type="range" id="poisson-lower" min="0" max="25" value="2" step="1" class="distribution-slider">
+          <div class="slider-value" id="poisson-lower-value">2</div>
+
+          <label for="poisson-upper" class="upper-label">Upper bound (b):</label>
+          <input type="range" id="poisson-upper" min="0" max="25" value="7" step="1" class="distribution-slider">
+          <div class="slider-value" id="poisson-upper-value">7</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PLOT CARD -->
+    <div class="calculator-card plot-card">
+      <div class="calculator-card-header">Poisson distribution plot</div>
+
+      <div class="calculator-card-body">
+        <div id="poisson-plot-title" class="distribution-plot-title">
+          Poisson(λ = 4.0)
+        </div>
+
+        <div class="poisson-chart-wrapper">
+          <canvas id="poisson-chart" tabindex="0" role="img" aria-label="Poisson distribution probability mass function">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESULTS CARD -->
+  <div class="calculator-card results-card">
+    <div class="calculator-card-header">Results</div>
+    <div class="calculator-card-body">
+      <div id="poisson-result" class="calculation-result" aria-live="polite"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   POISSON DISTRIBUTION CALCULATOR
+   ========================================================= */
+
+(function() {
+  "use strict";
+
+  const root = document.querySelector(".poisson-calculator");
+  if (!root) return;
+
+  const lambdaInput = root.querySelector("#poisson-lambda");
+  const xInput = root.querySelector("#poisson-x");
+  const lowerInput = root.querySelector("#poisson-lower");
+  const upperInput = root.querySelector("#poisson-upper");
+
+  const lambdaDisplay = root.querySelector("#poisson-lambda-value");
+  const xDisplay = root.querySelector("#poisson-x-value");
+  const lowerDisplay = root.querySelector("#poisson-lower-value");
+  const upperDisplay = root.querySelector("#poisson-upper-value");
+
+  const title = root.querySelector("#poisson-plot-title");
+  const result = root.querySelector("#poisson-result");
+  const xContainer = root.querySelector("#poisson-x-container");
+  const betweenContainer = root.querySelector("#poisson-between-container");
+  const canvas = root.querySelector("#poisson-chart");
+  const ctx = canvas.getContext("2d");
+
+  /* Stable recurrence avoids factorial overflow. */
+
+  function poissonProbabilities(maximumK, lambda) {
+    const probabilities = new Array(maximumK + 1);
+    probabilities[0] = Math.exp(-lambda);
+
+    for (let k = 1; k <= maximumK; k++) {
+      probabilities[k] = probabilities[k - 1] * lambda / k;
+    }
+
+    return probabilities;
+  }
+
+  function poissonCDF(k, lambda) {
+    if (k < 0) return 0;
+
+    k = Math.floor(k);
+    let term = Math.exp(-lambda);
+    let total = term;
+
+    for (let i = 1; i <= k; i++) {
+      term *= lambda / i;
+      total += term;
+    }
+
+    return Math.max(0, Math.min(1, total));
+  }
+
+  function getProbabilityType() {
+    const selected = root.querySelector(
+      'input[name="poisson-prob-type"]:checked'
+    );
+    return selected ? selected.value : "less";
+  }
+
+  function updateRanges() {
+    const lambda = parseFloat(lambdaInput.value);
+    const suggestedMaximum = Math.min(
+      100,
+      Math.max(15, Math.ceil(lambda + 6 * Math.sqrt(lambda) + 3))
+    );
+
+    [xInput, lowerInput, upperInput].forEach(function(input) {
+      input.max = suggestedMaximum;
+      if (parseInt(input.value, 10) > suggestedMaximum) {
+        input.value = suggestedMaximum;
       }
-      explanation &lt;- sprintf("P(X ≥ %d) = %.6f or %.4f%%", 
-                           input$x_greater, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_greater))
-      
-    } else if (input$prob_type == "between") {
-      if (input$x_lower == input$x_upper) {
-        # Exact probability for a single value
-        prob &lt;- dpois(input$x_lower, lambda = input$lambda)
-      } else {
-        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X &lt; x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
-        upper_prob &lt;- ppois(input$x_upper, lambda = input$lambda)
-        if (input$x_lower == 0) {
-          lower_prob &lt;- 0
-        } else {
-          lower_prob &lt;- ppois(input$x_lower - 1, lambda = input$lambda)
-        }
-        prob &lt;- upper_prob - lower_prob
-      }
-      explanation &lt;- sprintf("P(%d ≤ X ≤ %d) = %.6f or %.4f%%", 
-                           input$x_lower, input$x_upper, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "between", 
-                 lower = input$x_lower, upper = input$x_upper))
-    }
-  })
-  
-  # Display an explanation of the calculation
-  output$explanation &lt;- renderText({
-    res &lt;- probability()
-    return(res$explanation)
-  })
-  
-  # Generate the Poisson distribution plot
-  output$distPlot &lt;- renderPlot({
-    # Determine the range for the x-axis
-    lambda &lt;- input$lambda
-    max_x &lt;- max(round(lambda * 3), 10)
-    
-    # Create data frame for plotting
-    x_values &lt;- 0:max_x
-    prob_mass &lt;- dpois(x_values, lambda = lambda)
-    df &lt;- data.frame(x = x_values, probability = prob_mass)
-    
-    # Create base plot
-    p &lt;- ggplot(df, aes(x = x, y = probability)) +
-      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
-      labs(x = "number of events (X)", y = "probability mass function") +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank()) +
-      scale_x_continuous(breaks = seq(0, max_x, by = ifelse(max_x &gt; 20, 2, 1)))
-    
-    # Add shaded area based on selected probability type
-    res &lt;- probability()
-    
-    if (res$type == "exact") {
-      highlight_x &lt;- res$x
-      highlight_df &lt;- df[df$x == highlight_x, ]
-      
-      p &lt;- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-      
-    } else if (res$type == "less") {
-      highlight_x &lt;- 0:res$x
-      highlight_df &lt;- df[df$x %in% highlight_x, ]
-      
-      p &lt;- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-      
-    } else if (res$type == "greater") {
-      highlight_x &lt;- res$x:max_x
-      highlight_df &lt;- df[df$x %in% highlight_x, ]
-      
-      p &lt;- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-      
-    } else if (res$type == "between") {
-      highlight_x &lt;- res$lower:res$upper
-      highlight_df &lt;- df[df$x %in% highlight_x, ]
-      
-      p &lt;- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                      fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-    }
-    
-    return(p)
-  })
-}
+    });
 
-shinyApp(ui = ui, server = server)</code></pre>
+    if (parseInt(upperInput.value, 10) < parseInt(lowerInput.value, 10)) {
+      upperInput.value = lowerInput.value;
+    }
+  }
+
+  function updateDisplay() {
+    updateRanges();
+
+    const lambda = parseFloat(lambdaInput.value);
+    lambdaDisplay.textContent = lambda.toFixed(1);
+    xDisplay.textContent = parseInt(xInput.value, 10);
+    lowerDisplay.textContent = parseInt(lowerInput.value, 10);
+    upperDisplay.textContent = parseInt(upperInput.value, 10);
+    title.textContent = `Poisson(λ = ${lambda.toFixed(1)})`;
+  }
+
+  function calculateProbability() {
+    const lambda = parseFloat(lambdaInput.value);
+    const x = parseInt(xInput.value, 10);
+    let lower = parseInt(lowerInput.value, 10);
+    let upper = parseInt(upperInput.value, 10);
+    const type = getProbabilityType();
+
+    if (upper < lower) {
+      upper = lower;
+      upperInput.value = upper;
+      upperDisplay.textContent = upper;
+    }
+
+    let probability;
+
+    if (type === "less") {
+      probability = poissonCDF(x, lambda);
+      result.textContent =
+        `P(X ≤ ${x}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    } else if (type === "greater") {
+      probability = x <= 0 ? 1 : 1 - poissonCDF(x - 1, lambda);
+      result.textContent =
+        `P(X ≥ ${x}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    } else {
+      probability = poissonCDF(upper, lambda) - poissonCDF(lower - 1, lambda);
+      result.textContent =
+        `P(${lower} ≤ X ≤ ${upper}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    }
+
+    probability = Math.max(0, Math.min(1, probability));
+    return { type, x, lower, upper, probability, lambda };
+  }
+
+  function getPlotMaximum(lambda, selected) {
+    const selectedMaximum = selected.type === "between"
+      ? selected.upper
+      : selected.x;
+
+    return Math.min(
+      100,
+      Math.max(
+        12,
+        selectedMaximum + 3,
+        Math.ceil(lambda + 5 * Math.sqrt(lambda) + 2)
+      )
+    );
+  }
+
+  function drawChart() {
+    const selected = calculateProbability();
+    const lambda = selected.lambda;
+    const maximumK = getPlotMaximum(lambda, selected);
+    const probabilities = poissonProbabilities(maximumK, lambda);
+    const rect = canvas.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { left: 58, right: 20, top: 25, bottom: 52 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+    const maximumY = Math.max(...probabilities) * 1.12;
+
+    ctx.clearRect(0, 0, width, height);
+
+    function xScale(k) {
+      return padding.left + ((k + 0.5) / (maximumK + 1)) * chartWidth;
+    }
+
+    function yScale(value) {
+      return padding.top + chartHeight - (value / maximumY) * chartHeight;
+    }
+
+    /* GRID AND Y-AXIS LABELS */
+
+    ctx.font = "12px Arial";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i <= 4; i++) {
+      const probability = (i / 4) * maximumY;
+      const y = yScale(probability);
+
+      ctx.strokeStyle = "#e5e5e5";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padding.left, y);
+      ctx.lineTo(width - padding.right, y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#555555";
+      ctx.fillText(probability.toFixed(2), padding.left - 8, y);
+    }
+
+    /* BARS */
+
+    const availableWidth = chartWidth / (maximumK + 1);
+    const barWidth = Math.max(2, Math.min(34, availableWidth * 0.72));
+
+    for (let k = 0; k <= maximumK; k++) {
+      const probability = probabilities[k];
+      const barHeight = (probability / maximumY) * chartHeight;
+      const x = xScale(k) - barWidth / 2;
+      const y = padding.top + chartHeight - barHeight;
+      let highlighted = false;
+
+      if (selected.type === "less") {
+        highlighted = k <= selected.x;
+      } else if (selected.type === "greater") {
+        highlighted = k >= selected.x;
+      } else {
+        highlighted = k >= selected.lower && k <= selected.upper;
+      }
+
+      ctx.fillStyle = highlighted ? "#3F6BB6" : "#d3d3d3";
+      ctx.fillRect(x, y, barWidth, barHeight);
+
+      ctx.strokeStyle = "#777777";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x, y, barWidth, barHeight);
+    }
+
+    /* AXES */
+
+    ctx.strokeStyle = "#777777";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, padding.top + chartHeight);
+    ctx.lineTo(width - padding.right, padding.top + chartHeight);
+    ctx.stroke();
+
+    /* X-AXIS LABELS */
+
+    ctx.fillStyle = "#333333";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+
+    const interval = maximumK <= 15 ? 1 : maximumK <= 30 ? 2 : 5;
+
+    for (let k = 0; k <= maximumK; k++) {
+      if (k === 0 || k === maximumK || k % interval === 0) {
+        ctx.fillText(k, xScale(k), padding.top + chartHeight + 20);
+      }
+    }
+
+    ctx.font = "13px Arial";
+    ctx.fillText(
+      "number of events (X)",
+      padding.left + chartWidth / 2,
+      height - 8
+    );
+
+    ctx.save();
+    ctx.translate(15, padding.top + chartHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = "center";
+    ctx.fillText("probability mass function", 0, 0);
+    ctx.restore();
+
+    canvas.setAttribute(
+      "aria-label",
+      `Poisson probability mass function with mean rate ${lambda.toFixed(1)}. ` +
+      `The selected probability is ${selected.probability.toFixed(4)}.`
+    );
+  }
+
+  function updateVisibility() {
+    const type = getProbabilityType();
+    xContainer.hidden = type === "between";
+    betweenContainer.hidden = type !== "between";
+  }
+
+  function update() {
+    updateVisibility();
+    updateDisplay();
+    drawChart();
+  }
+
+  lambdaInput.addEventListener("input", update);
+  xInput.addEventListener("input", update);
+
+  lowerInput.addEventListener("input", function() {
+    if (parseInt(lowerInput.value, 10) > parseInt(upperInput.value, 10)) {
+      upperInput.value = lowerInput.value;
+    }
+    update();
+  });
+
+  upperInput.addEventListener("input", function() {
+    if (parseInt(upperInput.value, 10) < parseInt(lowerInput.value, 10)) {
+      lowerInput.value = upperInput.value;
+    }
+    update();
+  });
+
+  root.querySelectorAll('input[name="poisson-prob-type"]').forEach(
+    function(radio) {
+      radio.addEventListener("change", update);
+    }
+  );
+
+  let resizeTimer;
+
+  window.addEventListener("resize", function() {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(drawChart, 80);
+  });
+
+  update();
+})();
+</script>
+
+
+
+
 <p><strong>Where to use:</strong> The Poisson distribution is used when a specific event occurs at some rate <span class="math inline">\(\lambda\)</span>, and you are counting <span class="math inline">\(X\)</span>, the number of times this event occurs in some interval.</p>
 <p><strong>Notation:</strong> <span class="math inline">\(X \sim \textrm{Poisson}(\lambda)\)</span> or <span class="math inline">\(X \sim \textrm{Pois}(\lambda)\)</span>.</p>
 <p><strong>Parameter:</strong> <span class="math inline">\(\lambda\)</span> is the integer number of times an event occurs within a specific period of time.</p>
