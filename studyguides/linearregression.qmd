@@ -119,83 +119,799 @@ $$\mathbb{E}(Y) = \alpha + \beta x$$
 You can use the tool below to observe how changing the values of **regression parameters** affects how closely the **simple linear regression model** fits the observed data. 
 
 
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 700
+```{=html}
 
-library(shiny)
-library(bslib)
-library(ggplot2)
-library(plotly)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ice Cream Sales Linear Model</title>
 
-# Ice cream sales data
-ice_cream_data <- data.frame(
-  day = 1:10,
-  temperature = c(22, 20, 19, 21, 24, 25, 27, 26, 28, 25),
-  sales = c(150, 100, 110, 210, 260, 280, 310, 350, 360, 270)
-)
+  <style>
+    * { box-sizing: border-box; }
 
-ui <- page_sidebar(
-  title = "Ice cream sales linear model",
-  fillable = TRUE,
-  sidebar = sidebar(
-    width = 250,
-    numericInput("alpha", "intercept (α)", value = -500, step = 10, width = "100%"),
-    numericInput("beta", "gradient (β)", value = 25, step = 1, width = "100%")
-  ),
-  card(
-    full_screen = TRUE,
-    card_header("Ice cream sales vs temperature"),
-    plotlyOutput("regression_plot", height = "100%"),
-    card_footer(
-      class = "text-muted",
-      p("The scatter plot shows the relationship between temperature and ice cream sales. 
-        The blue line represents your fitted linear model: E(Y) = α + βx.
-        Adjust the model parameters (α and β) to find the line that best fits the data points. You can
-        hover over the graph to see individual datum points.")
-    )
-  )
-)
+    body {
+      margin: 0;
+      padding: 1rem;
+      background: #f5f6f8;
+      color: #222222;
+    }
 
-server <- function(input, output, session) {
-  output$regression_plot <- renderPlotly({
-    # Create regression line values
-    temp_range <- seq(18, 30, length.out = 100)
-    predicted_sales <- input$alpha + input$beta * temp_range
-    
-    # Create the plot
-    p <- ggplot() +
-      # Add the observed data points
-      geom_point(data = ice_cream_data, 
-                aes(x = temperature, y = sales),
-                size = 3, color = "#E31A1C", alpha = 0.8) +
-      # Add the regression line
-      geom_line(aes(x = temp_range, y = predicted_sales),
-               color = "#007ACC", linewidth = 1.5) +
-      labs(
-        title = paste("E(Y) =", input$alpha, "+", input$beta, "× temperature"),
-        x = "Average temperature (°C)",
-        y = "Number of ice cream sales"
-      ) +
-      xlim(18, 30) +
-      ylim(0, 400) +
-      theme_minimal() +
-      theme(
-        plot.title = element_text(size = 14, hjust = 0.5),
-        axis.title = element_text(size = 12)
-      ) +
-      # Add grid lines
-      geom_hline(yintercept = seq(0, 400, 50), alpha = 0.2) +
-      geom_vline(xintercept = seq(18, 30, 2), alpha = 0.2)
-    
-    # Convert to plotly for interactivity
-    ggplotly(p, tooltip = c("x", "y")) %>%
-      layout(autosize = TRUE) %>%
-      config(displayModeBar = FALSE)
-  })
-}
+    .linear-model-calculator {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-shinyApp(ui, server)
+    .linear-model-calculator .calculator-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .linear-model-calculator .calculator-card {
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .linear-model-calculator .calculator-card-header {
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      background: #3F6BB6;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .linear-model-calculator .calculator-card-body {
+      padding: 1rem;
+    }
+
+    .linear-model-calculator .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .linear-model-calculator label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .linear-model-calculator input[type="number"] {
+      width: 100%;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      background: #ffffff;
+      font-size: 1rem;
+    }
+
+    .linear-model-calculator .parameter-help {
+      margin-top: 0.35rem;
+      color: #555555;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .linear-model-calculator .equation-box {
+      padding: 0.8rem;
+      border: 1px solid #d9e2f2;
+      border-radius: 5px;
+      background: #f4f7fc;
+      color: #203f73;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .linear-model-calculator .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .linear-model-calculator button {
+      padding: 0.55rem 0.8rem;
+      border: 1px solid #31558f;
+      border-radius: 5px;
+      color: #ffffff;
+      background: #3F6BB6;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .linear-model-calculator button:hover {
+      background: #31558f;
+    }
+
+    .linear-model-calculator .secondary-button {
+      color: #203f73;
+      background: #ffffff;
+    }
+
+    .linear-model-calculator .secondary-button:hover {
+      background: #eef3fb;
+    }
+
+    .linear-model-calculator .distribution-plot-title {
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .linear-model-calculator .chart-wrapper {
+      position: relative;
+      width: 100%;
+      height: 380px;
+    }
+
+    .linear-model-calculator canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .linear-model-calculator .chart-tooltip {
+      position: absolute;
+      z-index: 5;
+      display: none;
+      min-width: 150px;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid #777777;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+      font-size: 0.88rem;
+      line-height: 1.45;
+      pointer-events: none;
+    }
+
+    .linear-model-calculator .plot-footer {
+      padding: 0.85rem 1rem;
+      border-top: 1px solid #dddddd;
+      background: #fafafa;
+      color: #555555;
+      font-size: 0.93rem;
+      line-height: 1.55;
+    }
+
+    .linear-model-calculator .calculation-result {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .linear-model-calculator .result-item {
+      padding: 0.8rem;
+      border: 1px solid #d9e2f2;
+      border-radius: 6px;
+      background: #f4f7fc;
+      text-align: center;
+    }
+
+    .linear-model-calculator .result-label {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: #555555;
+      font-size: 0.9rem;
+    }
+
+    .linear-model-calculator .result-value {
+      color: #203f73;
+      font-size: 1.08rem;
+      font-weight: 700;
+    }
+
+    .linear-model-calculator .legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 0.7rem;
+      font-size: 0.9rem;
+    }
+
+    .linear-model-calculator .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .linear-model-calculator .legend-point {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #E31A1C;
+    }
+
+    .linear-model-calculator .legend-line {
+      width: 24px;
+      height: 3px;
+      background: #007ACC;
+    }
+
+    .linear-model-calculator input:focus,
+    .linear-model-calculator button:focus,
+    .linear-model-calculator canvas:focus {
+      outline: 3px solid rgba(63, 104, 182, 0.35);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .linear-model-calculator .calculator-row {
+        grid-template-columns: 1fr;
+      }
+
+      .linear-model-calculator .plot-card {
+        min-width: 0;
+      }
+
+      .linear-model-calculator .chart-wrapper {
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 0.5rem; }
+
+      .linear-model-calculator .calculator-card-body {
+        padding: 0.9rem;
+      }
+
+      .linear-model-calculator .chart-wrapper {
+        height: 290px;
+      }
+
+      .linear-model-calculator .calculation-result {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="linear-model-calculator">
+
+  <div class="calculator-row">
+
+    <!-- PARAMETERS CARD -->
+    <section class="calculator-card parameters-card" aria-labelledby="parameters-heading">
+      <div class="calculator-card-header" id="parameters-heading">
+        Parameters
+      </div>
+
+      <div class="calculator-card-body">
+
+        <div class="form-group">
+          <label for="model-alpha">Intercept (α):</label>
+          <input
+            type="number"
+            id="model-alpha"
+            value="-500"
+            step="10"
+            aria-describedby="alpha-help">
+          <div class="parameter-help" id="alpha-help">
+            The predicted sales when temperature is 0°C.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="model-beta">Gradient (β):</label>
+          <input
+            type="number"
+            id="model-beta"
+            value="25"
+            step="1"
+            aria-describedby="beta-help">
+          <div class="parameter-help" id="beta-help">
+            The predicted change in sales for each 1°C increase in temperature.
+          </div>
+        </div>
+
+        <div class="equation-box" id="model-equation" aria-live="polite">
+          E(Y) = -500 + 25 × temperature
+        </div>
+
+        <div class="button-row">
+          <button type="button" id="best-fit-button">
+            Show least-squares fit
+          </button>
+          <button type="button" id="reset-button" class="secondary-button">
+            Reset
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PLOT CARD -->
+    <section class="calculator-card plot-card" aria-labelledby="plot-heading">
+      <div class="calculator-card-header" id="plot-heading">
+        Ice cream sales vs temperature
+      </div>
+
+      <div class="calculator-card-body">
+        <div class="distribution-plot-title" id="plot-title">
+          E(Y) = -500 + 25 × temperature
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas
+            id="regression-chart"
+            tabindex="0"
+            role="img"
+            aria-label="Scatter plot of ice cream sales against temperature with a fitted linear model">
+          </canvas>
+          <div class="chart-tooltip" id="chart-tooltip" role="tooltip"></div>
+        </div>
+
+        <div class="legend" aria-hidden="true">
+          <span class="legend-item">
+            <span class="legend-point"></span>
+            Observed data
+          </span>
+          <span class="legend-item">
+            <span class="legend-line"></span>
+            Fitted model
+          </span>
+        </div>
+      </div>
+
+      <div class="plot-footer">
+        The red points show the observed relationship between temperature and
+        ice cream sales. The blue line represents the fitted model
+        E(Y) = α + βx. Adjust α and β to fit the points. Hover over or focus
+        the plot, then use the left and right arrow keys to inspect observations.
+      </div>
+    </section>
+
+  </div>
+
+  <!-- RESULTS CARD -->
+  <section class="calculator-card results-card" aria-labelledby="results-heading">
+    <div class="calculator-card-header" id="results-heading">
+      Model summary
+    </div>
+
+    <div class="calculator-card-body">
+      <div class="calculation-result" aria-live="polite">
+        <div class="result-item">
+          <span class="result-label">Sum of squared errors</span>
+          <span class="result-value" id="sse-result">0.00</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Mean squared error</span>
+          <span class="result-value" id="mse-result">0.00</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">R²</span>
+          <span class="result-value" id="r-squared-result">0.0000</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function() {
+  "use strict";
+
+  const data = [
+    { day: 1, temperature: 22, sales: 150 },
+    { day: 2, temperature: 20, sales: 100 },
+    { day: 3, temperature: 19, sales: 110 },
+    { day: 4, temperature: 21, sales: 210 },
+    { day: 5, temperature: 24, sales: 260 },
+    { day: 6, temperature: 25, sales: 280 },
+    { day: 7, temperature: 27, sales: 310 },
+    { day: 8, temperature: 26, sales: 350 },
+    { day: 9, temperature: 28, sales: 360 },
+    { day: 10, temperature: 25, sales: 270 }
+  ];
+
+  const alphaInput = document.getElementById("model-alpha");
+  const betaInput = document.getElementById("model-beta");
+  const equation = document.getElementById("model-equation");
+  const plotTitle = document.getElementById("plot-title");
+  const canvas = document.getElementById("regression-chart");
+  const tooltip = document.getElementById("chart-tooltip");
+  const bestFitButton = document.getElementById("best-fit-button");
+  const resetButton = document.getElementById("reset-button");
+  const sseResult = document.getElementById("sse-result");
+  const mseResult = document.getElementById("mse-result");
+  const rSquaredResult = document.getElementById("r-squared-result");
+  const ctx = canvas.getContext("2d");
+
+  let plottedPoints = [];
+  let focusedPointIndex = -1;
+
+  function validNumber(input, fallback) {
+    const value = Number(input.value);
+    return Number.isFinite(value) ? value : fallback;
+  }
+
+  function formatCoefficient(value) {
+    return Number.isInteger(value) ? String(value) : value.toFixed(2);
+  }
+
+  function equationText(alpha, beta) {
+    const betaSign = beta >= 0 ? "+" : "−";
+    return `E(Y) = ${formatCoefficient(alpha)} ${betaSign} ` +
+      `${formatCoefficient(Math.abs(beta))} × temperature`;
+  }
+
+  function fittedValue(temperature, alpha, beta) {
+    return alpha + beta * temperature;
+  }
+
+  function calculateLeastSquaresFit() {
+    const meanX = data.reduce(function(total, item) {
+      return total + item.temperature;
+    }, 0) / data.length;
+
+    const meanY = data.reduce(function(total, item) {
+      return total + item.sales;
+    }, 0) / data.length;
+
+    let numerator = 0;
+    let denominator = 0;
+
+    data.forEach(function(item) {
+      numerator += (item.temperature - meanX) * (item.sales - meanY);
+      denominator += Math.pow(item.temperature - meanX, 2);
+    });
+
+    const beta = numerator / denominator;
+    const alpha = meanY - beta * meanX;
+
+    return { alpha, beta };
+  }
+
+  function updateSummary(alpha, beta) {
+    const meanSales = data.reduce(function(total, item) {
+      return total + item.sales;
+    }, 0) / data.length;
+
+    let sse = 0;
+    let totalSumSquares = 0;
+
+    data.forEach(function(item) {
+      const prediction = fittedValue(item.temperature, alpha, beta);
+      sse += Math.pow(item.sales - prediction, 2);
+      totalSumSquares += Math.pow(item.sales - meanSales, 2);
+    });
+
+    const mse = sse / data.length;
+    const rSquared = 1 - sse / totalSumSquares;
+
+    sseResult.textContent = sse.toFixed(2);
+    mseResult.textContent = mse.toFixed(2);
+    rSquaredResult.textContent = rSquared.toFixed(4);
+  }
+
+  function showTooltip(point, index, fromKeyboard) {
+    focusedPointIndex = index;
+
+    tooltip.innerHTML =
+      `<strong>Day ${point.day}</strong><br>` +
+      `Temperature: ${point.temperature}°C<br>` +
+      `Sales: ${point.sales}`;
+
+    const tooltipWidth = 165;
+    const tooltipHeight = 75;
+    const wrapperWidth = canvas.getBoundingClientRect().width;
+    const wrapperHeight = canvas.getBoundingClientRect().height;
+
+    let left = point.canvasX + 12;
+    let top = point.canvasY - tooltipHeight - 8;
+
+    if (left + tooltipWidth > wrapperWidth) {
+      left = point.canvasX - tooltipWidth - 12;
+    }
+
+    if (top < 0) {
+      top = point.canvasY + 12;
+    }
+
+    top = Math.min(top, wrapperHeight - tooltipHeight - 4);
+
+    tooltip.style.left = left + "px";
+    tooltip.style.top = top + "px";
+    tooltip.style.display = "block";
+
+    canvas.setAttribute(
+      "aria-label",
+      `Observation ${index + 1} of ${data.length}. Day ${point.day}, ` +
+      `temperature ${point.temperature} degrees Celsius, sales ${point.sales}. ` +
+      (fromKeyboard ? "Use the left and right arrow keys for other observations." : "")
+    );
+
+    drawChart(index);
+  }
+
+  function hideTooltip() {
+    tooltip.style.display = "none";
+    focusedPointIndex = -1;
+    drawChart(-1);
+  }
+
+  function drawChart(highlightedIndex) {
+    const alpha = validNumber(alphaInput, -500);
+    const beta = validNumber(betaInput, 25);
+    const rect = canvas.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { left: 66, right: 22, top: 25, bottom: 55 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+    const xMinimum = 18;
+    const xMaximum = 30;
+    const yMinimum = 0;
+    const yMaximum = 400;
+
+    function xScale(value) {
+      return padding.left +
+        ((value - xMinimum) / (xMaximum - xMinimum)) * chartWidth;
+    }
+
+    function yScale(value) {
+      return padding.top + chartHeight -
+        ((value - yMinimum) / (yMaximum - yMinimum)) * chartHeight;
+    }
+
+    ctx.clearRect(0, 0, width, height);
+
+    /* GRID AND Y-AXIS LABELS */
+
+    ctx.font = "12px Arial";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+
+    for (let sales = 0; sales <= 400; sales += 50) {
+      const y = yScale(sales);
+      ctx.strokeStyle = "#e5e5e5";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padding.left, y);
+      ctx.lineTo(width - padding.right, y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#555555";
+      ctx.fillText(sales, padding.left - 8, y);
+    }
+
+    /* VERTICAL GRID AND X-AXIS LABELS */
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+
+    for (let temperature = 18; temperature <= 30; temperature += 2) {
+      const x = xScale(temperature);
+      ctx.strokeStyle = "#e5e5e5";
+      ctx.beginPath();
+      ctx.moveTo(x, padding.top);
+      ctx.lineTo(x, padding.top + chartHeight);
+      ctx.stroke();
+
+      ctx.fillStyle = "#333333";
+      ctx.fillText(
+        temperature,
+        x,
+        padding.top + chartHeight + 20
+      );
+    }
+
+    /* REGRESSION LINE, CLIPPED TO PLOT AREA */
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(padding.left, padding.top, chartWidth, chartHeight);
+    ctx.clip();
+
+    ctx.beginPath();
+    ctx.moveTo(
+      xScale(xMinimum),
+      yScale(fittedValue(xMinimum, alpha, beta))
+    );
+    ctx.lineTo(
+      xScale(xMaximum),
+      yScale(fittedValue(xMaximum, alpha, beta))
+    );
+    ctx.strokeStyle = "#007ACC";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    /* OBSERVED POINTS */
+
+    plottedPoints = data.map(function(item) {
+      return {
+        day: item.day,
+        temperature: item.temperature,
+        sales: item.sales,
+        canvasX: xScale(item.temperature),
+        canvasY: yScale(item.sales)
+      };
+    });
+
+    plottedPoints.forEach(function(point, index) {
+      ctx.beginPath();
+      ctx.arc(
+        point.canvasX,
+        point.canvasY,
+        index === highlightedIndex ? 7 : 5,
+        0,
+        Math.PI * 2
+      );
+      ctx.fillStyle = "#E31A1C";
+      ctx.globalAlpha = 0.82;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = index === highlightedIndex ? "#000000" : "#9f1012";
+      ctx.lineWidth = index === highlightedIndex ? 2 : 1;
+      ctx.stroke();
+    });
+
+    ctx.restore();
+
+    /* AXES */
+
+    ctx.strokeStyle = "#777777";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, padding.top + chartHeight);
+    ctx.lineTo(width - padding.right, padding.top + chartHeight);
+    ctx.stroke();
+
+    /* AXIS TITLES */
+
+    ctx.fillStyle = "#333333";
+    ctx.font = "13px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(
+      "Average temperature (°C)",
+      padding.left + chartWidth / 2,
+      height - 8
+    );
+
+    ctx.save();
+    ctx.translate(16, padding.top + chartHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = "center";
+    ctx.fillText("Number of ice cream sales", 0, 0);
+    ctx.restore();
+  }
+
+  function update() {
+    const alpha = validNumber(alphaInput, -500);
+    const beta = validNumber(betaInput, 25);
+    const text = equationText(alpha, beta);
+
+    equation.textContent = text;
+    plotTitle.textContent = text;
+    updateSummary(alpha, beta);
+    drawChart(focusedPointIndex);
+
+    canvas.setAttribute(
+      "aria-label",
+      `Scatter plot of ten ice cream sales observations against temperature. ` +
+      `The fitted line is ${text}. Focus the plot and use left and right ` +
+      `arrow keys to inspect observations.`
+    );
+  }
+
+  function nearestPoint(mouseX, mouseY) {
+    let closest = null;
+    let closestDistance = 12;
+
+    plottedPoints.forEach(function(point, index) {
+      const distance = Math.hypot(
+        mouseX - point.canvasX,
+        mouseY - point.canvasY
+      );
+
+      if (distance < closestDistance) {
+        closest = { point, index };
+        closestDistance = distance;
+      }
+    });
+
+    return closest;
+  }
+
+  canvas.addEventListener("mousemove", function(event) {
+    const rect = canvas.getBoundingClientRect();
+    const match = nearestPoint(
+      event.clientX - rect.left,
+      event.clientY - rect.top
+    );
+
+    if (match) {
+      showTooltip(match.point, match.index, false);
+    } else if (focusedPointIndex !== -1) {
+      hideTooltip();
+    }
+  });
+
+  canvas.addEventListener("mouseleave", function() {
+    if (document.activeElement !== canvas) {
+      hideTooltip();
+    }
+  });
+
+  canvas.addEventListener("focus", function() {
+    if (focusedPointIndex < 0) focusedPointIndex = 0;
+    showTooltip(plottedPoints[focusedPointIndex], focusedPointIndex, true);
+  });
+
+  canvas.addEventListener("blur", hideTooltip);
+
+  canvas.addEventListener("keydown", function(event) {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+
+    event.preventDefault();
+
+    if (event.key === "ArrowRight") {
+      focusedPointIndex = (focusedPointIndex + 1) % plottedPoints.length;
+    } else {
+      focusedPointIndex =
+        (focusedPointIndex - 1 + plottedPoints.length) % plottedPoints.length;
+    }
+
+    showTooltip(plottedPoints[focusedPointIndex], focusedPointIndex, true);
+  });
+
+  alphaInput.addEventListener("input", update);
+  betaInput.addEventListener("input", update);
+
+  bestFitButton.addEventListener("click", function() {
+    const fit = calculateLeastSquaresFit();
+    alphaInput.value = fit.alpha.toFixed(2);
+    betaInput.value = fit.beta.toFixed(2);
+    update();
+    equation.focus?.();
+  });
+
+  resetButton.addEventListener("click", function() {
+    alphaInput.value = -500;
+    betaInput.value = 25;
+    update();
+    alphaInput.focus();
+  });
+
+  let resizeTimer;
+
+  window.addEventListener("resize", function() {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(update, 80);
+  });
+
+  update();
+})();
+</script>
+
+</body>
+</html>
+
+
 ```
 
 The question: 'what values of $\alpha$ and $\beta$ give the best fit?' is precisely the goal of simple linear regression. 
@@ -277,135 +993,80 @@ Use the tool below to explore how changing the values of the **regression parame
 
 :::
 
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 800
+```{=html}
 
-library(shiny)
-library(ggplot2)
-library(bslib)
-library(plotly)
-
-ui <- page_sidebar(
-  title = "Least squares estimation explorer",
-  fillable = TRUE,
-  sidebar = sidebar(
-    sliderInput("intercept", "Intercept (α)", 
-                min = -5, max = 10, value = 2, step = 0.1),
-    sliderInput("slope", "Gradient (β)", 
-                min = -2, max = 4, value = 1.5, step = 0.1),
-    checkboxInput("show_residuals", "Show residuals", value = TRUE),
-    hr(),
-    card(
-      card_header(
-        h5("Least squares estimates", style = "margin: 0;")
-      ),
-      card_body(
-        div(
-          style = "font-family: 'Courier New', monospace; font-size: 16px; font-weight: bold; text-align: center; padding: 10px;",
-          uiOutput("dataInfo")
-        )
-      )
-    )
-  ),
-  # Stack cards vertically using layout_columns with col_widths = 12
-  layout_columns(
-    col_widths = 12,
-    card(
-      card_header("Simple linear regression model plot"),
-      card_body(
-        plotlyOutput("regPlot", height = "100%")
-      ),
-      fill = TRUE
-    ),
-    card(
-      card_header("Key"),
-      div(
-        style = "font-size: 0.9em; line-height: 1.4;",
-        tags$div(tags$span("●", style = "color: black; font-size: 1.2em;"), " Data points"),
-        tags$div(tags$span("- - -", style = "color: blue; font-weight: bold;"), " Your guess"),
-        tags$div(tags$span("——", style = "color: red; font-weight: bold;"), " Least squares estimates"),
-        conditionalPanel(
-          condition = "input.show_residuals == true",
-          tags$div(tags$span("⋯⋯⋯", style = "color: blue;"), " Residuals")
-        )
-      )
-    )
-  )
-)
-
-server <- function(input, output, session) {
-  
-  # Generate simulated data
-  values <- reactiveValues()
-  
-  # Initialize data
-  observe({
-    if (is.null(values$data)) {
-      set.seed(123)
-      x <- runif(30, 0, 10)
-      y <- 1.5 * x + 2 + rnorm(30, 0, 2)
-      values$data <- data.frame(x = x, y = y)
-      values$lm_model <- lm(y ~ x, data = values$data)
-    }
-  })
-  
-  # Data information with better formatting using HTML
-  output$dataInfo <- renderUI({
-    req(values$lm_model)
-    ls_coef <- coef(values$lm_model)
-    
-    div(
-      div(
-        HTML(paste0("α̂ = ", span(round(ls_coef[1], 3), style = "color: #0066cc;"))),
-        style = "margin-bottom: 8px;"
-      ),
-      div(
-        HTML(paste0("β̂ = ", span(round(ls_coef[2], 3), style = "color: #0066cc;")))
-      )
-    )
-  })
-  
-  # Interactive plot with hover functionality
-  output$regPlot <- renderPlotly({
-    req(values$data, values$lm_model)
-    d <- values$data
-    
-    # Calculate predictions
-    ls_pred <- predict(values$lm_model)
-    guess_pred <- input$slope * d$x + input$intercept
-    
-    # Create base plot
-    p <- ggplot(d, aes(x, y)) +
-      geom_point(size = 2, color = "black", alpha = 0.7,
-                 aes(text = paste("x:", round(x, 2), "<br>y:", round(y, 2)))) +
-      geom_abline(slope = input$slope, intercept = input$intercept,
-                  color = "blue", linetype = "dashed", linewidth = 1.5) +
-      geom_line(aes(y = ls_pred), color = "red", linewidth = 1.5) +
-      labs(
-        title = paste("Your Model: E(Y) =", round(input$intercept, 2), "+", 
-                     paste0(round(input$slope, 2), "x")),
-        x = "x",
-        y = "y"
-      ) +
-      theme_minimal(base_size = 12) +
-      xlim(0, 10) +
-      ylim(min(d$y) - 2, max(d$y) + 2)
-    
-    # Add residuals if requested
-    if (input$show_residuals) {
-      p <- p + geom_segment(aes(xend = x, yend = guess_pred),
-                            color = "blue", linetype = "dotted", alpha = 0.7)
-    }
-    
-    # Convert to plotly with hover tooltips
-    ggplotly(p, tooltip = "text") %>%
-      config(displayModeBar = FALSE) %>%
-      layout(autosize = TRUE)
-  })
-}
-
-shinyApp(ui = ui, server = server)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Least squares estimation explorer</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:1rem;background:#f5f6f8;color:#222}.lse-app{width:100%;max-width:1200px;margin:auto}.lse-app .row{display:grid;grid-template-columns:minmax(280px,1fr) minmax(0,2fr);gap:1rem;align-items:start}.lse-app .card{background:#fff;border:1px solid #ddd;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.08);margin-bottom:1rem}.lse-app .header{background:#3F6BB6;color:#fff;padding:.75rem 1rem;font-weight:700}.lse-app .body{padding:1rem}.lse-app label{display:block;margin-bottom:.35rem;font-weight:500}.lse-app .group{margin-bottom:1rem}.lse-app input[type=range]{width:100%;margin:.45rem 0;accent-color:#3F68B6;cursor:pointer}.lse-app .value{text-align:center;color:#3F68B6;font-weight:700}.lse-app .check{display:flex;align-items:center;gap:.5rem;cursor:pointer}.lse-app .check input{width:18px;height:18px;accent-color:#3F68B6}.lse-app .estimate-box{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}.lse-app .estimate{padding:.7rem;background:#f4f7fc;border:1px solid #d9e2f2;border-radius:6px;text-align:center}.lse-app .estimate span{display:block;color:#0066cc;font-family:"Courier New",monospace;font-size:1.05rem;font-weight:bold}.lse-app .title{text-align:center;font-size:1.08rem;font-weight:600;margin-bottom:.8rem}.lse-app .chart-wrap{position:relative;width:100%;height:400px}.lse-app canvas{width:100%!important;height:100%!important}.lse-app .tooltip{display:none;position:absolute;z-index:3;padding:.5rem .65rem;background:rgba(255,255,255,.97);border:1px solid #777;border-radius:5px;box-shadow:0 2px 6px rgba(0,0,0,.18);font-size:.88rem;pointer-events:none}.lse-app .key{display:flex;flex-wrap:wrap;gap:1.2rem}.lse-app .key-item{display:flex;align-items:center;gap:.45rem}.lse-app .dot{width:11px;height:11px;border-radius:50%;background:#111}.lse-app .guess,.lse-app .least,.lse-app .lse-app .residual{width:28px;height:0;border-top:3px dashed #1261c9}.lse-app .least{border-top-style:solid;border-color:#d62728}.lse-app .residual{border-top-width:2px;border-top-style:dotted}.lse-app .summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem}.lse-app .metric{padding:.75rem;background:#f4f7fc;border:1px solid #d9e2f2;border-radius:6px;text-align:center}.lse-app .metric small{display:block;color:#555;margin-bottom:.25rem}.lse-app .metric strong{color:#203f73;font-size:1.08rem}.lse-app input:focus-visible,.lse-app canvas:focus-visible{outline:3px solid rgba(63,104,182,.4);outline-offset:2px}@media(max-width:768px){.lse-app .row{grid-template-columns:1fr}.lse-app .lse-app .chart-wrap{height:330px}}@media(max-width:520px){body{padding:.5rem}.lse-app .lse-app .summary{grid-template-columns:1fr}.lse-app .lse-app .chart-wrap{height:290px}}
+</style>
+</head>
+<body>
+<main class="lse-app">
+<div class="row">
+<section class="card" aria-labelledby="lse-parameters-heading"><div class="header" id="lse-parameters-heading">Parameters</div><div class="body">
+<div class="group"><label for="lse-intercept">Intercept (α)</label><input id="lse-intercept" type="range" min="-5" max="10" value="2" step="0.1" aria-describedby="lse-intercept-value"><div class="value" id="lse-intercept-value">2.0</div></div>
+<div class="group"><label for="lse-slope">Gradient (β)</label><input id="lse-slope" type="range" min="-2" max="4" value="1.5" step="0.1" aria-describedby="lse-slope-value"><div class="value" id="lse-slope-value">1.5</div></div>
+<label class="check"><input id="lse-show-residuals" type="checkbox" checked><span>Show residuals</span></label>
+</div></section>
+<section class="card"><div class="header">Simple linear regression model plot</div><div class="body"><div class="title" id="lse-plot-title">Your model: E(Y) = 2 + 1.5x</div><div class="chart-wrap"><canvas id="lse-regression-chart" tabindex="0" role="img" aria-label="Linear regression scatter plot"></canvas><div class="tooltip" id="lse-tooltip" role="tooltip"></div></div></div></section>
+</div>
+<section class="card"><div class="header">Least squares estimates</div><div class="body"><div class="estimate-box"><div class="estimate">Intercept estimate<span id="lse-alpha-hat">α̂ = 0.982</span></div><div class="estimate">Gradient estimate<span id="lse-beta-hat">β̂ = 1.672</span></div></div></div></section>
+<section class="card"><div class="header">Key</div><div class="body"><div class="key"><span class="key-item"><span class="dot"></span>Data points</span><span class="key-item"><span class="guess"></span>Your guess</span><span class="key-item"><span class="least"></span>Least squares estimates</span><span class="key-item" id="lse-residual-key"><span class="residual"></span>Residuals</span></div></div></section>
+<section class="card"><div class="header">Model comparison</div><div class="body"><div class="summary" aria-live="polite"><div class="metric"><small>Your sum of squared errors</small><strong id="lse-guess-sse"></strong></div><div class="metric"><small>Least-squares error</small><strong id="lse-least-sse"></strong></div><div class="metric"><small>Difference from minimum</small><strong id="lse-sse-difference"></strong></div></div></div></section>
+</main>
+<script>
+(function(){"use strict";
+const appRoot=document.querySelector('.lse-app');if(!appRoot)return;
+const data=[
+    { x: 0.523636, y: 3.715110 },
+    { x: 0.871867, y: 0.535587 },
+    { x: 4.072418, y: 5.357427 },
+    { x: 1.077002, y: 1.371287 },
+    { x: 9.011989, y: 16.342468 },
+    { x: 0.381537, y: 0.464338 },
+    { x: 5.362020, y: 7.604450 },
+    { x: 3.321977, y: 8.796279 },
+    { x: 8.520866, y: 13.337357 },
+    { x: 1.596624, y: 4.278993 },
+    { x: 3.372167, y: 5.935136 },
+    { x: 3.337964, y: 5.677582 },
+    { x: 2.451634, y: 7.065904 },
+    { x: 0.016706, y: 0.877877 },
+    { x: 4.362758, y: 7.366733 },
+    { x: 0.876135, y: 1.220439 },
+    { x: 5.975995, y: 13.711089 },
+    { x: 0.698770, y: 3.605204 },
+    { x: 3.154590, y: 7.359017 },
+    { x: 4.483217, y: 10.090026 },
+    { x: 9.053987, y: 16.659390 },
+    { x: 0.927646, y: 2.741251 },
+    { x: 1.421751, y: 5.012773 },
+    { x: 7.900718, y: 15.455086 },
+    { x: 0.212360, y: 0.031377 },
+    { x: 9.111505, y: 17.530657 },
+    { x: 5.734081, y: 6.196411 },
+    { x: 2.653217, y: 7.206648 },
+    { x: 8.378376, y: 13.480830 },
+    { x: 7.687947, y: 15.340681 }
+];
+const interceptInput=document.getElementById('lse-intercept'),slopeInput=document.getElementById('lse-slope'),residualInput=document.getElementById('lse-show-residuals'),interceptValue=document.getElementById('lse-intercept-value'),slopeValue=document.getElementById('lse-slope-value'),plotTitle=document.getElementById('lse-plot-title'),canvas=document.getElementById('lse-regression-chart'),tooltip=document.getElementById('lse-tooltip'),residualKey=document.getElementById('lse-residual-key'),guessSSE=document.getElementById('lse-guess-sse'),leastSSE=document.getElementById('lse-least-sse'),difference=document.getElementById('lse-sse-difference'),ctx=canvas.getContext('2d');
+const meanX=data.reduce((s,d)=>s+d.x,0)/data.length,meanY=data.reduce((s,d)=>s+d.y,0)/data.length;
+const lsSlope=data.reduce((s,d)=>s+(d.x-meanX)*(d.y-meanY),0)/data.reduce((s,d)=>s+(d.x-meanX)**2,0),lsIntercept=meanY-lsSlope*meanX;
+let points=[],focusIndex=-1;
+const fit=(x,a,b)=>a+b*x, sse=(a,b)=>data.reduce((s,d)=>s+(d.y-fit(d.x,a,b))**2,0);
+function equation(a,b){return `Your model: E(Y) = ${a.toFixed(1)} ${b>=0?'+':'−'} ${Math.abs(b).toFixed(1)}x`;}
+function draw(highlight=-1){const a=+interceptInput.value,b=+slopeInput.value,r=canvas.getBoundingClientRect();if(!r.width||!r.height)return;const dpr=devicePixelRatio||1;canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);const w=r.width,h=r.height,p={l:58,r:20,t:20,b:48},cw=w-p.l-p.r,ch=h-p.t-p.b,xmin=0,xmax=10,ymin=Math.min(...data.map(d=>d.y))-2,ymax=Math.max(...data.map(d=>d.y))+2,xs=x=>p.l+(x-xmin)/(xmax-xmin)*cw,ys=y=>p.t+ch-(y-ymin)/(ymax-ymin)*ch;ctx.clearRect(0,0,w,h);ctx.font='12px Arial';ctx.textBaseline='middle';ctx.textAlign='right';for(let i=0;i<=5;i++){const y=ymin+i*(ymax-ymin)/5,py=ys(y);ctx.strokeStyle='#e5e5e5';ctx.beginPath();ctx.moveTo(p.l,py);ctx.lineTo(w-p.r,py);ctx.stroke();ctx.fillStyle='#555';ctx.fillText(y.toFixed(1),p.l-7,py)}ctx.textAlign='center';ctx.textBaseline='alphabetic';for(let x=0;x<=10;x+=2){const px=xs(x);ctx.strokeStyle='#e5e5e5';ctx.beginPath();ctx.moveTo(px,p.t);ctx.lineTo(px,p.t+ch);ctx.stroke();ctx.fillStyle='#333';ctx.fillText(x,px,p.t+ch+18)}ctx.save();ctx.beginPath();ctx.rect(p.l,p.t,cw,ch);ctx.clip();if(residualInput.checked){ctx.setLineDash([2,4]);ctx.strokeStyle='rgba(18,97,201,.65)';ctx.lineWidth=1.5;data.forEach(d=>{ctx.beginPath();ctx.moveTo(xs(d.x),ys(d.y));ctx.lineTo(xs(d.x),ys(fit(d.x,a,b)));ctx.stroke()});ctx.setLineDash([])}ctx.setLineDash([7,5]);ctx.strokeStyle='#1261c9';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(xs(0),ys(fit(0,a,b)));ctx.lineTo(xs(10),ys(fit(10,a,b)));ctx.stroke();ctx.setLineDash([]);ctx.strokeStyle='#d62728';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(xs(0),ys(fit(0,lsIntercept,lsSlope)));ctx.lineTo(xs(10),ys(fit(10,lsIntercept,lsSlope)));ctx.stroke();points=data.map(d=>({...d,px:xs(d.x),py:ys(d.y)}));points.forEach((d,i)=>{ctx.beginPath();ctx.arc(d.px,d.py,i===highlight?6:4,0,Math.PI*2);ctx.fillStyle='#111';ctx.fill();if(i===highlight){ctx.strokeStyle='#ffbf47';ctx.lineWidth=3;ctx.stroke()}});ctx.restore();ctx.strokeStyle='#777';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.l,p.t);ctx.lineTo(p.l,p.t+ch);ctx.lineTo(w-p.r,p.t+ch);ctx.stroke();ctx.fillStyle='#333';ctx.font='13px Arial';ctx.textAlign='center';ctx.fillText('x',p.l+cw/2,h-7);ctx.save();ctx.translate(14,p.t+ch/2);ctx.rotate(-Math.PI/2);ctx.fillText('y',0,0);ctx.restore()}
+function update(){const a=+interceptInput.value,b=+slopeInput.value;interceptValue.textContent=a.toFixed(1);slopeValue.textContent=b.toFixed(1);plotTitle.textContent=equation(a,b);residualKey.hidden=!residualInput.checked;const gs=sse(a,b),ls=sse(lsIntercept,lsSlope);guessSSE.textContent=gs.toFixed(2);leastSSE.textContent=ls.toFixed(2);difference.textContent=(gs-ls).toFixed(2);canvas.setAttribute('aria-label',`${equation(a,b)}. Thirty data points, least-squares line α hat ${lsIntercept.toFixed(3)}, beta hat ${lsSlope.toFixed(3)}. Residuals are ${residualInput.checked?'shown':'hidden'}. Focus and use arrow keys to inspect points.`);draw(focusIndex)}
+function showPoint(i){focusIndex=i;const d=points[i];tooltip.innerHTML=`<strong>Point ${i+1}</strong><br>x: ${d.x.toFixed(2)}<br>y: ${d.y.toFixed(2)}`;let left=d.px+10,top=d.py-72;if(left+135>canvas.clientWidth)left=d.px-145;if(top<0)top=d.py+10;tooltip.style.left=left+'px';tooltip.style.top=top+'px';tooltip.style.display='block';canvas.setAttribute('aria-label',`Point ${i+1} of ${points.length}. x ${d.x.toFixed(2)}, y ${d.y.toFixed(2)}. Use left and right arrow keys.`);draw(i)}
+canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let best=-1,dist=12;points.forEach((d,i)=>{const z=Math.hypot(mx-d.px,my-d.py);if(z<dist){dist=z;best=i}});if(best>=0)showPoint(best);else if(document.activeElement!==canvas){tooltip.style.display='none';focusIndex=-1;draw()}});canvas.addEventListener('mouseleave',()=>{if(document.activeElement!==canvas){tooltip.style.display='none';focusIndex=-1;draw()}});canvas.addEventListener('focus',()=>showPoint(focusIndex<0?0:focusIndex));canvas.addEventListener('blur',()=>{tooltip.style.display='none';focusIndex=-1;draw()});canvas.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight'].includes(e.key))return;e.preventDefault();focusIndex=e.key==='ArrowRight'?(focusIndex+1)%points.length:(focusIndex-1+points.length)%points.length;showPoint(focusIndex)});[interceptInput,slopeInput,residualInput].forEach(el=>el.addEventListener('input',update));let timer;addEventListener('resize',()=>{clearTimeout(timer);timer=setTimeout(update,80)});update();
+})();
+</script>
+</body></html>
 
 
 ```
@@ -731,6 +1392,8 @@ To extend linear regression to encompass multiple explanatory variables, please 
 ## Version history {-}
 
 v1.0: initial version created 12/25 by Flora Green as part of a University of St Andrews VIP project.
+
+- v1.1: deprecated shinylive apps replaced 09/26 by tdhc.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

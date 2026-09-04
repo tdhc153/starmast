@@ -13,130 +13,627 @@ library("webexercises")
 ```
 
 
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 620
+```{=html}
 
-library(shiny)
-library(bslib)
-library(ggplot2)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Z-Test P-Value Explorer</title>
 
-ui <- page_fluid(
-  title = "Z-Test Calculator",
-  
-  layout_columns(
-    col_widths = c(4, 8),
-    
-    # Left column - Input parameters
-    card(
-      card_header("Input Parameters"),
-      card_body(
-        numericInput("zscore", "Z-score", value = 1.96, step = 0.01),
-        radioButtons("test_type", "Test Type",
-                    choices = list("Two-tailed" = "two",
-                                  "One-tailed (upper)" = "upper",
-                                  "One-tailed (lower)" = "lower"),
-                    selected = "two"),
-        hr(),
-        helpText("This app calculates p-values for Z-tests based on the standard normal distribution.")
-      )
-    ),
-    
-    # Right column - Graphical representation
-    card(
-      card_header("Graphical Representation"),
-      card_body(
-        plotOutput("density_plot", height = "300px")
-      )
-    )
-  ),
-  
-  # Results at the bottom
-  card(
-    card_header("Z-Test Results"),
-    card_body(
-      verbatimTextOutput("pvalue_result")
-    )
-  )
-)
+  <style>
+    * { box-sizing: border-box; }
 
-server <- function(input, output, session) {
-  
-  # Calculate p-value based on test type
-  p_value <- reactive({
-    z <- input$zscore
-    test <- input$test_type
-    
-    if (test == "two") {
-      p <- 2 * pnorm(-abs(z))
-      result <- paste0("Two-tailed p-value: ", round(p, 6))
-    } else if (test == "upper") {
-      p <- pnorm(z, lower.tail = FALSE)
-      result <- paste0("Upper-tailed p-value: ", round(p, 6))
-    } else if (test == "lower") {
-      p <- pnorm(z, lower.tail = TRUE)
-      result <- paste0("Lower-tailed p-value: ", round(p, 6))
+    body {
+      margin: 0;
+      padding: 1rem;
+      background: #f5f6f8;
+      color: #222222;
     }
-    
-    return(list(p = p, result = result, test = test))
-  })
-  
-  # Display p-value
-  output$pvalue_result <- renderText({
-    p_value()$result
-  })
-  
-  # Create density plot
-  output$density_plot <- renderPlot({
-    z <- input$zscore
-    test <- p_value()$test
-    
-    # Generate x values for normal distribution
-    x <- seq(-4, 4, length.out = 1000)
-    y <- dnorm(x)
-    df <- data.frame(x = x, y = y)
-    
-    # Base plot
-    p <- ggplot(df, aes(x = x, y = y)) +
-      geom_line() +
-      labs(x = "Z-score", y = "Density") +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank()) +
-      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.5)
-    
-    # Add shaded area based on test type, using #3F6BB6 as the color
-    if (test == "two") {
-      # Two-tailed test: shade both tails
-      if (z > 0) {
-        p <- p + 
-          geom_area(data = subset(df, x >= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_area(data = subset(df, x <= -z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_vline(xintercept = z, color = "#3F6BB6") +
-          geom_vline(xintercept = -z, color = "#3F6BB6")
-      } else {
-        p <- p + 
-          geom_area(data = subset(df, x <= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_area(data = subset(df, x >= -z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-          geom_vline(xintercept = z, color = "#3F6BB6") +
-          geom_vline(xintercept = -z, color = "#3F6BB6")
+
+    .ztp-app {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .ztp-app .ztp-calculator-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .ztp-app .ztp-card {
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .ztp-app .ztp-card-header {
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      background: #3F6BB6;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .ztp-app .ztp-card-body {
+      padding: 1rem;
+    }
+
+    .ztp-app .ztp-form-group {
+      margin-bottom: 1rem;
+    }
+
+    .ztp-app label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .ztp-app input[type="number"] {
+      width: 100%;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      background: #ffffff;
+      font-size: 1rem;
+    }
+
+    .ztp-app hr {
+      margin: 1.2rem 0;
+      border: 0;
+      border-top: 1px solid #dddddd;
+    }
+
+    .ztp-app .ztp-test-options {
+      padding: 0;
+      margin: 0;
+      border: 0;
+    }
+
+    .ztp-app .ztp-test-options legend {
+      margin-bottom: 0.6rem;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .ztp-app .ztp-radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+      font-weight: 400;
+    }
+
+    .ztp-app .ztp-radio-option input {
+      flex: 0 0 auto;
+      width: 17px;
+      height: 17px;
+      margin: 0;
+      accent-color: #3F68B6;
+    }
+
+    .ztp-app .ztp-help-text {
+      margin: 0;
+      color: #555555;
+      font-size: 0.93rem;
+      line-height: 1.55;
+    }
+
+    .ztp-app .ztp-plot-title {
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .ztp-app .ztp-chart-wrapper {
+      position: relative;
+      width: 100%;
+      height: 320px;
+    }
+
+    .ztp-app canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .ztp-app .ztp-calculation-result {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .ztp-app .ztp-result-label {
+      color: #333333;
+    }
+
+    .ztp-app .ztp-result-value {
+      color: #3F68B6;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 1.18rem;
+    }
+
+    .ztp-app .ztp-input-error {
+      min-height: 1.4em;
+      margin-top: 0.5rem;
+      color: #b00020;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .ztp-app input:focus-visible,
+    .ztp-app canvas:focus-visible {
+      outline: 3px solid rgba(63, 104, 182, 0.38);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .ztp-app .ztp-calculator-row {
+        grid-template-columns: 1fr;
       }
-    } else if (test == "upper") {
-      # Upper-tailed test: shade area above z
-      p <- p + 
-        geom_area(data = subset(df, x >= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-        geom_vline(xintercept = z, color = "#3F6BB6")
-    } else if (test == "lower") {
-      # Lower-tailed test: shade area below z
-      p <- p + 
-        geom_area(data = subset(df, x <= z), aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.5) +
-        geom_vline(xintercept = z, color = "#3F6BB6")
-    }
-    
-    return(p)
-  })
-}
 
-shinyApp(ui, server)
+      .ztp-app .ztp-chart-wrapper {
+        height: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 0.5rem; }
+
+      .ztp-app .ztp-card-body {
+        padding: 0.9rem;
+      }
+
+      .ztp-app .ztp-chart-wrapper {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="ztp-app">
+
+  <div class="ztp-calculator-row">
+
+    <section class="ztp-card" aria-labelledby="ztp-parameters-heading">
+      <div class="ztp-card-header" id="ztp-parameters-heading">
+        Input parameters
+      </div>
+
+      <div class="ztp-card-body">
+        <div class="ztp-form-group">
+          <label for="ztp-zscore">Z-score:</label>
+          <input
+            id="ztp-zscore"
+            type="number"
+            value="1.96"
+            step="0.01"
+            min="-8"
+            max="8"
+            inputmode="decimal"
+            aria-describedby="ztp-zscore-help ztp-input-error">
+
+          <div id="ztp-zscore-help" class="ztp-help-text">
+            Enter a Z-score between −8 and 8.
+          </div>
+
+          <div
+            id="ztp-input-error"
+            class="ztp-input-error"
+            role="alert"
+            aria-live="assertive">
+          </div>
+        </div>
+
+        <fieldset class="ztp-test-options">
+          <legend>Test type:</legend>
+
+          <label class="ztp-radio-option">
+            <input
+              type="radio"
+              name="ztp-test-type"
+              value="two"
+              checked>
+            <span>Two-tailed</span>
+          </label>
+
+          <label class="ztp-radio-option">
+            <input
+              type="radio"
+              name="ztp-test-type"
+              value="upper">
+            <span>One-tailed (upper)</span>
+          </label>
+
+          <label class="ztp-radio-option">
+            <input
+              type="radio"
+              name="ztp-test-type"
+              value="lower">
+            <span>One-tailed (lower)</span>
+          </label>
+        </fieldset>
+
+        <hr>
+
+        <p class="ztp-help-text">
+          This app demonstrates p-values in the standard normal distribution
+          for use in Z-testing.
+        </p>
+      </div>
+    </section>
+
+    <section class="ztp-card" aria-labelledby="ztp-plot-heading">
+      <div class="ztp-card-header" id="ztp-plot-heading">
+        Graphical representation
+      </div>
+
+      <div class="ztp-card-body">
+        <div class="ztp-plot-title" id="ztp-plot-title">
+          Two-tailed test with z = 1.96
+        </div>
+
+        <div class="ztp-chart-wrapper">
+          <canvas
+            id="ztp-density-chart"
+            tabindex="0"
+            role="img"
+            aria-describedby="ztp-chart-description"
+            aria-label="Standard normal density plot with two shaded tails">
+          </canvas>
+        </div>
+
+        <p id="ztp-chart-description" class="ztp-help-text">
+          The blue shaded region represents the p-value for the selected test.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="ztp-card" aria-labelledby="ztp-result-heading">
+    <div class="ztp-card-header" id="ztp-result-heading">
+      Result
+    </div>
+
+    <div class="ztp-card-body">
+      <div
+        id="ztp-result"
+        class="ztp-calculation-result"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true">
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function() {
+  "use strict";
+
+  const app = document.querySelector(".ztp-app");
+  if (!app) return;
+
+  const zInput = app.querySelector("#ztp-zscore");
+  const error = app.querySelector("#ztp-input-error");
+  const plotTitle = app.querySelector("#ztp-plot-title");
+  const result = app.querySelector("#ztp-result");
+  const chartDescription = app.querySelector("#ztp-chart-description");
+  const canvas = app.querySelector("#ztp-density-chart");
+  const ctx = canvas.getContext("2d");
+
+  function erf(value) {
+    const sign = value < 0 ? -1 : 1;
+    const z = Math.abs(value);
+    const t = 1 / (1 + 0.3275911 * z);
+
+    const approximation = 1 -
+      (((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t -
+      0.284496736) * t + 0.254829592) * t) * Math.exp(-z * z);
+
+    return sign * approximation;
+  }
+
+  function normalCDF(value) {
+    return 0.5 * (1 + erf(value / Math.sqrt(2)));
+  }
+
+  function normalPDF(value) {
+    return Math.exp(-0.5 * value * value) / Math.sqrt(2 * Math.PI);
+  }
+
+  function getTestType() {
+    const selected = app.querySelector(
+      'input[name="ztp-test-type"]:checked'
+    );
+
+    return selected ? selected.value : "two";
+  }
+
+  function validateZScore() {
+    const z = Number(zInput.value);
+    let message = "";
+
+    if (!Number.isFinite(z)) {
+      message = "Enter a valid numerical Z-score.";
+    } else if (z < -8 || z > 8) {
+      message = "Enter a Z-score between −8 and 8.";
+    }
+
+    error.textContent = message;
+    zInput.setAttribute("aria-invalid", message ? "true" : "false");
+
+    return message ? null : z;
+  }
+
+  function calculate(z, testType) {
+    let probability;
+    let label;
+
+    if (testType === "two") {
+      probability = 2 * normalCDF(-Math.abs(z));
+      label = "Two-tailed p-value";
+    } else if (testType === "upper") {
+      probability = 1 - normalCDF(z);
+      label = "Upper-tailed p-value";
+    } else {
+      probability = normalCDF(z);
+      label = "Lower-tailed p-value";
+    }
+
+    probability = Math.max(0, Math.min(1, probability));
+
+    return { probability, label };
+  }
+
+  function testName(testType) {
+    if (testType === "two") return "Two-tailed test";
+    if (testType === "upper") return "Upper-tailed test";
+    return "Lower-tailed test";
+  }
+
+  function drawChart(z, testType, calculation) {
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { left: 58, right: 20, top: 22, bottom: 50 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+    const xMinimum = -4;
+    const xMaximum = 4;
+    const yMaximum = 0.44;
+    const pointCount = 800;
+
+    function xScale(value) {
+      return padding.left +
+        ((value - xMinimum) / (xMaximum - xMinimum)) * chartWidth;
+    }
+
+    function yScale(value) {
+      return padding.top + chartHeight -
+        (value / yMaximum) * chartHeight;
+    }
+
+    function clamp(value, minimum, maximum) {
+      return Math.max(minimum, Math.min(maximum, value));
+    }
+
+    function fillArea(start, end) {
+      const boundedStart = clamp(start, xMinimum, xMaximum);
+      const boundedEnd = clamp(end, xMinimum, xMaximum);
+      if (boundedEnd <= boundedStart) return;
+
+      const count = Math.max(
+        2,
+        Math.round(pointCount * (boundedEnd - boundedStart) /
+        (xMaximum - xMinimum))
+      );
+
+      ctx.beginPath();
+      ctx.moveTo(xScale(boundedStart), yScale(0));
+
+      for (let i = 0; i <= count; i++) {
+        const value = boundedStart +
+          (i / count) * (boundedEnd - boundedStart);
+        ctx.lineTo(xScale(value), yScale(normalPDF(value)));
+      }
+
+      ctx.lineTo(xScale(boundedEnd), yScale(0));
+      ctx.closePath();
+      ctx.fillStyle = "rgba(63, 107, 182, 0.55)";
+      ctx.fill();
+    }
+
+    function drawBoundary(value) {
+      if (value < xMinimum || value > xMaximum) return;
+
+      ctx.strokeStyle = "#3F6BB6";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(xScale(value), yScale(0));
+      ctx.lineTo(xScale(value), yScale(normalPDF(value)));
+      ctx.stroke();
+    }
+
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.font = "12px Arial";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i <= 4; i++) {
+      const density = i * 0.1;
+      const y = yScale(density);
+
+      ctx.strokeStyle = "#e5e5e5";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padding.left, y);
+      ctx.lineTo(width - padding.right, y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#555555";
+      ctx.fillText(density.toFixed(1), padding.left - 8, y);
+    }
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+
+    for (let value = -4; value <= 4; value++) {
+      const x = xScale(value);
+
+      ctx.strokeStyle = "#eeeeee";
+      ctx.beginPath();
+      ctx.moveTo(x, padding.top);
+      ctx.lineTo(x, padding.top + chartHeight);
+      ctx.stroke();
+
+      ctx.fillStyle = "#333333";
+      ctx.fillText(value, x, padding.top + chartHeight + 20);
+    }
+
+    if (testType === "two") {
+      const boundary = Math.abs(z);
+      fillArea(xMinimum, -boundary);
+      fillArea(boundary, xMaximum);
+      drawBoundary(-boundary);
+      drawBoundary(boundary);
+    } else if (testType === "upper") {
+      fillArea(z, xMaximum);
+      drawBoundary(z);
+    } else {
+      fillArea(xMinimum, z);
+      drawBoundary(z);
+    }
+
+    ctx.beginPath();
+
+    for (let i = 0; i <= pointCount; i++) {
+      const value = xMinimum +
+        (i / pointCount) * (xMaximum - xMinimum);
+      const x = xScale(value);
+      const y = yScale(normalPDF(value));
+
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+
+    ctx.strokeStyle = "#222222";
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.setLineDash([5, 5]);
+    ctx.strokeStyle = "#777777";
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(xScale(0), padding.top);
+    ctx.lineTo(xScale(0), padding.top + chartHeight);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.strokeStyle = "#777777";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, padding.top + chartHeight);
+    ctx.lineTo(width - padding.right, padding.top + chartHeight);
+    ctx.stroke();
+
+    ctx.fillStyle = "#333333";
+    ctx.font = "13px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(
+      "Z-score",
+      padding.left + chartWidth / 2,
+      height - 8
+    );
+
+    ctx.save();
+    ctx.translate(15, padding.top + chartHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = "center";
+    ctx.fillText("Density", 0, 0);
+    ctx.restore();
+
+    const description =
+      `${testName(testType)} with z equal to ${z.toFixed(2)}. ` +
+      `The blue shaded region represents a p-value of ` +
+      `${calculation.probability.toFixed(6)}.`;
+
+    canvas.setAttribute("aria-label", description);
+    chartDescription.textContent = description;
+  }
+
+  function update() {
+    const z = validateZScore();
+    const testType = getTestType();
+
+    if (z === null) {
+      result.textContent =
+        "Enter a valid Z-score to calculate the p-value.";
+      plotTitle.textContent = "Standard normal distribution";
+      chartDescription.textContent =
+        "The graph is unavailable because the Z-score is invalid.";
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
+
+    const calculation = calculate(z, testType);
+
+    plotTitle.textContent =
+      `${testName(testType)} with z = ${z.toFixed(2)}`;
+
+    result.innerHTML =
+      `<span class="ztp-result-label">${calculation.label}: </span>` +
+      `<span class="ztp-result-value">` +
+      `${calculation.probability.toFixed(6)}</span>`;
+
+    drawChart(z, testType, calculation);
+  }
+
+  zInput.addEventListener("input", update);
+
+  app.querySelectorAll('input[name="ztp-test-type"]').forEach(
+    function(radio) {
+      radio.addEventListener("change", update);
+    }
+  );
+
+  let resizeTimer;
+
+  window.addEventListener("resize", function() {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(update, 80);
+  });
+
+  update();
+})();
+</script>
+
+</body>
+</html>
+
 ```
 
 # Further reading {-}
@@ -147,7 +644,9 @@ shinyApp(ui, server)
 
 v1.0: initial version created 12/24 by Ellie Trace as part of a University of St Andrews VIP project.
 
-  - v1.1: updated to R Shiny interface by tdhc 04/25.
+- v1.1: updated to R Shiny interface by tdhc 04/25.
+  
+- v1.2: deprecated shinylive apps replaced 09/26 by tdhc.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

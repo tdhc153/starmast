@@ -51,11 +51,6 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/bootstrap/bootstrap-dark-365d6bab852ec9a235b2fcad5c9fe113.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content="..">
-<script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
-<link href="../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/shinylive.css" rel="stylesheet">
-<link href="../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -615,178 +610,1194 @@ f(x) = \mathbb{P}(X=x) = \binom{n}{x} p^x q^{(n-x)} = \frac{n!}{(n-x)! x!} p^x q
 </div>
 </div>
 <p>You can use the interactive calculator below to explore the binomial distribution by changing the probability <span class="math inline">\(p\)</span> and the number of trials <span class="math inline">\(n\)</span>. This calculator not only helps you work out the PMF of the binomial distribution, but also the CDF (see later in the guide for a definition of this.)</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| viewerHeight: 750
 
-library(shiny)
-library(bslib)
-library(ggplot2)
+<div class="distribution-calculator binomial-calculator">
 
-ui &lt;- page_fluid(
-  title = "Binomial distribution calculator",
-  
-  layout_columns(
-    col_widths = c(4, 8),
-    
-    # Left column - Inputs
-    card(
-      card_header("Parameters"),
-      card_body(
-        numericInput("n", "Number of trials (n):", value = 10, min = 1, step = 1),
-        sliderInput("p", "Probability of success (p):", min = 0, max = 1, value = 0.5, step = 0.01),
-        hr(),
-        radioButtons("prob_type", "Probability to Calculate:",
-                    choices = list("P(X ≤ x)" = "less", 
-                                  "P(X ≥ x)" = "greater", 
-                                  "P(x ≤ X ≤ y)" = "between"),
-                    selected = "less"),
-        conditionalPanel(
-          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
-          sliderInput("x_value", "x value:", min = 0, max = 10, value = 5, step = 1)
-        ),
-        conditionalPanel(
-          condition = "input.prob_type == 'between'",
-          sliderInput("x_lower", "Lower bound (x):", min = 0, max = 10, value = 3, step = 1),
-          sliderInput("x_upper", "Upper bound (y):", min = 0, max = 10, value = 7, step = 1)
-        )
-      )
-    ),
-    
-    # Right column - Plot
-    card(
-      card_header("Binomial distribution plot"),
-      card_body(
-        uiOutput("plot_title"),
-        plotOutput("distPlot", height = "300px")
-      )
-    )
-  ),
-  
-  # Bottom row - Results
-  card(
-    card_header("Results"),
-    card_body(
-      textOutput("explanation")
-    )
-  )
-)
+  <div class="calculator-row">
 
-server &lt;- function(input, output, session) {
-  
-  # Update the range of the sliders when n changes
-  observe({
-    updateSliderInput(session, "x_value", max = input$n)
-    updateSliderInput(session, "x_lower", max = input$n)
-    updateSliderInput(session, "x_upper", max = input$n)
-  })
-  
-  # Ensure that x_upper is always greater than or equal to x_lower
-  observe({
-    if (input$x_upper &lt; input$x_lower) {
-      updateSliderInput(session, "x_upper", value = input$x_lower)
-    }
-  })
-  
-  # Display the plot title with distribution parameters
-  output$plot_title &lt;- renderUI({
-    title &lt;- sprintf("Bin(n = %d, p = %.2f)", input$n, input$p)
-    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
-  })
-  
-  # Calculate the probability based on user selection
-  probability &lt;- reactive({
-    if (input$prob_type == "less") {
-      prob &lt;- pbinom(input$x_value, size = input$n, prob = input$p)
-      explanation &lt;- sprintf("P(X ≤ %d) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
-      
-    } else if (input$prob_type == "greater") {
-      # For P(X ≥ x), we need 1 - P(X &lt; x) = 1 - P(X ≤ x-1)
-      if (input$x_value == 0) {
-        prob &lt;- 1  # P(X ≥ 0) is always 1
-      } else {
-        prob &lt;- 1 - pbinom(input$x_value - 1, size = input$n, prob = input$p)
-      }
-      explanation &lt;- sprintf("P(X ≥ %d) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
-      
-    } else if (input$prob_type == "between") {
-      if (input$x_lower == input$x_upper) {
-        # Exact probability for a single value
-        prob &lt;- dbinom(input$x_lower, size = input$n, prob = input$p)
-      } else {
-        # P(x_lower ≤ X ≤ x_upper) = P(X ≤ x_upper) - P(X &lt; x_lower) = P(X ≤ x_upper) - P(X ≤ x_lower-1)
-        upper_prob &lt;- pbinom(input$x_upper, size = input$n, prob = input$p)
-        if (input$x_lower == 0) {
-          lower_prob &lt;- 0
-        } else {
-          lower_prob &lt;- pbinom(input$x_lower - 1, size = input$n, prob = input$p)
-        }
-        prob &lt;- upper_prob - lower_prob
-      }
-      explanation &lt;- sprintf("P(%d ≤ X ≤ %d) = %.4f or %.2f%%", 
-                            input$x_lower, input$x_upper, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "between", 
-                 lower = input$x_lower, upper = input$x_upper))
-    }
-  })
-  
-  # Display an explanation of the calculation
-  output$explanation &lt;- renderText({
-    res &lt;- probability()
-    return(res$explanation)
-  })
-  
-  # Generate the binomial distribution plot
-  output$distPlot &lt;- renderPlot({
-    # Create data frame for plotting
-    x_values &lt;- 0:input$n
-    prob_mass &lt;- dbinom(x_values, size = input$n, prob = input$p)
-    df &lt;- data.frame(x = x_values, probability = prob_mass)
-    
-    # Create base plot
-    p &lt;- ggplot(df, aes(x = x, y = probability)) +
-      geom_col(fill = "lightgray", color = "darkgray", alpha = 0.7) +
-      labs(x = "number of successes (X)", y = "probability mass function") +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank()) +
-      scale_x_continuous(breaks = x_values)
-    
-    # Add shaded area based on selected probability type
-    res &lt;- probability()
-    
-    if (res$type == "less") {
-      highlight_x &lt;- 0:res$x
-      highlight_df &lt;- df[df$x %in% highlight_x, ]
-      
-      p &lt;- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-      
-    } else if (res$type == "greater") {
-      highlight_x &lt;- res$x:input$n
-      highlight_df &lt;- df[df$x %in% highlight_x, ]
-      
-      p &lt;- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-      
-    } else if (res$type == "between") {
-      highlight_x &lt;- res$lower:res$upper
-      highlight_df &lt;- df[df$x %in% highlight_x, ]
-      
-      p &lt;- p + geom_col(data = highlight_df, aes(x = x, y = probability), 
-                       fill = "#3F6BB6", color = "darkgray", alpha = 0.8)
-    }
-    
-    return(p)
-  })
+    <!-- PARAMETERS CARD -->
+    <div class="calculator-card parameters-card">
+
+      <div class="calculator-card-header">
+        Parameters
+      </div>
+
+      <div class="calculator-card-body">
+
+        <div class="form-group">
+          <label for="binomial-n">
+            Number of trials (n):
+          </label>
+
+          <input type="number" id="binomial-n" value="10" min="1" step="1" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="binomial-p">
+            Probability of success (p):
+          </label>
+
+          <input type="range" id="binomial-p" min="0" max="1" value="0.5" step="0.01" class="distribution-slider">
+
+          <div class="slider-value" id="binomial-p-value">
+            0.50
+          </div>
+        </div>
+
+        <hr>
+
+        <fieldset class="probability-options">
+
+          <legend>
+            Probability to calculate:
+          </legend>
+
+          <label class="radio-option">
+            <input type="radio" name="binomial-prob-type" value="less" checked="">
+            <span>P(X ≤ x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="binomial-prob-type" value="greater">
+            <span>P(X ≥ x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="binomial-prob-type" value="between">
+            <span>P(x ≤ X ≤ y)</span>
+          </label>
+
+        </fieldset>
+
+        <!-- SINGLE X VALUE -->
+
+        <div id="binomial-x-container" class="conditional-input">
+
+          <label for="binomial-x">
+            x value:
+          </label>
+
+          <input type="range" id="binomial-x" min="0" max="10" value="5" step="1" class="distribution-slider">
+
+          <div class="slider-value" id="binomial-x-value">
+            5
+          </div>
+
+        </div>
+
+        <!-- LOWER / UPPER VALUES -->
+
+        <div id="binomial-between-container" class="conditional-input" hidden="">
+
+          <label for="binomial-lower">
+            Lower bound (x):
+          </label>
+
+          <input type="range" id="binomial-lower" min="0" max="10" value="3" step="1" class="distribution-slider">
+
+          <div class="slider-value" id="binomial-lower-value">
+            3
+          </div>
+
+          <label for="binomial-upper" class="upper-label">
+
+            Upper bound (y):
+
+          </label>
+
+          <input type="range" id="binomial-upper" min="0" max="10" value="7" step="1" class="distribution-slider">
+
+          <div class="slider-value" id="binomial-upper-value">
+            7
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- PLOT CARD -->
+
+    <div class="calculator-card plot-card">
+
+      <div class="calculator-card-header">
+        Binomial distribution plot
+      </div>
+
+      <div class="calculator-card-body">
+
+        <div id="binomial-plot-title" class="distribution-plot-title">
+
+          Bin(n = 10, p = 0.50)
+
+        </div>
+
+        <div class="binomial-chart-wrapper">
+
+          <canvas id="binomial-chart" tabindex="0" aria-label="Binomial distribution probability mass function">
+          </canvas>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- RESULTS CARD -->
+
+  <div class="calculator-card results-card">
+
+    <div class="calculator-card-header">
+      Results
+    </div>
+
+    <div class="calculator-card-body">
+
+      <div id="binomial-result" class="calculation-result" aria-live="polite">
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<style>
+
+/* =========================================================
+   BINOMIAL CALCULATOR
+   ========================================================= */
+
+.binomial-calculator {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-shinyApp(ui = ui, server = server)</code></pre>
+
+/* TOP ROW */
+
+.binomial-calculator .calculator-row {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+
+/* CARDS */
+
+.binomial-calculator .calculator-card {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin-bottom: 1rem;
+}
+
+
+/* CARD HEADERS */
+
+.binomial-calculator .calculator-card-header {
+  background: #3F6BB6;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+
+/* CARD BODY */
+
+.binomial-calculator .calculator-card-body {
+  padding: 1rem;
+}
+
+
+/* FORM ELEMENTS */
+
+.binomial-calculator .form-group {
+  margin-bottom: 1rem;
+}
+
+.binomial-calculator label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.binomial-calculator input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  background: #ffffff;
+  font-size: 1rem;
+}
+
+
+/* SLIDERS */
+
+.binomial-calculator .distribution-slider {
+  width: 100%;
+  margin: 0.5rem 0;
+  accent-color: #3F68B6;
+  cursor: pointer;
+}
+
+.binomial-calculator .slider-value {
+  text-align: center;
+  color: #3F68B6;
+  font-weight: 700;
+  margin-top: 0.1rem;
+}
+
+
+/* DIVIDER */
+
+.binomial-calculator hr {
+  border: 0;
+  border-top: 1px solid #dddddd;
+  margin: 1.2rem 0;
+}
+
+
+/* RADIO BUTTONS */
+
+.binomial-calculator .probability-options {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.binomial-calculator .probability-options legend {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.6rem;
+}
+
+.binomial-calculator .radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.binomial-calculator .radio-option input {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: #3F68B6;
+}
+
+
+/* CONDITIONAL INPUTS */
+
+.binomial-calculator .conditional-input {
+  margin-top: 1rem;
+}
+
+.binomial-calculator .conditional-input[hidden] {
+  display: none;
+}
+
+.binomial-calculator .upper-label {
+  margin-top: 1rem;
+}
+
+
+/* PLOT */
+
+.binomial-calculator .distribution-plot-title {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.binomial-calculator .binomial-chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+
+.binomial-calculator canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+/* RESULTS */
+
+.binomial-calculator .calculation-result {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+
+/* FOCUS */
+
+.binomial-calculator input:focus,
+.binomial-calculator canvas:focus {
+  outline: 3px solid rgba(63,104,182,0.3);
+  outline-offset: 2px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .binomial-calculator .calculator-row {
+    grid-template-columns: 1fr;
+  }
+
+  .binomial-calculator .plot-card {
+    min-width: 0;
+  }
+
+  .binomial-calculator .binomial-chart-wrapper {
+    height: 280px;
+  }
+
+}
+
+
+/* SMALL MOBILE */
+
+@media (max-width: 480px) {
+
+  .binomial-calculator .calculator-card-body {
+    padding: 0.9rem;
+  }
+
+  .binomial-calculator .binomial-chart-wrapper {
+    height: 250px;
+  }
+
+}
+
+</style>
+
+
+<script>
+
+/* =========================================================
+   BINOMIAL DISTRIBUTION CALCULATOR
+   ========================================================= */
+
+(function() {
+
+  const nInput =
+    document.getElementById("binomial-n");
+
+  const pInput =
+    document.getElementById("binomial-p");
+
+  const xInput =
+    document.getElementById("binomial-x");
+
+  const lowerInput =
+    document.getElementById("binomial-lower");
+
+  const upperInput =
+    document.getElementById("binomial-upper");
+
+  const pDisplay =
+    document.getElementById("binomial-p-value");
+
+  const xDisplay =
+    document.getElementById("binomial-x-value");
+
+  const lowerDisplay =
+    document.getElementById("binomial-lower-value");
+
+  const upperDisplay =
+    document.getElementById("binomial-upper-value");
+
+  const title =
+    document.getElementById("binomial-plot-title");
+
+  const result =
+    document.getElementById("binomial-result");
+
+  const xContainer =
+    document.getElementById("binomial-x-container");
+
+  const betweenContainer =
+    document.getElementById("binomial-between-container");
+
+  const canvas =
+    document.getElementById("binomial-chart");
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  /* -------------------------------------------------------
+     BINOMIAL PMF
+     ------------------------------------------------------- */
+
+  function logGamma(z) {
+
+    const coefficients = [
+      676.5203681218851,
+      -1259.1392167224028,
+      771.32342877765313,
+      -176.61502916214059,
+      12.507343278686905,
+      -0.13857109526572012,
+      9.9843695780195716e-6,
+      1.5056327351493116e-7
+    ];
+
+    if (z < 0.5) {
+      return Math.log(Math.PI)
+        - Math.log(Math.sin(Math.PI * z))
+        - logGamma(1 - z);
+    }
+
+    z -= 1;
+
+    let x = 0.99999999999980993;
+
+    for (let i = 0; i < coefficients.length; i++) {
+      x += coefficients[i] / (z + i + 1);
+    }
+
+    const t = z + coefficients.length - 0.5;
+
+    return (
+      0.5 * Math.log(2 * Math.PI) +
+      (z + 0.5) * Math.log(t) -
+      t +
+      Math.log(x)
+    );
+  }
+
+
+  function binomialPMF(k, n, p) {
+
+    if (k < 0 || k > n) {
+      return 0;
+    }
+
+    if (p === 0) {
+      return k === 0 ? 1 : 0;
+    }
+
+    if (p === 1) {
+      return k === n ? 1 : 0;
+    }
+
+    const logProbability =
+      logGamma(n + 1) -
+      logGamma(k + 1) -
+      logGamma(n - k + 1) +
+      k * Math.log(p) +
+      (n - k) * Math.log(1 - p);
+
+    return Math.exp(logProbability);
+  }
+
+
+  /* -------------------------------------------------------
+     CUMULATIVE PROBABILITY
+     ------------------------------------------------------- */
+
+  function cumulativeProbability(k, n, p) {
+
+    if (k < 0) return 0;
+
+    if (k >= n) return 1;
+
+    let total = 0;
+
+    for (let i = 0; i <= k; i++) {
+      total += binomialPMF(i, n, p);
+    }
+
+    return total;
+  }
+
+
+  /* -------------------------------------------------------
+     CURRENT TEST TYPE
+     ------------------------------------------------------- */
+
+  function getTestType() {
+
+    const selected =
+      document.querySelector(
+        'input[name="binomial-prob-type"]:checked'
+      );
+
+    return selected
+      ? selected.value
+      : "less";
+  }
+
+
+  /* -------------------------------------------------------
+     UPDATE SLIDER RANGES
+     ------------------------------------------------------- */
+
+  function updateRanges() {
+
+    let n =
+      parseInt(nInput.value, 10);
+
+    if (!Number.isFinite(n) || n < 1) {
+      n = 1;
+      nInput.value = 1;
+    }
+
+    xInput.max = n;
+    lowerInput.max = n;
+    upperInput.max = n;
+
+    if (parseInt(xInput.value,10) > n) {
+      xInput.value = n;
+    }
+
+    if (parseInt(lowerInput.value,10) > n) {
+      lowerInput.value = n;
+    }
+
+    if (parseInt(upperInput.value,10) > n) {
+      upperInput.value = n;
+    }
+
+    if (
+      parseInt(upperInput.value,10) <
+      parseInt(lowerInput.value,10)
+    ) {
+      upperInput.value =
+        lowerInput.value;
+    }
+
+  }
+
+
+  /* -------------------------------------------------------
+     UPDATE DISPLAY
+     ------------------------------------------------------- */
+
+  function updateDisplay() {
+
+    updateRanges();
+
+    const n =
+      parseInt(nInput.value,10);
+
+    const p =
+      parseFloat(pInput.value);
+
+    const x =
+      parseInt(xInput.value,10);
+
+    const lower =
+      parseInt(lowerInput.value,10);
+
+    const upper =
+      parseInt(upperInput.value,10);
+
+    pDisplay.textContent =
+      p.toFixed(2);
+
+    xDisplay.textContent =
+      x;
+
+    lowerDisplay.textContent =
+      lower;
+
+    upperDisplay.textContent =
+      upper;
+
+    title.textContent =
+      `Bin(n = ${n}, p = ${p.toFixed(2)})`;
+
+  }
+
+
+  /* -------------------------------------------------------
+     CALCULATE RESULT
+     ------------------------------------------------------- */
+
+  function calculateProbability() {
+
+    const n =
+      parseInt(nInput.value,10);
+
+    const p =
+      parseFloat(pInput.value);
+
+    const x =
+      parseInt(xInput.value,10);
+
+    let lower =
+      parseInt(lowerInput.value,10);
+
+    let upper =
+      parseInt(upperInput.value,10);
+
+    const type =
+      getTestType();
+
+
+    if (upper < lower) {
+
+      upper = lower;
+
+      upperInput.value =
+        upper;
+
+      upperDisplay.textContent =
+        upper;
+
+    }
+
+
+    let probability;
+
+
+    if (type === "less") {
+
+      probability =
+        cumulativeProbability(
+          x,
+          n,
+          p
+        );
+
+      result.textContent =
+        `P(X ≤ ${x}) = ` +
+        `${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+
+    }
+
+
+    else if (type === "greater") {
+
+      if (x === 0) {
+
+        probability = 1;
+
+      } else {
+
+        probability =
+          1 -
+          cumulativeProbability(
+            x - 1,
+            n,
+            p
+          );
+
+      }
+
+      result.textContent =
+        `P(X ≥ ${x}) = ` +
+        `${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+
+    }
+
+
+    else {
+
+      if (lower === upper) {
+
+        probability =
+          binomialPMF(
+            lower,
+            n,
+            p
+          );
+
+      } else {
+
+        const upperProbability =
+          cumulativeProbability(
+            upper,
+            n,
+            p
+          );
+
+        const lowerProbability =
+          lower === 0
+            ? 0
+            : cumulativeProbability(
+                lower - 1,
+                n,
+                p
+              );
+
+        probability =
+          upperProbability -
+          lowerProbability;
+
+      }
+
+      result.textContent =
+        `P(${lower} ≤ X ≤ ${upper}) = ` +
+        `${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+
+    }
+
+
+    return {
+      type,
+      x,
+      lower,
+      upper,
+      probability
+    };
+
+  }
+
+
+  /* -------------------------------------------------------
+     DRAW CHART
+     ------------------------------------------------------- */
+
+  function drawChart() {
+
+    const n =
+      parseInt(nInput.value,10);
+
+    const p =
+      parseFloat(pInput.value);
+
+    const res =
+      calculateProbability();
+
+
+    const rect =
+      canvas.getBoundingClientRect();
+
+    const dpr =
+      window.devicePixelRatio || 1;
+
+    canvas.width =
+      rect.width * dpr;
+
+    canvas.height =
+      rect.height * dpr;
+
+    ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+
+    const width =
+      rect.width;
+
+    const height =
+      rect.height;
+
+
+    ctx.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    const padding = {
+      left: 55,
+      right: 20,
+      top: 25,
+      bottom: 50
+    };
+
+
+    const chartWidth =
+      width -
+      padding.left -
+      padding.right;
+
+    const chartHeight =
+      height -
+      padding.top -
+      padding.bottom;
+
+
+    const probabilities = [];
+
+    for(let k=0;k<=n;k++) {
+
+      probabilities.push(
+        binomialPMF(k,n,p)
+      );
+
+    }
+
+
+    const maxProbability =
+      Math.max(...probabilities);
+
+
+    function xScale(k) {
+
+      if(n === 0) {
+        return padding.left;
+      }
+
+      return padding.left +
+        (k / n) *
+        chartWidth;
+
+    }
+
+
+    function yScale(value) {
+
+      return padding.top +
+        chartHeight -
+        (value / maxProbability) *
+        chartHeight *
+        0.9;
+
+    }
+
+
+    /* GRID */
+
+    ctx.strokeStyle =
+      "#e5e5e5";
+
+    ctx.lineWidth = 1;
+
+    for(let i=0;i<=4;i++) {
+
+      const y =
+        padding.top +
+        chartHeight -
+        (i/4) *
+        chartHeight;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        padding.left,
+        y
+      );
+
+      ctx.lineTo(
+        width - padding.right,
+        y
+      );
+
+      ctx.stroke();
+
+    }
+
+
+    /* AXIS */
+
+    ctx.strokeStyle =
+      "#777";
+
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      padding.left,
+      padding.top + chartHeight
+    );
+
+    ctx.lineTo(
+      width - padding.right,
+      padding.top + chartHeight
+    );
+
+    ctx.stroke();
+
+
+    /* BARS */
+
+    const barWidth =
+      Math.max(
+        2,
+        Math.min(
+          40,
+          chartWidth / (n + 1) * 0.72
+        )
+      );
+
+
+    for(let k=0;k<=n;k++) {
+
+      const probability =
+        probabilities[k];
+
+      const barHeight =
+        (probability / maxProbability) *
+        chartHeight *
+        0.9;
+
+      const x =
+        xScale(k) -
+        barWidth / 2;
+
+      const y =
+        padding.top +
+        chartHeight -
+        barHeight;
+
+
+      let highlighted = false;
+
+
+      if(res.type === "less") {
+
+        highlighted =
+          k <= res.x;
+
+      }
+
+      else if(res.type === "greater") {
+
+        highlighted =
+          k >= res.x;
+
+      }
+
+      else if(res.type === "between") {
+
+        highlighted =
+          k >= res.lower &&
+          k <= res.upper;
+
+      }
+
+
+      ctx.fillStyle =
+        highlighted
+          ? "#3F6BB6"
+          : "#d3d3d3";
+
+
+      ctx.fillRect(
+        x,
+        y,
+        barWidth,
+        barHeight
+      );
+
+
+      ctx.strokeStyle =
+        "#777";
+
+      ctx.strokeRect(
+        x,
+        y,
+        barWidth,
+        barHeight
+      );
+
+    }
+
+
+    /* X AXIS LABELS */
+
+    ctx.fillStyle =
+      "#333";
+
+    ctx.font =
+      "12px Arial";
+
+    ctx.textAlign =
+      "center";
+
+    for(let k=0;k<=n;k++) {
+
+      const x =
+        xScale(k);
+
+      ctx.fillText(
+        k,
+        x,
+        padding.top +
+        chartHeight +
+        20
+      );
+
+    }
+
+
+    /* X LABEL */
+
+    ctx.font =
+      "13px Arial";
+
+    ctx.fillText(
+      "number of successes (X)",
+      padding.left +
+      chartWidth/2,
+      height - 8
+    );
+
+
+    /* Y LABEL */
+
+    ctx.save();
+
+    ctx.translate(
+      15,
+      padding.top +
+      chartHeight/2
+    );
+
+    ctx.rotate(-Math.PI/2);
+
+    ctx.textAlign =
+      "center";
+
+    ctx.fillText(
+      "probability mass function",
+      0,
+      0
+    );
+
+    ctx.restore();
+
+  }
+
+
+  /* -------------------------------------------------------
+     VISIBILITY
+     ------------------------------------------------------- */
+
+  function updateVisibility() {
+
+    const type =
+      getTestType();
+
+    if(
+      type === "less" ||
+      type === "greater"
+    ) {
+
+      xContainer.hidden = false;
+
+      betweenContainer.hidden = true;
+
+    } else {
+
+      xContainer.hidden = true;
+
+      betweenContainer.hidden = false;
+
+    }
+
+  }
+
+
+  /* -------------------------------------------------------
+     MASTER UPDATE
+     ------------------------------------------------------- */
+
+  function update() {
+
+    updateVisibility();
+
+    updateDisplay();
+
+    drawChart();
+
+  }
+
+
+  /* -------------------------------------------------------
+     EVENT LISTENERS
+     ------------------------------------------------------- */
+
+  nInput.addEventListener(
+    "input",
+    update
+  );
+
+  pInput.addEventListener(
+    "input",
+    update
+  );
+
+  xInput.addEventListener(
+    "input",
+    update
+  );
+
+  lowerInput.addEventListener(
+    "input",
+    function() {
+
+      if(
+        parseInt(upperInput.value,10) <
+        parseInt(lowerInput.value,10)
+      ) {
+
+        upperInput.value =
+          lowerInput.value;
+
+      }
+
+      update();
+
+    }
+  );
+
+  upperInput.addEventListener(
+    "input",
+    update
+  );
+
+
+  document
+    .querySelectorAll(
+      'input[name="binomial-prob-type"]'
+    )
+    .forEach(
+      radio =>
+        radio.addEventListener(
+          "change",
+          update
+        )
+    );
+
+
+  window.addEventListener(
+    "resize",
+    drawChart
+  );
+
+
+  /* INITIALISE */
+
+  update();
+
+})();
+
+</script>
+
 <p>You can find that all binomial distributions are valid PMFs: see <a href="../proofsheets/ps-pmfspdfscdfs.html">Proof sheet: PMFs, PDFs, CDFs</a> for more.</p>
 </section>
 <section id="what-is-a-probability-density-function-pdf" class="level1">
@@ -903,160 +1914,662 @@ f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left({-\frac{1}{2} \left( \frac{x - \mu
 </div>
 </div>
 <p>You can use the interactive calculator below to explore the normal distribution by changing the mean <span class="math inline">\(\mu\)</span> and the standard deviation <span class="math inline">\(\sigma\)</span>. This calculator not only gives you the PDF between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, which is <span class="math inline">\(\mathbb{P}(a\leq X\leq b)\)</span>, but it also allows you to calculate the CDF for the normal distribution (see later in the guide for a definition of this.)</p>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| viewerHeight: 700
 
-library(shiny)
-library(bslib)
-library(ggplot2)
 
-ui &lt;- page_fluid(
-  title = "Normal distribution calculator",
-  
-  layout_columns(
-    col_widths = c(4, 8),
-    
-    # Left column - Inputs
-    card(
-      card_header("Parameters"),
-      card_body(
-        numericInput("mean", "Mean (μ):", value = 0),
-        numericInput("sd", "Standard deviation (σ):", value = 1, min = 0.01),
-        hr(),
-        radioButtons("prob_type", "Probability to calculate:",
-                    choices = list("P(X ≤ x)" = "less", 
-                                  "P(X ≥ x)" = "greater", 
-                                  "P(x ≤ X ≤ y)" = "between"),
-                    selected = "less"),
-        conditionalPanel(
-          condition = "input.prob_type == 'less' || input.prob_type == 'greater'",
-          numericInput("x_value", "x value:", value = 0)
-        ),
-        conditionalPanel(
-          condition = "input.prob_type == 'between'",
-          numericInput("x_lower", "Lower bound (x):", value = -1),
-          numericInput("x_upper", "Upper bound (y):", value = 1)
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Normal Distribution Calculator</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 1rem;
+      background: #f5f6f8;
+      color: #222222;
+    }
+
+    /* =========================================================
+       NORMAL DISTRIBUTION CALCULATOR
+       ========================================================= */
+
+    .normal-calculator {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .normal-calculator .calculator-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .normal-calculator .calculator-card {
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      margin-bottom: 1rem;
+    }
+
+    .normal-calculator .calculator-card-header {
+      background: #3F6BB6;
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .normal-calculator .calculator-card-body { padding: 1rem; }
+    .normal-calculator .form-group { margin-bottom: 1rem; }
+
+    .normal-calculator label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .normal-calculator input[type="number"] {
+      width: 100%;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      background: #ffffff;
+      font-size: 1rem;
+    }
+
+    .normal-calculator .distribution-slider {
+      width: 100%;
+      margin: 0.5rem 0;
+      accent-color: #3F68B6;
+      cursor: pointer;
+    }
+
+    .normal-calculator .slider-value {
+      text-align: center;
+      color: #3F68B6;
+      font-weight: 700;
+      margin-top: 0.1rem;
+    }
+
+    .normal-calculator hr {
+      border: 0;
+      border-top: 1px solid #dddddd;
+      margin: 1.2rem 0;
+    }
+
+    .normal-calculator .probability-options {
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .normal-calculator .probability-options legend {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+    }
+
+    .normal-calculator .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.55rem;
+      cursor: pointer;
+      font-weight: 400;
+    }
+
+    .normal-calculator .radio-option input {
+      margin: 0;
+      width: 16px;
+      height: 16px;
+      accent-color: #3F68B6;
+    }
+
+    .normal-calculator .conditional-input { margin-top: 1rem; }
+    .normal-calculator .conditional-input[hidden] { display: none; }
+    .normal-calculator .upper-label { margin-top: 1rem; }
+
+    .normal-calculator .distribution-plot-title {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .normal-calculator .normal-chart-wrapper {
+      position: relative;
+      width: 100%;
+      height: 320px;
+    }
+
+    .normal-calculator canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .normal-calculator .calculation-result {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .normal-calculator input:focus,
+    .normal-calculator canvas:focus {
+      outline: 3px solid rgba(63, 104, 182, 0.3);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .normal-calculator .calculator-row { grid-template-columns: 1fr; }
+      .normal-calculator .plot-card { min-width: 0; }
+      .normal-calculator .normal-chart-wrapper { height: 280px; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 0.5rem; }
+      .normal-calculator .calculator-card-body { padding: 0.9rem; }
+      .normal-calculator .normal-chart-wrapper { height: 250px; }
+    }
+  </style>
+
+
+
+
+<div class="distribution-calculator normal-calculator">
+
+  <div class="calculator-row">
+
+    <!-- PARAMETERS CARD -->
+    <div class="calculator-card parameters-card">
+      <div class="calculator-card-header">Parameters</div>
+
+      <div class="calculator-card-body">
+
+        <div class="form-group">
+          <label for="normal-mean">Mean (μ):</label>
+          <input type="number" id="normal-mean" value="0" step="0.1" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="normal-sd">Standard deviation (σ):</label>
+          <input type="number" id="normal-sd" value="1" min="0.1" step="0.1" class="form-control">
+        </div>
+
+        <hr>
+
+        <fieldset class="probability-options">
+          <legend>Probability to calculate:</legend>
+
+          <label class="radio-option">
+            <input type="radio" name="normal-prob-type" value="less" checked="">
+            <span>P(X ≤ x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="normal-prob-type" value="greater">
+            <span>P(X ≥ x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="normal-prob-type" value="between">
+            <span>P(a ≤ X ≤ b)</span>
+          </label>
+        </fieldset>
+
+        <!-- SINGLE X VALUE -->
+        <div id="normal-x-container" class="conditional-input">
+          <label for="normal-x">x value:</label>
+          <input type="range" id="normal-x" min="-5" max="5" value="1" step="0.1" class="distribution-slider">
+          <div class="slider-value" id="normal-x-value">1.0</div>
+        </div>
+
+        <!-- LOWER / UPPER VALUES -->
+        <div id="normal-between-container" class="conditional-input" hidden="">
+          <label for="normal-lower">Lower bound (a):</label>
+          <input type="range" id="normal-lower" min="-5" max="5" value="-1" step="0.1" class="distribution-slider">
+          <div class="slider-value" id="normal-lower-value">-1.0</div>
+
+          <label for="normal-upper" class="upper-label">Upper bound (b):</label>
+          <input type="range" id="normal-upper" min="-5" max="5" value="1" step="0.1" class="distribution-slider">
+          <div class="slider-value" id="normal-upper-value">1.0</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PLOT CARD -->
+    <div class="calculator-card plot-card">
+      <div class="calculator-card-header">Normal distribution plot</div>
+
+      <div class="calculator-card-body">
+        <div id="normal-plot-title" class="distribution-plot-title">
+          N(μ = 0.0, σ = 1.0)
+        </div>
+
+        <div class="normal-chart-wrapper">
+          <canvas id="normal-chart" tabindex="0" role="img" aria-label="Normal distribution probability density function">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESULTS CARD -->
+  <div class="calculator-card results-card">
+    <div class="calculator-card-header">Results</div>
+    <div class="calculator-card-body">
+      <div id="normal-result" class="calculation-result" aria-live="polite"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   NORMAL DISTRIBUTION CALCULATOR
+   ========================================================= */
+
+(function() {
+  "use strict";
+
+  const root = document.querySelector(".normal-calculator");
+  if (!root) return;
+
+  const meanInput = root.querySelector("#normal-mean");
+  const sdInput = root.querySelector("#normal-sd");
+  const xInput = root.querySelector("#normal-x");
+  const lowerInput = root.querySelector("#normal-lower");
+  const upperInput = root.querySelector("#normal-upper");
+
+  const xDisplay = root.querySelector("#normal-x-value");
+  const lowerDisplay = root.querySelector("#normal-lower-value");
+  const upperDisplay = root.querySelector("#normal-upper-value");
+
+  const title = root.querySelector("#normal-plot-title");
+  const result = root.querySelector("#normal-result");
+  const xContainer = root.querySelector("#normal-x-container");
+  const betweenContainer = root.querySelector("#normal-between-container");
+  const canvas = root.querySelector("#normal-chart");
+  const ctx = canvas.getContext("2d");
+
+  function erf(value) {
+    const sign = value < 0 ? -1 : 1;
+    const z = Math.abs(value);
+    const a1 = 0.254829592;
+    const a2 = -0.284496736;
+    const a3 = 1.421413741;
+    const a4 = -1.453152027;
+    const a5 = 1.061405429;
+    const p = 0.3275911;
+    const t = 1 / (1 + p * z);
+
+    const y = 1 -
+      (((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t) *
+      Math.exp(-z * z);
+
+    return sign * y;
+  }
+
+  function normalPDF(value, mean, sd) {
+    const z = (value - mean) / sd;
+    return Math.exp(-0.5 * z * z) / (sd * Math.sqrt(2 * Math.PI));
+  }
+
+  function normalCDF(value, mean, sd) {
+    return 0.5 * (1 + erf((value - mean) / (sd * Math.sqrt(2))));
+  }
+
+  function getProbabilityType() {
+    const selected = root.querySelector(
+      'input[name="normal-prob-type"]:checked'
+    );
+    return selected ? selected.value : "less";
+  }
+
+  function validateParameters() {
+    let mean = parseFloat(meanInput.value);
+    let sd = parseFloat(sdInput.value);
+
+    if (!Number.isFinite(mean)) {
+      mean = 0;
+      meanInput.value = 0;
+    }
+
+    if (!Number.isFinite(sd) || sd <= 0) {
+      sd = 0.1;
+      sdInput.value = 0.1;
+    }
+
+    return { mean, sd };
+  }
+
+  function updateSliderRanges(mean, sd) {
+    const minimum = mean - 5 * sd;
+    const maximum = mean + 5 * sd;
+    const step = Math.max(0.01, sd / 10);
+
+    [xInput, lowerInput, upperInput].forEach(function(input) {
+      input.min = minimum;
+      input.max = maximum;
+      input.step = step;
+    });
+
+    if (parseFloat(xInput.value) < minimum || parseFloat(xInput.value) > maximum) {
+      xInput.value = mean + sd;
+    }
+
+    if (parseFloat(lowerInput.value) < minimum || parseFloat(lowerInput.value) > maximum) {
+      lowerInput.value = mean - sd;
+    }
+
+    if (parseFloat(upperInput.value) < minimum || parseFloat(upperInput.value) > maximum) {
+      upperInput.value = mean + sd;
+    }
+  }
+
+  function formatValue(value) {
+    return Number(value).toFixed(2);
+  }
+
+  function updateDisplay() {
+    const parameters = validateParameters();
+    updateSliderRanges(parameters.mean, parameters.sd);
+
+    xDisplay.textContent = formatValue(xInput.value);
+    lowerDisplay.textContent = formatValue(lowerInput.value);
+    upperDisplay.textContent = formatValue(upperInput.value);
+
+    title.textContent =
+      `N(μ = ${parameters.mean.toFixed(2)}, σ = ${parameters.sd.toFixed(2)})`;
+  }
+
+  function calculateProbability() {
+    const parameters = validateParameters();
+    const mean = parameters.mean;
+    const sd = parameters.sd;
+    const x = parseFloat(xInput.value);
+    let lower = parseFloat(lowerInput.value);
+    let upper = parseFloat(upperInput.value);
+    const type = getProbabilityType();
+
+    if (upper < lower) {
+      upper = lower;
+      upperInput.value = upper;
+      upperDisplay.textContent = formatValue(upper);
+    }
+
+    let probability;
+
+    if (type === "less") {
+      probability = normalCDF(x, mean, sd);
+      result.textContent =
+        `P(X ≤ ${formatValue(x)}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    } else if (type === "greater") {
+      probability = 1 - normalCDF(x, mean, sd);
+      result.textContent =
+        `P(X ≥ ${formatValue(x)}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    } else {
+      probability =
+        normalCDF(upper, mean, sd) -
+        normalCDF(lower, mean, sd);
+
+      result.textContent =
+        `P(${formatValue(lower)} ≤ X ≤ ${formatValue(upper)}) = ` +
+        `${probability.toFixed(4)} or ` +
+        `${(probability * 100).toFixed(2)}%`;
+    }
+
+    probability = Math.max(0, Math.min(1, probability));
+
+    return { type, x, lower, upper, probability, mean, sd };
+  }
+
+  function drawChart() {
+    const selected = calculateProbability();
+    const mean = selected.mean;
+    const sd = selected.sd;
+    const rect = canvas.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { left: 62, right: 22, top: 25, bottom: 52 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+    const minimumX = mean - 4 * sd;
+    const maximumX = mean + 4 * sd;
+    const maximumY = normalPDF(mean, mean, sd) * 1.12;
+    const pointCount = Math.max(600, Math.round(chartWidth * 1.7));
+
+    ctx.clearRect(0, 0, width, height);
+
+    function xScale(value) {
+      return padding.left +
+        ((value - minimumX) / (maximumX - minimumX)) * chartWidth;
+    }
+
+    function yScale(value) {
+      return padding.top + chartHeight -
+        (value / maximumY) * chartHeight;
+    }
+
+    ctx.font = "12px Arial";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i <= 4; i++) {
+      const density = (i / 4) * maximumY;
+      const y = yScale(density);
+
+      ctx.strokeStyle = "#e5e5e5";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padding.left, y);
+      ctx.lineTo(width - padding.right, y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#555555";
+      ctx.fillText(density.toFixed(2), padding.left - 8, y);
+    }
+
+    function fillArea(start, end, colour) {
+      const boundedStart = Math.max(minimumX, Math.min(maximumX, start));
+      const boundedEnd = Math.max(minimumX, Math.min(maximumX, end));
+
+      if (boundedEnd <= boundedStart) return;
+
+      const count = Math.max(
+        2,
+        Math.round(
+          pointCount * (boundedEnd - boundedStart) /
+          (maximumX - minimumX)
         )
-      )
-    ),
-    
-    # Right column - Plot
-    card(
-      card_header("Normal distribution plot"),
-      card_body(
-        uiOutput("plot_title"),
-        plotOutput("distPlot", height = "300px")
-      )
-    )
-  ),
-  
-  # Bottom row - Results
-  card(
-    card_header("Results"),
-    card_body(
-      # Removed the LaTeX formula display
-      textOutput("explanation")
-    )
-  )
-)
+      );
 
-server &lt;- function(input, output, session) {
-  
-  # Display the plot title with distribution parameters
-  output$plot_title &lt;- renderUI({
-    title &lt;- sprintf("N(μ = %.2f, σ = %.2f)", input$mean, input$sd)
-    tags$h4(title, style = "text-align: center; margin-bottom: 15px;")
-  })
-  
-  # Calculate the probability based on user selection
-  probability &lt;- reactive({
-    if (input$prob_type == "less") {
-      prob &lt;- pnorm(input$x_value, mean = input$mean, sd = input$sd)
-      explanation &lt;- sprintf("P(X ≤ %.2f) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "less", x = input$x_value))
-      
-    } else if (input$prob_type == "greater") {
-      prob &lt;- 1 - pnorm(input$x_value, mean = input$mean, sd = input$sd)
-      explanation &lt;- sprintf("P(X ≥ %.2f) = %.4f or %.2f%%", 
-                            input$x_value, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "greater", x = input$x_value))
-      
-    } else if (input$prob_type == "between") {
-      lower_prob &lt;- pnorm(input$x_lower, mean = input$mean, sd = input$sd)
-      upper_prob &lt;- pnorm(input$x_upper, mean = input$mean, sd = input$sd)
-      prob &lt;- upper_prob - lower_prob
-      explanation &lt;- sprintf("P(%.2f ≤ X ≤ %.2f) = %.4f or %.2f%%", 
-                            input$x_lower, input$x_upper, prob, prob * 100)
-      return(list(prob = prob, explanation = explanation, type = "between", 
-                 lower = input$x_lower, upper = input$x_upper))
-    }
-  })
-  
-  # Display an explanation of the calculation
-  output$explanation &lt;- renderText({
-    res &lt;- probability()
-    return(res$explanation)
-  })
-  
-  # Generate the normal distribution plot
-  output$distPlot &lt;- renderPlot({
-    # Calculate range for x-axis (covering 99.7% of the distribution)
-    x_min &lt;- input$mean - 3.5 * input$sd
-    x_max &lt;- input$mean + 3.5 * input$sd
-    
-    # Create data frame for plotting
-    x &lt;- seq(x_min, x_max, length.out = 500)
-    y &lt;- dnorm(x, mean = input$mean, sd = input$sd)
-    df &lt;- data.frame(x = x, y = y)
-    
-    # Create base plot
-    p &lt;- ggplot(df, aes(x = x, y = y)) +
-      geom_line() +
-      labs(x = "X", y = "Density") +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank())
-    
-    # Add bold line at X = 0
-    p &lt;- p + geom_vline(xintercept = 0, linetype = "solid", color = "black", linewidth = 0.8)
-    
-    # Add shaded area based on selected probability type
-    res &lt;- probability()
-    
-    if (res$type == "less") {
-      shade_x &lt;- seq(x_min, res$x, length.out = 200)
-      shade_y &lt;- dnorm(shade_x, mean = input$mean, sd = input$sd)
-      shade_df &lt;- data.frame(x = shade_x, y = shade_y)
-      
-      p &lt;- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
-        geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315")
-      
-    } else if (res$type == "greater") {
-      shade_x &lt;- seq(res$x, x_max, length.out = 200)
-      shade_y &lt;- dnorm(shade_x, mean = input$mean, sd = input$sd)
-      shade_df &lt;- data.frame(x = shade_x, y = shade_y)
-      
-      p &lt;- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
-        geom_vline(xintercept = res$x, linetype = "dashed", color = "#db4315")
-      
-    } else if (res$type == "between") {
-      shade_x &lt;- seq(res$lower, res$upper, length.out = 200)
-      shade_y &lt;- dnorm(shade_x, mean = input$mean, sd = input$sd)
-      shade_df &lt;- data.frame(x = shade_x, y = shade_y)
-      
-      p &lt;- p + geom_area(data = shade_df, aes(x = x, y = y), fill = "#3F6BB6", alpha = 0.6) +
-        geom_vline(xintercept = res$lower, linetype = "dashed", color = "#db4315") +
-        geom_vline(xintercept = res$upper, linetype = "dashed", color = "#db4315")
-    }
-    
-    return(p)
-  })
-}
+      ctx.beginPath();
+      ctx.moveTo(xScale(boundedStart), yScale(0));
 
-shinyApp(ui = ui, server = server)</code></pre>
+      for (let i = 0; i <= count; i++) {
+        const value = boundedStart +
+          (i / count) * (boundedEnd - boundedStart);
+        ctx.lineTo(xScale(value), yScale(normalPDF(value, mean, sd)));
+      }
+
+      ctx.lineTo(xScale(boundedEnd), yScale(0));
+      ctx.closePath();
+      ctx.fillStyle = colour;
+      ctx.fill();
+    }
+
+    fillArea(minimumX, maximumX, "rgba(211, 211, 211, 0.55)");
+
+    if (selected.type === "less") {
+      fillArea(minimumX, selected.x, "rgba(63, 107, 182, 0.58)");
+    } else if (selected.type === "greater") {
+      fillArea(selected.x, maximumX, "rgba(63, 107, 182, 0.58)");
+    } else {
+      fillArea(selected.lower, selected.upper, "rgba(63, 107, 182, 0.58)");
+    }
+
+    ctx.beginPath();
+
+    for (let i = 0; i <= pointCount; i++) {
+      const value = minimumX +
+        (i / pointCount) * (maximumX - minimumX);
+      const chartX = xScale(value);
+      const chartY = yScale(normalPDF(value, mean, sd));
+
+      if (i === 0) ctx.moveTo(chartX, chartY);
+      else ctx.lineTo(chartX, chartY);
+    }
+
+    ctx.strokeStyle = "#274f91";
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    function drawBoundary(value) {
+      if (value < minimumX || value > maximumX) return;
+
+      ctx.save();
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = "#274f91";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(xScale(value), yScale(0));
+      ctx.lineTo(xScale(value), yScale(normalPDF(value, mean, sd)));
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    if (selected.type === "between") {
+      drawBoundary(selected.lower);
+      drawBoundary(selected.upper);
+    } else {
+      drawBoundary(selected.x);
+    }
+
+    ctx.strokeStyle = "#777777";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, padding.top + chartHeight);
+    ctx.lineTo(width - padding.right, padding.top + chartHeight);
+    ctx.stroke();
+
+    ctx.save();
+    ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = "#aaaaaa";
+    ctx.beginPath();
+    ctx.moveTo(xScale(mean), padding.top);
+    ctx.lineTo(xScale(mean), padding.top + chartHeight);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = "#333333";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+
+    const tickCount = width < 500 ? 4 : 8;
+
+    for (let i = 0; i <= tickCount; i++) {
+      const value = minimumX +
+        (i / tickCount) * (maximumX - minimumX);
+      ctx.fillText(
+        formatValue(value),
+        xScale(value),
+        padding.top + chartHeight + 20
+      );
+    }
+
+    ctx.font = "13px Arial";
+    ctx.fillText(
+      "value of X",
+      padding.left + chartWidth / 2,
+      height - 8
+    );
+
+    ctx.save();
+    ctx.translate(15, padding.top + chartHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = "center";
+    ctx.fillText("probability density", 0, 0);
+    ctx.restore();
+
+    canvas.setAttribute(
+      "aria-label",
+      `Normal distribution plot with mean ${mean.toFixed(2)} and ` +
+      `standard deviation ${sd.toFixed(2)}. The selected probability is ` +
+      `${selected.probability.toFixed(4)}.`
+    );
+  }
+
+  function updateVisibility() {
+    const type = getProbabilityType();
+    xContainer.hidden = type === "between";
+    betweenContainer.hidden = type !== "between";
+  }
+
+  function update() {
+    updateVisibility();
+    updateDisplay();
+    drawChart();
+  }
+
+  meanInput.addEventListener("input", update);
+  sdInput.addEventListener("input", update);
+  meanInput.addEventListener("change", update);
+  sdInput.addEventListener("change", update);
+  xInput.addEventListener("input", update);
+
+  lowerInput.addEventListener("input", function() {
+    if (parseFloat(lowerInput.value) > parseFloat(upperInput.value)) {
+      upperInput.value = lowerInput.value;
+    }
+    update();
+  });
+
+  upperInput.addEventListener("input", function() {
+    if (parseFloat(upperInput.value) < parseFloat(lowerInput.value)) {
+      lowerInput.value = upperInput.value;
+    }
+    update();
+  });
+
+  root.querySelectorAll('input[name="normal-prob-type"]').forEach(
+    function(radio) {
+      radio.addEventListener("change", update);
+    }
+  );
+
+  let resizeTimer;
+
+  window.addEventListener("resize", function() {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(drawChart, 80);
+  });
+
+  update();
+})();
+</script>
+
+
+
 </section>
 <section id="key-differences-between-pmfs-and-pdfs" class="level1">
 <h1>Key differences between PMFs and PDFs</h1>
@@ -1271,7 +2784,8 @@ Warning
 <h2 class="unnumbered anchored" data-anchor-id="version-history-and-licensing">Version history and licensing</h2>
 <p>v1.0: initial version created 12/24 by Sophie Chowgule as part of a University of St Andrews VIP project.</p>
 <ul>
-<li>v1.1: interactive elements added by tdhc 05/24.</li>
+<li><p>v1.1: interactive elements added by tdhc 05/24.</p></li>
+<li><p>v1.2: deprecated shinylive apps replaced 09/26 by tdhc.</p></li>
 </ul>
 <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1">This work is licensed under CC BY-NC-SA 4.0.</a></p>
 

@@ -503,337 +503,655 @@ window.Quarto = {
 
 
 
-<meta charset="UTF-8">
-<title>Completing the Square (Interactive)</title>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Completing the Square Interactive</title>
 
-<style>
-body {
-  font-family: Arial;
-  padding-left: 20px;
-}
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+      options: { enableMenu: false }
+    };
+  </script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
 
-.controls {
-  margin-bottom: 10px;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-button {
-  padding: 6px 12px;
-  margin-right: 6px;
-  cursor: pointer;
-}
+    body {
+      margin: 0;
+      padding: 20px;
+      color: #222222;
+      background: #ffffff;
+      line-height: 1.5;
+    }
 
-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+    h1 {
+      margin-top: 0;
+      font-size: 1.7rem;
+    }
 
-#warning {
-  color: red;
-  margin-top: 8px;
-}
+    .instructions {
+      max-width: 800px;
+      margin-bottom: 1rem;
+    }
 
-.canvas {
-  position: relative;
-  width: 800px;
-  height: 420px;
-  border: 1px solid #ccc;
-  overflow: hidden;
-}
+    .controls {
+      max-width: 800px;
+      margin-bottom: 12px;
+      padding: 1rem;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+      background: #f7f8fa;
+    }
 
-/* square */
-.square {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  background: #e6b8b7;
-  border: 2px solid black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-end;
+      margin-bottom: 1rem;
+    }
 
-/* strips */
-.strip {
-  position: absolute;
-  background: #b4a7d6;
-  border: 1px solid black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  transition: all 0.8s ease;
-}
+    .form-group {
+      min-width: 180px;
+    }
 
-/* tiles */
-.tile {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background: #f3d5c0;
-  border: 1px solid #333;
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.8s ease;
-}
+    .form-group label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 700;
+    }
 
-/* missing square */
-.missing {
-  position: absolute;
-  border: 2px dashed red;
-  background: rgba(255,0,0,0.15);
-}
+    .form-group input {
+      width: 100%;
+      min-height: 42px;
+      padding: 0.45rem 0.55rem;
+      border: 1px solid #777777;
+      border-radius: 4px;
+      font: inherit;
+    }
 
-.result {
-  margin-top: 20px;
-  font-size: 20px;
-}
-</style>
+    .field-help {
+      display: block;
+      margin-top: 0.25rem;
+      color: #4a4a4a;
+      font-size: 0.9rem;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    button {
+      min-height: 42px;
+      padding: 0.55rem 0.9rem;
+      border: 2px solid #31558f;
+      border-radius: 5px;
+      color: #ffffff;
+      background: #3F6BB6;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover:not(:disabled) {
+      background: #31558f;
+    }
+
+    button:disabled {
+      color: #555555;
+      background: #dddddd;
+      border-color: #aaaaaa;
+      opacity: 1;
+      cursor: not-allowed;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    .canvas:focus-visible {
+      outline: 4px solid #ffbf47;
+      outline-offset: 3px;
+    }
+
+    #warning {
+      min-height: 1.5em;
+      margin-top: 0.75rem;
+      color: #b00020;
+      font-weight: 700;
+    }
+
+    .stage-heading {
+      margin: 1rem 0 0.4rem;
+      font-size: 1.25rem;
+    }
+
+    .stage-description {
+      max-width: 800px;
+      min-height: 3em;
+      margin: 0 0 0.75rem;
+      padding: 0.7rem 0.8rem;
+      border-left: 5px solid #3F6BB6;
+      background: #f2f5fa;
+    }
+
+    .canvas-scroll {
+      max-width: 100%;
+      overflow-x: auto;
+      padding: 3px;
+    }
+
+    .canvas {
+      position: relative;
+      width: 800px;
+      height: 420px;
+      border: 2px solid #666666;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .square {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: #e6b8b7;
+      border: 2px solid #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .strip {
+      position: absolute;
+      background: #b4a7d6;
+      border: 1px solid #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      transition: all 0.8s ease;
+    }
+
+    .tile {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #f3d5c0;
+      border: 1px solid #333333;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.8s ease;
+    }
+
+    .missing {
+      position: absolute;
+      border: 3px dashed #b00020;
+      background: rgba(176, 0, 32, 0.15);
+    }
+
+    .result {
+      max-width: 800px;
+      margin-top: 20px;
+      padding: 1rem;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .text-equivalent {
+      max-width: 800px;
+      margin-top: 1rem;
+      padding: 0.8rem;
+      border: 1px solid #cccccc;
+      border-radius: 6px;
+    }
+
+    .text-equivalent summary {
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .strip,
+      .tile {
+        transition: none;
+      }
+    }
+
+    @media (max-width: 840px) {
+      body {
+        padding: 12px;
+      }
+    }
+  </style>
 
 
 
 
-<div class="controls">
-  b: <input id="bVal" type="number" value="4" step="2">
-  c: <input id="cVal" type="number" value="9">
+<main>
+  <h1>Completing the square</h1>
 
-  <br><br>
+  <p class="instructions" id="instructions">
+    Enter an even, non-negative value for <strong>b</strong> and a value for
+    <strong>c</strong>. Use the Previous step and Next step buttons to explore
+    how the algebra tiles form a completed square. A textual description is
+    provided below the diagram.
+  </p>
 
-  <button id="prevBtn" onclick="prevStage()">Previous step</button>
-  <button id="nextBtn" onclick="nextStage()">Next step</button>
+  <section class="controls" aria-labelledby="controls-heading">
+    <h2 id="controls-heading" class="sr-only anchored" data-anchor-id="expressions-of-the-form-x2-bx-c">Interactive controls</h2>
 
-  <div id="warning"></div>
-</div>
+    <div class="input-row">
+      <div class="form-group">
+        <label for="bVal">Coefficient b</label>
+        <input id="bVal" type="number" value="4" min="0" step="2" inputmode="numeric" aria-describedby="bHelp warning">
+        <span class="field-help" id="bHelp">
+          Enter an even number greater than or equal to zero.
+        </span>
+      </div>
 
-<div class="canvas" id="canvas"></div>
+      <div class="form-group">
+        <label for="cVal">Constant c</label>
+        <input id="cVal" type="number" value="9" step="1" inputmode="numeric" aria-describedby="cHelp warning">
+        <span class="field-help" id="cHelp">
+          Enter the number of unit tiles. Negative values are not supported.
+        </span>
+      </div>
+    </div>
 
-<div class="result" id="result"></div>
+    <div class="button-row" role="group" aria-label="Step navigation">
+      <button id="prevBtn" type="button" aria-controls="canvas stageDescription result textDescription">
+        Previous step
+      </button>
+
+      <button id="nextBtn" type="button" aria-controls="canvas stageDescription result textDescription">
+        Next step
+      </button>
+    </div>
+
+    <div id="warning" role="alert" aria-live="assertive"></div>
+  </section>
+
+  <h2 class="stage-heading anchored" id="stageHeading">Step 1 of 3: Algebra tiles</h2>
+
+  <p class="stage-description" id="stageDescription" role="status" aria-live="polite" aria-atomic="true">
+  </p>
+
+  <div class="canvas-scroll">
+    <div class="canvas" id="canvas" tabindex="0" role="img" aria-labelledby="stageHeading" aria-describedby="stageDescription textDescription">
+    </div>
+  </div>
+
+  <div class="result" id="result" role="status" aria-live="polite" aria-atomic="true">
+  </div>
+
+  <details class="text-equivalent" open="">
+    <summary>Text description of the diagram</summary>
+    <p id="textDescription"></p>
+  </details>
+
+  <div id="stepAnnouncement" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+</main>
 
 <script>
-const size = 120;
-const unit = 20;
+(function() {
+  "use strict";
 
-let stage = 0;
-let strips = [];
-let tiles = [];
-let square;
+  const size = 120;
+  const unit = 20;
 
-function validate() {
-  const b = +bVal.value;
+  const bInput = document.getElementById("bVal");
+  const cInput = document.getElementById("cVal");
+  const warning = document.getElementById("warning");
+  const canvas = document.getElementById("canvas");
+  const result = document.getElementById("result");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const stageHeading = document.getElementById("stageHeading");
+  const stageDescription = document.getElementById("stageDescription");
+  const textDescription = document.getElementById("textDescription");
+  const stepAnnouncement = document.getElementById("stepAnnouncement");
 
-  if (b < 0) {
-    warning.textContent = "b must be non-negative";
-    return false;
+  let stage = 0;
+  let strips = [];
+  let tiles = [];
+  let square = null;
+  let missingSquare = null;
+
+  function setInvalid(input, invalid) {
+    input.setAttribute("aria-invalid", invalid ? "true" : "false");
   }
 
-  if (b % 2 !== 0) {
-    warning.textContent = "b must be even";
-    return false;
-  }
+  function validate() {
+    const b = Number(bInput.value);
+    const c = Number(cInput.value);
+    const messages = [];
 
-  warning.textContent = "";
-  return true;
-}
+    setInvalid(bInput, false);
+    setInvalid(cInput, false);
 
-/* ---------------- BUTTON STATE ---------------- */
-function updateButtons() {
-  prevBtn.disabled = (stage === 0);
-  nextBtn.disabled = (stage === 2);
-}
-
-/* ---------------- DRAW STAGE 0 ---------------- */
-function drawInitial() {
-  if (!validate()) return;
-
-  canvas.innerHTML = "";
-  strips = [];
-  tiles = [];
-  stage = 0;
-
-  const b = +bVal.value;
-  const c = +cVal.value;
-
-  let x = 20;
-
-  // square
-  square = document.createElement("div");
-  square.className = "square";
-  square.style.left = x + "px";
-  square.style.top = "150px";
-  square.textContent = "x²";
-  canvas.appendChild(square);
-
-  x += size + 20;
-
-  // b strips (n + n)
-  for (let i = 0; i < b; i++) {
-    const s = document.createElement("div");
-    s.className = "strip";
-    s.style.width = "20px";
-    s.style.height = size + "px";
-    s.style.left = x + "px";
-    s.style.top = "150px";
-    s.textContent = "x";
-    canvas.appendChild(s);
-    strips.push(s);
-    x += 20;
-  }
-
-  x += 20;
-
-  // tiles
-  for (let i = 0; i < c; i++) {
-    const t = document.createElement("div");
-    t.className = "tile";
-    t.textContent = "1";
-
-    t.style.left = (x + (i % 6) * 22) + "px";
-    t.style.top = (150 + Math.floor(i / 6) * 22) + "px";
-
-    canvas.appendChild(t);
-    tiles.push(t);
-  }
-
-  updateMath();
-  updateButtons();
-}
-
-/* ---------------- NEXT ---------------- */
-function nextStage() {
-  if (!validate()) return;
-
-  if (stage === 0) {
-    splitStrips();
-    stage = 1;
-  } 
-  else if (stage === 1) {
-    completeSquare();
-    stage = 2;
-  }
-
-  updateMath();
-  updateButtons();
-}
-
-/* ---------------- PREVIOUS ---------------- */
-function prevStage() {
-  if (!validate()) return;
-  if (stage === 0) return;
-
-  if (stage === 1) {
-    drawInitial();
-    return;
-  }
-
-  if (stage === 2) {
-    drawInitial();
-    splitStrips();
-    stage = 1;
-  }
-
-  updateMath();
-  updateButtons();
-}
-
-/* ---------------- STAGE 1 ---------------- */
-function splitStrips() {
-  const b = +bVal.value;
-  const n = b / 2;
-
-  const baseX = 50;
-  const baseY = 80;
-
-  square.style.left = baseX + "px";
-  square.style.top = baseY + "px";
-
-  strips.forEach((s, i) => {
-    if (i < n) {
-      // vertical
-      s.style.width = "20px";
-      s.style.height = size + "px";
-      s.style.left = (baseX + size + i * 20) + "px";
-      s.style.top = baseY + "px";
-    } else {
-      // horizontal
-      s.style.width = size + "px";
-      s.style.height = "20px";
-      s.style.left = baseX + "px";
-      s.style.top = (baseY + size + (i - n) * 20) + "px";
+    if (!Number.isFinite(b)) {
+      messages.push("Enter a value for b.");
+      setInvalid(bInput, true);
+    } else if (b < 0) {
+      messages.push("b must be non-negative.");
+      setInvalid(bInput, true);
+    } else if (!Number.isInteger(b) || b % 2 !== 0) {
+      messages.push("b must be an even whole number.");
+      setInvalid(bInput, true);
     }
-  });
-}
 
-/* ---------------- STAGE 2 ---------------- */
-function completeSquare() {
-  const b = +bVal.value;
-  const c = +cVal.value;
-  const n = b / 2;
-
-  const baseX = 50;
-  const baseY = 80;
-
-  const needed = n * n;
-
-  // missing square
-  const missing = document.createElement("div");
-  missing.className = "missing";
-  missing.style.left = (baseX + size) + "px";
-  missing.style.top = (baseY + size) + "px";
-  missing.style.width = (n * 20) + "px";
-  missing.style.height = (n * 20) + "px";
-  canvas.appendChild(missing);
-
-  tiles.forEach((t, i) => {
-    if (i < needed) {
-      const row = Math.floor(i / n);
-      const col = i % n;
-
-      t.style.left = (baseX + size + col * 20) + "px";
-      t.style.top = (baseY + size + row * 20) + "px";
-    } else {
-      // 🔥 FIXED GRID (10 per row)
-      const col = (i - needed) % 10;
-      const row = Math.floor((i - needed) / 10);
-
-      t.style.left = (baseX + size + n * 20 + 60 + col * 20) + "px";
-      t.style.top = (baseY + row * 20) + "px";
+    if (!Number.isFinite(c)) {
+      messages.push("Enter a value for c.");
+      setInvalid(cInput, true);
+    } else if (!Number.isInteger(c) || c < 0) {
+      messages.push("c must be a non-negative whole number.");
+      setInvalid(cInput, true);
+    } else if (c > 100) {
+      messages.push("c must be 100 or less so that all unit tiles fit in the diagram.");
+      setInvalid(cInput, true);
     }
-  });
 
-  if (c < needed) {
-    missing.style.background = "rgba(255,0,0,0.3)";
+    warning.textContent = messages.join(" ");
+    return messages.length === 0;
   }
-}
 
-/* ---------------- MATH ---------------- */
-function updateMath() {
-  const b = +bVal.value;
-  const c = +cVal.value;
+  function updateButtons() {
+    const valid = validate();
+    prevBtn.disabled = !valid || stage === 0;
+    nextBtn.disabled = !valid || stage === 2;
 
-  if (!validate()) return;
+    prevBtn.setAttribute("aria-disabled", String(prevBtn.disabled));
+    nextBtn.setAttribute("aria-disabled", String(nextBtn.disabled));
+  }
 
-  const n = b / 2;
-  const diff = c - n * n;
+  function equationText(b, c) {
+    const n = b / 2;
+    const difference = c - n * n;
+    const sign = difference >= 0 ? "+" : "−";
+    return `x squared plus ${b}x plus ${c} equals open bracket x plus ${n} close bracket squared ${sign} ${Math.abs(difference)}.`;
+  }
 
-  const sign = diff >= 0 ? "+" : "-";
-  const val = Math.abs(diff);
+  function updateAccessibleDescription() {
+    if (!validate()) {
+      stageHeading.textContent = "Diagram unavailable";
+      stageDescription.textContent = "Correct the input errors to display the algebra tiles.";
+      textDescription.textContent = "The diagram is not available because one or more inputs are invalid.";
+      canvas.setAttribute("aria-label", "Diagram unavailable because the inputs are invalid.");
+      return;
+    }
 
-  result.innerHTML =
-    `\\[x^2 + ${b}x + ${c} = (x + ${n})^2 ${sign} ${val}\\]`;
+    const b = Number(bInput.value);
+    const c = Number(cInput.value);
+    const n = b / 2;
+    const needed = n * n;
+    const availableForCorner = Math.min(c, needed);
+    const remaining = Math.max(0, c - needed);
+    const shortage = Math.max(0, needed - c);
 
-  MathJax.typesetPromise();
-}
+    if (stage === 0) {
+      stageHeading.textContent = "Step 1 of 3: Algebra tiles";
+      stageDescription.textContent =
+        `The expression is represented by one x-squared tile, ${b} x tiles, and ${c} unit tiles.`;
+      textDescription.textContent =
+        `A square tile represents x squared. To its right are ${b} rectangular x tiles. ` +
+        `There are also ${c} unit tiles. The tiles have not yet been rearranged.`;
+    } else if (stage === 1) {
+      stageHeading.textContent = "Step 2 of 3: Split the x tiles";
+      stageDescription.textContent =
+        `The ${b} x tiles are split equally into two groups of ${n} and placed along two adjacent sides of the x-squared tile.`;
+      textDescription.textContent =
+        `The x-squared tile is in the upper-left corner. ${n} vertical x tiles are placed to its right, ` +
+        `and ${n} horizontal x tiles are placed below it. This creates an incomplete square with a corner of size ${n} by ${n}.`;
+    } else {
+      stageHeading.textContent = "Step 3 of 3: Complete the square";
 
-/* ---------------- EVENTS ---------------- */
-bVal.addEventListener("input", drawInitial);
-cVal.addEventListener("input", drawInitial);
+      if (shortage > 0) {
+        stageDescription.textContent =
+          `The missing corner requires ${needed} unit tiles, but only ${c} are available. ${shortage} more unit tiles are needed.`;
+        textDescription.textContent =
+          `The corner is ${n} units by ${n} units, so it needs ${needed} unit tiles. ` +
+          `${availableForCorner} tiles fill part of the corner, leaving a shortage of ${shortage}. ` +
+          `The completed-square form is ${equationText(b, c)}`;
+      } else {
+        stageDescription.textContent =
+          `${needed} unit tiles fill the ${n} by ${n} corner. ${remaining} unit tiles remain outside the completed square.`;
+        textDescription.textContent =
+          `The corner is ${n} units by ${n} units and is filled by ${needed} unit tiles. ` +
+          `${remaining} unit tiles remain outside the square. The completed square has side length x plus ${n}. ` +
+          `The completed-square form is ${equationText(b, c)}`;
+      }
+    }
 
-/* ---------------- START ---------------- */
-drawInitial();
+    canvas.setAttribute(
+      "aria-label",
+      `${stageHeading.textContent}. ${stageDescription.textContent}`
+    );
+  }
+
+  function createSquare() {
+    square = document.createElement("div");
+    square.className = "square";
+    square.setAttribute("aria-hidden", "true");
+    square.textContent = "x²";
+    canvas.appendChild(square);
+  }
+
+  function drawInitial() {
+    if (!validate()) {
+      canvas.innerHTML = "";
+      stage = 0;
+      updateAccessibleDescription();
+      updateButtons();
+      updateMath();
+      return;
+    }
+
+    canvas.innerHTML = "";
+    strips = [];
+    tiles = [];
+    missingSquare = null;
+    stage = 0;
+
+    const b = Number(bInput.value);
+    const c = Number(cInput.value);
+    let xPosition = 20;
+
+    createSquare();
+    square.style.left = xPosition + "px";
+    square.style.top = "150px";
+
+    xPosition += size + 20;
+
+    for (let i = 0; i < b; i++) {
+      const strip = document.createElement("div");
+      strip.className = "strip";
+      strip.setAttribute("aria-hidden", "true");
+      strip.style.width = unit + "px";
+      strip.style.height = size + "px";
+      strip.style.left = xPosition + "px";
+      strip.style.top = "150px";
+      strip.textContent = "x";
+      canvas.appendChild(strip);
+      strips.push(strip);
+      xPosition += unit;
+    }
+
+    xPosition += 20;
+
+    for (let i = 0; i < c; i++) {
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      tile.setAttribute("aria-hidden", "true");
+      tile.textContent = "1";
+      tile.style.left = (xPosition + (i % 10) * 22) + "px";
+      tile.style.top = (150 + Math.floor(i / 10) * 22) + "px";
+      canvas.appendChild(tile);
+      tiles.push(tile);
+    }
+
+    updateMath();
+    updateAccessibleDescription();
+    updateButtons();
+  }
+
+  function splitStrips() {
+    const b = Number(bInput.value);
+    const n = b / 2;
+    const baseX = 50;
+    const baseY = 80;
+
+    square.style.left = baseX + "px";
+    square.style.top = baseY + "px";
+
+    strips.forEach(function(strip, index) {
+      if (index < n) {
+        strip.style.width = unit + "px";
+        strip.style.height = size + "px";
+        strip.style.left = (baseX + size + index * unit) + "px";
+        strip.style.top = baseY + "px";
+      } else {
+        strip.style.width = size + "px";
+        strip.style.height = unit + "px";
+        strip.style.left = baseX + "px";
+        strip.style.top = (baseY + size + (index - n) * unit) + "px";
+      }
+    });
+  }
+
+  function completeSquare() {
+    const b = Number(bInput.value);
+    const c = Number(cInput.value);
+    const n = b / 2;
+    const baseX = 50;
+    const baseY = 80;
+    const needed = n * n;
+
+    if (missingSquare) missingSquare.remove();
+
+    missingSquare = document.createElement("div");
+    missingSquare.className = "missing";
+    missingSquare.setAttribute("aria-hidden", "true");
+    missingSquare.style.left = (baseX + size) + "px";
+    missingSquare.style.top = (baseY + size) + "px";
+    missingSquare.style.width = (n * unit) + "px";
+    missingSquare.style.height = (n * unit) + "px";
+    canvas.appendChild(missingSquare);
+
+    tiles.forEach(function(tile, index) {
+      if (index < needed) {
+        const row = Math.floor(index / Math.max(n, 1));
+        const column = index % Math.max(n, 1);
+        tile.style.left = (baseX + size + column * unit) + "px";
+        tile.style.top = (baseY + size + row * unit) + "px";
+      } else {
+        const column = (index - needed) % 10;
+        const row = Math.floor((index - needed) / 10);
+        tile.style.left = (baseX + size + n * unit + 60 + column * unit) + "px";
+        tile.style.top = (baseY + row * unit) + "px";
+      }
+    });
+
+    if (c < needed) {
+      missingSquare.style.background = "rgba(176, 0, 32, 0.3)";
+    }
+  }
+
+  function announceStage() {
+    stepAnnouncement.textContent =
+      `${stageHeading.textContent}. ${stageDescription.textContent}`;
+  }
+
+  function nextStage() {
+    if (!validate()) return;
+
+    if (stage === 0) {
+      splitStrips();
+      stage = 1;
+    } else if (stage === 1) {
+      completeSquare();
+      stage = 2;
+    }
+
+    updateMath();
+    updateAccessibleDescription();
+    updateButtons();
+    announceStage();
+    stageHeading.focus?.();
+  }
+
+  function previousStage() {
+    if (!validate() || stage === 0) return;
+
+    if (stage === 1) {
+      drawInitial();
+    } else {
+      drawInitial();
+      splitStrips();
+      stage = 1;
+      updateMath();
+      updateAccessibleDescription();
+      updateButtons();
+    }
+
+    announceStage();
+  }
+
+  function updateMath() {
+    if (!validate()) {
+      result.textContent = "Correct the input errors to display the completed-square form.";
+      return;
+    }
+
+    const b = Number(bInput.value);
+    const c = Number(cInput.value);
+    const n = b / 2;
+    const difference = c - n * n;
+    const sign = difference >= 0 ? "+" : "-";
+    const absoluteValue = Math.abs(difference);
+
+    result.innerHTML =
+      `<span class="sr-only">${equationText(b, c)}</span>` +
+      `<span aria-hidden="true">\\[x^2 + ${b}x + ${c} = (x + ${n})^2 ${sign} ${absoluteValue}\\]</span>`;
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetClear?.([result]);
+      window.MathJax.typesetPromise([result]).catch(function() {
+        /* The screen-reader text remains available if MathJax fails. */
+      });
+    }
+  }
+
+  prevBtn.addEventListener("click", previousStage);
+  nextBtn.addEventListener("click", nextStage);
+  bInput.addEventListener("input", drawInitial);
+  cInput.addEventListener("input", drawInitial);
+
+  drawInitial();
+})();
 </script>
+
 
 
 

@@ -51,11 +51,6 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/bootstrap/bootstrap-dark-365d6bab852ec9a235b2fcad5c9fe113.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <link href="../../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content="../..">
-<script src="../../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="../../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
-<link href="../../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/shinylive.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -431,120 +426,401 @@ window.Quarto = {
 </header>
 
 
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| viewerHeight: 340
 
-library(shiny)
-library(bslib)
 
-ui &lt;- page_fluid(
-  title = "Z-table calculator",
-  
-  # Use fluidRow with columns for vertical alignment
-  fluidRow(
-    column(
-      width = 6,
-      card(
-        card_header("Input parameters"),
-        card_body(
-          style = "padding: 15px; min-height: 200px;",
-          # Input for significance level
-          numericInput(
-            "alpha",
-            "Significance Level (α):",
-            value = 0.05,
-            min = 0.001,
-            max = 0.999,
-            step = 0.001
-          ),
-          
-          # Radio buttons for test type with custom styling
-          tags$div(
-            style = "margin-top: 15px;",
-            tags$label("Test type:", style = "font-weight: bold; margin-bottom: 10px; display: block;"),
-            radioButtons(
-              "test_type",
-              "",
-              choices = list(
-                "One-tailed" = "one",
-                "Two-tailed" = "two"
-              ),
-              selected = "two"
-            )
-          )
-        )
-      )
-    ),
-    
-    column(
-      width = 6,
-      card(
-        card_header("Z-score results"),
-        card_body(
-          style = "padding: 15px; min-height: 200px;",
-          div(
-            style = "text-align: center;",
-            h4("Critical Z-score:", style = "color: #3F68B6; margin-bottom: 5px;"),
-            div(
-              style = "font-size: 32px; font-weight: bold; color: #3F68B6; margin: 5px 0;",
-              textOutput("z_score", inline = TRUE)
-            ),
-            div(
-              style = "margin-top: 8px; font-size: 14px;",
-              textOutput("interpretation")
-            )
-          )
-        )
-      )
-    )
-  ),
-  
-  # Custom CSS for styling the radio buttons
-  tags$style(HTML("
-    .radio label {
-      color: black !important;
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Z-Table Calculator</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 1rem;
+      background: #f5f6f8;
+      color: #222222;
+    }
+
+    .ztc-app {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .ztc-app .ztc-calculator-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .ztc-app .ztc-card {
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .ztc-app .ztc-card-header {
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      background: #3F6BB6;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .ztc-app .ztc-card-body {
+      min-height: 220px;
+      padding: 1rem;
+    }
+
+    .ztc-app .ztc-form-group {
+      margin-bottom: 1rem;
+    }
+
+    .ztc-app label {
+      display: block;
+      margin-bottom: 0.4rem;
       font-weight: 500;
     }
-    .radio input[type='radio'] {
-      accent-color: black;
-    }
-  "))
-)
 
-server &lt;- function(input, output, session) {
-  
-  # Calculate Z-score based on significance level and test type
-  z_value &lt;- reactive({
-    alpha &lt;- input$alpha
-    
-    if (input$test_type == "one") {
-      # One-tailed test: find Z such that P(Z &gt; z) = alpha
-      z_score &lt;- qnorm(1 - alpha)
+    .ztc-app input[type="number"] {
+      width: 100%;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      background: #ffffff;
+      font-size: 1rem;
+    }
+
+    .ztc-app .ztc-test-options {
+      padding: 0;
+      margin: 1rem 0 0;
+      border: 0;
+    }
+
+    .ztc-app .ztc-test-options legend {
+      margin-bottom: 0.65rem;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .ztc-app .ztc-radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .ztc-app .ztc-radio-option input {
+      flex: 0 0 auto;
+      width: 17px;
+      height: 17px;
+      margin: 0;
+      accent-color: #3F6BB6;
+    }
+
+    .ztc-app .ztc-input-help {
+      margin-top: 0.35rem;
+      color: #555555;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .ztc-app .ztc-input-error {
+      min-height: 1.4em;
+      margin-top: 0.5rem;
+      color: #b00020;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .ztc-app .ztc-result-panel {
+      display: flex;
+      min-height: 188px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .ztc-app .ztc-result-heading {
+      margin: 0 0 0.3rem;
+      color: #3F68B6;
+      font-size: 1.15rem;
+    }
+
+    .ztc-app .ztc-result-value {
+      margin: 0.2rem 0 0.4rem;
+      color: #3F68B6;
+      font-family: "Courier New", Courier, monospace;
+      font-size: clamp(2rem, 6vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .ztc-app .ztc-interpretation {
+      max-width: 500px;
+      margin-top: 0.4rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .ztc-app input:focus-visible {
+      outline: 3px solid rgba(63, 104, 182, 0.38);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 700px) {
+      .ztc-app .ztc-calculator-row {
+        grid-template-columns: 1fr;
+      }
+
+      .ztc-app .ztc-card-body {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 0.5rem; }
+
+      .ztc-app .ztc-card-body {
+        padding: 0.9rem;
+      }
+    }
+  </style>
+
+
+
+
+<main class="ztc-app">
+  <div class="ztc-calculator-row">
+
+    <section class="ztc-card" aria-labelledby="ztc-input-heading">
+      <div class="ztc-card-header" id="ztc-input-heading">
+        Input parameters
+      </div>
+
+      <div class="ztc-card-body">
+        <div class="ztc-form-group">
+          <label for="ztc-alpha">Significance level (α):</label>
+          <input id="ztc-alpha" type="number" value="0.05" min="0.001" max="0.999" step="0.001" inputmode="decimal" aria-describedby="ztc-alpha-help ztc-alpha-error">
+
+          <div id="ztc-alpha-help" class="ztc-input-help">
+            Enter a value from 0.001 to 0.999.
+          </div>
+
+          <div id="ztc-alpha-error" class="ztc-input-error" role="alert" aria-live="assertive">
+          </div>
+        </div>
+
+        <fieldset class="ztc-test-options">
+          <legend>Test type:</legend>
+
+          <label class="ztc-radio-option">
+            <input type="radio" name="ztc-test-type" value="one">
+            <span>One-tailed</span>
+          </label>
+
+          <label class="ztc-radio-option">
+            <input type="radio" name="ztc-test-type" value="two" checked="">
+            <span>Two-tailed</span>
+          </label>
+        </fieldset>
+      </div>
+    </section>
+
+    <section class="ztc-card" aria-labelledby="ztc-results-heading">
+      <div class="ztc-card-header" id="ztc-results-heading">
+        Z-score results
+      </div>
+
+      <div class="ztc-card-body">
+        <div class="ztc-result-panel" role="status" aria-live="polite" aria-atomic="true">
+
+          <h2 class="ztc-result-heading anchored">Critical Z-score</h2>
+
+          <div id="ztc-z-score" class="ztc-result-value">
+            ±1.9600
+          </div>
+
+          <div id="ztc-interpretation" class="ztc-interpretation">
+            For a two-tailed test with α = 0.05, the critical values are
+            −1.9600 and 1.9600.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+(function() {
+  "use strict";
+
+  const app = document.querySelector(".ztc-app");
+  if (!app) return;
+
+  const alphaInput = app.querySelector("#ztc-alpha");
+  const error = app.querySelector("#ztc-alpha-error");
+  const zScoreOutput = app.querySelector("#ztc-z-score");
+  const interpretation = app.querySelector("#ztc-interpretation");
+
+  /*
+    Inverse standard normal CDF using Peter J. Acklam's rational
+    approximation. It is accurate enough for the displayed four decimals.
+  */
+  function inverseNormalCDF(probability) {
+    if (probability <= 0) return -Infinity;
+    if (probability >= 1) return Infinity;
+
+    const a = [
+      -3.969683028665376e+01,
+       2.209460984245205e+02,
+      -2.759285104469687e+02,
+       1.383577518672690e+02,
+      -3.066479806614716e+01,
+       2.506628277459239e+00
+    ];
+
+    const b = [
+      -5.447609879822406e+01,
+       1.615858368580409e+02,
+      -1.556989798598866e+02,
+       6.680131188771972e+01,
+      -1.328068155288572e+01
+    ];
+
+    const c = [
+      -7.784894002430293e-03,
+      -3.223964580411365e-01,
+      -2.400758277161838e+00,
+      -2.549732539343734e+00,
+       4.374664141464968e+00,
+       2.938163982698783e+00
+    ];
+
+    const d = [
+       7.784695709041462e-03,
+       3.224671290700398e-01,
+       2.445134137142996e+00,
+       3.754408661907416e+00
+    ];
+
+    const lowerThreshold = 0.02425;
+    const upperThreshold = 1 - lowerThreshold;
+    let q;
+    let r;
+
+    if (probability < lowerThreshold) {
+      q = Math.sqrt(-2 * Math.log(probability));
+
+      return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q +
+        c[4]) * q + c[5]) /
+        ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
+    }
+
+    if (probability > upperThreshold) {
+      q = Math.sqrt(-2 * Math.log(1 - probability));
+
+      return -(((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q +
+        c[4]) * q + c[5]) /
+        ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
+    }
+
+    q = probability - 0.5;
+    r = q * q;
+
+    return (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r +
+      a[4]) * r + a[5]) * q /
+      (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r +
+      b[4]) * r + 1);
+  }
+
+  function getTestType() {
+    const selected = app.querySelector(
+      'input[name="ztc-test-type"]:checked'
+    );
+
+    return selected ? selected.value : "two";
+  }
+
+  function validateAlpha() {
+    const alpha = Number(alphaInput.value);
+    let message = "";
+
+    if (!Number.isFinite(alpha)) {
+      message = "Enter a valid numerical significance level.";
+    } else if (alpha < 0.001 || alpha > 0.999) {
+      message = "The significance level must be from 0.001 to 0.999.";
+    }
+
+    error.textContent = message;
+    alphaInput.setAttribute("aria-invalid", message ? "true" : "false");
+
+    return message ? null : alpha;
+  }
+
+  function formatAlpha(alpha) {
+    return Number(alpha.toFixed(3)).toString();
+  }
+
+  function update() {
+    const alpha = validateAlpha();
+    const testType = getTestType();
+
+    if (alpha === null) {
+      zScoreOutput.textContent = "Not available";
+      interpretation.textContent =
+        "Enter a valid significance level to calculate the critical Z-score.";
+      return;
+    }
+
+    const cumulativeProbability = testType === "one"
+      ? 1 - alpha
+      : 1 - alpha / 2;
+
+    const z = inverseNormalCDF(cumulativeProbability);
+    const formattedZ = Math.abs(z).toFixed(4);
+    const formattedAlpha = formatAlpha(alpha);
+
+    if (testType === "one") {
+      zScoreOutput.textContent = formattedZ;
+      interpretation.textContent =
+        `For a one-tailed test with α = ${formattedAlpha}, ` +
+        `the upper-tail critical Z-score is ${formattedZ}. ` +
+        `For a lower-tailed test, use −${formattedZ}.`;
     } else {
-      # Two-tailed test: find Z such that P(|Z| &gt; z) = alpha
-      # This means P(Z &gt; z) = alpha/2
-      z_score &lt;- qnorm(1 - alpha/2)
+      zScoreOutput.textContent = `±${formattedZ}`;
+      interpretation.textContent =
+        `For a two-tailed test with α = ${formattedAlpha}, ` +
+        `the critical values are −${formattedZ} and ${formattedZ}.`;
     }
-    
-    return(round(z_score, 4))
-  })
-  
-  # Output the Z-score
-  output$z_score &lt;- renderText({
-    z_value()
-  })
-  
-  # Provide interpretation
-  output$interpretation &lt;- renderText({
-    test_type &lt;- ifelse(input$test_type == "one", "one-tailed", "two-tailed")
-    paste0("For a ", test_type, " test with α = ", input$alpha)
-  })
-}
+  }
 
-shinyApp(ui = ui, server = server)</code></pre>
+  alphaInput.addEventListener("input", update);
+
+  app.querySelectorAll('input[name="ztc-test-type"]').forEach(
+    function(radio) {
+      radio.addEventListener("change", update);
+    }
+  );
+
+  update();
+})();
+</script>
+
+
+
+
 <section id="further-reading" class="level1 unnumbered">
 <h1 class="unnumbered">Further reading</h1>
 <p><a href="../../studyguides/confidenceintervals.html">This interactive element appears in Guide: Introduction to confidence intervals. Please click this link to go to the guide.</a></p>

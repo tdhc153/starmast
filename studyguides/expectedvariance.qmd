@@ -293,269 +293,3081 @@ You can use the interactive calculators below to explore the normal distribution
 
 The normal distribution has mean $\mu$ and variance $\sigma^2$, where the probability density function is given by $$f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left({-\frac{1}{2} \left( \frac{x - \mu}{\sigma} \right)^2}\right).$$
 
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 770
+```{=html}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Normal distribution calculator</title>
 
-library(shiny)
-library(bslib)
-library(ggplot2)
+  <style>
+    * { box-sizing: border-box; }
 
-ui <- page_fluid(
-  title = "Normal distribution visualizer",
-  
-  # Plot at the top
-  card(
-    card_header("Normal distribution plot"),
-    card_body(
-      plotOutput("distPlot", height = "500px")
-    )
-  ),
-  
-  # Parameters below
-  card(
-    card_header("Distribution parameters"),
-    card_body(
-      layout_columns(
-        col_widths = c(6, 6),
-        sliderInput("mean", "Mean/expected value (μ):", 
-                   min = -5, max = 5, value = 0, step = 0.1),
-        sliderInput("variance", "Variance (σ²):", 
-                   min = 0.25, max = 9, value = 1, step = 0.25)
-      )
-    )
-  )
-)
+    body {
+      margin: 0;
+      padding: 1rem;
+      background: #f5f6f8;
+      color: #222222;
+    }
 
-server <- function(input, output, session) {
-  
-  # Generate the normal distribution plot
-  output$distPlot <- renderPlot({
-    # Fixed range for x-axis to show consistent scale
-    x_min <- -8
-    x_max <- 8
-    
-    # Convert variance to standard deviation
-    sd_val <- sqrt(input$variance)
-    
-    # Create data frame for plotting
-    x <- seq(x_min, x_max, length.out = 500)
-    y <- dnorm(x, mean = input$mean, sd = sd_val)
-    df <- data.frame(x = x, y = y)
-    
-    # Create plot with fixed axes
-    p <- ggplot(df, aes(x = x, y = y)) +
-      geom_line(color = "#3F6BB6", size = 1.2) +
-      labs(x = "X", y = "Density",
-           title = sprintf("Normal distribution: N(μ = %.1f, σ² = %.2f)", 
-                          input$mean, input$variance)) +
-      theme_minimal() +
-      theme(
-        panel.grid.minor = element_blank(),
-        plot.title = element_text(hjust = 0.5, size = 16),
-        axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12)
-      ) +
-      # Fixed axis limits
-      xlim(x_min, x_max) +
-      ylim(0, 0.8) +
-      # Add reference line at x = 0
-      geom_vline(xintercept = 0, linetype = "dashed", color = "gray50", alpha = 0.7) +
-      # Add reference line at mean
-      geom_vline(xintercept = input$mean, linetype = "dashed", color = "#DB4315", alpha = 0.7) +
-      annotate("text", x = input$mean + 0.8, y = 0.7, label = "Mean", color = "#DB4315", size = 4)
-    
-    return(p)
-  })
-}
+    /* =========================================================
+       NORMAL DISTRIBUTION CALCULATOR
+       ========================================================= */
 
-shinyApp(ui = ui, server = server)
+    .normal-calculator {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .normal-calculator .calculator-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .normal-calculator .calculator-card {
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      margin-bottom: 1rem;
+    }
+
+    .normal-calculator .calculator-card-header {
+      background: #3F6BB6;
+      color: #ffffff;
+      padding: 0.75rem 1rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .normal-calculator .calculator-card-body { padding: 1rem; }
+    .normal-calculator .form-group { margin-bottom: 1rem; }
+
+    .normal-calculator label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .normal-calculator input[type="number"] {
+      width: 100%;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      background: #ffffff;
+      font-size: 1rem;
+    }
+
+    .normal-calculator .distribution-slider {
+      width: 100%;
+      margin: 0.5rem 0;
+      accent-color: #3F68B6;
+      cursor: pointer;
+    }
+
+    .normal-calculator .slider-value {
+      text-align: center;
+      color: #3F68B6;
+      font-weight: 700;
+      margin-top: 0.1rem;
+    }
+
+    .normal-calculator hr {
+      border: 0;
+      border-top: 1px solid #dddddd;
+      margin: 1.2rem 0;
+    }
+
+    .normal-calculator .probability-options {
+      border: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    .normal-calculator .probability-options legend {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+    }
+
+    .normal-calculator .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.55rem;
+      cursor: pointer;
+      font-weight: 400;
+    }
+
+    .normal-calculator .radio-option input {
+      margin: 0;
+      width: 16px;
+      height: 16px;
+      accent-color: #3F68B6;
+    }
+
+    .normal-calculator .conditional-input { margin-top: 1rem; }
+    .normal-calculator .conditional-input[hidden] { display: none; }
+    .normal-calculator .upper-label { margin-top: 1rem; }
+
+    .normal-calculator .distribution-plot-title {
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .normal-calculator .normal-chart-wrapper {
+      position: relative;
+      width: 100%;
+      height: 320px;
+    }
+
+    .normal-calculator canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .normal-calculator .calculation-result {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .normal-calculator input:focus,
+    .normal-calculator canvas:focus {
+      outline: 3px solid rgba(63, 104, 182, 0.3);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .normal-calculator .calculator-row { grid-template-columns: 1fr; }
+      .normal-calculator .plot-card { min-width: 0; }
+      .normal-calculator .normal-chart-wrapper { height: 280px; }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 0.5rem; }
+      .normal-calculator .calculator-card-body { padding: 0.9rem; }
+      .normal-calculator .normal-chart-wrapper { height: 250px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="distribution-calculator normal-calculator">
+
+  <div class="calculator-row">
+
+    <!-- PARAMETERS CARD -->
+    <div class="calculator-card parameters-card">
+      <div class="calculator-card-header">Parameters</div>
+
+      <div class="calculator-card-body">
+
+        <div class="form-group">
+          <label for="normal-mean">Mean (&mu;):</label>
+          <input
+            type="number"
+            id="normal-mean"
+            value="0"
+            step="0.1"
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="normal-sd">Standard deviation (&sigma;):</label>
+          <input
+            type="number"
+            id="normal-sd"
+            value="1"
+            min="0.1"
+            step="0.1"
+            class="form-control">
+        </div>
+
+        <hr>
+
+        <fieldset class="probability-options">
+          <legend>Probability to calculate:</legend>
+
+          <label class="radio-option">
+            <input type="radio" name="normal-prob-type" value="less" checked>
+            <span>P(X &le; x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="normal-prob-type" value="greater">
+            <span>P(X &ge; x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="normal-prob-type" value="between">
+            <span>P(a &le; X &le; b)</span>
+          </label>
+        </fieldset>
+
+        <!-- SINGLE X VALUE -->
+        <div id="normal-x-container" class="conditional-input">
+          <label for="normal-x">x value:</label>
+          <input
+            type="range"
+            id="normal-x"
+            min="-5"
+            max="5"
+            value="1"
+            step="0.1"
+            class="distribution-slider">
+          <div class="slider-value" id="normal-x-value">1.0</div>
+        </div>
+
+        <!-- LOWER / UPPER VALUES -->
+        <div id="normal-between-container" class="conditional-input" hidden>
+          <label for="normal-lower">Lower bound (a):</label>
+          <input
+            type="range"
+            id="normal-lower"
+            min="-5"
+            max="5"
+            value="-1"
+            step="0.1"
+            class="distribution-slider">
+          <div class="slider-value" id="normal-lower-value">-1.0</div>
+
+          <label for="normal-upper" class="upper-label">Upper bound (b):</label>
+          <input
+            type="range"
+            id="normal-upper"
+            min="-5"
+            max="5"
+            value="1"
+            step="0.1"
+            class="distribution-slider">
+          <div class="slider-value" id="normal-upper-value">1.0</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PLOT CARD -->
+    <div class="calculator-card plot-card">
+      <div class="calculator-card-header">Normal distribution plot</div>
+
+      <div class="calculator-card-body">
+        <div id="normal-plot-title" class="distribution-plot-title">
+          N(&mu; = 0.0, &sigma; = 1.0)
+        </div>
+
+        <div class="normal-chart-wrapper">
+          <canvas
+            id="normal-chart"
+            tabindex="0"
+            role="img"
+            aria-label="Normal distribution probability density function">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESULTS CARD -->
+  <div class="calculator-card results-card">
+    <div class="calculator-card-header">Results</div>
+    <div class="calculator-card-body">
+      <div id="normal-result" class="calculation-result" aria-live="polite"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* =========================================================
+   NORMAL DISTRIBUTION CALCULATOR
+   ========================================================= */
+
+(function() {
+  "use strict";
+
+  const root = document.querySelector(".normal-calculator");
+  if (!root) return;
+
+  const meanInput = root.querySelector("#normal-mean");
+  const sdInput = root.querySelector("#normal-sd");
+  const xInput = root.querySelector("#normal-x");
+  const lowerInput = root.querySelector("#normal-lower");
+  const upperInput = root.querySelector("#normal-upper");
+
+  const xDisplay = root.querySelector("#normal-x-value");
+  const lowerDisplay = root.querySelector("#normal-lower-value");
+  const upperDisplay = root.querySelector("#normal-upper-value");
+
+  const title = root.querySelector("#normal-plot-title");
+  const result = root.querySelector("#normal-result");
+  const xContainer = root.querySelector("#normal-x-container");
+  const betweenContainer = root.querySelector("#normal-between-container");
+  const canvas = root.querySelector("#normal-chart");
+  const ctx = canvas.getContext("2d");
+
+  function erf(value) {
+    const sign = value < 0 ? -1 : 1;
+    const z = Math.abs(value);
+    const a1 = 0.254829592;
+    const a2 = -0.284496736;
+    const a3 = 1.421413741;
+    const a4 = -1.453152027;
+    const a5 = 1.061405429;
+    const p = 0.3275911;
+    const t = 1 / (1 + p * z);
+
+    const y = 1 -
+      (((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t) *
+      Math.exp(-z * z);
+
+    return sign * y;
+  }
+
+  function normalPDF(value, mean, sd) {
+    const z = (value - mean) / sd;
+    return Math.exp(-0.5 * z * z) / (sd * Math.sqrt(2 * Math.PI));
+  }
+
+  function normalCDF(value, mean, sd) {
+    return 0.5 * (1 + erf((value - mean) / (sd * Math.sqrt(2))));
+  }
+
+  function getProbabilityType() {
+    const selected = root.querySelector(
+      'input[name="normal-prob-type"]:checked'
+    );
+    return selected ? selected.value : "less";
+  }
+
+  function validateParameters() {
+    let mean = parseFloat(meanInput.value);
+    let sd = parseFloat(sdInput.value);
+
+    if (!Number.isFinite(mean)) {
+      mean = 0;
+      meanInput.value = 0;
+    }
+
+    if (!Number.isFinite(sd) || sd <= 0) {
+      sd = 0.1;
+      sdInput.value = 0.1;
+    }
+
+    return { mean, sd };
+  }
+
+  function updateSliderRanges(mean, sd) {
+    const minimum = mean - 5 * sd;
+    const maximum = mean + 5 * sd;
+    const step = Math.max(0.01, sd / 10);
+
+    [xInput, lowerInput, upperInput].forEach(function(input) {
+      input.min = minimum;
+      input.max = maximum;
+      input.step = step;
+    });
+
+    if (parseFloat(xInput.value) < minimum || parseFloat(xInput.value) > maximum) {
+      xInput.value = mean + sd;
+    }
+
+    if (parseFloat(lowerInput.value) < minimum || parseFloat(lowerInput.value) > maximum) {
+      lowerInput.value = mean - sd;
+    }
+
+    if (parseFloat(upperInput.value) < minimum || parseFloat(upperInput.value) > maximum) {
+      upperInput.value = mean + sd;
+    }
+  }
+
+  function formatValue(value) {
+    return Number(value).toFixed(2);
+  }
+
+  function updateDisplay() {
+    const parameters = validateParameters();
+    updateSliderRanges(parameters.mean, parameters.sd);
+
+    xDisplay.textContent = formatValue(xInput.value);
+    lowerDisplay.textContent = formatValue(lowerInput.value);
+    upperDisplay.textContent = formatValue(upperInput.value);
+
+    title.textContent =
+      `N(μ = ${parameters.mean.toFixed(2)}, σ = ${parameters.sd.toFixed(2)})`;
+  }
+
+  function calculateProbability() {
+    const parameters = validateParameters();
+    const mean = parameters.mean;
+    const sd = parameters.sd;
+    const x = parseFloat(xInput.value);
+    let lower = parseFloat(lowerInput.value);
+    let upper = parseFloat(upperInput.value);
+    const type = getProbabilityType();
+
+    if (upper < lower) {
+      upper = lower;
+      upperInput.value = upper;
+      upperDisplay.textContent = formatValue(upper);
+    }
+
+    let probability;
+
+    if (type === "less") {
+      probability = normalCDF(x, mean, sd);
+      result.textContent =
+        `P(X ≤ ${formatValue(x)}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    } else if (type === "greater") {
+      probability = 1 - normalCDF(x, mean, sd);
+      result.textContent =
+        `P(X ≥ ${formatValue(x)}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    } else {
+      probability =
+        normalCDF(upper, mean, sd) -
+        normalCDF(lower, mean, sd);
+
+      result.textContent =
+        `P(${formatValue(lower)} ≤ X ≤ ${formatValue(upper)}) = ` +
+        `${probability.toFixed(4)} or ` +
+        `${(probability * 100).toFixed(2)}%`;
+    }
+
+    probability = Math.max(0, Math.min(1, probability));
+
+    return { type, x, lower, upper, probability, mean, sd };
+  }
+
+  function drawChart() {
+    const selected = calculateProbability();
+    const mean = selected.mean;
+    const sd = selected.sd;
+    const rect = canvas.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { left: 62, right: 22, top: 25, bottom: 52 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+    const minimumX = mean - 4 * sd;
+    const maximumX = mean + 4 * sd;
+    const maximumY = normalPDF(mean, mean, sd) * 1.12;
+    const pointCount = Math.max(600, Math.round(chartWidth * 1.7));
+
+    ctx.clearRect(0, 0, width, height);
+
+    function xScale(value) {
+      return padding.left +
+        ((value - minimumX) / (maximumX - minimumX)) * chartWidth;
+    }
+
+    function yScale(value) {
+      return padding.top + chartHeight -
+        (value / maximumY) * chartHeight;
+    }
+
+    ctx.font = "12px Arial";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i <= 4; i++) {
+      const density = (i / 4) * maximumY;
+      const y = yScale(density);
+
+      ctx.strokeStyle = "#e5e5e5";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padding.left, y);
+      ctx.lineTo(width - padding.right, y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#555555";
+      ctx.fillText(density.toFixed(2), padding.left - 8, y);
+    }
+
+    function fillArea(start, end, colour) {
+      const boundedStart = Math.max(minimumX, Math.min(maximumX, start));
+      const boundedEnd = Math.max(minimumX, Math.min(maximumX, end));
+
+      if (boundedEnd <= boundedStart) return;
+
+      const count = Math.max(
+        2,
+        Math.round(
+          pointCount * (boundedEnd - boundedStart) /
+          (maximumX - minimumX)
+        )
+      );
+
+      ctx.beginPath();
+      ctx.moveTo(xScale(boundedStart), yScale(0));
+
+      for (let i = 0; i <= count; i++) {
+        const value = boundedStart +
+          (i / count) * (boundedEnd - boundedStart);
+        ctx.lineTo(xScale(value), yScale(normalPDF(value, mean, sd)));
+      }
+
+      ctx.lineTo(xScale(boundedEnd), yScale(0));
+      ctx.closePath();
+      ctx.fillStyle = colour;
+      ctx.fill();
+    }
+
+    fillArea(minimumX, maximumX, "rgba(211, 211, 211, 0.55)");
+
+    if (selected.type === "less") {
+      fillArea(minimumX, selected.x, "rgba(63, 107, 182, 0.58)");
+    } else if (selected.type === "greater") {
+      fillArea(selected.x, maximumX, "rgba(63, 107, 182, 0.58)");
+    } else {
+      fillArea(selected.lower, selected.upper, "rgba(63, 107, 182, 0.58)");
+    }
+
+    ctx.beginPath();
+
+    for (let i = 0; i <= pointCount; i++) {
+      const value = minimumX +
+        (i / pointCount) * (maximumX - minimumX);
+      const chartX = xScale(value);
+      const chartY = yScale(normalPDF(value, mean, sd));
+
+      if (i === 0) ctx.moveTo(chartX, chartY);
+      else ctx.lineTo(chartX, chartY);
+    }
+
+    ctx.strokeStyle = "#274f91";
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    function drawBoundary(value) {
+      if (value < minimumX || value > maximumX) return;
+
+      ctx.save();
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = "#274f91";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(xScale(value), yScale(0));
+      ctx.lineTo(xScale(value), yScale(normalPDF(value, mean, sd)));
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    if (selected.type === "between") {
+      drawBoundary(selected.lower);
+      drawBoundary(selected.upper);
+    } else {
+      drawBoundary(selected.x);
+    }
+
+    ctx.strokeStyle = "#777777";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, padding.top + chartHeight);
+    ctx.lineTo(width - padding.right, padding.top + chartHeight);
+    ctx.stroke();
+
+    ctx.save();
+    ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = "#aaaaaa";
+    ctx.beginPath();
+    ctx.moveTo(xScale(mean), padding.top);
+    ctx.lineTo(xScale(mean), padding.top + chartHeight);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.fillStyle = "#333333";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+
+    const tickCount = width < 500 ? 4 : 8;
+
+    for (let i = 0; i <= tickCount; i++) {
+      const value = minimumX +
+        (i / tickCount) * (maximumX - minimumX);
+      ctx.fillText(
+        formatValue(value),
+        xScale(value),
+        padding.top + chartHeight + 20
+      );
+    }
+
+    ctx.font = "13px Arial";
+    ctx.fillText(
+      "value of X",
+      padding.left + chartWidth / 2,
+      height - 8
+    );
+
+    ctx.save();
+    ctx.translate(15, padding.top + chartHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = "center";
+    ctx.fillText("probability density", 0, 0);
+    ctx.restore();
+
+    canvas.setAttribute(
+      "aria-label",
+      `Normal distribution plot with mean ${mean.toFixed(2)} and ` +
+      `standard deviation ${sd.toFixed(2)}. The selected probability is ` +
+      `${selected.probability.toFixed(4)}.`
+    );
+  }
+
+  function updateVisibility() {
+    const type = getProbabilityType();
+    xContainer.hidden = type === "between";
+    betweenContainer.hidden = type !== "between";
+  }
+
+  function update() {
+    updateVisibility();
+    updateDisplay();
+    drawChart();
+  }
+
+  meanInput.addEventListener("input", update);
+  sdInput.addEventListener("input", update);
+  meanInput.addEventListener("change", update);
+  sdInput.addEventListener("change", update);
+  xInput.addEventListener("input", update);
+
+  lowerInput.addEventListener("input", function() {
+    if (parseFloat(lowerInput.value) > parseFloat(upperInput.value)) {
+      upperInput.value = lowerInput.value;
+    }
+    update();
+  });
+
+  upperInput.addEventListener("input", function() {
+    if (parseFloat(upperInput.value) < parseFloat(lowerInput.value)) {
+      lowerInput.value = upperInput.value;
+    }
+    update();
+  });
+
+  root.querySelectorAll('input[name="normal-prob-type"]').forEach(
+    function(radio) {
+      radio.addEventListener("change", update);
+    }
+  );
+
+  let resizeTimer;
+
+  window.addEventListener("resize", function() {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(drawChart, 80);
+  });
+
+  update();
+})();
+</script>
+
+</body>
+</html>
 ```
 
 ## Exponential distribution
 
 The exponential distribution has probability density function $$f(x) = \lambda e^{-\lambda x},$$ where $\lambda$ is number of times an event occurs within a specific period of time. (For more on this, see [Overview: Probability distributions](../overviews/o-distributions.qmd) It can be shown that the mean/expected value of the exponential distribution is $\mu = 1/\lambda$ and variance $\sigma^2 = 1/\lambda^2$, and so both the expected value and variance depend on $\lambda$ - which explains the one slider.
 
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 770
+```{=html}
 
-library(shiny)
-library(bslib)
-library(ggplot2)
+<div class="distribution-calculator exponential-calculator">
 
-ui <- page_fluid(
-  title = "Exponential distribution visualizer",
-  
-  # Plot at the top
-  card(
-    card_header("Exponential distribution plot"),
-    card_body(
-      plotOutput("distPlot", height = "500px")
-    )
-  ),
-  
-  # Parameters below
-  card(
-    card_header("Distribution parameters"),
-    card_body(
-      sliderInput("rate", "Rate parameter (λ):", 
-                 min = 0.1, max = 3, value = 1, step = 0.1)
-    )
-  )
-)
+  <div class="calculator-row">
 
-server <- function(input, output, session) {
-  
-  # Generate the exponential distribution plot
-  output$distPlot <- renderPlot({
-    # Fixed range for x-axis to show consistent scale
-    x_min <- 0
-    x_max <- 10
-    
-    # Create data frame for plotting
-    x <- seq(x_min, x_max, length.out = 500)
-    y <- dexp(x, rate = input$rate)
-    df <- data.frame(x = x, y = y)
-    
-    # Calculate mean and variance for display
-    mean_val <- 1 / input$rate
-    variance_val <- 1 / (input$rate^2)
-    
-    # Create plot with fixed axes
-    p <- ggplot(df, aes(x = x, y = y)) +
-      geom_line(color = "#3F6BB6", size = 1.2) +
-      labs(x = "X", y = "Density",
-           title = sprintf("Exponential distribution: Exp(λ = %.1f)\nMean = %.2f, Variance = %.2f", 
-                          input$rate, mean_val, variance_val)) +
-      theme_minimal() +
-      theme(
-        panel.grid.minor = element_blank(),
-        plot.title = element_text(hjust = 0.5, size = 16),
-        axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12)
-      ) +
-      # Fixed axis limits
-      xlim(x_min, x_max) +
-      ylim(0, 3) +
-      # Add reference line at mean
-      geom_vline(xintercept = mean_val, linetype = "dashed", color = "#DB4315", alpha = 0.7) +
-      annotate("text", x = mean_val + 0.5, y = 2.5, label = "Mean", color = "#DB4315", size = 4)
-    
-    return(p)
-  })
+    <!-- PARAMETERS CARD -->
+    <div class="calculator-card parameters-card">
+
+      <div class="calculator-card-header">
+        Parameters
+      </div>
+
+      <div class="calculator-card-body">
+
+        <div class="form-group">
+
+          <label for="exponential-lambda">
+            Rate parameter (&lambda;):
+          </label>
+
+          <input
+            type="range"
+            id="exponential-lambda"
+            min="0.1"
+            max="5"
+            value="1"
+            step="0.1"
+            class="distribution-slider"
+            aria-describedby="exponential-lambda-value">
+
+          <div
+            class="slider-value"
+            id="exponential-lambda-value">
+            1.00
+          </div>
+
+        </div>
+
+        <div class="distribution-information">
+
+          <div>
+            Mean:
+            <strong id="exponential-mean">1.000</strong>
+          </div>
+
+          <div>
+            Standard deviation:
+            <strong id="exponential-standard-deviation">1.000</strong>
+          </div>
+
+        </div>
+
+        <hr>
+
+        <fieldset class="probability-options">
+
+          <legend>
+            Probability to calculate:
+          </legend>
+
+          <label class="radio-option">
+
+            <input
+              type="radio"
+              name="exponential-prob-type"
+              value="less"
+              checked>
+
+            <span>P(X &le; x)</span>
+
+          </label>
+
+          <label class="radio-option">
+
+            <input
+              type="radio"
+              name="exponential-prob-type"
+              value="greater">
+
+            <span>P(X &ge; x)</span>
+
+          </label>
+
+          <label class="radio-option">
+
+            <input
+              type="radio"
+              name="exponential-prob-type"
+              value="between">
+
+            <span>P(a &le; X &le; b)</span>
+
+          </label>
+
+        </fieldset>
+
+
+        <!-- SINGLE X VALUE -->
+
+        <div
+          id="exponential-x-container"
+          class="conditional-input">
+
+          <label for="exponential-x">
+            x value:
+          </label>
+
+          <input
+            type="range"
+            id="exponential-x"
+            min="0"
+            max="10"
+            value="2"
+            step="0.1"
+            class="distribution-slider"
+            aria-describedby="exponential-x-value">
+
+          <div
+            class="slider-value"
+            id="exponential-x-value">
+            2.0
+          </div>
+
+        </div>
+
+
+        <!-- LOWER AND UPPER VALUES -->
+
+        <div
+          id="exponential-between-container"
+          class="conditional-input"
+          hidden>
+
+          <label for="exponential-lower">
+            Lower bound (a):
+          </label>
+
+          <input
+            type="range"
+            id="exponential-lower"
+            min="0"
+            max="10"
+            value="1"
+            step="0.1"
+            class="distribution-slider"
+            aria-describedby="exponential-lower-value">
+
+          <div
+            class="slider-value"
+            id="exponential-lower-value">
+            1.0
+          </div>
+
+          <label
+            for="exponential-upper"
+            class="upper-label">
+            Upper bound (b):
+          </label>
+
+          <input
+            type="range"
+            id="exponential-upper"
+            min="0"
+            max="10"
+            value="3"
+            step="0.1"
+            class="distribution-slider"
+            aria-describedby="exponential-upper-value">
+
+          <div
+            class="slider-value"
+            id="exponential-upper-value">
+            3.0
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- PLOT CARD -->
+
+    <div class="calculator-card plot-card">
+
+      <div class="calculator-card-header">
+        Exponential distribution plot
+      </div>
+
+      <div class="calculator-card-body">
+
+        <div
+          id="exponential-plot-title"
+          class="distribution-plot-title">
+          Exp(&lambda; = 1.00)
+        </div>
+
+        <div class="exponential-chart-wrapper">
+
+          <canvas
+            id="exponential-chart"
+            tabindex="0"
+            role="img"
+            aria-label="Exponential distribution probability density function">
+          </canvas>
+
+        </div>
+
+        <div class="plot-legend" aria-hidden="true">
+
+          <span class="legend-item">
+            <span class="legend-colour selected-colour"></span>
+            Selected probability
+          </span>
+
+          <span class="legend-item">
+            <span class="legend-colour unselected-colour"></span>
+            Probability density
+          </span>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- RESULTS CARD -->
+
+  <div class="calculator-card results-card">
+
+    <div class="calculator-card-header">
+      Results
+    </div>
+
+<div class="calculator-card-body">
+
+  <div
+    id="exponential-result"
+    class="calculation-result"
+    aria-live="polite">
+  </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<style>
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+body {
+  margin: 0;
+  padding: 1rem;
+  background: #f5f6f8;
+  color: #222222;
 }
 
-shinyApp(ui = ui, server = server)
+
+/* =========================================================
+   EXPONENTIAL CALCULATOR
+   ========================================================= */
+
+.exponential-calculator {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+/* TOP ROW */
+
+.exponential-calculator .calculator-row {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+
+/* CARDS */
+
+.exponential-calculator .calculator-card {
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+}
+
+
+/* CARD HEADERS */
+
+.exponential-calculator .calculator-card-header {
+  background: #3F6BB6;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+
+/* CARD BODY */
+
+.exponential-calculator .calculator-card-body {
+  padding: 1rem;
+}
+
+
+/* FORM ELEMENTS */
+
+.exponential-calculator .form-group {
+  margin-bottom: 1rem;
+}
+
+.exponential-calculator label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+
+/* SLIDERS */
+
+.exponential-calculator .distribution-slider {
+  width: 100%;
+  margin: 0.5rem 0;
+  accent-color: #3F68B6;
+  cursor: pointer;
+}
+
+.exponential-calculator .slider-value {
+  text-align: center;
+  color: #3F68B6;
+  font-weight: 700;
+  margin-top: 0.1rem;
+}
+
+
+/* DISTRIBUTION INFORMATION */
+
+.exponential-calculator .distribution-information {
+  padding: 0.75rem;
+  border: 1px solid #d9e2f2;
+  border-radius: 5px;
+  background: #f4f7fc;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+
+/* DIVIDER */
+
+.exponential-calculator hr {
+  border: 0;
+  border-top: 1px solid #dddddd;
+  margin: 1.2rem 0;
+}
+
+
+/* RADIO BUTTONS */
+
+.exponential-calculator .probability-options {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.exponential-calculator .probability-options legend {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.6rem;
+}
+
+.exponential-calculator .radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.exponential-calculator .radio-option input {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: #3F68B6;
+}
+
+
+/* CONDITIONAL INPUTS */
+
+.exponential-calculator .conditional-input {
+  margin-top: 1rem;
+}
+
+.exponential-calculator .conditional-input[hidden] {
+  display: none;
+}
+
+.exponential-calculator .upper-label {
+  margin-top: 1rem;
+}
+
+
+/* PLOT */
+
+.exponential-calculator .distribution-plot-title {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.exponential-calculator .exponential-chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+
+.exponential-calculator canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+/* PLOT LEGEND */
+
+.exponential-calculator .plot-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.exponential-calculator .legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.exponential-calculator .legend-colour {
+  display: inline-block;
+  width: 18px;
+  height: 12px;
+  border: 1px solid #777777;
+}
+
+.exponential-calculator .selected-colour {
+  background: rgba(63, 107, 182, 0.55);
+}
+
+.exponential-calculator .unselected-colour {
+  background: rgba(211, 211, 211, 0.55);
+}
+
+
+/* RESULTS */
+
+.exponential-calculator .calculation-result {
+  color: black;
+  font-size: 1.1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.exponential-calculator .calculation-working {
+  margin-top: 0.65rem;
+  color: #555555;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+
+/* FOCUS */
+
+.exponential-calculator input:focus,
+.exponential-calculator canvas:focus {
+  outline: 3px solid rgba(63, 104, 182, 0.3);
+  outline-offset: 2px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .exponential-calculator .calculator-row {
+    grid-template-columns: 1fr;
+  }
+
+  .exponential-calculator .plot-card {
+    min-width: 0;
+  }
+
+  .exponential-calculator .exponential-chart-wrapper {
+    height: 280px;
+  }
+
+}
+
+
+/* SMALL MOBILE */
+
+@media (max-width: 480px) {
+
+  body {
+    padding: 0.5rem;
+  }
+
+  .exponential-calculator .calculator-card-body {
+    padding: 0.9rem;
+  }
+
+  .exponential-calculator .exponential-chart-wrapper {
+    height: 250px;
+  }
+
+}
+
+</style>
+
+
+<script>
+
+/* =========================================================
+   EXPONENTIAL DISTRIBUTION CALCULATOR
+   ========================================================= */
+
+(function() {
+
+  "use strict";
+
+
+  /* -------------------------------------------------------
+     ELEMENTS
+     ------------------------------------------------------- */
+
+  const lambdaInput =
+    document.getElementById("exponential-lambda");
+
+  const xInput =
+    document.getElementById("exponential-x");
+
+  const lowerInput =
+    document.getElementById("exponential-lower");
+
+  const upperInput =
+    document.getElementById("exponential-upper");
+
+  const lambdaDisplay =
+    document.getElementById("exponential-lambda-value");
+
+  const xDisplay =
+    document.getElementById("exponential-x-value");
+
+  const lowerDisplay =
+    document.getElementById("exponential-lower-value");
+
+  const upperDisplay =
+    document.getElementById("exponential-upper-value");
+
+  const meanDisplay =
+    document.getElementById("exponential-mean");
+
+  const standardDeviationDisplay =
+    document.getElementById(
+      "exponential-standard-deviation"
+    );
+
+  const title =
+    document.getElementById("exponential-plot-title");
+
+  const result =
+    document.getElementById("exponential-result");
+
+  const xContainer =
+    document.getElementById("exponential-x-container");
+
+  const betweenContainer =
+    document.getElementById(
+      "exponential-between-container"
+    );
+
+  const canvas =
+    document.getElementById("exponential-chart");
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  /* -------------------------------------------------------
+     EXPONENTIAL PDF
+     f(x) = lambda * exp(-lambda * x)
+     ------------------------------------------------------- */
+
+  function exponentialPDF(x, lambda) {
+
+    if (x < 0) {
+      return 0;
+    }
+
+    return lambda * Math.exp(-lambda * x);
+
+  }
+
+
+  /* -------------------------------------------------------
+     EXPONENTIAL CDF
+     F(x) = 1 - exp(-lambda * x)
+     ------------------------------------------------------- */
+
+  function exponentialCDF(x, lambda) {
+
+    if (x <= 0) {
+      return 0;
+    }
+
+    return 1 - Math.exp(-lambda * x);
+
+  }
+
+
+  /* -------------------------------------------------------
+     SURVIVAL FUNCTION
+     P(X >= x) = exp(-lambda * x)
+     ------------------------------------------------------- */
+
+  function exponentialSurvival(x, lambda) {
+
+    if (x <= 0) {
+      return 1;
+    }
+
+    return Math.exp(-lambda * x);
+
+  }
+
+
+  /* -------------------------------------------------------
+     CURRENT PROBABILITY TYPE
+     ------------------------------------------------------- */
+
+  function getProbabilityType() {
+
+    const selected =
+      document.querySelector(
+        'input[name="exponential-prob-type"]:checked'
+      );
+
+    return selected
+      ? selected.value
+      : "less";
+
+  }
+
+
+  /* -------------------------------------------------------
+     NUMBER FORMATTING
+     ------------------------------------------------------- */
+
+  function formatInputValue(value) {
+
+    return Number(value).toFixed(1);
+
+  }
+
+
+  function formatProbability(value) {
+
+    const boundedValue =
+      Math.max(0, Math.min(1, value));
+
+    return boundedValue.toFixed(4);
+
+  }
+
+
+  function formatPercentage(value) {
+
+    const boundedValue =
+      Math.max(0, Math.min(1, value));
+
+    return (boundedValue * 100).toFixed(2) + "%";
+
+  }
+
+
+  /* -------------------------------------------------------
+     UPDATE DISPLAY
+     ------------------------------------------------------- */
+
+  function updateDisplay() {
+
+    const lambda =
+      parseFloat(lambdaInput.value);
+
+    const x =
+      parseFloat(xInput.value);
+
+    const lower =
+      parseFloat(lowerInput.value);
+
+    const upper =
+      parseFloat(upperInput.value);
+
+    lambdaDisplay.textContent =
+      lambda.toFixed(2);
+
+    xDisplay.textContent =
+      formatInputValue(x);
+
+    lowerDisplay.textContent =
+      formatInputValue(lower);
+
+    upperDisplay.textContent =
+      formatInputValue(upper);
+
+    meanDisplay.textContent =
+      (1 / lambda).toFixed(3);
+
+    standardDeviationDisplay.textContent =
+      (1 / (lambda*lambda)).toFixed(3);
+
+    title.textContent =
+      `Exp(\u03BB = ${lambda.toFixed(2)})`;
+
+  }
+
+
+  /* -------------------------------------------------------
+     CALCULATE RESULT
+     ------------------------------------------------------- */
+
+  function calculateProbability() {
+
+    const lambda =
+      parseFloat(lambdaInput.value);
+
+    const x =
+      parseFloat(xInput.value);
+
+    let lower =
+      parseFloat(lowerInput.value);
+
+    let upper =
+      parseFloat(upperInput.value);
+
+    const type =
+      getProbabilityType();
+
+
+    if (upper < lower) {
+
+      upper = lower;
+
+      upperInput.value =
+        upper.toFixed(1);
+
+      upperDisplay.textContent =
+        formatInputValue(upper);
+
+    }
+
+
+    let probability = 0;
+
+
+    if (type === "less") {
+
+      probability =
+        exponentialCDF(x, lambda);
+
+      result.textContent =
+        `P(X \u2264 ${formatInputValue(x)}) = ` +
+        `${formatProbability(probability)} ` +
+        `or ${formatPercentage(probability)}`;
+
+    }
+
+
+    else if (type === "greater") {
+
+      probability =
+        exponentialSurvival(x, lambda);
+
+      result.textContent =
+        `P(X \u2265 ${formatInputValue(x)}) = ` +
+        `${formatProbability(probability)} ` +
+        `or ${formatPercentage(probability)}`;
+
+    }
+
+
+    else {
+
+      probability =
+        exponentialCDF(upper, lambda) -
+        exponentialCDF(lower, lambda);
+
+      result.textContent =
+        `P(${formatInputValue(lower)} \u2264 X \u2264 ` +
+        `${formatInputValue(upper)}) = ` +
+        `${formatProbability(probability)} ` +
+        `or ${formatPercentage(probability)}`;
+
+    }
+
+
+    return {
+      type,
+      x,
+      lower,
+      upper,
+      probability
+    };
+
+  }
+
+
+  /* -------------------------------------------------------
+     CHOOSE A PLOT LIMIT
+     ------------------------------------------------------- */
+
+  function getPlotMaximum(lambda, probabilityResult) {
+
+    /*
+      The theoretical support is x >= 0 and has no upper
+      limit. The plotted range therefore uses:
+
+      1. A high quantile of the distribution
+      2. The currently selected values
+      3. A small amount of extra space
+    */
+
+    const highQuantile =
+      -Math.log(0.005) / lambda;
+
+    let selectedMaximum;
+
+    if (probabilityResult.type === "between") {
+
+      selectedMaximum =
+        probabilityResult.upper;
+
+    } else {
+
+      selectedMaximum =
+        probabilityResult.x;
+
+    }
+
+    const requiredMaximum =
+      Math.max(
+        highQuantile,
+        selectedMaximum * 1.2,
+        1
+      );
+
+    /*
+      Keep the plot within the range covered by the
+      sliders, while still allowing a useful minimum.
+    */
+
+    return Math.min(
+      12,
+      Math.max(2, requiredMaximum)
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     DETERMINE WHETHER X IS SELECTED
+     ------------------------------------------------------- */
+
+  function isSelected(x, probabilityResult) {
+
+    const tolerance = 1e-9;
+
+    if (probabilityResult.type === "less") {
+
+      return (
+        x <= probabilityResult.x + tolerance
+      );
+
+    }
+
+
+    if (probabilityResult.type === "greater") {
+
+      return (
+        x >= probabilityResult.x - tolerance
+      );
+
+    }
+
+
+    return (
+      x >= probabilityResult.lower - tolerance &&
+      x <= probabilityResult.upper + tolerance
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     DRAW CHART
+     ------------------------------------------------------- */
+
+  function drawChart() {
+
+    const lambda =
+      parseFloat(lambdaInput.value);
+
+    const probabilityResult =
+      calculateProbability();
+
+    const rect =
+      canvas.getBoundingClientRect();
+
+    if (rect.width === 0 || rect.height === 0) {
+      return;
+    }
+
+    const dpr =
+      window.devicePixelRatio || 1;
+
+    canvas.width =
+      Math.round(rect.width * dpr);
+
+    canvas.height =
+      Math.round(rect.height * dpr);
+
+    ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+
+    const width =
+      rect.width;
+
+    const height =
+      rect.height;
+
+
+    ctx.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    const padding = {
+      left: 62,
+      right: 22,
+      top: 25,
+      bottom: 52
+    };
+
+
+    const chartWidth =
+      width -
+      padding.left -
+      padding.right;
+
+    const chartHeight =
+      height -
+      padding.top -
+      padding.bottom;
+
+
+    const maximumX =
+      getPlotMaximum(
+        lambda,
+        probabilityResult
+      );
+
+    const maximumY =
+      lambda * 1.08;
+
+
+    function xScale(value) {
+
+      return (
+        padding.left +
+        (value / maximumX) *
+        chartWidth
+      );
+
+    }
+
+
+    function yScale(value) {
+
+      return (
+        padding.top +
+        chartHeight -
+        (value / maximumY) *
+        chartHeight
+      );
+
+    }
+
+
+    /* -----------------------------------------------------
+       GRID AND Y-AXIS LABELS
+       ----------------------------------------------------- */
+
+    ctx.font =
+      "12px Arial";
+
+    ctx.textAlign =
+      "right";
+
+    ctx.textBaseline =
+      "middle";
+
+    for (let i = 0; i <= 4; i++) {
+
+      const probability =
+        (i / 4) * maximumY;
+
+      const y =
+        yScale(probability);
+
+      ctx.strokeStyle =
+        "#e5e5e5";
+
+      ctx.lineWidth = 1;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        padding.left,
+        y
+      );
+
+      ctx.lineTo(
+        width - padding.right,
+        y
+      );
+
+      ctx.stroke();
+
+
+      ctx.fillStyle =
+        "#555555";
+
+      ctx.fillText(
+        probability.toFixed(2),
+        padding.left - 8,
+        y
+      );
+
+    }
+
+
+    /* -----------------------------------------------------
+       UNSELECTED AREA
+       ----------------------------------------------------- */
+
+    const pointCount =
+      Math.max(400, Math.round(chartWidth * 1.5));
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      xScale(0),
+      yScale(0)
+    );
+
+    for (let i = 0; i <= pointCount; i++) {
+
+      const x =
+        (i / pointCount) *
+        maximumX;
+
+      const y =
+        exponentialPDF(x, lambda);
+
+      ctx.lineTo(
+        xScale(x),
+        yScale(y)
+      );
+
+    }
+
+    ctx.lineTo(
+      xScale(maximumX),
+      yScale(0)
+    );
+
+    ctx.closePath();
+
+    ctx.fillStyle =
+      "rgba(211, 211, 211, 0.55)";
+
+    ctx.fill();
+
+
+    /* -----------------------------------------------------
+       SELECTED AREA
+       ----------------------------------------------------- */
+
+    let selectedStart;
+    let selectedEnd;
+
+
+    if (probabilityResult.type === "less") {
+
+      selectedStart = 0;
+
+      selectedEnd =
+        Math.min(
+          maximumX,
+          probabilityResult.x
+        );
+
+    }
+
+
+    else if (probabilityResult.type === "greater") {
+
+      selectedStart =
+        Math.min(
+          maximumX,
+          probabilityResult.x
+        );
+
+      selectedEnd =
+        maximumX;
+
+    }
+
+
+    else {
+
+      selectedStart =
+        Math.min(
+          maximumX,
+          probabilityResult.lower
+        );
+
+      selectedEnd =
+        Math.min(
+          maximumX,
+          probabilityResult.upper
+        );
+
+    }
+
+
+    if (selectedEnd >= selectedStart) {
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        xScale(selectedStart),
+        yScale(0)
+      );
+
+      const selectedPointCount =
+        Math.max(
+          2,
+          Math.round(
+            pointCount *
+            (
+              (selectedEnd - selectedStart) /
+              maximumX
+            )
+          )
+        );
+
+
+      for (
+        let i = 0;
+        i <= selectedPointCount;
+        i++
+      ) {
+
+        const x =
+          selectedStart +
+          (i / selectedPointCount) *
+          (selectedEnd - selectedStart);
+
+        const y =
+          exponentialPDF(x, lambda);
+
+        ctx.lineTo(
+          xScale(x),
+          yScale(y)
+        );
+
+      }
+
+
+      ctx.lineTo(
+        xScale(selectedEnd),
+        yScale(0)
+      );
+
+      ctx.closePath();
+
+      ctx.fillStyle =
+        "rgba(63, 107, 182, 0.58)";
+
+      ctx.fill();
+
+    }
+
+
+    /* -----------------------------------------------------
+       DENSITY CURVE
+       ----------------------------------------------------- */
+
+    ctx.beginPath();
+
+    for (let i = 0; i <= pointCount; i++) {
+
+      const x =
+        (i / pointCount) *
+        maximumX;
+
+      const y =
+        exponentialPDF(x, lambda);
+
+      if (i === 0) {
+
+        ctx.moveTo(
+          xScale(x),
+          yScale(y)
+        );
+
+      } else {
+
+        ctx.lineTo(
+          xScale(x),
+          yScale(y)
+        );
+
+      }
+
+    }
+
+    ctx.strokeStyle =
+      "#274f91";
+
+    ctx.lineWidth = 2.5;
+
+    ctx.stroke();
+
+
+    /* -----------------------------------------------------
+       BOUNDARY LINES
+       ----------------------------------------------------- */
+
+    function drawBoundary(value) {
+
+      if (value < 0 || value > maximumX) {
+        return;
+      }
+
+      ctx.save();
+
+      ctx.setLineDash([5, 4]);
+
+      ctx.strokeStyle =
+        "#274f91";
+
+      ctx.lineWidth = 1.5;
+
+      ctx.beginPath();
+
+      ctx.moveTo(
+        xScale(value),
+        yScale(0)
+      );
+
+      ctx.lineTo(
+        xScale(value),
+        yScale(
+          exponentialPDF(value, lambda)
+        )
+      );
+
+      ctx.stroke();
+
+      ctx.restore();
+
+    }
+
+
+    if (probabilityResult.type === "between") {
+
+      drawBoundary(
+        probabilityResult.lower
+      );
+
+      drawBoundary(
+        probabilityResult.upper
+      );
+
+    } else {
+
+      drawBoundary(
+        probabilityResult.x
+      );
+
+    }
+
+
+    /* -----------------------------------------------------
+       AXES
+       ----------------------------------------------------- */
+
+    ctx.strokeStyle =
+      "#777777";
+
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      padding.left,
+      padding.top
+    );
+
+    ctx.lineTo(
+      padding.left,
+      padding.top + chartHeight
+    );
+
+    ctx.lineTo(
+      width - padding.right,
+      padding.top + chartHeight
+    );
+
+    ctx.stroke();
+
+
+    /* -----------------------------------------------------
+       X-AXIS LABELS
+       ----------------------------------------------------- */
+
+    ctx.fillStyle =
+      "#333333";
+
+    ctx.font =
+      "12px Arial";
+
+    ctx.textAlign =
+      "center";
+
+    ctx.textBaseline =
+      "alphabetic";
+
+    const tickCount =
+      width < 500 ? 5 : 8;
+
+
+    for (let i = 0; i <= tickCount; i++) {
+
+      const value =
+        (i / tickCount) *
+        maximumX;
+
+      const x =
+        xScale(value);
+
+      ctx.fillText(
+        value.toFixed(1),
+        x,
+        padding.top +
+        chartHeight +
+        20
+      );
+
+    }
+
+
+    /* -----------------------------------------------------
+       X-AXIS TITLE
+       ----------------------------------------------------- */
+
+    ctx.font =
+      "13px Arial";
+
+    ctx.fillText(
+      "value of X",
+      padding.left +
+      chartWidth / 2,
+      height - 8
+    );
+
+
+    /* -----------------------------------------------------
+       Y-AXIS TITLE
+       ----------------------------------------------------- */
+
+    ctx.save();
+
+    ctx.translate(
+      15,
+      padding.top +
+      chartHeight / 2
+    );
+
+    ctx.rotate(
+      -Math.PI / 2
+    );
+
+    ctx.textAlign =
+      "center";
+
+    ctx.fillText(
+      "probability density",
+      0,
+      0
+    );
+
+    ctx.restore();
+
+
+    /* -----------------------------------------------------
+       ACCESSIBLE CANVAS DESCRIPTION
+       ----------------------------------------------------- */
+
+    let canvasDescription;
+
+    if (probabilityResult.type === "less") {
+
+      canvasDescription =
+        `Exponential probability density plot with rate ` +
+        `${lambda.toFixed(2)}. The area from zero to ` +
+        `${formatInputValue(probabilityResult.x)} is highlighted.`;
+
+    }
+
+    else if (probabilityResult.type === "greater") {
+
+      canvasDescription =
+        `Exponential probability density plot with rate ` +
+        `${lambda.toFixed(2)}. The area greater than ` +
+        `${formatInputValue(probabilityResult.x)} is highlighted.`;
+
+    }
+
+    else {
+
+      canvasDescription =
+        `Exponential probability density plot with rate ` +
+        `${lambda.toFixed(2)}. The area between ` +
+        `${formatInputValue(probabilityResult.lower)} and ` +
+        `${formatInputValue(probabilityResult.upper)} is highlighted.`;
+
+    }
+
+    canvas.setAttribute(
+      "aria-label",
+      canvasDescription
+    );
+
+  }
+
+
+  /* -------------------------------------------------------
+     VISIBILITY
+     ------------------------------------------------------- */
+
+  function updateVisibility() {
+
+    const type =
+      getProbabilityType();
+
+    if (
+      type === "less" ||
+      type === "greater"
+    ) {
+
+      xContainer.hidden = false;
+
+      betweenContainer.hidden = true;
+
+    } else {
+
+      xContainer.hidden = true;
+
+      betweenContainer.hidden = false;
+
+    }
+
+  }
+
+
+  /* -------------------------------------------------------
+     MASTER UPDATE
+     ------------------------------------------------------- */
+
+  function update() {
+
+    updateVisibility();
+
+    updateDisplay();
+
+    drawChart();
+
+  }
+
+
+  /* -------------------------------------------------------
+     EVENT LISTENERS
+     ------------------------------------------------------- */
+
+  lambdaInput.addEventListener(
+    "input",
+    update
+  );
+
+  xInput.addEventListener(
+    "input",
+    update
+  );
+
+
+  lowerInput.addEventListener(
+    "input",
+    function() {
+
+      if (
+        parseFloat(upperInput.value) <
+        parseFloat(lowerInput.value)
+      ) {
+
+        upperInput.value =
+          lowerInput.value;
+
+      }
+
+      update();
+
+    }
+  );
+
+
+  upperInput.addEventListener(
+    "input",
+    function() {
+
+      if (
+        parseFloat(upperInput.value) <
+        parseFloat(lowerInput.value)
+      ) {
+
+        lowerInput.value =
+          upperInput.value;
+
+      }
+
+      update();
+
+    }
+  );
+
+
+  document
+    .querySelectorAll(
+      'input[name="exponential-prob-type"]'
+    )
+    .forEach(function(radio) {
+
+      radio.addEventListener(
+        "change",
+        update
+      );
+
+    });
+
+
+  let resizeTimer;
+
+  window.addEventListener(
+    "resize",
+    function() {
+
+      window.clearTimeout(resizeTimer);
+
+      resizeTimer =
+        window.setTimeout(
+          drawChart,
+          80
+        );
+
+    }
+  );
+
+
+  /* -------------------------------------------------------
+     INITIALISE
+     ------------------------------------------------------- */
+
+  update();
+
+})();
+
+</script>
+
 ```
 
 ## Beta distribution
 
 The beta distribution is used to model probabilities. It has probability density function $$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{\textrm{B}(\alpha,\beta)},$$ where $\textrm{B}$ is the beta function and $\alpha = k+1$ and $\beta = n - k + 1$ are parameters for measuring the number of trials ($k$) and the number of success of those trials ($n$). It can be shown that the mean/expected value of the beta distribution is $\mu = \dfrac{\alpha}{\alpha + \beta}$ and variance $\sigma^2 = \dfrac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$.
 
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 770
+```{=html}
 
-library(shiny)
-library(bslib)
-library(ggplot2)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beta Distribution Calculator</title>
 
-ui <- page_fluid(
-  title = "Beta distribution",
-  
-  # Plot at the top
-  card(
-    card_header("Beta distribution plot"),
-    card_body(
-      uiOutput("plot_title"),
-      plotOutput("distPlot", height = "400px")
-    )
-  ),
-  
-  # Parameters below
-  card(
-    card_header("Distribution parameters"),
-    card_body(
-      layout_columns(
-        col_widths = c(6, 6),
-        sliderInput("mean", "Mean:", min = 0.1, max = 0.9, value = 0.5, step = 0.01),
-        sliderInput("variance", "Variance:", min = 0.01, max = 0.2, value = 0.05, step = 0.01)
-      )
-    )
-  )
-)
+  <style>
+    * { box-sizing: border-box; }
 
-server <- function(input, output, session) {
-  
-  # Convert mean and variance to shape parameters
-  beta_params <- reactive({
-    mean_val <- input$mean
-    var_val <- input$variance
-    
-    # For a beta distribution: mean = α/(α+β), var = αβ/((α+β)²(α+β+1))
-    # Solving for α and β given mean and variance:
-    # α = mean * ((mean * (1 - mean)) / variance - 1)
-    # β = (1 - mean) * ((mean * (1 - mean)) / variance - 1)
-    
-    # Ensure variance doesn't exceed theoretical maximum
-    max_var <- mean_val * (1 - mean_val) / 1.01  # Small buffer
-    if (var_val >= max_var) {
-      var_val <- max_var
+    body {
+      margin: 0;
+      padding: 1rem;
+      background: #f5f6f8;
+      color: #222222;
     }
-    
-    common_term <- (mean_val * (1 - mean_val)) / var_val - 1
-    alpha <- mean_val * common_term
-    beta <- (1 - mean_val) * common_term
-    
-    # Ensure positive parameters
-    alpha <- max(alpha, 0.01)
-    beta <- max(beta, 0.01)
-    
-    return(list(alpha = alpha, beta = beta))
-  })
-  
-  # Display the plot title with distribution parameters
-  output$plot_title <- renderUI({
-    params <- beta_params()
-    title <- sprintf("Beta(α = %.2f, β = %.2f)", params$alpha, params$beta)
-    subtitle <- sprintf("Mean = %.2f, Variance = %.4f", input$mean, input$variance)
-    div(
-      tags$h4(title, style = "text-align: center; margin-bottom: 5px;"),
-      tags$p(subtitle, style = "text-align: center; color: gray; margin-bottom: 15px;")
-    )
-  })
-  
-  # Generate the beta distribution plot
-  output$distPlot <- renderPlot({
-    # Get shape parameters
-    params <- beta_params()
-    shape1 <- params$alpha
-    shape2 <- params$beta
-    
-    # Create data frame for plotting with fixed x range
-    x_values <- seq(0, 1, length.out = 500)
-    density_values <- dbeta(x_values, shape1 = shape1, shape2 = shape2)
-    plot_df <- data.frame(x = x_values, density = density_values)
-    
-    # Create plot with fixed axes
-    p <- ggplot(plot_df, aes(x = x, y = density)) +
-      geom_line(size = 1, color = "#3F6BB6") +
-      geom_area(aes(x = x, y = density), fill = "#3F6BB6", alpha = 0.3) +
-      labs(x = "X", y = "Probability Density") +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank()) +
-      xlim(0, 1) +
-      ylim(0, 10) +  # Fixed y-axis range
-      # Add reference line at mean
-      geom_vline(xintercept = input$mean, linetype = "dashed", color = "#DB4315", alpha = 0.7) +
-      annotate("text", x = input$mean + 0.08, y = 8.5, label = "Mean", color = "#DB4315", size = 4)
-    
-    return(p)
-  })
-}
 
-shinyApp(ui = ui, server = server)
+    .beta-calculator {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .beta-calculator .calculator-row {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(0, 2fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .beta-calculator .calculator-card {
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .beta-calculator .calculator-card-header {
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      background: #3F6BB6;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .beta-calculator .calculator-card-body {
+      padding: 1rem;
+    }
+
+    .beta-calculator .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .beta-calculator label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .beta-calculator .distribution-slider {
+      width: 100%;
+      margin: 0.5rem 0;
+      accent-color: #3F68B6;
+      cursor: pointer;
+    }
+
+    .beta-calculator .slider-value {
+      margin-top: 0.1rem;
+      color: #3F68B6;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .beta-calculator hr {
+      margin: 1.2rem 0;
+      border: 0;
+      border-top: 1px solid #dddddd;
+    }
+
+    .beta-calculator .probability-options {
+      padding: 0;
+      margin: 0;
+      border: 0;
+    }
+
+    .beta-calculator .probability-options legend {
+      margin-bottom: 0.6rem;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .beta-calculator .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 0.55rem;
+      cursor: pointer;
+      font-weight: 400;
+    }
+
+    .beta-calculator .radio-option input {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+      accent-color: #3F68B6;
+    }
+
+    .beta-calculator .conditional-input {
+      margin-top: 1rem;
+    }
+
+    .beta-calculator .conditional-input[hidden] {
+      display: none;
+    }
+
+    .beta-calculator .upper-label {
+      margin-top: 1rem;
+    }
+
+    .beta-calculator .distribution-plot-title {
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .beta-calculator .beta-chart-wrapper {
+      position: relative;
+      width: 100%;
+      height: 320px;
+    }
+
+    .beta-calculator canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .beta-calculator .calculation-result {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .beta-calculator input:focus,
+    .beta-calculator canvas:focus {
+      outline: 3px solid rgba(63, 104, 182, 0.3);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .beta-calculator .calculator-row {
+        grid-template-columns: 1fr;
+      }
+
+      .beta-calculator .plot-card {
+        min-width: 0;
+      }
+
+      .beta-calculator .beta-chart-wrapper {
+        height: 280px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 0.5rem; }
+
+      .beta-calculator .calculator-card-body {
+        padding: 0.9rem;
+      }
+
+      .beta-calculator .beta-chart-wrapper {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="distribution-calculator beta-calculator">
+
+  <div class="calculator-row">
+
+    <div class="calculator-card parameters-card">
+      <div class="calculator-card-header">Parameters</div>
+
+      <div class="calculator-card-body">
+
+        <div class="form-group">
+          <label for="beta-alpha">Shape parameter (&alpha;):</label>
+          <input
+            type="range"
+            id="beta-alpha"
+            min="0.2"
+            max="10"
+            value="2"
+            step="0.1"
+            class="distribution-slider">
+          <div class="slider-value" id="beta-alpha-value">2.0</div>
+        </div>
+
+        <div class="form-group">
+          <label for="beta-beta">Shape parameter (&beta;):</label>
+          <input
+            type="range"
+            id="beta-beta"
+            min="0.2"
+            max="10"
+            value="5"
+            step="0.1"
+            class="distribution-slider">
+          <div class="slider-value" id="beta-beta-value">5.0</div>
+        </div>
+
+        <hr>
+
+        <fieldset class="probability-options">
+          <legend>Probability to calculate:</legend>
+
+          <label class="radio-option">
+            <input type="radio" name="beta-prob-type" value="less" checked>
+            <span>P(X &le; x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="beta-prob-type" value="greater">
+            <span>P(X &ge; x)</span>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="beta-prob-type" value="between">
+            <span>P(a &le; X &le; b)</span>
+          </label>
+        </fieldset>
+
+        <div id="beta-x-container" class="conditional-input">
+          <label for="beta-x">x value:</label>
+          <input
+            type="range"
+            id="beta-x"
+            min="0"
+            max="1"
+            value="0.5"
+            step="0.01"
+            class="distribution-slider">
+          <div class="slider-value" id="beta-x-value">0.50</div>
+        </div>
+
+        <div id="beta-between-container" class="conditional-input" hidden>
+          <label for="beta-lower">Lower bound (a):</label>
+          <input
+            type="range"
+            id="beta-lower"
+            min="0"
+            max="1"
+            value="0.2"
+            step="0.01"
+            class="distribution-slider">
+          <div class="slider-value" id="beta-lower-value">0.20</div>
+
+          <label for="beta-upper" class="upper-label">Upper bound (b):</label>
+          <input
+            type="range"
+            id="beta-upper"
+            min="0"
+            max="1"
+            value="0.7"
+            step="0.01"
+            class="distribution-slider">
+          <div class="slider-value" id="beta-upper-value">0.70</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="calculator-card plot-card">
+      <div class="calculator-card-header">Beta distribution plot</div>
+
+      <div class="calculator-card-body">
+        <div id="beta-plot-title" class="distribution-plot-title">
+          Beta(&alpha; = 2.0, &beta; = 5.0)
+        </div>
+
+        <div class="beta-chart-wrapper">
+          <canvas
+            id="beta-chart"
+            tabindex="0"
+            role="img"
+            aria-label="Beta distribution probability density function">
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="calculator-card results-card">
+    <div class="calculator-card-header">Results</div>
+    <div class="calculator-card-body">
+      <div id="beta-result" class="calculation-result" aria-live="polite"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  "use strict";
+
+  const root = document.querySelector(".beta-calculator");
+  if (!root) return;
+
+  const alphaInput = root.querySelector("#beta-alpha");
+  const betaInput = root.querySelector("#beta-beta");
+  const xInput = root.querySelector("#beta-x");
+  const lowerInput = root.querySelector("#beta-lower");
+  const upperInput = root.querySelector("#beta-upper");
+
+  const alphaDisplay = root.querySelector("#beta-alpha-value");
+  const betaDisplay = root.querySelector("#beta-beta-value");
+  const xDisplay = root.querySelector("#beta-x-value");
+  const lowerDisplay = root.querySelector("#beta-lower-value");
+  const upperDisplay = root.querySelector("#beta-upper-value");
+
+  const title = root.querySelector("#beta-plot-title");
+  const result = root.querySelector("#beta-result");
+  const xContainer = root.querySelector("#beta-x-container");
+  const betweenContainer = root.querySelector("#beta-between-container");
+  const canvas = root.querySelector("#beta-chart");
+  const ctx = canvas.getContext("2d");
+
+  function logGamma(z) {
+    const coefficients = [
+      676.5203681218851,
+      -1259.1392167224028,
+      771.32342877765313,
+      -176.61502916214059,
+      12.507343278686905,
+      -0.13857109526572012,
+      9.9843695780195716e-6,
+      1.5056327351493116e-7
+    ];
+
+    if (z < 0.5) {
+      return Math.log(Math.PI) -
+        Math.log(Math.sin(Math.PI * z)) -
+        logGamma(1 - z);
+    }
+
+    z -= 1;
+    let total = 0.99999999999980993;
+
+    for (let i = 0; i < coefficients.length; i++) {
+      total += coefficients[i] / (z + i + 1);
+    }
+
+    const t = z + coefficients.length - 0.5;
+
+    return 0.5 * Math.log(2 * Math.PI) +
+      (z + 0.5) * Math.log(t) - t + Math.log(total);
+  }
+
+  function betaContinuedFraction(a, b, x) {
+    const maxIterations = 200;
+    const epsilon = 3e-14;
+    const tiny = 1e-300;
+    const qab = a + b;
+    const qap = a + 1;
+    const qam = a - 1;
+
+    let c = 1;
+    let d = 1 - qab * x / qap;
+    if (Math.abs(d) < tiny) d = tiny;
+    d = 1 / d;
+    let h = d;
+
+    for (let m = 1; m <= maxIterations; m++) {
+      const m2 = 2 * m;
+      let aa = m * (b - m) * x /
+        ((qam + m2) * (a + m2));
+
+      d = 1 + aa * d;
+      if (Math.abs(d) < tiny) d = tiny;
+      c = 1 + aa / c;
+      if (Math.abs(c) < tiny) c = tiny;
+      d = 1 / d;
+      h *= d * c;
+
+      aa = -(a + m) * (qab + m) * x /
+        ((a + m2) * (qap + m2));
+
+      d = 1 + aa * d;
+      if (Math.abs(d) < tiny) d = tiny;
+      c = 1 + aa / c;
+      if (Math.abs(c) < tiny) c = tiny;
+      d = 1 / d;
+
+      const delta = d * c;
+      h *= delta;
+
+      if (Math.abs(delta - 1) < epsilon) break;
+    }
+
+    return h;
+  }
+
+  function regularizedIncompleteBeta(x, a, b) {
+    if (x <= 0) return 0;
+    if (x >= 1) return 1;
+
+    const logarithmicTerm =
+      logGamma(a + b) - logGamma(a) - logGamma(b) +
+      a * Math.log(x) + b * Math.log(1 - x);
+
+    const front = Math.exp(logarithmicTerm);
+
+    if (x < (a + 1) / (a + b + 2)) {
+      return front * betaContinuedFraction(a, b, x) / a;
+    }
+
+    return 1 - front * betaContinuedFraction(b, a, 1 - x) / b;
+  }
+
+  function betaPDF(value, alpha, beta) {
+    if (value <= 0 || value >= 1) return 0;
+
+    return Math.exp(
+      (alpha - 1) * Math.log(value) +
+      (beta - 1) * Math.log(1 - value) -
+      logGamma(alpha) - logGamma(beta) +
+      logGamma(alpha + beta)
+    );
+  }
+
+  function betaCDF(value, alpha, beta) {
+    return regularizedIncompleteBeta(value, alpha, beta);
+  }
+
+  function getProbabilityType() {
+    const selected = root.querySelector(
+      'input[name="beta-prob-type"]:checked'
+    );
+    return selected ? selected.value : "less";
+  }
+
+  function formatValue(value) {
+    return Number(value).toFixed(2);
+  }
+
+  function updateDisplay() {
+    const alpha = parseFloat(alphaInput.value);
+    const beta = parseFloat(betaInput.value);
+
+    alphaDisplay.textContent = alpha.toFixed(1);
+    betaDisplay.textContent = beta.toFixed(1);
+    xDisplay.textContent = formatValue(xInput.value);
+    lowerDisplay.textContent = formatValue(lowerInput.value);
+    upperDisplay.textContent = formatValue(upperInput.value);
+
+    title.textContent =
+      `Beta(α = ${alpha.toFixed(1)}, β = ${beta.toFixed(1)})`;
+  }
+
+  function calculateProbability() {
+    const alpha = parseFloat(alphaInput.value);
+    const beta = parseFloat(betaInput.value);
+    const x = parseFloat(xInput.value);
+    let lower = parseFloat(lowerInput.value);
+    let upper = parseFloat(upperInput.value);
+    const type = getProbabilityType();
+
+    if (upper < lower) {
+      upper = lower;
+      upperInput.value = upper;
+      upperDisplay.textContent = formatValue(upper);
+    }
+
+    let probability;
+
+    if (type === "less") {
+      probability = betaCDF(x, alpha, beta);
+      result.textContent =
+        `P(X ≤ ${formatValue(x)}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    } else if (type === "greater") {
+      probability = 1 - betaCDF(x, alpha, beta);
+      result.textContent =
+        `P(X ≥ ${formatValue(x)}) = ${probability.toFixed(4)} ` +
+        `or ${(probability * 100).toFixed(2)}%`;
+    } else {
+      probability =
+        betaCDF(upper, alpha, beta) -
+        betaCDF(lower, alpha, beta);
+
+      result.textContent =
+        `P(${formatValue(lower)} ≤ X ≤ ${formatValue(upper)}) = ` +
+        `${probability.toFixed(4)} or ` +
+        `${(probability * 100).toFixed(2)}%`;
+    }
+
+    probability = Math.max(0, Math.min(1, probability));
+
+    return { type, x, lower, upper, probability, alpha, beta };
+  }
+
+  function drawChart() {
+    const selected = calculateProbability();
+    const alpha = selected.alpha;
+    const beta = selected.beta;
+    const rect = canvas.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { left: 58, right: 20, top: 25, bottom: 50 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+    const pointCount = 700;
+    const epsilon = 0.001;
+    const points = [];
+    let maximumY = 0;
+
+    ctx.clearRect(0, 0, width, height);
+
+    for (let i = 0; i <= pointCount; i++) {
+      const value = epsilon +
+        (i / pointCount) * (1 - 2 * epsilon);
+      const density = betaPDF(value, alpha, beta);
+
+      if (Number.isFinite(density)) {
+        points.push({ value, density });
+        maximumY = Math.max(maximumY, density);
+      }
+    }
+
+    maximumY = Math.max(0.5, Math.min(25, maximumY * 1.08));
+
+    function xScale(value) {
+      return padding.left + value * chartWidth;
+    }
+
+    function yScale(value) {
+      const bounded = Math.min(value, maximumY);
+      return padding.top + chartHeight -
+        (bounded / maximumY) * chartHeight;
+    }
+
+    ctx.font = "12px Arial";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i <= 4; i++) {
+      const density = (i / 4) * maximumY;
+      const y = yScale(density);
+
+      ctx.strokeStyle = "#e5e5e5";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padding.left, y);
+      ctx.lineTo(width - padding.right, y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#555555";
+      ctx.fillText(density.toFixed(1), padding.left - 8, y);
+    }
+
+    function fillArea(start, end, colour) {
+      const boundedStart = Math.max(0, Math.min(1, start));
+      const boundedEnd = Math.max(0, Math.min(1, end));
+      if (boundedEnd <= boundedStart) return;
+
+      ctx.beginPath();
+      ctx.moveTo(xScale(boundedStart), yScale(0));
+
+      let hasPoint = false;
+
+      points.forEach(function(point) {
+        if (point.value >= boundedStart && point.value <= boundedEnd) {
+          ctx.lineTo(xScale(point.value), yScale(point.density));
+          hasPoint = true;
+        }
+      });
+
+      if (!hasPoint) return;
+
+      ctx.lineTo(xScale(boundedEnd), yScale(0));
+      ctx.closePath();
+      ctx.fillStyle = colour;
+      ctx.fill();
+    }
+
+    fillArea(0, 1, "rgba(211, 211, 211, 0.55)");
+
+    if (selected.type === "less") {
+      fillArea(0, selected.x, "rgba(63, 107, 182, 0.58)");
+    } else if (selected.type === "greater") {
+      fillArea(selected.x, 1, "rgba(63, 107, 182, 0.58)");
+    } else {
+      fillArea(selected.lower, selected.upper, "rgba(63, 107, 182, 0.58)");
+    }
+
+    ctx.beginPath();
+
+    points.forEach(function(point, index) {
+      const chartX = xScale(point.value);
+      const chartY = yScale(point.density);
+
+      if (index === 0) ctx.moveTo(chartX, chartY);
+      else ctx.lineTo(chartX, chartY);
+    });
+
+    ctx.strokeStyle = "#274f91";
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    function drawBoundary(value) {
+      if (value < 0 || value > 1) return;
+
+      const density = value === 0 || value === 1
+        ? 0
+        : betaPDF(value, alpha, beta);
+
+      ctx.save();
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = "#274f91";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(xScale(value), yScale(0));
+      ctx.lineTo(xScale(value), yScale(density));
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    if (selected.type === "between") {
+      drawBoundary(selected.lower);
+      drawBoundary(selected.upper);
+    } else {
+      drawBoundary(selected.x);
+    }
+
+    ctx.strokeStyle = "#777777";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding.left, padding.top);
+    ctx.lineTo(padding.left, padding.top + chartHeight);
+    ctx.lineTo(width - padding.right, padding.top + chartHeight);
+    ctx.stroke();
+
+    ctx.fillStyle = "#333333";
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+
+    for (let i = 0; i <= 5; i++) {
+      const value = i / 5;
+      ctx.fillText(
+        value.toFixed(1),
+        xScale(value),
+        padding.top + chartHeight + 20
+      );
+    }
+
+    ctx.font = "13px Arial";
+    ctx.fillText(
+      "value of X",
+      padding.left + chartWidth / 2,
+      height - 8
+    );
+
+    ctx.save();
+    ctx.translate(15, padding.top + chartHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.textAlign = "center";
+    ctx.fillText("probability density", 0, 0);
+    ctx.restore();
+
+    canvas.setAttribute(
+      "aria-label",
+      `Beta probability density plot with alpha ${alpha.toFixed(1)} and ` +
+      `beta ${beta.toFixed(1)}. The selected probability is ` +
+      `${selected.probability.toFixed(4)}.`
+    );
+  }
+
+  function updateVisibility() {
+    const type = getProbabilityType();
+    xContainer.hidden = type === "between";
+    betweenContainer.hidden = type !== "between";
+  }
+
+  function update() {
+    updateVisibility();
+    updateDisplay();
+    drawChart();
+  }
+
+  alphaInput.addEventListener("input", update);
+  betaInput.addEventListener("input", update);
+  xInput.addEventListener("input", update);
+
+  lowerInput.addEventListener("input", function() {
+    if (parseFloat(lowerInput.value) > parseFloat(upperInput.value)) {
+      upperInput.value = lowerInput.value;
+    }
+    update();
+  });
+
+  upperInput.addEventListener("input", function() {
+    if (parseFloat(upperInput.value) < parseFloat(lowerInput.value)) {
+      lowerInput.value = upperInput.value;
+    }
+    update();
+  });
+
+  root.querySelectorAll('input[name="beta-prob-type"]').forEach(
+    function(radio) {
+      radio.addEventListener("change", update);
+    }
+  );
+
+  let resizeTimer;
+
+  window.addEventListener("resize", function() {
+    window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(drawChart, 80);
+  });
+
+  update();
+})();
+</script>
+
+</body>
+</html>
+
 
 ```
 
@@ -644,5 +3456,7 @@ For more on probability distributions see [Overview: Probability distributions.]
 ## Version history and licensing {.unnumbered}
 
 v1.0: initial version created 08/25 by tdhc.
+
+- v1.1: deprecated shinylive apps replaced 09/26 by tdhc.
 
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
