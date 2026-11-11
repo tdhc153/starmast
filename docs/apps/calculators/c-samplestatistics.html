@@ -48,14 +48,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-3b7d9c4ba168eb520ddf55bb25793bc7.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-365d6bab852ec9a235b2fcad5c9fe113.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content="../..">
-<script src="../../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="../../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
-<link href="../../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/shinylive.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2492f432502476c73ee6ff4aef91155c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-c494f7f8f7d75a6ba64994847b441f20.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-2492f432502476c73ee6ff4aef91155c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -402,135 +397,500 @@ cookieconsent.run({
 
 <section id="sample-data-statistics-calculator" class="level2">
 <h2 class="anchored" data-anchor-id="sample-data-statistics-calculator">Sample data statistics calculator</h2>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| viewerHeight: 700
 
-library(shiny)
-library(bslib)
 
-ui &lt;- page_sidebar(
-  title = "Sample data statistics calculator",
-  sidebar = sidebar(
-    textAreaInput(
-      "data_input",
-      "Enter sample data (separated by spaces, commas, tabs, or line breaks):",
-      placeholder = "for example, 1 2 3 4 5\nor 1,2,3,4,5",
-      rows = 12
-    ),
-    actionButton(
-      "calculate",
-      "Calculate Statistics",
-      class = "btn-primary w-100",
-      style = "background-color: #3f68b6; border-color: #3f68b6;"
-    )
-  ),
-  card(
-    card_header("Sample statistics"),
-    tableOutput("stats_table")
-  )
-)
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sample Data Statistics Calculator</title>
 
-server &lt;- function(input, output, session) {
-  
-  # Parse the input data
-  parsed_data &lt;- eventReactive(input$calculate, {
-    req(input$data_input)
-    
-    # Replace commas, tabs, and newlines with spaces, then split
-    text &lt;- gsub("[,\t\n]+", " ", input$data_input)
-    values &lt;- strsplit(text, "\\s+")[[1]]
-    values &lt;- values[values != ""]  # Remove empty strings
-    
-    # Convert to numeric
-    numeric_values &lt;- suppressWarnings(as.numeric(values))
-    
-    # Remove NAs (invalid entries)
-    numeric_values &lt;- numeric_values[!is.na(numeric_values)]
-    
-    if (length(numeric_values) == 0) {
-      return(NULL)
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 1rem;
+      color: #222222;
     }
-    
-    numeric_values
-  })
-  
-  # Calculate statistics
-  output$stats_table &lt;- renderTable({
-    data &lt;- parsed_data()
-    
-    if (is.null(data)) {
-      return(data.frame(
-        Statistic = "Error",
-        Value = "No valid numeric data found"
-      ))
+
+    .sdsc-app {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    
-    # Calculate mode (most frequent value)
-    get_mode &lt;- function(x) {
-      ux &lt;- unique(x)
-      tab &lt;- tabulate(match(x, ux))
-      mode_val &lt;- ux[tab == max(tab)]
-      if (length(mode_val) == length(ux)) {
-        return("No mode")
-      } else {
-        return(paste(mode_val, collapse = ", "))
+
+    .sdsc-app .sdsc-layout {
+      display: grid;
+      grid-template-columns: minmax(300px, 1fr) minmax(0, 2fr);
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .sdsc-app .sdsc-card {
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .sdsc-app .sdsc-card-header {
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      background: #3F6BB6;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .sdsc-app .sdsc-card-body {
+      padding: 1rem;
+    }
+
+    .sdsc-app .sdsc-label {
+      display: block;
+      margin-bottom: 0.45rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .sdsc-app .sdsc-textarea {
+      width: 100%;
+      min-height: 290px;
+      padding: 0.7rem;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      color: #222222;
+      background: #ffffff;
+      font: 0.95rem/1.5 "Courier New", Courier, monospace;
+      resize: vertical;
+    }
+
+    .sdsc-app .sdsc-help {
+      margin: 0.55rem 0 0;
+      color: #555555;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .sdsc-app .sdsc-button {
+      width: 100%;
+      min-height: 44px;
+      margin-top: 1rem;
+      padding: 0.6rem 0.9rem;
+      border: 1px solid #31558f;
+      border-radius: 5px;
+      color: #ffffff;
+      background: #3F68B6;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .sdsc-app .sdsc-button:hover {
+      background: #31558f;
+    }
+
+    .sdsc-app .sdsc-error {
+      min-height: 1.4em;
+      margin-top: 0.65rem;
+      color: #b00020;
+      font-size: 0.92rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .sdsc-app .sdsc-notice {
+      min-height: 1.4em;
+      margin-top: 0.4rem;
+      color: #555555;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .sdsc-app .sdsc-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .sdsc-app .sdsc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.96rem;
+    }
+
+    .sdsc-app .sdsc-table-caption {
+      padding: 0 0 0.75rem;
+      color: #555555;
+      text-align: left;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .sdsc-app .sdsc-table th,
+    .sdsc-app .sdsc-table td {
+      padding: 0.72rem 0.8rem;
+      border: 1px solid #d8d8d8;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .sdsc-app .sdsc-table th {
+      color: #ffffff;
+      background: #3F6BB6;
+      font-weight: 700;
+    }
+
+    .sdsc-app .sdsc-table tbody tr:nth-child(even) {
+      background: #f4f7fc;
+    }
+
+    .sdsc-app .sdsc-table tbody tr:hover {
+      background: #eaf0fa;
+    }
+
+    .sdsc-app .sdsc-table td:last-child {
+      color: #203f73;
+      font-family: "Courier New", Courier, monospace;
+      font-weight: 700;
+    }
+
+    .sdsc-app .sdsc-empty-message {
+      padding: 2rem 1rem;
+      color: #555555;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .sdsc-app .sdsc-textarea:focus-visible,
+    .sdsc-app .sdsc-button:focus-visible {
+      outline: 3px solid rgba(63, 104, 182, 0.4);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 800px) {
+      .sdsc-app .sdsc-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sdsc-app .sdsc-textarea {
+        min-height: 230px;
       }
     }
-    
-    # Calculate all statistics
-    n &lt;- length(data)
-    min_val &lt;- min(data)
-    max_val &lt;- max(data)
-    mean_val &lt;- mean(data)
-    mode_val &lt;- get_mode(data)
-    median_val &lt;- median(data)
-    range_val &lt;- max_val - min_val
-    q1 &lt;- quantile(data, 0.25, names = FALSE)
-    q3 &lt;- quantile(data, 0.75, names = FALSE)
-    iqr_val &lt;- IQR(data)
-    var_val &lt;- var(data)
-    sd_val &lt;- sd(data)
-    
-    # Create results data frame
-    data.frame(
-      Statistic = c(
-        "Sample size",
-        "Minimum",
-        "Maximum",
-        "Mean",
-        "Mode",
-        "Median",
-        "Range",
-        "Lower quartile (Q1)",
-        "Upper quartile (Q3)",
-        "Interquartile range (IQR)",
-        "Sample variance",
-        "Sample standard deviation"
-      ),
-      Value = c(
-        as.character(n),
-        format(min_val, digits = 6),
-        format(max_val, digits = 6),
-        format(mean_val, digits = 6),
-        mode_val,
-        format(median_val, digits = 6),
-        format(range_val, digits = 6),
-        format(q1, digits = 6),
-        format(q3, digits = 6),
-        format(iqr_val, digits = 6),
-        format(var_val, digits = 6),
-        format(sd_val, digits = 6)
-      ),
-      stringsAsFactors = FALSE
-    )
-  }, striped = TRUE, hover = TRUE, bordered = TRUE, width = "100%")
-}
 
-shinyApp(ui = ui, server = server)
-</code></pre>
+    @media (max-width: 480px) {
+      body { padding: 0.5rem; }
+
+      .sdsc-app .sdsc-card-body {
+        padding: 0.9rem;
+      }
+
+      .sdsc-app .sdsc-table th,
+      .sdsc-app .sdsc-table td {
+        padding: 0.62rem;
+      }
+    }
+  </style>
+
+
+
+
+<main class="sdsc-app">
+  <div class="sdsc-layout">
+
+    <section class="sdsc-card" aria-labelledby="sdsc-input-heading">
+      <div class="sdsc-card-header" id="sdsc-input-heading">
+        Input data
+      </div>
+
+      <div class="sdsc-card-body">
+        <label class="sdsc-label" for="sdsc-data-input">
+          Enter sample data separated by spaces, commas, tabs, or line breaks:
+        </label>
+
+        <textarea class="sdsc-textarea" id="sdsc-data-input" placeholder="For example:
+1 2 3 4 5
+or 1,2,3,4,5" aria-describedby="sdsc-input-help sdsc-error sdsc-notice">1 2 3 4 5</textarea>
+
+        <p class="sdsc-help" id="sdsc-input-help">
+          Invalid entries are ignored. Sample variance and sample standard
+          deviation require at least two valid observations.
+        </p>
+
+        <button class="sdsc-button" id="sdsc-calculate" type="button">
+          Calculate statistics
+        </button>
+
+        <div class="sdsc-error" id="sdsc-error" role="alert" aria-live="assertive">
+        </div>
+
+        <div class="sdsc-notice" id="sdsc-notice" role="status" aria-live="polite">
+        </div>
+      </div>
+    </section>
+
+    <section class="sdsc-card" aria-labelledby="sdsc-results-heading">
+      <div class="sdsc-card-header" id="sdsc-results-heading">
+        Sample statistics
+      </div>
+
+      <div class="sdsc-card-body">
+        <div class="sdsc-table-wrapper">
+          
+<div id="sdsc-stats-table" class="sdsc-table quarto-float quarto-figure quarto-figure-center anchored" data-quarto-postprocess="true">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="sdsc-stats-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Statistics for the valid numerical observations.
+</figcaption>
+<div aria-describedby="sdsc-stats-table-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table id="sdsc-stats-table" class="sdsc-table caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" scope="col">Statistic</th>
+<th data-quarto-table-cell-role="th" scope="col">Value</th>
+</tr>
+</thead>
+<tbody id="sdsc-stats-body">
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+
+
+          <div class="sdsc-empty-message" id="sdsc-empty-message" hidden="">
+            Enter sample data and select Calculate statistics.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+(function() {
+  "use strict";
+
+  const sdscRoot = document.querySelector(".sdsc-app");
+  if (!sdscRoot) return;
+
+  const sdscDataInput = sdscRoot.querySelector("#sdsc-data-input");
+  const sdscCalculateButton = sdscRoot.querySelector("#sdsc-calculate");
+  const sdscError = sdscRoot.querySelector("#sdsc-error");
+  const sdscNotice = sdscRoot.querySelector("#sdsc-notice");
+  const sdscTable = sdscRoot.querySelector("#sdsc-stats-table");
+  const sdscTableCaption = sdscRoot.querySelector("#sdsc-table-caption");
+  const sdscStatsBody = sdscRoot.querySelector("#sdsc-stats-body");
+  const sdscEmptyMessage = sdscRoot.querySelector("#sdsc-empty-message");
+
+  function sdscParseInput(text) {
+    const sdscTokens = text
+      .trim()
+      .split(/[,\s\t\r\n]+/)
+      .filter(Boolean);
+
+    const sdscValues = [];
+    const sdscInvalidTokens = [];
+
+    sdscTokens.forEach(function(sdscToken) {
+      const sdscValue = Number(sdscToken);
+
+      if (Number.isFinite(sdscValue)) {
+        sdscValues.push(sdscValue);
+      } else {
+        sdscInvalidTokens.push(sdscToken);
+      }
+    });
+
+    return {
+      values: sdscValues,
+      invalidTokens: sdscInvalidTokens,
+      tokenCount: sdscTokens.length
+    };
+  }
+
+  /* Matches R's default quantile method, type = 7. */
+  function sdscQuantileType7(sdscSortedValues, sdscProbability) {
+    const sdscN = sdscSortedValues.length;
+
+    if (sdscN === 1) return sdscSortedValues[0];
+
+    const sdscIndex = (sdscN - 1) * sdscProbability;
+    const sdscLowerIndex = Math.floor(sdscIndex);
+    const sdscUpperIndex = Math.ceil(sdscIndex);
+    const sdscWeight = sdscIndex - sdscLowerIndex;
+
+    if (sdscLowerIndex === sdscUpperIndex) {
+      return sdscSortedValues[sdscLowerIndex];
+    }
+
+    return sdscSortedValues[sdscLowerIndex] * (1 - sdscWeight) +
+      sdscSortedValues[sdscUpperIndex] * sdscWeight;
+  }
+
+  function sdscMedian(sdscSortedValues) {
+    return sdscQuantileType7(sdscSortedValues, 0.5);
+  }
+
+  function sdscMode(sdscValues) {
+    const sdscCounts = new Map();
+    const sdscOrder = [];
+
+    sdscValues.forEach(function(sdscValue) {
+      const sdscKey = Object.is(sdscValue, -0) ? 0 : sdscValue;
+
+      if (!sdscCounts.has(sdscKey)) {
+        sdscCounts.set(sdscKey, 0);
+        sdscOrder.push(sdscKey);
+      }
+
+      sdscCounts.set(sdscKey, sdscCounts.get(sdscKey) + 1);
+    });
+
+    const sdscMaximumFrequency = Math.max(...sdscCounts.values());
+
+    if (sdscMaximumFrequency === 1) {
+      return "No mode";
+    }
+
+    return sdscOrder
+      .filter(function(sdscValue) {
+        return sdscCounts.get(sdscValue) === sdscMaximumFrequency;
+      })
+      .map(sdscFormatNumber)
+      .join(", ");
+  }
+
+  function sdscFormatNumber(sdscValue) {
+    if (!Number.isFinite(sdscValue)) return "Not defined";
+
+    if (Math.abs(sdscValue) >= 1e9 ||
+        (Math.abs(sdscValue) > 0 && Math.abs(sdscValue) < 1e-6)) {
+      return sdscValue.toExponential(6);
+    }
+
+    return Number(sdscValue.toPrecision(6)).toString();
+  }
+
+  function sdscCalculateStatistics(sdscValues) {
+    const sdscSortedValues = [...sdscValues].sort(function(a, b) {
+      return a - b;
+    });
+
+    const sdscN = sdscValues.length;
+    const sdscMinimum = sdscSortedValues[0];
+    const sdscMaximum = sdscSortedValues[sdscN - 1];
+    const sdscMean = sdscValues.reduce(function(sdscTotal, sdscValue) {
+      return sdscTotal + sdscValue;
+    }, 0) / sdscN;
+    const sdscQ1 = sdscQuantileType7(sdscSortedValues, 0.25);
+    const sdscQ3 = sdscQuantileType7(sdscSortedValues, 0.75);
+
+    let sdscVariance = NaN;
+
+    if (sdscN >= 2) {
+      const sdscSumSquaredDeviations = sdscValues.reduce(
+        function(sdscTotal, sdscValue) {
+          return sdscTotal + Math.pow(sdscValue - sdscMean, 2);
+        },
+        0
+      );
+
+      sdscVariance = sdscSumSquaredDeviations / (sdscN - 1);
+    }
+
+    return [
+      ["Sample size", String(sdscN)],
+      ["Minimum", sdscFormatNumber(sdscMinimum)],
+      ["Maximum", sdscFormatNumber(sdscMaximum)],
+      ["Mean", sdscFormatNumber(sdscMean)],
+      ["Mode", sdscMode(sdscValues)],
+      ["Median", sdscFormatNumber(sdscMedian(sdscSortedValues))],
+      ["Range", sdscFormatNumber(sdscMaximum - sdscMinimum)],
+      ["Lower quartile (Q1)", sdscFormatNumber(sdscQ1)],
+      ["Upper quartile (Q3)", sdscFormatNumber(sdscQ3)],
+      ["Interquartile range (IQR)", sdscFormatNumber(sdscQ3 - sdscQ1)],
+      ["Sample variance", sdscFormatNumber(sdscVariance)],
+      ["Sample standard deviation", sdscFormatNumber(Math.sqrt(sdscVariance))]
+    ];
+  }
+
+  function sdscRenderRows(sdscRows) {
+    sdscStatsBody.innerHTML = "";
+
+    sdscRows.forEach(function(sdscRow) {
+      const sdscTableRow = document.createElement("tr");
+      const sdscStatisticCell = document.createElement("td");
+      const sdscValueCell = document.createElement("td");
+
+      sdscStatisticCell.textContent = sdscRow[0];
+      sdscValueCell.textContent = sdscRow[1];
+
+      sdscTableRow.appendChild(sdscStatisticCell);
+      sdscTableRow.appendChild(sdscValueCell);
+      sdscStatsBody.appendChild(sdscTableRow);
+    });
+  }
+
+  function sdscCalculate() {
+    const sdscParsed = sdscParseInput(sdscDataInput.value);
+
+    if (sdscParsed.values.length === 0) {
+      sdscError.textContent = "No valid numerical data were found.";
+      sdscNotice.textContent = "";
+      sdscDataInput.setAttribute("aria-invalid", "true");
+      sdscStatsBody.innerHTML = "";
+      sdscTable.hidden = true;
+      sdscEmptyMessage.hidden = false;
+      sdscEmptyMessage.textContent = "No statistics are available.";
+      return;
+    }
+
+    sdscError.textContent = "";
+    sdscDataInput.setAttribute("aria-invalid", "false");
+
+    if (sdscParsed.invalidTokens.length > 0) {
+      const sdscPreview = sdscParsed.invalidTokens.slice(0, 5).join(", ");
+      const sdscAdditional = sdscParsed.invalidTokens.length > 5
+        ? ` and ${sdscParsed.invalidTokens.length - 5} more`
+        : "";
+
+      sdscNotice.textContent =
+        `${sdscParsed.invalidTokens.length} invalid entr` +
+        `${sdscParsed.invalidTokens.length === 1 ? "y was" : "ies were"} ` +
+        `ignored: ${sdscPreview}${sdscAdditional}.`;
+    } else {
+      sdscNotice.textContent =
+        `${sdscParsed.values.length} valid observation` +
+        `${sdscParsed.values.length === 1 ? "" : "s"} analysed.`;
+    }
+
+    const sdscRows = sdscCalculateStatistics(sdscParsed.values);
+    sdscRenderRows(sdscRows);
+
+    sdscTableCaption.textContent =
+      `Statistics for ${sdscParsed.values.length} valid numerical ` +
+      `observation${sdscParsed.values.length === 1 ? "" : "s"}.`;
+
+    sdscTable.hidden = false;
+    sdscEmptyMessage.hidden = true;
+  }
+
+  sdscCalculateButton.addEventListener("click", sdscCalculate);
+
+  sdscDataInput.addEventListener("keydown", function(sdscEvent) {
+    if ((sdscEvent.ctrlKey || sdscEvent.metaKey) && sdscEvent.key === "Enter") {
+      sdscEvent.preventDefault();
+      sdscCalculate();
+    }
+  });
+
+  sdscCalculate();
+})();
+</script>
+
+
+
 </section>
 <section id="version-history" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>

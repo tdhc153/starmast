@@ -14,172 +14,141 @@ library("webexercises")
 
 ## Simple linear regression calculator
 
-```{shinylive-r}
-#| standalone: true
-#| viewerHeight: 1400
+```{=html}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Linear Regression Calculator</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 1rem; background: #f5f8ff; color: #222 }
+    .slrc-app { width: 100%; max-width: 1200px; margin: 0 auto; }
+    .slrc-app .slrc-card { margin-bottom: 1rem; overflow: hidden; background: #fff; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+    .slrc-app .slrc-card-header { padding: .75rem 1rem; color: #fff; background: #3F6BB6; font-weight: 700; line-height: 1.4; }
+    .slrc-app .slrc-card-body { padding: 1rem; }
+    .slrc-app .slrc-two-column { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; }
+    .slrc-app .slrc-input-plot-row { display: grid; grid-template-columns: minmax(300px, 1fr) minmax(0, 2fr); gap: 1rem; align-items: start; }
+    .slrc-app .slrc-group { margin-bottom: 1rem; }
+    .slrc-app label { display: block; margin-bottom: .4rem; font-weight: 600; }
+    .slrc-app input[type="text"], .slrc-app textarea { width: 100%; padding: .6rem .7rem; border: 1px solid #ccc; border-radius: 5px; background: #fff; color: #222; font: inherit; }
+    .slrc-app textarea { min-height: 190px; resize: vertical; line-height: 1.45; font-family: "Courier New", monospace; }
+    .slrc-app .slrc-help { margin: 0 0 .75rem; color: #555; font-size: .93rem; line-height: 1.5; }
+    .slrc-app .slrc-button { min-height: 42px; padding: .55rem .9rem; border: 1px solid #31558f; border-radius: 5px; color: #fff; background: #3F6BB6; font: inherit; font-weight: 700; cursor: pointer; }
+    .slrc-app .slrc-button:hover { background: #31558f; }
+    .slrc-app .slrc-error { min-height: 1.4em; margin-top: .6rem; color: #b00020; font-size: .92rem; font-weight: 600; }
+    .slrc-app .slrc-results-grid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: .7rem; }
+    .slrc-app .slrc-result-item { padding: .75rem; border: 1px solid #d9e2f2; border-radius: 6px; background: #f4f7fc; text-align: center; }
+    .slrc-app .slrc-result-label { display: block; margin-bottom: .25rem; color: #555; font-size: .88rem; }
+    .slrc-app .slrc-result-value { color: #203f73; font-weight: 700; overflow-wrap: anywhere; }
+    .slrc-app .slrc-equation { grid-column: span 5; padding: .85rem; border: 1px solid #d9e2f2; border-radius: 6px; background: #f4f7fc; color: #203f73; text-align: center; font-family: "Courier New", monospace; font-size: 1.05rem; font-weight: 700; }
+    .slrc-app .slrc-plot-title { margin-bottom: .75rem; text-align: center; font-size: 1.1rem; font-weight: 600; }
+    .slrc-app .slrc-chart-wrap { position: relative; width: 100%; height: 410px; }
+    .slrc-app canvas { width: 100% !important; height: 100% !important; }
+    .slrc-app .slrc-tooltip { position: absolute; z-index: 4; display: none; padding: .5rem .65rem; border: 1px solid #777; border-radius: 5px; background: rgba(255,255,255,.97); box-shadow: 0 2px 6px rgba(0,0,0,.18); font-size: .88rem; line-height: 1.45; pointer-events: none; }
+    .slrc-app .slrc-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: .65rem; font-size: .9rem; }
+    .slrc-app .slrc-legend-item { display: inline-flex; align-items: center; gap: .4rem; }
+    .slrc-app .slrc-dot { width: 11px; height: 11px; border-radius: 50%; background: #3F68B6; }
+    .slrc-app .slrc-line { width: 25px; height: 3px; background: #db4315; }
+    .slrc-app .slrc-band { width: 25px; height: 12px; border: 1px solid rgba(219,67,21,.45); background: rgba(219,67,21,.2); }
+    .slrc-app .slrc-description { margin: .7rem 0 0; color: #555; font-size: .92rem; line-height: 1.5; }
+    .slrc-app input:focus-visible, .slrc-app textarea:focus-visible, .slrc-app button:focus-visible, .slrc-app canvas:focus-visible { outline: 3px solid rgba(63,104,182,.4); outline-offset: 2px; }
+    @media (max-width: 900px) { .slrc-app .slrc-input-plot-row { grid-template-columns: 1fr; } .slrc-app .slrc-chart-wrap { height: 350px; } .slrc-app .slrc-results-grid { grid-template-columns: repeat(2,1fr); } .slrc-app .slrc-equation { grid-column: span 2; } }
+    @media (max-width: 600px) { body { padding: .5rem; } .slrc-app .slrc-two-column, .slrc-app .slrc-results-grid { grid-template-columns: 1fr; } .slrc-app .slrc-equation { grid-column: auto; } .slrc-app .slrc-chart-wrap { height: 300px; } }
+  </style>
+</head>
+<body>
+<main class="slrc-app">
+  <section class="slrc-card" aria-labelledby="slrc-variable-heading">
+    <div class="slrc-card-header" id="slrc-variable-heading">Variable names</div>
+    <div class="slrc-card-body slrc-two-column">
+      <div class="slrc-group"><label for="slrc-x-name">X variable name:</label><input id="slrc-x-name" type="text" value="X Variable" placeholder="Enter X variable name"></div>
+      <div class="slrc-group"><label for="slrc-y-name">Y variable name:</label><input id="slrc-y-name" type="text" value="Y Variable" placeholder="Enter Y variable name"></div>
+    </div>
+  </section>
 
-library(shiny)
-library(bslib)
-library(ggplot2)
+  <div class="slrc-input-plot-row">
+    <section class="slrc-card" aria-labelledby="slrc-input-heading">
+      <div class="slrc-card-header" id="slrc-input-heading">Input data</div>
+      <div class="slrc-card-body">
+        <p class="slrc-help">Enter one x and y pair per line. Separate values with a space, comma, or tab.</p>
+        <label class="slrc-group" for="slrc-data-input">Data pairs:</label>
+        <textarea id="slrc-data-input" placeholder="For example:
+1 2
+2 4
+3 5
+4 4
+5 5" aria-describedby="slrc-input-help slrc-error">1 2
+2 4
+3 5
+4 4
+5 5</textarea>
+        <p class="slrc-help" id="slrc-input-help">At least two valid pairs are required, and the x values must not all be identical.</p>
+        <button class="slrc-button" id="slrc-calculate" type="button">Calculate simple linear regression</button>
+        <div class="slrc-error" id="slrc-error" role="alert" aria-live="assertive"></div>
+      </div>
+    </section>
 
-ui <- page_fillable(
-  title = "Simple linear regression calculator",
-  
-  card(
-    card_header("Variable names"),
-    height = "175px",
-    layout_columns(
-      col_widths = c(6, 6),
-      textInput("x_name", "X Variable Name:", value = "X Variable", placeholder = "Enter X variable name"),
-      textInput("y_name", "Y Variable Name:", value = "Y Variable", placeholder = "Enter Y variable name")
-    )
-  ),
-  
-  card(
-    card_header("Input data"),
-    height = "375px",
-    p("Enter x and y values (one pair per line, separated by space, comma, or tab):"),
-    textAreaInput(
-      "data_input",
-      NULL,
-      placeholder = "for example,\n1 2\n2 4\n3 5\n4 4\n5 5",
-      height = "150px",
-      width = "100%"
-    ),
-    actionButton("calculate", "Calculate simple linear regression", class = "btn-primary")
-  ),
-  
-  card(
-    card_header("Regression results"),
-    height = "350px",
-    verbatimTextOutput("regression_summary")
-  ),
-  
-  card(
-    card_header("Regression plot"),
-    height = "500px",
-    plotOutput("regression_plot", height = "400px")
-  )
-)
+    <section class="slrc-card" aria-labelledby="slrc-plot-heading">
+      <div class="slrc-card-header" id="slrc-plot-heading">Regression plot</div>
+      <div class="slrc-card-body">
+        <div class="slrc-plot-title">Simple linear regression</div>
+        <div class="slrc-chart-wrap">
+          <canvas id="slrc-chart" tabindex="0" role="img" aria-describedby="slrc-chart-description"></canvas>
+          <div class="slrc-tooltip" id="slrc-tooltip" role="tooltip"></div>
+        </div>
+        <div class="slrc-legend" aria-hidden="true">
+          <span class="slrc-legend-item"><span class="slrc-dot"></span>Observed data</span>
+          <span class="slrc-legend-item"><span class="slrc-line"></span>Regression line</span>
+          <span class="slrc-legend-item"><span class="slrc-band"></span>Approx. 95% mean-response band</span>
+        </div>
+        <p class="slrc-description" id="slrc-chart-description"></p>
+      </div>
+    </section>
+  </div>
 
-server <- function(input, output, session) {
-  
-  # Reactive expression to parse and validate data
-  parsed_data <- reactive({
-    req(input$calculate)
-    
-    # Get input text
-    text <- input$data_input
-    
-    if (text == "" || is.null(text)) {
-      return(NULL)
-    }
-    
-    # Split by newlines
-    lines <- strsplit(text, "\n")[[1]]
-    lines <- lines[lines != ""]  # Remove empty lines
-    
-    # Parse each line (split by space, comma, or tab)
-    data_list <- lapply(lines, function(line) {
-      # Split by space, comma, or tab
-      parts <- strsplit(line, "[,\\s\t]+")[[1]]
-      parts <- parts[parts != ""]  # Remove empty strings
-      
-      if (length(parts) >= 2) {
-        return(c(as.numeric(parts[1]), as.numeric(parts[2])))
-      } else {
-        return(NULL)
-      }
-    })
-    
-    # Remove NULL entries
-    data_list <- data_list[!sapply(data_list, is.null)]
-    
-    if (length(data_list) < 2) {
-      return(NULL)
-    }
-    
-    # Convert to data frame
-    df <- data.frame(
-      x = sapply(data_list, `[`, 1),
-      y = sapply(data_list, `[`, 2)
-    )
-    
-    # Remove rows with NA values
-    df <- na.omit(df)
-    
-    if (nrow(df) < 2) {
-      return(NULL)
-    }
-    
-    return(df)
-  })
-  
-  # Reactive expression to fit linear model
-  regression_model <- reactive({
-    df <- parsed_data()
-    req(df)
-    
-    lm(y ~ x, data = df)
-  })
-  
-  # Output: Regression summary
-  output$regression_summary <- renderPrint({
-    model <- regression_model()
-    req(model)
-    
-    coefs <- coef(model)
-    r_squared <- summary(model)$r.squared
-    x_name <- input$x_name
-    y_name <- input$y_name
-    
-    cat("Simple linear regression results\n")
-    cat("=========================\n\n")
-    cat(sprintf("Equation: %s = %.4f + %.4f * %s\n\n", y_name, coefs[1], coefs[2], x_name))
-    cat(sprintf("Intercept (alpha): %.4f\n", coefs[1]))
-    cat(sprintf("Gradient (beta): %.4f\n", coefs[2]))
-    cat(sprintf("R-squared: %.4f\n\n", r_squared))
-    cat("Sample size:", nrow(parsed_data()), "\n")
-  })
-  
-  # Output: Regression plot
-  output$regression_plot <- renderPlot({
-    df <- parsed_data()
-    model <- regression_model()
-    req(df, model)
-    
-    x_name <- input$x_name
-    y_name <- input$y_name
-    
-    # Get predictions for the regression line
-    df$predicted <- predict(model)
-    df$se <- predict(model, se.fit = TRUE)$se.fit
-    
-    ggplot(df, aes(x = x, y = y)) +
-      geom_point(size = 3, color = "#3f68b6") +
-      geom_line(aes(y = predicted), color = "#db4315", linewidth = 1) +
-      geom_ribbon(aes(ymin = predicted - 1.96 * se, ymax = predicted + 1.96 * se), 
-                  fill = "#db4315", alpha = 0.2) +
-      labs(
-        title = "Simple linear regression",
-        x = x_name,
-        y = y_name
-      ) +
-      theme_minimal(base_size = 14) +
-      theme(
-        plot.title = element_text(hjust = 0.5, face = "bold"),
-        panel.grid.minor = element_blank()
-      )
-  })
-}
-
-shinyApp(ui, server)
+  <section class="slrc-card" aria-labelledby="slrc-results-heading">
+    <div class="slrc-card-header" id="slrc-results-heading">Regression results</div>
+    <div class="slrc-card-body">
+      <div class="slrc-results-grid" role="status" aria-live="polite" aria-atomic="true">
+        <div class="slrc-equation" id="slrc-equation">Enter data and calculate the model.</div>
+        <div class="slrc-result-item"><span class="slrc-result-label">Intercept (α)</span><span class="slrc-result-value" id="slrc-intercept">—</span></div>
+        <div class="slrc-result-item"><span class="slrc-result-label">Gradient (β)</span><span class="slrc-result-value" id="slrc-slope">—</span></div>
+        <div class="slrc-result-item"><span class="slrc-result-label">R-squared</span><span class="slrc-result-value" id="slrc-r-squared">—</span></div>
+        <div class="slrc-result-item"><span class="slrc-result-label">Residual standard error</span><span class="slrc-result-value" id="slrc-rse">—</span></div>
+        <div class="slrc-result-item"><span class="slrc-result-label">Sample size</span><span class="slrc-result-value" id="slrc-sample-size">—</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  "use strict";
+  const app=document.querySelector('.slrc-app'); if(!app)return;
+  const xNameInput=app.querySelector('#slrc-x-name'),yNameInput=app.querySelector('#slrc-y-name'),dataInput=app.querySelector('#slrc-data-input'),calculateButton=app.querySelector('#slrc-calculate'),error=app.querySelector('#slrc-error');
+  const equation=app.querySelector('#slrc-equation'),interceptOut=app.querySelector('#slrc-intercept'),slopeOut=app.querySelector('#slrc-slope'),r2Out=app.querySelector('#slrc-r-squared'),rseOut=app.querySelector('#slrc-rse'),nOut=app.querySelector('#slrc-sample-size');
+  const canvas=app.querySelector('#slrc-chart'),tooltip=app.querySelector('#slrc-tooltip'),description=app.querySelector('#slrc-chart-description'),ctx=canvas.getContext('2d');
+  let current=null,plotted=[],focusIndex=-1;
+  function safeName(value,fallback){const text=value.trim();return text||fallback}
+  function parseData(){const lines=dataInput.value.split(/\r?\n/),data=[],issues=[];lines.forEach((line,index)=>{const trimmed=line.trim();if(!trimmed)return;const parts=trimmed.split(/[,\s\t]+/).filter(Boolean);if(parts.length<2){issues.push(`Line ${index+1} does not contain two values.`);return}const x=Number(parts[0]),y=Number(parts[1]);if(!Number.isFinite(x)||!Number.isFinite(y)){issues.push(`Line ${index+1} contains a non-numerical value.`);return}data.push({x,y,row:index+1})});if(data.length<2)issues.push('Enter at least two valid data pairs.');if(data.length>=2&&Math.max(...data.map(d=>d.x))===Math.min(...data.map(d=>d.x)))issues.push('The x values must not all be identical.');if(data.length>500)issues.push('Please use no more than 500 data pairs.');return{data,issues}}
+  function fit(data){const n=data.length,meanX=data.reduce((s,d)=>s+d.x,0)/n,meanY=data.reduce((s,d)=>s+d.y,0)/n,sxx=data.reduce((s,d)=>s+(d.x-meanX)**2,0),sxy=data.reduce((s,d)=>s+(d.x-meanX)*(d.y-meanY),0),slope=sxy/sxx,intercept=meanY-slope*meanX;let sse=0,sst=0;data.forEach(d=>{d.predicted=intercept+slope*d.x;d.residual=d.y-d.predicted;sse+=d.residual**2;sst+=(d.y-meanY)**2});const r2=sst===0?(sse===0?1:0):1-sse/sst,rse=n>2?Math.sqrt(sse/(n-2)):NaN;return{n,meanX,meanY,sxx,slope,intercept,sse,sst,r2,rse}}
+  function bandAt(x,model){const predicted=model.intercept+model.slope*x;if(model.n<=2||!Number.isFinite(model.rse))return{predicted,lower:predicted,upper:predicted};const se=model.rse*Math.sqrt(1/model.n+(x-model.meanX)**2/model.sxx),margin=1.96*se;return{predicted,lower:predicted-margin,upper:predicted+margin}}
+  function draw(){if(!current)return;const {data,model}=current,r=canvas.getBoundingClientRect();if(!r.width||!r.height)return;const dpr=devicePixelRatio||1;canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);const w=r.width,h=r.height,p={l:70,r:24,t:22,b:58},cw=w-p.l-p.r,ch=h-p.t-p.b;let xmin=Math.min(...data.map(d=>d.x)),xmax=Math.max(...data.map(d=>d.x));let xpad=(xmax-xmin)*.08||1;xmin-=xpad;xmax+=xpad;const samples=160,curve=[];for(let i=0;i<=samples;i++){const x=xmin+i/samples*(xmax-xmin);curve.push({x,...bandAt(x,model)})}let ymin=Math.min(...data.map(d=>d.y),...curve.map(d=>d.lower)),ymax=Math.max(...data.map(d=>d.y),...curve.map(d=>d.upper));let ypad=(ymax-ymin)*.1||1;ymin-=ypad;ymax+=ypad;const xs=x=>p.l+(x-xmin)/(xmax-xmin)*cw,ys=y=>p.t+ch-(y-ymin)/(ymax-ymin)*ch;ctx.clearRect(0,0,w,h);ctx.font='12px Arial';ctx.textBaseline='middle';ctx.textAlign='right';for(let i=0;i<=5;i++){const y=ymin+i/5*(ymax-ymin),py=ys(y);ctx.strokeStyle='#e5e5e5';ctx.beginPath();ctx.moveTo(p.l,py);ctx.lineTo(w-p.r,py);ctx.stroke();ctx.fillStyle='#555';ctx.fillText(y.toFixed(2),p.l-8,py)}ctx.textAlign='center';ctx.textBaseline='alphabetic';for(let i=0;i<=6;i++){const x=xmin+i/6*(xmax-xmin),px=xs(x);ctx.strokeStyle='#eee';ctx.beginPath();ctx.moveTo(px,p.t);ctx.lineTo(px,p.t+ch);ctx.stroke();ctx.fillStyle='#333';ctx.fillText(x.toFixed(2),px,p.t+ch+20)}ctx.save();ctx.beginPath();ctx.rect(p.l,p.t,cw,ch);ctx.clip();ctx.beginPath();curve.forEach((d,i)=>i?ctx.lineTo(xs(d.x),ys(d.upper)):ctx.moveTo(xs(d.x),ys(d.upper)));for(let i=curve.length-1;i>=0;i--)ctx.lineTo(xs(curve[i].x),ys(curve[i].lower));ctx.closePath();ctx.fillStyle='rgba(219,67,21,.20)';ctx.fill();ctx.beginPath();curve.forEach((d,i)=>i?ctx.lineTo(xs(d.x),ys(d.predicted)):ctx.moveTo(xs(d.x),ys(d.predicted)));ctx.strokeStyle='#db4315';ctx.lineWidth=2.5;ctx.stroke();plotted=data.map((d,i)=>({...d,index:i,px:xs(d.x),py:ys(d.y)}));plotted.forEach((d,i)=>{ctx.beginPath();ctx.arc(d.px,d.py,i===focusIndex?7:5,0,Math.PI*2);ctx.fillStyle='#3F68B6';ctx.fill();ctx.strokeStyle=i===focusIndex?'#111':'#274f91';ctx.lineWidth=i===focusIndex?2:1;ctx.stroke()});ctx.restore();ctx.strokeStyle='#777';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p.l,p.t);ctx.lineTo(p.l,p.t+ch);ctx.lineTo(w-p.r,p.t+ch);ctx.stroke();ctx.fillStyle='#333';ctx.font='13px Arial';ctx.textAlign='center';ctx.fillText(safeName(xNameInput.value,'X Variable'),p.l+cw/2,h-8);ctx.save();ctx.translate(16,p.t+ch/2);ctx.rotate(-Math.PI/2);ctx.fillText(safeName(yNameInput.value,'Y Variable'),0,0);ctx.restore();const text=`Scatter plot of ${model.n} observations. The fitted regression equation has intercept ${model.intercept.toFixed(4)}, gradient ${model.slope.toFixed(4)}, and R-squared ${model.r2.toFixed(4)}. The shaded ribbon is an approximate 95 percent confidence band for the mean response.`;canvas.setAttribute('aria-label',text);description.textContent=text}
+  function showPoint(index){focusIndex=index;const d=plotted[index],xName=safeName(xNameInput.value,'X Variable'),yName=safeName(yNameInput.value,'Y Variable');tooltip.innerHTML=`<strong>Observation ${index+1}</strong><br>${xName}: ${d.x.toFixed(4)}<br>${yName}: ${d.y.toFixed(4)}<br>Predicted: ${d.predicted.toFixed(4)}`;let left=d.px+12,top=d.py-92;if(left+190>canvas.clientWidth)left=d.px-200;if(top<0)top=d.py+12;tooltip.style.left=left+'px';tooltip.style.top=top+'px';tooltip.style.display='block';canvas.setAttribute('aria-label',`Observation ${index+1} of ${plotted.length}. ${xName} ${d.x.toFixed(4)}, ${yName} ${d.y.toFixed(4)}, predicted ${d.predicted.toFixed(4)}. Use left and right arrow keys.`);draw()}
+  function calculate(){const parsed=parseData();if(parsed.issues.length){error.textContent=parsed.issues.join(' ');dataInput.setAttribute('aria-invalid','true');current=null;equation.textContent='Correct the input data to calculate the model.';[interceptOut,slopeOut,r2Out,rseOut,nOut].forEach(o=>o.textContent='—');ctx.clearRect(0,0,canvas.width,canvas.height);description.textContent='The plot is unavailable because the input data are invalid.';return}error.textContent='';dataInput.setAttribute('aria-invalid','false');const model=fit(parsed.data),xName=safeName(xNameInput.value,'X Variable'),yName=safeName(yNameInput.value,'Y Variable'),sign=model.slope>=0?'+':'−';current={data:parsed.data,model};equation.textContent=`${yName} = ${model.intercept.toFixed(4)} ${sign} ${Math.abs(model.slope).toFixed(4)} × ${xName}`;interceptOut.textContent=model.intercept.toFixed(4);slopeOut.textContent=model.slope.toFixed(4);r2Out.textContent=model.r2.toFixed(4);rseOut.textContent=Number.isFinite(model.rse)?model.rse.toFixed(4):'Not defined (n ≤ 2)';nOut.textContent=model.n;focusIndex=-1;tooltip.style.display='none';draw()}
+  calculateButton.addEventListener('click',calculate);[xNameInput,yNameInput].forEach(i=>i.addEventListener('input',()=>{if(current)calculate()}));canvas.addEventListener('mousemove',event=>{if(!current)return;const r=canvas.getBoundingClientRect(),mx=event.clientX-r.left,my=event.clientY-r.top;let best=-1,distance=12;plotted.forEach((d,i)=>{const v=Math.hypot(mx-d.px,my-d.py);if(v<distance){distance=v;best=i}});if(best>=0)showPoint(best);else if(document.activeElement!==canvas){tooltip.style.display='none';focusIndex=-1;draw()}});canvas.addEventListener('mouseleave',()=>{if(document.activeElement!==canvas){tooltip.style.display='none';focusIndex=-1;draw()}});canvas.addEventListener('focus',()=>{if(plotted.length)showPoint(focusIndex<0?0:focusIndex)});canvas.addEventListener('blur',()=>{tooltip.style.display='none';focusIndex=-1;draw()});canvas.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight'].includes(event.key)||!plotted.length)return;event.preventDefault();focusIndex=event.key==='ArrowRight'?(focusIndex+1+plotted.length)%plotted.length:(focusIndex-1+plotted.length)%plotted.length;showPoint(focusIndex)});let timer;window.addEventListener('resize',()=>{clearTimeout(timer);timer=setTimeout(draw,80)});calculate();
+})();
+</script>
+</body>
+</html>
 
 ```
 
 ## Version history {-}
 
 v1.0: created by tdhc 03/26.
+
+  - v1.1: deprecated shinylive apps replaced 11/26 by tdhc.
   
 [This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
 

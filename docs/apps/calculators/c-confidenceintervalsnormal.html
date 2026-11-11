@@ -48,14 +48,9 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting-3b7d9c4ba168eb520ddf55bb25793bc7.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-365d6bab852ec9a235b2fcad5c9fe113.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-018cfdbfe23a1300bb52dc40fce1b454.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<meta name="shinylive:serviceworker_dir" content="../..">
-<script src="../../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/load-shinylive-sw.js" type="module"></script>
-<script src="../../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/run-python-blocks.js" type="module"></script>
-<link href="../../site_libs/quarto-contrib/shinylive-0.10.12/shinylive/shinylive.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-2492f432502476c73ee6ff4aef91155c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-c494f7f8f7d75a6ba64994847b441f20.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-2492f432502476c73ee6ff4aef91155c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -402,192 +397,721 @@ cookieconsent.run({
 
 <section id="confidence-interval-calculator" class="level2">
 <h2 class="anchored" data-anchor-id="confidence-interval-calculator">Confidence interval calculator</h2>
-<pre class="shinylive-r" data-engine="r"><code>#| '!! shinylive warning !!': |
-#|   shinylive does not work in self-contained HTML documents.
-#|   Please set `embed-resources: false` in your metadata.
-#| standalone: true
-#| viewerHeight: 900
 
-library(shiny)
-library(bslib)
-library(ggplot2)
-library(plotly)
 
-ui &lt;- page_sidebar(
-  title = "Confidence interval calculator",
-  
-  # Add custom CSS to hide numeric input arrows
-  tags$head(
-    tags$style(HTML("
-      input[type=number]::-webkit-inner-spin-button,
-      input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confidence interval calculator</title>
+
+<style>
+  .ci-app {
+    --ci-blue: #3f68b6;
+    --ci-orange: #db4315;
+    --ci-light-blue: rgba(63,104,182,0.20);
+    --ci-light-orange: rgba(219,67,21,0.25);
+    color: #30343b;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ci-app * {
+    box-sizing: border-box;
+  }
+
+  .ci-app .ci-title {
+    background: var(--ci-blue);
+    color: white;
+    padding: 17px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 1.45rem;
+    font-weight: 600;
+  }
+
+  .ci-app .ci-layout {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.8fr);
+    gap: 20px;
+    align-items: start;
+  }
+
+  .ci-app .ci-card {
+    background: white;
+    border: 1px solid #dedede;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .ci-app .ci-card-header {
+    background: var(--ci-blue);
+    color: white;
+    padding: 13px 17px;
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .ci-app .ci-card-body {
+    padding: 18px;
+  }
+
+  .ci-app .ci-control {
+    margin-bottom: 22px;
+  }
+
+  .ci-app .ci-control:last-child {
+    margin-bottom: 0;
+  }
+
+  .ci-app label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .ci-app input[type="number"] {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #c9cdd3;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #30343b;
+  }
+
+  .ci-app input[type="number"]::-webkit-inner-spin-button,
+  .ci-app input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .ci-app input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  .ci-app input[type="range"] {
+    width: 100%;
+    accent-color: var(--ci-blue);
+    cursor: pointer;
+  }
+
+  .ci-app .ci-range-values {
+    display: flex;
+    justify-content: space-between;
+    color: #6b7280;
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+
+  .ci-app .ci-current-value {
+    color: var(--ci-blue);
+    font-weight: 700;
+    float: right;
+  }
+
+  .ci-app .ci-plot-wrap {
+    width: 100%;
+    position: relative;
+  }
+
+  .ci-app canvas {
+    display: block;
+    width: 100%;
+    height: 490px;
+  }
+
+  .ci-app .ci-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .ci-app .ci-result {
+    background: #f5f7fb;
+    border-left: 4px solid var(--ci-blue);
+    border-radius: 5px;
+    padding: 13px 15px;
+    min-width: 0;
+  }
+
+  .ci-app .ci-result-label {
+    color: #555e6b;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  .ci-app .ci-result-value {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ci-blue);
+    overflow-wrap: anywhere;
+  }
+
+  .ci-app .ci-explanation {
+    margin-top: 15px;
+    color: #606975;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .ci-app .ci-formula {
+    background: #f5f7fb;
+    padding: 12px 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 950px) {
+    .ci-app .ci-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ci-app canvas {
+      height: 400px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .ci-app .ci-card-body {
+      padding: 13px;
+    }
+
+    .ci-app .ci-summary {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ci-app canvas {
+      height: 340px;
+    }
+
+    .ci-app .ci-title {
+      font-size: 1.2rem;
+    }
+  }
+</style>
+
+
+
+
+<div class="ci-app">
+
+  <div class="ci-title">Confidence interval calculator</div>
+
+  <div class="ci-layout">
+
+    <!-- INPUTS -->
+    <div class="ci-card">
+      <div class="ci-card-header">Calculator inputs</div>
+
+      <div class="ci-card-body">
+
+        <div class="ci-control">
+          <label for="ci-alpha">
+            Significance level (α)
+            <span class="ci-current-value" id="ci-alpha-value">0.05</span>
+          </label>
+
+          <input type="range" id="ci-alpha" min="0.01" max="0.20" value="0.05" step="0.01">
+
+          <div class="ci-range-values">
+            <span>0.01</span>
+            <span>0.20</span>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="ci-control">
+          <label for="ci-xbar">Sample mean (x̄)</label>
+          <input type="number" id="ci-xbar" value="75" min="50" max="100" step="0.1">
+        </div>
+
+        <div class="ci-control">
+          <label for="ci-sigma">Sample standard deviation (s)</label>
+          <input type="number" id="ci-sigma" value="10" min="1" max="20" step="0.1">
+        </div>
+
+        <div class="ci-control">
+          <label for="ci-n">Sample size (n)</label>
+          <input type="number" id="ci-n" value="100" min="10" max="500" step="1">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PLOT -->
+    <div class="ci-card">
+      <div class="ci-card-header">
+        Normal distribution and confidence interval
+      </div>
+
+      <div class="ci-card-body">
+        <div class="ci-plot-wrap">
+          <canvas id="ci-plot" role="img" aria-label="Standard normal distribution showing the confidence region and two rejection regions."></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="ci-card">
+    <div class="ci-card-header">Confidence interval summary</div>
+
+    <div class="ci-card-body">
+
+      <div class="ci-summary">
+
+        <div class="ci-result">
+          <div class="ci-result-label">Confidence level</div>
+          <div class="ci-result-value" id="ci-confidence">95.0%</div>
+        </div>
+
+        <div class="ci-result">
+          <div class="ci-result-label">Confidence interval</div>
+          <div class="ci-result-value" id="ci-interval">[73.040, 76.960]</div>
+        </div>
+
+        <div class="ci-result">
+          <div class="ci-result-label">Margin of error (ME)</div>
+          <div class="ci-result-value" id="ci-me">1.960</div>
+        </div>
+
+        <div class="ci-result">
+          <div class="ci-result-label">Standard error (SE)</div>
+          <div class="ci-result-value" id="ci-se">1.000</div>
+        </div>
+
+      </div>
+
+      <div class="ci-explanation">
+        The confidence interval estimates the population mean (μ).
+        The central blue region represents the confidence level, while
+        the orange tails represent the two rejection regions, each with
+        area α/2.
+      </div>
+
+      <div class="ci-formula">
+        <strong>Confidence interval:</strong>
+        x̄ ± Z<sub>α/2</sub> × SE
+        <br>
+        <strong>Standard error:</strong>
+        SE = s / √n
+        <br>
+        <strong>Margin of error:</strong>
+        ME = Z<sub>α/2</sub> × SE
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const app = document.querySelector(".ci-app");
+
+  const alphaInput = app.querySelector("#ci-alpha");
+  const xbarInput = app.querySelector("#ci-xbar");
+  const sigmaInput = app.querySelector("#ci-sigma");
+  const nInput = app.querySelector("#ci-n");
+
+  const canvas = app.querySelector("#ci-plot");
+  const ctx = canvas.getContext("2d");
+
+  const BLUE = "#3f68b6";
+  const ORANGE = "#db4315";
+  const TEXT = "#30343b";
+  const MUTED = "#6b7280";
+
+  // Standard normal quantile using the Acklam approximation.
+  function normalQuantile(p) {
+    const a = [
+      -3.969683028665376e+1,
+       2.209460984245205e+2,
+      -2.759285104469687e+2,
+       1.383577518672690e+2,
+      -3.066479806614716e+1,
+       2.506628277459239
+    ];
+
+    const b = [
+      -5.447609879822406e+1,
+       1.615858368580409e+2,
+      -1.556989798598866e+2,
+       6.680131188771972e+1,
+      -1.328068155288572e+1
+    ];
+
+    const c = [
+      -7.784894002430293e-3,
+      -3.223964580411365e-1,
+      -2.400758277161838,
+      -2.549732539343734,
+       4.374664141464968,
+       2.938163982698783
+    ];
+
+    const d = [
+       7.784695709041462e-3,
+       3.224671290700398e-1,
+       2.445134137142996,
+       3.754408661907416
+    ];
+
+    const low = 0.02425;
+    const high = 1 - low;
+
+    if (p <= 0 || p >= 1) {
+      return NaN;
+    }
+
+    let q, r;
+
+    if (p < low) {
+      q = Math.sqrt(-2 * Math.log(p));
+
+      return (((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) /
+        ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+    }
+
+    if (p > high) {
+      q = Math.sqrt(-2 * Math.log(1-p));
+
+      return -(((((c[0]*q+c[1])*q+c[2])*q+c[3])*q+c[4])*q+c[5]) /
+        ((((d[0]*q+d[1])*q+d[2])*q+d[3])*q+1);
+    }
+
+    q = p - 0.5;
+    r = q * q;
+
+    return (((((a[0]*r+a[1])*r+a[2])*r+a[3])*r+a[4])*r+a[5])*q /
+      (((((b[0]*r+b[1])*r+b[2])*r+b[3])*r+b[4])*r+1);
+  }
+
+  function normalDensity(x) {
+    return Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI);
+  }
+
+  function readNumber(input, fallback, min, max) {
+    let value = Number(input.value);
+
+    if (!Number.isFinite(value)) {
+      value = fallback;
+    }
+
+    value = Math.min(max, Math.max(min, value));
+    input.value = value;
+
+    return value;
+  }
+
+  function calculate() {
+    const alpha = Number(alphaInput.value);
+    const xbar = readNumber(xbarInput, 75, 50, 100);
+    const sigma = readNumber(sigmaInput, 10, 1, 20);
+    const n = readNumber(nInput, 100, 10, 500);
+
+    const confidence = (1 - alpha) * 100;
+    const alphaHalf = alpha / 2;
+
+    const zCritical = normalQuantile(1 - alphaHalf);
+    const standardError = sigma / Math.sqrt(n);
+    const marginOfError = zCritical * standardError;
+
+    const lower = xbar - marginOfError;
+    const upper = xbar + marginOfError;
+
+    document.getElementById("ci-alpha-value").textContent =
+      alpha.toFixed(2);
+
+    document.getElementById("ci-confidence").textContent =
+      confidence.toFixed(1) + "%";
+
+    document.getElementById("ci-interval").textContent =
+      "[" + lower.toFixed(3) + ", " + upper.toFixed(3) + "]";
+
+    document.getElementById("ci-me").textContent =
+      marginOfError.toFixed(3);
+
+    document.getElementById("ci-se").textContent =
+      standardError.toFixed(3);
+
+    drawPlot({
+      alpha,
+      alphaHalf,
+      confidence,
+      zCritical,
+      lower,
+      upper
+    });
+  }
+
+  function drawPlot(values) {
+    const {
+      alphaHalf,
+      confidence,
+      zCritical,
+      lower,
+      upper
+    } = values;
+
+    const rect = canvas.getBoundingClientRect();
+    const width = Math.max(300, rect.width);
+    const height = Math.max(300, rect.height);
+
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    const margin = {
+      top: 65,
+      right: 35,
+      bottom: 65,
+      left: 55
+    };
+
+    const plotWidth = width - margin.left - margin.right;
+    const plotHeight = height - margin.top - margin.bottom;
+
+    const xMin = -4;
+    const xMax = 4;
+    const yMin = 0;
+    const yMax = 0.5;
+
+    function xPixel(x) {
+      return margin.left + (x - xMin) / (xMax - xMin) * plotWidth;
+    }
+
+    function yPixel(y) {
+      return margin.top + plotHeight -
+        (y - yMin) / (yMax - yMin) * plotHeight;
+    }
+
+    // Background
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
+
+    // Confidence region
+    ctx.beginPath();
+    ctx.moveTo(xPixel(-zCritical), yPixel(0));
+
+    for (let x = -zCritical; x <= zCritical; x += 0.01) {
+      ctx.lineTo(xPixel(x), yPixel(normalDensity(x)));
+    }
+
+    ctx.lineTo(xPixel(zCritical), yPixel(0));
+    ctx.closePath();
+    ctx.fillStyle = "rgba(63,104,182,0.20)";
+    ctx.fill();
+
+    // Left rejection region
+    ctx.beginPath();
+    ctx.moveTo(xPixel(xMin), yPixel(0));
+
+    for (let x = xMin; x <= -zCritical; x += 0.01) {
+      ctx.lineTo(xPixel(x), yPixel(normalDensity(x)));
+    }
+
+    ctx.lineTo(xPixel(-zCritical), yPixel(0));
+    ctx.closePath();
+    ctx.fillStyle = "rgba(219,67,21,0.25)";
+    ctx.fill();
+
+    // Right rejection region
+    ctx.beginPath();
+    ctx.moveTo(xPixel(zCritical), yPixel(0));
+
+    for (let x = zCritical; x <= xMax; x += 0.01) {
+      ctx.lineTo(xPixel(x), yPixel(normalDensity(x)));
+    }
+
+    ctx.lineTo(xPixel(xMax), yPixel(0));
+    ctx.closePath();
+    ctx.fillStyle = "rgba(219,67,21,0.25)";
+    ctx.fill();
+
+    // Normal curve
+    ctx.beginPath();
+
+    for (let i = 0; i <= 800; i++) {
+      const x = xMin + (xMax - xMin) * i / 800;
+      const y = normalDensity(x);
+
+      if (i === 0) {
+        ctx.moveTo(xPixel(x), yPixel(y));
+      } else {
+        ctx.lineTo(xPixel(x), yPixel(y));
       }
-      input[type=number] {
-        -moz-appearance: textfield;
-      }
-    "))
-  ),
-  
-  sidebar = sidebar(
-    sliderInput("alpha",
-                "significance level (α):",
-                min = 0.01,
-                max = 0.20,
-                value = 0.05,
-                step = 0.01),
-    
-    hr(),
-    
-    numericInput("x_bar",
-                 "sample mean (x̄)",
-                 value = 75,
-                 min = 50,
-                 max = 100,
-                 step = 0.1),
-    
-    numericInput("sigma",
-                 "sample standard deviation (s):",
-                 value = 10,
-                 min = 1,
-                 max = 20,
-                 step = 0.1),
-    
-    numericInput("n",
-                 "sample size (n):",
-                 value = 100,
-                 min = 10,
-                 max = 500,
-                 step = 1)
-  ),
-  
-  card(
-    card_header("Normal distribution and confidence interval"),
-    plotlyOutput("normal_plot", height = "600px")
-  ),
-  
-  card(
-    card_header("Confidence interval summary"),
-    div(
-      style = "font-size: 16px; padding: 10px;",
-      uiOutput("ci_summary")
-    ),
-    height = "250px"
-  )
-)
+    }
 
-server &lt;- function(input, output, session) {
-  
-  # Reactive calculations
-  confidence_level &lt;- reactive({
-    (1 - input$alpha) * 100
-  })
-  
-  alpha_half &lt;- reactive({
-    input$alpha / 2
-  })
-  
-  z_critical &lt;- reactive({
-    qnorm(1 - alpha_half())
-  })
-  
-  standard_error &lt;- reactive({
-    input$sigma / sqrt(input$n)
-  })
-  
-  margin_of_error &lt;- reactive({
-    z_critical() * standard_error()
-  })
-  
-  ci_lower &lt;- reactive({
-    input$x_bar - margin_of_error()
-  })
-  
-  ci_upper &lt;- reactive({
-    input$x_bar + margin_of_error()
-  })
-  
-  # Main plot
-  output$normal_plot &lt;- renderPlotly({
-    
-    # Create data for the normal distribution
-    x_seq &lt;- seq(-4, 4, length.out = 1000)
-    y_seq &lt;- dnorm(x_seq)
-    
-    # Create the base plot
-    p &lt;- ggplot(data.frame(x = x_seq, y = y_seq), aes(x = x, y = y)) +
-      geom_line(linewidth = 1.2, color = "#3f68b6") +
-      
-      # Shade the rejection regions
-      geom_area(data = data.frame(x = x_seq[x_seq &lt;= -z_critical()], 
-                                  y = y_seq[x_seq &lt;= -z_critical()]),
-                aes(x = x, y = y), fill = "#db4315", alpha = 0.3) +
-      geom_area(data = data.frame(x = x_seq[x_seq &gt;= z_critical()], 
-                                  y = y_seq[x_seq &gt;= z_critical()]),
-                aes(x = x, y = y), fill = "#db4315", alpha = 0.3) +
-      
-      # Shade the confidence region
-      geom_area(data = data.frame(x = x_seq[x_seq &gt;= -z_critical() &amp; x_seq &lt;= z_critical()], 
-                                  y = y_seq[x_seq &gt;= -z_critical() &amp; x_seq &lt;= z_critical()]),
-                aes(x = x, y = y), fill = "#3f68b6", alpha = 0.2) +
-      
-      # Add vertical lines for critical values
-      geom_vline(xintercept = c(-z_critical(), z_critical()), 
-                 linetype = "dashed", color = "#db4315", linewidth = 1) +
-      geom_vline(xintercept = 0, linetype = "solid", color = "black", linewidth = 1) +
-      
-      # Add labels
-      annotate("text", x = -z_critical(), y = 0.1, 
-               label = paste("-Z =", round(-z_critical(), 3)), 
-               hjust = 1.1, color = "#db4315", size = 4) +
-      annotate("text", x = z_critical(), y = 0.1, 
-               label = paste("Z =", round(z_critical(), 3)), 
-               hjust = -0.1, color = "#db4315", size = 4) +
-      annotate("text", x = 0, y = 0.45, 
-               label = paste(confidence_level(), "% confidence"), 
-               hjust = 0.5, color = "#3f68b6", size = 5, fontface = "bold") +
-      annotate("text", x = -3, y = 0.05, 
-               label = paste("α/2 =", round(alpha_half(), 4)), 
-               hjust = 0.5, color = "#db4315", size = 4) +
-      annotate("text", x = 3, y = 0.05, 
-               label = paste("α/2 =", round(alpha_half(), 4)), 
-               hjust = 0.5, color = "#db4315", size = 4) +
-      
-      labs(
-        title = "Standard normal distribution for confidence interval",
-        x = "Z-score",
-        y = "Probability density",
-        subtitle = paste("Confidence interval for μ: [", round(ci_lower(), 2), "g,", round(ci_upper(), 2), "g]")
-      ) +
-      theme_minimal() +
-      theme(
-        plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
-        plot.subtitle = element_text(hjust = 0.5, size = 12),
-        axis.title = element_text(size = 12),
-        axis.text = element_text(size = 10)
-      ) +
-      xlim(-4, 4) +
-      ylim(0, 0.5)
-    
-    ggplotly(p) %&gt;%
-      config(displayModeBar = FALSE)
-  })
-  
-  # Confidence interval summary
-  output$ci_summary &lt;- renderUI({
-    tagList(
-      p(strong("Confidence level:"), paste0(sprintf("%.1f", confidence_level()), "%")),
-      p(strong("Confidence interval:"), 
-        paste0("[", sprintf("%.3f", ci_lower()), " g , ", sprintf("%.3f", ci_upper()), " g]")),
-      p(strong("Margin of error (ME):"), paste0(sprintf("%.3f", margin_of_error()), " g")),
-      p(strong("Standard error (SE):"), paste0(sprintf("%.3f", standard_error()), " g"))
-    )
-  })
-}
+    ctx.strokeStyle = BLUE;
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
 
-shinyApp(ui = ui, server = server)
-</code></pre>
+    // Axes
+    ctx.strokeStyle = "#555";
+    ctx.lineWidth = 1;
+
+    ctx.beginPath();
+    ctx.moveTo(margin.left, yPixel(0));
+    ctx.lineTo(width - margin.right, yPixel(0));
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(margin.left, margin.top);
+    ctx.lineTo(margin.left, yPixel(0));
+    ctx.stroke();
+
+    // X-axis ticks
+    ctx.fillStyle = MUTED;
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+
+    for (let x = -4; x <= 4; x++) {
+      const px = xPixel(x);
+
+      ctx.beginPath();
+      ctx.moveTo(px, yPixel(0));
+      ctx.lineTo(px, yPixel(0) + 5);
+      ctx.strokeStyle = "#777";
+      ctx.stroke();
+
+      ctx.fillText(x.toString(), px, yPixel(0) + 20);
+    }
+
+    // Y-axis ticks
+    ctx.textAlign = "right";
+
+    for (let y = 0; y <= 0.5; y += 0.1) {
+      const py = yPixel(y);
+
+      ctx.fillText(y.toFixed(1), margin.left - 9, py + 4);
+
+      ctx.strokeStyle = "#eeeeee";
+      ctx.beginPath();
+      ctx.moveTo(margin.left, py);
+      ctx.lineTo(width - margin.right, py);
+      ctx.stroke();
+    }
+
+    // Critical value lines
+    [-zCritical, zCritical].forEach(z => {
+      ctx.beginPath();
+      ctx.setLineDash([6, 5]);
+      ctx.moveTo(xPixel(z), margin.top);
+      ctx.lineTo(xPixel(z), yPixel(0));
+      ctx.strokeStyle = ORANGE;
+      ctx.lineWidth = 1.8;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    // Centre line
+    ctx.beginPath();
+    ctx.moveTo(xPixel(0), margin.top);
+    ctx.lineTo(xPixel(0), yPixel(0));
+    ctx.strokeStyle = "#30343b";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Critical value labels
+    ctx.fillStyle = ORANGE;
+    ctx.font = "bold 12px Arial";
+
+    ctx.textAlign = "right";
+    ctx.fillText("-Z = " + (-zCritical).toFixed(3),
+      xPixel(-zCritical) - 7, margin.top + 17);
+
+    ctx.textAlign = "left";
+    ctx.fillText("Z = " + zCritical.toFixed(3),
+      xPixel(zCritical) + 7, margin.top + 17);
+
+    // Confidence label
+    ctx.fillStyle = BLUE;
+    ctx.font = "bold 15px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText(confidence.toFixed(1) + "% confidence",
+      xPixel(0), yPixel(0.44));
+
+    // Alpha labels
+    ctx.fillStyle = ORANGE;
+    ctx.font = "12px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText("α/2 = " + alphaHalf.toFixed(4),
+      xPixel(-3), yPixel(0.07));
+
+    ctx.fillText("α/2 = " + alphaHalf.toFixed(4),
+      xPixel(3), yPixel(0.07));
+
+    // Axis titles
+    ctx.fillStyle = TEXT;
+    ctx.font = "13px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText("Z-score",
+      margin.left + plotWidth / 2, height - 13);
+
+    ctx.save();
+    ctx.translate(16, margin.top + plotHeight / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText("Probability density", 0, 0);
+    ctx.restore();
+
+    // Plot title and interval subtitle
+    ctx.fillStyle = TEXT;
+    ctx.font = "bold 15px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText("Standard normal distribution for confidence interval",
+      width / 2, 23);
+
+    ctx.font = "12px Arial";
+    ctx.fillStyle = MUTED;
+
+    ctx.fillText(
+      "Confidence interval for μ: [" +
+      lower.toFixed(2) + ", " + upper.toFixed(2) + "]",
+      width / 2,
+      43
+    );
+  }
+
+  // Update when inputs change
+  [alphaInput, xbarInput, sigmaInput, nInput].forEach(input => {
+    input.addEventListener("input", calculate);
+    input.addEventListener("change", calculate);
+  });
+
+  // Redraw when the chart changes size
+  if (typeof ResizeObserver !== "undefined") {
+    const observer = new ResizeObserver(() => calculate());
+    observer.observe(canvas);
+  } else {
+    window.addEventListener("resize", calculate);
+  }
+
+  calculate();
+
+})();
+</script>
+
+
+
+
+
+
 </section>
 <section id="version-history" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="version-history">Version history</h2>
