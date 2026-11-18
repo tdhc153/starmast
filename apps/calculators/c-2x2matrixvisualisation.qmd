@@ -1,0 +1,774 @@
+---
+title: "Calculator: 2x2 matrix visualisation"
+author: Tom Coleman, Ross Mcphee
+format: html
+abstract-title: Summary
+abstract: A calculator to provide visualisations for what a $2\times 2$ matrix does to vectors in 2D space.
+---
+
+```{r, setup, include = FALSE}
+library("webexercises")
+```
+
+
+```{=html}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2×2 matrix visualiser</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 1rem;
+      background: #f5f6f8;
+      color: #222222;
+    }
+
+    .mtv-app {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .mtv-app .mtv-row {
+      display: grid;
+      grid-template-columns: minmax(290px, 1fr) minmax(0, 2fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .mtv-app .mtv-card {
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #dddddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .mtv-app .mtv-card-header {
+      padding: 0.75rem 1rem;
+      color: #ffffff;
+      background: #3F6BB6;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .mtv-app .mtv-card-body { padding: 1rem; }
+
+    .mtv-app .mtv-help {
+      margin: 0 0 1rem;
+      color: #555555;
+      font-size: 0.93rem;
+      line-height: 1.5;
+    }
+
+    .mtv-app .mtv-matrix-editor {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      margin: 1rem 0 1.2rem;
+    }
+
+    .mtv-app .mtv-matrix-bracket {
+      font-family: Arial, sans-serif;
+      color: #333333;
+      font-size: 7rem;
+      font-weight: 1;
+      line-height: 0.75;
+    }
+
+    .mtv-app .mtv-matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 76px);
+      gap: 0.65rem;
+    }
+
+    .mtv-app .mtv-entry-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .mtv-app .mtv-matrix-entry {
+      width: 76px;
+      padding: 0.55rem 0.4rem;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      background: #ffffff;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .mtv-app .mtv-button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1rem;
+    }
+
+    .mtv-app .mtv-button {
+      min-height: 42px;
+      padding: 0.55rem 0.9rem;
+      border: 1px solid #31558f;
+      border-radius: 5px;
+      color: #ffffff;
+      background: #3F6BB6;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .mtv-app .mtv-button:hover { background: #31558f; }
+
+    .mtv-app .mtv-secondary-button {
+      color: #203f73;
+      background: #ffffff;
+    }
+
+    .mtv-app .mtv-secondary-button:hover { background: #eef3fb; }
+
+    .mtv-app .mtv-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      line-height: 1.45;
+    }
+
+    .mtv-app .mtv-option input {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+      margin: 0.08rem 0 0;
+      accent-color: #3F68B6;
+    }
+
+    .mtv-app .mtv-error {
+      min-height: 1.4em;
+      margin-top: 0.75rem;
+      color: #b00020;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .mtv-app .mtv-equation {
+      padding: 0.8rem;
+      border: 1px solid #d9e2f2;
+      border-radius: 6px;
+      background: #f4f7fc;
+      color: #203f73;
+      text-align: center;
+      font-family: "Courier New", Courier, monospace;
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .mtv-app .mtv-plot-title {
+      margin-bottom: 0.7rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .mtv-app .mtv-chart-wrapper {
+      position: relative;
+      width: 100%;
+      height: 480px;
+    }
+
+    .mtv-app canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .mtv-app .mtv-legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    .mtv-app .mtv-legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .mtv-app .mtv-line-symbol {
+      width: 24px;
+      height: 3px;
+      background: #3F6BB6;
+    }
+
+    .mtv-app .mtv-red-line-symbol { background: #db4315; }
+
+    .mtv-app .mtv-blue-area-symbol,
+    .mtv-app .mtv-red-area-symbol {
+      width: 22px;
+      height: 13px;
+      border: 1px solid #3F6BB6;
+      background: rgba(63, 104, 182, 0.25);
+    }
+
+    .mtv-app .mtv-red-area-symbol {
+      border-color: #db4315;
+      background: rgba(219, 67, 21, 0.25);
+    }
+
+    .mtv-app .mtv-description {
+      margin: 0.75rem 0 0;
+      color: #555555;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .mtv-app .mtv-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .mtv-app .mtv-summary-item {
+      padding: 0.8rem;
+      border: 1px solid #d9e2f2;
+      border-radius: 6px;
+      background: #f4f7fc;
+      text-align: center;
+    }
+
+    .mtv-app .mtv-summary-label {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: #555555;
+      font-size: 0.9rem;
+    }
+
+    .mtv-app .mtv-summary-value {
+      color: #203f73;
+      font-size: 1.08rem;
+      font-weight: 700;
+    }
+
+    .mtv-app .mtv-matrix-entry:focus-visible,
+    .mtv-app .mtv-button:focus-visible,
+    .mtv-app .mtv-option input:focus-visible,
+    .mtv-app canvas:focus-visible {
+      outline: 3px solid rgba(63, 104, 182, 0.4);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 800px) {
+      .mtv-app .mtv-row { grid-template-columns: 1fr; }
+      .mtv-app .mtv-chart-wrapper { height: 420px; }
+      .mtv-app .mtv-summary { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 520px) {
+      body { padding: 0.5rem; }
+      .mtv-app .mtv-card-body { padding: 0.9rem; }
+      .mtv-app .mtv-chart-wrapper { height: 340px; }
+      .mtv-app .mtv-summary { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="mtv-app">
+  <div class="mtv-row">
+
+    <section class="mtv-card" aria-labelledby="mtv-parameters-heading">
+      <div class="mtv-card-header" id="mtv-parameters-heading">Matrix A</div>
+
+      <div class="mtv-card-body">
+        <p class="mtv-help">
+          Enter four numbers into the entries of the matrix A, then select Apply matrix to draw
+          the images A<b>i</b> and A<b>j</b> of the unit vectors <b>i</b> and <b>j</b>.
+        </p>
+
+        <div class="mtv-matrix-editor" role="group" aria-label="Entries of matrix A">
+          <span class="mtv-matrix-bracket" aria-hidden="true">[</span>
+
+          <div class="mtv-matrix-grid">
+            <div>
+              <label class="mtv-entry-label" for="mtv-a11">Entry a 1 1</label>
+              <input class="mtv-matrix-entry" id="mtv-a11" type="number" value="1" step="0.1" inputmode="decimal">
+            </div>
+            <div>
+              <label class="mtv-entry-label" for="mtv-a12">Entry a 1 2</label>
+              <input class="mtv-matrix-entry" id="mtv-a12" type="number" value="0" step="0.1" inputmode="decimal">
+            </div>
+            <div>
+              <label class="mtv-entry-label" for="mtv-a21">Entry a 2 1</label>
+              <input class="mtv-matrix-entry" id="mtv-a21" type="number" value="0" step="0.1" inputmode="decimal">
+            </div>
+            <div>
+              <label class="mtv-entry-label" for="mtv-a22">Entry a 2 2</label>
+              <input class="mtv-matrix-entry" id="mtv-a22" type="number" value="1" step="0.1" inputmode="decimal">
+            </div>
+          </div>
+
+          <span class="mtv-matrix-bracket" aria-hidden="true"> ] </span>
+        </div>
+
+        <div class="mtv-equation" id="mtv-matrix-display" aria-live="polite">
+          A = [[1, 0], [0, 1]]
+        </div>
+
+        <label class="mtv-option">
+          <input id="mtv-show-determinant" type="checkbox">
+          <span>
+            Visualise determinant areas: the unit square in blue and its
+            transformed parallelogram in red.
+          </span>
+        </label>
+
+        <div class="mtv-button-row">
+          <button class="mtv-button" id="mtv-apply" type="button">Apply matrix</button>
+          <button class="mtv-button mtv-secondary-button" id="mtv-reset" type="button">Reset</button>
+        </div>
+
+        <div class="mtv-error" id="mtv-error" role="alert" aria-live="assertive"></div>
+      </div>
+    </section>
+
+    <section class="mtv-card" aria-labelledby="mtv-plot-heading">
+      <div class="mtv-card-header" id="mtv-plot-heading">Visualisation of 2D space</div>
+
+      <div class="mtv-card-body">
+        <div class="mtv-plot-title" id="mtv-plot-title">
+          Standard basis vectors i and j
+        </div>
+
+        <div class="mtv-chart-wrapper">
+          <canvas
+            id="mtv-chart"
+            tabindex="0"
+            role="img"
+            aria-describedby="mtv-chart-description">
+          </canvas>
+        </div>
+
+        <div class="mtv-legend" aria-hidden="true">
+          <span class="mtv-legend-item"><span class="mtv-line-symbol"></span><b>i</b> and <b>j</b></span>
+          <span class="mtv-legend-item" id="mtv-transformed-vector-key" hidden><span class="mtv-line-symbol mtv-red-line-symbol"></span>A<b>i</b> and A<b>j</b></span>
+          <span class="mtv-legend-item" id="mtv-unit-area-key" hidden><span class="mtv-blue-area-symbol"></span>Unit area</span>
+          <span class="mtv-legend-item" id="mtv-transformed-area-key" hidden><span class="mtv-red-area-symbol"></span>Transformed area</span>
+        </div>
+
+        <p class="mtv-description" id="mtv-chart-description"></p>
+      </div>
+    </section>
+
+  </div>
+
+  <section class="mtv-card" aria-labelledby="mtv-summary-heading">
+    <div class="mtv-card-header" id="mtv-summary-heading">Transformation summary</div>
+
+    <div class="mtv-card-body">
+      <div class="mtv-summary" role="status" aria-live="polite" aria-atomic="true">
+        <div class="mtv-summary-item">
+          <span class="mtv-summary-label">A<b>i</b></span>
+          <span class="mtv-summary-value" id="mtv-ai-value">Not applied</span>
+        </div>
+        <div class="mtv-summary-item">
+          <span class="mtv-summary-label">A<b>j</b></span>
+          <span class="mtv-summary-value" id="mtv-aj-value">Not applied</span>
+        </div>
+        <div class="mtv-summary-item">
+          <span class="mtv-summary-label">det(A)</span>
+          <span class="mtv-summary-value" id="mtv-determinant-value">Not applied</span>
+        </div>
+        <div class="mtv-summary-item">
+          <span class="mtv-summary-label">Area scale factor</span>
+          <span class="mtv-summary-value" id="mtv-area-value">Not applied</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function() {
+  "use strict";
+
+  const mtvRoot = document.querySelector(".mtv-app");
+  if (!mtvRoot) return;
+
+  const mtvA11 = mtvRoot.querySelector("#mtv-a11");
+  const mtvA12 = mtvRoot.querySelector("#mtv-a12");
+  const mtvA21 = mtvRoot.querySelector("#mtv-a21");
+  const mtvA22 = mtvRoot.querySelector("#mtv-a22");
+  const mtvApplyButton = mtvRoot.querySelector("#mtv-apply");
+  const mtvResetButton = mtvRoot.querySelector("#mtv-reset");
+  const mtvShowDeterminant = mtvRoot.querySelector("#mtv-show-determinant");
+  const mtvMatrixDisplay = mtvRoot.querySelector("#mtv-matrix-display");
+  const mtvError = mtvRoot.querySelector("#mtv-error");
+  const mtvPlotTitle = mtvRoot.querySelector("#mtv-plot-title");
+  const mtvChartDescription = mtvRoot.querySelector("#mtv-chart-description");
+  const mtvCanvas = mtvRoot.querySelector("#mtv-chart");
+  const mtvContext = mtvCanvas.getContext("2d");
+  const mtvAiValue = mtvRoot.querySelector("#mtv-ai-value");
+  const mtvAjValue = mtvRoot.querySelector("#mtv-aj-value");
+  const mtvDeterminantValue = mtvRoot.querySelector("#mtv-determinant-value");
+  const mtvAreaValue = mtvRoot.querySelector("#mtv-area-value");
+  const mtvTransformedVectorKey = mtvRoot.querySelector("#mtv-transformed-vector-key");
+  const mtvUnitAreaKey = mtvRoot.querySelector("#mtv-unit-area-key");
+  const mtvTransformedAreaKey = mtvRoot.querySelector("#mtv-transformed-area-key");
+
+  let mtvAppliedMatrix = null;
+
+  function mtvFormatNumber(mtvValue) {
+    if (Math.abs(mtvValue) < 1e-12) return "0";
+    return Number(mtvValue.toFixed(3)).toString();
+  }
+
+  function mtvReadMatrix() {
+    const mtvEntries = [
+      Number(mtvA11.value),
+      Number(mtvA12.value),
+      Number(mtvA21.value),
+      Number(mtvA22.value)
+    ];
+
+    if (!mtvEntries.every(Number.isFinite)) {
+      mtvError.textContent = "Enter a valid numerical value in every matrix entry.";
+      [mtvA11, mtvA12, mtvA21, mtvA22].forEach(function(mtvInput) {
+        mtvInput.setAttribute("aria-invalid", Number.isFinite(Number(mtvInput.value)) ? "false" : "true");
+      });
+      return null;
+    }
+
+    mtvError.textContent = "";
+    [mtvA11, mtvA12, mtvA21, mtvA22].forEach(function(mtvInput) {
+      mtvInput.setAttribute("aria-invalid", "false");
+    });
+
+    return {
+      a11: mtvEntries[0],
+      a12: mtvEntries[1],
+      a21: mtvEntries[2],
+      a22: mtvEntries[3]
+    };
+  }
+
+  function mtvUpdateMatrixDisplay() {
+    const mtvMatrix = mtvReadMatrix();
+    if (!mtvMatrix) return;
+
+    mtvMatrixDisplay.textContent =
+      `A = [[${mtvFormatNumber(mtvMatrix.a11)}, ${mtvFormatNumber(mtvMatrix.a12)}], ` +
+      `[${mtvFormatNumber(mtvMatrix.a21)}, ${mtvFormatNumber(mtvMatrix.a22)}]]`;
+  }
+
+  function mtvVectorMagnitude(mtvVector) {
+    return Math.hypot(mtvVector.x, mtvVector.y);
+  }
+
+  function mtvDrawArrow(mtvStart, mtvEnd, mtvColour, mtvWidth, mtvLabel, mtvToX, mtvToY) {
+    const mtvStartX = mtvToX(mtvStart.x);
+    const mtvStartY = mtvToY(mtvStart.y);
+    const mtvEndX = mtvToX(mtvEnd.x);
+    const mtvEndY = mtvToY(mtvEnd.y);
+    const mtvAngle = Math.atan2(mtvEndY - mtvStartY, mtvEndX - mtvStartX);
+    const mtvHeadLength = 11;
+
+    mtvContext.strokeStyle = mtvColour;
+    mtvContext.fillStyle = mtvColour;
+    mtvContext.lineWidth = mtvWidth;
+    mtvContext.beginPath();
+    mtvContext.moveTo(mtvStartX, mtvStartY);
+    mtvContext.lineTo(mtvEndX, mtvEndY);
+    mtvContext.stroke();
+
+    if (Math.hypot(mtvEndX - mtvStartX, mtvEndY - mtvStartY) > 2) {
+      mtvContext.beginPath();
+      mtvContext.moveTo(mtvEndX, mtvEndY);
+      mtvContext.lineTo(
+        mtvEndX - mtvHeadLength * Math.cos(mtvAngle - Math.PI / 6),
+        mtvEndY - mtvHeadLength * Math.sin(mtvAngle - Math.PI / 6)
+      );
+      mtvContext.lineTo(
+        mtvEndX - mtvHeadLength * Math.cos(mtvAngle + Math.PI / 6),
+        mtvEndY - mtvHeadLength * Math.sin(mtvAngle + Math.PI / 6)
+      );
+      mtvContext.closePath();
+      mtvContext.fill();
+    }
+
+    mtvContext.font = "bold 14px Arial";
+    mtvContext.textAlign = "left";
+    mtvContext.textBaseline = "bottom";
+    mtvContext.fillText(mtvLabel, mtvEndX + 7, mtvEndY - 5);
+  }
+
+  function mtvDrawPolygon(mtvPoints, mtvFill, mtvStroke, mtvToX, mtvToY) {
+    mtvContext.beginPath();
+    mtvContext.moveTo(mtvToX(mtvPoints[0].x), mtvToY(mtvPoints[0].y));
+
+    for (let mtvIndex = 1; mtvIndex < mtvPoints.length; mtvIndex++) {
+      mtvContext.lineTo(mtvToX(mtvPoints[mtvIndex].x), mtvToY(mtvPoints[mtvIndex].y));
+    }
+
+    mtvContext.closePath();
+    mtvContext.fillStyle = mtvFill;
+    mtvContext.fill();
+    mtvContext.strokeStyle = mtvStroke;
+    mtvContext.lineWidth = 1.5;
+    mtvContext.stroke();
+  }
+
+  function mtvDraw() {
+    const mtvRect = mtvCanvas.getBoundingClientRect();
+    if (!mtvRect.width || !mtvRect.height) return;
+
+    const mtvDpr = window.devicePixelRatio || 1;
+    mtvCanvas.width = Math.round(mtvRect.width * mtvDpr);
+    mtvCanvas.height = Math.round(mtvRect.height * mtvDpr);
+    mtvContext.setTransform(mtvDpr, 0, 0, mtvDpr, 0, 0);
+
+    const mtvWidth = mtvRect.width;
+    const mtvHeight = mtvRect.height;
+    const mtvPadding = 36;
+    const mtvI = { x: 1, y: 0 };
+    const mtvJ = { x: 0, y: 1 };
+
+    let mtvAi = null;
+    let mtvAj = null;
+
+    if (mtvAppliedMatrix) {
+      mtvAi = { x: mtvAppliedMatrix.a11, y: mtvAppliedMatrix.a21 };
+      mtvAj = { x: mtvAppliedMatrix.a12, y: mtvAppliedMatrix.a22 };
+    }
+
+    const mtvCandidateValues = [-2, 2, -1, 1];
+
+    if (mtvAi && mtvAj) {
+      [mtvAi, mtvAj, { x: mtvAi.x + mtvAj.x, y: mtvAi.y + mtvAj.y }].forEach(
+        function(mtvPoint) {
+          mtvCandidateValues.push(mtvPoint.x, mtvPoint.y);
+        }
+      );
+    }
+
+    const mtvMaximumCoordinate = Math.max(
+      2,
+      ...mtvCandidateValues.map(Math.abs)
+    );
+    const mtvLimit = Math.ceil(mtvMaximumCoordinate + 0.75);
+    const mtvScale = Math.min(
+      (mtvWidth - 2 * mtvPadding) / (2 * mtvLimit),
+      (mtvHeight - 2 * mtvPadding) / (2 * mtvLimit)
+    );
+    const mtvOriginX = mtvWidth / 2;
+    const mtvOriginY = mtvHeight / 2;
+    const mtvToX = function(mtvValue) { return mtvOriginX + mtvValue * mtvScale; };
+    const mtvToY = function(mtvValue) { return mtvOriginY - mtvValue * mtvScale; };
+
+    mtvContext.clearRect(0, 0, mtvWidth, mtvHeight);
+
+    for (let mtvGridValue = -mtvLimit; mtvGridValue <= mtvLimit; mtvGridValue++) {
+      const mtvX = mtvToX(mtvGridValue);
+      const mtvY = mtvToY(mtvGridValue);
+      mtvContext.strokeStyle = mtvGridValue === 0 ? "#777777" : "#e5e5e5";
+      mtvContext.lineWidth = mtvGridValue === 0 ? 1.5 : 1;
+
+      mtvContext.beginPath();
+      mtvContext.moveTo(mtvX, mtvToY(-mtvLimit));
+      mtvContext.lineTo(mtvX, mtvToY(mtvLimit));
+      mtvContext.stroke();
+
+      mtvContext.beginPath();
+      mtvContext.moveTo(mtvToX(-mtvLimit), mtvY);
+      mtvContext.lineTo(mtvToX(mtvLimit), mtvY);
+      mtvContext.stroke();
+    }
+
+    mtvContext.fillStyle = "#444444";
+    mtvContext.font = "12px Arial";
+    mtvContext.textAlign = "center";
+    mtvContext.textBaseline = "top";
+
+    for (let mtvTick = -mtvLimit; mtvTick <= mtvLimit; mtvTick++) {
+      if (mtvTick !== 0) {
+        mtvContext.fillText(String(mtvTick), mtvToX(mtvTick), mtvOriginY + 7);
+        mtvContext.textAlign = "right";
+        mtvContext.textBaseline = "middle";
+        mtvContext.fillText(String(mtvTick), mtvOriginX - 7, mtvToY(mtvTick));
+        mtvContext.textAlign = "center";
+        mtvContext.textBaseline = "top";
+      }
+    }
+
+    if (mtvShowDeterminant.checked) {
+      mtvDrawPolygon(
+        [{ x: 0, y: 0 }, mtvI, { x: 1, y: 1 }, mtvJ],
+        "rgba(63, 104, 182, 0.22)",
+        "#3F68B6",
+        mtvToX,
+        mtvToY
+      );
+
+      if (mtvAi && mtvAj) {
+        mtvDrawPolygon(
+          [
+            { x: 0, y: 0 },
+            mtvAi,
+            { x: mtvAi.x + mtvAj.x, y: mtvAi.y + mtvAj.y },
+            mtvAj
+          ],
+          "rgba(219, 67, 21, 0.25)",
+          "#db4315",
+          mtvToX,
+          mtvToY
+        );
+      }
+    }
+
+    mtvDrawArrow({ x: 0, y: 0 }, mtvI, "#3F68B6", 3, "i", mtvToX, mtvToY);
+    mtvDrawArrow({ x: 0, y: 0 }, mtvJ, "#3F68B6", 3, "j", mtvToX, mtvToY);
+
+    if (mtvAi && mtvAj) {
+      mtvDrawArrow({ x: 0, y: 0 }, mtvAi, "#db4315", 3, "Ai", mtvToX, mtvToY);
+      mtvDrawArrow({ x: 0, y: 0 }, mtvAj, "#9b2f11", 3, "Aj", mtvToX, mtvToY);
+    }
+
+    mtvContext.fillStyle = "#333333";
+    mtvContext.font = "13px Arial";
+    mtvContext.textAlign = "right";
+    mtvContext.textBaseline = "bottom";
+    mtvContext.fillText("x", mtvToX(mtvLimit) - 4, mtvOriginY - 8);
+    mtvContext.textAlign = "left";
+    mtvContext.fillText("y", mtvOriginX + 8, mtvToY(mtvLimit) + 16);
+
+    let mtvDescription =
+      "Cartesian plane showing the standard basis vectors i equals [1, 0]^T and j equals [0, 1]^T.";
+
+    if (mtvAi && mtvAj) {
+      const mtvDeterminant =
+        mtvAppliedMatrix.a11 * mtvAppliedMatrix.a22 -
+        mtvAppliedMatrix.a12 * mtvAppliedMatrix.a21;
+
+      mtvDescription +=
+        ` The applied matrix sends i to [${mtvFormatNumber(mtvAi.x)}, ` +
+        `${mtvFormatNumber(mtvAi.y)}]^T and j to ` +
+        `[${mtvFormatNumber(mtvAj.x)}, ${mtvFormatNumber(mtvAj.y)}]^T. ` +
+        `The determinant is ${mtvFormatNumber(mtvDeterminant)}, so areas are ` +
+        `scaled by ${mtvFormatNumber(Math.abs(mtvDeterminant))}.`;
+    }
+
+    if (mtvShowDeterminant.checked) {
+      mtvDescription += mtvAppliedMatrix
+        ? " The blue unit square and red transformed parallelogram are shown."
+        : " The blue unit square is shown; apply the matrix to show its transformed area.";
+    }
+
+    mtvCanvas.setAttribute("aria-label", mtvDescription);
+    mtvChartDescription.textContent = mtvDescription;
+  }
+
+  function mtvApply() {
+    const mtvMatrix = mtvReadMatrix();
+    if (!mtvMatrix) return;
+
+    mtvAppliedMatrix = mtvMatrix;
+
+    const mtvAi = { x: mtvMatrix.a11, y: mtvMatrix.a21 };
+    const mtvAj = { x: mtvMatrix.a12, y: mtvMatrix.a22 };
+    const mtvDeterminant =
+      mtvMatrix.a11 * mtvMatrix.a22 -
+      mtvMatrix.a12 * mtvMatrix.a21;
+
+    mtvAiValue.textContent =
+      `(${mtvFormatNumber(mtvAi.x)}, ${mtvFormatNumber(mtvAi.y)})`;
+    mtvAjValue.textContent =
+      `(${mtvFormatNumber(mtvAj.x)}, ${mtvFormatNumber(mtvAj.y)})`;
+    mtvDeterminantValue.textContent = mtvFormatNumber(mtvDeterminant);
+    mtvAreaValue.textContent = mtvFormatNumber(Math.abs(mtvDeterminant));
+
+    mtvPlotTitle.textContent = "Standard basis and transformed basis vectors";
+    mtvTransformedVectorKey.hidden = false;
+    mtvUnitAreaKey.hidden = !mtvShowDeterminant.checked;
+    mtvTransformedAreaKey.hidden = !mtvShowDeterminant.checked;
+
+    mtvUpdateMatrixDisplay();
+    mtvDraw();
+  }
+
+  function mtvReset() {
+    mtvA11.value = 1;
+    mtvA12.value = 0;
+    mtvA21.value = 0;
+    mtvA22.value = 1;
+    mtvShowDeterminant.checked = false;
+    mtvAppliedMatrix = null;
+    mtvError.textContent = "";
+    mtvAiValue.textContent = "Not applied";
+    mtvAjValue.textContent = "Not applied";
+    mtvDeterminantValue.textContent = "Not applied";
+    mtvAreaValue.textContent = "Not applied";
+    mtvPlotTitle.textContent = "Standard basis vectors i and j";
+    mtvTransformedVectorKey.hidden = true;
+    mtvUnitAreaKey.hidden = true;
+    mtvTransformedAreaKey.hidden = true;
+    mtvUpdateMatrixDisplay();
+    mtvDraw();
+    mtvA11.focus();
+  }
+
+  [mtvA11, mtvA12, mtvA21, mtvA22].forEach(function(mtvInput) {
+    mtvInput.addEventListener("input", mtvUpdateMatrixDisplay);
+  });
+
+  mtvApplyButton.addEventListener("click", mtvApply);
+  mtvResetButton.addEventListener("click", mtvReset);
+
+  mtvShowDeterminant.addEventListener("change", function() {
+    mtvUnitAreaKey.hidden = !mtvShowDeterminant.checked;
+    mtvTransformedAreaKey.hidden =
+      !mtvShowDeterminant.checked || !mtvAppliedMatrix;
+    mtvDraw();
+  });
+
+  let mtvResizeTimer;
+  window.addEventListener("resize", function() {
+    window.clearTimeout(mtvResizeTimer);
+    mtvResizeTimer = window.setTimeout(mtvDraw, 80);
+  });
+
+  mtvUpdateMatrixDisplay();
+  mtvDraw();
+})();
+</script>
+
+</body>
+</html>
+
+```
+
+
+## Version history {-}
+
+v1.0: initial version created 11/26 by tdhc and Ross Mcphee as part of a Vertically Integrated Project at the University of St Andrews.
+  
+[This work is licensed under CC BY-NC-SA 4.0.](https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1)
+
+
+
